@@ -26,6 +26,7 @@ group :development, :test do
   # Gems in this group do not require version numbers
 
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'faker'                                           # Easy way to add fake data: names, email addresses, etc.
   gem 'git-smart'                                       # Makes using git in terminal better: https://github.com/geelen/git-smart
   gem 'letter_opener'                                   # Allows for seeing sent emails in dev environment
   gem 'letter_opener_web'                               # GUI for letter_opener
