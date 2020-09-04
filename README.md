@@ -115,7 +115,7 @@ See [this link](https://ariejan.net/2010/06/10/cherry-picking-specific-commits-f
 
 1. Any significant feature should be done in a separate branch.
 
-        $ git checkout -b BP-123-description-of-issue
+        $ git checkout -b bp-123-description-of-issue
 
     To get the branch name, open up the story in [Linear.app](https://linear.app/bullpen/team/BP/active) and then copy it using `cmd`+`shift`+`.`
 
