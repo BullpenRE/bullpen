@@ -58,6 +58,7 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    amazing_print (1.2.1)
     bindex (0.8.1)
     bootsnap (1.4.8)
       msgpack (~> 1.0)
@@ -163,6 +164,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    table_print (1.5.7)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -189,6 +191,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  amazing_print (~> 1.2, >= 1.2.1)
   bootsnap (>= 1.4.2)
   byebug
   git-smart
@@ -202,6 +205,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   spring
   spring-watcher-listen (~> 2.0.0)
+  table_print (~> 1.5, >= 1.5.7)
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)
