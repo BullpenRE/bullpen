@@ -140,28 +140,6 @@ See [this link](https://ariejan.net/2010/06/10/cherry-picking-specific-commits-f
     - Click "Create pull request"
     - Add a description of the pull request and add pivotal tracker IDs (similar to commit messages)
 
-
-
-=== Dev Environment Server Database Reset
-
-Use the following rake task to reset your local database to what is on staging. Before running these commands:
-
-1. Close out any servers or consoles running that might be connecting to your local DB.
-2. Make sure that your branch is set to what is on staging (most likely master).
-3. Make sure you ahve wget installed. If not you can get it using homebrew via `brew install wget`.
-
-            $ heroku pg:backups capture -a cp-business-staging
-            Backing up DATABASE to XXXX... done
-            $ wget `heroku pg:backups public-url -a cp-business-staging` -O latest.dump
-            $ rake db:import
-
-The `db:import` command can also specify an older *.dump file to import like so:
-
-            $ rake db:import[2017-06-22_production_scrubbed.dump]
-
-After the new database is installed you can switch to a different branch. Don't forget to run migrations after switching to another branch (if there are new ones).
-NOTE: If you get a Rails 5 error `ActiveRecord::ProtectedEnvironmentError: You are attempting to run a destructive action against your 'production' database` while doing an import, you can bypass this by running `$ rails db:environment:set`.
-
 ### Heroku Deploy Setup
 
 1. Make sure the heroku toolbelt is installed from https://toolbelt.heroku.com/
