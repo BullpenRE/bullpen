@@ -115,26 +115,27 @@ See [this link](https://ariejan.net/2010/06/10/cherry-picking-specific-commits-f
 
 1. Any significant feature should be done in a separate branch.
 
-        $ git checkout -b new_branch_name
+        $ git checkout -b BP-123-description-of-issue
+
+    To get the branch name, open up the story in [Linear.app](https://linear.app/bullpen/team/BP/active) and then copy it using `cmd`+`shift`+`.`
 
 2. When a feature is complete and tests pass, push to github.
 
-        $ git push origin new_branch_name
+        $ git push origin bp-X-branch-name
 
 3. If you want to update your new branch with changes from master (very recommended), do the following:
 
         $ git checkout master
         $ git pull origin master
-        $ git checkout new_branch_name
+        $ git checkout bp-X-branch-name
         $ git merge master
 
     Then resolve conflicts manually and push to your new_branch_name again
 
-        $ git push origin new_branch_name
+        $ git push origin bp-X-branch-name
 
 4. When all work in branch is done, create a pull request:
     - Go to https://github.com/bullpenre/bullpen
-    - Click "Pull Requests" -> "New Pull Request"
     - Set base branch to master and compare-to branch to the branch where you've done your work
     - Click "Create pull request"
     - Add a description of the pull request and add pivotal tracker IDs (similar to commit messages)
