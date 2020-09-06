@@ -19,6 +19,7 @@ The following assumes you haven't installed the following on your machine yet.
   * Git
   * RVM
   * Postgresql
+
 _Note: After installing something new it's generally a good idea to quit and restart terminal._
 
 1. Install the latest version of XCode from the App store, run `$ xcode-select --install`
