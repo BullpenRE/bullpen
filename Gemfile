@@ -31,6 +31,17 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # rspec-rails is a testing framework for Rails 5+.
+  gem 'rspec-rails', '~> 4.0.1'
+  gem 'factory_bot_rails', '~> 5.1', '>= 5.1.1'
+  # Easy way to add fake data: names, email addresses, etc.
+  gem 'faker', '~> 2.12'
+end
+
+group :test do
+  # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
+  gem 'shoulda-matchers', '~> 4.0'
+  gem 'database_cleaner', '~> 1.7'
 end
 
 group :development do
