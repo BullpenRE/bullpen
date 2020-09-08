@@ -69,6 +69,8 @@ GEM
     colorize (0.8.1)
     concurrent-ruby (1.1.7)
     crass (1.0.6)
+    cypress-on-rails (1.8.0)
+      rack
     database_cleaner (1.8.5)
     diff-lcs (1.4.4)
     erubi (1.9.0)
@@ -251,6 +253,7 @@ DEPENDENCIES
   amazing_print (~> 1.2, >= 1.2.1)
   bootsnap (>= 1.4.2)
   byebug
+  cypress-on-rails (~> 1.8)
   database_cleaner
   factory_bot_rails
   faker

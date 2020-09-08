@@ -25,14 +25,13 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'rspec-rails'                                     # rspec-rails is a testing framework for Rails 5+.
   gem 'factory_bot_rails'
-  gem 'faker'                                           # Easy way to add fake data: names, email addresses, etc.
+  gem 'cypress-on-rails', '~> 1.8'
 end
 
 group :test do
   # Gems in this group do not require version numbers
   gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
   gem 'database_cleaner'
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'faker'                                           # Easy way to add fake data: names, email addresses, etc.
   gem 'git-smart'                                       # Makes using git in terminal better: https://github.com/geelen/git-smart
   gem 'letter_opener'                                   # Allows for seeing sent emails in dev environment
