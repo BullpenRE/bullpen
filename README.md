@@ -19,6 +19,7 @@ The following assumes you haven't installed the following on your machine yet.
   * Git
   * RVM
   * Postgresql
+
 _Note: After installing something new it's generally a good idea to quit and restart terminal._
 
 1. Install the latest version of XCode from the App store, run `$ xcode-select --install`
@@ -45,10 +46,7 @@ Once your machine is set up for Rails development you can do the following to ge
 8. Instantiate the local database: `$ rails db:create`
 9. Test it out: `$ rails s` and then navigate to http://localhost:3000
 
-
-
-### Beginner's Guide to Changing Code
-
+### Running the application locally and making changes
 Every time you are ready to start work, do the following terminal commands in the bullpen directory:
 
         $ git smart-pull
@@ -68,36 +66,24 @@ To check to make sure your code changes didn't break anything critical:
 
 Green dots are good, red F's are bad. Note that sometimes other people may have broken the build, so use your best judgement if the automated test errors were caused by your code or not (for example if you undo changes and re-run the test). You can also compare your local errors to that on our CI server (pending).
 
-To push your code changes to the repo:
+### How to attach your commits to the Linear.app story
+To push your code changes create a new branch that follows the patter `bp-X-story-description` where `X` is the Linear.app story number. When viewing the [story in Linear.app](https://linear.app/bullpen/team/BP/active) do `cmd`+`shift`+`.` to copy this branch name, then paste it when creating a new local branch.
 
+        $ git checkout -b [paste branch name from Linear.app]
         $ git add .
-        $ git commit -am "Message describing what changes you made [#XXXXXXX]"
-        $ git push origin master
+        $ git commit -am "Message describing what changes you made"
+        $ git push origin [branch name]
 
-Note: replace XXXXXXX with the issue tracker story ID (very important).
-
-If you run into problems pushing, it's probably because somebody pushed other commits between the time you last pulled and the current time that you want to push:
-
-        $ git smart-pull
-        $ git push origin master
-
-Switching between master and a private branch:
-
-        $ git checkout XXXXXX
-        $ git checkout master (to go back to master)
-
-where XXXXXX is the branch name. Then you'll want to use this branch name instead of master for things, i.e.
-
-        $ git pull origin XXXXXXX
-           or
-        $ git push origin XXXXXXX
-
-When you are ready to move your branch to master:
+### Keeping Synced with Master
+At least once per day merge master into your story branch:
 
         $ git checkout master
-        $ git merge XXXXXXX
+        $ git smart-pull
+        $ git checkout [your local branch name]
+        $ git merge master
+        $ git push origin [your local branch name]
 
-This will attempt to migrate your branch differences into master.
+If you have merge conflicts after merging master, work with your teammates to resolve them.
 
 
 ### Cherry Picking
@@ -113,38 +99,22 @@ See [this link](https://ariejan.net/2010/06/10/cherry-picking-specific-commits-f
 
 ### Code Submissions and Reviews
 
-1. Any significant feature should be done in a separate branch.
+When all work in for a story is done, create a pull request:
 
-        $ git checkout -b bp-123-description-of-issue
+- Go to https://github.com/bullpenre/bullpen
+- Set base branch to master and compare-to branch to the branch where you've done your work
+- Click "Create pull request"
+- Add a description of the pull request (similar to commit messages)
 
-    To get the branch name, open up the story in [Linear.app](https://linear.app/bullpen/team/BP/active) and then copy it using `cmd`+`shift`+`.`
-
-2. When a feature is complete and tests pass, push to github.
-
-        $ git push origin bp-X-branch-name
-
-3. If you want to update your new branch with changes from master (very recommended), do the following:
-
-        $ git checkout master
-        $ git pull origin master
-        $ git checkout bp-X-branch-name
-        $ git merge master
-
-    Then resolve conflicts manually and push to your new_branch_name again
-
-        $ git push origin bp-X-branch-name
-
-4. When all work in branch is done, create a pull request:
-    - Go to https://github.com/bullpenre/bullpen
-    - Set base branch to master and compare-to branch to the branch where you've done your work
-    - Click "Create pull request"
-    - Add a description of the pull request and add pivotal tracker IDs (similar to commit messages)
+After a pull request is made, Linear.app will automatically link it to your story (and visa versa) based on the branch name.
 
 ### Heroku Deploy Setup
+Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to automatically deploy the master branch after pull requests are merged. In case you need to do manual pushes:
 
-1. Make sure the heroku toolbelt is installed from https://toolbelt.heroku.com/
-2. Restart terminal and cd into the bullpen directory, then run the following:
+1. Make sure the heroku toolbelt is installed from https://toolbelt.heroku.com/ _(optional)_
+2. Restart terminal and cd into the bullpen directory, then run the following: _(optional)_
 
         $ heroku login
         $ git remote add bullpen-staging git@heroku.com:bullpen-staging.git
+3. Run `$ git push bullpen-staging master` to deploy master. You may need to switch Heroku's deploy from Github to Heroku Git [here](https://dashboard.heroku.com/apps/bullpen-staging/deploy/github).
 
