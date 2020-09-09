@@ -3,36 +3,33 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
 
-gem 'amazing_print', '~> 1.2', '>= 1.2.1' # Replacement for awesome_print which is depreciated
+gem 'amazing_print', '~> 1.2', '>= 1.2.1'   # Replacement for awesome_print which is depreciated
 gem 'bootsnap', '>= 1.4.2', require: false  # Reduces boot times through caching; required in config/boot.rb
-gem 'jbuilder', '~> 2.7'                  # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'pg', '>= 0.18', '< 2.0'              # Use postgresql as the database for Active Record
-gem 'puma', '~> 4.1'                      # Use Puma as the app server
-gem 'rails', '~> 6.0.3', '>= 6.0.3.2'     # If you're not sure what this is for then you're in the wrong place ;)
-gem 'sass-rails', '>= 6'                  # Use SCSS for stylesheets
-gem 'table_print', '~> 1.5', '>= 1.5.7'   # Allows viewing of data in console in nice ways, including table joins: http://tableprintgem.com/ (video)
-gem 'turbolinks', '~> 5'                  # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'webpacker', '~> 4.0'                 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-
+gem 'jbuilder', '~> 2.7'                    # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'pg', '>= 0.18', '< 2.0'                # Use postgresql as the database for Active Record
+gem 'puma', '~> 4.1'                        # Use Puma as the app server
+gem 'rails', '~> 6.0.3', '>= 6.0.3.2'       # If you're not sure what this is for then you're in the wrong place ;)
+gem 'sass-rails', '>= 6'                    # Use SCSS for stylesheets
+gem 'table_print', '~> 1.5', '>= 1.5.7'     # Allows viewing of data in console in nice ways, including table joins: http://tableprintgem.com/ (video)
+gem 'turbolinks', '~> 5'                    # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
+gem 'webpacker', '~> 4.0'                   # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
+gem 'devise', '~> 4.7', '>= 4.7.2'          # Flexible authentication solution for Rails with Warden
 
 # The gems below were recommended by the base Rails install
 # gem 'redis', '~> 4.0'                   # Use Redis adapter to run Action Cable in production
 # gem 'bcrypt', '~> 3.1.7'                # Use Active Model has_secure_password
 # gem 'image_processing', '~> 1.2'        # Use Active Storage variant
 
-
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'rspec-rails'                                     # rspec-rails is a testing framework for Rails 5+.
   gem 'factory_bot_rails'
-  gem 'faker'                                           # Easy way to add fake data: names, email addresses, etc.
 end
 
 group :test do
   # Gems in this group do not require version numbers
   gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
   gem 'database_cleaner'
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'faker'                                           # Easy way to add fake data: names, email addresses, etc.
   gem 'git-smart'                                       # Makes using git in terminal better: https://github.com/geelen/git-smart
   gem 'letter_opener'                                   # Allows for seeing sent emails in dev environment
