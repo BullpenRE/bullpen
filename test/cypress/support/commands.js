@@ -23,3 +23,21 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+import axios from 'axios'
+
+Cypress.Commands.add('cleanDatabase', (opts = { seed: true }) => {
+    return axios({
+        method: 'POST',
+        url: 'http://localhost:3000/test/clean_database',
+        data: { should_seed: opts.seed }
+    })
+})
+
+Cypress.Commands.add('seedPosts', (count) => {
+    return axios({
+        method: 'POST',
+        url: 'http://localhost:3000/test/seed_posts',
+        data: { count }
+    })
+})
