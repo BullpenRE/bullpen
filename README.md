@@ -116,5 +116,5 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
 
         $ heroku login
         $ git remote add bullpen-staging git@heroku.com:bullpen-staging.git
-3. Run `$ git push bullpen-staging master` to deploy master. You may need to switch Heroku's deploy from Github to Heroku Git [here](https://dashboard.heroku.com/apps/bullpen-staging/deploy/github).
+3. Run `$ git push bullpen-staging master` to deploy master. Before doing this you may need to switch Heroku's deploy from Github to Heroku Git [here](https://dashboard.heroku.com/apps/bullpen-staging/deploy/github).
 
