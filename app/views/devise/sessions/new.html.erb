@@ -1,0 +1,32 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h2 class="display-4 text-primary">Log In</h2>
+</div>
+<div class="row justify-content-center log-in-container">
+
+  <div class="card col-md-5 shadow-sm align-items-center">
+
+    <div class="col-md-10 px-4 py-4">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="field field-log-in">
+          <%= f.label :email, class: 'text-primary text-left' %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control center', placeholder: "Email address"%>
+        </div>
+
+        <div class="field field-log-in">
+          <%= f.label :password, class: 'text-primary' %><br />
+          <%= f.password_field :password, autocomplete: "current-password", class: 'form-control center', placeholder: "Password" %>
+        </div>
+
+        <div class="field text-center">
+          <%= link_to "Forgot password?", new_password_path(resource_name), class: "text-center text-muted" %><br />
+        </div>
+
+        <div class="actions field-log-in">
+          <%= f.submit "Log in", class: "btn btn-success col-md-12" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render "devise/shared/links" %>
