@@ -1,3 +1,3 @@
-class JoinController < ActionController::Base
+class JoinController < ApplicationController
   def index; end
 end
