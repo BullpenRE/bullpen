@@ -45,7 +45,8 @@ module Bullpen
     end
 
     # Suppress automatic generation of stylesheets per
-    # https://stackoverflow.com/questions/7366273/how-do-i-turn-off-automatic-stylesheet-javascript-generation-on-rails-3-1
+    # https://stackoverflow.com/questions/14045858/syntax-to-skip-creating-tests-assets-helpers-for-rails-generate-controller
     config.generators.stylesheets = false
+    config.generators.helper = false
   end
 end
