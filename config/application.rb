@@ -43,5 +43,9 @@ module Bullpen
                               request_specs: false,
                               controller_specs: false
     end
+
+    # Suppress automatic generation of stylesheets per
+    # https://stackoverflow.com/questions/7366273/how-do-i-turn-off-automatic-stylesheet-javascript-generation-on-rails-3-1
+    config.generators.stylesheets = false
   end
 end
