@@ -5,6 +5,10 @@ The Bullpen application is built on:
  * Rails 6.0.3.2
  * postgresql 10.0 or higher
  * Code complexity and security monitoring by CodeClimate (pending)
+ 
+##### Current Grades
+[![Maintainability](https://api.codeclimate.com/v1/badges/2b1724876c36b5bb29c3/maintainability)](https://codeclimate.com/repos/5f5ff58f6f8e8901a000376a/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/2b1724876c36b5bb29c3/test_coverage)](https://codeclimate.com/repos/5f5ff58f6f8e8901a000376a/test_coverage)
 
 ### Useful Mac goodies that are highly recommended
 1. For pretty and customizable command line info, including branch and whether you have uncommited changes or not: https://github.com/bobthecow/git-flow-completion/wiki/Install-Bash-git-completion
