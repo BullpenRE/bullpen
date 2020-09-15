@@ -25,6 +25,8 @@ group :development, :test do
   gem 'factory_bot_rails'                               # Fixtures but better
   gem 'rubocop', '~> 0.91.0', require: false            # Needed to fix CodeClimate issues
   gem 'rspec-rails'                                     # rspec-rails is a testing framework for Rails 5+.
+  gem 'letter_opener'                                   # Allows for seeing sent emails in dev environment
+  gem 'letter_opener_web'                               # GUI for letter_opener
 end
 
 group :test do
@@ -32,8 +34,6 @@ group :test do
   gem 'database_cleaner'                                # Cleans the database data between tests
   gem 'faker'                                           # Easy way to add fake data: names, email addresses, etc.
   gem 'git-smart'                                       # Makes using git in terminal better: https://github.com/geelen/git-smart
-  gem 'letter_opener'                                   # Allows for seeing sent emails in dev environment
-  gem 'letter_opener_web'                               # GUI for letter_opener
   gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
 end
 
