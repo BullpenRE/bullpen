@@ -1,10 +1,12 @@
 <footer class="pt-4 my-md-5 pt-md-5 border-top">
 
   <%- if controller_name != 'sessions' %>
-    <%= link_to "Log in", new_session_path(resource_name) %><br />
+    <div class="text-center text-muted">
+      <h5>Remember your password? <%= link_to "Login", new_session_path(resource_name) %></h5><br />
+    </div>
   <% end %>
 
-  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+  <%- if devise_mapping.registerable? && controller_name != 'registrations'  && controller_name != 'passwords' %>
     <div class="text-center text-muted">
       <h5>Need an account? <%= link_to "Sign up", join_path(resource_name) %></h5><br />
     </div>
