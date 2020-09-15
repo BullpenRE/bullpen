@@ -7,22 +7,22 @@
 
     <div class="col-md-10 px-4 py-4">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="field field-log-in">
+        <div class="field mb-3">
           <%= f.label :email, class: 'text-primary text-left' %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control center', placeholder: "Email address"%>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control center font-weight-light', placeholder: "Email address"%>
         </div>
 
-        <div class="field field-log-in">
+        <div class="field">
           <%= f.label :password, class: 'text-primary' %><br />
-          <%= f.password_field :password, autocomplete: "current-password", class: 'form-control center', placeholder: "Password" %>
+          <%= f.password_field :password, autocomplete: "current-password", class: 'form-control center font-weight-light', placeholder: "Password" %>
         </div>
 
-        <div class="field text-center">
+        <div class="field text-center mb-3">
           <%= link_to "Forgot password?", new_password_path(resource_name), class: "text-center text-muted" %><br />
         </div>
 
-        <div class="actions field-log-in">
-          <%= f.submit "Log in", class: "btn btn-success col-md-12" %>
+        <div class="actions">
+          <%= f.submit "Login", class: "btn btn-primary col-md-12" %>
         </div>
       <% end %>
     </div>
