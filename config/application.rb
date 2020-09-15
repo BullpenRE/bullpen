@@ -31,5 +31,22 @@ module Bullpen
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Suppress automatic generation of certain types of specs
+    # Per https://www.codewithjason.com/get-rspec-skip-view-specs-generate-scaffolds/
+    config.generators do |generate|
+      generate.test_framework :rspec,
+                              fixtures: false,
+                              view_specs: false,
+                              helper_specs: false,
+                              routing_specs: false,
+                              request_specs: false,
+                              controller_specs: false
+    end
+
+    # Suppress automatic generation of stylesheets per
+    # https://stackoverflow.com/questions/14045858/syntax-to-skip-creating-tests-assets-helpers-for-rails-generate-controller
+    config.generators.stylesheets = false
+    config.generators.helper = false
   end
 end

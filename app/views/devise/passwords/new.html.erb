@@ -1,0 +1,28 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h2 class="display-4 text-primary">Reset your password</h2>
+</div>
+<div class="row justify-content-center">
+
+  <div class="card col-md-5 shadow-sm align-items-center">
+
+    <div class="col-md-10 px-4 py-4">
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <h6 class="text-muted text-center mb-3">
+          Enter the email address associated with your Bullpen acccount,
+          and we'll email you a link to reset your password.
+        </h6>
+        <div class="field">
+          <%= f.label :email, class: 'text-primary text-left' %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control center mb-5', placeholder: "Email address" %>
+        </div>
+
+        <div class="actions text-center">
+          <%= f.submit "Send Password Reset", class: 'form-control-lg btn btn-outline-secondary col-md-12'%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render "devise/shared/links" %>
