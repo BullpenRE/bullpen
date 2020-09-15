@@ -16,7 +16,7 @@
       <h1 class="my-0 font-weight-normal text-primary">Freelancer</h1>
 
       <div class="card-body">
-        <h5 class="card-title pricing-card-title">I'm individual and I'm looking for work. </h5>
+        <h5 class="card-title pricing-card-title text-muted">I'm individual and I'm looking for work. </h5>
 
         <button type="button" class="btn btn-lg btn-block btn-primary">Apply</button>
       </div>
@@ -25,7 +25,7 @@
       <h1 class="my-0 font-weight-normal text-primary">Company</h1>
 
       <div class="card-body">
-        <h5 class="card-title pricing-card-title">I'm a company interested in hiring. </h5>
+        <h5 class="card-title pricing-card-title text-muted">I'm a company interested in hiring. </h5>
 
         <button type="button" class="btn btn-lg btn-block btn-primary">Sing-Up</button>
       </div>
@@ -33,8 +33,7 @@
   </div>
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <div class="text-center">
-      <h5>Already have an account?<a class="p-2" href="#">Login</a> </h5>
-
+      <h5>Already have an account? <%= link_to "Login", new_user_session_path, class: "p-2" %></h5>
     </div>
   </footer>
 </div>
