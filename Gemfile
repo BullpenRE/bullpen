@@ -23,7 +23,7 @@ gem 'webpacker', '~> 5.2', '>= 5.2.1'       # Transpile app-like JavaScript. Rea
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'factory_bot_rails'                               # Fixtures but better
-  gem 'rubocop', '~> 0.91.0', require: false            # Needed to fix CodeClimate issues
+  gem 'rubocop', '~> 0.90.0', require: false            # Needed to fix CodeClimate issues
   gem 'rspec-rails'                                     # rspec-rails is a testing framework for Rails 5+.
 end
 
