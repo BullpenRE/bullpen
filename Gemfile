@@ -22,26 +22,28 @@ gem 'webpacker', '~> 5.2', '>= 5.2.1'       # Transpile app-like JavaScript. Rea
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'factory_bot_rails'                               # Fixtures but better
   gem 'rspec-rails'                                     # rspec-rails is a testing framework for Rails 5+.
-  gem 'factory_bot_rails'
+  gem 'rubocop-rspec'                                   # Code style checking for RSpec files
 end
 
 group :test do
   # Gems in this group do not require version numbers
-  gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
-  gem 'database_cleaner'
+  gem 'database_cleaner'                                # Cleans the database data between tests
   gem 'faker'                                           # Easy way to add fake data: names, email addresses, etc.
   gem 'git-smart'                                       # Makes using git in terminal better: https://github.com/geelen/git-smart
   gem 'letter_opener'                                   # Allows for seeing sent emails in dev environment
   gem 'letter_opener_web'                               # GUI for letter_opener
+  gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
 end
 
 group :development do
   # Gems in this group do not require version numbers
-  gem 'web-console', '>= 3.3.0'             # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'listen', '~> 3.2'
+  gem 'listen'                              # The Listen gem listens to file modifications and notifies you about the changes: https://github.com/guard/listen
+  gem 'rubocop', require: false             # Detect coding style problems, needed for CodeClimate
   gem 'spring'                              # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring-watcher-listen', '~> 2.0.0'   # Applies spring to listening for file changes
+  gem 'web-console', '>= 3.3.0'             # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]    # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
