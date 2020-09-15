@@ -275,7 +275,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   letter_opener
   letter_opener_web
-  listen (~> 3.2)
+  listen
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.2)
@@ -283,11 +283,11 @@ DEPENDENCIES
   sass-rails (>= 6)
   shoulda-matchers
   spring
-  spring-watcher-listen (~> 2.0.0)
+  spring-watcher-listen
   table_print (~> 1.5, >= 1.5.7)
   turbolinks (~> 5)
   tzinfo-data
-  web-console (>= 3.3.0)
+  web-console
   webpacker (~> 5.2, >= 5.2.1)
 
 RUBY VERSION
