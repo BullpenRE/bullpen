@@ -12,5 +12,7 @@ blocks:
           commands:
             - checkout
             - sem-version ruby 2.6.0
-            - bundle install --deployment --path vendor/bundle
+            - sem-service start postgres
+            - createdb -U postgres -h 0.0.0.0 bullpen_test
+            - bundle exec rails db:create
             - bundle exec rspec
