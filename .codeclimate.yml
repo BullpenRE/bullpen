@@ -29,6 +29,7 @@ exclude_patterns:
   - ".ruby-version"
   - "app/assets/"
   - "app/admin/"
+  - "babel.config.js"
   - "bin/"
   - "config/"
   - "config.ru"
@@ -52,6 +53,8 @@ exclude_patterns:
   - "tmp/"
   - "vendor/"
 
+Rubocop/Style/Documentation:
+  enabled: false
 Rubocop/Style/RegexpLiteral:
   enabled: false
 Rubocop/Layout/EmptyLinesAroundModuleBody:
