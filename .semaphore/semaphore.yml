@@ -14,5 +14,7 @@ blocks:
             - sem-version ruby 2.6.0
             - sem-service start postgres
             - createdb -U postgres -h 0.0.0.0 bullpen_test
+            - gem install bundler
+            - bundle install
             - bundle exec rails db:create
             - bundle exec rspec
