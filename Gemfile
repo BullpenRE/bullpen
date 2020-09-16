@@ -33,12 +33,12 @@ group :test do
   # Gems in this group do not require version numbers
   gem 'database_cleaner'                                # Cleans the database data between tests
   gem 'faker'                                           # Easy way to add fake data: names, email addresses, etc.
-  gem 'git-smart'                                       # Makes using git in terminal better: https://github.com/geelen/git-smart
   gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
 end
 
 group :development do
   # Gems in this group do not require version numbers
+  gem 'git-smart'                           # Makes using git in terminal better: https://github.com/geelen/git-smart
   gem 'listen'                              # The Listen gem listens to file modifications and notifies you about the changes: https://github.com/guard/listen
   gem 'spring'                              # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'web-console'                         # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
