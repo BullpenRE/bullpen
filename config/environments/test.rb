@@ -50,4 +50,15 @@ Rails.application.configure do
   if Rails.env.test?
     Rails.application.config.hosts << "/test/*"
   end
+
+  # Adding this because tests bomb out if I don't have it
+  current_node = ENV['CIRCLE_NODE_INDEX'] || ENV['CI_NODE_INDEX'] || ENV['TEST_ENV_NUMBER']
+  ENV['TEST_DOMAIN'] = '127.0.0.1'
+  ENV['TEST_PORT'] = (3001 + current_node.to_i).to_s
+  ENV['WEBSITE_URL'] = "#{ENV['TEST_DOMAIN']}:#{ENV['TEST_PORT']}"
+  config.action_mailer.default_url_options = { host: ENV['WEBSITE_URL'] }
+
+  config.after_initialize do
+    Rails.application.routes.default_url_options[:host] = ENV['WEBSITE_URL']
+  end
 end
