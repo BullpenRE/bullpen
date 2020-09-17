@@ -1,4 +1,4 @@
-ruby = User.create!(id: '1', email: 'some@email.com')
-javascript = User.create!(id: '2', email: 'newone@email.com')
+ruby = User.create!(:user)
+javascript = User.create!(:user)
 
 #Post.create!(title: 'Seed Post', body: 'This is a seed post.', category: ruby)
