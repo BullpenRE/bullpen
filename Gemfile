@@ -35,7 +35,7 @@ end
 group :test do
   # Gems in this group do not require version numbers
   gem 'database_cleaner'                                # Cleans the database data between tests
-  gem 'faker'                                           # Easy way to add fake data: names, email addresses, etc.
+  gem 'faker', github: 'stympy/faker'                   # Easy way to add fake data: names, email addresses, etc.
   gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
 end
 
