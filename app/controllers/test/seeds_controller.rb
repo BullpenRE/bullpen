@@ -10,9 +10,9 @@ module Test
 
       count.to_i.times do |c|
         User.create!(
-         id: c,
-         email: "new@email.com",
-         password: '123'
+          id: c,
+          email: 'new@email.com',
+          password: '123'
         )
       end
     end
