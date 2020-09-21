@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: bullpen_production
-  username: bullpen
-  password: <%= ENV['BULLPEN_DATABASE_PASSWORD'] %>
+  username: <%= ENV['PRODUCTION_DATABASE_USERNAME'] %>
+  password: <%= ENV['PRODUCTION_DATABASE_PASSWORD'] %>
