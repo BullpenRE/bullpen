@@ -25,7 +25,6 @@ group :development, :test do
   gem 'factory_bot_rails'                               # Fixtures but better
   gem 'rubocop', '~> 0.90.0', require: false            # Needed to fix CodeClimate issues
   gem 'rspec-rails'                                     # rspec-rails is a testing framework for Rails 5+.
-  gem 'factory_bot_rails'
   gem 'cypress-on-rails', '~> 1.8'
   gem 'letter_opener'                                   # Allows for seeing sent emails in dev environment
   gem 'letter_opener_web'                               # GUI for letter_opener
