@@ -293,7 +293,7 @@ DEPENDENCIES
   amazing_print (~> 1.2, >= 1.2.1)
   bootsnap (>= 1.4.2)
   byebug
-  cypress-on-rails (~> 1.8)
+  cypress-on-rails
   database_cleaner
   devise (~> 4.7, >= 4.7.2)
   factory_bot_rails
