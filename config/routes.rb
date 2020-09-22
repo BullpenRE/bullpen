@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/styleguide', to: 'styleguide#index'
+
   root 'join#index'
 
 end
