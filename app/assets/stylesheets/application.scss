@@ -1,4 +1,43 @@
-// Override bootstrap styles here.
+// Set Bootstrap theme variables here
+$body-bg: #E9ECEF;
+$body-color: #4E4E4E;
+$btn-white-space: nowrap;
+$spacer: 1.25rem;
+$theme-colors: (
+  "primary": #29BF89,
+  "secondary": #005495,
+  "danger": #FB3640,
+  "dark": #4E4E4E,
+  "light": #E9ECEF,
+  "gray-dark": #7A7A7A,
+  "gray": #E4E4E4,
+  "blue-light": #DFECF5
+);
 
 // Bootstrap and its defaut variables
 @import 'bootstrap/scss/bootstrap';
+
+//Set Bootstrap style overrides here
+.btn {
+    border-radius: 0.1875rem;
+}
+h1, .h1 {
+    font-size: 1.75rem;
+    color: #005495;
+    font-weight: 700;
+}
+h2, .h2 {
+    font-size: 1.5rem;
+    color: #005495;
+    font-weight: 700;
+}
+h3, .h3 {
+    font-size: 1.125rem;
+    color: #005495;
+    font-weight: 600;
+}
+h4, .h4 {
+    font-size: 1rem;
+    color: #005495;
+    font-weight: 600;
+}
