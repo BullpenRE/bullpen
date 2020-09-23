@@ -1,6 +1,6 @@
-<div class="container bg-white my-3 px-3 py-1">
+<div class="container bullpen-card my-3">
     <div class="display-4 text-secondary border-bottom mb-3 pb-1">Color classes</div>
-    <div class="row mx-0">
+    <div class="row m-0">
         <div class="col bg-primary text-white p-3">primary<br/>#29BF89</div>
         <div class="col bg-secondary text-white p-3">secondary<br/>#005495</div>
         <div class="col bg-danger text-white p-3">danger<br/>#FB3640</div>
@@ -10,19 +10,19 @@
         <div class="col bg-gray text-dark p-3">gray*<br/>#E4E4E4</div>
         <div class="col bg-blue-light text-dark p-3">blue-light*<br/>#DFECF5</div>
     </div>
-    <p><strong>*</strong> These color classes should be used sparingly or not at all.</p>
+    <strong>*</strong> The last three color classes should be used sparingly or not at all.
 </div>
-<div class="container bg-white my-3 px-3 py-1">
-        <div class="display-4 text-secondary border-bottom mb-3 pb-1">Typography</div>
-        <div class="row">
-            <div class="col"><h1>Page Title</h1><p>Ubuntu<br />Bold 1.75rem<br /><code>&lt;h1&gt;Page Title&lt;/h1&gt;</code></p></div>
-            <div class="col"><h2>Popup Title</h2><p>Ubuntu<br />Bold 1.5rem<br /><code>&lt;h2&gt;Popup Title&lt;/h2&gt;</code></p></div>
-            <div class="col"><h3>Page Subtitle</h3><p>Nunito Sans<br />SemiBold 1.125rem<br /><code>&lt;h3&gt;Page Subtitle&lt;/h3&gt;</code></p></div>
-            <div class="col"><h4>Section Subtitle</h4><p>Nunito Sans<br />SemiBold 1rem<br /><code>&lt;h4&gt;Section Subtitle&lt;/h4&gt;</code></p></div>
-            <div class="col"><p>Body</p><p>Nunito Sans<br />Regular 1rem<br /><code>&lt;p&gt;Body&lt;/p&gt;</code></p></div>
-        </div>
+<div class="container bullpen-card my-3">
+    <div class="display-4 text-secondary border-bottom mb-3 pb-1">Typography</div>
+    <div class="row">
+        <div class="col"><h1>Page Title</h1><p>Ubuntu<br />Bold 1.75rem<br /><code>&lt;h1&gt;Page Title&lt;/h1&gt;</code></p></div>
+        <div class="col"><h2>Popup Title</h2><p>Ubuntu<br />Bold 1.5rem<br /><code>&lt;h2&gt;Popup Title&lt;/h2&gt;</code></p></div>
+        <div class="col"><h3>Page Subtitle</h3><p>Nunito Sans<br />SemiBold 1.125rem<br /><code>&lt;h3&gt;Page Subtitle&lt;/h3&gt;</code></p></div>
+        <div class="col"><h4>Section Subtitle</h4><p>Nunito Sans<br />SemiBold 1rem<br /><code>&lt;h4&gt;Section Subtitle&lt;/h4&gt;</code></p></div>
+        <div class="col"><p>Body</p><p>Nunito Sans<br />Regular 1rem<br /><code>&lt;p&gt;Body&lt;/p&gt;</code></p></div>
+    </div>
 </div>
-<div class="container bg-white my-3 px-3 py-1">
+<div class="container bullpen-card my-3">
     <div class="display-4 text-secondary border-bottom mb-3 pb-1">Buttons</div>
     <div class="row mb-3">
         <div class="col"><button class="btn btn-primary">Default button</button><br/><code>&lt;button class="btn btn-primary"&gt;Default button&lt;/button&gt;</code></div>
@@ -33,7 +33,54 @@
         <div class="col"><button class="btn btn-outline-primary btn-lg">Large secondary</button><br/><code>&lt;button class="btn btn-outline-primary btn-lg"&gt;Large secondary&lt;/button&gt;</code></div>
     </div>
     <div class="row mb-3">
-        <div class="col"><button class="btn btn-link">Link button</button><br/><code>&lt;button class="btn btn-link"&gt;Link button&lt;/button&gt;</code></div>
+        <div class="col"><button class="btn btn-link">Link button</button><br/><code>&lt;button class="btn btn-link"&gt;Link button&lt;/button&gt;</code><br/>Add the class <code>p-0</code> to remove button padding.</div>
         <div class="col"><a href="#">Link</a><br/><code>&lt;a href="#"&gt;Link&lt;/a&gt;</code></div>
     </div>
+    <div class="row">
+       <div class="col"><button class="btn btn-outline-danger mr-3">Danger button</button><a href="#" class="text-danger">Danger link</a><br/>Use the <code>danger</code> color classes for destructive actions.</div>
+       <div class="col"><button class="btn btn-primary disabled">Disabled button</button><br/>All buttons will display this color and cursor appearance if the <code>disabled</code> class is added to it.</div>
+    </div>
+</div>
+<div class="container bullpen-card my-3">
+    <div class="display-4 text-secondary border-bottom mb-3 pb-1">Input fields</div>
+    <form>
+        <div class="form-group">
+            <label for="exampleFormControlInput1" class="bullpen-label">Input label</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Placeholder text">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1" class="bullpen-label">Select label</label>
+            <select class="form-control" id="exampleFormControlSelect1">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1" class="bullpen-label">Textarea label</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="customCheck1">
+            <label class="custom-control-label" for="customCheck1">Custom checkbox</label>
+        </div>
+        <div class="custom-control custom-checkbox mb-2">
+            <input type="checkbox" class="custom-control-input" id="customCheck2" disabled>
+            <label class="custom-control-label" for="customCheck2">Disabled custom checkbox</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio1">Custom radio 1</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="customRadio2">Custom radio 2</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" disabled>
+            <label class="custom-control-label" for="customRadio3">Disabled radio button</label>
+        </div>
+    </form>
 </div>
