@@ -80,7 +80,11 @@
         <hr class="mb-4">
         <button class="form-control-lg btn btn-outline-secondary col-md-12 mb-3 nextBtn-2" type="button">Sign up as a freelancer</button>
 
-        <%= render "devise/shared/links" %>
+          <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="text-center">
+              <h5>Already have an account? <%= link_to "Login", new_user_session_path, class: "p-2" %></h5>
+            </div>
+          </footer>
       </div>
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -124,14 +128,14 @@
 
 <script>
   // --------- Check 2 page and validate on submit ----------
-  const pswInput = document.getElementById("psw"),
-        spesial = document.getElementById("special"),
-        capital = document.getElementById("capital"),
-        number = document.getElementById("number"),
-        length = document.getElementById("length"),
-        same_psw = document.getElementById("same_psw"),
-        cInput = document.getElementById("cPwdId");
   $(document).ready(function(){
+    const pswInput = document.getElementById("psw"),
+      spesial = document.getElementById("special"),
+      capital = document.getElementById("capital"),
+      number = document.getElementById("number"),
+      length = document.getElementById("length"),
+      same_psw = document.getElementById("same_psw"),
+      cInput = document.getElementById("cPwdId");
     // When the user clicks on the password field, show the message box
     pswInput.onfocus = function() {
       document.getElementById("message").style.display = "block";
@@ -270,7 +274,6 @@
     });
 
     prevBtn.click(function(){
-      debugger;
       $('#regForm').find('input:eq(0)').focus();
       step2.hide();
       step1.show();
