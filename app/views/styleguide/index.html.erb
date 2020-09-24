@@ -1,5 +1,44 @@
-<div class="container bullpen-card my-3">
-    <div class="display-4 text-secondary border-bottom mb-3 pb-1">Color classes</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+    <a class="navbar-brand" href="#">
+        <img src="app/assets/images/bullpen-email-logo.png" alt width="141" height="44">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <button class="btn btn-link-primary my-2 my-sm-0" type="submit">Log In</button>
+            <button class="btn btn-primary my-2 my-sm-0" type="submit">Sign Up</button>
+        </form>
+    </div>
+</nav>
+
+
+<div class="container bp-card mb-3">
+    <div class="h1 text-secondary border-bottom mb-3 pb-1">Color classes</div>
     <div class="row m-0">
         <div class="col bg-primary text-white p-3">primary<br/>#29BF89</div>
         <div class="col bg-secondary text-white p-3">secondary<br/>#005495</div>
@@ -12,18 +51,37 @@
     </div>
     <strong>*</strong> The last three color classes should be used sparingly or not at all.
 </div>
-<div class="container bullpen-card my-3">
-    <div class="display-4 text-secondary border-bottom mb-3 pb-1">Typography</div>
-    <div class="row">
-        <div class="col"><h1>Page Title</h1><p>Ubuntu<br />Bold 1.75rem<br /><code>&lt;h1&gt;Page Title&lt;/h1&gt;</code></p></div>
-        <div class="col"><h2>Popup Title</h2><p>Ubuntu<br />Bold 1.5rem<br /><code>&lt;h2&gt;Popup Title&lt;/h2&gt;</code></p></div>
-        <div class="col"><h3>Page Subtitle</h3><p>Nunito Sans<br />SemiBold 1.125rem<br /><code>&lt;h3&gt;Page Subtitle&lt;/h3&gt;</code></p></div>
-        <div class="col"><h4>Section Subtitle</h4><p>Nunito Sans<br />SemiBold 1rem<br /><code>&lt;h4&gt;Section Subtitle&lt;/h4&gt;</code></p></div>
-        <div class="col"><p>Body</p><p>Nunito Sans<br />Regular 1rem<br /><code>&lt;p&gt;Body&lt;/p&gt;</code></p></div>
+<div class="container bp-card my-3">
+    <div class="h1 text-secondary border-bottom mb-3 pb-1">Typography</div>
+    <div class="row mb-3">
+        <div class="col">
+            <h4 class="text-dark">Dashboard fonts</h4>
+            <h1><code>&lt;h1&gt;</code> Title Ubuntu 24pt bold</h1>
+            <div class="font-weight-bold mb-1"><code>&lt;b&gt;</code> Side Menu Active Nunito Sans 16pt bold</div>
+            <div class="mb-1"><code>default</code> Side Menu Default Nunito Sans 16pt regular</div>
+            <div class="mb-1"><code>default</code> Side Menu User Name Nunito Sans 16pt regular*</div>
+        </div>
+        <div class="col">
+            <h4 class="text-dark">Card fonts</h4>
+            <h2><code>&lt;h2&gt;</code> Card Title Ubuntu 22pt bold</h2>
+            <h4><code>&lt;h4&gt;</code> Subtitle 1 Nunito Sans 18pt bold</h4>
+            <h5><code>&lt;h5&gt;</code> Subtitle 2 Nunito Sans 16pt bold</h5>
+            <div class="mb-1"><code>default</code> Content text Nunito sans regular 16pt</div>
+            <div class="bp-text-sm"><code>class=".bp-text-sm"</code> Details/terms text Nunito sans regular 14pt*</div>
+        </div>
+        <div class="col">
+            <h4 class="text-dark">Popup fonts</h4>
+            <h3><code>&lt;h3&gt;</code> Popup Title Ubuntu 20pt bold</h3>
+            <h4><code>&lt;h4&gt;</code> Subtitle 1 Nunito Sans 18pt bold</h4>
+            <h5><code>&lt;h5&gt;</code> Subtitle 2 Nunito Sans 16pt bold*</h5>
+            <div class="mb-1"><code>default</code> Content text Nunito sans regular 16pt</div>
+            <div class="bp-text-sm"><code>class=".bp-text-sm"</code> Details/ terms text Nunito sans regular 14pt*</div>
+        </div>
     </div>
+    <strong>*</strong> These fonts have been adjusted slightly from the existing design for simplicity & consistency
 </div>
-<div class="container bullpen-card my-3">
-    <div class="display-4 text-secondary border-bottom mb-3 pb-1">Buttons</div>
+<div class="container bp-card my-3">
+    <div class="h1 text-secondary border-bottom mb-3 pb-1">Buttons</div>
     <div class="row mb-3">
         <div class="col"><button class="btn btn-primary">Default button</button><br/><code>&lt;button class="btn btn-primary"&gt;Default button&lt;/button&gt;</code></div>
         <div class="col"><button class="btn btn-outline-primary">Secondary button</button><br/><code>&lt;button class="btn btn-outline-primary"&gt;Secondary&lt;/button&gt;</code></div>
@@ -37,50 +95,117 @@
         <div class="col"><a href="#">Link</a><br/><code>&lt;a href="#"&gt;Link&lt;/a&gt;</code></div>
     </div>
     <div class="row">
-       <div class="col"><button class="btn btn-outline-danger mr-3">Danger button</button><a href="#" class="text-danger">Danger link</a><br/>Use the <code>danger</code> color classes for destructive actions.</div>
+       <div class="col"><button class="btn btn-outline-danger mr-3">Danger button</button><a href="#" class="text-danger">Danger link</a><br/>Use the <code>danger</code> color classes for destructive actions. Note this is not specified in the existing design.</div>
        <div class="col"><button class="btn btn-primary disabled">Disabled button</button><br/>All buttons will display this color and cursor appearance if the <code>disabled</code> class is added to it.</div>
     </div>
 </div>
-<div class="container bullpen-card my-3">
-    <div class="display-4 text-secondary border-bottom mb-3 pb-1">Input fields</div>
+<div class="container bp-card my-3">
+    <div class="h1 text-secondary border-bottom mb-3 pb-1">Input fields</div>
     <form>
         <div class="form-group">
-            <label for="exampleFormControlInput1" class="bullpen-label">Input label</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Placeholder text">
+            <label for="exampleFormControlInput1" class="bp-label">Input label</label>
+            <div class="d-flex">
+                <input type="text" class="form-control mr-2" id="exampleFormControlInput1" placeholder="Placeholder text">
+                <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#inputCodeExample" aria-expanded="false" aria-controls="inputCodeExample">Code</button> 
+            </div>
         </div>
+        
+<pre class="collapse mb-3 px-3" id="inputCodeExample">&lt;div class="form-group"&gt;
+    &lt;label for="exampleFormControlInput1" class="bp-label"&gt;Input label&lt;/label&gt;
+    &lt;input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Placeholder text"&gt;
+&lt;/div&gt;</pre>
         <div class="form-group">
-            <label for="exampleFormControlSelect1" class="bullpen-label">Select label</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            </select>
+            <label for="exampleFormControlSelect1" class="bp-label">Select label</label>
+            <div class="d-flex">
+                <select class="form-control mr-2" id="exampleFormControlSelect1">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#selectCodeExample" aria-expanded="false" aria-controls="selectCodeExample">Code</button>
+            </div>
         </div>
+<pre class="mb-3 px-3 collapse" id="selectCodeExample">&lt;div class="form-group"&gt;
+    &lt;label for="exampleFormControlSelect1" class="bp-label"&gt;Select label&lt;/label&gt;
+    &lt;select class="form-control" id="exampleFormControlSelect1"&gt;
+        &lt;option&gt;1&lt;/option&gt;
+        &lt;option&gt;2&lt;/option&gt;
+        &lt;option&gt;3&lt;/option&gt;
+        &lt;option&gt;4&lt;/option&gt;
+        &lt;option&gt;5&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;</pre>
+
         <div class="form-group">
-            <label for="exampleFormControlTextarea1" class="bullpen-label">Textarea label</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <label for="exampleFormControlTextarea1" class="bp-label">Textarea label</label>
+            <div class="d-flex align-items-start">
+                <textarea class="form-control mr-2" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#textareaCodeExample" aria-expanded="false" aria-controls="textareaCodeExample">Code</button>
+            </div>
         </div>
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck1">
-            <label class="custom-control-label" for="customCheck1">Custom checkbox</label>
+
+<pre class="mb-3 px-3 collapse" id="textareaCodeExample">&lt;div class="form-group"&gt;
+    &lt;label for="exampleFormControlTextarea1" class="bp-label"&gt;Textarea label&lt;/label&gt;
+    &lt;textarea class="form-control" id="exampleFormControlTextarea1" rows="3"&gt;&lt;/textarea&gt;
+&lt;/div&gt;</pre>
+
+        <div class="d-flex align-items-start mb-3">
+            <div class="mr-3">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Custom checkbox</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck2" disabled>
+                    <label class="custom-control-label" for="customCheck2">Disabled custom checkbox</label>
+                </div>
+            </div>
+            <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="collapse" data-target="#checkboxCodeExample" aria-expanded="false" aria-controls="checkboxCodeExample">Code</button>
         </div>
-        <div class="custom-control custom-checkbox mb-2">
-            <input type="checkbox" class="custom-control-input" id="customCheck2" disabled>
-            <label class="custom-control-label" for="customCheck2">Disabled custom checkbox</label>
+
+<pre class="mb-3 px-3 collapse" id="checkboxCodeExample">&lt;div class="custom-control custom-checkbox"&gt;
+    &lt;input type="checkbox" class="custom-control-input" id="customCheck1"&gt;
+    &lt;label class="custom-control-label" for="customCheck1"&gt;Custom checkbox&lt;/label&gt;
+&lt;/div&gt;
+&lt;div class="custom-control custom-checkbox"&gt;
+    &lt;input type="checkbox" class="custom-control-input" id="customCheck2" disabled&gt;
+    &lt;label class="custom-control-label" for="customCheck2"&gt;Disabled custom checkbox&lt;/label&gt;
+&lt;/div&gt;</pre>
+        <div class="d-flex align-items-start mb-3">
+            <div class="mr-3">
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio1">Custom radio 1</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio2">Custom radio 2</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" disabled>
+                    <label class="custom-control-label" for="customRadio3">Disabled radio button</label>
+                </div>
+            </div>
+            <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="collapse" data-target="#radioCodeExample" aria-expanded="false" aria-controls="radioCodeExample">Code</button>
         </div>
-        <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio1">Custom radio 1</label>
-        </div>
-        <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-            <label class="custom-control-label" for="customRadio2">Custom radio 2</label>
-        </div>
-        <div class="custom-control custom-radio">
-            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" disabled>
-            <label class="custom-control-label" for="customRadio3">Disabled radio button</label>
-        </div>
+
+<pre class="mb-3 mt-2 px-3 collapse" id="radioCodeExample">&lt;div class="custom-control custom-radio"&gt;
+    &lt;input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"&gt;
+    &lt;label class="custom-control-label" for="customRadio1"&gt;Custom radio 1&lt;/label&gt;
+&lt;/div&gt;
+&lt;div class="custom-control custom-radio"&gt;
+    &lt;input type="radio" id="customRadio2" name="customRadio" class="custom-control-input"&gt;
+    &lt;label class="custom-control-label" for="customRadio2"&gt;Custom radio 2&lt;/label&gt;
+&lt;/div&gt;
+&lt;div class="custom-control custom-radio"&gt;
+    &lt;input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" disabled&gt;
+    &lt;label class="custom-control-label" for="customRadio3"&gt;Disabled radio button&lt;/label&gt;
+&lt;/div&gt;</pre>
     </form>
+</div>
+<div class="container bp-card my-3">
+    <div class="h1 text-secondary border-bottom mb-3 pb-1">Progress bar</div>
+    <div>Use custom <code>class="bp-card"</code> for content panels in the body.</div>
 </div>

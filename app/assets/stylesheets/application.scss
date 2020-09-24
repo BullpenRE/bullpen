@@ -1,5 +1,5 @@
 // Webfonts
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;1,400;1,600&family=Ubuntu:ital,wght@0,700;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Ubuntu:ital,wght@0,700;1,700&display=swap');
 
 // Bootstrap theme variables
 $body-bg: #E9ECEF;
@@ -9,15 +9,15 @@ $border-radius-sm: 0.1875rem;
 $border-radius-lg: 0.1875rem;
 $btn-white-space: nowrap;
 $component-active-bg: #005495; //highlight color on focus
-$font-family-base: 'Nunito', sans-serif;
+$font-family-base: 'Nunito Sans', sans-serif;
 $custom-control-indicator-checked-disabled-bg:  rgba(0, 84, 149, 0.5);
-$h1-font-size: 1.5rem;
-$h2-font-size: 1.375rem;
-$h3-font-size: 1.25rem;
-$h4-font-size: 1.125rem;
-$h5-font-size: 1rem;
+$h1-font-size: 1.5rem; //24px
+$h2-font-size: 1.375rem; //22px
+$h3-font-size: 1.25rem; //20px
+$h4-font-size: 1.125rem; //18px
+$h5-font-size: 1rem; //16px
 $headings-color: #005495;
-$headings-font-weight: bold;
+$headings-font-weight: 700;
 $spacer: 1.25rem;
 $theme-colors: (
   "primary": #29BF89,
@@ -41,18 +41,21 @@ $theme-colors: (
     opacity: 1;
     cursor: default;
 }
-h1, .h1, h2, .h2 {
+h1, .h1, h2, .h2, h3, .h3 {
     font-family: 'Ubuntu', sans-serif;
 }
 
 // Custom classes
-.bullpen-card {
+.bp-card {
     background-color: white;
     box-shadow: 0px 4px 6px rgba(78, 78, 78, 0.15);
     border-radius: 0.1875rem;
     padding: 1.25rem;
 }
-.bullpen-label {
+.bp-label {
     font-family: 'Ubuntu', sans-serif;
     color: #005495;
+}
+.bp-text-sm {
+    font-size: 0.875rem;
 }
