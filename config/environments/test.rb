@@ -47,6 +47,10 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
+  if Rails.env.test?
+    Rails.application.config.hosts << "/test/*"
+  end
+
   # Adding this because tests bomb out if I don't have it
   current_node = ENV['CIRCLE_NODE_INDEX'] || ENV['CI_NODE_INDEX'] || ENV['TEST_ENV_NUMBER']
   ENV['TEST_DOMAIN'] = '127.0.0.1'
