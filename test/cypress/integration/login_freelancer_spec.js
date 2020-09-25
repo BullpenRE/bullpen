@@ -8,21 +8,33 @@ describe('login test suite', () => {
   expect(pass, 'password was set').to.be.a('string').and.not.be.empty
 
   it('wrong credentials', () => {
-    cy.visit('http://localhost:3000')
+    cy.visit('/')
     cy.get('a.p-2').click()
-    cy.get('#user_email').type('email')
 
-    cy.get('#user_password').type('some') //must have more then 8 symbols
+    // test email
+    cy.get('[id = "user_email"]:invalid').should('have.length', 0)
+    cy.get('#user_email').type('not_an_email')
+    cy.get('[type="submit"]').click()
+    cy.get('[id = "user_email"]:invalid').should('have.length', 1)
+    cy.get('#user_email').then(($input) => {
+      expect($input[0].validationMessage).to.eq('Please include an \'@\' in the email address. \'not_an_email\' is missing an \'@\'.')
+    })
 
-    cy.get('#new_user').submit()
+    // test password
 
-    //cy.contains('.error-message', 'email must be valid')
+    cy.get('[id="user_password"]:invalid').should('have.length', 0)
+    cy.get('#user_password').type('pass')
+    cy.get('[type="submit"]').click()
+    cy.get('[id="user_password"]:invalid').should('have.length', 1)
+    cy.get('#user_password').then(($input) => {
+      expect($input[0].validationMessage).to.eq('mes')
+    })
 
     cy.location('pathname').should('equal','/users/sign_in')
   });
 
   it('true credentials', () => {
-    cy.visit('http://localhost:3000')
+    cy.visit('/')
     cy.get('a.p-2').click()
     cy.get('#user_email').type(email)
     cy.get('#user_password').type(pass)
