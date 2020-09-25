@@ -1,43 +1,36 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
-    <a class="navbar-brand" href="#">
-        <img src="app/assets/images/bullpen-email-logo.png" alt width="141" height="44">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="container">
+        <a class="navbar-brand" href="https://bullpenre.com/">
+            <img src="<%= image_path('bullpen-email-logo.png') %>" alt width="141" height="44">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <button class="btn btn-link-primary my-2 my-sm-0" type="submit">Log In</button>
-            <button class="btn btn-primary my-2 my-sm-0" type="submit">Sign Up</button>
-        </form>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#colorClasses">Color Classes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#typography">Typography</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#buttons">Buttons</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#formInputs">Form Inputs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#progressBars">Progress Bars</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
 
-
-<div class="container bp-card mb-3">
+<a name="colorClasses" style="position:relative;top:-76px"></a>
+<div class="container bp-card my-3">
     <div class="h1 text-secondary border-bottom mb-3 pb-1">Color classes</div>
     <div class="row m-0">
         <div class="col bg-primary text-white p-3">primary<br/>#29BF89</div>
@@ -51,6 +44,8 @@
     </div>
     <strong>*</strong> The last three color classes should be used sparingly or not at all.
 </div>
+
+<a name="typography" style="position:relative;top:-76px"></a>
 <div class="container bp-card my-3">
     <div class="h1 text-secondary border-bottom mb-3 pb-1">Typography</div>
     <div class="row mb-3">
@@ -80,6 +75,8 @@
     </div>
     <strong>*</strong> These fonts have been adjusted slightly from the existing design for simplicity & consistency
 </div>
+
+<a name="buttons" style="position:relative;top:-76px"></a>
 <div class="container bp-card my-3">
     <div class="h1 text-secondary border-bottom mb-3 pb-1">Buttons</div>
     <div class="row mb-3">
@@ -99,8 +96,10 @@
        <div class="col"><button class="btn btn-primary disabled">Disabled button</button><br/>All buttons will display this color and cursor appearance if the <code>disabled</code> class is added to it.</div>
     </div>
 </div>
+
+<a name="formInputs" style="position:relative;top:-76px"></a>
 <div class="container bp-card my-3">
-    <div class="h1 text-secondary border-bottom mb-3 pb-1">Input fields</div>
+    <div class="h1 text-secondary border-bottom mb-3 pb-1">Form inputs</div>
     <form>
         <div class="form-group">
             <label for="exampleFormControlInput1" class="bp-label">Input label</label>
@@ -205,7 +204,19 @@
 &lt;/div&gt;</pre>
     </form>
 </div>
+
+<a name="progressBars" style="position:relative;top:-76px"></a>
 <div class="container bp-card my-3">
-    <div class="h1 text-secondary border-bottom mb-3 pb-1">Progress bar</div>
-    <div>Use custom <code>class="bp-card"</code> for content panels in the body.</div>
+    <div class="h1 text-secondary border-bottom mb-3 pb-1">Progress bars</div>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="row text-center d-none d-lg-flex mt-1 mb-3">
+        <div class="col">Step 1</div>
+        <div class="col text-secondary font-weight-bold">Step 2</div>
+        <div class="col text-light">Step 3</div>
+        <div class="col text-light">Verify Profile</div>
+        <div class="col text-light">Review Application</div>
+    </div>
+    <p class="mb-0">Match <code>col</code> divs to the number of steps.  Hide the legend using display utility classes at breakpoints where the text wraps or does not fit.</p>
 </div>
