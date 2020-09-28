@@ -35,8 +35,10 @@ _Note: After installing something new it's generally a good idea to quit and res
 7. Install GPG using homebrew: `$ brew install gpg` (May be needed for RVM in next step)
 8. Install the latest version of RVM: https://rvm.io. The command is probably something like `$ \curl -sSL https://get.rvm.io | bash -s stable`.
 9. Install Ruby from terminal using RVM: `$ rvm install 2.7.1`
-10. Install posgtresql from terminal: `$ brew install postgresql` and follow on screen instructions (very important)
-11. Create postgresql superuser postgres: `$ createuser postgres -s`
+10. Install the latest version of NVM: https://github.com/nvm-sh/nvm.
+11. Install NodeJS from terminal using NVM: `nvm install node` and Yarn `npm install -g yarn`
+12. Install posgtresql from terminal: `$ brew install postgresql` and follow on screen instructions (very important)
+13. Create postgresql superuser postgres: `$ createuser postgres -s`
 
 ### Getting Started with this Codebase
 Once your machine is set up for Rails development you can do the following to get the app running locally.
@@ -47,6 +49,7 @@ Once your machine is set up for Rails development you can do the following to ge
 5. If you had to update your Ruby version in step 3, exit and enter the current directory: `$ cd ..`, then `$ cd bullpen`.
 6. Enter the following command: `$ rvm gemset list` -- verify that the current gemset is *bullpen*.
 7. Install missing gems in your currently selected gemset by running `$ bundle`
+8. Install NodeJS packages: `$ yarn isntall`
 8. Instantiate the local database: `$ rails db:create`
 9. Test it out: `$ rails s` and then navigate to http://localhost:3000
 
