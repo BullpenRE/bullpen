@@ -40,8 +40,9 @@ $theme-colors: (
   "blue-light": #DFECF5
 );
 
-// Bootstrap and its defaut variables
+// Bootstrap and its default variables
 @import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-select/dist/css/bootstrap-select';
 
 // Bootstrap style overrides
 .btn.disabled {
