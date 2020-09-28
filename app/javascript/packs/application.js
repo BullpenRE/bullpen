@@ -10,6 +10,7 @@ require("@rails/activestorage").start()
 require("channels")
 require("bootstrap")
 require("bootstrap-select")
+require("bootstrap-tagsinput")
 
 import $ from "jquery"
 

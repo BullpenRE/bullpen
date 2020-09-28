@@ -49,6 +49,7 @@ $theme-colors: (
 // Bootstrap and its default variables
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-select/dist/css/bootstrap-select';
+@import 'bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead';
 
 // Bootstrap style overrides
 .btn.disabled {
