@@ -14,7 +14,6 @@ require("bootstrap-tagsinput")
 require("select2")
 
 import $ from "jquery"
-
 document.addEventListener("turbolinks:load", () => {
   $('[data-toggle="tooltip"]').tooltip()
   $('[data-toggle="popover"]').popover()
