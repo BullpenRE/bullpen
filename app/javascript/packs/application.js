@@ -11,6 +11,7 @@ require("channels")
 require("bootstrap")
 require("bootstrap-select")
 require("select2")
+require("@fortawesome/fontawesome-free/js/all")
 require("typeface-nunito-sans")
 require("typeface-ubuntu")
 
@@ -20,7 +21,6 @@ document.addEventListener("turbolinks:load", () => {
   $('[data-toggle="popover"]').popover()
 })
 
-import "@fortawesome/fontawesome-free/js/all";
 import * as bootstrapValidate from 'bootstrap-validate';
 window.bootstrapValidate = bootstrapValidate;
 
