@@ -11,6 +11,9 @@ require("channels")
 require("bootstrap")
 require("bootstrap-select")
 require("select2")
+require("@fortawesome/fontawesome-free/js/all")
+require("typeface-nunito-sans")
+require("typeface-ubuntu")
 
 import $ from "jquery"
 document.addEventListener("turbolinks:load", () => {
