@@ -1,6 +1,5 @@
 // Webfonts
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,700;1,700&display=swap');
-@import url('//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
 
 // Bootstrap theme variables
 $badge-font-size: 100%;
@@ -50,6 +49,7 @@ $theme-colors: (
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-select/dist/css/bootstrap-select';
 @import 'select2/dist/css/select2';
+@import '@fortawesome/fontawesome-free/css/fontawesome';
 
 // Bootstrap style overrides
 .btn.disabled {
