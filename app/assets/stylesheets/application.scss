@@ -1,6 +1,6 @@
-
 // Webfonts
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Ubuntu:ital,wght@0,700;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,700;1,700&display=swap');
+@import url('//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
 
 // Bootstrap theme variables
 $badge-font-size: 100%;
@@ -8,6 +8,7 @@ $badge-font-weight: 500;
 $badge-padding-x: .8em;
 $body-bg: #E9ECEF;
 $body-color: #4E4E4E;
+//$border-color: #E4E4E4;
 $border-radius: 0.1875rem;
 $border-radius-sm: 0.1875rem;
 $border-radius-lg: 0.1875rem;
@@ -22,10 +23,15 @@ $h4-font-size: 1.125rem; //18px
 $h5-font-size: 1rem; //16px
 $headings-color: #005495;
 $headings-font-weight: 700;
+//$input-border-color: #4E4E4E;
 $modal-inner-padding: 1.25rem;
 $modal-header-border-width: 0;
 $modal-footer-border-width: 0;
 $modal-header-padding-y: 0;
+$pagination-border-width: 0;
+//$pagination-hover-bg: none;
+//$pagination-active-color: #005495;
+//$pagination-active-bg: none;
 $progress-bar-bg: #005495;
 $progress-border-radius: 2rem;
 $spacer: 1.25rem;
@@ -55,8 +61,28 @@ $theme-colors: (
 h1, .h1, h2, .h2, h3, .h3 {
     font-family: 'Ubuntu', sans-serif;
 }
+//Replace the dropdown triangle with a FontAwesome chevron
+.dropdown-toggle::after {
+    border: none!important;
+    color: #29BF89;
+    content: "\f107"!important;
+    font: normal normal normal 16px/1 FontAwesome;
+    vertical-align: 0;
+}
+.page-item .page-link {
+    border-radius: 0.1875rem;
+}
 
 // Custom classes
+.bp-btn-select-border { 
+    border-color: #ced4da;
+}
+.bp-btn-select-border:not(:disabled):not(.disabled):active, 
+.bp-btn-select-border.active:not(:disabled):not(.disabled), 
+.show > .bp-btn-select-border.dropdown-toggle {
+    border-color: lighten(#005495, 25%);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 0 .2rem rgba(0, 84, 149, 0.25);
+}
 .bp-card {
     background-color: white;
     box-shadow: 0px 4px 6px rgba(78, 78, 78, 0.15);
