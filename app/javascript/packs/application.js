@@ -9,6 +9,15 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require("bootstrap")
+require("bootstrap-select")
+require("bootstrap-tagsinput")
+
+import $ from "jquery"
+
+document.addEventListener("turbolinks:load", () => {
+  $('[data-toggle="tooltip"]').tooltip()
+  $('[data-toggle="popover"]').popover()
+})
 
 import $ from "jquery"
 

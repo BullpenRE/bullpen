@@ -1,5 +1,5 @@
 const { environment } = require('@rails/webpacker')
-const customConfig = require('./custom');
+const customConfig = require('./custom')
 
 const webpack = require('webpack')
 environment.plugins.prepend('Provide',
@@ -10,5 +10,5 @@ environment.plugins.prepend('Provide',
   })
 )
 
-environment.config.merge(customConfig);
+environment.config.merge(customConfig)
 module.exports = environment
