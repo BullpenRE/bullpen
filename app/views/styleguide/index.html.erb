@@ -31,15 +31,18 @@
         </div>
     </div>
 </nav>
-
 <div class="container bp-card my-3">
-  <div class="h1 text-secondary border-bottom mb-3 pb-1">Pending</div>
-  <div class="form-group">
-    <label for="exampleFormControlMultiSelect" class="bp-input-label">Multi Select with Select2 (pending <a href="https://select2.github.io/select2/" target="_blank">examples</a>, <a href="https://select2.org/getting-started/basic-usage" target="_blank">installation and setup</a>)</label>
-    <select class="select2" name="state" multiple="multiple">
-        <option value="AL">Alabama</option>
-        <option value="WY">Wyoming</option>
-    </select>
+    <div class="h1 text-secondary border-bottom mb-3 pb-1">Pending</div>
+    <div class="form-group">
+        <div class="mb-3">
+            <label for="exampleFormControlMultiSelect" class="bp-input-label">Multi Select with Select2 (pending <a href="https://select2.github.io/select2/" target="_blank">examples</a>, <a href="https://select2.org/getting-started/basic-usage" target="_blank">installation and setup</a>)</label>
+            <select class="select2" name="state" multiple="multiple">
+            </select>
+        </div>  
+        <select class="select2 hide-search" name="state">
+            <option></option>
+        </select>
+    
 
     <style type='text/css'>
         /* Temporary -- Ron, feel free to remove */
@@ -47,15 +50,33 @@
             background-color: #005495;
         }
         .select2 {
+            display:block;
             width: 100%;
         }
     </style>
 
-
      <script>
         $(document).ready(function() {
-            $('.select2').select2();
+            $('.select2').select2({
+                "data": [
+                    {
+                        "id": 1,
+                        "text": "Option 1"
+                    },
+                    {
+                        "id": 2,
+                        "text": "Option 2"
+                    }
+                ],
+                placeholder: 'Please make a selection',
+                allowClear: true
+            });
+            $(".hide-search").select2({
+                minimumResultsForSearch: Infinity
+            });
         });
+    
+        
     </script> 
   </div>
 </div>
@@ -105,14 +126,6 @@
             <div class="bp-text-sm"><code>class=".bp-text-sm"</code> Details/ terms text Nunito sans regular 14pt*</div>
         </div>
     </div>
-  <div class="row mb-3">
-    <div class="col">
-      <h4 class="text-dark">Font Awesome Icons (<a href="https://fontawesome.com/icons?d=gallery&m=freee" target="_blank">available icons</a>)</h4>
-      <h1><code>&lt;h1&gt; &lt;i class="far fa-calendar-alt"&gt;&lt;/i&gt;</code> <i class="far fa-calendar-alt"></i></h1>
-      <div class="font-weight-bold mb-1"><code>&lt;b&gt;</code> <i class="far fa-calendar-alt"></i></div>
-      <div class="mb-1"><code>default</code> <i class="far fa-calendar-alt"></i></div>
-    </div>
-  </div>
     <strong>*</strong> These fonts have been adjusted slightly from the existing design for simplicity & consistency
 </div>
 
