@@ -56,9 +56,9 @@
     </style>
 
      <script>
-        $(document).ready(function() {
+       $(function() {
             $('.select2').select2({
-                "data": [
+                data: [
                     {
                         "id": 1,
                         "text": "Option 1"
@@ -71,8 +71,10 @@
                 placeholder: 'Please make a selection',
                 allowClear: true
             });
+
             $(".hide-search").select2({
-                minimumResultsForSearch: Infinity
+                minimumResultsForSearch: Infinity,
+                placeholder: 'Please make a selection'
             });
         });
     
