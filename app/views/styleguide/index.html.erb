@@ -36,10 +36,9 @@
   <div class="h1 text-secondary border-bottom mb-3 pb-1">Pending</div>
   <div class="form-group">
     <label for="exampleFormControlMultiSelect" class="bp-input-label">Multi Select with Select2 (pending <a href="https://select2.github.io/select2/" target="_blank">examples</a>, <a href="https://select2.org/getting-started/basic-usage" target="_blank">installation and setup</a>)</label>
-    <select class="select2-example" name="state" multiple="multiple">
-<!--      <option value="AL">Alabama</option>-->
-<!--      ...-->
-<!--      <option value="WY">Wyoming</option>-->
+    <select class="select2" name="state" multiple="multiple">
+        <option value="AL">Alabama</option>
+        <option value="WY">Wyoming</option>
     </select>
 
     <style type='text/css'>
@@ -47,27 +46,17 @@
         span.label-info {
             background-color: #005495;
         }
-        .select2-example {
-            width: 200px;
+        .select2 {
+            width: 100%;
         }
     </style>
 
-    <script>
-        $(function () {
-            $('.select2-example').select2({
-                "data": [
-                        {
-                            "id": 1,
-                            "text": "Option 1"
-                        },
-                        {
-                            "id": 2,
-                            "text": "Option 2"
-                        }
-                ]
-            });
+
+     <script>
+        $(document).ready(function() {
+            $('.select2').select2();
         });
-    </script>
+    </script> 
   </div>
 </div>
 
