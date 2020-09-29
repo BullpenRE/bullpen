@@ -46,11 +46,12 @@ $theme-colors: (
   "blue-light": #DFECF5
 );
 
-// Bootstrap and its default variables
+// CSS from webpacker javascript components including Bootstrap
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-select/dist/css/bootstrap-select';
 @import 'bootstrap-tagsinput/src/bootstrap-tagsinput';
 @import 'bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead';
+@import 'select2/dist/css/select2';
 
 // Bootstrap style overrides
 .btn.disabled {

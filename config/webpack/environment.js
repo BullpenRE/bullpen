@@ -8,7 +8,6 @@ environment.plugins.prepend('Provide',
     jQuery: 'jquery/src/jquery',
     Popper: ['popper.js', 'default']
   })
-)
 
 environment.config.merge(customConfig)
 module.exports = environment

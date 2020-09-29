@@ -11,10 +11,9 @@ require("channels")
 require("bootstrap")
 require("bootstrap-select")
 require("bootstrap-tagsinput")
+require("select2")
 
 import $ from "jquery"
-import 'select2'
-import 'select2/dist/css/select2.css'
 
 document.addEventListener("turbolinks:load", () => {
   $('[data-toggle="tooltip"]').tooltip()
