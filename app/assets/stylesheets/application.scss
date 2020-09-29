@@ -1,14 +1,14 @@
-// Webfonts
+// Webfonts (Temporary)
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,700;1,700&display=swap');
 @import url('//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
 
-// Bootstrap theme variables
+/* Bootstrap theme variables */
 $badge-font-size: 100%;
 $badge-font-weight: 500;
 $badge-padding-x: .8em;
 $body-bg: #E9ECEF;
 $body-color: #4E4E4E;
-//$border-color: #E4E4E4;
+//$border-color: #4E4E4E; Omitting, looks like poo
 $border-radius: 0.1875rem;
 $border-radius-sm: 0.1875rem;
 $border-radius-lg: 0.1875rem;
@@ -23,15 +23,12 @@ $h4-font-size: 1.125rem; //18px
 $h5-font-size: 1rem; //16px
 $headings-color: #005495;
 $headings-font-weight: 700;
-//$input-border-color: #4E4E4E;
+//$input-border-color: #4E4E4E; Omitting, looks like poo
 $modal-inner-padding: 1.25rem;
 $modal-header-border-width: 0;
 $modal-footer-border-width: 0;
 $modal-header-padding-y: 0;
 $pagination-border-width: 0;
-//$pagination-hover-bg: none;
-//$pagination-active-color: #005495;
-//$pagination-active-bg: none;
 $progress-bar-bg: #005495;
 $progress-border-radius: 2rem;
 $spacer: 1.25rem;
@@ -46,13 +43,13 @@ $theme-colors: (
   "blue-light": #DFECF5
 );
 
-// Bootstrap and its default variables
+/* Bootstrap and its default variables */
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-select/dist/css/bootstrap-select';
 @import 'bootstrap-tagsinput/src/bootstrap-tagsinput';
 @import 'bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead';
 
-// Bootstrap style overrides
+/* Bootstrap style overrides */
 .btn.disabled {
     color: #7A7A7A;
     border: #7A7A7A;
@@ -75,7 +72,45 @@ h1, .h1, h2, .h2, h3, .h3 {
     border-radius: 0.1875rem;
 }
 
-// Custom classes
+/* Tags Input*/
+.bootstrap-tagsinput {
+    box-shadow: none;
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.1875rem;
+}
+.bootstrap-tagsinput .tag {
+    background-color: #005495;
+    padding: 1px 0.8em;
+    font-size: 100%;
+    border-radius: 0.1875rem;
+    line-height: 1;
+    white-space: nowrap;
+    box-sizing: border-box;
+    vertical-align: baseline;
+    border-radius: 0.1875rem;
+}
+.bootstrap-tagsinput .tag [data-role="remove"] {
+    margin-left: 8px;
+    margin-right: -0.4em;
+    cursor: pointer;
+}
+.bootstrap-tagsinput .tag [data-role="remove"]:after {
+    padding: 0px 2px;
+    position: relative;
+    top: -1px;
+}
+
+/* Custom classes */
 .bp-btn-select-border { 
     border-color: #ced4da;
 }
