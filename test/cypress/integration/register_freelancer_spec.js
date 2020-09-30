@@ -30,7 +30,7 @@ describe('Register', () => {
 
     cy.get('form').submit()
 
-    cy.contains('.invalid-feedback','Valid first name is required.')
+    cy.contains('li','First name can\'t be blank')
   });
 
   it ('empty last name', () => {
@@ -43,32 +43,31 @@ describe('Register', () => {
 
     cy.get('form').submit()
 
-    cy.contains('.invalid-feedback','Valid last name is required.')
-  });
-
-  it ('empty email', () => {
-    cy.visit('http://localhost:3000')
-    cy.contains('Apply').click()
-
-    cy.get('#firstName').type(first_name)
-    cy.get('#lastName').type(last_name)
-    cy.get('#email').type(email).clear()
-
-    cy.get('form').submit()
-
-    cy.contains('.invalid-feedback','Please enter a valid email address.')
+    cy.contains('li','Last name can\'t be blank')
   });
 
   it ('wrong email', () => {
     cy.visit('http://localhost:3000')
     cy.contains('Apply').click()
 
-    cy.get('#firstName').type(first_name)
-    cy.get('#lastName').type(last_name)
-    cy.get('#email').type('email')
+   // cy.get('[id = "email"]:invalid').should('have.length', 0)
+    cy.get('#email').type('not_an_email')
+    cy.get('[type="submit"]').click()
+    cy.get('[id = "email"]:invalid').should('have.length', 1)
+    cy.get('#email').then(($input) => {
+      expect($input[0].validationMessage).to.eq('Please include an \'@\' in the email address. \'not_an_email\' is missing an \'@\'.')
+    })
+  });
 
-    cy.get('form').submit()
+  it ('check password', () => {
+    cy.visit('http://localhost:3000')
+    cy.contains('Apply').click()
 
-    cy.contains('.invalid-feedback','Please enter a valid email address.')
+    //cy.get('[id = "psw"]:invalid').should('have.length', 0)
+    cy.get('#psw').type('!')
+    cy.get('[type="submit"]').click()
+    cy.get('#psw').then(($input) => {
+      expect($input[0].validationMessage).to.eq('Please fill in this field.')
+    })
   });
 })
