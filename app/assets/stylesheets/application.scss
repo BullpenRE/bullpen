@@ -9,7 +9,7 @@ $badge-font-weight: 500;
 $badge-padding-x: .8em;
 $body-bg: #E9ECEF;
 $body-color: #4E4E4E;
-//$border-color: #E4E4E4;
+//$border-color: #4E4E4E;
 $border-radius: 0.1875rem;
 $border-radius-sm: 0.1875rem;
 $border-radius-lg: 0.1875rem;
@@ -30,9 +30,6 @@ $modal-header-border-width: 0;
 $modal-footer-border-width: 0;
 $modal-header-padding-y: 0;
 $pagination-border-width: 0;
-//$pagination-hover-bg: none;
-//$pagination-active-color: #005495;
-//$pagination-active-bg: none;
 $progress-bar-bg: #005495;
 $progress-border-radius: 2rem;
 $spacer: 1.25rem;
@@ -67,7 +64,7 @@ h1, .h1, h2, .h2, h3, .h3 {
 .dropdown-toggle::after {
     border: none!important;
     color: #29BF89;
-    content: "\f107"!important;
+    content: "\f078"!important;
     font: normal normal normal 16px/1 FontAwesome;
     vertical-align: 0;
 }
@@ -76,16 +73,58 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 
 //Select2 Style overrides
-.select2-dropdown {
-    border: 1px solid #dee2e6;
-    border-radius: 0.1875rem;
+.select2 {
+    width:100%;
+    display: block;
 }
-.select2-selection--single {
-    height: 38px;
-      .select2-selection__rendered {
-      padding-left: 8px;
-      padding-right: 20px;
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: lighten(#005495, 25%);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 0 .2rem rgba(0, 84, 149, 0.25);
+}
+.select2-container--default .select2-selection--multiple {
+    border-color: #ced4da;
+    border-radius: 0.1875rem;
+    min-height: 38px;
+}
+.select2-container .select2-search--inline .select2-search__field {
+    margin-top: 6px;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    margin-bottom: -1px;
+    padding-left: 0.75rem
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    color:white;
+    background-color: #005495;
+    border-color: #005495;
+    border-radius: 0.1875rem;
+    padding: 0 0.8em;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: white;
+    margin-right: .4em;
+    margin-left: -0.4em;
+    &:hover {
+        color: white;
     }
+}
+.select2-dropdown {
+    border-color: #ced4da;
+    border-radius: 0.1875rem;
+    padding: 0.5rem 0;
+}
+.select2-results__option--highlighted[aria-selected] {
+    background-color: #E9ECEF !important;
+    color: inherit !important;
+}
+.select2-results__option {
+    &[aria-selected=true] {
+      background-color: #005495 !important;
+      color:white !important;
+    }
+}
+.select2-results__option {
+    padding: 0.25rem 1.5rem;
 }
 
 // Custom classes
