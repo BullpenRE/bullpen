@@ -2,16 +2,21 @@
   "name": "bullpen",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.0",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
     "bootstrap": "^4.5.2",
+    "bootstrap-select": "^1.13.18",
     "bootstrap-validate": "^2.2.0",
     "channels": "^0.0.4",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
-    "turbolinks": "^5.2.0"
+    "select2": "^4.0.13",
+    "turbolinks": "^5.2.0",
+    "typeface-nunito-sans": "^0.0.72",
+    "typeface-ubuntu": "^0.0.65"
   },
   "version": "0.1.0",
   "devDependencies": {
