@@ -35,6 +35,7 @@ $pagination-border-width: 0;
 $progress-bar-bg: #005495;
 $progress-border-radius: 2rem;
 $spacer: 1.25rem;
+$text-muted: lighten(#4E4E4E, 25%);
 $theme-colors: (
   "primary": #29BF89,
   "secondary": #005495,
@@ -67,7 +68,7 @@ h1, .h1, h2, .h2, h3, .h3 {
     border: none!important;
     color: #29BF89;
     content: "\f078"!important;
-    font: normal normal normal 16px/1 "Font Awesome 5 Free";
+    font: normal normal normal 12px/1 "Font Awesome 5 Free";
     vertical-align: 0;
 }
 .page-item .page-link {
@@ -146,6 +147,7 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 .bp-input-label {
     font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
     color: #005495;
     margin-bottom: .5rem;
 }
