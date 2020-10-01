@@ -4,6 +4,7 @@
 // that code so it'll be compiled.
 
 require("jquery")
+require("@fortawesome/fontawesome-free/js/all")
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
@@ -11,9 +12,10 @@ require("channels")
 require("bootstrap")
 require("bootstrap-select")
 require("select2")
-require("@fortawesome/fontawesome-free/js/all")
 require("typeface-nunito-sans")
 require("typeface-ubuntu")
+
+import 'src/stylesheets/application'
 
 import $ from "jquery"
 document.addEventListener("turbolinks:load", () => {

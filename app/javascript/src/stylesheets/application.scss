@@ -1,8 +1,16 @@
+@import '_custom';
+
 // Fonts
-@import 'typeface-nunito-sans/index';
-@import 'typeface-ubuntu/index';
-$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
-@import '@fortawesome/fontawesome-free/scss/solid';
+
+// TODO Ask Roger and Ron if these two fonts are needed
+//@import 'typeface-nunito-sans/index';
+//@import 'typeface-ubuntu/index';
+
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
 
 // Bootstrap theme variables
 $badge-font-size: 100%;
@@ -63,10 +71,11 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 //Replace the dropdown triangle with a FontAwesome chevron
 .dropdown-toggle::after {
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-chevron-down);
     border: none!important;
     color: #29BF89;
-    content: "\f078"!important;
-    font: normal normal normal 16px/1 "Font Awesome 5 Free";
     vertical-align: 0;
 }
 .page-item .page-link {
