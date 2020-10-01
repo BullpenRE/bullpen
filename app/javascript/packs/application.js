@@ -16,6 +16,7 @@ require("typeface-nunito-sans")
 require("typeface-ubuntu")
 
 import 'src/stylesheets/application'
+const images = require.context('../images', true)
 
 import $ from "jquery"
 document.addEventListener("turbolinks:load", () => {
