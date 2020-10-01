@@ -1,6 +1,8 @@
-// Webfonts
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,700;1,700&display=swap');
-@import url('//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
+// Fonts
+@import 'typeface-nunito-sans/index';
+@import 'typeface-ubuntu/index';
+$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
+@import '@fortawesome/fontawesome-free/scss/solid';
 
 // Bootstrap theme variables
 $badge-font-size: 100%;
@@ -8,7 +10,7 @@ $badge-font-weight: 500;
 $badge-padding-x: .8em;
 $body-bg: #E9ECEF;
 $body-color: #4E4E4E;
-//$border-color: #E4E4E4;
+//$border-color: #4E4E4E;
 $border-radius: 0.1875rem;
 $border-radius-sm: 0.1875rem;
 $border-radius-lg: 0.1875rem;
@@ -29,9 +31,6 @@ $modal-header-border-width: 0;
 $modal-footer-border-width: 0;
 $modal-header-padding-y: 0;
 $pagination-border-width: 0;
-//$pagination-hover-bg: none;
-//$pagination-active-color: #005495;
-//$pagination-active-bg: none;
 $progress-bar-bg: #005495;
 $progress-border-radius: 2rem;
 $spacer: 1.25rem;
@@ -46,11 +45,10 @@ $theme-colors: (
   "blue-light": #DFECF5
 );
 
-// Bootstrap and its default variables
+// CSS from webpacker javascript components including Bootstrap
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-select/dist/css/bootstrap-select';
-@import 'bootstrap-tagsinput/src/bootstrap-tagsinput';
-@import 'bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead';
+@import 'select2/dist/css/select2';
 
 // Bootstrap style overrides
 .btn.disabled {
@@ -67,12 +65,67 @@ h1, .h1, h2, .h2, h3, .h3 {
 .dropdown-toggle::after {
     border: none!important;
     color: #29BF89;
-    content: "\f107"!important;
-    font: normal normal normal 16px/1 FontAwesome;
+    content: "\f078"!important;
+    font: normal normal normal 16px/1 "Font Awesome 5 Free";
     vertical-align: 0;
 }
 .page-item .page-link {
     border-radius: 0.1875rem;
+}
+
+//Select2 Style overrides
+.select2 {
+    width:100%;
+    display: block;
+}
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: lighten(#005495, 25%);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 0 .2rem rgba(0, 84, 149, 0.25);
+}
+.select2-container--default .select2-selection--multiple {
+    border-color: #ced4da;
+    border-radius: 0.1875rem;
+    min-height: 38px;
+}
+.select2-container .select2-search--inline .select2-search__field {
+    margin-top: 6px;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    margin-bottom: -1px;
+    padding-left: 0.75rem
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    color:white;
+    background-color: #005495;
+    border-color: #005495;
+    border-radius: 0.1875rem;
+    padding: 0 0.8em;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: white;
+    margin-right: .4em;
+    margin-left: -0.4em;
+    &:hover {
+        color: white;
+    }
+}
+.select2-dropdown {
+    border-color: #ced4da;
+    border-radius: 0.1875rem;
+    padding: 0.5rem 0;
+}
+.select2-results__option--highlighted[aria-selected] {
+    background-color: #E9ECEF !important;
+    color: inherit !important;
+}
+.select2-results__option {
+    &[aria-selected=true] {
+      background-color: #005495 !important;
+      color:white !important;
+    }
+}
+.select2-results__option {
+    padding: 0.25rem 1.5rem;
 }
 
 // Custom classes

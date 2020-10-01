@@ -31,36 +31,6 @@
         </div>
     </div>
 </nav>
-<div class="container bp-card my-3">
-    <div class="h1 text-secondary border-bottom mb-3 pb-1">Pending</div>
-    <div class="form-group">
-        <label for="exampleFormControlMultiSelect" class="bp-input-label">Multi Select with Typeahead (pending <a href="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/" target="_blank">installation and setup</a>)</label>
-        <input type="text" class="form-control" value="Amsterdam,Washington" data-role="tagsinput" />
-        <script>
-            // var citynames = new Bloodhound({
-            // datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-            // queryTokenizer: Bloodhound.tokenizers.whitespace,
-            // prefetch: {
-            //     url: 'assets/citynames.json',
-            //     filter: function(list) {
-            //     return $.map(list, function(cityname) {
-            //         return { name: cityname }; });
-            //     }
-            // }
-            // });
-            // citynames.initialize();
-            //
-            // $('input').tagsinput({
-            // typeaheadjs: {
-            //     name: 'citynames',
-            //     displayKey: 'name',
-            //     valueKey: 'name',
-            //     source: citynames.ttAdapter()
-            // }
-            // });
-        </script>
-    </div>
-</div>
 
 <a name="colorClasses" style="position:relative;top:-76px"></a>
 <div class="container bp-card my-3">
@@ -136,7 +106,7 @@
     <div class="h1 text-secondary border-bottom mb-3 pb-1">Form inputs</div>
     <form>
         <div class="form-group">
-            <label for="exampleFormControlInput1" class="bp-input-label">Input label*</label>
+            <label for="exampleFormControlInput1" class="bp-input-label">Single line field</label>
             <div class="d-flex">
                 <input type="text" class="form-control mr-2" id="exampleFormControlInput1" placeholder="Placeholder text">
                 <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#inputCodeExample" aria-expanded="false" aria-controls="inputCodeExample">Code</button> 
@@ -144,23 +114,96 @@
         </div>
         
 <pre class="collapse mb-3 px-3" id="inputCodeExample">&lt;div class="form-group"&gt;
-    &lt;label for="exampleFormControlInput1" class="bp-input-label"&gt;Input label&lt;/label&gt;
+    &lt;label for="exampleFormControlInput1" class="bp-input-label"&gt;Single line field&lt;/label&gt;
     &lt;input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Placeholder text"&gt;
 &lt;/div&gt;</pre>
 
         <div class="form-group">
-            <label for="exampleFormControlSelect2" class="bp-input-label">Select Picker* (<a href="https://developer.snapappointments.com/bootstrap-select/examples/" target="_blank">Documentation</a>)</label>
-            <select class="form-control selectpicker" id="exampleFormControlSelect2" data-style="bp-btn-select-border" data-styleBase="form-control" multiple title="Select all that apply">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
+            <label for="exampleFormControlSelect2" class="bp-input-label">Select Picker with Bootstrap-Select* (<a href="https://developer.snapappointments.com/bootstrap-select/examples/" target="_blank">Documentation</a>)</label>
+            <div class="d-flex">
+                <select class="form-control selectpicker mr-2" id="exampleFormControlSelect2" data-style="bp-btn-select-border" title="Please make a selection">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#selectPickerExample" aria-expanded="false" aria-controls="selectPickerExample">Code</button> 
+            </div>
         </div>
+
+<pre class="collapse mb-3 px-3" id="selectPickerExample">
+&lt;div class="form-group"&gt;
+    &lt;label for="exampleFormControlSelect2" class="bp-input-label"&gt;Select Picker&lt;/label&gt;
+    &lt;select class="form-control selectpicker" id="exampleFormControlSelect2" data-style="bp-btn-select-border" title="Please make a selection"&gt;
+        &lt;option&gt;1&lt;/option&gt;
+        &lt;option&gt;2&lt;/option&gt;
+        &lt;option&gt;3&lt;/option&gt;
+        &lt;option&gt;4&lt;/option&gt;
+        &lt;option&gt;5&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/div&gt;
+</pre>
+
+        <div class="form-group">
+            <label for="exampleFormControlMultiSelect" class="bp-input-label">Multi Select with Select2* (<a href="https://select2.github.io/select2/" target="_blank">Documentation</a>)</label>
+            <div class="d-flex">
+                <select class="select2" name="state" multiple="multiple" style="width: 100%">
+                    <option>Option 1</option>
+                </select>
+                <button class="btn btn-outline-primary ml-2" type="button" data-toggle="collapse" data-target="#multiSelectExample" aria-expanded="false" aria-controls="multiSelectExample">Code</button> 
+            </div>
+
+            <script>
+                $(function() {
+                    $('.select2').select2({
+                        data: [
+                            {
+                                "id": 1,
+                                "text": "Option 2"
+                            },
+                            {
+                                "id": 2,
+                                "text": "Option 3"
+                            }
+                        ],
+                        placeholder: 'Select all that apply',
+                        allowClear: true
+                    });
+                });
+            </script> 
+        </div>
+
+<pre class="collapse mb-3 px-3" id="multiSelectExample">
+&lt;div class="form-group"&gt;
+        &lt;label for="exampleFormControlMultiSelect" class="bp-input-label"&gt;Multi Select&lt;/label&gt;
+        &lt;select class="select2" name="state" multiple="multiple"  style="width: 100%"&gt;
+            &lt;option&gt;Option 1&lt;/option&gt;
+        &lt;/select&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    $(function() {
+        $('.select2').select2({
+            data: [
+                {
+                    "id": 1,
+                    "text": "Option 2"
+                },
+                {
+                    "id": 2,
+                    "text": "Option 3"
+                }
+            ],
+            placeholder: 'Select all that apply',
+            allowClear: true
+        });
+    });
+&lt;/script&gt;
+</pre>
         
         <div class="form-group">
-            <label for="exampleFormControlTextarea1" class="bp-input-label">Textarea label*</label>
+            <label for="exampleFormControlTextarea1" class="bp-input-label">Textarea</label>
             <div class="d-flex align-items-start">
                 <textarea class="form-control mr-2" id="exampleFormControlTextarea1" rows="3"></textarea>
                 <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#textareaCodeExample" aria-expanded="false" aria-controls="textareaCodeExample">Code</button>
@@ -168,11 +211,11 @@
         </div>
 
 <pre class="mb-3 px-3 collapse" id="textareaCodeExample">&lt;div class="form-group"&gt;
-    &lt;label for="exampleFormControlTextarea1" class="bp-input-label"&gt;Textarea label&lt;/label&gt;
+    &lt;label for="exampleFormControlTextarea1" class="bp-input-label"&gt;Textarea&lt;/label&gt;
     &lt;textarea class="form-control" id="exampleFormControlTextarea1" rows="3"&gt;&lt;/textarea&gt;
 &lt;/div&gt;</pre>
         
-        <div class="bp-input-label">Header for checkboxes*</div>
+        <div class="bp-input-label">Checkboxes</div>
         <div class="d-flex align-items-start mb-3">
             <div class="mr-3">
                 <div class="custom-control custom-checkbox">
@@ -187,7 +230,7 @@
             <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="collapse" data-target="#checkboxCodeExample" aria-expanded="false" aria-controls="checkboxCodeExample">Code</button>
         </div>
 
-<pre class="mb-3 px-3 collapse" id="checkboxCodeExample">&lt;div class="bp-input-label"&gt;Header for checkboxes&lt;/div&gt;
+<pre class="mb-3 px-3 collapse" id="checkboxCodeExample">&lt;div class="bp-input-label"&gt;Checkboxes&lt;/div&gt;
 &lt;div class="custom-control custom-checkbox"&gt;
     &lt;input type="checkbox" class="custom-control-input" id="customCheck1"&gt;
     &lt;label class="custom-control-label" for="customCheck1"&gt;Custom checkbox&lt;/label&gt;
@@ -196,7 +239,7 @@
     &lt;input type="checkbox" class="custom-control-input" id="customCheck2" disabled&gt;
     &lt;label class="custom-control-label" for="customCheck2"&gt;Disabled custom checkbox&lt;/label&gt;
 &lt;/div&gt;</pre>
-        <div class="bp-input-label">Header for radios*</div>
+        <div class="bp-input-label">Radios</div>
         <div class="d-flex align-items-start mb-3">
             <div class="mr-3">
                 <div class="custom-control custom-radio">
@@ -215,7 +258,7 @@
             <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="collapse" data-target="#radioCodeExample" aria-expanded="false" aria-controls="radioCodeExample">Code</button>
         </div>
 
-<pre class="mb-3 mt-2 px-3 collapse" id="radioCodeExample">&lt;div class="bp-input-label"&gt;Header for radios&lt;/div&gt;
+<pre class="mb-3 mt-2 px-3 collapse" id="radioCodeExample">&lt;div class="bp-input-label"&gt;Radios&lt;/div&gt;
 &lt;div class="custom-control custom-radio"&gt;
     &lt;input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"&gt;
     &lt;label class="custom-control-label" for="customRadio1"&gt;Custom radio 1&lt;/label&gt;
@@ -229,7 +272,7 @@
     &lt;label class="custom-control-label" for="customRadio3"&gt;Disabled radio button&lt;/label&gt;
 &lt;/div&gt;</pre>
     </form>
-    <div>*Use the custom class <code>.bp-input-label</code></div>
+    <div>Use the custom class <code>.bp-input-label</code>to label inputs with the header style.<br/>* These are third party libraries styled to look like bootstrap.</div>
 </div>
 
 <a name="progressBars" style="position:relative;top:-76px"></a>
@@ -329,25 +372,49 @@
     Use the custom class <code>.bp-card</code> with <code>.container</code> or <code>.container-fluid</code>.  Padding and drop shadows are defined.
 
     <h4 class="text-dark mt-4">Pagination</h4>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&lsaquo;</span>
-                <span class="sr-only">Previous</span>
-            </a>
-            </li>
-            <li class="page-item active text-bold"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&rsaquo;</span>
-                <span class="sr-only">Next</span>
-            </a>
-            </li>
-        </ul>
-    </nav>
+    <div class="d-flex align-items-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination mb-0">
+                <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true"><i class="fas fa-chevron-left"></i></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                </li>
+                <li class="page-item active text-bold"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+                    <span class="sr-only">Next</span>
+                </a>
+                </li>
+            </ul>
+        </nav>
+        <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="collapse" data-target="#paginationExample" aria-expanded="false" aria-controls="paginationExample">Code</button>
+    </div>
+<pre class="collapse mt-2 mb-0" id="paginationExample">
+&lt;nav aria-label="Page navigation example"&gt;
+    &lt;ul class="pagination"&gt;
+        &lt;li class="page-item"&gt;
+        &lt;a class="page-link" href="#" aria-label="Previous"&gt;
+            &lt;span aria-hidden="true"&gt;&lt;i class="fas fa-chevron-left"&gt;&lt;/i&gt;&lt;/span&gt;
+            &lt;span class="sr-only"&gt;Previous&lt;/span&gt;
+        &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class="page-item active text-bold"&gt;&lt;a class="page-link" href="#"&gt;1&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;2&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;3&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="page-item"&gt;
+        &lt;a class="page-link" href="#" aria-label="Next"&gt;
+            &lt;span aria-hidden="true"&gt;&lt;i class="fas fa-chevron-right"&gt;&lt;/i&gt;&lt;/span&gt;
+            &lt;span class="sr-only"&gt;Next&lt;/span&gt;
+        &lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+</pre>
 
     <h4 class="text-dark mt-4">Modals</h4>
     <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModalCenter">Launch Modal</button>
@@ -375,7 +442,7 @@
     <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#modalExample" aria-expanded="false" aria-controls="modalExample">Code</button>
     
     <div class="collapse mt-2 mb-0" id="modalExample">
-<pre>&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"&gt;Launch Modal&lt;/button&gt;
+<pre class="collapse mt-2 mb-0" id="modalExample">&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"&gt;Launch Modal&lt;/button&gt;
 &lt;div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"&gt;
     &lt;div class="modal-dialog modal-dialog-centered <span class="text-danger">modal-lg</span>" role="document"&gt;
         &lt;div class="modal-content"&gt;
