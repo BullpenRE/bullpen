@@ -1,7 +1,8 @@
 // Fonts
-@import '@fortawesome/fontawesome-free/css/fontawesome';
 @import 'typeface-nunito-sans/index';
 @import 'typeface-ubuntu/index';
+$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
+@import '@fortawesome/fontawesome-free/scss/solid';
 
 // Bootstrap theme variables
 $badge-font-size: 100%;
@@ -65,7 +66,7 @@ h1, .h1, h2, .h2, h3, .h3 {
     border: none!important;
     color: #29BF89;
     content: "\f078"!important;
-    font: normal normal normal 16px/1 FontAwesome;
+    font: normal normal normal 16px/1 "Font Awesome 5 Free";
     vertical-align: 0;
 }
 .page-item .page-link {
