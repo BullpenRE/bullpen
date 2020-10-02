@@ -59,7 +59,6 @@
   <div class="col-md-4 shadow-sm">
     <div class="col-md-12">
       <div class="row setup-content-2" id="step-1">
-      <% byebug %>
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { novalidate: true, id: "regForm", class: "needs-validation" }) do |f| %>
           <%= render "devise/shared/error_messages", resource: resource %>
           <h4 class="mb-5 mt-4 display-5 text-primary text-center">Create an Account</h4>
