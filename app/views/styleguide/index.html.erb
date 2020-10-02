@@ -419,7 +419,7 @@
     <h4 class="text-dark mt-4">Modals</h4>
     <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModalCenter">Launch Modal</button>
 
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">                        
@@ -428,7 +428,7 @@
                     </button>
                 </div>
                 <div class="modal-body pt-0">
-                    <h3 class="modal-title  text-center">Modal title</h3>
+                    <h3 class="modal-title text-center" id="modalLabel">Modal title</h3>
                     Content goes here
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -443,7 +443,7 @@
     
     <div class="collapse mt-2 mb-0" id="modalExample">
 <pre class="collapse mt-2 mb-0" id="modalExample">&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"&gt;Launch Modal&lt;/button&gt;
-&lt;div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"&gt;
+&lt;div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true"&gt;
     &lt;div class="modal-dialog modal-dialog-centered <span class="text-danger">modal-lg</span>" role="document"&gt;
         &lt;div class="modal-content"&gt;
             &lt;div class="modal-header"&gt;                        
@@ -452,7 +452,7 @@
                 &lt;/button&gt;
             &lt;/div&gt;
             &lt;div class="modal-body pt-0"&gt;
-                &lt;h3 class="modal-title  text-center"&gt;Modal title&lt;/h3&gt;
+                &lt;h3 class="modal-title  text-center" id="modalLabel"&gt;Modal title&lt;/h3&gt;
                 Content goes here
             &lt;/div&gt;
             &lt;div class="modal-footer justify-content-between"&gt;
