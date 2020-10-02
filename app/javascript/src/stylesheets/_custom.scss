@@ -12,12 +12,17 @@
 .bp-card {
   background-color: white;
   box-shadow: 0px 4px 6px rgba(78, 78, 78, 0.15);
-  padding: 1.25rem;
+  padding: 1.875rem;
 }
 .bp-input-label {
   font-family: 'Ubuntu', sans-serif;
+  font-weight: 700;
   color: #005495;
   margin-bottom: .5rem;
+}
+.bp-profile-placeholder {
+  font-size: 2rem;
+  color: #E4E4E4;
 }
 .bp-text-sm {
   font-size: 0.875rem;

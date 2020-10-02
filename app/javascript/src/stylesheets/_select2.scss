@@ -16,7 +16,20 @@
 }
 .select2-container .select2-search--inline .select2-search__field {
   margin-top: 6px;
+  &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #6c757d !important;
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #6c757d;
+  }
+
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: #6c757d;
+  }
 }
+
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
   margin-bottom: -1px;
   padding-left: 0.75rem

@@ -12,6 +12,7 @@ $btn-white-space: nowrap;
 $component-active-bg: #005495; //highlight color on focus, select for checkboxes & radio buttons
 $font-family-base: 'Nunito Sans', sans-serif;
 $custom-control-indicator-checked-disabled-bg:  rgba(0, 84, 149, 0.5);
+$grid-gutter-width: 40px;
 $h1-font-size: 1.5rem; //24px
 $h2-font-size: 1.375rem; //22px
 $h3-font-size: 1.25rem; //20px
@@ -20,7 +21,7 @@ $h5-font-size: 1rem; //16px
 $headings-color: #005495;
 $headings-font-weight: 700;
 //$input-border-color: #4E4E4E;
-$modal-inner-padding: 1.25rem;
+$modal-inner-padding: 1.875rem;
 $modal-header-border-width: 0;
 $modal-footer-border-width: 0;
 $modal-header-padding-y: 0;
@@ -28,6 +29,7 @@ $pagination-border-width: 0;
 $progress-bar-bg: #005495;
 $progress-border-radius: 2rem;
 $spacer: 1.25rem;
+$text-muted: lighten(#4E4E4E, 25%);
 $theme-colors: (
         "primary": #29BF89,
         "secondary": #005495,
@@ -65,4 +67,9 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 .page-item .page-link {
   border-radius: 0.1875rem;
+}
+
+//Bootstrap Select Style Overrides
+.bootstrap-select > .dropdown-toggle.bs-placeholder, .bootstrap-select > .dropdown-toggle.bs-placeholder:hover, .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+  color: #6c757d;
 }
