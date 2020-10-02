@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
 class StyleController < ApplicationController
-  def index; end
+
+  def freelancer; end
+
+  def employer; end
 end
