@@ -1,0 +1,121 @@
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+
+/* nunito-sans-400normal - latin */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src:
+          local('Nunito Sans Regular '),
+          local('Nunito Sans-Regular'),
+          url('~typeface-nunito-sans/files/nunito-sans-latin-400.woff2') format('woff2'), /* Super Modern Browsers */
+          url('~typeface-nunito-sans/files/nunito-sans-latin-400.woff') format('woff'); /* Modern Browsers */
+}
+
+/* nunito-sans-400italic - latin */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src:
+          local('Nunito Sans Regular italic'),
+          local('Nunito Sans-Regularitalic'),
+          url('~typeface-nunito-sans/files/nunito-sans-latin-400italic.woff2') format('woff2'), /* Super Modern Browsers */
+          url('~typeface-nunito-sans/files/nunito-sans-latin-400italic.woff') format('woff'); /* Modern Browsers */
+}
+
+/* nunito-sans-700normal - latin */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src:
+          local('Nunito Sans Bold '),
+          local('Nunito Sans-Bold'),
+          url('~typeface-nunito-sans/files/nunito-sans-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+          url('~typeface-nunito-sans/files/nunito-sans-latin-700.woff') format('woff'); /* Modern Browsers */
+}
+
+/* nunito-sans-700italic - latin */
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src:
+          local('Nunito Sans Bold italic'),
+          local('Nunito Sans-Bolditalic'),
+          url('~typeface-nunito-sans/files/nunito-sans-latin-700italic.woff2') format('woff2'), /* Super Modern Browsers */
+          url('~typeface-nunito-sans/files/nunito-sans-latin-700italic.woff') format('woff'); /* Modern Browsers */
+}
+
+/* ubuntu-300normal - latin */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src:
+          local('Ubuntu Light '),
+          local('Ubuntu-Light'),
+          url('~typeface-ubuntu/files/ubuntu-latin-300.woff2') format('woff2'), /* Super Modern Browsers */
+          url('~typeface-ubuntu/files/ubuntu-latin-300.woff') format('woff'); /* Modern Browsers */
+}
+
+/* ubuntu-300italic - latin */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 300;
+  src:
+          local('Ubuntu Light italic'),
+          local('Ubuntu-Lightitalic'),
+          url('~typeface-ubuntu/files/ubuntu-latin-300italic.woff2') format('woff2'), /* Super Modern Browsers */
+          url('~typeface-ubuntu/files/ubuntu-latin-300italic.woff') format('woff'); /* Modern Browsers */
+}
+
+/* ubuntu-400normal - latin */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src:
+          local('Ubuntu Regular '),
+          local('Ubuntu-Regular'),
+          url('~typeface-ubuntu/files/ubuntu-latin-400.woff2') format('woff2'), /* Super Modern Browsers */
+          url('~typeface-ubuntu/files/ubuntu-latin-400.woff') format('woff'); /* Modern Browsers */
+}
+
+/* ubuntu-700normal - latin */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src:
+          local('Ubuntu Bold '),
+          local('Ubuntu-Bold'),
+          url('~typeface-ubuntu/files/ubuntu-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+          url('~typeface-ubuntu/files/ubuntu-latin-700.woff') format('woff'); /* Modern Browsers */
+}
+
+/* ubuntu-700italic - latin */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src:
+          local('Ubuntu Bold italic'),
+          local('Ubuntu-Bolditalic'),
+          url('~typeface-ubuntu/files/ubuntu-latin-700italic.woff2') format('woff2'), /* Super Modern Browsers */
+          url('~typeface-ubuntu/files/ubuntu-latin-700italic.woff') format('woff'); /* Modern Browsers */
+}

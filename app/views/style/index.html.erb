@@ -1,0 +1,766 @@
+<!--Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-5">
+    <div class="container">
+        <a class="navbar-brand" href="https://bullpenre.com/">
+            <%= image_pack_tag('bullpen-email-logo.png', width: 130, height: 40) %>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">          
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        
+                        <i class="fas fa-user-circle mr-2 display-4 bp-profile-placeholder"></i>
+                        <span class="pr-1">Ron Graves</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--Progress Meter, Step 1-->
+<div class="container mb-4">
+    <div class="progress bg-white shadow-sm mx-auto" style="max-width: 700px;">
+        <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="text-secondary font-weight-bold my-1 text-center">0%</div>
+</div>
+
+<!--Content Card, Step 1-->
+<div class="container">
+    <div class="bp-card mb-5 mx-auto" style="max-width: 700px;">
+        <div class="text-center">
+            <h2>Tell us about your skills.</h2>
+            <p class="mb-4">Add tags to your application that represent your sector and operating knowledge.</p>
+        </div>
+        <div class="form-group mb-4">
+            <label for="exampleFormControlMultiSelect" class="bp-input-label">Describe your real estate skills</label>
+            <select class="select2" name="state" multiple="multiple"  style="width: 100%">
+                <option>Underwriting</option>
+                <option>Investment Memo</option>
+                <option>Brokerage Memo</option>
+                <option>Acquisition Underwriting</option>
+                <option>Development Underwriting</option>
+                <option>Construction Management</option>
+                <option>Distribution Waterfall</option>
+                <option>Financial Modeling</option>
+                <option>Capital Markets</option>
+                <option>Acquisition Diligence</option>
+                <option>Development Diligence</option>
+                <option>Due Diligence</option>
+                <option>Market Research</option>
+                <option>Zoning Requirements</option>
+                <option>Debt Sizing</option>
+                <option>Asset Management</option>
+                <option>Property Review</option>
+                <option>Equity Memo</option>
+                <option>Debt Memo</option>
+                <option>Lease Audit</option>
+                <option>Legal Review</option>
+                <option>Copywriting</option>
+                <option>Marketing</option>
+                <option>Content Creation</option>
+                <option>Graphic Design</option>
+            </select>
+        </div>
+        <div class="form-group mb-5">
+            <label for="exampleFormControlMultiSelect" class="bp-input-label">
+                In what asset classes do you have experience?
+            </label>
+            <select class="select2" name="state" multiple="multiple"  style="width: 100%">
+                <option>HTC</option>
+                <option>Affordable Housing</option>
+                <option>Condo</option>
+                <option>Hospitality</option>
+                <option>Industrial</option>
+                <option>Land Development</option>
+                <option>LIHTC</option>
+                <option>Medical</option>
+                <option>Mixed Use</option>
+                <option>Mobile Home</option>
+                <option>Multifamily</option>
+                <option>Office</option>
+                <option>Retail</option>
+                <option>Senior Housing</option>
+                <option>Student Housing</option>
+                <option>Single Family</option>
+                <option>Self Storage</option>
+                <option>Marina</option>
+            </select>
+        </div>
+        <script>
+            $(function() {
+                $('.select2').select2({
+                    placeholder: 'Select all that apply',
+                    allowClear: true
+                });
+            });
+        </script>
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-link px-0 invisible">Back</button>
+            <button type="button" class="btn btn-primary">Next</button>
+        </div>
+    </div>
+</div>
+
+<!--Progress Meter, Step 2-->
+<div class="container mb-4">
+    <div class="progress bg-white shadow-sm mx-auto" style="max-width: 700px;">
+        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="text-secondary font-weight-bold my-1 text-center">25%</div>
+</div>
+
+<!--Content Card, Step 2-->
+<div class="container">
+    <div class="bp-card mb-5 mx-auto" style="max-width: 700px;">
+        <div class="row">
+            <div class="col-md text-center mb-5">
+                <h2>Profile Picture</h2>
+                <p class="mb-4">Users with a clear and recognizable photo are hired more often. <strong>(Optional)</strong></p>
+                <div class="text-light mb-3" style="font-size: 170px;line-height: 0;"><i class="fas fa-user-circle"></i></div>
+                <div class="custom-file">
+                    <input type="file" class="d-none" id="uploadProfilePic">
+                    <label class="btn btn-outline-primary" for="uploadProfilePic">Upload your photo</label>
+                </div>
+            </div>
+            <div class="col-md text-center mb-5">
+                <hr class="d-md-none mt-0">
+                <h2>Location</h2>
+                <p class="mb-4">Where do you live? Some companies prefer to work with local talent.</p>
+                <div class="form-group text-left">
+                    <label for="freelancerLocationInput" class="bp-input-label">Location</label>
+                    <input type="text" class="form-control" id="freelancerLocationInput" placeholder="City, State abbreviation">
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-link px-0">Back</button>
+            <button type="button" class="btn btn-primary">Next</button>
+        </div>
+    </div>
+</div>
+
+<!--Progress Meter, Step 3-->
+<div class="container mb-4">
+    <div class="progress bg-white shadow-sm mx-auto" style="max-width: 700px;">
+        <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="text-secondary font-weight-bold my-1 text-center">50%</div>
+</div>
+
+<!--Content Card, Step 3-->
+<div class="container">
+    <div class="bp-card mb-5 mx-auto" style="max-width: 700px;">
+        <div class="text-center">
+            <h2>Professional History</h2>
+            <p class="mb-4">Tell us about your professional history.</p>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <div class="form-group mb-4">
+                    <label for="professionalTitleInput" class="bp-input-label">Professional Title</label>
+                    <input type="text" class="form-control" id="professionalTitleInput" placeholder="e.g. Senior Analyst">
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-group mb-4">
+                    <label for="yearsExperienceSelect" class="bp-input-label">Years of professional experience</label>
+                    <select class="form-control selectpicker" id="yearsExperienceSelect" data-style="bp-btn-select-border" title="Please make a selection">
+                        <option>0-2</option>
+                        <option>2-5</option>
+                        <option>5-10</option>
+                        <option>&gt;10</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-5">
+            <label for="professionalSummaryTextarea" class="bp-input-label">Professional Summary</label>
+            <textarea class="form-control" id="professionalSummaryTextarea" placeholder="Describe your experience in a short elevator pitch" rows="3" maxlength="1000"></textarea>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-link px-0">Back</button>
+            <button type="button" class="btn btn-primary">Next</button>
+        </div>
+    </div>
+</div>
+
+<!--Progress Meter, Step 4-->
+<div class="container mb-4">
+    <div class="progress bg-white shadow-sm mx-auto" style="max-width: 700px;">
+        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="text-secondary font-weight-bold my-1 text-center">75%</div>
+</div>
+
+<!--Content Card, Step 4-->
+<div class="container">
+    <div class="bp-card mb-5 mx-auto" style="max-width: 700px;">
+        <div class="text-center">
+            <h2>Work experience and education</h2>
+            <p class="mb-4">Tell us about your work experience and educational background.</p>
+        </div>
+        <div class="mb-4">
+            <div class="bp-input-label">
+                Work Experience
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="w-100">
+                    <div class="row">
+                        <div class="col mb-1 text">Market Analyst</div>
+                    </div>
+                    <div class="row bp-text-sm">
+                        <div class="col-md">Bullpen, San Francisco, CA</div>
+                        <div class="col-md">July 2019-Present</div>
+                    </div>
+                </div>
+                <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editWorkExperienceModal"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
+            </div>              
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addWorkExperienceModal"><i class="fas fa-plus mr-2"></i>Add Experience</button>
+        </div>
+        <div class="mb-5">
+            <div class="bp-input-label">
+                Education
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="w-100">
+                    <div class="row">
+                        <div class="col mb-1 text">Academy of Art University</div>
+                    </div>
+                    <div class="row bp-text-sm">
+                        <div class="col-md">Masters, Web Design & New Media</div>
+                        <div class="col-md">2019</div>
+                    </div>
+                </div>
+                <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editEducationModal"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
+            </div>
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addEducationModal"><i class="fas fa-plus mr-2"></i>Add Education</button>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-link px-0">Back</button>
+            <button type="button" class="btn btn-primary">Next</button>
+        </div>
+    </div>
+</div>
+
+<!--Add Work Experience Modal-->
+<div class="modal fade" id="addWorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">                        
+                <button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <h3 class="modal-title mb-4" id="modalLabel">Add Experience</h3>
+                <div class="form-group">
+                    <label for="jobTitleInput" class="bp-input-label">Job Title</label>
+                    <input type="text" class="form-control" id="jobTitleInput" placeholder="Enter your job title">
+                </div>
+                <div class="form-group">
+                    <label for="companyInput" class="bp-input-label">Company</label>
+                    <input type="text" class="form-control" id="companyInput" placeholder="Enter the comany name">
+                </div>
+                <div class="form-group">
+                    <label for="locationInput" class="bp-input-label">Location</label>
+                    <input type="text" class="form-control" id="locationInput" placeholder="e.g. San Francisco, CA">
+                </div>
+                <div class="form-group">
+                    <label for="startMonth" class="bp-input-label">Start Date</label>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <select class="form-control selectpicker" id="startMonth" data-style="bp-btn-select-border" title="Month">
+                                <option value="&quot;January&quot;">January</option>
+                                <option value="&quot;February&quot;">February</option>
+                                <option value="&quot;March&quot;">March</option>
+                                <option value="&quot;April&quot;">April</option>
+                                <option value="&quot;May&quot;">May</option>
+                                <option value="&quot;June&quot;">June</option>
+                                <option value="&quot;July&quot;">July</option>
+                                <option value="&quot;August&quot;">August</option>
+                                <option value="&quot;September&quot;">September</option>
+                                <option value="&quot;October&quot;">October</option>
+                                <option value="&quot;November&quot;">November</option>
+                                <option value="&quot;December&quot;">December</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-control selectpicker" id="startYear" data-style="bp-btn-select-border" title="Year">
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                                <option value="2007">2007</option>
+                                <option value="2006">2006</option>
+                                <option value="2005">2005</option>
+                                <option value="2004">2004</option>
+                                <option value="2003">2003</option>
+                                <option value="2002">2002</option>
+                                <option value="2001">2001</option>
+                                <option value="2000">2000</option>
+                                <option value="1999">1999</option>
+                                <option value="1998">1998</option>
+                                <option value="1997">1997</option>
+                                <option value="1996">1996</option>
+                                <option value="1995">1995</option>
+                                <option value="1994">1994</option>
+                                <option value="1993">1993</option>
+                                <option value="1992">1992</option>
+                                <option value="1991">1991</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="currentJob" type="button" data-toggle="collapse" data-target="#endDateToggle" aria-expanded="false" aria-controls="endDateToggle">
+                        <label class="custom-control-label" for="currentJob">Current Job</label>
+                    </div>
+                </div>
+                <div class="form-group collapse show" id="endDateToggle">
+                    <label for="endMonth" class="bp-input-label">End Date</label>
+                    <div class="row">
+                        <div class="col">
+                            <select class="form-control selectpicker" id="endMonth" data-style="bp-btn-select-border" title="Month">
+                                <option value="&quot;January&quot;">January</option>
+                                <option value="&quot;February&quot;">February</option>
+                                <option value="&quot;March&quot;">March</option>
+                                <option value="&quot;April&quot;">April</option>
+                                <option value="&quot;May&quot;">May</option>
+                                <option value="&quot;June&quot;">June</option>
+                                <option value="&quot;July&quot;">July</option>
+                                <option value="&quot;August&quot;">August</option>
+                                <option value="&quot;September&quot;">September</option>
+                                <option value="&quot;October&quot;">October</option>
+                                <option value="&quot;November&quot;">November</option>
+                                <option value="&quot;December&quot;">December</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-control selectpicker" id="endYear" data-style="bp-btn-select-border" title="Year">
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                                <option value="2007">2007</option>
+                                <option value="2006">2006</option>
+                                <option value="2005">2005</option>
+                                <option value="2004">2004</option>
+                                <option value="2003">2003</option>
+                                <option value="2002">2002</option>
+                                <option value="2001">2001</option>
+                                <option value="2000">2000</option>
+                                <option value="1999">1999</option>
+                                <option value="1998">1998</option>
+                                <option value="1997">1997</option>
+                                <option value="1996">1996</option>
+                                <option value="1995">1995</option>
+                                <option value="1994">1994</option>
+                                <option value="1993">1993</option>
+                                <option value="1992">1992</option>
+                                <option value="1991">1991</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-0">
+                    <label for="jobDescriptionTextarea" class="bp-input-label">Description</label>
+                    <textarea class="form-control" id="jobDescriptionTextarea" rows="3" placeholder="Enter your job description"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Work Experience Modal-->
+<div class="modal fade" id="editWorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">                        
+                <button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <h3 class="modal-title mb-4" id="modalLabel">Edit Experience</h3>
+                <div class="form-group">
+                    <label for="editJobTitleInput" class="bp-input-label">Job Title</label>
+                    <input type="text" class="form-control" id="editJobTitleInput" placeholder="Enter your job title" value="Market Analyst">
+                </div>
+                <div class="form-group">
+                    <label for="editCompanyInput" class="bp-input-label">Company</label>
+                    <input type="text" class="form-control" id="editCompanyInput" placeholder="Enter the comany name" value="Bullpen">
+                </div>
+                <div class="form-group">
+                    <label for="editLocationInput" class="bp-input-label">Location</label>
+                    <input type="text" class="form-control" id="editLocationInput" placeholder="e.g. San Francisco, CA" value="San Francisco, CA">
+                </div>
+                <div class="form-group">
+                    <label for="editStartMonth" class="bp-input-label">Start Date</label>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <select class="form-control selectpicker" id="editStartMonth" data-style="bp-btn-select-border" title="Month">
+                                <option value="&quot;January&quot;">January</option>
+                                <option value="&quot;February&quot;">February</option>
+                                <option value="&quot;March&quot;">March</option>
+                                <option value="&quot;April&quot;">April</option>
+                                <option value="&quot;May&quot;">May</option>
+                                <option value="&quot;June&quot;">June</option>
+                                <option value="&quot;July&quot;">July</option>
+                                <option value="&quot;August&quot;">August</option>
+                                <option value="&quot;September&quot;">September</option>
+                                <option value="&quot;October&quot;">October</option>
+                                <option value="&quot;November&quot;">November</option>
+                                <option value="&quot;December&quot;">December</option>
+                            </select>
+                            <script>
+                                $('#editStartMonth').selectpicker('val', '"July"');
+                            </script>
+                        </div>
+                        <div class="col">
+                            <select class="form-control selectpicker" id="editStartYear" data-style="bp-btn-select-border" title="Year">
+                                <option value="2020">2020</option>
+                                <option value="2019" selected>2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                                <option value="2007">2007</option>
+                                <option value="2006">2006</option>
+                                <option value="2005">2005</option>
+                                <option value="2004">2004</option>
+                                <option value="2003">2003</option>
+                                <option value="2002">2002</option>
+                                <option value="2001">2001</option>
+                                <option value="2000">2000</option>
+                                <option value="1999">1999</option>
+                                <option value="1998">1998</option>
+                                <option value="1997">1997</option>
+                                <option value="1996">1996</option>
+                                <option value="1995">1995</option>
+                                <option value="1994">1994</option>
+                                <option value="1993">1993</option>
+                                <option value="1992">1992</option>
+                                <option value="1991">1991</option>
+                            </select>
+                            <script>
+                                $('#editStartYear').selectpicker('val', '2019');
+                            </script>
+                        </div>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="editCurrentJob" type="button" data-toggle="collapse" data-target="#editEndDateToggle" aria-expanded="false" aria-controls="editEndDateToggle" checked="checked">
+                        <label class="custom-control-label" for="editCurrentJob">Current Job</label>
+                    </div>
+                </div>
+                <div class="form-group collapse" id="editEndDateToggle">
+                    <label for="endMonth" class="bp-input-label">End Date</label>
+                    <div class="row">
+                        <div class="col">
+                            <select class="form-control selectpicker" id="editEndMonth" data-style="bp-btn-select-border" title="Month">
+                                <option value="&quot;January&quot;">January</option>
+                                <option value="&quot;February&quot;">February</option>
+                                <option value="&quot;March&quot;">March</option>
+                                <option value="&quot;April&quot;">April</option>
+                                <option value="&quot;May&quot;">May</option>
+                                <option value="&quot;June&quot;">June</option>
+                                <option value="&quot;July&quot;">July</option>
+                                <option value="&quot;August&quot;">August</option>
+                                <option value="&quot;September&quot;">September</option>
+                                <option value="&quot;October&quot;">October</option>
+                                <option value="&quot;November&quot;">November</option>
+                                <option value="&quot;December&quot;">December</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-control selectpicker" id="editEndYear" data-style="bp-btn-select-border" title="Year">
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                                <option value="2007">2007</option>
+                                <option value="2006">2006</option>
+                                <option value="2005">2005</option>
+                                <option value="2004">2004</option>
+                                <option value="2003">2003</option>
+                                <option value="2002">2002</option>
+                                <option value="2001">2001</option>
+                                <option value="2000">2000</option>
+                                <option value="1999">1999</option>
+                                <option value="1998">1998</option>
+                                <option value="1997">1997</option>
+                                <option value="1996">1996</option>
+                                <option value="1995">1995</option>
+                                <option value="1994">1994</option>
+                                <option value="1993">1993</option>
+                                <option value="1992">1992</option>
+                                <option value="1991">1991</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-0">
+                    <label for="editJobDescriptionTextarea" class="bp-input-label">Description</label>
+                    <textarea class="form-control" id="editJobDescriptionTextarea" rows="3" placeholder="Enter your job description">I did some stuff.</textarea>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
+                <div>
+                    <button type="button" class="btn btn-outline-danger mr-2">Delete</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add Education Modal-->
+<div class="modal fade" id="addEducationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">                        
+                <button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <h3 class="modal-title mb-4" id="modalLabel">Add Education</h3>
+                <div class="form-group">
+                    <label for="institutionInput" class="bp-input-label">Institution</label>
+                    <input type="text" class="form-control" id="institutionInput" placeholder="Enter the school you attended">
+                </div>
+                <div class="form-group">
+                    <label for="degreeSelect" class="bp-input-label">Degree</label>
+                    <select class="form-control selectpicker" id="degreeSelect" data-style="bp-btn-select-border" title="Please make a
+                     selection">
+                        <option>BS</option>
+                        <option>BA</option>
+                        <option>Masters</option>
+                        <option>PhD</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="courseInput" class="bp-input-label">Course of Study</label>
+                    <input type="text" class="form-control" id="courseInput" placeholder="Enter your degree program">
+                </div>
+                <div class="form-group">
+                    <label for="graduationYear" class="bp-input-label">Graduation Year</label>
+                    <div class="row mb-2 collapse show" id="graduationDateToggle">
+                        <div class="col">
+                            <select class="form-control selectpicker" id="graduationYear" data-style="bp-btn-select-border" title="Year">
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                                <option value="2007">2007</option>
+                                <option value="2006">2006</option>
+                                <option value="2005">2005</option>
+                                <option value="2004">2004</option>
+                                <option value="2003">2003</option>
+                                <option value="2002">2002</option>
+                                <option value="2001">2001</option>
+                                <option value="2000">2000</option>
+                                <option value="1999">1999</option>
+                                <option value="1998">1998</option>
+                                <option value="1997">1997</option>
+                                <option value="1996">1996</option>
+                                <option value="1995">1995</option>
+                                <option value="1994">1994</option>
+                                <option value="1993">1993</option>
+                                <option value="1992">1992</option>
+                                <option value="1991">1991</option>
+                                <option value="1990">1990</option>
+                                <option value="1989">1989</option>
+                                <option value="1988">1988</option>
+                                <option value="1987">1987</option>
+                                <option value="1986">1986</option>
+                                <option value="1985">1985</option>
+                                <option value="1984">1984</option>
+                                <option value="1983">1983</option>
+                                <option value="1982">1982</option>
+                                <option value="1981">1981</option>
+                            </select>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="currentlyStudying" data-toggle="collapse" data-target="#graduationDateToggle" aria-expanded="false" aria-controls="graduationDateToggle">
+                        <label class="custom-control-label" for="currentlyStudying">Currently Studying</label>
+                    </div>
+                </div>
+                <div class="form-group mb-0">
+                    <label for="educationDescriptionTextarea" class="bp-input-label">Description (optional)</label>
+                    <textarea class="form-control" id="educationDescriptionTextarea" rows="3" placeholder="Enter a brief description"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Education Modal-->
+<div class="modal fade" id="editEducationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">                        
+                <button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <h3 class="modal-title mb-4" id="modalLabel">Edit Education</h3>
+                <div class="form-group">
+                    <label for="editInstitutionInput" class="bp-input-label">Institution</label>
+                    <input type="text" class="form-control" id="editInstitutionInput" placeholder="Enter the school you attended" value="Academy of Art University">
+                </div>
+                <div class="form-group">
+                    <label for="editDegreeSelect" class="bp-input-label">Degree</label>
+                    <select class="form-control selectpicker" id="editDegreeSelect" data-style="bp-btn-select-border" title="Please make a
+                     selection">
+                        <option>BS</option>
+                        <option>BA</option>
+                        <option>Masters</option>
+                        <option>PhD</option>
+                    </select>
+                    <script>
+                        $('#editDegreeSelect').selectpicker('val', 'Masters');
+                    </script>
+                </div>
+                <div class="form-group">
+                    <label for="editCourseInput" class="bp-input-label">Course of Study</label>
+                    <input type="text" class="form-control" id="editCourseInput" placeholder="Enter your degree program" value="Web Design & New Media">
+                </div>
+                <div class="form-group">
+                    <label for="editGraduationYear" class="bp-input-label">Graduation Year</label>
+                    <div class="row mb-2 collapse show" id="editGraduationDateToggle">
+                        <div class="col">
+                            <select class="form-control selectpicker" id="editGraduationYear" data-style="bp-btn-select-border" title="Year">
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                                <option value="2007">2007</option>
+                                <option value="2006">2006</option>
+                                <option value="2005">2005</option>
+                                <option value="2004">2004</option>
+                                <option value="2003">2003</option>
+                                <option value="2002">2002</option>
+                                <option value="2001">2001</option>
+                                <option value="2000">2000</option>
+                                <option value="1999">1999</option>
+                                <option value="1998">1998</option>
+                                <option value="1997">1997</option>
+                                <option value="1996">1996</option>
+                                <option value="1995">1995</option>
+                                <option value="1994">1994</option>
+                                <option value="1993">1993</option>
+                                <option value="1992">1992</option>
+                                <option value="1991">1991</option>
+                                <option value="1990">1990</option>
+                                <option value="1989">1989</option>
+                                <option value="1988">1988</option>
+                                <option value="1987">1987</option>
+                                <option value="1986">1986</option>
+                                <option value="1985">1985</option>
+                                <option value="1984">1984</option>
+                                <option value="1983">1983</option>
+                                <option value="1982">1982</option>
+                                <option value="1981">1981</option>
+                            </select>
+                            <script>
+                                $('#editGraduationYear').selectpicker('val', '2019');
+                            </script>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="editCurrentlyStudying" data-toggle="collapse" data-target="#editGraduationDateToggle" aria-expanded="false" aria-controls="editGraduationDateToggle">
+                        <label class="custom-control-label" for="editCurrentlyStudying">Currently Studying</label>
+                    </div>
+                </div>
+                <div class="form-group mb-0">
+                    <label for="editEducationDescriptionTextarea" class="bp-input-label">Description (optional)</label>
+                    <textarea class="form-control" id="editEducationDescriptionTextarea" rows="3" placeholder="Enter a brief description"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
+                <div>
+                    <button type="button" class="btn btn-outline-danger mr-2">Delete</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Copyright info/subtext-->
+<footer class="mb-3 text-center">
+    <span class="text-muted bp-text-sm">Find me in app/views/style/index.html.erb</span> 
+</footer>
