@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get '/style', to: 'style#index' if Rails.env.development?
+  get '/style', to: 'style#index'
   get '/join', to: 'join#index'
 
   devise_for :users, controllers: {
