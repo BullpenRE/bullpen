@@ -8,6 +8,10 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+  def new_company
+    new
+  end
+
   def create
     super
   end
@@ -47,10 +51,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   def configure_sign_up_params
     is_employer? ? employer_params : freelancer_params
-  end
-
-  def is_employer?
-    true
   end
 
   def freelancer_params
