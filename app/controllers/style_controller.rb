@@ -5,4 +5,6 @@ class StyleController < ApplicationController
   def freelancer; end
 
   def employer; end
+
+  def login; end
 end

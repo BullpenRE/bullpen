@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get '/freelancer_style', to: 'style#freelancer'
   get '/employer_style', to: 'style#employer'
+  get '/login_style', to: 'style#login'
   get '/join', to: 'join#index'
 
   devise_for :users, controllers: {
