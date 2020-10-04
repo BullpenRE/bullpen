@@ -24,6 +24,13 @@ document.addEventListener("turbolinks:load", () => {
   $('[data-toggle="popover"]').popover()
 })
 
+import $ from "jquery"
+
+document.addEventListener("turbolinks:load", () => {
+  $('[data-toggle="tooltip"]').tooltip()
+  $('[data-toggle="popover"]').popover()
+})
+
 import * as bootstrapValidate from 'bootstrap-validate';
 window.bootstrapValidate = bootstrapValidate;
 
