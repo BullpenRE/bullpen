@@ -23,12 +23,12 @@ ActiveRecord::Schema.define(version: 2020_10_05_172119) do
   end
 
   create_table "freelancer_asset_classes", force: :cascade do |t|
-    t.bigint "asset_classes_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "freelancer_profiles_id"
-    t.index ["asset_classes_id"], name: "index_freelancer_asset_classes_on_asset_classes_id"
-    t.index ["freelancer_profiles_id"], name: "index_freelancer_asset_classes_on_freelancer_profiles_id"
+    t.bigint "freelancer_profile_id"
+    t.bigint "asset_class_id"
+    t.index ["asset_class_id"], name: "index_freelancer_asset_classes_on_asset_class_id"
+    t.index ["freelancer_profile_id"], name: "index_freelancer_asset_classes_on_freelancer_profile_id"
   end
 
   create_table "freelancer_profiles", force: :cascade do |t|
@@ -39,12 +39,12 @@ ActiveRecord::Schema.define(version: 2020_10_05_172119) do
   end
 
   create_table "freelancer_real_estate_skills", force: :cascade do |t|
-    t.bigint "real_estate_skills_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "freelancer_profiles_id"
-    t.index ["freelancer_profiles_id"], name: "index_freelancer_real_estate_skills_on_freelancer_profiles_id"
-    t.index ["real_estate_skills_id"], name: "index_freelancer_real_estate_skills_on_real_estate_skills_id"
+    t.bigint "freelancer_profile_id"
+    t.bigint "real_estate_skill_id"
+    t.index ["freelancer_profile_id"], name: "index_freelancer_real_estate_skills_on_freelancer_profile_id"
+    t.index ["real_estate_skill_id"], name: "index_freelancer_real_estate_skills_on_real_estate_skill_id"
   end
 
   create_table "real_estate_skills", force: :cascade do |t|
@@ -73,14 +73,10 @@ ActiveRecord::Schema.define(version: 2020_10_05_172119) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
     t.string "last_name"
-    t.string "phone_number"
-    t.boolean "is_employer"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "freelancer_asset_classes", "asset_classes", column: "asset_classes_id"
   add_foreign_key "freelancer_profiles", "users"
-  add_foreign_key "freelancer_real_estate_skills", "real_estate_skills", column: "real_estate_skills_id"
 end
