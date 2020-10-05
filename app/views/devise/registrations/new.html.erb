@@ -5,7 +5,6 @@
     cursor: pointer;
     right: 0.5rem;
     top: 1.0rem;
-    color: $input-label-color;
     z-index: 2;
   }
   /* Style all input fields */
@@ -37,7 +36,7 @@
     content: "\2713";
   }
 
-  /* Add a red text color and an "x" when the requirements are wrong */
+  /* Add a grey text color and an "x" when the requirements are wrong */
   .invalid {
     color: grey;
   }
@@ -51,19 +50,19 @@
 
 <div class="align-items-center bg-white border-bottom shadow-sm mb-5">
   <div class="text-left mt-2 mb-2 ml-5">
-    <%= image_pack_tag('media/images/bullpen-email-logo.png', size: "175x55") %>
+    <%= image_pack_tag('bullpen-email-logo.png', width: 175, height: 55) %>
   </div>
 </div>
 
 <div class="row justify-content-center">
   <div class="col-md-4 shadow-sm">
     <div class="col-md-12">
-      <div class="row setup-content-2" id="step-1">
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { novalidate: true, id: "regForm", class: "needs-validation" }) do |f| %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { novalidate: true, id: "regForm", class: "needs-validation" }) do |f| %>
+        <div class="row-cols-1 setup-content-2" id="step-1">
           <%= render "devise/shared/error_messages", resource: resource %>
-          <h4 class="mb-5 mt-4 display-5 text-primary text-center">Create an Account</h4>
+          <h4 class="mb-5 mt-4 display-5 ml-4 text-primary text-center">Create an Account</h4>
           <div class="check-email mb-5 text-center"></div>
-          <div class="row">
+          <div class="row ml-1">
           <div class="col-md-6 mb-4">
             <%= f.label :first_name, class: "text-primary" %>
             <%= f.text_field :first_name, class: "form-control", id: "firstName", required: true %>
@@ -74,14 +73,14 @@
           </div>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-5 col-md-12">
           <%= f.label :email, class: "text-primary" %><br />
           <%= f.email_field :email, class: "form-control", id: "email", required: true %>
         </div>
         <hr class="mb-4">
         <button class="form-control-lg btn btn-outline-secondary col-md-12 mb-3 nextBtn-2" type="button">Sign up as a freelancer</button>
 
-          <footer class="pt-4 my-md-5 pt-md-5 border-top">
+          <footer class="col-md-11 border-top mt-2  pt-lg-4">
             <div class="text-center">
               <h5>Already have an account? <%= link_to "Login", new_user_session_path, class: "p-2" %></h5>
             </div>
@@ -97,8 +96,7 @@
         <div class="row-cols-1 text-primary">Password</div>
         <div class="input-group">
           <%=  f.password_field :password, id: "psw",  required: true  %>
-          <span toggle="#psw" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-          <div class="invalid-feedback">Your password must contain at least 8 characters, 1 uppercase character, 1 number and 1 special character.</div>
+          <span toggle="#psw" class="field-icon toggle-password"><i class="fas fa-fw fa-eye" aria-hidden="true"></i></span>
         </div>
 
         <div id="message">
@@ -115,12 +113,11 @@
         <div class="text-primary">Confirm Password</div>
         <div class="input-group mb-4">
           <%=  f.password_field :password_confirmation, id: "cPwdId", class: "myCpwdClass", required: true  %>
-          <span toggle="#cPwdId" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+          <span toggle="#cPwdId" class="field-icon toggle-password"><i class="fas fa-fw fa-eye" aria-hidden="true"></i></span>
           <div id="same_psw" class="col-sm text-muted text-nowrap small same_psw">Same as your password</div>
         </div>
         <hr class="mb-4">
         <%= f.submit "Create my account", class: "form-control-lg btn btn-outline-secondary col-md-12 mb-3", id: "submitBtn" %>
-      <% end %>
         <hr class="mb-4">
         <div class="text-center text-muted">
           By creating your account, you agree to Bullpen's
@@ -131,8 +128,11 @@
             Privacy Agreement
           </a>, and <a href="https://stripe.com/connect-account/legal">Stripe's Connected Accounts Authorization</a>
         </div>
+      </div>
+      <% end %>
     </div>
   </div>
+</div>
 
 
 <script>
@@ -216,7 +216,7 @@
     }
 
     $('.toggle-password').on('click', function() {
-      $(this).toggleClass('fa-eye fa-eye-slash');
+      $(this).find('svg').toggleClass('fa-eye fa-eye-slash');
       let input = $($(this).attr('toggle'));
       if (input.attr('type') == 'password') {
         input.attr('type', 'text');
