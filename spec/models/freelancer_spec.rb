@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe "bootstraptest/freelancer.html.erb", type: :view do
+RSpec.describe Freelancer, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end

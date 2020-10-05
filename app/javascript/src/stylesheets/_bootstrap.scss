@@ -1,0 +1,75 @@
+// Bootstrap theme variables
+$badge-font-size: 100%;
+$badge-font-weight: 500;
+$badge-padding-x: .8em;
+$body-bg: #E9ECEF;
+$body-color: #4E4E4E;
+//$border-color: #4E4E4E;
+$border-radius: 0.1875rem;
+$border-radius-sm: 0.1875rem;
+$border-radius-lg: 0.1875rem;
+$btn-white-space: nowrap;
+$component-active-bg: #005495; //highlight color on focus, select for checkboxes & radio buttons
+$font-family-base: 'Nunito Sans', sans-serif;
+$custom-control-indicator-checked-disabled-bg:  rgba(0, 84, 149, 0.5);
+$grid-gutter-width: 40px;
+$h1-font-size: 1.5rem; //24px
+$h2-font-size: 1.375rem; //22px
+$h3-font-size: 1.25rem; //20px
+$h4-font-size: 1.125rem; //18px
+$h5-font-size: 1rem; //16px
+$headings-color: #005495;
+$headings-font-weight: 700;
+//$input-border-color: #4E4E4E;
+$modal-inner-padding: 1.875rem;
+$modal-header-border-width: 0;
+$modal-footer-border-width: 0;
+$modal-header-padding-y: 0;
+$pagination-border-width: 0;
+$progress-bar-bg: #005495;
+$progress-border-radius: 2rem;
+$spacer: 1.25rem;
+$text-muted: lighten(#4E4E4E, 25%);
+$theme-colors: (
+        "primary": #29BF89,
+        "secondary": #005495,
+        "danger": #FB3640,
+        "dark": #4E4E4E,
+        "light": #E9ECEF,
+        "gray-dark": #7A7A7A,
+        "gray": #E4E4E4,
+        "blue-light": #DFECF5
+);
+
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-select/dist/css/bootstrap-select';
+
+// Bootstrap style overrides
+.btn.disabled {
+  color: #7A7A7A;
+  border: #7A7A7A;
+  background-color: #E4E4E4;
+  opacity: 1;
+  cursor: not-allowed;
+}
+h1, .h1, h2, .h2, h3, .h3 {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+//Replace the dropdown triangle with a FontAwesome chevron
+.dropdown-toggle::after {
+  @extend %fa-icon;
+  @extend .fas;
+  content: fa-content($fa-var-chevron-down);
+  border: none!important;
+  color: #29BF89;
+  vertical-align: 0;
+}
+.page-item .page-link {
+  border-radius: 0.1875rem;
+}
+
+//Bootstrap Select Style Overrides
+.bootstrap-select > .dropdown-toggle.bs-placeholder, .bootstrap-select > .dropdown-toggle.bs-placeholder:hover, .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+  color: #6c757d;
+}
