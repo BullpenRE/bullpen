@@ -2,5 +2,5 @@
 
 class AssetClass < ApplicationRecord
   validates :description, presence: true, uniqueness: true
-  has_many :freelancer_asset_classes
+  has_many :freelancer_asset_classes, dependent: :destroy
 end
