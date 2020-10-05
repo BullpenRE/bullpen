@@ -83,6 +83,9 @@
             <%= f.label :phone_number, class: "text-primary" %><br />
             <%= f.phone_field :phone_number, class: "form-control", id: "phone", required: true %>
           </div>
+          <div>
+            <%= f.hidden_field :is_employer, :value => 'true' %>
+          </div>
           <hr class="mb-4">
           <button class="form-control-lg btn btn-outline-secondary col-md-12 mb-3 nextBtn-2" type="button">Sign up as a Company</button>
 
