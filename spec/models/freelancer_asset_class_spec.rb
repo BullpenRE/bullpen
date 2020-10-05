@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe FreelancerAssetClass, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let!(:freelancer_asset_class) { FactoryBot.create(:freelancer_asset_class) }
+
+  it 'factory works' do
+    expect(freelancer_asset_class).to be_valid
+  end
 end
