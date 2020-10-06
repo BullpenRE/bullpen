@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+
   get '/freelancer_style', to: 'style#freelancer'
   get '/employer_style', to: 'style#employer'
   get '/login_style', to: 'style#login'
