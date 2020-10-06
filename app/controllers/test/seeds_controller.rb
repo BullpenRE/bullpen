@@ -9,10 +9,7 @@ module Test
       count = params[:count] || 0
 
       count.to_i.times do |c|
-        User.create!(
-          email: "new_#{c}@email.com",
-          password: '123'
-        )
+        FactoryBot.create(:user, email: "new_#{c}@email.com", password: '123')
       end
     end
   end
