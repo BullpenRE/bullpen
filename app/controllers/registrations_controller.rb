@@ -19,19 +19,19 @@ class RegistrationsController < Devise::RegistrationsController
   protected
 
   def after_sign_in_path_for(resource)
-    registration_steps_path(current_user)
+    freelancer_profile_steps_path(current_user)
   end
 
   def after_sign_up_path_for(resource)
-    registration_steps_path
+    freelancer_profile_steps_path
   end
 
   def after_inactive_sign_up_path_for(resource)
-    registration_steps_path
+    freelancer_profile_steps_path
   end
 
   def after_update_path_for(resource)
-    registration_steps_path
+    freelancer_profile_steps_path
   end
 
   # If you have extra params to permit, append them to the sanitizer.
