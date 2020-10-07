@@ -37,4 +37,14 @@ describe User do
       end
     end
   end
+
+  context 'Scopes' do
+    let!(:confirmed) { FactoryBot.create(:user, confirmed_at: 3.days.ago) }
+    let!(:not_confirmed) { FactoryBot.create(:user, confirmed_at: nil) }
+
+    it '.confirmed' do
+      expect(User.confirmed).to include(confirmed)
+      expect(User.confirmed).to_not include(not_confirmed)
+    end
+  end
 end
