@@ -19,8 +19,13 @@
         <label for="exampleFormControlMultiSelect" class="bp-input-label">Describe your real estate skills</label>
         <div class="w-100">
           <%= f.select :freelancer_real_estate_skills,
-                       RealEstateSkill.all.map{ |skill| [skill.description, skill.id] }, {},
-                       multiple: true, class: 'select2', required: true %>
+                       options_for_select(
+                           RealEstateSkill.all.map{ |skill| [skill.description, skill.id] if skill.disable == false },
+                           @freelancer_profile&.freelancer_real_estate_skills&.map do |skill|
+                             [skill.real_estate_skill.description, skill.real_estate_skill.id]
+                           end.flatten
+                       ),
+                       {}, multiple: true, class: 'select2', required: true %>
         </div>
       </div>
       <div class="form-group mb-5">
@@ -28,8 +33,12 @@
           In what asset classes do you have experience?
         </label>
         <%= f.select :freelancer_asset_classes,
-                     AssetClass.all.map{ |asset| [asset.description, asset.id] }, {},
-                     multiple: true, class: 'select2', required: true %>
+                     options_for_select(
+                         AssetClass.all.map{ |asset| [asset.description, asset.id] if asset.disable == false },
+                         @freelancer_profile&.freelancer_asset_classes&.map do |asset|
+                           [asset.asset_class.description, asset.asset_class.id]
+                         end.flatten),
+                     {}, multiple: true, class: 'select2', required: true %>
       </div>
       <script>
         $(function() {
