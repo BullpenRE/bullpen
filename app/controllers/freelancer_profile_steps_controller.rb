@@ -6,7 +6,10 @@ class FreelancerProfileStepsController < ApplicationController
 
   def show
     @user = current_user
-    FreelancerProfile.create(user_id: @user.id) if @user.freelancer_profile.blank?
+    if @user.freelancer_profile.blank?
+      FreelancerProfile.create(user_id: @user.id)
+      @user.reload
+    end
     @freelancer_profile = @user.freelancer_profile
     render_wizard
   end
@@ -21,8 +24,8 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   def skills_page_save
-    @freelancer_profile&.freelancer_real_estate_skills&.delete_all
-    @freelancer_profile&.freelancer_asset_classes&.delete_all
+    @freelancer_profile&.freelancer_real_estate_skills&.destroy_all
+    @freelancer_profile&.freelancer_asset_classes&.destroy_all
     params[:freelancer_profile][:freelancer_real_estate_skills]&.reject(&:blank?)&.each do |skill|
       FreelancerRealEstateSkill.create(freelancer_profile_id: @freelancer_profile.id, real_estate_skill_id: skill)
     end
