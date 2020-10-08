@@ -6,7 +6,10 @@ class FreelancerProfileStepsController < ApplicationController
 
   def show
     @user = current_user
-    FreelancerProfile.create(user_id: @user.id) if @user.freelancer_profile.blank?
+    if @user.freelancer_profile.blank?
+      FreelancerProfile.create(user_id: @user.id)
+      @user.reload
+    end
     @freelancer_profile = @user.freelancer_profile
     render_wizard
   end
