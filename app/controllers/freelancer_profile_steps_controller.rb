@@ -29,14 +29,24 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   def skills_page_save
-    @freelancer_profile&.freelancer_real_estate_skills&.delete_all
-    @freelancer_profile&.freelancer_asset_classes&.delete_all
-    params[:freelancer_profile][:freelancer_real_estate_skills]&.reject(&:blank?)&.each do |skill|
+    @freelancer_profile&.freelancer_real_estate_skills&.destroy_all
+    @freelancer_profile&.freelancer_asset_classes&.destroy_all
+    real_estate_skill_params&.each do |skill|
       FreelancerRealEstateSkill.create(freelancer_profile_id: @freelancer_profile.id, real_estate_skill_id: skill)
     end
-    params[:freelancer_profile][:freelancer_asset_classes]&.reject(&:blank?)&.each do |asset|
+    asset_classes_params&.each do |asset|
       FreelancerAssetClass.create(freelancer_profile_id: @freelancer_profile.id, asset_class_id: asset)
     end
+  end
+
+  private
+
+  def real_estate_skill_params
+    params[:freelancer_profile][:freelancer_real_estate_skills]&.reject(&:blank?)
+  end
+
+  def asset_classes_params
+    params[:freelancer_profile][:freelancer_asset_classes]&.reject(&:blank?)
   end
 
   def history_params
