@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get '/password_reset', to: 'passwords#password_reset'
+    get '/new_company', to: 'registrations#new_company'
   end
 
   resources :freelancer_profile_steps
