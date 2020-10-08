@@ -2,7 +2,7 @@
 
 class FreelancerProfileStepsController < ApplicationController
   include Wicked::Wizard
-  steps :skills_page, :other_step
+  steps :skills_page, :professional_history
 
   def show
     @user = current_user
@@ -19,8 +19,13 @@ class FreelancerProfileStepsController < ApplicationController
     @freelancer_profile = @user.freelancer_profile
 
     skills_page_save if wizard_value(step) == :skills_page
+    professional_history_save if wizard_value(step) == :professional_history
 
     render_wizard @user
+  end
+
+  def professional_history_save
+    @freelancer_profile.update_attributes(history_params)
   end
 
   def skills_page_save
@@ -42,5 +47,10 @@ class FreelancerProfileStepsController < ApplicationController
 
   def asset_classes_params
     params[:freelancer_profile][:freelancer_asset_classes]&.reject(&:blank?)
+  end
+
+  def history_params
+    params.require(:freelancer_profile)
+      .permit(:professional_title, :professional_years_experience, :professional_summary)
   end
 end
