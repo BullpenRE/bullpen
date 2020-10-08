@@ -8,6 +8,10 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+  def new_company
+    new
+  end
+
   def create
     super
   end
@@ -45,7 +49,19 @@ class RegistrationsController < Devise::RegistrationsController
   # end
   #
 
+  def employer?
+    params[:user][:is_employer]
+  end
+
   def configure_sign_up_params
+    employer? ? employer_params : freelancer_params
+  end
+
+  def freelancer_params
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email])
+  end
+
+  def employer_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email phone_number is_employer])
   end
 end
