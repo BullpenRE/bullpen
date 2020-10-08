@@ -14,9 +14,10 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get '/password_reset', to: 'passwords#password_reset'
+    get '/new_company', to: 'registrations#new_company'
   end
 
-  resources :registration_steps
+  resources :freelancer_profile_steps
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   post '/check_users_email', to: 'check_email#check_users_email'
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?

@@ -8,6 +8,10 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+  def new_company
+    new
+  end
+
   def create
     super
   end
@@ -19,19 +23,19 @@ class RegistrationsController < Devise::RegistrationsController
   protected
 
   def after_sign_in_path_for(resource)
-    registration_steps_path(current_user)
+    freelancer_profile_steps_path(current_user)
   end
 
   def after_sign_up_path_for(resource)
-    registration_steps_path
+    freelancer_profile_steps_path
   end
 
   def after_inactive_sign_up_path_for(resource)
-    registration_steps_path
+    freelancer_profile_steps_path
   end
 
   def after_update_path_for(resource)
-    registration_steps_path
+    freelancer_profile_steps_path
   end
 
   # If you have extra params to permit, append them to the sanitizer.
@@ -45,7 +49,19 @@ class RegistrationsController < Devise::RegistrationsController
   # end
   #
 
+  def employer?
+    params[:user][:is_employer]
+  end
+
   def configure_sign_up_params
+    employer? ? employer_params : freelancer_params
+  end
+
+  def freelancer_params
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email])
+  end
+
+  def employer_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email phone_number is_employer])
   end
 end
