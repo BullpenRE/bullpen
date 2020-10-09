@@ -2,7 +2,7 @@
 
 class FreelancerProfileStepsController < ApplicationController
   include Wicked::Wizard
-  steps :skills_page, :professional_history
+  steps :skills_page, :professional_history, :work_education_experience
 
   def show
     @user = current_user
