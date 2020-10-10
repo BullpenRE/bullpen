@@ -7,7 +7,7 @@ class FreelancerProfileExperience < ApplicationRecord
   validates :description, presence: true
 
   AVAILABLE_YEARS = (1991..Time.now.year).reverse_each
-  AVAILABLE_MONTHNAMES = Date::MONTHNAMES.each_with_index.collect{|m, i| [m, i]}.drop(1)
+  AVAILABLE_MONTHNAMES = Date::MONTHNAMES.each_with_index.collect { |m, i| [m, i] }.drop(1)
 
   before_save :update_start_date, :update_end_date
   attr_accessor :start_month, :start_year, :end_month, :end_year

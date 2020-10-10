@@ -68,12 +68,16 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   def checked_profile_experience_params
-    experience_params = if params[:freelancer_profile_experience][:current_job] == true
+    experience_params = if current_job?
                           profile_experience_params.reject { |param| param == 'end_month' || param == 'end_year' }
                         else
                           profile_experience_params
                         end
 
     experience_params.merge(freelancer_profile_id: @freelancer_profile.id)
+  end
+
+  def current_job?
+    params[:freelancer_profile_experience][:current_job] == true
   end
 end
