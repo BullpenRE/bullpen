@@ -38,6 +38,7 @@ group :test do
   gem 'database_cleaner'                                # Cleans the database data between tests
   gem 'faker', github: 'stympy/faker'                   # Easy way to add fake data: names, email addresses, etc.
   gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
+  gem 'rails-controller-testing'                        # This gem brings back assigns to your controller tests as well as assert_template to both controller and integration tests.
 end
 
 group :development do
