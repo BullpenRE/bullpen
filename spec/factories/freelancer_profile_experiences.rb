@@ -3,7 +3,7 @@ FactoryBot.define do
     freelancer_profile
     job_title { Faker::Company.profession }
     company { Faker::Company.name }
-    description { Faker::Company.profession }
+    description { Faker::Lorem.sentence }
     location { Faker::Address.city }
     start_month { 2 }
     start_year { 2008 }
