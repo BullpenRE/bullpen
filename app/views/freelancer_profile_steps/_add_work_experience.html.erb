@@ -1,0 +1,76 @@
+<!--Add Work Experience Modal-->
+<div class="modal fade" id="addWorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <%= form_for :freelancer_profile_experience, url: wizard_path, method: :put do |f| %>
+        <div class="modal-body pt-0">
+        <h3 class="modal-title mb-4" id="modalLabel">Add Experience</h3>
+        <div class="form-group">
+          <label for="jobTitleInput" class="bp-input-label">Job Title</label>
+          <%= f.text_field :job_title, class: "form-control", id: "jobTitleInput", placeholder: "Enter your job title", required: true %>
+        </div>
+        <div class="form-group">
+          <label for="companyInput" class="bp-input-label">Company</label>
+          <%= f.text_field :company, class: "form-control", id: "companyInput", placeholder: "Enter the comany name", required: true %>
+        </div>
+        <div class="form-group">
+          <label for="locationInput" class="bp-input-label">Location</label>
+          <%= f.text_field :location, class: "form-control", id: "locationInput", placeholder: "e.g. San Francisco, CA", required: true %>
+        </div>
+        <div class="form-group">
+          <label for="startMonth" class="bp-input-label">Start Date</label>
+          <div class="row mb-3">
+            <div class="col">
+              <%= f.select :start_month,
+                           options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES),
+                           {}, class: 'form-control selectpicker',
+                           id: 'startMonth', required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
+            </div>
+            <div class="col">
+              <%= f.select :start_year,
+                           options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS),
+                           {}, class: 'form-control selectpicker',
+                           id: 'startYear', required: true, 'data-style': "bp-btn-select-border", title: "Year" %>
+            </div>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <%= f.check_box :current_job, class: "custom-control-input", id: "currentJob", type: "button", 'data-toggle': "collapse", 'data-target': "#endDateToggle", 'aria-expanded': "false", 'aria-controls': "endDateToggle" %>
+            <input type="checkbox" class="custom-control-input" id="currentJob" type="button" data-toggle="collapse" data-target="#endDateToggle" aria-expanded="false" aria-controls="endDateToggle">
+            <label class="custom-control-label" for="currentJob">Current Job</label>
+          </div>
+        </div>
+        <div class="form-group collapse show" id="endDateToggle">
+          <label for="endMonth" class="bp-input-label">End Date</label>
+          <div class="row">
+            <div class="col">
+              <%= f.select :end_month,
+                           options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES),
+                           {}, class: 'form-control selectpicker',
+                           id: 'startMonth', 'data-style': "bp-btn-select-border", title: "Month" %>
+            </div>
+            <div class="col">
+              <%= f.select :end_year,
+                           options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS),
+                           {}, class: 'form-control selectpicker',
+                           id: 'startYear', 'data-style': "bp-btn-select-border", title: "Year" %>
+            </div>
+          </div>
+        </div>
+        <div class="form-group mb-0">
+          <label for="jobDescriptionTextarea" class="bp-input-label">Description</label>
+          <%= f.text_area :description, class: "form-control", id: "jobDescriptionTextarea", placeholder: "Enter your job description", rows: 3, required: true %>
+        </div>
+      </div>
+        <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
+        <%= f.submit 'Save', class: 'btn btn-primary' %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

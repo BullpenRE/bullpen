@@ -1,6 +1,13 @@
 FactoryBot.define do
   factory :freelancer_profile_experience do
-    job_title { "MyString" }
-    start_date { "2020-10-08" }
+    freelancer_profile
+    job_title { Faker::Company.profession }
+    company { Faker::Company.name }
+    description { Faker::Company.profession }
+    location { Faker::Address.city }
+    start_month { 2 }
+    start_year { 2008 }
+    end_month { 2 }
+    end_year { 2020 }
   end
 end

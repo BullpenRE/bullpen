@@ -18,18 +18,24 @@
       <div class="bp-input-label">
         Work Experience
       </div>
-      <div class="d-flex align-items-center justify-content-between mb-3">
-        <div class="w-100">
-          <div class="row">
-            <div class="col mb-1 text">Market Analyst</div>
+      <% if @freelancer_profile.freelancer_profile_experiences.present? %>
+        <% @freelancer_profile.freelancer_profile_experiences.each do |work_exp| %>
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="w-100">
+              <div class="row">
+                <div class="col mb-1 text"><%= work_exp.job_title %></div>
+              </div>
+              <div class="row bp-text-sm">
+                <div class="col-md"><%= work_exp.company %>, <%= work_exp.location %></div>
+                <div class="col-md">
+                  <%= work_exp.start_date.strftime("%B, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date.strftime("%B, %Y") %>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editWorkExperienceModal"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
           </div>
-          <div class="row bp-text-sm">
-            <div class="col-md">Bullpen, San Francisco, CA</div>
-            <div class="col-md">July 2019-Present</div>
-          </div>
-        </div>
-        <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editWorkExperienceModal"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
-      </div>
+        <% end %>
+      <% end %>
       <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addWorkExperienceModal"><i class="fas fa-plus mr-2"></i>Add Experience</button>
     </div>
     <div class="mb-5">
@@ -56,4 +62,5 @@
     </div>
   </div>
 </div>
-<%= render 'work_experience' %>
+<%= render 'edit_work_experience' %>
+<%= render 'add_work_experience' %>

@@ -17,11 +17,18 @@ class FreelancerProfileStepsController < ApplicationController
   def update
     @user = current_user
     @freelancer_profile = @user.freelancer_profile
-
     skills_page_save if wizard_value(step) == :skills_page
     professional_history_save if wizard_value(step) == :professional_history
+    if wizard_value(step) == :work_education_experience
+      work_experience_save
+      render wizard_path(:work_education_experience)
+    else
+      render_wizard @user
+    end
+  end
 
-    render_wizard @user
+  def work_experience_save
+    FreelancerProfileExperience.create(checked_profile_experience_params)
   end
 
   def professional_history_save
@@ -52,5 +59,21 @@ class FreelancerProfileStepsController < ApplicationController
   def history_params
     params.require(:freelancer_profile)
       .permit(:professional_title, :professional_years_experience, :professional_summary)
+  end
+
+  def profile_experience_params
+    params.require(:freelancer_profile_experience)
+      .permit(:job_title, :company, :location, :description,
+              :start_month, :start_year, :end_month, :end_year, :current_job)
+  end
+
+  def checked_profile_experience_params
+    experience_params = if params[:freelancer_profile_experience][:current_job] == true
+                          profile_experience_params.reject { |param| param == 'end_month' || param == 'end_year' }
+                        else
+                          profile_experience_params
+                        end
+
+    experience_params.merge(freelancer_profile_id: @freelancer_profile.id)
   end
 end
