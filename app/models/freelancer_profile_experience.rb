@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FreelancerProfileExperience < ApplicationRecord
   belongs_to :freelancer_profile
 
@@ -13,14 +15,14 @@ class FreelancerProfileExperience < ApplicationRecord
   attr_accessor :start_month, :start_year, :end_month, :end_year
 
   def update_start_date
-    start_date = "#{self.start_year}-#{self.start_month}"
+    start_date = "#{start_year}-#{start_month}"
     self.start_date = Date.strptime(start_date, '%Y-%m')
   end
 
   def update_end_date
-    return unless self.end_year.present? && self.end_month.present?
+    return unless end_year.present? && end_month.present?
 
-    end_date = "#{self.end_year}-#{self.end_month}"
+    end_date = "#{end_year}-#{end_month}"
     self.end_date = Date.strptime(end_date, '%Y-%m')
   end
 end
