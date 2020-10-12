@@ -21,4 +21,16 @@ RSpec.describe FreelancerProfileExperience, type: :model do
       expect(freelancer_profile_experience.freelancer_profile).to eq(freelancer_profile)
     end
   end
+
+  context 'Methods' do
+    it '#update_start_date' do
+      freelancer_profile_experience.update(start_month: 2, start_year: 2015)
+      expect(freelancer_profile_experience.start_date).to eq Date.strptime('2015-2', '%Y-%m')
+    end
+
+    it '#update_end_date' do
+      freelancer_profile_experience.update(end_month: 2, end_year: 2020)
+      expect(freelancer_profile_experience.end_date).to eq Date.strptime('2020-2', '%Y-%m')
+    end
+  end
 end

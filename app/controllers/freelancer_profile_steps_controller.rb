@@ -17,25 +17,32 @@ class FreelancerProfileStepsController < ApplicationController
   def update
     @user = current_user
     @freelancer_profile = @user.freelancer_profile
-    skills_page_save if wizard_value(step) == :skills_page
-    professional_history_save if wizard_value(step) == :professional_history
-    if wizard_value(step) == :work_education_experience
+    skills_page_save ||
+      professional_history_save ||
       work_experience_save
-      render wizard_path(:work_education_experience)
-    else
-      render_wizard @user
-    end
   end
 
   def work_experience_save
+    return false unless wizard_value(step) == :work_education_experience
+
     FreelancerProfileExperience.create(checked_profile_experience_params)
+    render wizard_path(:work_education_experience)
+
+    true
   end
 
   def professional_history_save
+    return false unless wizard_value(step) == :professional_history
+
     @freelancer_profile.update_attributes(history_params)
+    render_wizard @user
+
+    true
   end
 
   def skills_page_save
+    return false unless wizard_value(step) == :skills_page
+
     @freelancer_profile&.freelancer_real_estate_skills&.destroy_all
     @freelancer_profile&.freelancer_asset_classes&.destroy_all
     real_estate_skill_params&.each do |skill|
@@ -44,6 +51,9 @@ class FreelancerProfileStepsController < ApplicationController
     asset_classes_params&.each do |asset|
       FreelancerAssetClass.create(freelancer_profile_id: @freelancer_profile.id, asset_class_id: asset)
     end
+    render_wizard @user
+
+    true
   end
 
   private
