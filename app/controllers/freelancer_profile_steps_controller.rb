@@ -43,7 +43,7 @@ class FreelancerProfileStepsController < ApplicationController
   def skills_page_save
     return false unless wizard_value(step) == :skills_page
 
-    destroy_old_records
+    destroy_old_re_skills_and_asset_classes
     real_estate_skill_params&.each do |skill|
       FreelancerRealEstateSkill.create(freelancer_profile_id: @freelancer_profile.id, real_estate_skill_id: skill)
     end
@@ -57,7 +57,7 @@ class FreelancerProfileStepsController < ApplicationController
 
   private
 
-  def destroy_old_records
+  def destroy_old_re_skills_and_asset_classes
     @freelancer_profile&.freelancer_real_estate_skills&.destroy_all
     @freelancer_profile&.freelancer_asset_classes&.destroy_all
   end
