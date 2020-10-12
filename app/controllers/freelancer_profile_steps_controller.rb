@@ -25,7 +25,7 @@ class FreelancerProfileStepsController < ApplicationController
   def work_experience_save
     return false unless wizard_value(step) == :work_education_experience
 
-    FreelancerProfileExperience.create(checked_profile_experience_params)
+    @freelancer_profile_experience = FreelancerProfileExperience.create(checked_profile_experience_params)
     render wizard_path(:work_education_experience)
 
     true

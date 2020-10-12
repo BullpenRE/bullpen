@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_08_073835) do
+ActiveRecord::Schema.define(version: 2020_10_12_111627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,19 @@ ActiveRecord::Schema.define(version: 2020_10_08_073835) do
     t.bigint "asset_class_id"
     t.index ["asset_class_id"], name: "index_freelancer_asset_classes_on_asset_class_id"
     t.index ["freelancer_profile_id"], name: "index_freelancer_asset_classes_on_freelancer_profile_id"
+  end
+
+  create_table "freelancer_profile_educations", force: :cascade do |t|
+    t.bigint "freelancer_profile_id", null: false
+    t.string "institution"
+    t.integer "degree"
+    t.string "course_of_study"
+    t.integer "graduation_year"
+    t.boolean "currently_studying", default: false
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["freelancer_profile_id"], name: "index_freelancer_profile_educations_on_freelancer_profile_id"
   end
 
   create_table "freelancer_profile_experiences", force: :cascade do |t|
@@ -123,6 +136,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_073835) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "freelancer_profile_educations", "freelancer_profiles"
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
   add_foreign_key "freelancer_profiles", "users"
 end
