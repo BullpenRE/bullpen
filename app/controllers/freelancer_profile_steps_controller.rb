@@ -2,6 +2,7 @@
 
 class FreelancerProfileStepsController < ApplicationController
   include Wicked::Wizard
+  include WorkEducationExperience
   steps :skills_page, :professional_history, :work_education_experience
 
   def show
@@ -19,13 +20,15 @@ class FreelancerProfileStepsController < ApplicationController
     @freelancer_profile = @user.freelancer_profile
     skills_page_save ||
       professional_history_save ||
-      work_experience_save
+      work_education_experience_save
   end
 
-  def work_experience_save
+  def work_education_experience_save
     return false unless wizard_value(step) == :work_education_experience
 
-    @freelancer_profile_experience = FreelancerProfileExperience.create(checked_profile_experience_params)
+    freelancer_profile_education_save
+    work_experience_save
+
     render wizard_path(:work_education_experience)
 
     true
@@ -73,25 +76,5 @@ class FreelancerProfileStepsController < ApplicationController
   def history_params
     params.require(:freelancer_profile)
       .permit(:professional_title, :professional_years_experience, :professional_summary)
-  end
-
-  def profile_experience_params
-    params.require(:freelancer_profile_experience)
-      .permit(:job_title, :company, :location, :description,
-              :start_month, :start_year, :end_month, :end_year, :current_job)
-  end
-
-  def checked_profile_experience_params
-    experience_params = if current_job?
-                          profile_experience_params.reject { |param| param == 'end_month' || param == 'end_year' }
-                        else
-                          profile_experience_params
-                        end
-
-    experience_params.merge(freelancer_profile_id: @freelancer_profile.id)
-  end
-
-  def current_job?
-    params[:freelancer_profile_experience][:current_job] == true
   end
 end

@@ -1,4 +1,4 @@
-<div class="modal fade" id="editWorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="editWorkExperienceModal-<%= freelancer_profile_experience.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -43,7 +43,7 @@
             <label class="custom-control-label" for="editCurrentJob">Current Job</label>
           </div>
         </div>
-        <div class="form-group collapse" id="editEndDateToggle">
+        <div class="form-group collapse <%= freelancer_profile_experience.current_job ? '' : 'show' %>" id="editEndDateToggle">
           <label for="endMonth" class="bp-input-label">End Date</label>
           <div class="row">
             <div class="col">
@@ -64,12 +64,13 @@
           <label for="editJobDescriptionTextarea" class="bp-input-label">Description</label>
           <%= f.text_area :description, class: "form-control", id: "editJobDescriptionTextarea", placeholder: "Enter your job description", rows: 3, required: true, value: freelancer_profile_experience.description %>
         </div>
+        <%= f.hidden_field :id, value: freelancer_profile_experience.id %>
       </div>
         <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
         <div>
-          <button type="button" class="btn btn-outline-danger mr-2">Delete</button>
-          <button type="button" class="btn btn-primary">Save</button>
+          <%= link_to 'Delete', wizard_path, data: { delete: true, exp_id: freelancer_profile_experience.id }, class: "btn btn-outline-danger mr-2" %>
+          <%= f.submit 'Save', class: 'btn btn-primary' %>
         </div>
       </div>
       <% end %>

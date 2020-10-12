@@ -1,0 +1,57 @@
+<!--Add Education Modal-->
+<div class="modal fade" id="addEducationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <%= form_for :freelancer_profile_education, url: wizard_path, method: :put do |f| %>
+        <div class="modal-body pt-0">
+          <h3 class="modal-title mb-4" id="modalLabel">Add Education</h3>
+          <div class="form-group">
+            <label for="institutionInput" class="bp-input-label">Institution</label>
+            <%= f.text_field :institution, class: "form-control", id: "institutionInput", placeholder: "Enter the school you attended" %>
+          </div>
+          <div class="form-group">
+            <label for="degreeSelect" class="bp-input-label">Degree</label>
+            <%= f.select :degree,
+                         options_for_select(FreelancerProfileEducation.degrees.keys.map { |w| [w.humanize, w] }),
+                         {}, class: 'form-control selectpicker',
+                         id: 'degreeSelect', required: true, 'data-style': "bp-btn-select-border",
+                         title: "Please make a selection" %>
+          </div>
+          <div class="form-group">
+            <label for="courseInput" class="bp-input-label">Course of Study</label>
+            <%= f.text_field :course_of_study, class: "form-control", id: "courseInput", placeholder: "Enter your degree program" %>
+          </div>
+          <div class="form-group">
+            <label for="graduationYear" class="bp-input-label">Graduation Year</label>
+            <div class="row mb-2 collapse show" id="graduationDateToggle">
+              <div class="col">
+                <%= f.select :graduation_year,
+                             options_for_select(FreelancerProfileEducation::AVAILABLE_YEARS),
+                             {}, class: 'form-control selectpicker',
+                             id: 'graduationYear', required: true, 'data-style': "bp-btn-select-border", title: "Year" %>
+            </div>
+            <div class="col"></div>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <%= f.check_box :currently_studying, class: "custom-control-input", id: "currentlyStudying", type: "button", 'data-toggle': "collapse", 'data-target': "#graduationDateToggle", 'aria-expanded': "false", 'aria-controls': "graduationDateToggle" %>
+            <label class="custom-control-label" for="currentlyStudying">Currently Studying</label>
+          </div>
+        </div>
+        <div class="form-group mb-0">
+          <label for="educationDescriptionTextarea" class="bp-input-label">Description (optional)</label>
+          <%= f.text_area :description, class: "form-control", id: "educationDescriptionTextarea", placeholder: "Enter a brief description", rows: 3, required: true %>
+        </div>
+      </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
+          <%= f.submit 'Save', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
