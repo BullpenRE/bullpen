@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module WorkEducationExperience
-
   def freelancer_profile_education_save
     return unless params[:freelancer_profile_education].present?
 
@@ -37,10 +36,10 @@ module WorkEducationExperience
 
   def checked_profile_education_params
     education_params = if currently_studying?
-                          profile_education_params.reject { |param| param == 'graduation_year' }
-                        else
-                          profile_education_params
-                        end
+                         profile_education_params.reject { |param| param == 'graduation_year' }
+                       else
+                         profile_education_params
+                       end
 
     education_params.merge(freelancer_profile_id: @freelancer_profile.id)
   end

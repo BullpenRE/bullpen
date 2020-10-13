@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FreelancerProfileEducation < ApplicationRecord
   belongs_to :freelancer_profile
 
@@ -6,6 +8,6 @@ class FreelancerProfileEducation < ApplicationRecord
   validates :course_of_study, presence: true
 
   AVAILABLE_YEARS = (1981..Time.now.year).reverse_each
-  enum degree: ['BS', 'BA', 'Masters', 'PHD']
+  enum degree: %w[BS BA Masters PHD]
 
 end
