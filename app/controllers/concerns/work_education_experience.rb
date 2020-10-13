@@ -25,13 +25,13 @@ module WorkEducationExperience
 
   def profile_experience_params
     params.require(:freelancer_profile_experience)
-      .permit(:job_title, :company, :location, :description,
-              :start_month, :start_year, :end_month, :end_year, :current_job)
+          .permit(:job_title, :company, :location, :description,
+                  :start_month, :start_year, :end_month, :end_year, :current_job)
   end
 
   def profile_education_params
     params.require(:freelancer_profile_education)
-      .permit(:institution, :degree, :course_of_study, :graduation_year, :currently_studying, :description)
+          .permit(:institution, :degree, :course_of_study, :graduation_year, :currently_studying, :description)
   end
 
   def checked_profile_education_params
