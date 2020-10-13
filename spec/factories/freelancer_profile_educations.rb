@@ -4,7 +4,7 @@ FactoryBot.define do
     institution { "MyString" }
     degree { 1 }
     course_of_study { "MyString" }
-    graduation_year { 1 }
+    graduation_year { 2011 }
     currently_studying { false }
     description { "MyText" }
   end

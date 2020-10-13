@@ -5,7 +5,11 @@ module WorkEducationExperience
   def freelancer_profile_education_save
     return unless params[:freelancer_profile_education].present?
 
-    FreelancerProfileEducation.create(checked_profile_education_params)
+    if education_profile_experience.present?
+      education_profile_experience.update(checked_profile_education_params)
+    else
+      FreelancerProfileEducation.create(checked_profile_education_params)
+    end
   end
 
   def work_experience_save
@@ -61,5 +65,9 @@ module WorkEducationExperience
 
   def work_profile_experience
     @freelancer_profile&.freelancer_profile_experiences&.find_by(id: params[:freelancer_profile_experience][:id])
+  end
+
+  def education_profile_experience
+    @freelancer_profile&.freelancer_profile_educations&.find_by(id: params[:freelancer_profile_education][:id])
   end
 end
