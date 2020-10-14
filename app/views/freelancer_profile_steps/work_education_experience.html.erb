@@ -28,11 +28,12 @@
               <div class="row bp-text-sm">
                 <div class="col-md"><%= work_exp.company %>, <%= work_exp.location %></div>
                 <div class="col-md">
-                  <%= work_exp.start_date.strftime("%B, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date.strftime("%B, %Y") %>
+                  <%= work_exp.start_date.strftime("%B, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%B, %Y") %>
                 </div>
               </div>
             </div>
-            <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editWorkExperienceModal"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
+            <%= render 'edit_work_experience', freelancer_profile_experience: work_exp %>
+            <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editWorkExperienceModal-<%= work_exp.id %>"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
           </div>
         <% end %>
       <% end %>
@@ -42,25 +43,39 @@
       <div class="bp-input-label">
         Education
       </div>
-      <div class="d-flex align-items-center justify-content-between mb-3">
-        <div class="w-100">
-          <div class="row">
-            <div class="col mb-1 text">Academy of Art University</div>
+      <% if @freelancer_profile.freelancer_profile_educations.present? %>
+        <% @freelancer_profile.freelancer_profile_educations.each do |education_exp| %>
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="w-100">
+              <div class="row">
+                <div class="col mb-1 text"><%= education_exp.institution %></div>
+              </div>
+              <div class="row bp-text-sm">
+                <div class="col-md"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
+                <div class="col-md"><%= education_exp.currently_studying.present? ? "Currently Studying" : education_exp.graduation_year %></div>
+              </div>
+            </div>
+            <%= render 'edit_education', freelancer_profile_education: education_exp %>
+            <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editEducationModal-<%= education_exp.id %>"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
           </div>
-          <div class="row bp-text-sm">
-            <div class="col-md">Masters, Web Design & New Media</div>
-            <div class="col-md">2019</div>
-          </div>
-        </div>
-        <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editEducationModal"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
-      </div>
+        <% end %>
+      <% end %>
       <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addEducationModal"><i class="fas fa-plus mr-2"></i>Add Education</button>
     </div>
     <div class="d-flex justify-content-between">
       <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
-      <button type="button" class="btn btn-primary">Next</button>
+      <%= link_to 'Next', next_wizard_path, class: "btn btn-primary", id: "NextBtn" %>
     </div>
   </div>
 </div>
-<%= render 'edit_work_experience' %>
+
+<script>
+    $('#NextBtn').click(function(event){
+      if (<%= @freelancer_profile.freelancer_profile_educations.blank? || @freelancer_profile.freelancer_profile_experiences.blank? %>) {
+        event.preventDefault();
+      }
+    });
+</script>
+
 <%= render 'add_work_experience' %>
+<%= render 'add_education' %>
