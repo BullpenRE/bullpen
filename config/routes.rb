@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   end
 
   resources :freelancer_profile_steps
+  resources :employer_profile_steps
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   post '/check_users_email', to: 'check_email#check_users_email'
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?

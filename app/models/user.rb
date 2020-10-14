@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :freelancer_real_estate_skills, through: :freelancer_profile
   has_many :freelancer_asset_classes, through: :freelancer_profile
 
+  has_one :employer_profile, dependent: :destroy
+
   def self.ransackable_scopes(_auth_object = nil)
     [:confirmed]
   end

@@ -1,0 +1,43 @@
+<div class="align-items-center bg-white border-bottom shadow-sm mb-5">
+  <div class="text-left mt-2 mb-2 ml-5">
+    <%= image_pack_tag('media/images/bullpen-email-logo.png', size: "175x55") %>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="progress bg-white shadow-sm mx-auto" style="max-width: 500px;">
+    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+  <div class="text-secondary font-weight-bold my-1 text-center">Step 1 of 5</div>
+
+  <div class="container">
+    <div class="bp-card mb-5 mx-auto" style="max-width: 500px;">
+      <%= form_for @employer_profile, url: wizard_path, method: :put do |f| %>
+      <div class="mb-4">
+        <h2>Tell us about your company.</h2>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="companyNameInput" class="bp-input-label">Company Name</label>
+        <%= f.text_field :company_name, class: "form-control", id: "companyNameInput", placeholder: "Enter your company name", required: true %>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="companyWebsiteInput" class="bp-input-label">Website</label>
+        <%= f.text_field :company_website, class: "form-control", id: "companyWebsiteInput", placeholder: "Enter your company web site", required: true %>
+      </div>
+
+      <div class="form-group mb-5">
+        <label for="companyRoleInput" class="bp-input-label">What is your role?</label>
+        <%= f.text_field :role_in_company, class: "form-control", id: "companyRoleInput", placeholder: "Enter your role", required: true %>
+      </div>
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-link px-0 invisible">Back</button>
+          <%= f.submit 'Next', class: 'btn btn-primary' %>
+        </div>
+    </div>
+      <% end %>
+  </div>
+</div>

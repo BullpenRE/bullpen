@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(version: 2020_10_12_111627) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "employer_profiles", force: :cascade do |t|
+    t.string "company_name"
+    t.string "company_website"
+    t.string "role_in_company"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_employer_profiles_on_user_id"
+  end
+
   create_table "freelancer_asset_classes", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -135,6 +145,8 @@ ActiveRecord::Schema.define(version: 2020_10_12_111627) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+  
+  add_foreign_key "employer_profiles", "users"
 
   add_foreign_key "freelancer_profile_educations", "freelancer_profiles"
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
