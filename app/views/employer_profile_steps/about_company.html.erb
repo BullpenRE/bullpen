@@ -21,26 +21,23 @@
 
       <div class="form-group mb-4">
         <label for="companyNameInput" class="bp-input-label">Company Name</label>
-        <%= f.text_field :companyNameInput, class: "form-control", id: "companyNameInput", placeholder: "Enter your company name", required: true %>
+        <%= f.text_field :company_name, class: "form-control", id: "companyNameInput", placeholder: "Enter your company name", required: true %>
       </div>
 
       <div class="form-group mb-4">
         <label for="companyWebsiteInput" class="bp-input-label">Website</label>
-        <%= f.text_field :companyWebsiteInput, class: "form-control", id: "companyWebsiteInput", placeholder: "Enter your company web site", required: true %>
+        <%= f.text_field :company_website, class: "form-control", id: "companyWebsiteInput", placeholder: "Enter your company web site", required: true %>
       </div>
 
       <div class="form-group mb-5">
         <label for="companyRoleInput" class="bp-input-label">What is your role?</label>
-        <%= f.text_field :companyRoleInput, class: "form-control", id: "companyRoleInput", placeholder: "Enter your role", required: true %>
+        <%= f.text_field :role_in_company, class: "form-control", id: "companyRoleInput", placeholder: "Enter your role", required: true %>
       </div>
-      <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-primary">Next</button>
-      </div>
-    </div>
         <div class="d-flex justify-content-between">
           <button type="button" class="btn btn-link px-0 invisible">Back</button>
           <%= f.submit 'Next', class: 'btn btn-primary' %>
         </div>
+    </div>
       <% end %>
   </div>
 </div>

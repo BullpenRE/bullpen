@@ -16,11 +16,17 @@ class EmployerProfileStepsController < ApplicationController
   end
 
   def update
+    @user = current_user
+    @employer_profile = @user.employer_profile
 
+    #skills_page_save if wizard_value(step) == :skills_page
+    about_company_save if wizard_value(step) == :about_company
+
+    render_wizard @user
   end
 
-  def about_company
-
+  def about_company_save
+    @employer_profile.update_attributes(company_params)
   end
 
   def company_params
