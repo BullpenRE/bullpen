@@ -17,7 +17,7 @@
           <div class="form-group">
             <label for="degreeSelect" class="bp-input-label">Degree</label>
             <%= f.select :degree,
-                         options_for_select(FreelancerProfileEducation.degrees.keys.map { |w| [w.humanize, w] }),
+                         options_for_select(FreelancerProfileEducation.degrees.keys),
                          {}, class: 'form-control selectpicker',
                          id: 'degreeSelect', required: true, 'data-style': "bp-btn-select-border",
                          title: "Please make a selection" %>
@@ -33,7 +33,7 @@
                 <%= f.select :graduation_year,
                              options_for_select(FreelancerProfileEducation::AVAILABLE_YEARS),
                              {}, class: 'form-control selectpicker',
-                             id: 'graduationYear', required: true, 'data-style': "bp-btn-select-border", title: "Year" %>
+                             id: 'graduationYear', 'data-style': "bp-btn-select-border", title: "Year" %>
             </div>
             <div class="col"></div>
           </div>

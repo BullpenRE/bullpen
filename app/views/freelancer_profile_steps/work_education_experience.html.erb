@@ -28,7 +28,7 @@
               <div class="row bp-text-sm">
                 <div class="col-md"><%= work_exp.company %>, <%= work_exp.location %></div>
                 <div class="col-md">
-                  <%= work_exp.start_date.strftime("%B, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date.strftime("%B, %Y") %>
+                  <%= work_exp.start_date.strftime("%B, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%B, %Y") %>
                 </div>
               </div>
             </div>

@@ -13,6 +13,7 @@ RSpec.describe FreelancerProfileEducation, type: :model do
     it { is_expected.to validate_presence_of(:institution) }
     it { is_expected.to validate_presence_of(:course_of_study) }
     it { is_expected.to validate_presence_of(:degree) }
+    it { should belong_to(:freelancer_profile) }
   end
 
   context 'Relationships' do
