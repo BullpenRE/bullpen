@@ -61,6 +61,19 @@ if AssetClass.none?
                     ])
 end
 
+if Sector.none?
+  Sector.create([
+                    { description: 'Office' },
+                    { description: 'Industrial' },
+                    { description: 'Retail' },
+                    { description: 'Student Housing' },
+                    { description: 'Multifamily' },
+                    { description: 'Medical' },
+                    { description: 'LIHTC' },
+                    { description: 'HTC' }
+                ])
+end
+
 if Rails.env.development? && AdminUser.none?
   AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
 end
