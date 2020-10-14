@@ -3,7 +3,6 @@
 class EmployerProfile < ApplicationRecord
   belongs_to :user
 
-  validates :company_name, presence: true
-  validates :company_website, presence: true
-  validates :role_in_company, presence: true
+  enum available_employee_counts: ['1-10', '11-50', '51-100', '101+']
+
 end

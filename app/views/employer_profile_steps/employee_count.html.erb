@@ -1,3 +1,5 @@
+<%= render 'logo' %>
+
 <!--Progress Meter, Step 2-->
 <div class="container mb-4">
   <div class="progress bg-white shadow-sm mx-auto" style="max-width: 500px;">
@@ -9,28 +11,26 @@
 <!--Content Card, Step 2-->
 <div class="container">
   <div class="bp-card mb-5 mx-auto" style="max-width: 500px;">
+    <%= form_for @employer_profile, url: wizard_path, method: :put do |f| %>
     <div class="mb-4">
       <h2>How many people work at your company?</h2>
     </div>
-    <div class="custom-control custom-radio mb-3">
-      <input type="radio" id="employeeCount1" name="employeeCountRadio" class="custom-control-input">
-      <label class="custom-control-label" for="employeeCount1">1-10</label>
-    </div>
-    <div class="custom-control custom-radio mb-3">
-      <input type="radio" id="employeeCount2" name="employeeCountRadio" class="custom-control-input">
-      <label class="custom-control-label" for="employeeCount2">11-50</label>
-    </div>
-    <div class="custom-control custom-radio mb-3">
-      <input type="radio" id="employeeCount3" name="employeeCountRadio" class="custom-control-input">
-      <label class="custom-control-label" for="employeeCount3">51-100</label>
-    </div>
-    <div class="custom-control custom-radio mb-5">
-      <input type="radio" id="employeeCount4" name="employeeCountRadio" class="custom-control-input">
-      <label class="custom-control-label" for="employeeCount4">100+</label>
-    </div>
+
+      <% EmployerProfile.available_employee_counts.each do |employee_count| %>
+        <div class="custom-control custom-radio mb-3">
+          <%= f.radio_button :employee_count, employee_count[1],
+                             :class => "custom-control-input",
+                             :id => "employeeCount#{employee_count[1]}",
+                             :value => "#{employee_count[1]}" %>
+          <%= f.label employee_count[0], :class => "custom-control-label",
+                                             :for => "employeeCount#{employee_count[1]}" %>
+        </div>
+      <% end %>
+
     <div class="d-flex justify-content-between">
-      <button type="button" class="btn btn-link px-0">Back</button>
-      <button type="button" class="btn btn-primary">Next</button>
+      <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
+      <%= f.submit 'Next', class: 'btn btn-primary' %>
     </div>
+      <% end %>
   </div>
 </div>
