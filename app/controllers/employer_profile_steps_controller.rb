@@ -20,7 +20,7 @@ class EmployerProfileStepsController < ApplicationController
     @employer_profile = @user.employer_profile
 
     about_company_save ||
-    employee_count_save ||
+      employee_count_save ||
         type_of_work_save
   end
 
