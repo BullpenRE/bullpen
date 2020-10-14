@@ -8,9 +8,7 @@ RSpec.describe EmployerProfile, type: :model do
     expect(employer_profile).to be_valid
   end
 
-  context 'Validations' do
-    it { should belong_to(:user) }
-  end
+  context 'Validations'
 
   context 'Relationships' do
     it 'belongs_to a user' do
