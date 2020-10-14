@@ -19,7 +19,6 @@ class EmployerProfileStepsController < ApplicationController
     @user = current_user
     @employer_profile = @user.employer_profile
 
-    #skills_page_save if wizard_value(step) == :skills_page
     about_company_save if wizard_value(step) == :about_company
 
     render_wizard @user
