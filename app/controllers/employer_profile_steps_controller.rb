@@ -21,7 +21,7 @@ class EmployerProfileStepsController < ApplicationController
 
     about_company_save ||
       employee_count_save ||
-        type_of_work_save
+      type_of_work_save
   end
 
   def about_company_save
