@@ -21,31 +21,25 @@
                          {}, class: 'form-control selectpicker',
                          id: 'editDegreeSelect', 'data-style': "bp-btn-select-border",
                          title: "Please make a selection" %>
-            <script>
-              $('#editDegreeSelect').selectpicker('val', 'Masters');
-            </script>
           </div>
           <div class="form-group">
             <label for="editCourseInput" class="bp-input-label">Course of Study</label>
             <%= f.text_field :course_of_study, class: "form-control", id: "editCourseInput", placeholder: "Enter your degree program", value: freelancer_profile_education.course_of_study %>
           </div>
           <div class="form-group">
-            <label for="editGraduationYear" class="bp-input-label">Graduation Year</label>
-            <div class="row mb-2 collapse show" id="editGraduationDateToggle">
+            <label for="editGraduationYear-<%=freelancer_profile_education.id %>" class="bp-input-label">Graduation Year</label>
+            <div class="row mb-2 collapse <%= freelancer_profile_education.currently_studying ? '' : 'show' %>" id="editGraduationDateToggle-<%= freelancer_profile_education.id %>">
               <div class="col">
                 <%= f.select :graduation_year,
                              options_for_select(FreelancerProfileEducation::AVAILABLE_YEARS, freelancer_profile_education.graduation_year),
                              {}, class: 'form-control selectpicker',
-                             id: 'editGraduationYear', 'data-style': "bp-btn-select-border", title: "Year" %>
-              <script>
-                $('#editGraduationYear').selectpicker('val', '2019');
-              </script>
+                             id: "editGraduationYear-#{freelancer_profile_education.id}", 'data-style': "bp-btn-select-border", title: "Year" %>
               </div>
               <div class="col"></div>
             </div>
             <div class="custom-control custom-checkbox">
-              <%= f.check_box :currently_studying, class: "custom-control-input", id: "editCurrentlyStudying", type: "button", 'data-toggle': "collapse", 'data-target': "#editGraduationDateToggle", 'aria-expanded': "false", 'aria-controls': "editGraduationDateToggle" %>
-              <label class="custom-control-label" for="editCurrentlyStudying">Currently Studying</label>
+              <%= f.check_box :currently_studying, class: "custom-control-input #{freelancer_profile_education.currently_studying ? 'collapsed' : ''}", id: "editCurrentlyStudying-#{freelancer_profile_education.id}", type: "button", 'data-toggle': "collapse", 'data-target': "#editGraduationDateToggle-#{freelancer_profile_education.id}", 'aria-expanded': "false", 'aria-controls': "editGraduationDateToggle-#{freelancer_profile_education.id}", checked: "#{freelancer_profile_education.currently_studying ? 'checked' : 'false'}" %>
+              <label class="custom-control-label" for="editCurrentlyStudying-<%=freelancer_profile_education.id %>">Currently Studying</label>
             </div>
           </div>
           <div class="form-group mb-0">
@@ -57,7 +51,7 @@
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
           <div>
-            <button type="button" class="btn btn-outline-danger mr-2">Delete</button>
+            <%= f.submit 'Delete', class: 'btn btn-outline-danger mr-2' %>
             <%= f.submit 'Save', class: 'btn btn-primary' %>
           </div>
         </div>

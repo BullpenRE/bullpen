@@ -39,11 +39,11 @@
             </div>
           </div>
           <div class="custom-control custom-checkbox">
-            <%= f.check_box :current_job, class: "custom-control-input", id: "editCurrentJob", type: "button", 'data-toggle': "collapse", 'data-target': "#editEndDateToggle", 'aria-expanded': "false", 'aria-controls': "editEndDateToggle", checked: "checked" %>
-            <label class="custom-control-label" for="editCurrentJob">Current Job</label>
+            <%= f.check_box :current_job, class: "custom-control-input #{freelancer_profile_experience.current_job ? 'collapsed' : ''}", id: "editCurrentJob-#{freelancer_profile_experience.id}", type: "button", 'data-toggle': "collapse", 'data-target': "#editEndDateToggle-#{freelancer_profile_experience.id}", 'aria-expanded': "false", 'aria-controls': "editEndDateToggle-#{freelancer_profile_experience.id}", checked: "#{freelancer_profile_experience.current_job ? 'checked' : 'false'}" %>
+            <label class="custom-control-label" for="editCurrentJob-<%= freelancer_profile_experience.id %>">Current Job</label>
           </div>
         </div>
-        <div class="form-group collapse <%= freelancer_profile_experience.current_job ? '' : 'show' %>" id="editEndDateToggle">
+        <div class="form-group collapse <%= freelancer_profile_experience.current_job ? '' : 'show' %>" id="editEndDateToggle-<%= freelancer_profile_experience.id %>">
           <label for="endMonth" class="bp-input-label">End Date</label>
           <div class="row">
             <div class="col">
@@ -69,7 +69,7 @@
         <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
         <div>
-          <%= link_to 'Delete', wizard_path, data: { delete: true, exp_id: freelancer_profile_experience.id }, class: "btn btn-outline-danger mr-2" %>
+          <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2" %>
           <%= f.submit 'Save', class: 'btn btn-primary' %>
         </div>
       </div>

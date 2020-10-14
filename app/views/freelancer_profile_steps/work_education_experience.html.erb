@@ -64,10 +64,18 @@
     </div>
     <div class="d-flex justify-content-between">
       <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
-      <button type="button" class="btn btn-primary">Next</button>
+      <%= link_to 'Next', next_wizard_path, class: "btn btn-primary", id: "NextBtn" %>
     </div>
   </div>
 </div>
+
+<script>
+    $('#NextBtn').click(function(event){
+      if (<%= @freelancer_profile.freelancer_profile_educations.blank? || @freelancer_profile.freelancer_profile_experiences.blank? %>) {
+        event.preventDefault();
+      }
+    });
+</script>
 
 <%= render 'add_work_experience' %>
 <%= render 'add_education' %>

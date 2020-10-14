@@ -4,7 +4,9 @@ module WorkEducationExperience
   def freelancer_profile_education_save
     return unless params[:freelancer_profile_education].present?
 
-    if education_profile_experience.present?
+    if education_profile_experience.present? && params[:commit] == 'Delete'
+      education_profile_experience.destroy
+    elsif education_profile_experience.present?
       education_profile_experience.update(checked_profile_education_params)
     else
       FreelancerProfileEducation.create(checked_profile_education_params)
@@ -14,7 +16,9 @@ module WorkEducationExperience
   def work_experience_save
     return unless params[:freelancer_profile_experience].present?
 
-    if work_profile_experience.present?
+    if work_profile_experience.present? && params[:commit] == 'Delete'
+      work_profile_experience.destroy
+    elsif work_profile_experience.present?
       work_profile_experience.update(checked_profile_experience_params)
     else
       FreelancerProfileExperience.create(checked_profile_experience_params)
