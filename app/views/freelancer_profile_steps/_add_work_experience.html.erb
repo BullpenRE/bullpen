@@ -40,7 +40,6 @@
           </div>
           <div class="custom-control custom-checkbox">
             <%= f.check_box :current_job, class: "custom-control-input", id: "currentJob", type: "button", 'data-toggle': "collapse", 'data-target': "#endDateToggle", 'aria-expanded': "false", 'aria-controls': "endDateToggle" %>
-            <input type="checkbox" class="custom-control-input" id="currentJob" type="button" data-toggle="collapse" data-target="#endDateToggle" aria-expanded="false" aria-controls="endDateToggle">
             <label class="custom-control-label" for="currentJob">Current Job</label>
           </div>
         </div>
@@ -51,13 +50,13 @@
               <%= f.select :end_month,
                            options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES),
                            {}, class: 'form-control selectpicker',
-                           id: 'startMonth', 'data-style': "bp-btn-select-border", title: "Month" %>
+                           id: 'endMonth', 'data-style': "bp-btn-select-border", title: "Month" %>
             </div>
             <div class="col">
               <%= f.select :end_year,
                            options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS),
                            {}, class: 'form-control selectpicker',
-                           id: 'startYear', 'data-style': "bp-btn-select-border", title: "Year" %>
+                           id: 'endYear', 'data-style': "bp-btn-select-border", title: "Year" %>
             </div>
           </div>
         </div>

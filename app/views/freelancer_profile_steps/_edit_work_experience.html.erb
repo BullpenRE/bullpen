@@ -1,4 +1,4 @@
-<div class="modal fade" id="editWorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="editWorkExperienceModal-<%= freelancer_profile_experience.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -6,152 +6,74 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body pt-0">
+      <%= form_for :freelancer_profile_experience, url: wizard_path, method: :put do |f| %>
+        <div class="modal-body pt-0">
         <h3 class="modal-title mb-4" id="modalLabel">Edit Experience</h3>
+
         <div class="form-group">
           <label for="editJobTitleInput" class="bp-input-label">Job Title</label>
-          <input type="text" class="form-control" id="editJobTitleInput" placeholder="Enter your job title" value="Market Analyst">
+          <%= f.text_field :job_title, class: "form-control", id: "editJobTitleInput", placeholder: "Enter your job title", required: true, value: freelancer_profile_experience.job_title  %>
         </div>
         <div class="form-group">
           <label for="editCompanyInput" class="bp-input-label">Company</label>
-          <input type="text" class="form-control" id="editCompanyInput" placeholder="Enter the company name" value="Bullpen">
+          <%= f.text_field :company, class: "form-control", id: "editCompanyInput", placeholder: "Enter the company name", required: true, value: freelancer_profile_experience.company  %>
         </div>
         <div class="form-group">
           <label for="editLocationInput" class="bp-input-label">Location</label>
-          <input type="text" class="form-control" id="editLocationInput" placeholder="e.g. San Francisco, CA" value="San Francisco, CA">
+          <%= f.text_field :location, class: "form-control", id: "editLocationInput", placeholder: "e.g. San Francisco, CA", required: true, value: freelancer_profile_experience.location %>
         </div>
         <div class="form-group">
           <label for="editStartMonth" class="bp-input-label">Start Date</label>
           <div class="row mb-3">
             <div class="col">
-              <select class="form-control selectpicker" id="editStartMonth" data-style="bp-btn-select-border" title="Month">
-                <option value="&quot;January&quot;">January</option>
-                <option value="&quot;February&quot;">February</option>
-                <option value="&quot;March&quot;">March</option>
-                <option value="&quot;April&quot;">April</option>
-                <option value="&quot;May&quot;">May</option>
-                <option value="&quot;June&quot;">June</option>
-                <option value="&quot;July&quot;">July</option>
-                <option value="&quot;August&quot;">August</option>
-                <option value="&quot;September&quot;">September</option>
-                <option value="&quot;October&quot;">October</option>
-                <option value="&quot;November&quot;">November</option>
-                <option value="&quot;December&quot;">December</option>
-              </select>
-              <script>
-                  $('#editStartMonth').selectpicker('val', '"July"');
-              </script>
+              <%= f.select :start_month,
+                           options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES, freelancer_profile_experience.start_date.month),
+                           {}, class: 'form-control selectpicker',
+                           id: 'editStartMonth', required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
             </div>
             <div class="col">
-              <select class="form-control selectpicker" id="editStartYear" data-style="bp-btn-select-border" title="Year">
-                <option value="2020">2020</option>
-                <option value="2019" selected>2019</option>
-                <option value="2018">2018</option>
-                <option value="2017">2017</option>
-                <option value="2016">2016</option>
-                <option value="2015">2015</option>
-                <option value="2014">2014</option>
-                <option value="2013">2013</option>
-                <option value="2012">2012</option>
-                <option value="2011">2011</option>
-                <option value="2010">2010</option>
-                <option value="2009">2009</option>
-                <option value="2008">2008</option>
-                <option value="2007">2007</option>
-                <option value="2006">2006</option>
-                <option value="2005">2005</option>
-                <option value="2004">2004</option>
-                <option value="2003">2003</option>
-                <option value="2002">2002</option>
-                <option value="2001">2001</option>
-                <option value="2000">2000</option>
-                <option value="1999">1999</option>
-                <option value="1998">1998</option>
-                <option value="1997">1997</option>
-                <option value="1996">1996</option>
-                <option value="1995">1995</option>
-                <option value="1994">1994</option>
-                <option value="1993">1993</option>
-                <option value="1992">1992</option>
-                <option value="1991">1991</option>
-              </select>
-              <script>
-                  $('#editStartYear').selectpicker('val', '2019');
-              </script>
+              <%= f.select :start_year,
+                           options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS, freelancer_profile_experience.start_date.year),
+                           {}, class: 'form-control selectpicker',
+                           id: 'editStartYear', required: true, 'data-style': "bp-btn-select-border", title: "Year" %>
             </div>
           </div>
           <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="editCurrentJob" type="button" data-toggle="collapse" data-target="#editEndDateToggle" aria-expanded="false" aria-controls="editEndDateToggle" checked="checked">
+            <%= f.check_box :current_job, class: "custom-control-input", id: "editCurrentJob", type: "button", 'data-toggle': "collapse", 'data-target': "#editEndDateToggle", 'aria-expanded': "false", 'aria-controls': "editEndDateToggle", checked: "checked" %>
             <label class="custom-control-label" for="editCurrentJob">Current Job</label>
           </div>
         </div>
-        <div class="form-group collapse" id="editEndDateToggle">
+        <div class="form-group collapse <%= freelancer_profile_experience.current_job ? '' : 'show' %>" id="editEndDateToggle">
           <label for="endMonth" class="bp-input-label">End Date</label>
           <div class="row">
             <div class="col">
-              <select class="form-control selectpicker" id="editEndMonth" data-style="bp-btn-select-border" title="Month">
-                <option value="&quot;January&quot;">January</option>
-                <option value="&quot;February&quot;">February</option>
-                <option value="&quot;March&quot;">March</option>
-                <option value="&quot;April&quot;">April</option>
-                <option value="&quot;May&quot;">May</option>
-                <option value="&quot;June&quot;">June</option>
-                <option value="&quot;July&quot;">July</option>
-                <option value="&quot;August&quot;">August</option>
-                <option value="&quot;September&quot;">September</option>
-                <option value="&quot;October&quot;">October</option>
-                <option value="&quot;November&quot;">November</option>
-                <option value="&quot;December&quot;">December</option>
-              </select>
+              <%= f.select :end_month,
+                           options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES, freelancer_profile_experience.end_date&.month),
+                           {}, class: 'form-control selectpicker',
+                           id: 'editEndMonth', 'data-style': "bp-btn-select-border", title: "Month" %>
             </div>
             <div class="col">
-              <select class="form-control selectpicker" id="editEndYear" data-style="bp-btn-select-border" title="Year">
-                <option value="2020">2020</option>
-                <option value="2019">2019</option>
-                <option value="2018">2018</option>
-                <option value="2017">2017</option>
-                <option value="2016">2016</option>
-                <option value="2015">2015</option>
-                <option value="2014">2014</option>
-                <option value="2013">2013</option>
-                <option value="2012">2012</option>
-                <option value="2011">2011</option>
-                <option value="2010">2010</option>
-                <option value="2009">2009</option>
-                <option value="2008">2008</option>
-                <option value="2007">2007</option>
-                <option value="2006">2006</option>
-                <option value="2005">2005</option>
-                <option value="2004">2004</option>
-                <option value="2003">2003</option>
-                <option value="2002">2002</option>
-                <option value="2001">2001</option>
-                <option value="2000">2000</option>
-                <option value="1999">1999</option>
-                <option value="1998">1998</option>
-                <option value="1997">1997</option>
-                <option value="1996">1996</option>
-                <option value="1995">1995</option>
-                <option value="1994">1994</option>
-                <option value="1993">1993</option>
-                <option value="1992">1992</option>
-                <option value="1991">1991</option>
-              </select>
+              <%= f.select :end_year,
+                           options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS, freelancer_profile_experience.end_date&.year),
+                           {}, class: 'form-control selectpicker',
+                           id: 'editEndYear', 'data-style': "bp-btn-select-border", title: "Year" %>
             </div>
           </div>
         </div>
         <div class="form-group mb-0">
           <label for="editJobDescriptionTextarea" class="bp-input-label">Description</label>
-          <textarea class="form-control" id="editJobDescriptionTextarea" rows="3" placeholder="Enter your job description">I did some stuff.</textarea>
+          <%= f.text_area :description, class: "form-control", id: "editJobDescriptionTextarea", placeholder: "Enter your job description", rows: 3, required: true, value: freelancer_profile_experience.description %>
         </div>
+        <%= f.hidden_field :id, value: freelancer_profile_experience.id %>
       </div>
-      <div class="modal-footer justify-content-between">
+        <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
         <div>
-          <button type="button" class="btn btn-outline-danger mr-2">Delete</button>
-          <button type="button" class="btn btn-primary">Save</button>
+          <%= link_to 'Delete', wizard_path, data: { delete: true, exp_id: freelancer_profile_experience.id }, class: "btn btn-outline-danger mr-2" %>
+          <%= f.submit 'Save', class: 'btn btn-primary' %>
         </div>
       </div>
+      <% end %>
     </div>
   </div>
 </div>
