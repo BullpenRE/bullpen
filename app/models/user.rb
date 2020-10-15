@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   scope :confirmed, -> { where.not(confirmed_at: nil) }
+  scope :no_freelancer_data, -> { left_joins(:freelancer_profile).where(freelancer_profiles: {user_id: nil}) }
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable
   validates :first_name, presence: true

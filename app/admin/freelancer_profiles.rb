@@ -5,7 +5,8 @@ ActiveAdmin.register FreelancerProfile do
 
   filter :user_email, as: :string, label: 'User Email'
 
-  permit_params :professional_summary,
+  permit_params :user_id,
+                :professional_summary,
                 :professional_title,
                 :professional_years_experience
 
@@ -43,7 +44,14 @@ ActiveAdmin.register FreelancerProfile do
   end
 
   form do |f|
-    f.inputs "#{f.object.user.email} Freelancer Profile" do
+    f.inputs "#{f.object&.user&.email || 'New'} Freelancer Profile" do
+
+      if f.object.new_record?
+        f.input :user,
+                as: :select,
+                collection: User.no_freelancer_data.order(:email).pluck(:email, :id),
+                label: "User (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
+      end
       f.input :professional_title
       f.input :professional_years_experience
       f.input :professional_summary
@@ -54,21 +62,27 @@ ActiveAdmin.register FreelancerProfile do
   end
 
   controller do
+    def create
+      error_message = nil
+      freelancer_profile = FreelancerProfile.new(permitted_params[:freelancer_profile])
+
+      ApplicationRecord.transaction do
+        freelancer_profile.save!
+        update_asset_classes_and_real_estate_skills(freelancer_profile)
+      rescue StandardError => e
+        error_message = e.message
+      end
+      message = { alert: error_message } if error_message
+      message ||= { notice: 'Successfully created!' }
+
+      redirect_to admin_freelancer_profile_path(freelancer_profile), flash: message
+    end
+
     def update
       error_message = nil
 
       freelancer_profile = FreelancerProfile.find(params[:id])
-      freelancer_profile.freelancer_asset_classes.destroy_all
-      freelancer_profile.freelancer_real_estate_skills.destroy_all
-      freelancer_profile.reload
-      params[:freelancer_profile][:asset_class_ids].reject(&:empty?).each do |asset_class_id|
-        freelancer_profile.freelancer_asset_classes.create(asset_class_id: asset_class_id.to_i)
-      end
-      params[:freelancer_profile][:real_estate_skill_ids].reject(&:empty?).each do |real_estate_skill_id|
-        freelancer_profile.freelancer_real_estate_skills.create(real_estate_skill_id: real_estate_skill_id)
-      end
-      params[:freelancer_profile].delete(:asset_class_ids)
-      params[:freelancer_profile].delete(:real_estate_skill_ids)
+      update_asset_classes_and_real_estate_skills(freelancer_profile)
 
       ApplicationRecord.transaction do
         freelancer_profile.update!(permitted_params[:freelancer_profile])
@@ -80,6 +94,22 @@ ActiveAdmin.register FreelancerProfile do
       message ||= { notice: 'Successfully updated!' }
 
       redirect_to admin_freelancer_profile_path(freelancer_profile), flash: message
+    end
+
+    def update_asset_classes_and_real_estate_skills(freelancer_profile)
+      freelancer_profile.freelancer_asset_classes.destroy_all
+      freelancer_profile.freelancer_real_estate_skills.destroy_all
+      freelancer_profile.reload
+
+      params[:freelancer_profile][:asset_class_ids].reject(&:empty?).each do |asset_class_id|
+        freelancer_profile.freelancer_asset_classes.create(asset_class_id: asset_class_id.to_i)
+      end
+      params[:freelancer_profile][:real_estate_skill_ids].reject(&:empty?).each do |real_estate_skill_id|
+        freelancer_profile.freelancer_real_estate_skills.create(real_estate_skill_id: real_estate_skill_id)
+      end
+
+      params[:freelancer_profile].delete(:asset_class_ids)
+      params[:freelancer_profile].delete(:real_estate_skill_ids)
     end
   end
 end
