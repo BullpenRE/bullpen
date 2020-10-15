@@ -5,7 +5,9 @@ ActiveAdmin.register FreelancerProfile do
 
   filter :user_email, as: :string, label: 'User Email'
 
-  permit_params :professional_summary, :professional_title, :professional_years_experience
+  permit_params :professional_summary,
+                :professional_title,
+                :professional_years_experience
 
   index do
     column :user
@@ -26,13 +28,16 @@ ActiveAdmin.register FreelancerProfile do
       row :professional_years_experience
       row :professional_summary
       row 'Asset Classes' do
-        freelancer_profile.freelancer_asset_classes.map{|f_a_c| f_a_c.asset_class.description }.to_sentence
+        freelancer_profile.asset_classes.pluck(:description)
       end
       row 'Real Estate Skills' do
-        freelancer_profile.freelancer_real_estate_skills.map{|f_r_e_s| f_r_e_s.real_estate_skill.description }.to_sentence
+        freelancer_profile.real_estate_skills.pluck(:description)
       end
       row 'Education' do
         freelancer_profile.freelancer_profile_educations.map{|f_e| "#{'<i>(current)</i> ' if f_e.currently_studying}#{f_e.graduation_year} #{f_e.degree} in #{f_e.course_of_study} at #{f_e.institution}" }.join('<br>').html_safe
+      end
+      row 'Experience' do
+        freelancer_profile.freelancer_profile_experiences.map{|f_e| "#{'<i>(current)</i> ' if f_e.current_job}#{f_e.start_date.year}#{"-#{f_e.end_date.year}" if f_e.end_date && f_e.end_date.year != f_e.start_date.year} #{f_e.job_title} at #{f_e.company}" }.join('<br>').html_safe
       end
     end
   end
@@ -42,8 +47,39 @@ ActiveAdmin.register FreelancerProfile do
       f.input :professional_title
       f.input :professional_years_experience
       f.input :professional_summary
+      f.input :asset_classes, as: :check_boxes, collection: AssetClass.order(:description).pluck(:description, :id)
+      f.input :real_estate_skills, as: :check_boxes, collection: RealEstateSkill.order(:description).pluck(:description, :id)
       f.actions
     end
   end
 
+  controller do
+    def update
+      error_message = nil
+
+      freelancer_profile = FreelancerProfile.find(params[:id])
+      freelancer_profile.freelancer_asset_classes.destroy_all
+      freelancer_profile.freelancer_real_estate_skills.destroy_all
+      freelancer_profile.reload
+      params[:freelancer_profile][:asset_class_ids].reject(&:empty?).each do |asset_class_id|
+        freelancer_profile.freelancer_asset_classes.create(asset_class_id: asset_class_id.to_i)
+      end
+      params[:freelancer_profile][:real_estate_skill_ids].reject(&:empty?).each do |real_estate_skill_id|
+        freelancer_profile.freelancer_real_estate_skills.create(real_estate_skill_id: real_estate_skill_id)
+      end
+      params[:freelancer_profile].delete(:asset_class_ids)
+      params[:freelancer_profile].delete(:real_estate_skill_ids)
+
+      ApplicationRecord.transaction do
+        freelancer_profile.update!(permitted_params[:freelancer_profile])
+      rescue StandardError => e
+        error_message = e.message
+      end
+
+      message = { alert: error_message } if error_message
+      message ||= { notice: 'Successfully updated!' }
+
+      redirect_to admin_freelancer_profile_path(freelancer_profile), flash: message
+    end
+  end
 end
