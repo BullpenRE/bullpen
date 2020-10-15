@@ -1,0 +1,79 @@
+<%= render 'nav_bar' %>
+<!--Content Card, Step 2-->
+<div class="container">
+  <div class="bp-card mb-5 mx-auto" style="max-width: 700px;">
+    <%= form_for @user, url: wizard_path, method: :put do |f| %>
+      <div class="row">
+        <div class="col-md text-center mb-5 avatar">
+          <h2>Profile Picture</h2>
+          <p class="mb-4">Users with a clear and recognizable photo are hired more often. <strong>(Optional)</strong></p>
+          <% if @freelancer_profile.avatar.attached? %>
+            <div class="text-light mb-3 avatar-image" style="font-size: 170px;line-height: 0;">
+              <%= image_tag @freelancer_profile.avatar, class: 'rounded-circle' %>
+            </div>
+            <div class="custom-file">
+              <%= f.file_field :freelancer_profile_avatar, multiple: false, name: 'avatar', class: "d-none", id: "uploadProfilePic" %>
+              <label class="btn btn-outline-primary upload-avatar" for="uploadProfilePic">
+                Edit your photo
+              </label>
+              <button type="button" class="delete-avatar d-none" id="deleteProfilePic"></button>
+              <label class="btn btn-outline-danger mr-2" for="deleteProfilePic">
+                Delete
+              </label>
+            </div>
+          <% else %>
+            <div class="text-light mb-3" style="font-size: 170px;line-height: 0;"><i class="fas fa-user-circle"></i></div>
+            <div class="custom-file">
+              <%= f.file_field :freelancer_profile_avatar, multiple: false, name: 'avatar', class: "d-none", id: "uploadProfilePic" %>
+              <label class="btn btn-outline-primary upload-avatar" for="uploadProfilePic">
+                Upload your photo
+              </label>
+            </div>
+          <% end %>
+        </div>
+        <div class="col-md text-center mb-5">
+          <hr class="d-md-none mt-0">
+          <h2>Location</h2>
+          <p class="mb-4">Where do you live? Some companies prefer to work with local talent.</p>
+          <div class="form-group text-left">
+            <label for="freelancerLocationInput" class="bp-input-label">Location</label>
+            <%= f.text_field :location, class: "form-control", id: "freelancerLocationInput", placeholder: "City, State abbreviation", required: true %>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between">
+        <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
+        <%= f.submit 'Next', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  $('.avatar').on('change', '#uploadProfilePic', function (e) {
+    var file = e.target.files[0];
+    var formData = new FormData();
+    formData.append('avatar', file);
+    $.ajax({
+      url: '/avatar/update',
+      method: 'PUT',
+      contentType: false,
+      processData: false,
+      dataType: 'json',
+      data: formData,
+      success: function() {
+        $('.avatar').load(' .avatar');
+      }
+    });
+  });
+
+  $('.avatar').on('click', '.delete-avatar', function (e) {
+    $.ajax({
+      url: '/avatar/destroy',
+      method: 'DELETE',
+      success: function() {
+        $('.avatar').load(' .avatar');
+      }
+    })
+  });
+</script>

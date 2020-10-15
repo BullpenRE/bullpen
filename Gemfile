@@ -16,6 +16,7 @@ gem 'table_print', '~> 1.5', '>= 1.5.7'     # Allows viewing of data in console 
 gem 'turbolinks', '~> 5'                    # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'webpacker', '~> 5.2', '>= 5.2.1'       # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'wicked', '~> 1.3', '>= 1.3.2'          # Wicked is a Rails engine for producing easy wizard controllers
+gem 'mini_magick', '~> 4.10', '>= 4.10.1'               # Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
 
 # The gems below were recommended by the base Rails install
 # gem 'redis', '~> 4.0'                   # Use Redis adapter to run Action Cable in production
