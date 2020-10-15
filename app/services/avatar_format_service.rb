@@ -2,7 +2,7 @@
 
 class AvatarFormatService
 
-  AVATAR_SAVE_DIMENSIONS = '150x150'.freeze
+  AVATAR_SAVE_DIMENSIONS = '150x150'
 
   attr_accessor :image
 
