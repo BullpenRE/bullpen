@@ -68,6 +68,19 @@ ActiveRecord::Schema.define(version: 2020_10_14_041729) do
     t.index ["freelancer_profile_id"], name: "index_freelancer_asset_classes_on_freelancer_profile_id"
   end
 
+  create_table "freelancer_profile_educations", force: :cascade do |t|
+    t.bigint "freelancer_profile_id", null: false
+    t.string "institution"
+    t.integer "degree"
+    t.string "course_of_study"
+    t.integer "graduation_year"
+    t.boolean "currently_studying", default: false
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["freelancer_profile_id"], name: "index_freelancer_profile_educations_on_freelancer_profile_id"
+  end
+
   create_table "freelancer_profile_experiences", force: :cascade do |t|
     t.string "job_title"
     t.string "company"
@@ -135,6 +148,8 @@ ActiveRecord::Schema.define(version: 2020_10_14_041729) do
   end
 
   add_foreign_key "employer_profiles", "users"
+
+  add_foreign_key "freelancer_profile_educations", "freelancer_profiles"
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
   add_foreign_key "freelancer_profiles", "users"
 end
