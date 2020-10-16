@@ -32,7 +32,7 @@ class FreelancerProfile < ApplicationRecord
   end
 
   def attachment_valid_content_type?(attachment)
-    return true unless attachment.attached?
+    return true if no_attachment_uploaded?(attachment)
     return true if ACCEPTABLE_CONTENT_TYPE.include?(attachment.blob.content_type)
     return true if attachment.blob.content_type.blank?
 
@@ -40,9 +40,13 @@ class FreelancerProfile < ApplicationRecord
   end
 
   def attachment_valid_correct_size?(attachment)
-    return true unless attachment.attached?
+    return true if no_attachment_uploaded?(attachment)
     return true if attachment.blob.byte_size < MAX_FILE_SIZE
 
     false
+  end
+
+  def no_attachment_uploaded?(attachment)
+    attachment.attached? == false
   end
 end
