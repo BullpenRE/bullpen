@@ -148,7 +148,6 @@ ActiveRecord::Schema.define(version: 2020_10_14_041729) do
   end
 
   add_foreign_key "employer_profiles", "users"
-
   add_foreign_key "freelancer_profile_educations", "freelancer_profiles"
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
   add_foreign_key "freelancer_profiles", "users"
