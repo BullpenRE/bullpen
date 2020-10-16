@@ -3,7 +3,7 @@
 class EmployerProfileStepsController < ApplicationController
   include Wicked::Wizard
 
-  steps :about_company, :employee_count, :type_of_work
+  steps :about_company, :employee_count, :type_of_work, :sectors
 
   def show
     @user = current_user
@@ -21,7 +21,7 @@ class EmployerProfileStepsController < ApplicationController
 
     about_company_save ||
       employee_count_save ||
-      type_of_work_save
+      type_of_work_save || sectors_save
   end
 
   def about_company_save
@@ -51,7 +51,22 @@ class EmployerProfileStepsController < ApplicationController
     true
   end
 
+  def sectors_save
+    return false unless wizard_value(step) == :sectors
+    byebug
+    sectors_params&.each do |sector|
+      EmployerProfileSector.create(employer_profile_id: @employer_profile.id, sector_id: sector)
+    end
+    render_wizard @user
+
+    true
+  end
+
   def company_params
     params.require(:employer_profile).permit(:company_name, :company_website, :role_in_company)
+  end
+
+  def sectors_params
+    params[:employer_profile][:employer_profile_sectors]&.reject(&:blank?)
   end
 end
