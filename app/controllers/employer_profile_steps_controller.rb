@@ -53,7 +53,7 @@ class EmployerProfileStepsController < ApplicationController
 
   def sectors_save
     return false unless wizard_value(step) == :sectors
-    byebug
+
     sectors_params&.each do |sector|
       EmployerProfileSector.create(employer_profile_id: @employer_profile.id, sector_id: sector)
     end

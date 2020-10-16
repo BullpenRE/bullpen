@@ -63,14 +63,14 @@ end
 
 if Sector.none?
   Sector.create([
-                    { description: 'Office' },
-                    { description: 'Industrial' },
-                    { description: 'Retail' },
-                    { description: 'Student Housing' },
-                    { description: 'Multifamily' },
-                    { description: 'Medical' },
-                    { description: 'LIHTC' },
-                    { description: 'HTC' }
+                    { sector_description: 'Office' },
+                    { sector_description: 'Industrial' },
+                    { sector_description: 'Retail' },
+                    { sector_description: 'Student Housing' },
+                    { sector_description: 'Multifamily' },
+                    { sector_description: 'Medical' },
+                    { sector_description: 'LIHTC' },
+                    { sector_description: 'HTC' }
                 ])
 end
 
