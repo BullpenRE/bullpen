@@ -1,0 +1,35 @@
+<%= render 'logo' %>
+
+<!--Progress Meter, Step 3-->
+<div class="container mb-4">
+  <div class="progress bg-white shadow-sm mx-auto" style="max-width: 500px;">
+    <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <div class="text-secondary font-weight-bold my-1 text-center">Step 3 of 5</div>
+</div>
+
+<!--Content Card, Step 3-->
+<div class="container">
+  <div class="bp-card mb-5 mx-auto" style="max-width: 500px;">
+    <%= form_for @employer_profile, url: wizard_path, method: :put do |f| %>
+    <div class="mb-4">
+      <h2>What type of work do you do most?</h2>
+    </div>
+
+      <% EmployerProfile.categories.each do |category| %>
+        <div class="custom-control custom-radio mb-3">
+          <%= f.radio_button :category, category[0],
+                             :class => "custom-control-input",
+                             :id => "workType#{category[1]}" %>
+          <%= f.label category[0], :class => "custom-control-label",
+                            :for => "workType#{category[1]}" %>
+        </div>
+      <% end %>
+
+    <div class="d-flex justify-content-between">
+      <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
+      <%= f.submit 'Next', class: 'btn btn-primary' %>
+    </div>
+      <% end %>
+  </div>
+</div>
