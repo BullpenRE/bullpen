@@ -35,10 +35,10 @@ ActiveAdmin.register FreelancerProfile do
         freelancer_profile.real_estate_skills.pluck(:description)
       end
       row 'Education' do
-        freelancer_profile.freelancer_profile_educations.map{|f_e| "#{'<i>(current)</i> ' if f_e.currently_studying}#{f_e.graduation_year} #{f_e.degree} in #{f_e.course_of_study} at #{f_e.institution}" }.join('<br>').html_safe
+        freelancer_profile.freelancer_profile_educations.map{|f_e| "#{'<i>(current)</i> ' if f_e.currently_studying}#{f_e.graduation_year} #{f_e.degree} in #{f_e.course_of_study} at #{f_e.institution}" }.push(link_to('Add/Edit/Remove', admin_freelancer_profile_educations_path(q: {freelancer_profile_id_eq: params[:id]}), target: '_blank')).join('<br>').html_safe
       end
       row 'Experience' do
-        freelancer_profile.freelancer_profile_experiences.map{|f_e| "#{'<i>(current)</i> ' if f_e.current_job}#{f_e.start_date.year}#{"-#{f_e.end_date.year}" if f_e.end_date && f_e.end_date.year != f_e.start_date.year} #{f_e.job_title} at #{f_e.company}" }.join('<br>').html_safe
+        freelancer_profile.freelancer_profile_experiences.map{|f_e| "#{'<i>(current)</i> ' if f_e.current_job}#{f_e.start_date.year}#{"-#{f_e.end_date.year}" if f_e.end_date && f_e.end_date.year != f_e.start_date.year} #{f_e.job_title} at #{f_e.company}" }.push(link_to('Add/Edit/Remove', admin_freelancer_profile_experiences_path(q: {freelancer_profile_id_eq: params[:id]}), target: '_blank')).join('<br>').html_safe
       end
     end
   end
