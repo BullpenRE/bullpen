@@ -6,7 +6,7 @@ ActiveAdmin.register FreelancerProfileEducation do
   filter :freelancer_profile,
          as: :select,
          label: 'User Email',
-         collection: FreelancerProfile.all.map {|fp| [fp.user.email, fp.id] }
+         collection: FreelancerProfile.find_each.map {|fp| [fp.user.email, fp.id] }
 
 
   index do
@@ -23,7 +23,7 @@ ActiveAdmin.register FreelancerProfileEducation do
     f.inputs "Education for #{}" do
       f.input :freelancer_profile,
               as: :select,
-              collection: FreelancerProfile.all.map{|fp| [fp.user.email, fp.id] }
+              collection: FreelancerProfile.find_each.map{|fp| [fp.user.email, fp.id] }
       f.input :institution
       f.input :degree
       f.input :course_of_study
