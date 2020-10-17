@@ -18,7 +18,7 @@ describe('Register', () => {
       })
   });
 
-  it('checks "Create an Account" presence at the view step-1', () => {
+  it('checks text "Create an Account" presence at the view step-1', () => {
     cy.visit('http://localhost:5017')
       .contains('Sign-Up').click()
       .get('div#step-1')
@@ -65,7 +65,7 @@ describe('Register', () => {
 
   });
 
-  it('checks "Create an Account" presence at the view step-2', () => {
+  it('checks text "Create an Account" presence at the view step-2', () => {
     cy.visit('http://localhost:5017')
       .contains('Sign-Up').click()
       .get('#firstName').type(first_name)
