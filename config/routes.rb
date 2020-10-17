@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
   if Rails.env.test?
+    require 'test_routes'
+    define_test_routes
     namespace :test do
       post 'clean_database', to: 'databases#clean_database'
       post 'seed_posts', to: 'seeds#seed_posts'
@@ -30,6 +32,9 @@ Rails.application.routes.draw do
   end
 
   get '/styleguide', to: 'styleguide#index'
+  get '/employer', to: 'style#employer'
+  get '/freelancer', to: 'style#freelancer'
+  get '/login', to: 'style#login'
 
   root 'join#index'
 

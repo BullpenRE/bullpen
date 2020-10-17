@@ -41,3 +41,20 @@ Cypress.Commands.add('seedPosts', (count) => {
         data: { count }
     })
 })
+
+Cypress.Commands.add("resetDatabase", () => {
+    cy.request('DELETE', '/cypress/cleanup').as('cleanup')
+})
+
+Cypress.Commands.add("factory", (name, attributes) => {
+    cy.request('POST', '/cypress/factories', {
+        name: name,
+        attributes: attributes || {}
+    }).as('test data')
+})
+
+Cypress.Commands.add("login", (email) => {
+    cy.request('POST', '/cypress/sessions', {
+        email: email
+    })
+})

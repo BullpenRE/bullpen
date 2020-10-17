@@ -129,15 +129,33 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
 
 1. Install Cypress:
 
-        $yarn add cypress --dev
+        $ yarn add cypress --dev
         
-2. Open cypress dashboard:
+2. Create test db:
+
+        $ RAILS_ENV=test bin/rake db:create db:schema:load 
+        
+3. In terminal of project or RubyMine IDE start puma server on port:5017 as second separate and parallel to localhost:3000 development process:
+    
+        $ bundle exec rails server -e test -p 5017 --pid tmp/pids/server5017.pid   
+        Use Ctrl-C to stop
+        
+4. Run test db migration if needed:
+  
+        $  RAILS_ENV=test rake db:migrate
+        
+5. Open cypress dashboard:
 
         $yarn cypress open --project ./test
         
-3. Getting started:
- https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements
-4. Best Practice: 
+6. Getting started:
+
+ https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements;
+ https://docs.cypress.io/guides/getting-started/testing-your-app.html#Step-1-Start-your-server
+ https://blog.simplificator.com/2019/10/11/setting-up-cypress-with-rails/
+
+7. Best Practice: 
 Use data-* attributes to provide context to your selectors and isolate them from CSS or JS changes [here](https://docs.cypress.io/guides/references/best-practices.html)
-5. How to using: https://docs.cypress.io/faq/questions/using-cypress-faq.html
+
+8. How to using: https://docs.cypress.io/faq/questions/using-cypress-faq.html
 

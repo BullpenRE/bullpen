@@ -2,6 +2,6 @@
 
 describe('Register', () => {
   it('register a new user', () => {
-    cy.visit('/')
+    cy.visit('/', {failOnStatusCode: false})
   });
 })
