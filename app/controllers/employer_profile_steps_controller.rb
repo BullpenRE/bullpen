@@ -54,6 +54,7 @@ class EmployerProfileStepsController < ApplicationController
   def sectors_save
     return false unless wizard_value(step) == :sectors
 
+    destroy_old_sectors
     sectors_params&.each do |sector|
       EmployerProfileSector.create(employer_profile_id: @employer_profile.id, sector_id: sector)
     end
@@ -63,6 +64,10 @@ class EmployerProfileStepsController < ApplicationController
   end
 
   private
+
+  def destroy_old_sectors
+    @employer_profile&.employer_profile_sectors&.destroy_all
+  end
 
   def company_params
     params.require(:employer_profile).permit(:company_name, :company_website, :role_in_company)
