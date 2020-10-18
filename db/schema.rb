@@ -66,14 +66,11 @@ ActiveRecord::Schema.define(version: 2020_10_16_221149) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "employee_count"
     t.integer "category"
-<<<<<<< HEAD
     t.boolean "motivation_one_time"
     t.boolean "motivation_ongoing_support"
     t.boolean "motivation_backfill"
     t.boolean "motivation_augment"
     t.boolean "motivation_other"
-=======
->>>>>>> master
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
