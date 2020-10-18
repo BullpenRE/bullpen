@@ -21,13 +21,13 @@
       <% Sector.all.each do |sector| %>
           <% if sector.id == 1 || sector.id == 5 %>
             <div class="col-md">
-              <% end %>
+          <% end %>
         <div class="custom-control custom-checkbox mb-3">
-        <%= check_box :employer_profile_sectors, sector.sector_description,
-                      id: "sector#{sector.id}",
-                      :class => "custom-control-input" %>
-        <%= label sector.id, sector.sector_description, :class => "custom-control-label",
-                                                           :for => "sector#{sector.id}" %>
+        <%= f.check_box :employer_profile_sectors,
+                        :id => "sector#{sector.id}",
+                        :class => "custom-control-input" %>
+        <%= f.label sector.id, sector.sector_description, :class => "custom-control-label",
+                                                          :for => "sector#{sector.id}" %>
         </div>
           <% if sector.id == 4 || sector.id == 8 %>
             </div>

@@ -62,6 +62,8 @@ class EmployerProfileStepsController < ApplicationController
     true
   end
 
+  private
+
   def company_params
     params.require(:employer_profile).permit(:company_name, :company_website, :role_in_company)
   end
