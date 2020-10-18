@@ -33,9 +33,6 @@ Rails.application.routes.draw do
   end
 
   get '/styleguide', to: 'styleguide#index'
-  get '/employer', to: 'style#employer'
-  get '/freelancer', to: 'style#freelancer'
-  get '/login', to: 'style#login'
 
   root 'join#index'
 
