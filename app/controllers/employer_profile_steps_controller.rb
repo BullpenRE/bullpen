@@ -3,7 +3,7 @@
 class EmployerProfileStepsController < ApplicationController
   include Wicked::Wizard
 
-  steps :about_company, :employee_count, :last_question
+  steps :about_company, :employee_count, :type_of_work, :last_question
 
   def show
     @user = current_user
@@ -20,7 +20,8 @@ class EmployerProfileStepsController < ApplicationController
     @employer_profile = @user.employer_profile
 
     about_company_save ||
-      employee_count_save || last_question_save
+      employee_count_save ||
+      type_of_work_save || last_question_save
   end
 
   def about_company_save
@@ -36,6 +37,15 @@ class EmployerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :employee_count
 
     @employer_profile.update(employee_count: params.require(:employer_profile).values.dig(0))
+    render_wizard @user
+
+    true
+  end
+
+  def type_of_work_save
+    return false unless wizard_value(step) == :type_of_work
+
+    @employer_profile.update(category: params.require(:employer_profile).values.dig(0))
     render_wizard @user
 
     true
