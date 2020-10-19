@@ -3,7 +3,7 @@
 describe('Register', () => {
     const first_name = 'First'
     const last_name = 'Last'
-    const email = 'freelancer@yahoo.com'
+    const email = 'employer@yahoo.com'
     const phone = '111'
 
   it('checks Logo "BULLPEN" presence at the view, LOGO has width=175px, height=55px', () => {
