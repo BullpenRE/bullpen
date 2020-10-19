@@ -83,19 +83,6 @@ describe('Register', () => {
       })
   });
 
-  it('checks registration of new user as a company', () => {
-    cy.visit('http://localhost:5017')
-      .contains('Sign-Up').click()
-      .get('#firstName').type(first_name)
-      .get('#lastName').type(last_name)
-      .get('#email').type(email)
-      .get('#phone').type(phone)
-      .get('button.form-control-lg.btn.btn-outline-secondary.col-md-12.mb-3.nextBtn-2').click()
-      .get('input#psw').type('q1234567!Q')
-      .get('input#cPwdId').type('q1234567!Q')
-      .get('form').submit()
-  });
-
   it('checks change of email', () => {
     cy.visit('http://localhost:5017')
       .contains('Sign-Up').click()
@@ -123,7 +110,7 @@ describe('Register', () => {
       .then(($div) => {
         expect($div).to.have.text("\n            By creating your account, you agree to Bullpen's\n            \n              Terms of Service\n            ,\n            \n              Privacy Agreement\n            , and Stripe's Connected Accounts Authorization\n          ")
       })
-  })
+  });
 
   it('checks "Terms of Service", "Privacy Agreement", "Stripe\'s Connected Accounts Authorization" links', () => {
     cy.visit('http://localhost:5017')
@@ -253,7 +240,7 @@ describe('Register', () => {
         .should(($svg) => {
             expect($svg).to.have.length(1)
         })
-  })
+  });
 
   it ('checks password and div#message.div.row.div#special', () => {
       cy.visit('http://localhost:5017')
@@ -290,7 +277,7 @@ describe('Register', () => {
 
             expect(className).to.match(/col-sm text-muted text-nowrap small valid/)
         })
-  })
+  });
 
   it ('checks password and div#message.div.row.div#number', () => {
       cy.visit('http://localhost:5017')
@@ -401,7 +388,7 @@ describe('Register', () => {
 
         expect(className).to.match(/col-sm text-muted text-nowrap small valid/)
       })
-  })
+  });
 
   it ('checks password_confirmation and "eye" icon in input field', () => {
     cy.visit('http://localhost:5017')
@@ -438,7 +425,7 @@ describe('Register', () => {
       .should(($svg) => {
         expect($svg).to.have.length(1)
       })
-  })
+  });
 
   it ('checks password-confirmation', () => {
     cy.visit('http://localhost:5017')
