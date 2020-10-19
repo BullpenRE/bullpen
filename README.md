@@ -134,19 +134,20 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
 2. Create test db:
 
         $ RAILS_ENV=test bin/rake db:create db:schema:load 
+        $ RAILS_ENV=test rails db:seed - if needed
         
-3. In terminal of project or RubyMine IDE start puma server on port:5017 as second separate and parallel to localhost:3000 development process:
+3. Run test db migration if needed:
+  
+        $ RAILS_ENV=test rake db:migrate
+        
+4. In terminal of project or RubyMine IDE start puma server on port:5017 as second separate and parallel to localhost:3000 development process:
     
         $ bundle exec rails server -e test -p 5017 --pid tmp/pids/server5017.pid   
         Use Ctrl-C to stop
         
-4. Run test db migration if needed:
-  
-        $  RAILS_ENV=test rake db:migrate
-        
 5. Open cypress dashboard:
 
-        $yarn cypress open --project ./test
+        $ yarn cypress open --project ./test
         
 6. Getting started:
 
