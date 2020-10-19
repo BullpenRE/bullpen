@@ -6,7 +6,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :phone_number, presence: true
 
   has_one :freelancer_profile, dependent: :destroy
   has_many :freelancer_real_estate_skills, through: :freelancer_profile
