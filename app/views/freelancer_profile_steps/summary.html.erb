@@ -70,7 +70,7 @@
                       <label class="bp-input-label">Skills</label>
                       <div class="w-100">
                         <%  @freelancer_profile&.freelancer_real_estate_skills&.each do |skill| %>
-                          <div class="btn btn-dark small mb-1" style="background-color: #005495; border-color: #005495">
+                          <div class="btn btn-dark small mb-1" style="background-color: #005495; border: none">
                             <%= skill.real_estate_skill.description %>
                           </div>
                         <% end %>
@@ -83,7 +83,7 @@
                       <label class="bp-input-label">Asset Classes</label>
                       <div class="w-100">
                         <%  @freelancer_profile&.freelancer_asset_classes&.map do |asset| %>
-                          <div class="btn btn-dark small mb-1" style="background-color: #005495; border-color: #005495">
+                          <div class="btn btn-dark small mb-1" style="background-color: #005495; border: none">
                             <%= asset.asset_class.description %>
                           </div>
                         <% end %>
