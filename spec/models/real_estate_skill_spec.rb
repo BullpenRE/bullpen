@@ -20,6 +20,10 @@ RSpec.describe RealEstateSkill, type: :model do
     it 'has many freelancer_real_estate_skills' do
       expect(real_estate_skill.freelancer_real_estate_skills).to include(freelancer_real_estate_skill)
     end
+
+    it 'has many freelancer_profiles through freelancer_real_estate_skills' do
+      expect(real_estate_skill.freelancer_profiles).to include(freelancer_real_estate_skill.freelancer_profile)
+    end
   end
 
 end

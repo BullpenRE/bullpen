@@ -20,5 +20,9 @@ RSpec.describe FreelancerProfileEducation, type: :model do
     it 'belongs_to a freelancer_profile' do
       expect(freelancer_profile_education.freelancer_profile).to eq(freelancer_profile)
     end
+
+    it 'has a user through the freelancer_profile' do
+      expect(freelancer_profile_education.user).to eq(freelancer_profile.user)
+    end
   end
 end

@@ -12,4 +12,4 @@ ActiveAdmin.register RealEstateSkill do
 
   filter :description
   filter :disable
-end
+end unless Rails.env.test?

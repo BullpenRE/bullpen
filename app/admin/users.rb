@@ -18,7 +18,7 @@ ActiveAdmin.register User do
   form do |f|
     f.inputs 'User Info' do
       f.input :email
-      f.input :password, label: 'Password (if unchanged, leave blank)'
+      f.input :password, label: "Password#{' (if unchanged leave blank)' unless f.object.new_record?}"
       f.input :first_name
       f.input :last_name
       f.input :confirmed_at, label: 'Confirmed (UTC)'
@@ -48,4 +48,4 @@ ActiveAdmin.register User do
     end
 
   end
-end
+end unless Rails.env.test?
