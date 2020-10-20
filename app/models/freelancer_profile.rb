@@ -24,19 +24,19 @@ class FreelancerProfile < ApplicationRecord
   def correct_content_type?
     return true if attachment_valid_content_type?(avatar)
 
-    errors.add(:base, 'Selected wrong file type!')
+    errors.add(:base, 'Please upload only a jpg, png or gif image.')
     false
   end
 
   def correct_size?
     return true if attachment_valid_correct_size?(avatar)
 
-    errors.add(:base, 'File size exceeded 2MB')
+    errors.add(:base, 'Uploaded files must not exceed 2MB.')
     false
   end
 
   def attachment_valid_content_type?(attachment)
-    return true unless attachment.attached?
+    return true if no_attachment_uploaded?(attachment)
     return true if ACCEPTABLE_CONTENT_TYPE.include?(attachment.blob.content_type)
     return true if attachment.blob.content_type.blank?
 
@@ -44,9 +44,13 @@ class FreelancerProfile < ApplicationRecord
   end
 
   def attachment_valid_correct_size?(attachment)
-    return true unless attachment.attached?
+    return true if no_attachment_uploaded?(attachment)
     return true if attachment.blob.byte_size < MAX_FILE_SIZE
 
     false
+  end
+
+  def no_attachment_uploaded?(attachment)
+    attachment.attached? == false
   end
 end
