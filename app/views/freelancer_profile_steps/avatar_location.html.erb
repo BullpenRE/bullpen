@@ -8,6 +8,7 @@
 </div>
 <!--Content Card, Step 2-->
 <div class="container">
+  <div class="error"><%= @errors %></div>
   <div class="bp-card mb-5 mx-auto" style="max-width: 700px;">
     <%= form_for @user, url: wizard_path, method: :put do |f| %>
       <div class="row">
@@ -57,28 +58,52 @@
 </div>
 
 <script>
-  $('.avatar').on('change', '#uploadProfilePic', function (e) {
-    var file = e.target.files[0];
-    var formData = new FormData();
-    formData.append('avatar', file);
-    $.ajax({
-      url: '/avatar/update',
-      method: 'PUT',
-      contentType: false,
-      processData: false,
-      dataType: 'json',
-      data: formData,
-      success: function() {
-        $('.avatar').load(' .avatar');
-      }
-    });
+  $('.avatar').on('change', '#uploadProfilePic', (e) => {
+    const file = e.target.files[0];
+    const maxFileSize = 2097152;
+    if (file.size && file.size > maxFileSize) {
+      const message = "Uploaded files must not exceed 2MB\n";
+      Swal.fire({
+        title: '<h5>Oops!</h5>',
+        text: message
+      });
+    }
+    else if (file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
+      const message = "Please upload only a jpg, png or gif image\n";
+      Swal.fire({
+        title: '<h5>Oops!</h5>',
+        text: message
+      });
+    }
+    else {
+      const formData = new FormData();
+      formData.append('avatar', file);
+      $.ajax({
+        url: '/avatar/update',
+        method: 'PUT',
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        data: formData,
+        success: function() {
+          $('.avatar').load(' .avatar');
+        },
+        error: () => {
+          const message = 'This file can not be attached';
+          Swal.fire({
+            title: '<h5>Oops!</h5>',
+            text: message
+          });
+        }
+      });
+    }
   });
 
-  $('.avatar').on('click', '.delete-avatar', function (e) {
+  $('.avatar').on('click', '.delete-avatar', () => {
     $.ajax({
       url: '/avatar/destroy',
       method: 'DELETE',
-      success: function() {
+      success: () => {
         $('.avatar').load(' .avatar');
       }
     })

@@ -11,9 +11,9 @@ class AvatarController < ApplicationController
     process_and_save_new_image! if params[:avatar].present?
 
     render json: { status: :ok }
-  rescue
+  rescue StandardError
     @freelancer_profile.avatar.purge_later
-    head :forbidden, status: :forbidden
+    @errors.add(:base, 'hghghhg')
   end
 
   def destroy
