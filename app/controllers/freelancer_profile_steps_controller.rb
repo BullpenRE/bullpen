@@ -3,7 +3,7 @@
 class FreelancerProfileStepsController < ApplicationController
   include Wicked::Wizard
   include WorkEducationExperience
-  steps :skills_page, :avatar_location, :professional_history, :work_education_experience, :summary
+  steps :skills_page, :avatar_location, :professional_history, :work_education_experience, :summary, :final_step
 
   def show
     @user = current_user
@@ -21,7 +21,18 @@ class FreelancerProfileStepsController < ApplicationController
     skills_page_save ||
       professional_history_save ||
       work_education_experience_save ||
-      location_save
+      location_save ||
+      summary_save
+  end
+
+  def summary_save
+    return false unless wizard_value(step) == :summary
+
+    @freelancer_profile.is_draft = params[:freelancer_profile][:is_draft]
+    @freelancer_profile.save
+    render_wizard @user
+
+    true
   end
 
   def location_save

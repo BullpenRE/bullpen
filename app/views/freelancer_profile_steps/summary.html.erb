@@ -44,14 +44,17 @@
                 <div class="text-left mb-4">
                   Please verify your information and click the submit button to complete the application process.
                 </div>
-                 <div class="row">
-                  <div class="col">
-                    <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
+                <%= form_for @freelancer_profile, url: wizard_path, method: :put do |f| %>
+                  <div class="row">
+                    <%= f.hidden_field :is_draft, value: false %>
+                    <div class="col">
+                      <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
+                    </div>
+                    <div class="col text-right">
+                      <%= f.submit 'Submit application', class: 'btn btn-primary' %>
+                    </div>
                   </div>
-                  <div class="col text-right">
-                    <button type="button" class="btn btn-primary">Submit application</button>
-                  </div>
-                 </div>
+                <% end %>
               </p>
             </div>
             </div>
