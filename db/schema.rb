@@ -129,9 +129,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_124904) do
     t.string "professional_title"
     t.integer "professional_years_experience"
     t.text "professional_summary"
-    t.boolean "is_declined"
-    t.boolean "is_pending", default: true
-    t.boolean "is_accepted"
+    t.integer "curation", default: 0
     t.boolean "is_draft", default: true
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
