@@ -59,7 +59,7 @@ ActiveAdmin.register FreelancerProfile do
       f.input :real_estate_skills, as: :check_boxes, collection: RealEstateSkill.order(:description).pluck(:description, :id)
       f.actions
     end
-  end
+  end unless Rails.env.test?
 
   controller do
     def create

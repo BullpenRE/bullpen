@@ -35,4 +35,4 @@ ActiveAdmin.register FreelancerProfileExperience do
       f.actions
     end
   end
-end
+end unless Rails.env.test?
