@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_152203) do
+ActiveRecord::Schema.define(version: 2020_10_16_221149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,15 @@ ActiveRecord::Schema.define(version: 2020_10_14_152203) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "employer_profile_sectors", force: :cascade do |t|
+    t.bigint "sector_id", null: false
+    t.bigint "employer_profile_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employer_profile_id"], name: "index_employer_profile_sectors_on_employer_profile_id"
+    t.index ["sector_id"], name: "index_employer_profile_sectors_on_sector_id"
+  end
+
   create_table "employer_profiles", force: :cascade do |t|
     t.string "company_name"
     t.string "company_website"
@@ -57,6 +66,11 @@ ActiveRecord::Schema.define(version: 2020_10_14_152203) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "employee_count"
     t.integer "category"
+    t.boolean "motivation_one_time"
+    t.boolean "motivation_ongoing_support"
+    t.boolean "motivation_backfill"
+    t.boolean "motivation_augment"
+    t.boolean "motivation_other"
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
@@ -122,6 +136,12 @@ ActiveRecord::Schema.define(version: 2020_10_14_152203) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "sectors", force: :cascade do |t|
+    t.string "sector_description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -148,6 +168,8 @@ ActiveRecord::Schema.define(version: 2020_10_14_152203) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "employer_profile_sectors", "employer_profiles"
+  add_foreign_key "employer_profile_sectors", "sectors"
   add_foreign_key "employer_profiles", "users"
   add_foreign_key "freelancer_profile_educations", "freelancer_profiles"
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
