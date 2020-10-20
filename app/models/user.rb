@@ -17,4 +17,8 @@ class User < ApplicationRecord
   def self.ransackable_scopes(_auth_object = nil)
     [:confirmed]
   end
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end
