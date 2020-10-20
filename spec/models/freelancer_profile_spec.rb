@@ -39,6 +39,15 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(FreelancerAssetClass.exists?(freelancer_asset_class.id)).to be_falsey
         expect(FreelancerRealEstateSkill.exists?(freelancer_real_estate_skill.id)).to be_falsey
       end
+
+      it 'can have asset_classes through freelancer_asset_classes' do
+        expect(freelancer_profile.asset_classes).to include(freelancer_asset_class.asset_class)
+      end
+
+      it 'can have real_estate_skills through freelancer_real_estate_skills' do
+        expect(freelancer_profile.real_estate_skills).to include(freelancer_real_estate_skill.real_estate_skill)
+      end
+
     end
   end
 

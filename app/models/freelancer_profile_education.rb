@@ -2,6 +2,7 @@
 
 class FreelancerProfileEducation < ApplicationRecord
   belongs_to :freelancer_profile
+  has_one :user, through: :freelancer_profile
 
   validates :institution, presence: true
   validates :degree, presence: true
