@@ -20,7 +20,7 @@ class EmployerProfileStepsController < ApplicationController
     @employer_profile = @user.employer_profile
 
     about_company_save ||
-      employee_count_save || type_of_work_save
+      employee_count_save || type_of_work_save ||
       sectors_save || last_question_save
   end
 
@@ -83,7 +83,6 @@ class EmployerProfileStepsController < ApplicationController
   end
 
   def sectors_params
-    byebug
     params[:employer_profile][:employer_profile_sectors]&.reject(&:blank?)
   end
 
