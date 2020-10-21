@@ -3,11 +3,7 @@
 class EmployerProfileStepsController < ApplicationController
   include Wicked::Wizard
 
-<<<<<<< HEAD
-  steps :about_company, :employee_count, :type_of_work, :sectors
-=======
-  steps :about_company, :employee_count, :type_of_work, :last_question
->>>>>>> master
+  steps :about_company, :employee_count, :type_of_work, :sectors, :last_question
 
   def show
     @user = current_user
@@ -24,12 +20,8 @@ class EmployerProfileStepsController < ApplicationController
     @employer_profile = @user.employer_profile
 
     about_company_save ||
-      employee_count_save ||
-<<<<<<< HEAD
-      type_of_work_save || sectors_save
-=======
-      type_of_work_save || last_question_save
->>>>>>> master
+      employee_count_save || type_of_work_save
+      sectors_save || last_question_save
   end
 
   def about_company_save
@@ -91,6 +83,7 @@ class EmployerProfileStepsController < ApplicationController
   end
 
   def sectors_params
+    byebug
     params[:employer_profile][:employer_profile_sectors]&.reject(&:blank?)
   end
 

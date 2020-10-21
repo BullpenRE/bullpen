@@ -16,30 +16,23 @@
       <h2>What sectors do you work in?</h2>
     </div>
 
-
-
       <div class="row mb-5">
-        <div class="col-md">
-        <%= f.collection_check_boxes(:employer_profile_sectors,
-                                     Sector.all[0..3], :id, :sector_description) do |b| %>
+        <% Sector.all.each do |sector| %>
+          <% if sector.id == 1 || sector.id == 5 %>
+            <div class="col-md">
+          <% end %>
           <div class="custom-control custom-checkbox mb-3">
-            <%=  b.label(:calss => "custom-control-label") do %>
-              <%= b.check_box(:calss => "custom-control-input") + b.text %>
-            <% end %>
+
+            <%= check_box_tag '[employer_profile][employer_profile_sectors][]', sector.id, false, :id => "sector#{sector.id}", class: "custom-control-input"%>
+            <%= label sector.id, sector.sector_description, :class => "custom-control-label",
+                      :for => "sector#{sector.id}" %>
           </div>
+          <% if sector.id == 4 || sector.id == 8 %>
+            </div>
+          <% end %>
         <% end %>
-        </div>
-          <div class="col-md">
-        <%= f.collection_check_boxes(:employer_profile_sectors,
-                                     Sector.all[4..7], :id, :sector_description) do |b| %>
-          <div class="custom-control custom-checkbox mb-3">
-            <%=  b.label(:calss => "custom-control-label") do %>
-              <%= b.check_box(:calss => "custom-control-input") + b.text %>
-            <% end %>
-          </div>
-        <% end %>
-          </div>
-    </div>
+      </div>
+      
     <div class="d-flex justify-content-between">
       <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
       <%= f.submit 'Next', class: 'btn btn-primary' %>
