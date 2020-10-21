@@ -3,7 +3,11 @@
 class EmployerProfileStepsController < ApplicationController
   include Wicked::Wizard
 
+<<<<<<< HEAD
   steps :about_company, :employee_count, :type_of_work, :sectors
+=======
+  steps :about_company, :employee_count, :type_of_work, :last_question
+>>>>>>> master
 
   def show
     @user = current_user
@@ -21,7 +25,11 @@ class EmployerProfileStepsController < ApplicationController
 
     about_company_save ||
       employee_count_save ||
+<<<<<<< HEAD
       type_of_work_save || sectors_save
+=======
+      type_of_work_save || last_question_save
+>>>>>>> master
   end
 
   def about_company_save
@@ -63,6 +71,15 @@ class EmployerProfileStepsController < ApplicationController
     true
   end
 
+  def last_question_save
+    return false unless wizard_value(step) == :last_question
+
+    @employer_profile.update_attributes(last_question_params)
+    render_wizard @user
+
+    true
+  end
+
   private
 
   def destroy_old_sectors
@@ -75,5 +92,13 @@ class EmployerProfileStepsController < ApplicationController
 
   def sectors_params
     params[:employer_profile][:employer_profile_sectors]&.reject(&:blank?)
+  end
+
+  def last_question_params
+    params.require(:employer_profile).permit(:motivation_one_time,
+                                             :motivation_ongoing_support,
+                                             :motivation_backfill,
+                                             :motivation_augment,
+                                             :motivation_other)
   end
 end
