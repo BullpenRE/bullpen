@@ -25,6 +25,15 @@
                                                   PATCH      /admin/asset_classes/:id(.:format)                                                       admin/asset_classes#update
                                                   PUT        /admin/asset_classes/:id(.:format)                                                       admin/asset_classes#update
                                   admin_dashboard GET        /admin/dashboard(.:format)                                                               admin/dashboard#index
+             batch_action_admin_employer_profiles POST       /admin/employer_profiles/batch_action(.:format)                                          admin/employer_profiles#batch_action
+                          admin_employer_profiles GET        /admin/employer_profiles(.:format)                                                       admin/employer_profiles#index
+                                                  POST       /admin/employer_profiles(.:format)                                                       admin/employer_profiles#create
+                       new_admin_employer_profile GET        /admin/employer_profiles/new(.:format)                                                   admin/employer_profiles#new
+                      edit_admin_employer_profile GET        /admin/employer_profiles/:id/edit(.:format)                                              admin/employer_profiles#edit
+                           admin_employer_profile GET        /admin/employer_profiles/:id(.:format)                                                   admin/employer_profiles#show
+                                                  PATCH      /admin/employer_profiles/:id(.:format)                                                   admin/employer_profiles#update
+                                                  PUT        /admin/employer_profiles/:id(.:format)                                                   admin/employer_profiles#update
+                                                  DELETE     /admin/employer_profiles/:id(.:format)                                                   admin/employer_profiles#destroy
  batch_action_admin_freelancer_profile_educations POST       /admin/freelancer_profile_educations/batch_action(.:format)                              admin/freelancer_profile_educations#batch_action
               admin_freelancer_profile_educations GET        /admin/freelancer_profile_educations(.:format)                                           admin/freelancer_profile_educations#index
                                                   POST       /admin/freelancer_profile_educations(.:format)                                           admin/freelancer_profile_educations#create
@@ -93,6 +102,9 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   POST       /users(.:format)                                                                         registrations#create
                                    password_reset GET        /password_reset(.:format)                                                                passwords#password_reset
                                       new_company GET        /new_company(.:format)                                                                   registrations#new_company
+                                           avatar PATCH      /avatar/:id(.:format)                                                                    avatar#update
+                                                  PUT        /avatar/:id(.:format)                                                                    avatar#update
+                                                  DELETE     /avatar/:id(.:format)                                                                    avatar#destroy
                          freelancer_profile_steps GET        /freelancer_profile_steps(.:format)                                                      freelancer_profile_steps#index
                                                   POST       /freelancer_profile_steps(.:format)                                                      freelancer_profile_steps#create
                       new_freelancer_profile_step GET        /freelancer_profile_steps/new(.:format)                                                  freelancer_profile_steps#new
