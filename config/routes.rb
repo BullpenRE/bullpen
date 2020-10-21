@@ -14,9 +14,11 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get '/password_reset', to: 'passwords#password_reset'
-    get '/new_company', to: 'registrations#new_company'
+    get '/employer_sign_up', to: 'registrations#employer_sign_up'
+    get '/freelancer_sign_up', to: 'registrations#freelancer_sign_up'
   end
 
+  resources :avatar, only: %i[update destroy]
   resources :freelancer_profile_steps
   resources :employer_profile_steps
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

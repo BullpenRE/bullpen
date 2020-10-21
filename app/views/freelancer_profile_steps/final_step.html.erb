@@ -1,0 +1,21 @@
+<%= render 'nav_bar' %>
+
+<div class="container">
+  <div class="bp-card mb-5 mx-auto" style="max-width: 500px;">
+    <div class="text-center  mb-4">
+      <h1>Thanks for applying</h1>
+    </div>
+    <div class="text-center mb-3">
+      <%= image_pack_tag('check-mark.png', width: 130, height: 120) %>
+    </div>
+    <div class="text-center">
+      <h5>Keep an eye on your inbox!</h5>
+    </div>
+    <div class="text-center mb-4">
+      Our talent team will review your application and be in touch with you shortly.
+    </div>
+    <div class="text-center mb-3">
+      <%= link_to 'Back to homepage', next_wizard_path, class: "btn btn-primary btn-md" %>
+    </div>
+  </div>
+</div>

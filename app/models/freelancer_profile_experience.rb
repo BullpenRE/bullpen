@@ -15,6 +15,8 @@ class FreelancerProfileExperience < ApplicationRecord
   attr_accessor :start_month, :start_year, :end_month, :end_year
 
   def update_start_date
+    return unless start_year.present? && start_month.present?
+
     start_date = "#{start_year}-#{start_month}"
     self.start_date = Date.strptime(start_date, '%Y-%m')
   end

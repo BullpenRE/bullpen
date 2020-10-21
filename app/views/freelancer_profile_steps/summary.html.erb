@@ -1,0 +1,146 @@
+<%= render 'nav_bar' %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">
+                <% if @freelancer_profile.avatar.attached? %>
+                  <div class="text-light mb-3 avatar-image text-center" style="font-size: 170px;line-height: 0;">
+                    <%= image_tag @freelancer_profile.avatar, class: 'rounded-circle' %>
+                  </div>
+                <% else %>
+                  <div class="text-light mb-3 avatar-image text-center" style="font-size: 170px;line-height: 0;"><i class="fas fa-user-circle"></i></div>
+                <% end %>
+                <div class="text-center mb-5">
+                  <h2> <%=  @user.first_name %> <%=  @user.last_name %> </h2>
+                </div>
+                <div class="form-group mb-3">
+                  <label class="bp-input-label">Professional Title</label>
+                  <div><%=  @freelancer_profile.professional_title %></div>
+                </div>
+                <div class="form-group mb-3">
+                  <label class="bp-input-label">Professional Summary</label>
+                  <div><%=  @freelancer_profile.professional_summary %></div>
+                </div>
+                <div class="form-group mb-3">
+                  <label class="bp-input-label">Email</label>
+                  <div><%=  @user.email %></div>
+                </div>
+                <div class="form-group mb-3">
+                  <label class="bp-input-label">Location</label>
+                  <div><%=  @user.location %></div>
+                </div>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <p class="card-text">
+                <div class="text-left mt-2 mb-4">
+                  <h2>Submit your application</h2>
+                </div>
+                <div class="text-left mb-4">
+                  Please verify your information and click the submit button to complete the application process.
+                </div>
+                <%= form_for @freelancer_profile, url: wizard_path, method: :put do |f| %>
+                  <div class="row">
+                    <%= f.hidden_field :is_draft, value: false %>
+                    <div class="col">
+                      <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
+                    </div>
+                    <div class="col text-right">
+                      <%= f.submit 'Submit application', class: 'btn btn-primary' %>
+                    </div>
+                  </div>
+                <% end %>
+              </p>
+            </div>
+            </div>
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">
+                <div class="text-left mb-4">
+                  <h2>Application Summary</h2>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group mb-3">
+                      <label class="bp-input-label">Skills</label>
+                      <div class="w-100">
+                        <%  @freelancer_profile&.freelancer_real_estate_skills&.each do |skill| %>
+                          <div class="btn btn-dark small mb-1" style="background-color: #005495; border: none">
+                            <%= skill.real_estate_skill.description %>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col">
+                    <div class="form-group mb-3">
+                      <label class="bp-input-label">Asset Classes</label>
+                      <div class="w-100">
+                        <%  @freelancer_profile&.freelancer_asset_classes&.map do |asset| %>
+                          <div class="btn btn-dark small mb-1" style="background-color: #005495; border: none">
+                            <%= asset.asset_class.description %>
+                          </div>
+                        <% end %>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group mb-3">
+                    <label class="bp-input-label">Work Experience</label>
+                    <div>
+                      <% @freelancer_profile.freelancer_profile_experiences.each do |work_exp| %>
+                        <div><%= work_exp.job_title %></div>
+                        <div class="row bp-text-sm">
+                          <div class="col-md">
+                            <%= work_exp.company %>, <%= work_exp.location %>
+                          </div>
+                          <div class="col-md">
+                            <%= work_exp.start_date.strftime("%b, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%b, %Y") %>
+                          </div>
+                        </div>
+                        <div>
+                          <hr>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group mb-3">
+                    <label class="bp-input-label">Education</label>
+                    <div>
+                      <% @freelancer_profile.freelancer_profile_educations.each do |education_exp| %>
+                        <div><%= education_exp.institution %></div>
+                        <div class="row bp-text-sm ">
+                          <div class="col-md"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
+                          <div class="col-md"><%= education_exp.currently_studying.present? ? "Currently Studying" : education_exp.graduation_year %></div>
+                        </div>
+                        <div>
+                          <hr>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

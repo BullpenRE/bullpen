@@ -36,6 +36,10 @@ RSpec.describe AssetClass, type: :model do
       asset_class.destroy
       expect(FreelancerAssetClass.exists?(freelancer_asset_class.id)).to be_falsey
     end
+
+    it 'has many freelancer_profiles through freelancer_asset_classes' do
+      expect(asset_class.freelancer_profiles).to include(freelancer_asset_class.freelancer_profile)
+    end
   end
 
 end

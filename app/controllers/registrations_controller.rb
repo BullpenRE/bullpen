@@ -5,10 +5,18 @@ class RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   def new
-    super
+    if params[:action] == 'freelancer_sign_up' || params[:action] == 'employer_sign_up'
+      super
+    else
+      redirect_to root_path
+    end
   end
 
-  def new_company
+  def freelancer_sign_up
+    new
+  end
+
+  def employer_sign_up
     new
   end
 
@@ -37,17 +45,6 @@ class RegistrationsController < Devise::RegistrationsController
   def after_update_path_for(resource)
     employer? ? employer_profile_steps_path : freelancer_profile_steps_path
   end
-
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
-
-  # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
-  #
 
   def employer?
     params[:user][:is_employer]

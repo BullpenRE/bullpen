@@ -20,7 +20,7 @@
         <div class="w-100">
           <%= f.select :freelancer_real_estate_skills,
                        options_for_select(
-                           RealEstateSkill.all.map{ |skill| [skill.description, skill.id] if skill.disable == false },
+                           RealEstateSkill.find_each.map{ |skill| [skill.description, skill.id] if skill.disable == false },
                            @freelancer_profile&.freelancer_real_estate_skills&.map do |skill|
                              [skill.real_estate_skill.description, skill.real_estate_skill.id]
                            end.flatten
@@ -34,7 +34,7 @@
         </label>
         <%= f.select :freelancer_asset_classes,
                      options_for_select(
-                         AssetClass.all.map{ |asset| [asset.description, asset.id] if asset.disable == false },
+                         AssetClass.find_each.map{ |asset| [asset.description, asset.id] if asset.disable == false },
                          @freelancer_profile&.freelancer_asset_classes&.map do |asset|
                            [asset.asset_class.description, asset.asset_class.id]
                          end.flatten),
