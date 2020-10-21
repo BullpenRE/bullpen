@@ -14,7 +14,8 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get '/password_reset', to: 'passwords#password_reset'
-    get '/new_company', to: 'registrations#new_company'
+    get '/employer_sign_up', to: 'registrations#employer_sign_up'
+    get '/freelancer_sign_up', to: 'registrations#freelancer_sign_up'
   end
 
   resources :avatar, only: %i[update destroy]
