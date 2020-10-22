@@ -7,4 +7,7 @@ class StyleController < ApplicationController
   def employer; end
 
   def login; end
+
+  def employer_jobs; end
+
 end
