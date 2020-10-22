@@ -80,5 +80,26 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.errors.messages[:base]).to eq ['Please upload only a jpg, png or gif image.']
       end
     end
+
+    describe 'curation states' do
+      it '#accepted?' do
+        freelancer_profile.update(curation: 'accepted')
+        expect(freelancer_profile.accepted?).to be_truthy
+        expect(freelancer_profile.declined?).to be_falsey
+        expect(freelancer_profile.pending?).to be_falsey
+      end
+      it '#declined?' do
+        freelancer_profile.update(curation: 'declined')
+        expect(freelancer_profile.accepted?).to be_falsey
+        expect(freelancer_profile.declined?).to be_truthy
+        expect(freelancer_profile.pending?).to be_falsey
+      end
+      it '#pending?' do
+        freelancer_profile.update(curation: 'pending')
+        expect(freelancer_profile.accepted?).to be_falsey
+        expect(freelancer_profile.declined?).to be_falsey
+        expect(freelancer_profile.pending?).to be_truthy
+      end
+    end
   end
 end
