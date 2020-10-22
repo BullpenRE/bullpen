@@ -4,17 +4,22 @@ ActiveAdmin.register FreelancerProfile do
   includes :user, :freelancer_asset_classes, :freelancer_real_estate_skills, :freelancer_profile_educations, :freelancer_profile_experiences
 
   filter :user_email, as: :string, label: 'User Email'
+  filter :is_draft
+  filter :curation, as: :select, collection: FreelancerProfile::curations.keys
 
   permit_params :user_id,
                 :professional_summary,
                 :professional_title,
-                :professional_years_experience
+                :professional_years_experience,
+                :curation,
+                :is_draft
 
   index do
     column :user
     column 'Title', :professional_title
     column 'Years Experience', :professional_years_experience
-
+    column :is_draft
+    column :curation
     actions
   end
 
@@ -40,6 +45,25 @@ ActiveAdmin.register FreelancerProfile do
       row 'Experience' do
         freelancer_profile.freelancer_profile_experiences.map{|f_e| "#{'<i>(current)</i> ' if f_e.current_job}#{f_e.start_date.year}#{"-#{f_e.end_date.year}" if f_e.end_date && f_e.end_date.year != f_e.start_date.year} #{f_e.job_title} at #{f_e.company}" }.push(link_to('Add/Edit/Remove', admin_freelancer_profile_experiences_path(q: {freelancer_profile_id_eq: params[:id]}), target: '_blank')).join('<br>').html_safe
       end
+      row :is_draft
+      row :curation
+    end
+
+    if !freelancer_profile.is_draft? && freelancer_profile.pending?
+      columns do
+        column do
+          button_to 'Accept',
+                    "/admin/freelancer_profiles/#{freelancer_profile.id}/accept",
+                    action: :post,
+                    data: { confirm: 'Are you sure?' }
+        end
+        column do
+          button_to 'Decline',
+                    "/admin/freelancer_profiles/#{freelancer_profile.id}/decline",
+                    action: :post,
+                    data: { confirm: 'Are you sure?' }
+        end
+      end
     end
   end
 
@@ -57,8 +81,22 @@ ActiveAdmin.register FreelancerProfile do
       f.input :professional_summary
       f.input :asset_classes, as: :check_boxes, collection: AssetClass.order(:description).pluck(:description, :id)
       f.input :real_estate_skills, as: :check_boxes, collection: RealEstateSkill.order(:description).pluck(:description, :id)
+      f.input :is_draft
+      f.input :curation
       f.actions
     end
+  end
+
+  member_action :accept, method: :post do
+    freelancer_profile = FreelancerProfile.find(params[:id])
+    freelancer_profile.update(curation: 'accepted')
+    redirect_to admin_freelancer_profile_path(freelancer_profile.id), { notice: 'Application Accepted.' }
+  end
+
+  member_action :decline, method: :post do
+    freelancer_profile = FreelancerProfile.find(params[:id])
+    freelancer_profile.update(curation: 'declined')
+    redirect_to admin_freelancer_profile_path(freelancer_profile.id), { notice: 'Application Declined.' }
   end
 
   controller do
