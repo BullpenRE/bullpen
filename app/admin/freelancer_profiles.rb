@@ -49,6 +49,8 @@ ActiveAdmin.register FreelancerProfile do
       row :curation
     end
 
+    active_admin_comments
+
     if !freelancer_profile.is_draft? && freelancer_profile.pending?
       columns do
         column do
