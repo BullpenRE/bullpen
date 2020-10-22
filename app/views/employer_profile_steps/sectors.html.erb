@@ -23,8 +23,14 @@
           <% end %>
           <div class="custom-control custom-checkbox mb-3">
 
-            <%= check_box_tag '[employer_profile][employer_profile_sectors][]', sector.id, false, :id => "sector#{sector.id}", class: "custom-control-input"%>
-            <%= label sector.id, sector.sector_description, :class => "custom-control-label",
+            <%= check_box_tag '[employer_profile][employer_profile_sectors][]',
+                              sector.id,
+                              false,
+                              :id => "sector#{sector.id}",
+                              :class => "custom-control-input"%>
+            <%= label_tag sector.id,
+                      sector.sector_description,
+                      :class => "custom-control-label",
                       :for => "sector#{sector.id}" %>
           </div>
           <% if sector.id == 4 || sector.id == 8 %>
