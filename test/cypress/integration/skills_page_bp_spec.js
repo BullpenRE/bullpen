@@ -121,13 +121,83 @@ describe('Register', () => {
 
       })
 
+    // cy.get('div.form-group.mb-4')
+    //   .get('div.w-100')
+    //   .get('select.select2.select2-hidden-accessible', { includeShadowDom: true}).first()
+    //   .select('Underwriting')
+    //   .should(($select) => {
+    //     expect($select).to.have.length(1)
+    //   })
+
+    cy.get('div.form-group.mb-5')
+      .find('label.bp-input-label')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('\n          In what asset classes do you have experience?\n        ')
+      })
+
+    cy.get('div.form-group.mb-5')
+      .find('input').first()
+      .should((input) => {
+        expect(input).to.have.length(1)
+      })
+      .should('have.attr', 'type', 'hidden')
+      .should('have.attr', 'name', 'freelancer_profile[freelancer_asset_classes][]')
+
+    cy.get('div.form-group.mb-5')
+      .get('select#freelancer_profile_freelancer_asset_classes')
+      .should((select) => {
+        expect(select).to.have.length(1)
+      })
+      .should('have.attr', 'multiple', 'multiple')
+      .should('have.attr', 'required', 'required')
+      .should('have.attr', 'name', 'freelancer_profile[freelancer_asset_classes][]')
+      .should('have.attr', 'class', 'select2 select2-hidden-accessible')
+      .should('have.attr', 'data-select2-id', 'freelancer_profile_freelancer_asset_classes')
+      .should('have.attr', 'tabindex', '-1')
+      .should('have.attr', 'aria-hidden', 'true')
+
+    // cy.get('select#freelancer_profile_freelancer_asset_classes')
+    //   .select(['HTC', 'Affordable Housing']).should('have.value', ["55", "56"])
+
+    cy.get('select#freelancer_profile_freelancer_asset_classes')
+      .find('option').contains('HTC')
+      .then(function ($option) {
+        let value = $option[0].value;
+        cy.get('select#freelancer_profile_freelancer_asset_classes').select(value, { force: true });
+      });
+
+    cy.get('div.form-group.mb-45')
+      .get('div.w-100')
+      .get('span.select2.select2-container.select2-container--default').first()
+      .should((span) => {
+        expect(span).to.have.length(1)
+      })
+      .should('have.attr', 'dir', 'ltr')
+      .should('have.attr', 'data-select2-id', '1')
+    // .should('have.attr', 'style', 'width: 610px;')
+
     cy.get('div.form-group.mb-4')
       .get('div.w-100')
-      .get('select.select2.select2-hidden-accessible', { includeShadowDom: true}).first()
-      .select('Underwriting')
-      .should(($select) => {
-        expect($select).to.have.length(1)
+      .get('span.select2.select2-container.select2-container--default').first()
+      .get('span.selection').first()
+      .get('span.select2-selection.select2-selection--multiple').first()
+      .get('ul.select2-selection__rendered').first().children('.select2-search.select2-search--inline')
+      .within(() => {
+        cy.get('input').should('have.attr', 'placeholder', 'Select all that apply')
+        cy.get('input').focus().click()
+
       })
+
+    // cy.get('div.form-group.mb-4')
+    //   .get('div.w-100')
+    //   .get('select.select2.select2-hidden-accessible', { includeShadowDom: true}).first()
+    //   .select('Underwriting')
+    //   .should(($select) => {
+    //     expect($select).to.have.length(1)
+    //   })
   });
 
 })
