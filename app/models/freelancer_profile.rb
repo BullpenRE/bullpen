@@ -11,7 +11,7 @@ class FreelancerProfile < ApplicationRecord
   has_many :asset_classes, through: :freelancer_asset_classes
   has_many :real_estate_skills, through: :freelancer_real_estate_skills
 
-  enum professional_years_experience: { '0-2': 0, '2-5': 1, '5-10': 2 , '>10': 3 }
+  enum professional_years_experience: { '0-2': 0, '2-5': 1, '5-10': 2, '>10': 3 }
   enum curation: { pending: 0, declined: 1, accepted: 2 }
 
   MAX_FILE_SIZE = 2_097_152
