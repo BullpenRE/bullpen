@@ -4,6 +4,7 @@ class EmployerProfileStepsController < ApplicationController
   include Wicked::Wizard
 
   steps :about_company, :employee_count, :type_of_work, :last_question
+  before_action :authenticate_user!
 
   def show
     @user = current_user
@@ -58,6 +59,10 @@ class EmployerProfileStepsController < ApplicationController
     render_wizard @user
 
     true
+  end
+
+  def finish_wizard_path
+    employer_dashboard_path
   end
 
   def company_params
