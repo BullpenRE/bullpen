@@ -52,6 +52,8 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   PATCH      /admin/freelancer_profile_experiences/:id(.:format)                                      admin/freelancer_profile_experiences#update
                                                   PUT        /admin/freelancer_profile_experiences/:id(.:format)                                      admin/freelancer_profile_experiences#update
                                                   DELETE     /admin/freelancer_profile_experiences/:id(.:format)                                      admin/freelancer_profile_experiences#destroy
+                  accept_admin_freelancer_profile POST       /admin/freelancer_profiles/:id/accept(.:format)                                          admin/freelancer_profiles#accept
+                 decline_admin_freelancer_profile POST       /admin/freelancer_profiles/:id/decline(.:format)                                         admin/freelancer_profiles#decline
            batch_action_admin_freelancer_profiles POST       /admin/freelancer_profiles/batch_action(.:format)                                        admin/freelancer_profiles#batch_action
                         admin_freelancer_profiles GET        /admin/freelancer_profiles(.:format)                                                     admin/freelancer_profiles#index
                                                   POST       /admin/freelancer_profiles(.:format)                                                     admin/freelancer_profiles#create
@@ -84,6 +86,7 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                  freelancer_style GET        /freelancer_style(.:format)                                                              style#freelancer
                                    employer_style GET        /employer_style(.:format)                                                                style#employer
                                       login_style GET        /login_style(.:format)                                                                   style#login
+                              employer_jobs_style GET        /employer_jobs_style(.:format)                                                           style#login
                                              join GET        /join(.:format)                                                                          join#index
                                  new_user_session GET        /users/sign_in(.:format)                                                                 devise/sessions#new
                                      user_session POST       /users/sign_in(.:format)                                                                 devise/sessions#create
@@ -101,7 +104,8 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   DELETE     /users(.:format)                                                                         registrations#destroy
                                                   POST       /users(.:format)                                                                         registrations#create
                                    password_reset GET        /password_reset(.:format)                                                                passwords#password_reset
-                                      new_company GET        /new_company(.:format)                                                                   registrations#new_company
+                                 employer_sign_up GET        /employer_sign_up(.:format)                                                              registrations#employer_sign_up
+                               freelancer_sign_up GET        /freelancer_sign_up(.:format)                                                            registrations#freelancer_sign_up
                                            avatar PATCH      /avatar/:id(.:format)                                                                    avatar#update
                                                   PUT        /avatar/:id(.:format)                                                                    avatar#update
                                                   DELETE     /avatar/:id(.:format)                                                                    avatar#destroy
