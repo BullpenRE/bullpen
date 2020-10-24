@@ -32,11 +32,11 @@
         <label for="exampleFormControlMultiSelect" class="bp-input-label">
           In what asset classes do you have experience?
         </label>
-        <%= f.select :freelancer_asset_classes,
+        <%= f.select :freelancer_sectors,
                      options_for_select(
-                         AssetClass.find_each.map{ |asset| [asset.description, asset.id] if asset.disable == false },
-                         @freelancer_profile&.freelancer_asset_classes&.map do |asset|
-                           [asset.asset_class.description, asset.asset_class.id]
+                         Sector.find_each.map{ |sector| [sector.description, sector.id] if sector.disable == false },
+                         @freelancer_profile&.freelancer_sectors&.map do |freelancer_sector|
+                           [freelancer_sector.sector.description, freelancer_sector.sector.id]
                          end.flatten),
                      {}, multiple: true, class: 'select2', required: true %>
       </div>

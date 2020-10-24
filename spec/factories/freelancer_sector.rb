@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :freelancer_asset_class do
+  factory :freelancer_sector do
     freelancer_profile
-    asset_class
+    sector
   end
 end

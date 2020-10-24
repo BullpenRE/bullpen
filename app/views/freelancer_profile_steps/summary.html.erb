@@ -86,9 +86,9 @@
                     <div class="form-group mb-3">
                       <label class="bp-input-label">Asset Classes</label>
                       <div class="w-100">
-                        <%  @freelancer_profile&.freelancer_asset_classes&.map do |asset| %>
+                        <%  @freelancer_profile&.freelancer_sectors&.map do |freelancer_sector| %>
                           <div class="btn btn-dark small mb-1" style="background-color: #005495; border: none">
-                            <%= asset.asset_class.description %>
+                            <%= freelancer_sector.sector.description %>
                           </div>
                         <% end %>
                       </div>

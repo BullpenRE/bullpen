@@ -1,4 +1,4 @@
-ActiveAdmin.register AssetClass do
+ActiveAdmin.register Sector do
   permit_params :description, :disable
   actions :index, :show, :create, :edit, :update
 
