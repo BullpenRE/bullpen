@@ -151,15 +151,6 @@ ActiveRecord::Schema.define(version: 2020_10_23_231651) do
     t.index ["job_id"], name: "index_job_questions_on_job_id"
   end
 
-  create_table "job_sectors", force: :cascade do |t|
-    t.bigint "job_id", null: false
-    t.bigint "sector_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["job_id"], name: "index_job_sectors_on_job_id"
-    t.index ["sector_id"], name: "index_job_sectors_on_sector_id"
-  end
-
   create_table "job_skills", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.bigint "skill_id", null: false
@@ -196,13 +187,6 @@ ActiveRecord::Schema.define(version: 2020_10_23_231651) do
   create_table "real_estate_skills", force: :cascade do |t|
     t.string "description", null: false
     t.boolean "disable", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "sectors", force: :cascade do |t|
-    t.string "description"
-    t.boolean "disabled", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -254,8 +238,6 @@ ActiveRecord::Schema.define(version: 2020_10_23_231651) do
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
   add_foreign_key "freelancer_profiles", "users"
   add_foreign_key "job_questions", "jobs"
-  add_foreign_key "job_sectors", "jobs"
-  add_foreign_key "job_sectors", "sectors"
   add_foreign_key "job_skills", "jobs"
   add_foreign_key "job_skills", "skills"
   add_foreign_key "job_softwares", "jobs"

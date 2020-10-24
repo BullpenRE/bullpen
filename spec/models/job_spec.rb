@@ -12,19 +12,9 @@ RSpec.describe Job, type: :model do
   end
 
   context 'Relationships' do
-    let!(:job_sector) { FactoryBot.create(:job_sector, job: job) }
-    let!(:sector) { job_sector.sector }
     let!(:job_skill) { FactoryBot.create(:job_skill, job: job) }
     let!(:skill) { job_skill.skill }
     let!(:job_question) { FactoryBot.create(:job_question, job: job) }
-
-    it 'has many job_sectors with dependent destroy and jobs through them' do
-      expect(job.job_sectors).to include(job_sector)
-      expect(job.sectors).to include(sector)
-      job.destroy
-      expect(JobSector.exists?(job_sector.id)).to be_falsey
-      expect(Sector.exists?(sector.id)).to be_truthy
-    end
 
     it 'has many job_skills with dependent destroy and skills through them' do
       expect(job.job_skills).to include(job_skill)
