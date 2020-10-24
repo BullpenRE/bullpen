@@ -4,6 +4,10 @@ class Job < ApplicationRecord
   belongs_to :user
   has_many :job_skills, dependent: :destroy
   has_many :skills, through: :job_skills
+  has_many :job_softwares, dependent: :destroy
+  has_many :softwares, through: :job_softwares
+  has_many :job_sectors, dependent: :destroy
+  has_many :sectors, through: :job_sectors
   has_many :job_questions, dependent: :destroy
 
   validates :user_id, presence: true
