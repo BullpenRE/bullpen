@@ -4,7 +4,7 @@ describe('Register', () => {
     const first_name = 'First'
     const last_name = 'Last'
     const email = 'employer@yahoo.com'
-    const phone = '111'
+    const phone = '1112223'
 
   it('checks Logo "BULLPEN" presence at the view, LOGO has width=175px, height=55px', () => {
     cy.visit('http://localhost:5017')
@@ -190,19 +190,19 @@ describe('Register', () => {
       cy.get('div.invalid-feedback.has-error-min').contains('Valid first name is required - two symbols minimum.')
       cy.get('div.invalid-feedback.has-error-min').contains('Valid last name is required - two symbols minimum.')
       cy.get('div.invalid-feedback.has-error-email').contains('Enter valid email - it has contain \"@\".')
-      cy.get('div.invalid-feedback.has-error-min').contains('Valid phone number is required - three symbols minimum.')
+      cy.get('div.invalid-feedback.has-error-min').contains('Valid phone number is required - seven symbols minimum.')
 
       cy.get('#firstName').type(first_name)
       cy.get('#lastName').type(last_name)
       cy.get('#email').type(email)
       cy.get('#phone').type(phone).clear()
-      cy.get('div.invalid-feedback.has-error-min').contains('Valid phone number is required - three symbols minimum.')
+      cy.get('div.invalid-feedback.has-error-min').contains('Valid phone number is required - seven symbols minimum.')
 
       cy.get('#firstName').clear().type(first_name)
       cy.get('#lastName').clear().type(last_name)
       cy.get('#email').clear().type(email)
       cy.get('#phone').type('1')
-      cy.get('div.invalid-feedback.has-error-min').contains('Valid phone number is required - three symbols minimum.')
+      cy.get('div.invalid-feedback.has-error-min').contains('Valid phone number is required - seven symbols minimum.')
   });
 
   it ('checks password and "eye" icon in input field', () => {
