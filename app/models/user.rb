@@ -10,6 +10,7 @@ class User < ApplicationRecord
   validates :last_name, presence: true
 
   has_one :freelancer_profile, dependent: :destroy
+  has_many :jobs, dependent: :destroy
   has_many :freelancer_real_estate_skills, through: :freelancer_profile
   has_many :freelancer_asset_classes, through: :freelancer_profile
 

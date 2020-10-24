@@ -27,6 +27,18 @@ describe User do
       end
     end
 
+    describe 'jobs' do
+      let!(:job) { FactoryBot.create(:job, user: user) }
+      it 'has many' do
+        expect(user.jobs).to include(job)
+      end
+
+      it 'dependent destroy' do
+        user.destroy
+        expect(Job.exists?(job.id)).to be_falsey
+      end
+    end
+
     describe 'freelancer_asset_classes and freelancer_real_estate_skills' do
       let!(:freelancer_asset_class) { FactoryBot.create(:freelancer_asset_class, freelancer_profile: freelancer_profile) }
       let!(:freelancer_real_estate_skill) { FactoryBot.create(:freelancer_real_estate_skill, freelancer_profile: freelancer_profile) }
