@@ -38,8 +38,8 @@ if RealEstateSkill.none?
                          ])
 end
 
-if AssetClass.none?
-  AssetClass.create([
+if Sector.none?
+  Sector.create([
                       { description: 'HTC' },
                       { description: 'Affordable Housing' },
                       { description: 'Condo' },

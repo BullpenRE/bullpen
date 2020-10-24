@@ -1,7 +1,7 @@
 ActiveAdmin.register FreelancerProfile do
   menu label: 'Freelancers'
 
-  includes :user, :freelancer_asset_classes, :freelancer_real_estate_skills, :freelancer_profile_educations, :freelancer_profile_experiences
+  includes :user, :freelancer_sectors, :freelancer_real_estate_skills, :freelancer_profile_educations, :freelancer_profile_experiences
 
   filter :user_email, as: :string, label: 'User Email'
   filter :is_draft
@@ -33,8 +33,8 @@ ActiveAdmin.register FreelancerProfile do
       row :professional_title
       row :professional_years_experience
       row :professional_summary
-      row 'Asset Classes' do
-        freelancer_profile.asset_classes.pluck(:description)
+      row 'Sectors' do
+        freelancer_profile.sectors.pluck(:description)
       end
       row 'Real Estate Skills' do
         freelancer_profile.real_estate_skills.pluck(:description)
@@ -81,7 +81,7 @@ ActiveAdmin.register FreelancerProfile do
       f.input :professional_title
       f.input :professional_years_experience
       f.input :professional_summary
-      f.input :asset_classes, as: :check_boxes, collection: AssetClass.order(:description).pluck(:description, :id)
+      f.input :sectors, as: :check_boxes, collection: Sector.order(:description).pluck(:description, :id)
       f.input :real_estate_skills, as: :check_boxes, collection: RealEstateSkill.order(:description).pluck(:description, :id)
       f.input :is_draft
       f.input :curation
@@ -108,7 +108,7 @@ ActiveAdmin.register FreelancerProfile do
 
       ApplicationRecord.transaction do
         freelancer_profile.save!
-        update_asset_classes_and_real_estate_skills(freelancer_profile)
+        update_sectors_and_real_estate_skills(freelancer_profile)
       rescue StandardError => e
         error_message = e.message
       end
@@ -122,7 +122,7 @@ ActiveAdmin.register FreelancerProfile do
       error_message = nil
 
       freelancer_profile = FreelancerProfile.find(params[:id])
-      update_asset_classes_and_real_estate_skills(freelancer_profile)
+      update_sectors_and_real_estate_skills(freelancer_profile)
 
       ApplicationRecord.transaction do
         freelancer_profile.update!(permitted_params[:freelancer_profile])
@@ -136,19 +136,19 @@ ActiveAdmin.register FreelancerProfile do
       redirect_to admin_freelancer_profile_path(freelancer_profile), flash: message
     end
 
-    def update_asset_classes_and_real_estate_skills(freelancer_profile)
-      freelancer_profile.freelancer_asset_classes.destroy_all
+    def update_sectors_and_real_estate_skills(freelancer_profile)
+      freelancer_profile.freelancer_sectors.destroy_all
       freelancer_profile.freelancer_real_estate_skills.destroy_all
       freelancer_profile.reload
 
-      params[:freelancer_profile][:asset_class_ids].reject(&:empty?).each do |asset_class_id|
-        freelancer_profile.freelancer_asset_classes.create(asset_class_id: asset_class_id.to_i)
+      params[:freelancer_profile][:sector_ids].reject(&:empty?).each do |sector_id|
+        freelancer_profile.freelancer_sectors.create(sector_id: sector_id.to_i)
       end
       params[:freelancer_profile][:real_estate_skill_ids].reject(&:empty?).each do |real_estate_skill_id|
         freelancer_profile.freelancer_real_estate_skills.create(real_estate_skill_id: real_estate_skill_id)
       end
 
-      params[:freelancer_profile].delete(:asset_class_ids)
+      params[:freelancer_profile].delete(:sector_ids)
       params[:freelancer_profile].delete(:real_estate_skill_ids)
     end
   end
