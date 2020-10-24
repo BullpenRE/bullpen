@@ -29,4 +29,4 @@ ActiveAdmin.register_page "Dashboard" do
     #   end
     # end
   end # content
-end unless Rails.env.test?
+end unless Rails.env.test? || Rails.env.production?

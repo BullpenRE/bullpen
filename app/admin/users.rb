@@ -48,4 +48,4 @@ ActiveAdmin.register User do
     end
 
   end
-end unless Rails.env.test?
+end unless Rails.env.test? || Rails.env.production?
