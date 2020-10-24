@@ -4,7 +4,7 @@ $badge-font-weight: 500;
 $badge-padding-x: .8em;
 $body-bg: #E9ECEF;
 $body-color: #4E4E4E;
-//$border-color: #4E4E4E;
+$border-color: #B4C8D8;
 $border-radius: 0.1875rem;
 $border-radius-sm: 0.1875rem;
 $border-radius-lg: 0.1875rem;
@@ -20,7 +20,9 @@ $h4-font-size: 1.125rem; //18px
 $h5-font-size: 1rem; //16px
 $headings-color: #005495;
 $headings-font-weight: 700;
-//$input-border-color: #4E4E4E;
+$hr-border-color: #B4C8D8;
+$input-bg: #E9ECEF;
+$input-border-color: #E9ECEF;
 $modal-inner-padding: 1.875rem;
 $modal-header-border-width: 0;
 $modal-footer-border-width: 0;
@@ -31,14 +33,15 @@ $progress-border-radius: 2rem;
 $spacer: 1.25rem;
 $text-muted: lighten(#4E4E4E, 25%);
 $theme-colors: (
-        "primary": #29BF89,
+        "primary": #24A878,
         "secondary": #005495,
         "danger": #FB3640,
         "dark": #4E4E4E,
         "light": #E9ECEF,
         "gray-dark": #7A7A7A,
         "gray": #E4E4E4,
-        "blue-light": #DFECF5
+        "blue-light": #B4C8D8,
+        "header": #183C58
 );
 
 @import 'bootstrap/scss/bootstrap';
