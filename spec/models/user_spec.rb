@@ -39,12 +39,12 @@ describe User do
       end
     end
 
-    describe 'freelancer_asset_classes and freelancer_real_estate_skills' do
-      let!(:freelancer_asset_class) { FactoryBot.create(:freelancer_asset_class, freelancer_profile: freelancer_profile) }
+    describe 'freelancer_sectors and freelancer_real_estate_skills' do
+      let!(:freelancer_sector) { FactoryBot.create(:freelancer_sector, freelancer_profile: freelancer_profile) }
       let!(:freelancer_real_estate_skill) { FactoryBot.create(:freelancer_real_estate_skill, freelancer_profile: freelancer_profile) }
 
       it 'can have many through the freelance_profile' do
-        expect(user.freelancer_asset_classes).to include(freelancer_asset_class)
+        expect(user.freelancer_sectors).to include(freelancer_sector)
         expect(user.freelancer_real_estate_skills).to include(freelancer_real_estate_skill)
       end
     end

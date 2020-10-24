@@ -62,13 +62,6 @@ ActiveRecord::Schema.define(version: 2020_10_23_231651) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "asset_classes", force: :cascade do |t|
-    t.string "description", null: false
-    t.boolean "disable", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "employer_profiles", force: :cascade do |t|
     t.string "company_name"
     t.string "company_website"
@@ -84,15 +77,6 @@ ActiveRecord::Schema.define(version: 2020_10_23_231651) do
     t.boolean "motivation_augment"
     t.boolean "motivation_other"
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
-  end
-
-  create_table "freelancer_asset_classes", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "freelancer_profile_id"
-    t.bigint "asset_class_id"
-    t.index ["asset_class_id"], name: "index_freelancer_asset_classes_on_asset_class_id"
-    t.index ["freelancer_profile_id"], name: "index_freelancer_asset_classes_on_freelancer_profile_id"
   end
 
   create_table "freelancer_profile_educations", force: :cascade do |t|
@@ -143,6 +127,15 @@ ActiveRecord::Schema.define(version: 2020_10_23_231651) do
     t.index ["real_estate_skill_id"], name: "index_freelancer_real_estate_skills_on_real_estate_skill_id"
   end
 
+  create_table "freelancer_sectors", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "freelancer_profile_id"
+    t.bigint "sector_id"
+    t.index ["freelancer_profile_id"], name: "index_freelancer_sectors_on_freelancer_profile_id"
+    t.index ["sector_id"], name: "index_freelancer_sectors_on_sector_id"
+  end
+
   create_table "job_questions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "description"
@@ -185,6 +178,13 @@ ActiveRecord::Schema.define(version: 2020_10_23_231651) do
   end
 
   create_table "real_estate_skills", force: :cascade do |t|
+    t.string "description", null: false
+    t.boolean "disable", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "sectors", force: :cascade do |t|
     t.string "description", null: false
     t.boolean "disable", default: false
     t.datetime "created_at", precision: 6, null: false
