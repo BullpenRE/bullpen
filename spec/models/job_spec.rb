@@ -25,7 +25,7 @@ RSpec.describe Job, type: :model do
       end
     end
 
-    describe 'job_software' do
+    describe 'job_softwares' do
       let!(:job_software) { FactoryBot.create(:job_software, job: job) }
       let!(:software) { job_software.software }
 
@@ -38,7 +38,7 @@ RSpec.describe Job, type: :model do
       end
     end
 
-    describe 'job_sector' do
+    describe 'job_sectors' do
       let!(:job_sector) { FactoryBot.create(:job_sector, job: job) }
       let!(:sector) { job_sector.sector }
 
@@ -60,6 +60,5 @@ RSpec.describe Job, type: :model do
         expect(JobQuestion.exists?(job_question.id)).to be_falsey
       end
     end
-
   end
 end
