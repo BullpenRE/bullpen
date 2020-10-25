@@ -245,7 +245,7 @@
     // ----------------- Validate on submit -----------------
     const currForm = document.getElementById('regForm');
     currForm.addEventListener('submit', function(event) {
-      if(myInput.classList.contains('valid') && cInput.classList.contains('valid')){
+      if(pswInput.classList.contains('valid') && cInput.classList.contains('valid')){
         currForm.classList.add('was-validated');
       } else {
         event.preventDefault();
