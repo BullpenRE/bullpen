@@ -204,14 +204,14 @@ ActiveRecord::Schema.define(version: 2020_10_24_224220) do
 
   create_table "skills", force: :cascade do |t|
     t.string "description"
-    t.boolean "disabled", default: false
+    t.boolean "disable", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "softwares", force: :cascade do |t|
     t.string "description"
-    t.boolean "disabled", default: false
+    t.boolean "disable", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
