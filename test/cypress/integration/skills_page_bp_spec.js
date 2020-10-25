@@ -14,16 +14,57 @@ describe('Register', () => {
   const last_name = 'Last'
   const email = 'freelancer@yahoo.com'
 
-  it('checks Logo "BULLPEN" presence at the view, LOGO has width=175px, height=55px', () => {
+  it('checks data of nav-bar', () => {
     cy.visit('http://localhost:5017', {failOnStatusCode: false})
       .contains('Apply').click()
-      .get('div.text-left.mt-2.mb-2.ml-5')
+      .get('#firstName').type(first_name)
+      .get('#lastName').type(last_name)
+      .get('#email').type(email)
+      .get('button.form-control-lg.btn.btn-outline-secondary.col-md-12.mb-3.nextBtn-2').click()
+      .get('input#psw').type('q1234567!Q')
+      .get('input#cPwdId').type('q1234567!Q')
+      .get('form').submit()
+
+    cy.get('nav.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.mb-5')
+      .get('div.container').first()
+      .get('a.navbar-brand')
+      .should('have.attr', 'href', 'https://bullpenre.com/')
       .find('img')
       .should('have.attr', 'src', '/packs-test/media/images/bullpen-email-logo-64fc4a58c54693e46d0e2e963bd3c9ac.png')
       .should(($img) => {
-        expect($img).css('width', '175px')
-        expect($img).css('height', '55px')
-      })
+      expect($img).css('width', '130px')
+      expect($img).css('height', '40px')
+    })
+
+     cy.get('nav.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.mb-5')
+       .get('div.container').first()
+       .get('div.collapse.navbar-collapse')
+       .get('ul.navbar-nav.ml-auto')
+       .get('li.nav-item.dropdown')
+       .get('a.nav-link.dropdown-toggle.d-flex.align-items-center')
+       .find('svg')
+       .should(($svg) => {
+         expect($svg).to.have.length(1)
+         expect($svg).have.attr('data-prefix', 'fas')
+         expect($svg).have.attr('data-icon', 'user-circle')
+         expect($svg).have.attr('role', 'img')
+       })
+
+     cy.get('a.nav-link.dropdown-toggle.d-flex.align-items-center')
+     .get('span.pr-1')
+     .should(($span) => {
+       expect($span).to.have.length(1)
+       expect($span).have.text('First Last')
+     })
+
+     cy.get('li.nav-item.dropdown')
+       .get('div.dropdown-menu.dropdown-menu-right')
+       .get('a.dropdown-item')
+       .should('have.attr', 'href', '#')
+       .should(($a) => {
+         expect($a).to.have.length(1)
+         expect($a).have.text('Logout')
+       })
   });
 
   it('checks progress bar & Content card', () => {
