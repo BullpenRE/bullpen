@@ -72,5 +72,10 @@ describe User do
       expect(User.no_employer_data).to include(freelancer_user)
       expect(User.no_employer_data).to_not include(employer_user)
     end
+
+    it '.employers' do
+      expect(User.employers).to include(employer_user)
+      expect(User.employers).to_not include(freelancer_user)
+    end
   end
 end

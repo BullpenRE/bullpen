@@ -17,13 +17,6 @@
                                                   PATCH      /admin/admin_users/:id(.:format)                                                         admin/admin_users#update
                                                   PUT        /admin/admin_users/:id(.:format)                                                         admin/admin_users#update
                                                   DELETE     /admin/admin_users/:id(.:format)                                                         admin/admin_users#destroy
-                       batch_action_admin_sectors POST       /admin/sectors/batch_action(.:format)                                                    admin/sectors#batch_action
-                                    admin_sectors GET        /admin/sectors(.:format)                                                                 admin/sectors#index
-                                                  POST       /admin/sectors(.:format)                                                                 admin/sectors#create
-                                edit_admin_sector GET        /admin/sectors/:id/edit(.:format)                                                        admin/sectors#edit
-                                     admin_sector GET        /admin/sectors/:id(.:format)                                                             admin/sectors#show
-                                                  PATCH      /admin/sectors/:id(.:format)                                                             admin/sectors#update
-                                                  PUT        /admin/sectors/:id(.:format)                                                             admin/sectors#update
                                   admin_dashboard GET        /admin/dashboard(.:format)                                                               admin/dashboard#index
              batch_action_admin_employer_profiles POST       /admin/employer_profiles/batch_action(.:format)                                          admin/employer_profiles#batch_action
                           admin_employer_profiles GET        /admin/employer_profiles(.:format)                                                       admin/employer_profiles#index
@@ -63,6 +56,15 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   PATCH      /admin/freelancer_profiles/:id(.:format)                                                 admin/freelancer_profiles#update
                                                   PUT        /admin/freelancer_profiles/:id(.:format)                                                 admin/freelancer_profiles#update
                                                   DELETE     /admin/freelancer_profiles/:id(.:format)                                                 admin/freelancer_profiles#destroy
+                          batch_action_admin_jobs POST       /admin/jobs/batch_action(.:format)                                                       admin/jobs#batch_action
+                                       admin_jobs GET        /admin/jobs(.:format)                                                                    admin/jobs#index
+                                                  POST       /admin/jobs(.:format)                                                                    admin/jobs#create
+                                    new_admin_job GET        /admin/jobs/new(.:format)                                                                admin/jobs#new
+                                   edit_admin_job GET        /admin/jobs/:id/edit(.:format)                                                           admin/jobs#edit
+                                        admin_job GET        /admin/jobs/:id(.:format)                                                                admin/jobs#show
+                                                  PATCH      /admin/jobs/:id(.:format)                                                                admin/jobs#update
+                                                  PUT        /admin/jobs/:id(.:format)                                                                admin/jobs#update
+                                                  DELETE     /admin/jobs/:id(.:format)                                                                admin/jobs#destroy
             batch_action_admin_real_estate_skills POST       /admin/real_estate_skills/batch_action(.:format)                                         admin/real_estate_skills#batch_action
                          admin_real_estate_skills GET        /admin/real_estate_skills(.:format)                                                      admin/real_estate_skills#index
                                                   POST       /admin/real_estate_skills(.:format)                                                      admin/real_estate_skills#create
@@ -70,6 +72,13 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                           admin_real_estate_skill GET        /admin/real_estate_skills/:id(.:format)                                                  admin/real_estate_skills#show
                                                   PATCH      /admin/real_estate_skills/:id(.:format)                                                  admin/real_estate_skills#update
                                                   PUT        /admin/real_estate_skills/:id(.:format)                                                  admin/real_estate_skills#update
+                       batch_action_admin_sectors POST       /admin/sectors/batch_action(.:format)                                                    admin/sectors#batch_action
+                                    admin_sectors GET        /admin/sectors(.:format)                                                                 admin/sectors#index
+                                                  POST       /admin/sectors(.:format)                                                                 admin/sectors#create
+                                edit_admin_sector GET        /admin/sectors/:id/edit(.:format)                                                        admin/sectors#edit
+                                     admin_sector GET        /admin/sectors/:id(.:format)                                                             admin/sectors#show
+                                                  PATCH      /admin/sectors/:id(.:format)                                                             admin/sectors#update
+                                                  PUT        /admin/sectors/:id(.:format)                                                             admin/sectors#update
                          batch_action_admin_users POST       /admin/users/batch_action(.:format)                                                      admin/users#batch_action
                                       admin_users GET        /admin/users(.:format)                                                                   admin/users#index
                                                   POST       /admin/users(.:format)                                                                   admin/users#create
