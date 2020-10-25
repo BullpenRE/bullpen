@@ -175,7 +175,36 @@ describe('Register', () => {
     cy.get('div.form-group.mb-4')
       .get('div.w-100')
       .get('select.select2.select2-hidden-accessible', { includeShadowDom: true}).first()
-      .select('Underwriting', {force: true})
+      .select(['Underwriting', 'Investment Memo'], {force: true})
+      .should(($select) => {
+        expect($select).to.have.length(1)
+      })
+
+    cy.get('ul.select2-selection__rendered')
+      .get('li.select2-selection__choice').first()
+      .get('span.select2-selection__choice__remove').first()
+      .should(($span) => {
+        expect($span).to.have.length(1)
+        expect($span).have.text('×')
+      })
+      .should('have.attr', 'role', 'presentation')
+      .click({ force: true })
+    cy.get('body').focused().blur()
+
+    cy.get('ul.select2-selection__rendered')
+      .find('span.select2-selection__clear').first()
+      .should(($span) => {
+        expect($span).to.have.length(1)
+        expect($span).have.text('×')
+      })
+      .should('have.attr', 'title', 'Remove all items')
+      .click({ force: true })
+    cy.get('body').focused().blur()
+
+    cy.get('div.form-group.mb-4')
+      .get('div.w-100')
+      .get('select.select2.select2-hidden-accessible', { includeShadowDom: true}).first()
+      .select(['Underwriting', 'Investment Memo', 'Brokerage Memo'], {force: true})
       .should(($select) => {
         expect($select).to.have.length(1)
       })
@@ -240,7 +269,36 @@ describe('Register', () => {
     cy.get('div.form-group.mb-5')
       .get('select.select2.select2-hidden-accessible', { includeShadowDom: true})
       .last()
-      .select('HTC', {force: true})
+      .select(['HTC','Affordable Housing'], {force: true})
+      .should(($select) => {
+        expect($select).to.have.length(1)
+      })
+
+    cy.get('ul.select2-selection__rendered')
+      .get('li.select2-selection__choice').last()
+      .find('span.select2-selection__choice__remove').first()
+      .should(($span) => {
+        expect($span).to.have.length(1)
+        expect($span).have.text('×')
+      })
+      .should('have.attr', 'role', 'presentation')
+      .click({ force: true })
+    cy.get('body').focused().blur()
+
+    cy.get('ul.select2-selection__rendered')
+      .find('span.select2-selection__clear').last()
+      .should(($span) => {
+        expect($span).to.have.length(1)
+        expect($span).have.text('×')
+      })
+      .should('have.attr', 'title', 'Remove all items')
+      .click({ force: true })
+    cy.get('body').focused().blur()
+
+    cy.get('div.form-group.mb-5')
+      .get('select.select2.select2-hidden-accessible', { includeShadowDom: true})
+      .last()
+      .select(['HTC','Affordable Housing', 'Condo'], {force: true})
       .should(($select) => {
         expect($select).to.have.length(1)
       })
