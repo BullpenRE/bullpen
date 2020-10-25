@@ -1,6 +1,15 @@
 /// <reference types="Cypress" />
 
 describe('Register', () => {
+  beforeEach(() => {
+    // seed the database prior to every test
+    cy.exec('RAILS_ENV=test rails db:seed')
+  })
+
+  it('successfully loads', () => {
+    cy.visit('http://localhost:5017', {failOnStatusCode: false})
+  })
+
   const first_name = 'First'
   const last_name = 'Last'
   const email = 'freelancer@yahoo.com'
@@ -102,12 +111,12 @@ describe('Register', () => {
     cy.get('div.form-group.mb-4')
       .get('div.w-100')
       .get('span.select2.select2-container.select2-container--default').first()
-      .should((span) => {
-        expect(span).to.have.length(1)
+      .should(($span) => {
+        expect($span).to.have.length(1)
       })
       .should('have.attr', 'dir', 'ltr')
       .should('have.attr', 'data-select2-id', '1')
-      // .should('have.attr', 'style', 'width: 610px;')
+      .should('have.attr', 'style', 'width: 640px;')
 
     cy.get('div.form-group.mb-4')
       .get('div.w-100')
@@ -117,17 +126,18 @@ describe('Register', () => {
       .get('ul.select2-selection__rendered').first().children('.select2-search.select2-search--inline')
       .within(() => {
       cy.get('input').should('have.attr', 'placeholder', 'Select all that apply')
-      cy.get('input').focus().click()
-
+      cy.get('input')
+        .focus()
+        .click()
       })
 
-    // cy.get('div.form-group.mb-4')
-    //   .get('div.w-100')
-    //   .get('select.select2.select2-hidden-accessible', { includeShadowDom: true}).first()
-    //   .select('Underwriting')
-    //   .should(($select) => {
-    //     expect($select).to.have.length(1)
-    //   })
+    cy.get('div.form-group.mb-4')
+      .get('div.w-100')
+      .get('select.select2.select2-hidden-accessible', { includeShadowDom: true}).first()
+      .select('Underwriting', {force: true})
+      .should(($select) => {
+        expect($select).to.have.length(1)
+      })
 
     cy.get('div.form-group.mb-5')
       .find('label.bp-input-label')
@@ -140,16 +150,16 @@ describe('Register', () => {
 
     cy.get('div.form-group.mb-5')
       .find('input').first()
-      .should((input) => {
-        expect(input).to.have.length(1)
+      .should(($input) => {
+        expect($input).to.have.length(1)
       })
       .should('have.attr', 'type', 'hidden')
       .should('have.attr', 'name', 'freelancer_profile[freelancer_asset_classes][]')
 
     cy.get('div.form-group.mb-5')
       .get('select#freelancer_profile_freelancer_asset_classes')
-      .should((select) => {
-        expect(select).to.have.length(1)
+      .should(($select) => {
+        expect($select).to.have.length(1)
       })
       .should('have.attr', 'multiple', 'multiple')
       .should('have.attr', 'required', 'required')
@@ -159,45 +169,40 @@ describe('Register', () => {
       .should('have.attr', 'tabindex', '-1')
       .should('have.attr', 'aria-hidden', 'true')
 
-    // cy.get('select#freelancer_profile_freelancer_asset_classes')
-    //   .select(['HTC', 'Affordable Housing']).should('have.value', ["55", "56"])
-
-    cy.get('select#freelancer_profile_freelancer_asset_classes')
-      .find('option').contains('HTC')
-      .then(function ($option) {
-        let value = $option[0].value;
-        cy.get('select#freelancer_profile_freelancer_asset_classes').select(value, { force: true });
-      });
-
-    cy.get('div.form-group.mb-45')
-      .get('div.w-100')
-      .get('span.select2.select2-container.select2-container--default').first()
-      .should((span) => {
-        expect(span).to.have.length(1)
+    cy.get('div.form-group.mb-5')
+      .get('span.select2-container.select2-container--default.select2-container--below', { includeShadowDom: true})
+      .first()
+      .should(($span) => {
+        expect($span).to.have.length(1)
       })
       .should('have.attr', 'dir', 'ltr')
       .should('have.attr', 'data-select2-id', '1')
-    // .should('have.attr', 'style', 'width: 610px;')
+    .should('have.attr', 'style', 'width: 640px;')
 
-    cy.get('div.form-group.mb-4')
-      .get('div.w-100')
-      .get('span.select2.select2-container.select2-container--default').first()
-      .get('span.selection').first()
-      .get('span.select2-selection.select2-selection--multiple').first()
-      .get('ul.select2-selection__rendered').first().children('.select2-search.select2-search--inline')
+    cy.get('div.form-group.mb-5')
+      .get('span.select2-container.select2-container--default.select2-container--below', { includeShadowDom: true})
+      .first()
+      .get('span.selection')
+      .first()
+      .get('span.select2-selection.select2-selection--multiple')
+      .first()
+      .get('ul.select2-selection__rendered').last().children('.select2-search.select2-search--inline')
       .within(() => {
         cy.get('input').should('have.attr', 'placeholder', 'Select all that apply')
-        cy.get('input').focus().click()
+        cy.get('input')
+          .focus()
+          .click({force: true})
+          .blur()
 
       })
 
-    // cy.get('div.form-group.mb-4')
-    //   .get('div.w-100')
-    //   .get('select.select2.select2-hidden-accessible', { includeShadowDom: true}).first()
-    //   .select('Underwriting')
-    //   .should(($select) => {
-    //     expect($select).to.have.length(1)
-    //   })
+    cy.get('div.form-group.mb-5')
+      .get('select.select2.select2-hidden-accessible', { includeShadowDom: true})
+      .last()
+      .select('HTC', {force: true})
+      .should(($select) => {
+        expect($select).to.have.length(1)
+      })
   });
 
 })
