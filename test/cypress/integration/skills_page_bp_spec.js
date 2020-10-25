@@ -244,6 +244,25 @@ describe('Register', () => {
       .should(($select) => {
         expect($select).to.have.length(1)
       })
+
+    cy.get('div.d-flex.justify-content-between', { includeShadowDom: true})
+      .get('button.btn.btn-link.px-0.invisible', { includeShadowDom: true})
+      .should(($button) => {
+        expect($button).to.have.length(1)
+      })
+      .should('have.attr', 'type', 'button')
+
+    cy.get('div.d-flex.justify-content-between')
+      .get('input.btn.btn-primary')
+      .should(($input) => {
+        expect($input).to.have.length(1)
+      })
+      .should('have.attr', 'type', 'submit')
+      .should('have.attr', 'name', 'commit')
+      .should('have.attr', 'value', 'Next')
+      .should('have.attr', 'data-disable-with', 'Next')
+      .click()
+
   });
 
 })
