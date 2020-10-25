@@ -13,5 +13,6 @@ class Job < ApplicationRecord
   validates :user_id, presence: true
 
   enum position_length: { 'long-term': 0, 'temporary': 1 }
+  enum hours_needed: { 'part-time': 0, 'on-call': 1, 'project-based': 2 }
   enum required_experience: { 'junior': 0, 'intermediate': 1, 'senior': 2 }
 end

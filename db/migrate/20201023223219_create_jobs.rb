@@ -5,9 +5,11 @@ class CreateJobs < ActiveRecord::Migration[6.0]
       t.string :title
       t.string :short_description
       t.integer :position_length
+      t.integer :hours_needed
       t.string :time_zone
       t.boolean :daytime_availability_required
       t.integer :required_experience
+      t.string :required_regional_knowledge
       t.text :relevant_job_details
       t.boolean :draft, default: true
 
