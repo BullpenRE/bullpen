@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_26_115708) do
+ActiveRecord::Schema.define(version: 2020_10_26_202524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -136,6 +136,58 @@ ActiveRecord::Schema.define(version: 2020_10_26_115708) do
     t.index ["sector_id"], name: "index_freelancer_sectors_on_sector_id"
   end
 
+  create_table "job_questions", force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_job_questions_on_job_id"
+  end
+
+  create_table "job_sectors", force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.bigint "sector_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_job_sectors_on_job_id"
+    t.index ["sector_id"], name: "index_job_sectors_on_sector_id"
+  end
+
+  create_table "job_skills", force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.bigint "skill_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_job_skills_on_job_id"
+    t.index ["skill_id"], name: "index_job_skills_on_skill_id"
+  end
+
+  create_table "job_softwares", force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.bigint "software_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_job_softwares_on_job_id"
+    t.index ["software_id"], name: "index_job_softwares_on_software_id"
+  end
+
+  create_table "jobs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title"
+    t.string "short_description"
+    t.integer "position_length"
+    t.integer "hours_needed"
+    t.string "time_zone"
+    t.boolean "daytime_availability_required"
+    t.integer "required_experience"
+    t.string "required_regional_knowledge"
+    t.text "relevant_job_details"
+    t.boolean "draft", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_jobs_on_user_id"
+  end
+
   create_table "real_estate_skills", force: :cascade do |t|
     t.string "description", null: false
     t.boolean "disable", default: false
@@ -145,6 +197,20 @@ ActiveRecord::Schema.define(version: 2020_10_26_115708) do
 
   create_table "sectors", force: :cascade do |t|
     t.string "description", null: false
+    t.boolean "disable", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "skills", force: :cascade do |t|
+    t.string "description"
+    t.boolean "disable", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "softwares", force: :cascade do |t|
+    t.string "description"
     t.boolean "disable", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -171,7 +237,7 @@ ActiveRecord::Schema.define(version: 2020_10_26_115708) do
     t.string "last_name"
     t.string "phone_number"
     t.string "location"
-    t.integer "mode"
+    t.integer "role"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -182,4 +248,12 @@ ActiveRecord::Schema.define(version: 2020_10_26_115708) do
   add_foreign_key "freelancer_profile_educations", "freelancer_profiles"
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
   add_foreign_key "freelancer_profiles", "users"
+  add_foreign_key "job_questions", "jobs"
+  add_foreign_key "job_sectors", "jobs"
+  add_foreign_key "job_sectors", "sectors"
+  add_foreign_key "job_skills", "jobs"
+  add_foreign_key "job_skills", "skills"
+  add_foreign_key "job_softwares", "jobs"
+  add_foreign_key "job_softwares", "softwares"
+  add_foreign_key "jobs", "users"
 end

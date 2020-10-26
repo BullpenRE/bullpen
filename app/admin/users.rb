@@ -8,7 +8,7 @@ ActiveAdmin.register User do
     column :created_at
     column :last_sign_in_at
     column :confirmed_at
-    column 'Role', :mode
+    column :role
 
     actions defaults: true
   end
@@ -22,7 +22,7 @@ ActiveAdmin.register User do
       f.input :password, label: "Password#{' (if unchanged leave blank)' unless f.object.new_record?}"
       f.input :first_name
       f.input :last_name
-      f.input :mode, as: :select, label: 'Role'
+      f.input :role, as: :select
       f.input :confirmed_at, label: 'Confirmed (UTC)'
       f.actions
     end
