@@ -189,7 +189,7 @@ describe('Register', () => {
       })
       .should('have.attr', 'role', 'presentation')
       .click({ force: true })
-    cy.get('body').focused().blur()
+    cy.focused().blur()
 
     cy.get('ul.select2-selection__rendered')
       .find('span.select2-selection__clear').first()
@@ -199,7 +199,7 @@ describe('Register', () => {
       })
       .should('have.attr', 'title', 'Remove all items')
       .click({ force: true })
-    cy.get('body').focused().blur()
+    cy.focused().blur()
 
     cy.get('div.form-group.mb-4')
       .get('div.w-100')
@@ -283,7 +283,7 @@ describe('Register', () => {
       })
       .should('have.attr', 'role', 'presentation')
       .click({ force: true })
-    cy.get('body').focused().blur()
+    cy.focused().blur()
 
     cy.get('ul.select2-selection__rendered')
       .find('span.select2-selection__clear').last()
@@ -293,7 +293,7 @@ describe('Register', () => {
       })
       .should('have.attr', 'title', 'Remove all items')
       .click({ force: true })
-    cy.get('body').focused().blur()
+    cy.focused().blur()
 
     cy.get('div.form-group.mb-5')
       .get('select.select2.select2-hidden-accessible', { includeShadowDom: true})
