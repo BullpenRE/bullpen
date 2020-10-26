@@ -31,6 +31,7 @@ class FreelancerProfileStepsController < ApplicationController
 
     @freelancer_profile.is_draft = params[:freelancer_profile][:is_draft]
     @freelancer_profile.save
+    save_current_step
     render_wizard @user
 
     true
@@ -46,6 +47,7 @@ class FreelancerProfileStepsController < ApplicationController
 
     @user.location = params[:user][:location]
     @user.save
+    save_current_step
     render_wizard @user
 
     true
@@ -56,6 +58,7 @@ class FreelancerProfileStepsController < ApplicationController
 
     freelancer_profile_education_save
     work_experience_save
+    save_current_step
 
     render wizard_path(:work_education_experience)
 
@@ -66,6 +69,7 @@ class FreelancerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :professional_history
 
     @freelancer_profile.update_attributes(history_params)
+    save_current_step
     render_wizard @user
 
     true
@@ -81,12 +85,18 @@ class FreelancerProfileStepsController < ApplicationController
     sectors_params&.each do |sector|
       FreelancerSector.create(freelancer_profile_id: @freelancer_profile.id, sector_id: sector)
     end
+    save_current_step
     render_wizard @user
 
     true
   end
 
   private
+
+  def save_current_step
+    @freelancer_profile.current_step = wizard_value(next_step)
+    @freelancer_profile.save
+  end
 
   def destroy_old_re_skills_and_sectors
     @freelancer_profile&.freelancer_real_estate_skills&.destroy_all

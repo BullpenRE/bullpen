@@ -21,13 +21,15 @@ class EmployerProfileStepsController < ApplicationController
 
     about_company_save ||
       employee_count_save ||
-      type_of_work_save || last_question_save
+      type_of_work_save ||
+      last_question_save
   end
 
   def about_company_save
     return false unless wizard_value(step) == :about_company
 
     @employer_profile.update_attributes(company_params)
+    save_current_step
     render_wizard @user
 
     true
@@ -37,6 +39,7 @@ class EmployerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :employee_count
 
     @employer_profile.update(employee_count: params.require(:employer_profile).values.dig(0))
+    save_current_step
     render_wizard @user
 
     true
@@ -46,6 +49,7 @@ class EmployerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :type_of_work
 
     @employer_profile.update(category: params.require(:employer_profile).values.dig(0))
+    save_current_step
     render_wizard @user
 
     true
@@ -55,10 +59,13 @@ class EmployerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :last_question
 
     @employer_profile.update_attributes(last_question_params)
+    save_current_step
     render_wizard @user
 
     true
   end
+
+  private
 
   def company_params
     params.require(:employer_profile).permit(:company_name, :company_website, :role_in_company)
@@ -70,5 +77,10 @@ class EmployerProfileStepsController < ApplicationController
                                              :motivation_backfill,
                                              :motivation_augment,
                                              :motivation_other)
+  end
+
+  def save_current_step
+    @employer_profile.current_step = wizard_value(next_step)
+    @employer_profile.save
   end
 end

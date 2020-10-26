@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_26_202524) do
+ActiveRecord::Schema.define(version: 2020_10_26_213008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2020_10_26_202524) do
     t.boolean "motivation_backfill"
     t.boolean "motivation_augment"
     t.boolean "motivation_other"
+    t.string "current_step"
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
@@ -115,6 +116,7 @@ ActiveRecord::Schema.define(version: 2020_10_26_202524) do
     t.text "professional_summary"
     t.integer "curation", default: 0
     t.boolean "is_draft", default: true
+    t.string "current_step"
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
