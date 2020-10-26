@@ -25,21 +25,40 @@ RSpec.describe Sector, type: :model do
   end
 
   context 'Relationships' do
-    let(:freelancer_sector) { FactoryBot.create(:freelancer_sector, sector: sector) }
+    describe 'freelancer_sectors' do
+      let(:freelancer_sector) { FactoryBot.create(:freelancer_sector, sector: sector) }
 
-    it 'has many freelancer_sectors' do
-      expect(sector.freelancer_sectors).to include(freelancer_sector)
+      it 'has many' do
+        expect(sector.freelancer_sectors).to include(freelancer_sector)
+      end
+
+      it 'destroying a sector also destroys its associated freelancer_sectors' do
+        expect(FreelancerSector.exists?(freelancer_sector.id)).to be_truthy
+        sector.destroy
+        expect(FreelancerSector.exists?(freelancer_sector.id)).to be_falsey
+      end
+
+      it 'has many freelancer_profiles through freelancer_sectors' do
+        expect(sector.freelancer_profiles).to include(freelancer_sector.freelancer_profile)
+      end
     end
 
-    it 'destroying an sector also destroys its associated freelancer_sectors' do
-      expect(FreelancerSector.exists?(freelancer_sector.id)).to be_truthy
-      sector.destroy
-      expect(FreelancerSector.exists?(freelancer_sector.id)).to be_falsey
-    end
+    describe 'job_sectors' do
+      let(:job_sector) { FactoryBot.create(:job_sector, sector: sector) }
 
-    it 'has many freelancer_profiles through freelancer_sectors' do
-      expect(sector.freelancer_profiles).to include(freelancer_sector.freelancer_profile)
+      it 'has many' do
+        expect(sector.job_sectors).to include(job_sector)
+      end
+
+      it 'destroying a sector also destroys its associate job_sectors' do
+        expect(JobSector.exists?(job_sector.id)).to be_truthy
+        sector.destroy
+        expect(JobSector.exists?(job_sector.id)).to be_falsey
+      end
+
+      it 'has many sectors through job_sectors' do
+        expect(sector.jobs).to include(job_sector.job)
+      end
     end
   end
-
 end
