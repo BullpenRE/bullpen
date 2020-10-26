@@ -41,4 +41,4 @@ ActiveAdmin.register JobQuestion do
       f.actions
     end
   end
-end unless Rails.env.test?
+end unless Rails.env.test? || Rails.env.production?

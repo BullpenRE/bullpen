@@ -12,4 +12,4 @@ ActiveAdmin.register Skill do
 
   filter :description
   filter :disable
-end unless Rails.env.test?
+end unless Rails.env.test? || Rails.env.production?

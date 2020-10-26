@@ -139,4 +139,4 @@ ActiveAdmin.register Job do
       params[:job].delete(:software_ids)
     end
   end
-end unless Rails.env.test?
+end unless Rails.env.test? || Rails.env.production?
