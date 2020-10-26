@@ -56,7 +56,7 @@ class EmployerProfileStepsController < ApplicationController
 
     destroy_old_sectors
     sectors_params&.each do |sector|
-      EmployerProfileSector.create(employer_profile_id: @employer_profile.id, sector_id: sector)
+      EmployerSector.create(employer_profile_id: @employer_profile.id, sector_id: sector)
     end
     render_wizard @user
 
@@ -75,7 +75,7 @@ class EmployerProfileStepsController < ApplicationController
   private
 
   def destroy_old_sectors
-    @employer_profile&.employer_profile_sectors&.destroy_all
+    @employer_profile&.employer_sectors&.destroy_all
   end
 
   def company_params
@@ -83,7 +83,7 @@ class EmployerProfileStepsController < ApplicationController
   end
 
   def sectors_params
-    params[:employer_profile][:employer_profile_sectors]&.reject(&:blank?)
+    params[:employer_profile][:employer_sectors]&.reject(&:blank?)
   end
 
   def last_question_params

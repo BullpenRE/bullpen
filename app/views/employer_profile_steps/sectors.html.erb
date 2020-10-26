@@ -23,13 +23,13 @@
           <% end %>
           <div class="custom-control custom-checkbox mb-3">
 
-            <%= check_box_tag '[employer_profile][employer_profile_sectors][]',
+            <%= check_box_tag '[employer_profile][employer_sectors][]',
                               sector.id,
                               false,
                               :id => "sector#{sector.id}",
                               :class => "custom-control-input"%>
             <%= label_tag sector.id,
-                      sector.sector_description,
+                      sector.description,
                       :class => "custom-control-label",
                       :for => "sector#{sector.id}" %>
           </div>

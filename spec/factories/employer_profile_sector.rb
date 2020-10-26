@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :employer_profile_sector do
+  factory :employer_sector do
     employer_profile
     sector
   end

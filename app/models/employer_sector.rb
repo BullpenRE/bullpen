@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EmployerProfileSector < ApplicationRecord
+class EmployerSector < ApplicationRecord
   belongs_to :employer_profile
   belongs_to :sector
 

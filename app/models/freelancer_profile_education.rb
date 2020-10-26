@@ -9,6 +9,6 @@ class FreelancerProfileEducation < ApplicationRecord
   validates :course_of_study, presence: true
 
   AVAILABLE_YEARS = (40.years.ago.year..Time.now.year).reverse_each
-  enum degree: %w[BS BA Masters PHD]
+  enum degree: { 'BS': 0, 'BA': 1, 'Masters': 2, 'PHD': 3 }
 
 end
