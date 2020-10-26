@@ -15,6 +15,8 @@ class User < ApplicationRecord
 
   has_one :employer_profile, dependent: :destroy
 
+  enum mode: { freelancer: 0, employer: 1 }
+
   def self.ransackable_scopes(_auth_object = nil)
     [:confirmed]
   end

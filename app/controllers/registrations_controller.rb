@@ -47,7 +47,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def employer?
-    params[:user][:is_employer]
+    params[:user][:mode] == 'employer'
   end
 
   def configure_sign_up_params
@@ -55,10 +55,10 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def freelancer_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email mode])
   end
 
   def employer_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email phone_number is_employer])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email phone_number mode])
   end
 end
