@@ -10,8 +10,8 @@ $border-radius-sm: 0.1875rem;
 $border-radius-lg: 0.1875rem;
 $btn-white-space: nowrap;
 $component-active-bg: #005495; //highlight color on focus, select for checkboxes & radio buttons
-$font-family-base: 'Nunito Sans', sans-serif;
 $custom-control-indicator-checked-disabled-bg:  rgba(0, 84, 149, 0.5);
+$font-family-base: 'Nunito Sans', sans-serif;
 $grid-gutter-width: 40px;
 $h1-font-size: 1.5rem; //24px
 $h2-font-size: 1.375rem; //22px
@@ -23,25 +23,24 @@ $headings-font-weight: 700;
 $hr-border-color: #B4C8D8;
 $input-bg: #E9ECEF;
 $input-border-color: #E9ECEF;
-$modal-inner-padding: 1.875rem;
+$modal-inner-padding: 1.25rem;
 $modal-header-border-width: 0;
 $modal-footer-border-width: 0;
-$modal-header-padding-y: 0;
 $pagination-border-width: 0;
 $progress-bar-bg: #005495;
 $progress-border-radius: 2rem;
 $spacer: 1.25rem;
 $text-muted: lighten(#4E4E4E, 25%);
 $theme-colors: (
-        "primary": #24A878,
-        "secondary": #005495,
-        "danger": #FB3640,
-        "dark": #4E4E4E,
-        "light": #E9ECEF,
-        "gray-dark": #7A7A7A,
-        "gray": #E4E4E4,
-        "blue-light": #B4C8D8,
-        "header": #183C58
+  "primary": #24A878,
+  "secondary": #005495,
+  "danger": #FB3640,
+  "dark": #4E4E4E,
+  "light": #E9ECEF,
+  "gray-dark": #7A7A7A,
+  "gray": #E4E4E4,
+  "blue-light": #B4C8D8,
+  "header": #183C58
 );
 
 @import 'bootstrap/scss/bootstrap';
@@ -59,14 +58,14 @@ h1, .h1, h2, .h2, h3, .h3 {
   font-family: 'Ubuntu', sans-serif;
 }
 
-//Replace the dropdown triangle with a FontAwesome chevron
+//Include a FontAwesome chevron for menus. This was updated to allow using button styles instead.
 .dropdown-toggle::after {
-  @extend %fa-icon;
-  @extend .fas;
-  content: fa-content($fa-var-chevron-down);
+  //@extend %fa-icon;
+  //@extend .fas;
+  //content: fa-content($fa-var-chevron-down);
   border: none!important;
-  color: #29BF89;
-  vertical-align: 0;
+  //color: #29BF89;
+  //vertical-align: 0;
 }
 .page-item .page-link {
   border-radius: 0.1875rem;

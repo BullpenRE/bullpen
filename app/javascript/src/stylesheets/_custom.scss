@@ -12,21 +12,27 @@
   border: 2px solid #183C58;
   border-radius: 8px;
 }
-
 .bp-btn-select-border {
-  border-color: #B4C8D8;
+  border-color: #24A878;
+  color: #24A878;
 }
 .bp-btn-select-border:not(:disabled):not(.disabled):active,
 .bp-btn-select-border.active:not(:disabled):not(.disabled),
 .show > .bp-btn-select-border.dropdown-toggle {
-  border-color: lighten(#005495, 25%);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 0 .2rem rgba(0, 84, 149, 0.25);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 0 .2rem rgba(36, 168, 120, 0.25);
+  color: darken(#24A878, 10%);
+}
+.bp-btn-select-border:not(:disabled):not(.disabled):hover,
+.bp-btn-select-border.hover:not(:disabled):not(.disabled),
+.show > .bp-btn-select-border.dropdown-toggle {
+  border-color: darken(#24A878, 10%);
+  color: darken(#24A878, 10%);
 }
 .bp-card {
   background-color: white;
-  //box-shadow: 0px 4px 6px rgba(78, 78, 78, 0.15);
-  padding: 1.875rem;
+  padding: 1.25rem;
 }
+//To be depreciated for the H5 class
 .bp-input-label {
   font-family: 'Ubuntu', sans-serif;
   font-weight: 700;
