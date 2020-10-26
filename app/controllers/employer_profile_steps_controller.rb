@@ -2,6 +2,7 @@
 
 class EmployerProfileStepsController < ApplicationController
   include Wicked::Wizard
+  before_action :step_variables, only: [:show]
 
   steps :about_company, :employee_count, :type_of_work, :sectors, :last_question
 
@@ -73,6 +74,19 @@ class EmployerProfileStepsController < ApplicationController
   end
 
   private
+
+  def step_variables
+    case wizard_value(step)
+    when :sectors
+      sectors = Sector.enabled.order(:description)
+      @sector_column_1 = []
+      @sector_column_2 = []
+      Sector.enabled.order(:description).each_with_index do |sector, index|
+        index < (sectors.length / 2) ? @sector_column_1 << sector : @sector_column_2 << sector
+      end
+      @selected_sector_ids = current_user.employer_sectors.pluck(:sector_id)
+    end
+  end
 
   def destroy_old_sectors
     @employer_profile&.employer_sectors&.destroy_all
