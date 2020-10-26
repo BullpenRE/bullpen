@@ -18,7 +18,7 @@
 
       <div class="row mb-5">
         <div class="col-md">
-          <% @sector_column_1.each do |sector| %>
+          <% @sector_column1.each do |sector| %>
             <div class="custom-control custom-checkbox mb-3">
               <%= check_box_tag '[employer_profile][employer_sectors][]',
                                 sector.id,
@@ -33,7 +33,7 @@
           <% end %>
         </div>
         <div class="col-md">
-          <% @sector_column_2.each do |sector| %>
+          <% @sector_column2.each do |sector| %>
             <div class="custom-control custom-checkbox mb-3">
               <%= check_box_tag '[employer_profile][employer_sectors][]',
                                 sector.id,

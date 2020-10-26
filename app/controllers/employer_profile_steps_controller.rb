@@ -21,8 +21,10 @@ class EmployerProfileStepsController < ApplicationController
     @employer_profile = @user.employer_profile
 
     about_company_save ||
-      employee_count_save || type_of_work_save ||
-      sectors_save || last_question_save
+      employee_count_save ||
+      type_of_work_save ||
+      sectors_save ||
+      last_question_save
   end
 
   def about_company_save
@@ -79,10 +81,10 @@ class EmployerProfileStepsController < ApplicationController
     case wizard_value(step)
     when :sectors
       sectors = Sector.enabled.order(:description)
-      @sector_column_1 = []
-      @sector_column_2 = []
+      @sector_column1 = []
+      @sector_column2 = []
       Sector.enabled.order(:description).each_with_index do |sector, index|
-        index < (sectors.length / 2) ? @sector_column_1 << sector : @sector_column_2 << sector
+        index < (sectors.length / 2) ? @sector_column1 << sector : @sector_column2 << sector
       end
       @selected_sector_ids = current_user.employer_sectors.pluck(:sector_id)
     end

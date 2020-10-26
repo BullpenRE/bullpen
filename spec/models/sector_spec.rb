@@ -82,10 +82,10 @@ RSpec.describe Sector, type: :model do
 
   context 'Scopes' do
     it '.enabled' do
-      disabled_scope = FactoryBot.create(:sector, disable: true)
+      disabled_sector = FactoryBot.create(:sector, disable: true)
       expect(sector.disable).to be_falsey
       expect(Sector.enabled).to include(sector)
-      expect(Sector.enabled).to_not include(disabled_scope)
+      expect(Sector.enabled).to_not include(disabled_sector)
     end
   end
 end
