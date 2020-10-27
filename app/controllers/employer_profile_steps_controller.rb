@@ -18,7 +18,7 @@ class EmployerProfileStepsController < ApplicationController
   def update
     @user = current_user
     @employer_profile = @user.employer_profile
-
+    save_current_step
     about_company_save ||
       employee_count_save ||
       type_of_work_save ||
@@ -29,7 +29,6 @@ class EmployerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :about_company
 
     @employer_profile.update_attributes(company_params)
-    save_current_step
     render_wizard @user
 
     true
@@ -39,7 +38,6 @@ class EmployerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :employee_count
 
     @employer_profile.update(employee_count: params.require(:employer_profile).values.dig(0))
-    save_current_step
     render_wizard @user
 
     true
@@ -49,7 +47,6 @@ class EmployerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :type_of_work
 
     @employer_profile.update(category: params.require(:employer_profile).values.dig(0))
-    save_current_step
     render_wizard @user
 
     true
@@ -59,7 +56,6 @@ class EmployerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :last_question
 
     @employer_profile.update_attributes(last_question_params)
-    save_current_step
     render_wizard @user
 
     true
