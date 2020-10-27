@@ -21,7 +21,11 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    super
+    if User.exists?(email: params[:user][:email])
+      #redirect_to root_path
+    else
+      super
+    end
   end
 
   def update
