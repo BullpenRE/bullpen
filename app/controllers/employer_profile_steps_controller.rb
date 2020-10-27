@@ -5,6 +5,7 @@ class EmployerProfileStepsController < ApplicationController
   before_action :step_variables, only: [:show]
 
   steps :about_company, :employee_count, :type_of_work, :sectors, :last_question
+  before_action :authenticate_user!
 
   def show
     @user = current_user
@@ -73,6 +74,10 @@ class EmployerProfileStepsController < ApplicationController
     render_wizard @user
 
     true
+  end
+
+  def finish_wizard_path
+    employer_dashboard_path('finished')
   end
 
   private
