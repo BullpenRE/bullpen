@@ -80,6 +80,15 @@ ActiveRecord::Schema.define(version: 2020_10_26_213008) do
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
+  create_table "employer_sectors", force: :cascade do |t|
+    t.bigint "sector_id", null: false
+    t.bigint "employer_profile_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employer_profile_id"], name: "index_employer_sectors_on_employer_profile_id"
+    t.index ["sector_id"], name: "index_employer_sectors_on_sector_id"
+  end
+
   create_table "freelancer_profile_educations", force: :cascade do |t|
     t.bigint "freelancer_profile_id", null: false
     t.string "institution"
@@ -247,6 +256,8 @@ ActiveRecord::Schema.define(version: 2020_10_26_213008) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "employer_profiles", "users"
+  add_foreign_key "employer_sectors", "employer_profiles"
+  add_foreign_key "employer_sectors", "sectors"
   add_foreign_key "freelancer_profile_educations", "freelancer_profiles"
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
   add_foreign_key "freelancer_profiles", "users"
