@@ -60,7 +60,7 @@ describe('Register', () => {
      cy.get('li.nav-item.dropdown')
        .get('div.dropdown-menu.dropdown-menu-right')
        .get('a.dropdown-item')
-       .should('have.attr', 'href', '#')
+       .should('have.attr', 'href', '/users/sign_out')
        .should(($a) => {
          expect($a).to.have.length(1)
          expect($a).have.text('Logout')
@@ -157,7 +157,7 @@ describe('Register', () => {
       })
       .should('have.attr', 'dir', 'ltr')
       .should('have.attr', 'data-select2-id', '1')
-      .should('have.attr', 'style', 'width: 640px;')
+      .should('have.attr', 'style', 'width: 660px;')
 
     cy.get('div.form-group.mb-4')
       .get('div.w-100')
@@ -215,7 +215,7 @@ describe('Register', () => {
         expect($label).to.have.length(1)
       })
       .then(($label) => {
-        expect($label).to.have.text('\n          In what asset classes do you have experience?\n        ')
+        expect($label).to.have.text('\n          In what sectors do you have experience?\n        ')
       })
 
     cy.get('div.form-group.mb-5')
@@ -224,18 +224,18 @@ describe('Register', () => {
         expect($input).to.have.length(1)
       })
       .should('have.attr', 'type', 'hidden')
-      .should('have.attr', 'name', 'freelancer_profile[freelancer_asset_classes][]')
+      .should('have.attr', 'name', 'freelancer_profile[freelancer_sectors][]')
 
     cy.get('div.form-group.mb-5')
-      .get('select#freelancer_profile_freelancer_asset_classes')
+      .get('select#freelancer_profile_freelancer_sectors')
       .should(($select) => {
         expect($select).to.have.length(1)
       })
       .should('have.attr', 'multiple', 'multiple')
       .should('have.attr', 'required', 'required')
-      .should('have.attr', 'name', 'freelancer_profile[freelancer_asset_classes][]')
+      .should('have.attr', 'name', 'freelancer_profile[freelancer_sectors][]')
       .should('have.attr', 'class', 'select2 select2-hidden-accessible')
-      .should('have.attr', 'data-select2-id', 'freelancer_profile_freelancer_asset_classes')
+      .should('have.attr', 'data-select2-id', 'freelancer_profile_freelancer_sectors')
       .should('have.attr', 'tabindex', '-1')
       .should('have.attr', 'aria-hidden', 'true')
 
@@ -247,7 +247,7 @@ describe('Register', () => {
       })
       .should('have.attr', 'dir', 'ltr')
       .should('have.attr', 'data-select2-id', '1')
-    .should('have.attr', 'style', 'width: 640px;')
+    .should('have.attr', 'style', 'width: 660px;')
 
     cy.get('div.form-group.mb-5')
       .get('span.select2-container.select2-container--default.select2-container--below', { includeShadowDom: true})
