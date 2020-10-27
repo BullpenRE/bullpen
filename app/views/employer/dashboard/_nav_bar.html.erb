@@ -1,25 +1,22 @@
 <nav class="navbar navbar-light bg-white shadow-sm mb-5">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-6">
-        <h2> <%= current_user.first_name %>, welcome to Bullpen! </h2>
-      </div>
 
-      <div class="col-sm">
-        <button class="btn btn-primary btn-lg">Post a Job</button>
-      </div>
-
-      <div class="col-sm">
-        <ul class="navbar-nav ml-auto">
-          <li>Hello, <%= current_user.first_name %></li>
-          <li>You are <a class="text-secondary" href="#">signed in</a></li>
-        </ul>
-      </div>
-
-      <div class="col-sm-1">
-        <i class="fas fa-user-circle mr-2 display-4 bp-profile-placeholder"></i>
-      </div>
-
-    </div>
+  <div class="col-sm">
+    <h2> <%= current_user.first_name %>, welcome to Bullpen! </h2>
   </div>
+
+  <div class="col-sm-2">
+    <button class="btn btn-primary btn-lg">Post a Job</button>
+  </div>
+
+  <div class="col-sm-2">
+    <ul class="navbar-nav ml-auto">
+      <li>Hello, <%= current_user.first_name %></li>
+      <li>You are <a class="text-secondary" href="#">signed in</a></li>
+    </ul>
+  </div>
+
+  <div class="col-sm-1">
+    <i class="fas fa-user-circle mr-2 display-4 bp-profile-placeholder"></i>
+  </div>
+
 </nav>
