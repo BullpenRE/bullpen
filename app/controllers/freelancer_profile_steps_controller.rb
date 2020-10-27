@@ -74,12 +74,12 @@ class FreelancerProfileStepsController < ApplicationController
   def skills_page_save
     return false unless wizard_value(step) == :skills_page
 
-    destroy_old_re_skills_and_asset_classes
+    destroy_old_re_skills_and_sectors
     real_estate_skill_params&.each do |skill|
       FreelancerRealEstateSkill.create(freelancer_profile_id: @freelancer_profile.id, real_estate_skill_id: skill)
     end
-    asset_classes_params&.each do |asset|
-      FreelancerAssetClass.create(freelancer_profile_id: @freelancer_profile.id, asset_class_id: asset)
+    sectors_params&.each do |sector|
+      FreelancerSector.create(freelancer_profile_id: @freelancer_profile.id, sector_id: sector)
     end
     render_wizard @user
 
@@ -88,17 +88,17 @@ class FreelancerProfileStepsController < ApplicationController
 
   private
 
-  def destroy_old_re_skills_and_asset_classes
+  def destroy_old_re_skills_and_sectors
     @freelancer_profile&.freelancer_real_estate_skills&.destroy_all
-    @freelancer_profile&.freelancer_asset_classes&.destroy_all
+    @freelancer_profile&.freelancer_sectors&.destroy_all
   end
 
   def real_estate_skill_params
     params[:freelancer_profile][:freelancer_real_estate_skills]&.reject(&:blank?)
   end
 
-  def asset_classes_params
-    params[:freelancer_profile][:freelancer_asset_classes]&.reject(&:blank?)
+  def sectors_params
+    params[:freelancer_profile][:freelancer_sectors]&.reject(&:blank?)
   end
 
   def history_params

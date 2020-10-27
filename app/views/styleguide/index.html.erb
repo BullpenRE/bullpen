@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark bg-header sticky-top">
     <div class="container">
         <a class="navbar-brand" href="https://bullpenre.com/">
-          <%= image_pack_tag('media/images/bullpen-email-logo.png', size: '141x44') %>
+          <%= image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30') %>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -36,14 +36,14 @@
 <div class="container bp-card my-3">
     <div class="h1 text-secondary border-bottom mb-3 pb-1">Color classes</div>
     <div class="row m-0 mb-3">
-        <div class="col bg-primary text-white p-3">primary<br/>#29BF89</div>
+        <div class="col bg-primary text-white p-3">primary<br/>#24A878</div>
         <div class="col bg-secondary text-white p-3">secondary<br/>#005495</div>
         <div class="col bg-danger text-white p-3">danger<br/>#FB3640</div>
         <div class="col bg-dark text-white p-3">dark<br/>#4E4E4E</div>
         <div class="col bg-light text-dark p-3">light<br/>#E9ECEF</div>
         <div class="col bg-gray-dark text-white p-3">gray-dark*<br/>#7A7A7A</div>
         <div class="col bg-gray text-dark p-3">gray*<br/>#E4E4E4</div>
-        <div class="col bg-blue-light text-dark p-3">blue-light*<br/>#DFECF5</div>
+        <div class="col bg-blue-light text-dark p-3">blue-light*<br/>#B4C8D8</div>
     </div>
     Color classes will be commonly used for backgrounds <code>bg-{color}</code>, buttons <code>btn-{color}</code>, and occasionally fonts <code>text-{color}</code><br/>
     <strong>*</strong> Note the last three color classes should be used sparingly or not at all.
@@ -106,7 +106,7 @@
     <div class="h1 text-secondary border-bottom mb-3 pb-1">Form inputs</div>
     <form>
         <div class="form-group">
-            <label for="exampleFormControlInput1" class="bp-input-label">Single line field</label>
+            <label for="exampleFormControlInput1" class="h5">Single line field</label>
             <div class="d-flex">
                 <input type="text" class="form-control mr-2" id="exampleFormControlInput1" placeholder="Placeholder text">
                 <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#inputCodeExample" aria-expanded="false" aria-controls="inputCodeExample">Code</button> 
@@ -114,14 +114,14 @@
         </div>
         
 <pre class="collapse mb-3 px-3" id="inputCodeExample">&lt;div class="form-group"&gt;
-    &lt;label for="exampleFormControlInput1" class="bp-input-label"&gt;Single line field&lt;/label&gt;
+    &lt;label for="exampleFormControlInput1" class="h5"&gt;Single line field&lt;/label&gt;
     &lt;input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Placeholder text"&gt;
 &lt;/div&gt;</pre>
 
         <div class="form-group">
-            <label for="exampleFormControlSelect2" class="bp-input-label">Select Picker with Bootstrap-Select* (<a href="https://developer.snapappointments.com/bootstrap-select/examples/" target="_blank">Documentation</a>)</label>
+            <label for="exampleFormControlSelect2" class="h5">Select Picker with Bootstrap-Select* (<a href="https://developer.snapappointments.com/bootstrap-select/examples/" target="_blank">Documentation</a>)</label>
             <div class="d-flex">
-                <select class="form-control selectpicker mr-2" id="exampleFormControlSelect2" data-style="bp-btn-select-border" title="Please make a selection">
+                <select class="form-control selectpicker mr-2" id="exampleFormControlSelect2" title="Please make a selection">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -134,8 +134,8 @@
 
 <pre class="collapse mb-3 px-3" id="selectPickerExample">
 &lt;div class="form-group"&gt;
-    &lt;label for="exampleFormControlSelect2" class="bp-input-label"&gt;Select Picker&lt;/label&gt;
-    &lt;select class="form-control selectpicker" id="exampleFormControlSelect2" data-style="bp-btn-select-border" title="Please make a selection"&gt;
+    &lt;label for="exampleFormControlSelect2" class="h5"&gt;Select Picker&lt;/label&gt;
+    &lt;select class="form-control selectpicker" id="exampleFormControlSelect2" title="Please make a selection"&gt;
         &lt;option&gt;1&lt;/option&gt;
         &lt;option&gt;2&lt;/option&gt;
         &lt;option&gt;3&lt;/option&gt;
@@ -146,7 +146,7 @@
 </pre>
 
         <div class="form-group">
-            <label for="exampleFormControlMultiSelect" class="bp-input-label">Multi Select with Select2* (<a href="https://select2.github.io/select2/" target="_blank">Documentation</a>)</label>
+            <label for="exampleFormControlMultiSelect" class="h5">Multi Select with Select2* (<a href="https://select2.github.io/select2/" target="_blank">Documentation</a>)</label>
             <div class="d-flex">
                 <select class="select2" name="state" multiple="multiple" style="width: 100%">
                     <option>Option 1</option>
@@ -176,7 +176,7 @@
 
 <pre class="collapse mb-3 px-3" id="multiSelectExample">
 &lt;div class="form-group"&gt;
-        &lt;label for="exampleFormControlMultiSelect" class="bp-input-label"&gt;Multi Select&lt;/label&gt;
+        &lt;label for="exampleFormControlMultiSelect" class="h5"&gt;Multi Select&lt;/label&gt;
         &lt;select class="select2" name="state" multiple="multiple"  style="width: 100%"&gt;
             &lt;option&gt;Option 1&lt;/option&gt;
         &lt;/select&gt;
@@ -203,7 +203,7 @@
 </pre>
         
         <div class="form-group">
-            <label for="exampleFormControlTextarea1" class="bp-input-label">Textarea</label>
+            <label for="exampleFormControlTextarea1" class="h5">Textarea</label>
             <div class="d-flex align-items-start">
                 <textarea class="form-control mr-2" id="exampleFormControlTextarea1" rows="3"></textarea>
                 <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#textareaCodeExample" aria-expanded="false" aria-controls="textareaCodeExample">Code</button>
@@ -211,11 +211,11 @@
         </div>
 
 <pre class="mb-3 px-3 collapse" id="textareaCodeExample">&lt;div class="form-group"&gt;
-    &lt;label for="exampleFormControlTextarea1" class="bp-input-label"&gt;Textarea&lt;/label&gt;
+    &lt;label for="exampleFormControlTextarea1" class="h5"&gt;Textarea&lt;/label&gt;
     &lt;textarea class="form-control" id="exampleFormControlTextarea1" rows="3"&gt;&lt;/textarea&gt;
 &lt;/div&gt;</pre>
         
-        <div class="bp-input-label">Checkboxes</div>
+        <div class="h5">Checkboxes</div>
         <div class="d-flex align-items-start mb-3">
             <div class="mr-3">
                 <div class="custom-control custom-checkbox">
@@ -230,7 +230,7 @@
             <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="collapse" data-target="#checkboxCodeExample" aria-expanded="false" aria-controls="checkboxCodeExample">Code</button>
         </div>
 
-<pre class="mb-3 px-3 collapse" id="checkboxCodeExample">&lt;div class="bp-input-label"&gt;Checkboxes&lt;/div&gt;
+<pre class="mb-3 px-3 collapse" id="checkboxCodeExample">&lt;div class="h5"&gt;Checkboxes&lt;/div&gt;
 &lt;div class="custom-control custom-checkbox"&gt;
     &lt;input type="checkbox" class="custom-control-input" id="customCheck1"&gt;
     &lt;label class="custom-control-label" for="customCheck1"&gt;Custom checkbox&lt;/label&gt;
@@ -239,7 +239,7 @@
     &lt;input type="checkbox" class="custom-control-input" id="customCheck2" disabled&gt;
     &lt;label class="custom-control-label" for="customCheck2"&gt;Disabled custom checkbox&lt;/label&gt;
 &lt;/div&gt;</pre>
-        <div class="bp-input-label">Radios</div>
+        <div class="h5">Radios</div>
         <div class="d-flex align-items-start mb-3">
             <div class="mr-3">
                 <div class="custom-control custom-radio">
@@ -258,7 +258,7 @@
             <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="collapse" data-target="#radioCodeExample" aria-expanded="false" aria-controls="radioCodeExample">Code</button>
         </div>
 
-<pre class="mb-3 mt-2 px-3 collapse" id="radioCodeExample">&lt;div class="bp-input-label"&gt;Radios&lt;/div&gt;
+<pre class="mb-3 mt-2 px-3 collapse" id="radioCodeExample">&lt;div class="h5"&gt;Radios&lt;/div&gt;
 &lt;div class="custom-control custom-radio"&gt;
     &lt;input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"&gt;
     &lt;label class="custom-control-label" for="customRadio1"&gt;Custom radio 1&lt;/label&gt;
@@ -272,7 +272,7 @@
     &lt;label class="custom-control-label" for="customRadio3"&gt;Disabled radio button&lt;/label&gt;
 &lt;/div&gt;</pre>
     </form>
-    <div>Use the custom class <code>.bp-input-label</code>to label inputs with the header style.<br/>* These are third party libraries styled to look like bootstrap.</div>
+    <div>Use the custom class <code>.h5</code>to label inputs with the header style.<br/>* These are third party libraries styled to look like bootstrap.</div>
 </div>
 
 <a name="progressBars" style="position:relative;top:-76px"></a>
@@ -284,13 +284,16 @@
             <div class="progress">
                 <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-        
-            <div class="row text-center d-none d-lg-flex my-1">
-                <div class="col">Step 1</div>
+            <div class="text-center d-none d-lg-flex my-1">
+                <div class="col"><a href="#">Step 1</a></div>
                 <div class="col text-secondary font-weight-bold">Step 2</div>
                 <div class="col text-muted">Step 3</div>
                 <div class="col text-muted">Verify Profile</div>
                 <div class="col text-muted">Review Application</div>
+            </div>
+            <div class="d-flex justify-content-between d-lg-none">
+                <div class="text-secondary font-weight-bold">Step 2</div>
+                <div class="text-secondary">2 of 5</div>
             </div>
         </div>
         <button class="btn btn-outline-primary align-self-center" type="button" data-toggle="collapse" data-target="#progressBar1Example" aria-expanded="false" aria-controls="progressBar1Example">Code</button>
@@ -299,13 +302,19 @@
 <pre class="collapse mb-0" id="progressBar1Example">&lt;div class="progress"&gt;
     &lt;div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="row text-center d-none d-lg-flex mt-1"&gt;
-    &lt;div class="col"&gt;Step 1&lt;/div&gt;
+&lt;div class="text-center d-none d-lg-flex mt-1"&gt;
+    &lt;div class="col"&gt;&lt;a href="#"&gt;Step 1&lt;/a&gt;&lt;/div&gt;
     &lt;div class="col text-secondary font-weight-bold"&gt;Step 2&lt;/div&gt;
     &lt;div class="col text-muted"&gt;Step 3&lt;/div&gt;
     &lt;div class="col text-muted"&gt;Verify Profile&lt;/div&gt;
     &lt;div class="col text-muted"&gt;Review Application&lt;/div&gt;
-&lt;/div&gt;</pre>
+&lt;/div&gt;
+&lt;div class="d-flex justify-content-between d-lg-none"&gt;
+    &lt;div class="text-secondary font-weight-bold"&gt;Step 2&lt;/div&gt;
+    &lt;div class="text-secondary"&gt;2 of 5&lt;/div&gt;
+&lt;/div&gt;
+
+</pre>
     
     <h4 class="text-dark mt-4">Status legend</h4>
     <div class="d-flex">
@@ -331,10 +340,9 @@
     <h4 class="text-dark">Dropdown menu</h4>
     <div class="d-flex">
         <div class="dropdown mr-2">
-            <span class="bp-input-label mb-0 mr-2">Results per page</span>
-            <button class="btn bp-btn-select-border dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                5
-            </button>
+            <span class="h5 mb-0 mr-2">Results per page</span>
+            <button class="btn btn-outline-primary dropdown-toggle pr-1" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                5<i class="fas fa-chevron-down ml-2"></i></button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                 <button class="dropdown-item active" type="button">5</button>
                 <button class="dropdown-item" type="button">10</button>
@@ -347,10 +355,9 @@
 
 <pre class="px-3 mt-3 collapse" id="dropDownExample">
 &lt;div class="dropdown"&gt;
-    &lt;span class="bp-input-label mb-0 mr-2"&gt;Results per page&lt;/span&gt;
-    &lt;button class="btn bp-btn-select-border dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
-        5
-    &lt;/button&gt;
+    &lt;span class="h5 mb-0 mr-2"&gt;Results per page&lt;/span&gt;
+    &lt;button class="btn btn-outline-primary dropdown-toggle pr-1" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+        5&lt;i class="fas fa-chevron-down ml-2"&gt;&lt;/i&gt;&lt;/button&gt;
     &lt;div class="dropdown-menu" aria-labelledby="dropdownMenu"&gt;
         &lt;button class="dropdown-item active" type="button"&gt;5&lt;/button&gt;
         &lt;button class="dropdown-item" type="button"&gt;10&lt;/button&gt;
@@ -369,7 +376,7 @@
     <div><code>&lt;span class="badge badge-secondary"&gt;Title here&lt;/span&gt;</code></div>
     
     <h4 class="text-dark mt-4">Content cards</h4>
-    Use the custom class <code>.bp-card</code> with <code>.container</code> or <code>.container-fluid</code>.  Padding and drop shadows are defined.
+    Use the custom class <code>.bp-card</code> with <code>.container</code> or <code>.container-fluid</code>.  Padding is defined.
 
     <h4 class="text-dark mt-4">Pagination</h4>
     <div class="d-flex align-items-center">
@@ -417,57 +424,50 @@
 </pre>
 
     <h4 class="text-dark mt-4">Modals</h4>
-    <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModalCenter">Launch Modal</button>
-
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal">Launch Modal</button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">                        
-                    <button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <div class="modal-header">
+                    <h1 class="modal-title" id="exampleModalLabel">Modal title</h1>                        
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body pt-0">
-                    <h3 class="modal-title text-center" id="modalLabel">Modal title</h3>
                     Content goes here
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-link px-0" data-dismiss="modal">Back</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Back</button>
                     <button type="button" class="btn btn-primary">Next</button>
                 </div>
             </div>
         </div>
     </div>
-    
     <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#modalExample" aria-expanded="false" aria-controls="modalExample">Code</button>
     
     <div class="collapse mt-2 mb-0" id="modalExample">
-<pre class="collapse mt-2 mb-0" id="modalExample">&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"&gt;Launch Modal&lt;/button&gt;
-&lt;div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true"&gt;
-    &lt;div class="modal-dialog modal-dialog-centered <span class="text-danger">modal-lg</span>" role="document"&gt;
+<pre class="collapse mt-2 mb-0" id="modalExample">
+&lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"&gt;Launch Modal&lt;/button&gt;
+&lt;div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true"&gt;
+    &lt;div class="modal-dialog modal-lg" role="document"&gt;
         &lt;div class="modal-content"&gt;
-            &lt;div class="modal-header"&gt;                        
-                &lt;button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close"&gt;
-                &lt;span aria-hidden="true"&gt;&times;&lt;/span&gt;
+            &lt;div class="modal-header"&gt;
+                &lt;h1 class="modal-title" id="exampleModalLabel"&gt;Modal title&lt;/h1&gt;                        
+                &lt;button type="button" class="close" data-dismiss="modal" aria-label="Close"&gt;
+                &lt;span aria-hidden="true"&gt;×&lt;/span&gt;
                 &lt;/button&gt;
             &lt;/div&gt;
             &lt;div class="modal-body pt-0"&gt;
-                &lt;h3 class="modal-title  text-center" id="modalLabel"&gt;Modal title&lt;/h3&gt;
                 Content goes here
             &lt;/div&gt;
             &lt;div class="modal-footer justify-content-between"&gt;
-                &lt;button type="button" class="btn btn-link px-0" data-dismiss="modal"&gt;Back&lt;/button&gt;
+                &lt;button type="button" class="btn btn-outline-primary" data-dismiss="modal"&gt;Back&lt;/button&gt;
                 &lt;button type="button" class="btn btn-primary"&gt;Next&lt;/button&gt;
             &lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-&lt;/div&gt;</pre>
-        <div>
-            Note the <a href="https://getbootstrap.com/docs/4.1/components/modal/#optional-sizes" target="_blank">Bootstrap documentation</a> is incorrect.  There are 4 possible sizes for modals.<br/>
-            <code>modal-xl</code>: 1140px (max width)<br/>
-            <code>modal-lg</code>: 800px (max width)<br/>
-            <code>modal-md</code>: 500px (max width)<br/>
-            <code>modal-sm</code>: 300px (max width)<br/>
-        </div>
+&lt;/div&gt;
+</pre>
     </div>
 </div>

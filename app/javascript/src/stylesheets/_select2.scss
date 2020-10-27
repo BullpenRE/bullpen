@@ -10,7 +10,8 @@
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 0 .2rem rgba(0, 84, 149, 0.25);
 }
 .select2-container--default .select2-selection--multiple {
-  border-color: #ced4da;
+  background-color: #E9ECEF;
+  border: 1px solid #E9ECEF;
   border-radius: 0.1875rem;
   min-height: 38px;
 }
