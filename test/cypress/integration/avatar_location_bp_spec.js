@@ -60,7 +60,7 @@ describe('Register', () => {
     cy.get('li.nav-item.dropdown')
       .get('div.dropdown-menu.dropdown-menu-right')
       .get('a.dropdown-item')
-      .should('have.attr', 'href', '#')
+      .should('have.attr', 'href', '/users/sign_out')
       .should(($a) => {
         expect($a).to.have.length(1)
         expect($a).have.text('Logout')
@@ -111,6 +111,112 @@ describe('Register', () => {
       })
       .then(($div) => {
         expect($div).to.have.text('25%')
+      })
+
+    cy.get('div.bp-card.mb-5.mx-auto')
+      .get('form.edit_user')
+      .get('div.row').first()
+      .get('div.col-md.text-center.mb-5.avatar')
+      .find('h2').first()
+      .should(($h2) => {
+        expect($h2).to.have.length(1)
+      })
+      .then(($h2) => {
+        expect($h2).to.have.text('Profile Picture')
+      })
+      .get('p.mb-4').first()
+      .should(($p) => {
+        expect($p).to.have.length(1)
+      })
+      .then(($p) => {
+        expect($p).to.have.text('Users with a clear and recognizable photo are hired more often. (Optional)')
+      })
+      .find('strong')
+      .should(($strong) => {
+        expect($strong).to.have.length(1)
+      })
+      .then(($strong) => {
+        expect($strong).to.have.text('(Optional)')
+      })
+
+    cy.get('div.text-light.mb-3')
+      .should(($div) => {
+        expect($div).css('font-size', '170px')
+        expect($div).css('line-height', '0px')
+      })
+      .find('svg.svg-inline--fa.fa-user-circle.fa-w-16')
+      .should(($svg) => {
+        expect($svg).to.have.length(1)
+        expect($svg).have.attr('data-prefix', 'fas')
+        expect($svg).have.attr('data-icon', 'user-circle')
+        expect($svg).have.attr('role', 'img')
+      })
+
+    cy.get('div.custom-file')
+      .get('input#uploadProfilePic.d-none')
+      .should(($input) => {
+        expect($input).to.have.length(1)
+        expect($input).have.attr('name', 'avatar')
+        expect($input).have.attr('type', 'file')
+      })
+      .get('label.btn.btn-outline-primary.upload-avatar')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('\n                Upload your photo\n              ')
+        expect($label).have.attr('for', 'uploadProfilePic')
+      })
+
+    cy.get('div.col-md.text-center.mb-5')
+      .find('h2.location')
+      .should(($h2) => {
+        expect($h2).to.have.length(1)
+      })
+      .then(($h2) => {
+        expect($h2).to.have.text('Location')
+      })
+      .get('p.mb-4').last()
+      .should(($p) => {
+        expect($p).to.have.length(1)
+      })
+      .then(($p) => {
+        expect($p).to.have.text('Where do you live? Some companies prefer to work with local talent.')
+      })
+      .get('div.form-group.text-left')
+      .get('label.bp-input-label')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Location')
+        expect($label).have.attr('for', 'freelancerLocationInput')
+      })
+      .get('input#freelancerLocationInput.form-control')
+      .should(($input) => {
+        expect($input).to.have.length(1)
+        expect($input).have.attr('name', 'user[location]')
+        expect($input).have.attr('type', 'text')
+        expect($input).have.attr('required', 'required')
+        expect($input).have.attr('placeholder', 'City, State abbreviation')
+      })
+
+    cy.get('div.d-flex.justify-content-between')
+      .get('a.btn.btn-link.px-0')
+      .should(($a) => {
+        expect($a).to.have.length(1)
+      })
+      .then(($a) => {
+        expect($a).to.have.text('Back')
+      })
+      .should('have.attr', 'href', '/freelancer_profile_steps/skills_page')
+      .get('input.btn.btn-primary')
+      .should(($input) => {
+        expect($input).to.have.length(1)
+        expect($input).have.attr('name', 'commit')
+        expect($input).have.attr('type', 'submit')
+        expect($input).have.attr('value', 'Next')
+        expect($input).have.attr('data-disable-with', 'Next')
       })
 
   })
