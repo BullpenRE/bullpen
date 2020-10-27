@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_many :freelancer_sectors, through: :freelancer_profile
 
   has_one :employer_profile, dependent: :destroy
+  has_many :employer_sectors, through: :employer_profile
 
   enum role: { freelancer: 0, employer: 1 }
 
@@ -28,6 +29,10 @@ class User < ApplicationRecord
   end
 
   def employer?
-    role == :employer
+    role == 'employer'
+  end
+
+  def freelancer?
+    role == 'freelancer'
   end
 end

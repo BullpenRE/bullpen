@@ -19,6 +19,7 @@ class FreelancerProfileStepsController < ApplicationController
   def update
     @user = current_user
     @freelancer_profile = @user.freelancer_profile
+    save_current_step
     skills_page_save ||
       professional_history_save ||
       work_education_experience_save ||
@@ -87,6 +88,11 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   private
+
+  def save_current_step
+    @freelancer_profile.current_step = wizard_value(next_step)
+    @freelancer_profile.save
+  end
 
   def destroy_old_re_skills_and_sectors
     @freelancer_profile&.freelancer_real_estate_skills&.destroy_all
