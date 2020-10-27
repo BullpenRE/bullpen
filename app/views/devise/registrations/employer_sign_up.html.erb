@@ -83,7 +83,7 @@
             <%= f.phone_field :phone_number, class: "form-control", id: "phone", required: true %>
           </div>
           <div>
-            <%= f.hidden_field :is_employer, :value => 'true' %>
+            <%= f.hidden_field :role, value: :employer %>
           </div>
 
           <hr class="mb-4">
@@ -254,7 +254,7 @@
         // ----------------- Validate on submit -----------------
         const currForm = document.getElementById('regForm');
         currForm.addEventListener('submit', function(event) {
-            if(myInput.classList.contains('valid') && cInput.classList.contains('valid')){
+            if(pswInput.classList.contains('valid') && cInput.classList.contains('valid')){
                 currForm.classList.add('was-validated');
             } else {
                 event.preventDefault();
@@ -266,7 +266,7 @@
         bootstrapValidate('#email', 'email:Enter a valid E-Mail Address!');
         bootstrapValidate('#lastName', 'min:2:Valid last name is required.');
         bootstrapValidate('#firstName', 'min:2:Valid first name is required.');
-        bootstrapValidate('#phone', 'phone:A valid phone number is required.');
+        bootstrapValidate('#phone', 'min:7:A valid phone number is required - 7 digits minimum.');
 
         const step1 = $('#step-1'),
             step2 = $('#step-2'),
