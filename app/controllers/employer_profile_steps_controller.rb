@@ -19,7 +19,7 @@ class EmployerProfileStepsController < ApplicationController
   def update
     @user = current_user
     @employer_profile = @user.employer_profile
-
+    save_current_step
     about_company_save ||
       employee_count_save ||
       type_of_work_save ||
@@ -108,5 +108,10 @@ class EmployerProfileStepsController < ApplicationController
                                              :motivation_backfill,
                                              :motivation_augment,
                                              :motivation_other)
+  end
+
+  def save_current_step
+    @employer_profile.current_step = wizard_value(next_step)
+    @employer_profile.save
   end
 end
