@@ -77,7 +77,7 @@ class EmployerProfileStepsController < ApplicationController
   end
 
   def finish_wizard_path
-    employer_dashboard_path
+    employer_dashboard_path(current_user)
   end
 
   private
