@@ -19,6 +19,10 @@ class FreelancerProfile < ApplicationRecord
 
   validate :correct_content_type?, :correct_size?
 
+  def pending_profile?
+    curation == 'pending'
+  end
+
   private
 
   def correct_content_type?
