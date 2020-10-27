@@ -60,7 +60,7 @@ Rails.application.configure do
   ENV['WEBSITE_URL'] = "#{ENV['TEST_DOMAIN']}:#{ENV['TEST_PORT']}"
   config.action_mailer.default_url_options = { host: ENV['WEBSITE_URL'] }
 
-  config.factory_bot.definition_file_paths = ['**/factories/**.rb']
+  # config.factory_bot.definition_file_paths = ['**/factories/**.rb']
 
   config.after_initialize do
     Rails.application.routes.default_url_options[:host] = ENV['WEBSITE_URL']
