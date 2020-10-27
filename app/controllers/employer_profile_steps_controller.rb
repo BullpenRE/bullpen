@@ -4,12 +4,8 @@ class EmployerProfileStepsController < ApplicationController
   include Wicked::Wizard
   before_action :step_variables, only: [:show]
 
-<<<<<<< HEAD
-  steps :about_company, :employee_count, :type_of_work, :last_question
-  before_action :authenticate_user!
-=======
   steps :about_company, :employee_count, :type_of_work, :sectors, :last_question
->>>>>>> master
+  before_action :authenticate_user!
 
   def show
     @user = current_user
