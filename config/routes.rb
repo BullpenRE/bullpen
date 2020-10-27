@@ -23,6 +23,15 @@ Rails.application.routes.draw do
   resources :avatar, only: %i[update destroy]
   resources :freelancer_profile_steps
   resources :employer_profile_steps
+
+  resources :employer
+
+  namespace :employer do
+    resources :jobs
+    resources :billing
+    resources :refer
+    resources :talent
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   post '/check_users_email', to: 'check_email#check_users_email'
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?

@@ -28,6 +28,6 @@ class User < ApplicationRecord
   end
 
   def employer?
-    role == :employer
+    role == 'employer'
   end
 end
