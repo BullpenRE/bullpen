@@ -2,8 +2,9 @@
 
 class EmployerProfileStepsController < ApplicationController
   include Wicked::Wizard
+  before_action :step_variables, only: [:show]
 
-  steps :about_company, :employee_count, :type_of_work, :last_question
+  steps :about_company, :employee_count, :type_of_work, :sectors, :last_question
 
   def show
     @user = current_user
@@ -18,10 +19,12 @@ class EmployerProfileStepsController < ApplicationController
   def update
     @user = current_user
     @employer_profile = @user.employer_profile
-
+    save_current_step
     about_company_save ||
       employee_count_save ||
-      type_of_work_save || last_question_save
+      type_of_work_save ||
+      sectors_save ||
+      last_question_save
   end
 
   def about_company_save
@@ -51,6 +54,18 @@ class EmployerProfileStepsController < ApplicationController
     true
   end
 
+  def sectors_save
+    return false unless wizard_value(step) == :sectors
+
+    destroy_old_sectors
+    sectors_params&.each do |sector|
+      EmployerSector.create(employer_profile_id: @employer_profile.id, sector_id: sector)
+    end
+    render_wizard @user
+
+    true
+  end
+
   def last_question_save
     return false unless wizard_value(step) == :last_question
 
@@ -60,8 +75,31 @@ class EmployerProfileStepsController < ApplicationController
     true
   end
 
+  private
+
+  def step_variables
+    case wizard_value(step)
+    when :sectors
+      sectors = Sector.enabled.order(:description)
+      @sector_column1 = []
+      @sector_column2 = []
+      Sector.enabled.order(:description).each_with_index do |sector, index|
+        index < (sectors.length / 2) ? @sector_column1 << sector : @sector_column2 << sector
+      end
+      @selected_sector_ids = current_user.employer_sectors.pluck(:sector_id)
+    end
+  end
+
+  def destroy_old_sectors
+    @employer_profile&.employer_sectors&.destroy_all
+  end
+
   def company_params
     params.require(:employer_profile).permit(:company_name, :company_website, :role_in_company)
+  end
+
+  def sectors_params
+    params[:employer_profile][:employer_sectors]&.reject(&:blank?)
   end
 
   def last_question_params
@@ -70,5 +108,10 @@ class EmployerProfileStepsController < ApplicationController
                                              :motivation_backfill,
                                              :motivation_augment,
                                              :motivation_other)
+  end
+
+  def save_current_step
+    @employer_profile.current_step = wizard_value(next_step)
+    @employer_profile.save
   end
 end
