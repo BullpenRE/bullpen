@@ -1,13 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  def after_sign_in_path_for(user)
-    if user.freelancer?
-      current_freelancer_profile_step(user)
-    elsif user.employer?
-      current_employer_profile_step(user)
-    end
-  end
+
 
   private
 
