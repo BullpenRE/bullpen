@@ -168,6 +168,8 @@ describe('Register', () => {
         expect($label).have.attr('for', 'uploadProfilePic')
       })
 
+    cy.get('input#uploadProfilePic.d-none').click({force: true})
+
     cy.get('div.col-md.text-center.mb-5')
       .find('h2.location')
       .should(($h2) => {
