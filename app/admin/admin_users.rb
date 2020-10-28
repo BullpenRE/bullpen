@@ -25,4 +25,5 @@ ActiveAdmin.register AdminUser do
     f.actions
   end
 
-end unless Rails.env.test?
+end if defined?(ActiveAdmin)
+

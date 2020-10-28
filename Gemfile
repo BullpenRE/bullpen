@@ -3,7 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
 
-gem 'activeadmin', '~> 2.8', '>= 2.8.1'     # Administration DSL out of a box: https://activeadmin.info/
 gem 'amazing_print', '~> 1.2', '>= 1.2.1'   # Replacement for awesome_print which is depreciated
 gem 'bootsnap', '>= 1.4.2', require: false  # Reduces boot times through caching; required in config/boot.rb
 gem 'devise', '~> 4.7', '>= 4.7.2'          # Flexible authentication solution for Rails with Warden
@@ -18,7 +17,11 @@ gem 'webpacker', '~> 5.2', '>= 5.2.1'       # Transpile app-like JavaScript. Rea
 gem 'wicked', '~> 1.3', '>= 1.3.2'          # Wicked is a Rails engine for producing easy wizard controllers
 gem 'mini_magick', '~> 4.10', '>= 4.10.1'   # Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
 
-group :production do
+group :development, :staging do
+  gem 'activeadmin', '~> 2.8', '>= 2.8.1'     # Administration DSL out of a box: https://activeadmin.info/
+end
+
+group :production, :staging do
   gem 'aws-sdk-s3', '~> 1.83', '>= 1.83.1', require: false  # Amazon Simple Storage Service is a web service that provides highly scalable cloud storage
 end
 
@@ -30,7 +33,6 @@ group :development, :test do
   gem 'rspec-rails'                                     # rspec-rails is a testing framework for Rails 5+.
   gem 'letter_opener'                                   # Allows for seeing sent emails in dev environment
   gem 'letter_opener_web'                               # GUI for letter_opener
-
 end
 
 group :test do

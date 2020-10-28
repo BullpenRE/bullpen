@@ -30,7 +30,6 @@ ActiveAdmin.register User do
 
   controller do
     def update
-      Rails.logger.info "!!!!!!! running update now !!!!!!!!"
       user = User.find(params[:id])
       error_message = nil
       params[:user].delete('password') if params[:user][:password].blank?
@@ -50,4 +49,4 @@ ActiveAdmin.register User do
     end
 
   end
-end unless Rails.env.test?
+end if defined?(ActiveAdmin)

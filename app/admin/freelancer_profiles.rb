@@ -152,4 +152,5 @@ ActiveAdmin.register FreelancerProfile do
       params[:freelancer_profile].delete(:real_estate_skill_ids)
     end
   end
-end unless Rails.env.test?
+end if defined?(ActiveAdmin)
+

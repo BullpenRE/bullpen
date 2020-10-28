@@ -29,4 +29,5 @@ ActiveAdmin.register_page "Dashboard" do
     #   end
     # end
   end # content
-end unless Rails.env.test?
+end if defined?(ActiveAdmin)
+

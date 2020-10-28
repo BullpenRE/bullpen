@@ -87,4 +87,5 @@ ActiveAdmin.register EmployerProfile do
       redirect_to admin_employer_profile_path(employer_profile), flash: message
     end
   end
-end unless Rails.env.test?
+end if defined?(ActiveAdmin)
+

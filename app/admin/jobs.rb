@@ -139,4 +139,5 @@ ActiveAdmin.register Job do
       params[:job].delete(:software_ids)
     end
   end
-end unless Rails.env.test?
+end if defined?(ActiveAdmin)
+
