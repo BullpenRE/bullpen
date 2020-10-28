@@ -41,7 +41,37 @@
         <div class="col-md-8">
           <div class="card mb-4">
             <div class="card-body">
-              <p class="card-text">
+              <% if @freelancer_profile.is_draft == false && @freelancer_profile.pending_profile? %>
+                <p class="card-text">
+                <div class="text-left mt-2 mb-4">
+                  <h2>Application Submitted</h2>
+                </div>
+                <div class="text-left mb-4">
+                  Your information is currently under review. If you'd like to make corrections you can still do so.
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <%= link_to 'Modify Application', previous_wizard_path, class: "btn btn-primary" %>
+                  </div>
+                  </div>
+                </p>
+              <% elsif @freelancer_profile.is_draft == false && @freelancer_profile.curation == 'declined' %>
+                <p class="card-text">
+                  <div class="text-left mt-2 mb-4">
+                    <h2>Application Declined</h2>
+                  </div>
+                  <div class="text-left mb-4">
+                    We regret to inform you that your application did not meet the requirements to be a freelancer
+                    on the Bullpen platform. If you'd like to appeal please email your request to support@bullpenre.com.
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: "btn btn-primary" %>
+                    </div>
+                  </div>
+                </p>
+              <% else %>
+                <p class="card-text">
                 <div class="text-left mt-2 mb-4">
                   <h2>Submit your application</h2>
                 </div>
@@ -59,7 +89,8 @@
                     </div>
                   </div>
                 <% end %>
-              </p>
+                </p>
+              <% end %>
             </div>
             </div>
           <div class="card">

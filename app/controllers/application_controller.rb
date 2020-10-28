@@ -2,6 +2,8 @@
 
 class ApplicationController < ActionController::Base
   def after_sign_in_path_for(user)
+    return admin_dashboard_path if user.class.name == 'AdminUser'
+
     if user.freelancer?
       current_freelancer_profile_step(user)
     elsif user.employer?
