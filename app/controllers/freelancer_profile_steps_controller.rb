@@ -38,6 +38,8 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   def finish_wizard_path
+    return wizard_path(:summary) if pending_profile?
+
     reset_session
     root_path
   end
@@ -88,6 +90,10 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   private
+
+  def pending_profile?
+    @freelancer_profile.is_draft == false && @freelancer_profile.pending?
+  end
 
   def save_current_step
     @freelancer_profile.current_step = wizard_value(next_step)
