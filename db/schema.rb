@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_24_224220) do
+ActiveRecord::Schema.define(version: 2020_10_26_213008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,17 @@ ActiveRecord::Schema.define(version: 2020_10_24_224220) do
     t.boolean "motivation_backfill"
     t.boolean "motivation_augment"
     t.boolean "motivation_other"
+    t.string "current_step"
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
+  end
+
+  create_table "employer_sectors", force: :cascade do |t|
+    t.bigint "sector_id", null: false
+    t.bigint "employer_profile_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employer_profile_id"], name: "index_employer_sectors_on_employer_profile_id"
+    t.index ["sector_id"], name: "index_employer_sectors_on_sector_id"
   end
 
   create_table "freelancer_profile_educations", force: :cascade do |t|
@@ -115,6 +125,7 @@ ActiveRecord::Schema.define(version: 2020_10_24_224220) do
     t.text "professional_summary"
     t.integer "curation", default: 0
     t.boolean "is_draft", default: true
+    t.string "current_step"
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
@@ -236,8 +247,8 @@ ActiveRecord::Schema.define(version: 2020_10_24_224220) do
     t.string "first_name"
     t.string "last_name"
     t.string "phone_number"
-    t.boolean "is_employer"
     t.string "location"
+    t.integer "role"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -245,6 +256,8 @@ ActiveRecord::Schema.define(version: 2020_10_24_224220) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "employer_profiles", "users"
+  add_foreign_key "employer_sectors", "employer_profiles"
+  add_foreign_key "employer_sectors", "sectors"
   add_foreign_key "freelancer_profile_educations", "freelancer_profiles"
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
   add_foreign_key "freelancer_profiles", "users"
