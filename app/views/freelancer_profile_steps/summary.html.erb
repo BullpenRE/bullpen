@@ -41,7 +41,7 @@
         <div class="col-md-8">
           <div class="card mb-4">
             <div class="card-body">
-              <% if @freelancer_profile.is_draft == false && @freelancer_profile.pending_profile? %>
+              <% if @freelancer_profile.is_draft == false && @freelancer_profile.pending? %>
                 <p class="card-text">
                 <div class="text-left mt-2 mb-4">
                   <h2>Application Submitted</h2>
@@ -55,14 +55,15 @@
                   </div>
                   </div>
                 </p>
-              <% elsif @freelancer_profile.is_draft == false && @freelancer_profile.curation == 'declined' %>
+              <% elsif @freelancer_profile.declined? %>
                 <p class="card-text">
                   <div class="text-left mt-2 mb-4">
                     <h2>Application Declined</h2>
                   </div>
                   <div class="text-left mb-4">
                     We regret to inform you that your application did not meet the requirements to be a freelancer
-                    on the Bullpen platform. If you'd like to appeal please email your request to support@bullpenre.com.
+                    on the Bullpen platform. If you'd like to appeal please email your request to
+                    <%= mail_to('support@bullpenre.com', 'support@bullpenre.com', subject: 'Declined Application Appeal') %>.
                   </div>
                   <div class="row">
                     <div class="col">

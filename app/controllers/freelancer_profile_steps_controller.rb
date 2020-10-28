@@ -92,7 +92,7 @@ class FreelancerProfileStepsController < ApplicationController
   private
 
   def pending_profile?
-    @freelancer_profile.is_draft == false && @freelancer_profile.pending_profile?
+    @freelancer_profile.is_draft == false && @freelancer_profile.pending?
   end
 
   def save_current_step
