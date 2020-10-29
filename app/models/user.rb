@@ -20,7 +20,7 @@ class User < ApplicationRecord
 
   enum role: { freelancer: 0, employer: 1 }
 
-  belongs_to :signup_promo
+  belongs_to :signup_promos
 
   def self.ransackable_scopes(_auth_object = nil)
     [:confirmed]

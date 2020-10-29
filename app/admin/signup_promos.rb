@@ -1,8 +1,16 @@
-ActiveAdmin.register SignupPromo do
+ActiveAdmin.register SignupPromos do
   menu label: 'Promo'
 
+  includes :users
+
+  permit_params :user_ids,
+                :description,
+                :code,
+                :user_type,
+                :enabled
+
   index do
-    column :user
+    column :users
     column :description
     column :code
     column :user_type
@@ -12,9 +20,7 @@ ActiveAdmin.register SignupPromo do
 
   show title: 'Promo' do |promo|
     attributes_table do
-      row 'Email' do
-        promo.users
-      end
+      row :users
       row :description
       row :created_at
       row :updated_at
@@ -31,6 +37,8 @@ ActiveAdmin.register SignupPromo do
 
       if f.object.new_record?
         f.input :users,
+                as: :select,
+                collection: User.employers.order(:email).pluck(:email, :id),
                 label: "User (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
       end
       f.input :description
@@ -44,28 +52,26 @@ ActiveAdmin.register SignupPromo do
   controller do
     def create
       error_message = nil
-      promo = SignupPromo.new(permitted_params[:signup_promo])
+      promo = SignupPromos.new(permitted_params[:signup_promos])
 
       ApplicationRecord.transaction do
-        signup_promo.save!
-        update_sectors_skills_and_software(promo)
+        promo.save!
       rescue StandardError => e
         error_message = e.message
       end
       message = { alert: error_message } if error_message
       message ||= { notice: 'Successfully created!' }
 
-      redirect_to admin_signup_promo_path(signup_promo.id), flash: message
+      redirect_to admin_signup_promo_path(promo.id), flash: message
     end
 
     def update
       error_message = nil
 
-      promo = SignupPromo.find(params[:id])
-      update_sectors_skills_and_software(promo)
+      promo = SignupPromos.find(permitted_params[:id])
 
       ApplicationRecord.transaction do
-        promo.update!(permitted_params[:signup_promo])
+        promo.update!(permitted_params[:signup_promos])
       rescue StandardError => e
         error_message = e.message
       end
@@ -73,11 +79,7 @@ ActiveAdmin.register SignupPromo do
       message = { alert: error_message } if error_message
       message ||= { notice: 'Successfully updated!' }
 
-      redirect_to admin_job_path(promo.id), flash: message
-    end
-
-    def update_sectors_skills_and_software(promo)
-      promo.reload
+      redirect_to admin_signup_promo_path(promo.id), flash: message
     end
   end
 end unless Rails.env.test?
