@@ -30,7 +30,7 @@ class FreelancerProfileStepsController < ApplicationController
   def summary_save
     return false unless wizard_value(step) == :summary
 
-    @freelancer_profile.is_draft = params[:freelancer_profile][:is_draft]
+    @freelancer_profile.draft = params[:freelancer_profile][:draft]
     @freelancer_profile.save
     render_wizard @user
 
@@ -92,7 +92,7 @@ class FreelancerProfileStepsController < ApplicationController
   private
 
   def pending_profile?
-    @freelancer_profile.is_draft == false && @freelancer_profile.pending?
+    @freelancer_profile.draft == false && @freelancer_profile.pending?
   end
 
   def save_current_step

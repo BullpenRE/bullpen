@@ -41,7 +41,7 @@
         <div class="col-md-8">
           <div class="card mb-4">
             <div class="card-body">
-              <% if @freelancer_profile.is_draft == false && @freelancer_profile.pending? %>
+              <% if @freelancer_profile.draft == false && @freelancer_profile.pending? %>
                 <p class="card-text">
                 <div class="text-left mt-2 mb-4">
                   <h2>Application Submitted</h2>
@@ -81,7 +81,7 @@
                 </div>
                 <%= form_for @freelancer_profile, url: wizard_path, method: :put do |f| %>
                   <div class="row">
-                    <%= f.hidden_field :is_draft, value: false %>
+                    <%= f.hidden_field :draft, value: false %>
                     <div class="col">
                       <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
                     </div>
