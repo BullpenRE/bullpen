@@ -168,14 +168,9 @@ describe('Register', () => {
         expect($label).have.attr('for', 'uploadProfilePic')
       })
 
-    // cy.clearLocalStorage()
-    // const fixtureFile = 'image1.png'
     const bestFixtureFile = 'icons8_trash_can_48.png'
-
     cy.get('input#uploadProfilePic.d-none')
-      // .attachFile(fixtureFile, { force: true })
       .attachFile(bestFixtureFile, { force: true })
-      // .clearLocalStorage()
 
     cy.get('div.text-light.mb-3.avatar-image')
       .find('img.rounded-circle')
@@ -216,13 +211,9 @@ describe('Register', () => {
         expect($label).have.attr('for', 'deleteProfilePic')
       })
 
-    const fixtureFile = 'image1.png'
-    // const bestFixtureFile = 'icons8_trash_can_48.png'
-
+    const fixtureFile = 'cat.png'
     cy.get('input#uploadProfilePic.d-none')
       .attachFile(fixtureFile, { force: true })
-      // .attachFile(bestFixtureFile, { force: true })
-    // .clearLocalStorage()
 
     cy.get('div.text-light.mb-3.avatar-image')
       .find('img.rounded-circle')
@@ -233,20 +224,19 @@ describe('Register', () => {
       })
 
     // cy.get('button#deleteProfilePic.delete-avatar.d-none', { includeShadowDom: true})
+    //   .should('not.be.visible')
     //   .click( {force: true})
 
-    // cy.get('div.text-light.mb-3')
-    //   .should(($div) => {
-    //     expect($div).css('font-size', '170px')
-    //     expect($div).css('line-height', '0px')
-    //   })
-    //   .find('svg.svg-inline--fa.fa-user-circle.fa-w-16')
-    //   .should(($svg) => {
-    //     expect($svg).to.have.length(1)
-    //     expect($svg).have.attr('data-prefix', 'fas')
-    //     expect($svg).have.attr('data-icon', 'user-circle')
-    //     expect($svg).have.attr('role', 'img')
-    //   })
+    cy.get('div.bp-card.mb-5.mx-auto')
+      .get('form.edit_user')
+      .get('div.row').first()
+      // .get('div.col-md.text-center.mb-5.avatar')
+      .get('div.col-md.text-center.mb-5.avatar').last()
+      .get('div.text-light.mb-3')
+      .should(($div) => {
+        expect($div).css('font-size', '170px')
+        expect($div).css('line-height', '0px')
+      })
 
     cy.get('div.col-md.text-center.mb-5')
       .find('h2.location')
