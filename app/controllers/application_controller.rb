@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def profile_pending?(user)
-    user.freelancer_profile.is_draft == false && user.freelancer_profile.pending?
+    user.freelancer_profile.draft == false && user.freelancer_profile.pending?
   end
 
   def profile_declined?(user)
