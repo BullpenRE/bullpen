@@ -168,7 +168,85 @@ describe('Register', () => {
         expect($label).have.attr('for', 'uploadProfilePic')
       })
 
-    cy.get('input#uploadProfilePic.d-none').click({force: true})
+    // cy.clearLocalStorage()
+    // const fixtureFile = 'image1.png'
+    const bestFixtureFile = 'icons8_trash_can_48.png'
+
+    cy.get('input#uploadProfilePic.d-none')
+      // .attachFile(fixtureFile, { force: true })
+      .attachFile(bestFixtureFile, { force: true })
+      // .clearLocalStorage()
+
+    cy.get('div.text-light.mb-3.avatar-image')
+      .find('img.rounded-circle')
+      .should(($img) => {
+        expect($img).to.have.length(1)
+        const className = $img[0].className
+        expect(className).to.match(/rounded-circle/)
+      })
+
+    cy.get('div.custom-file')
+      .find('input#uploadProfilePic.d-none', { includeShadowDom: true})
+      .should(($input) => {
+      expect($input).to.have.length(1)
+      expect($input).have.attr('name', 'avatar')
+      expect($input).have.attr('type', 'file')
+      })
+      .get('label.btn.btn-outline-primary.upload-avatar')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('\n                Edit your photo\n              ')
+        expect($label).have.attr('for', 'uploadProfilePic')
+      })
+      .get('button#deleteProfilePic.delete-avatar.d-none')
+      .should(($button) => {
+        expect($button).to.have.length(1)
+      })
+      .then(($button) => {
+        expect($button).have.attr('type', 'button')
+      })
+      .get('label.btn.btn-outline-danger.mr-2')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('\n                Delete\n              ')
+        expect($label).have.attr('for', 'deleteProfilePic')
+      })
+
+    const fixtureFile = 'image1.png'
+    // const bestFixtureFile = 'icons8_trash_can_48.png'
+
+    cy.get('input#uploadProfilePic.d-none')
+      .attachFile(fixtureFile, { force: true })
+      // .attachFile(bestFixtureFile, { force: true })
+    // .clearLocalStorage()
+
+    cy.get('div.text-light.mb-3.avatar-image')
+      .find('img.rounded-circle')
+      .should(($img) => {
+        expect($img).to.have.length(1)
+        const className = $img[0].className
+        expect(className).to.match(/rounded-circle/)
+      })
+
+    // cy.get('button#deleteProfilePic.delete-avatar.d-none', { includeShadowDom: true})
+    //   .click( {force: true})
+
+    // cy.get('div.text-light.mb-3')
+    //   .should(($div) => {
+    //     expect($div).css('font-size', '170px')
+    //     expect($div).css('line-height', '0px')
+    //   })
+    //   .find('svg.svg-inline--fa.fa-user-circle.fa-w-16')
+    //   .should(($svg) => {
+    //     expect($svg).to.have.length(1)
+    //     expect($svg).have.attr('data-prefix', 'fas')
+    //     expect($svg).have.attr('data-icon', 'user-circle')
+    //     expect($svg).have.attr('role', 'img')
+    //   })
 
     cy.get('div.col-md.text-center.mb-5')
       .find('h2.location')
