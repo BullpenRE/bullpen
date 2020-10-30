@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_27_150253) do
+ActiveRecord::Schema.define(version: 2020_10_29_003206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,15 @@ ActiveRecord::Schema.define(version: 2020_10_27_150253) do
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
+  create_table "employer_sectors", force: :cascade do |t|
+    t.bigint "sector_id", null: false
+    t.bigint "employer_profile_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employer_profile_id"], name: "index_employer_sectors_on_employer_profile_id"
+    t.index ["sector_id"], name: "index_employer_sectors_on_sector_id"
+  end
+
   create_table "freelancer_profile_educations", force: :cascade do |t|
     t.bigint "freelancer_profile_id", null: false
     t.string "institution"
@@ -116,7 +125,7 @@ ActiveRecord::Schema.define(version: 2020_10_27_150253) do
     t.integer "professional_years_experience"
     t.text "professional_summary"
     t.integer "curation", default: 0
-    t.boolean "is_draft", default: true
+    t.boolean "draft", default: true
     t.string "current_step"
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
@@ -248,6 +257,8 @@ ActiveRecord::Schema.define(version: 2020_10_27_150253) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "employer_profiles", "users"
+  add_foreign_key "employer_sectors", "employer_profiles"
+  add_foreign_key "employer_sectors", "sectors"
   add_foreign_key "freelancer_profile_educations", "freelancer_profiles"
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
   add_foreign_key "freelancer_profiles", "users"

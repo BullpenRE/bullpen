@@ -19,6 +19,7 @@ class FreelancerProfileStepsController < ApplicationController
   def update
     @user = current_user
     @freelancer_profile = @user.freelancer_profile
+    save_current_step
     skills_page_save ||
       professional_history_save ||
       work_education_experience_save ||
@@ -29,7 +30,7 @@ class FreelancerProfileStepsController < ApplicationController
   def summary_save
     return false unless wizard_value(step) == :summary
 
-    @freelancer_profile.is_draft = params[:freelancer_profile][:is_draft]
+    @freelancer_profile.draft = params[:freelancer_profile][:draft]
     @freelancer_profile.save
     render_wizard @user
 
@@ -37,6 +38,8 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   def finish_wizard_path
+    return wizard_path(:summary) if pending_profile?
+
     reset_session
     root_path
   end
@@ -87,6 +90,15 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   private
+
+  def pending_profile?
+    @freelancer_profile.draft == false && @freelancer_profile.pending?
+  end
+
+  def save_current_step
+    @freelancer_profile.current_step = wizard_value(next_step)
+    @freelancer_profile.save
+  end
 
   def destroy_old_re_skills_and_sectors
     @freelancer_profile&.freelancer_real_estate_skills&.destroy_all
