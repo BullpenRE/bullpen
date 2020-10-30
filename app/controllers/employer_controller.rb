@@ -7,6 +7,9 @@ class EmployerController < ApplicationController
   def index
   end
 
+  def show
+  end
+
   private
 
   def completed_profile

@@ -24,10 +24,10 @@ Rails.application.routes.draw do
   resources :freelancer_profile_steps
   resources :employer_profile_steps
 
-  resources :employer
+  # resources :employer
 
   namespace :employer do
-    resources :dashboard
+    get 'dashboard', to: 'dashboard#show'
     resources :jobs
     resources :billing
     resources :refer
