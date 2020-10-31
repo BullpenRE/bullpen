@@ -141,8 +141,8 @@ describe('Register', () => {
     cy.get('div.form-group.mb-4')
       .get('div.w-100')
       .get('select#freelancer_profile_freelancer_real_estate_skills')
-      .should((select) => {
-        expect(select).to.have.length(1)
+      .should(($select) => {
+        expect($select).to.have.length(1)
       })
       .should('have.attr', 'multiple', 'multiple')
       .should('have.attr', 'required', 'required')
@@ -322,7 +322,8 @@ describe('Register', () => {
       .should('have.attr', 'name', 'commit')
       .should('have.attr', 'value', 'Next')
       .should('have.attr', 'data-disable-with', 'Next')
-      .click()
+      // .click()
+      .get('form').submit()
 
   });
 
