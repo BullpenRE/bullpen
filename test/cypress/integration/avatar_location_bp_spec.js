@@ -69,6 +69,7 @@ describe('Register', () => {
   });
 
   it('checks progress bar & Content card', () => {
+    // to get target page avatar_location
     cy.visit('http://localhost:5017')
       .contains('Apply').click()
       .get('#firstName').type(first_name)
@@ -94,8 +95,11 @@ describe('Register', () => {
       .should(($input) => {
         expect($input).to.have.length(1)
       })
-      .click()
+      // .click()
+      .get('form').submit()
+    // at least we got target page avatar_location
 
+    // progress bar 25%
     cy.get('div.container.mb-4')
       .get('div.progress.bg-white.shadow-sm.mx-auto')
       .get('div.progress-bar')

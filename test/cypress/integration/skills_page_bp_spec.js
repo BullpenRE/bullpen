@@ -68,6 +68,7 @@ describe('Register', () => {
   });
 
   it('checks progress bar & Content card', () => {
+    // to get target page skill_page
     cy.visit('http://localhost:5017')
       .contains('Apply').click()
       .get('#firstName').type(first_name)
@@ -77,7 +78,9 @@ describe('Register', () => {
       .get('input#psw').type('q1234567!Q')
       .get('input#cPwdId').type('q1234567!Q')
       .get('form').submit()
+    // at least we got target page skill_page
 
+    // progress bar 0%
     cy.get('div.container.mb-4')
       .get('div.progress.bg-white.shadow-sm.mx-auto')
       .get('div.progress-bar')
