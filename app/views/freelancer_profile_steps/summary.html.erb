@@ -1,4 +1,4 @@
-<%= render 'nav_bar' %>
+<%= render '/nav_bar/nav_bar' %>
 
 <div class="container">
   <div class="row">
@@ -106,7 +106,7 @@
                       <label class="bp-input-label">Skills</label>
                       <div class="w-100">
                         <%  @freelancer_profile&.freelancer_real_estate_skills&.each do |skill| %>
-                          <div class="btn btn-dark small mb-1" style="background-color: #005495; border: none">
+                          <div class="btn btn-dark small mb-1" style="background-color: #005495; border: none; cursor: default;">
                             <%= skill.real_estate_skill.description %>
                           </div>
                         <% end %>
@@ -119,7 +119,7 @@
                       <label class="bp-input-label">Sectors</label>
                       <div class="w-100">
                         <%  @freelancer_profile&.freelancer_sectors&.map do |freelancer_sector| %>
-                          <div class="btn btn-dark small mb-1" style="background-color: #005495; border: none">
+                          <div class="btn btn-dark small mb-1" style="background-color: #005495; border: none; cursor: default;">
                             <%= freelancer_sector.sector.description %>
                           </div>
                         <% end %>
