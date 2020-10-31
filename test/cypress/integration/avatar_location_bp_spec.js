@@ -65,6 +65,7 @@ describe('Register', () => {
         expect($a).to.have.length(1)
         expect($a).have.text('Logout')
       })
+      .click({force: true})
   });
 
   it('checks progress bar & Content card', () => {
@@ -211,32 +212,34 @@ describe('Register', () => {
         expect($label).have.attr('for', 'deleteProfilePic')
       })
 
-    const fixtureFile = 'cat.png'
-    cy.get('input#uploadProfilePic.d-none')
-      .attachFile(fixtureFile, { force: true })
+    // below lines are commented by the moment when problem of remove test images from storage will be solved
+    // const fixtureFile = 'cat.png'
+    // cy.get('input#uploadProfilePic.d-none')
+    //   .attachFile(fixtureFile, { force: true })
 
-    cy.get('div.text-light.mb-3.avatar-image')
-      .find('img.rounded-circle')
-      .should(($img) => {
-        expect($img).to.have.length(1)
-        const className = $img[0].className
-        expect(className).to.match(/rounded-circle/)
-      })
+    // cy.get('div.text-light.mb-3.avatar-image')
+    //   .find('img.rounded-circle')
+    //   .should(($img) => {
+    //     expect($img).to.have.length(1)
+    //     const className = $img[0].className
+    //     expect(className).to.match(/rounded-circle/)
+    //   })
 
     // cy.get('button#deleteProfilePic.delete-avatar.d-none', { includeShadowDom: true})
     //   .should('not.be.visible')
     //   .click( {force: true})
 
-    cy.get('div.bp-card.mb-5.mx-auto')
-      .get('form.edit_user')
-      .get('div.row').first()
-      // .get('div.col-md.text-center.mb-5.avatar')
-      .get('div.col-md.text-center.mb-5.avatar').last()
-      .get('div.text-light.mb-3')
-      .should(($div) => {
-        expect($div).css('font-size', '170px')
-        expect($div).css('line-height', '0px')
-      })
+    // cy.get('div.bp-card.mb-5.mx-auto')
+    //   .get('form.edit_user')
+    //   .get('div.row').first()
+    //   .get('div.col-md.text-center.mb-5.avatar')
+    //   .get('div.col-md.text-center.mb-5.avatar').last()
+    //   .get('div.text-light.mb-3')
+    //   .should(($div) => {
+    //     expect($div).css('font-size', '170px')
+    //     expect($div).css('line-height', '0px')
+    //   })
+    //above lines are commented by the moment when problem of remove test images from storage will be solved
 
     cy.get('div.col-md.text-center.mb-5')
       .find('h2.location')
@@ -270,6 +273,7 @@ describe('Register', () => {
         expect($input).have.attr('required', 'required')
         expect($input).have.attr('placeholder', 'City, State abbreviation')
       })
+      .type('Walnut Creek, CA')
 
     cy.get('div.d-flex.justify-content-between')
       .get('a.btn.btn-link.px-0')
@@ -280,6 +284,9 @@ describe('Register', () => {
         expect($a).to.have.text('Back')
       })
       .should('have.attr', 'href', '/freelancer_profile_steps/skills_page')
+      .click({force: true})
+
+    cy.wait(3000)
       .get('input.btn.btn-primary')
       .should(($input) => {
         expect($input).to.have.length(1)
@@ -288,7 +295,16 @@ describe('Register', () => {
         expect($input).have.attr('value', 'Next')
         expect($input).have.attr('data-disable-with', 'Next')
       })
-
+      .click({force: true})
+      .get('input.btn.btn-primary')
+      .should(($input) => {
+        expect($input).to.have.length(1)
+        expect($input).have.attr('name', 'commit')
+        expect($input).have.attr('type', 'submit')
+        expect($input).have.attr('value', 'Next')
+        expect($input).have.attr('data-disable-with', 'Next')
+      })
+      .get('form').submit()
   })
 
 })
