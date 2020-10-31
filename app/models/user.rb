@@ -6,7 +6,7 @@ class User < ApplicationRecord
   scope :no_employer_data, -> { left_joins(:employer_profile).where(employer_profiles: { user_id: nil }) }
   scope :employers, -> { joins(:employer_profile) }
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :confirmable
   validates :first_name, presence: true
   validates :last_name, presence: true
 
