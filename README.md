@@ -1,7 +1,7 @@
 # Welcome to the Bullpen App
 
 The Bullpen application is built on:
- * Ruby 2.7.1
+ * Ruby 2.7.2
  * Rails 6.0.3.2
  * postgresql 10.0 or higher
  * Code complexity and security monitoring by CodeClimate (pending)
@@ -34,7 +34,7 @@ _Note: After installing something new it's generally a good idea to quit and res
 6. Generate and add SSH keys your Github account by following the instructions at https://help.github.com/articles/generating-ssh-keys/
 7. Install GPG using homebrew: `$ brew install gpg` (May be needed for RVM in next step)
 8. Install the latest version of RVM: https://rvm.io. The command is probably something like `$ \curl -sSL https://get.rvm.io | bash -s stable`.
-9. Install Ruby from terminal using RVM: `$ rvm install 2.7.1`
+9. Install Ruby from terminal using RVM: `$ rvm install 2.7.2`
 10. Install the latest version of NVM: https://github.com/nvm-sh/nvm.
 11. Install NodeJS from terminal using NVM: `nvm install node` and Yarn `npm install -g yarn`
 12. Install posgtresql from terminal: `$ brew install postgresql` and follow on screen instructions (very important)
@@ -45,7 +45,7 @@ Once your machine is set up for Rails development you can do the following to ge
 1. In your primary workspace directory run `$ git clone git@github.com:BullpenRE/bullpen.git` in terminal.
 2. Enter into the new directory: `$ cd bullpen`
 3. At this point you might be prompted to update your Ruby version. If so, follow the instructions in terminal.
-4. Enter the following command: `$ rvm list` -- verify that your currently selected Ruby version is 2.7.1.
+4. Enter the following command: `$ rvm list` -- verify that your currently selected Ruby version is 2.7.2.
 5. If you had to update your Ruby version in step 3, exit and enter the current directory: `$ cd ..`, then `$ cd bullpen`.
 6. Enter the following command: `$ rvm gemset list` -- verify that the current gemset is *bullpen*.
 7. Install missing gems in your currently selected gemset by running `$ bundle`
