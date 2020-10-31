@@ -66,10 +66,10 @@ describe('Register', () => {
         expect($a).have.text('Logout')
       })
       .click({force: true})
-  });
+  })
 
   it('checks progress bar & Content card', () => {
-    // to get target page avatar_location
+    // to get target page professional_history
     cy.visit('http://localhost:5017')
       .contains('Apply').click()
       .get('#firstName').type(first_name)
@@ -92,21 +92,31 @@ describe('Register', () => {
 
     cy.get('div.d-flex.justify-content-between')
       .get('input.btn.btn-primary')
-      .should(($input) => {
-        expect($input).to.have.length(1)
-      })
+      .click()
+
+    const bestFixtureFile = 'icons8_trash_can_48.png'
+    cy.get('input#uploadProfilePic.d-none')
+      .attachFile(bestFixtureFile, { force: true })
+
+    cy.get('div.col-md.text-center.mb-5')
+      .get('div.form-group.text-left')
+      .get('input#freelancerLocationInput.form-control')
+      .type('Walnut Creek, CA')
+
+    cy.get('div.d-flex.justify-content-between')
+      .get('input.btn.btn-primary')
       // .click()
       .get('form').submit()
-    // at least we got target page avatar_location
+    // at least we got target page professional_history
 
-    // progress bar 25%
+    // progress bar 50%
     cy.get('div.container.mb-4')
       .get('div.progress.bg-white.shadow-sm.mx-auto')
       .get('div.progress-bar')
       .should(($div) => {
         expect($div).to.have.length(1)
       })
-      .should('have.attr', 'style', 'width: 25%')
+      .should('have.attr', 'style', 'width: 50%')
 
     cy.get('div.container.mb-4')
       .get('div.progress.bg-white.shadow-sm.mx-auto')
@@ -115,171 +125,96 @@ describe('Register', () => {
         expect($div).to.have.length(1)
       })
       .then(($div) => {
-        expect($div).to.have.text('25%')
+        expect($div).to.have.text('50%')
       })
 
-    // Content Card. Step 2
+      // Content Card. Step 3
 
-    cy.get('div.bp-card.mb-5.mx-auto')
-      .get('form.edit_user')
-      .get('div.row').first()
-      .get('div.col-md.text-center.mb-5.avatar')
+    cy.get('div.bp-card.mb-5.mx-auto.professional')
+      .find('form.edit_freelancer_profile')
+      .find('div.text-center')
       .find('h2').first()
       .should(($h2) => {
         expect($h2).to.have.length(1)
       })
       .then(($h2) => {
-        expect($h2).to.have.text('Profile Picture')
+        expect($h2).to.have.text('Professional History')
       })
       .get('p.mb-4').first()
       .should(($p) => {
         expect($p).to.have.length(1)
       })
       .then(($p) => {
-        expect($p).to.have.text('Users with a clear and recognizable photo are hired more often. (Optional)')
-      })
-      .find('strong')
-      .should(($strong) => {
-        expect($strong).to.have.length(1)
-      })
-      .then(($strong) => {
-        expect($strong).to.have.text('(Optional)')
+        expect($p).to.have.text('Tell us about your professional history.')
       })
 
-    cy.get('div.text-light.mb-3')
-      .should(($div) => {
-        expect($div).css('font-size', '170px')
-        expect($div).css('line-height', '0px')
+    cy.get('div.row')
+      .get('div.col-md.title')
+      .find('div.form-group.mb-4')
+      .find('label.bp-input-label')
+      .should(($label) => {
+        expect($label).to.have.length(1)
       })
-      .find('svg.svg-inline--fa.fa-user-circle.fa-w-16')
-      .should(($svg) => {
-        expect($svg).to.have.length(1)
-        expect($svg).have.attr('data-prefix', 'fas')
-        expect($svg).have.attr('data-icon', 'user-circle')
-        expect($svg).have.attr('role', 'img')
+      .then(($label) => {
+        expect($label).to.have.text('Professional Title')
+        expect($label).have.attr('for', 'professionalTitleInput')
       })
-
-    cy.get('div.custom-file')
-      .get('input#uploadProfilePic.d-none')
+      .get('input#professionalTitleInput.form-control')
       .should(($input) => {
         expect($input).to.have.length(1)
-        expect($input).have.attr('name', 'avatar')
-        expect($input).have.attr('type', 'file')
-      })
-      .get('label.btn.btn-outline-primary.upload-avatar')
-      .should(($label) => {
-        expect($label).to.have.length(1)
-      })
-      .then(($label) => {
-        expect($label).to.have.text('\n                Upload your photo\n              ')
-        expect($label).have.attr('for', 'uploadProfilePic')
-      })
-
-    const bestFixtureFile = 'icons8_trash_can_48.png'
-    cy.get('input#uploadProfilePic.d-none')
-      .attachFile(bestFixtureFile, { force: true })
-
-    cy.get('div.text-light.mb-3.avatar-image')
-      .find('img.rounded-circle')
-      .should(($img) => {
-        expect($img).to.have.length(1)
-        const className = $img[0].className
-        expect(className).to.match(/rounded-circle/)
-      })
-
-    cy.get('div.custom-file')
-      .find('input#uploadProfilePic.d-none', { includeShadowDom: true})
-      .should(($input) => {
-      expect($input).to.have.length(1)
-      expect($input).have.attr('name', 'avatar')
-      expect($input).have.attr('type', 'file')
-      })
-      .get('label.btn.btn-outline-primary.upload-avatar')
-      .should(($label) => {
-        expect($label).to.have.length(1)
-      })
-      .then(($label) => {
-        expect($label).to.have.text('\n                Edit your photo\n              ')
-        expect($label).have.attr('for', 'uploadProfilePic')
-      })
-      .get('button#deleteProfilePic.delete-avatar.d-none')
-      .should(($button) => {
-        expect($button).to.have.length(1)
-      })
-      .then(($button) => {
-        expect($button).have.attr('type', 'button')
-      })
-      .get('label.btn.btn-outline-danger.mr-2')
-      .should(($label) => {
-        expect($label).to.have.length(1)
-      })
-      .then(($label) => {
-        expect($label).to.have.text('\n                Delete\n              ')
-        expect($label).have.attr('for', 'deleteProfilePic')
-      })
-
-    // below lines are commented by the moment when problem of remove test images from storage will be solved
-    // const fixtureFile = 'cat.png'
-    // cy.get('input#uploadProfilePic.d-none')
-    //   .attachFile(fixtureFile, { force: true })
-
-    // cy.get('div.text-light.mb-3.avatar-image')
-    //   .find('img.rounded-circle')
-    //   .should(($img) => {
-    //     expect($img).to.have.length(1)
-    //     const className = $img[0].className
-    //     expect(className).to.match(/rounded-circle/)
-    //   })
-
-    // cy.get('button#deleteProfilePic.delete-avatar.d-none', { includeShadowDom: true})
-    //   .should('not.be.visible')
-    //   .click( {force: true})
-
-    // cy.get('div.bp-card.mb-5.mx-auto')
-    //   .get('form.edit_user')
-    //   .get('div.row').first()
-    //   .get('div.col-md.text-center.mb-5.avatar')
-    //   .get('div.col-md.text-center.mb-5.avatar').last()
-    //   .get('div.text-light.mb-3')
-    //   .should(($div) => {
-    //     expect($div).css('font-size', '170px')
-    //     expect($div).css('line-height', '0px')
-    //   })
-    //above lines are commented by the moment when problem of remove test images from storage will be solved
-
-    cy.get('div.col-md.text-center.mb-5')
-      .find('h2.location')
-      .should(($h2) => {
-        expect($h2).to.have.length(1)
-      })
-      .then(($h2) => {
-        expect($h2).to.have.text('Location')
-      })
-      .get('p.mb-4').last()
-      .should(($p) => {
-        expect($p).to.have.length(1)
-      })
-      .then(($p) => {
-        expect($p).to.have.text('Where do you live? Some companies prefer to work with local talent.')
-      })
-      .get('div.form-group.text-left')
-      .get('label.bp-input-label')
-      .should(($label) => {
-        expect($label).to.have.length(1)
-      })
-      .then(($label) => {
-        expect($label).to.have.text('Location')
-        expect($label).have.attr('for', 'freelancerLocationInput')
-      })
-      .get('input#freelancerLocationInput.form-control')
-      .should(($input) => {
-        expect($input).to.have.length(1)
-        expect($input).have.attr('name', 'user[location]')
-        expect($input).have.attr('type', 'text')
+        expect($input).have.attr('placeholder', 'e.g. Senior Analyst')
         expect($input).have.attr('required', 'required')
-        expect($input).have.attr('placeholder', 'City, State abbreviation')
+        expect($input).have.attr('type', 'text')
+        expect($input).have.attr('name', 'freelancer_profile[professional_title]')
       })
-      .type('Walnut Creek, CA')
+      .type('Owner')
+      .get('div.col-md.experience')
+      .find('div.form-group.mb-4')
+      .find('label.bp-input-label')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Years of professional experience')
+        expect($label).have.attr('for', 'yearsExperienceSelect')
+      })
+      .get('div.w-100.yearsExperienceSelect')
+      .find('div.dropdown.bootstrap-select.form-control')
+      .find('select#freelancer_profile_professional_years_experience.form-control.selectpicker', { includeShadowDom: true})
+      .should(($select) => {
+        expect($select).to.have.length(1)
+      })
+      .should('have.attr', 'data-style', 'bp-btn-select-border')
+      .should('have.attr', 'style', 'display:block !important')
+      .should('have.attr', 'title', 'Please make a selection')
+      .should('have.attr', 'required', 'required')
+      .should('have.attr', 'name', 'freelancer_profile[professional_years_experience]')
+      .select('>10', {force: true})
+      .should(($select) => {
+        expect($select).to.have.length(1)
+      })
+
+    cy.get('div.form-group.mb-5.summary')
+      .find('label.bp-input-label')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Professional Summary')
+        expect($label).have.attr('for', 'professionalSummaryTextarea')
+      })
+      .get('textarea#professionalSummaryTextarea.form-control')
+      .should(($textarea) => {
+        expect($textarea).to.have.length(1)
+      })
+      .then(($textarea) => {
+        expect($textarea).have.attr('placeholder', 'Describe your experience in a short elevator pitch')
+        expect($textarea).have.attr('rows', '3')
+        expect($textarea).have.attr('maxlength', '1000')
+        expect($textarea).have.attr('required', 'required')
+        expect($textarea).have.attr('name', 'freelancer_profile[professional_summary]')
+      })
+      .type('Some professional summary')
 
     cy.get('div.d-flex.justify-content-between')
       .get('a.btn.btn-link.px-0')
@@ -289,7 +224,7 @@ describe('Register', () => {
       .then(($a) => {
         expect($a).to.have.text('Back')
       })
-      .should('have.attr', 'href', '/freelancer_profile_steps/skills_page')
+      .should('have.attr', 'href', '/freelancer_profile_steps/avatar_location')
       .click({force: true})
 
     cy.wait(3000)

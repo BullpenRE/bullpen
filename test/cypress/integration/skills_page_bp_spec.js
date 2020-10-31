@@ -99,6 +99,8 @@ describe('Register', () => {
         expect($div).to.have.text('0%')
       })
 
+    // Content Card. Step 1
+
     cy.get('div.container.first')
       .get('div.bp-card.mb-5.mx-auto')
       .get('form.edit_freelancer_profile')
