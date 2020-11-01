@@ -4,55 +4,55 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
+          <span class="close" aria-hidden="true">×</span>
         </button>
       </div>
       <%= form_for :freelancer_profile_experience, url: wizard_path, method: :put do |f| %>
         <div class="modal-body pt-0">
         <h3 class="modal-title mb-4" id="modalLabel">Add Experience</h3>
-        <div class="form-group">
-          <label for="jobTitleInput" class="bp-input-label">Job Title</label>
+        <div class="form-group job-title">
+          <label for="jobTitleInput" class="bp-input-label job-title">Job Title</label>
           <%= f.text_field :job_title, class: "form-control", id: "jobTitleInput", placeholder: "Enter your job title", required: true %>
         </div>
-        <div class="form-group">
-          <label for="companyInput" class="bp-input-label">Company</label>
+        <div class="form-group company">
+          <label for="companyInput" class="bp-input-label company">Company</label>
           <%= f.text_field :company, class: "form-control", id: "companyInput", placeholder: "Enter the company name", required: true %>
         </div>
-        <div class="form-group">
-          <label for="locationInput" class="bp-input-label">Location</label>
+        <div class="form-group location">
+          <label for="locationInput" class="bp-input-label location">Location</label>
           <%= f.text_field :location, class: "form-control", id: "locationInput", placeholder: "e.g. San Francisco, CA", required: true %>
         </div>
-        <div class="form-group">
-          <label for="startMonth" class="bp-input-label">Start Date</label>
-          <div class="row mb-3">
-            <div class="col">
+        <div class="form-group start-date">
+          <label for="startMonth" class="bp-input-label start-date">Start Date</label>
+          <div class="row mb-3 start-date">
+            <div class="col start-month">
               <%= f.select :start_month,
                            options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES),
                            {}, class: 'form-control selectpicker',
                            id: 'startMonth', required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
             </div>
-            <div class="col">
+            <div class="col start-year">
               <%= f.select :start_year,
                            options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS),
                            {}, class: 'form-control selectpicker',
                            id: 'startYear', required: true, 'data-style': "bp-btn-select-border", title: "Year" %>
             </div>
           </div>
-          <div class="custom-control custom-checkbox">
+          <div class="custom-control custom-checkbox current-job">
             <%= f.check_box :current_job, class: "custom-control-input", id: "currentJob", type: "button", 'data-toggle': "collapse", 'data-target': "#endDateToggle", 'aria-expanded': "false", 'aria-controls': "endDateToggle" %>
             <label class="custom-control-label" for="currentJob">Current Job</label>
           </div>
         </div>
         <div class="form-group collapse show" id="endDateToggle">
-          <label for="endMonth" class="bp-input-label">End Date</label>
-          <div class="row">
-            <div class="col">
+          <label for="endMonth" class="bp-input-label end-date">End Date</label>
+          <div class="row end-date">
+            <div class="col end-date">
               <%= f.select :end_month,
                            options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES),
                            {}, class: 'form-control selectpicker',
                            id: 'endMonth', 'data-style': "bp-btn-select-border", title: "Month" %>
             </div>
-            <div class="col">
+            <div class="col end-year">
               <%= f.select :end_year,
                            options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS),
                            {}, class: 'form-control selectpicker',
@@ -60,14 +60,14 @@
             </div>
           </div>
         </div>
-        <div class="form-group mb-0">
-          <label for="jobDescriptionTextarea" class="bp-input-label">Description</label>
-          <%= f.text_area :description, class: "form-control", id: "jobDescriptionTextarea", placeholder: "Enter your job description", rows: 3, required: true %>
+        <div class="form-group mb-0 description">
+          <label for="jobDescriptionTextarea" class="bp-input-label description">Description</label>
+          <%= f.text_area :description, class: "form-control", id: "jobDescriptionTextarea", placeholder: "Enter your job description", rows: 3, maxlength: "1000", required: true %>
         </div>
       </div>
-        <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
-        <%= f.submit 'Save', class: 'btn btn-primary' %>
+        <div class="modal-footer justify-content-between work-experience">
+        <button type="button" class="btn btn-link px-0 text-dark cancel" data-dismiss="modal">Cancel</button>
+        <%= f.submit 'Save', class: 'btn btn-primary save' %>
       </div>
       <% end %>
     </div>
