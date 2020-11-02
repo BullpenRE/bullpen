@@ -417,7 +417,7 @@ describe('Register', () => {
       })
       .type('Some description of my job')
       .get('div.modal-footer.justify-content-between.work-experience')
-      .get('button.btn.btn-link.px-0.text-dark.cancel')
+      .get('button.btn.btn-link.px-0.text-dark.cancel.work-experience')
       .should(($button) => {
         expect($button).to.have.length(1)
         expect($button).to.have.text('Cancel')
@@ -605,7 +605,43 @@ describe('Register', () => {
         expect($label).to.have.text('Currently Studying')
         expect($label).have.attr('for', 'currentlyStudying')
       })
-
+      .get('div.form-group.mb-0.education-description')
+      .get('label.bp-input-label.education-description')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Description (optional)')
+        expect($label).have.attr('for', 'educationDescriptionTextarea')
+      })
+      .get('textarea#educationDescriptionTextarea.form-control')
+      .should(($textarea) => {
+        expect($textarea).to.have.length(1)
+      })
+      .then(($textarea) => {
+        expect($textarea).have.attr('placeholder', 'Enter a brief description')
+        expect($textarea).have.attr('rows', '3')
+        expect($textarea).have.attr('name', 'freelancer_profile_education[description]')
+      })
+      .type('Some description of my education')
+      .get('div.modal-footer.justify-content-between.education')
+      .get('button.btn.btn-link.px-0.text-dark.cancel.education')
+      .should(($button) => {
+        expect($button).to.have.length(1)
+        expect($button).to.have.text('Cancel')
+        expect($button).have.attr('type', 'button')
+        expect($button).have.attr('data-dismiss', 'modal')
+      })
+      .get('input.btn.btn-primary.save-education')
+      .should(($input) => {
+        expect($input).to.have.length(1)
+      })
+      .should('have.attr', 'name', 'commit')
+      .should('have.attr', 'type', 'submit')
+      .should('have.attr', 'value', 'Save')
+      .should('have.attr', 'data-disable-with', 'Save')
+      .get('form').last().submit()
+    //  End of education modal
 
 
 
