@@ -479,10 +479,54 @@ describe('Register', () => {
         expect($span).to.have.length(1)
         expect($span).have.text('×')
       })
-    cy.get('button.close.mt-2.education').first()
+    cy.get('button.close.mt-2.education')
       .should('be.visible')
       .wait(2000)
       .click()
+
+    cy.get('div.mb-5.education-experience')
+      .get('button.btn.btn-outline-primary.education')
+      .click()
+      .get('div#addEducationModal.modal.fade.show', { includeShadowDom: true})
+      .get('div.modal-dialog.modal-dialog-centered.modal-md.education')
+      .get('div.modal-content.education')
+      .find('form', { includeShadowDom: true}).last()
+      .should(($form) => {
+        expect($form).to.have.length(1)
+        expect($form).have.attr('action', '/freelancer_profile_steps/work_education_experience')
+        expect($form).have.attr('accept-charset', 'UTF-8')
+        expect($form).have.attr('method', 'post')
+      })
+      .find('div.modal-body.pt-0')
+      .find('h3')
+      .should(($h3) => {
+        expect($h3).to.have.length(1)
+      })
+      .then(($h3) => {
+        expect($h3).to.have.text('Add Education')
+      })
+      .get('div.form-group.institution')
+      .get('label.bp-input-label.institution')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Institution')
+        expect($label).have.attr('for', 'institutionInput')
+      })
+      .get('input#institutionInput.form-control')
+      .should((input) => {
+        expect(input).to.have.length(1)
+      })
+      .should('have.attr', 'placeholder', 'Enter the school you attended')
+      .should('have.attr', 'name', 'freelancer_profile_education[institution]')
+      .should('have.attr', 'type', 'text')
+      .type('Some University')
+
+
+
+
+
 
     // end of education modal
 
