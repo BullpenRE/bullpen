@@ -443,7 +443,7 @@ describe('Register', () => {
       .then(($div) => {
         expect($div).to.have.text('\n        Education\n      ')
       })
-      .get('button.btn.btn-outline-primary').last()
+      .get('button.btn.btn-outline-primary.education').last()
       .should('have.attr', 'data-toggle', 'modal')
       .should('have.attr', 'data-target', '#addEducationModal')
       .should(($button) => {
@@ -461,6 +461,28 @@ describe('Register', () => {
       })
 
     // => Add education modal
+    cy.get('button.btn.btn-outline-primary.education', { includeShadowDom: true})
+      .click({force: true})
+      .get('div#addEducationModal.modal.fade.show')
+      .get('div.modal-dialog.modal-dialog-centered.modal-md.education')
+      .find('div.modal-content.education')
+      .find('div.modal-header.education')
+      .get('button.close.mt-2.education')
+      .should(($button) => {
+        expect($button).to.have.length(1)
+        expect($button).have.attr('type', 'button')
+        expect($button).have.attr('data-dismiss', 'modal')
+        expect($button).have.attr('aria-label', 'Close')
+      })
+      .find('span.education.close')
+      .should(($span) => {
+        expect($span).to.have.length(1)
+        expect($span).have.text('×')
+      })
+    cy.get('button.close.mt-2.education').first()
+      .should('be.visible')
+      .wait(2000)
+      .click()
 
     // end of education modal
 
