@@ -433,9 +433,7 @@ describe('Register', () => {
       .should('have.attr', 'value', 'Save')
       .should('have.attr', 'data-disable-with', 'Save')
       .get('form').first().submit()
-
-
-
+      //  End of work experience modal
 
     cy.get('div.mb-5.education-experience')
       .find('div.bp-input-label')
@@ -463,6 +461,8 @@ describe('Register', () => {
       })
 
     // => Add education modal
+
+    // end of education modal
 
     cy.get('div.d-flex.justify-content-between')
       .get('a.btn.btn-link.px-0')
