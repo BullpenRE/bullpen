@@ -673,16 +673,15 @@ describe('Register', () => {
       })
       .should('have.attr', 'href', '/freelancer_profile_steps/summary')
       .click({force: true})
-
-      // .get('input.btn.btn-primary')
-      // .should(($input) => {
-      //   expect($input).to.have.length(1)
-      //   expect($input).have.attr('name', 'commit')
-      //   expect($input).have.attr('type', 'submit')
-      //   expect($input).have.attr('value', 'Next')
-      //   expect($input).have.attr('data-disable-with', 'Next')
-      // })
-      // .get('form').submit()
+      .get('input.btn.btn-primary')
+      .should(($input) => {
+        expect($input).to.have.length(1)
+        expect($input).have.attr('name', 'commit')
+        expect($input).have.attr('type', 'submit')
+        expect($input).have.attr('value', 'Next')
+        expect($input).have.attr('data-disable-with', 'Next')
+      })
+      .get('form').submit()
   })
 
 })
