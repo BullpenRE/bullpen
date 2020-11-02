@@ -7,7 +7,7 @@
           <span class="education close" aria-hidden="true">×</span>
         </button>
       </div>
-      <%= form_for :freelancer_profile_education, url: wizard_path, method: :put do |f| %>
+      <%= form_for :freelancer_profile_education, html: {class: 'education'}, url: wizard_path, method: :put do |f| %>
         <div class="modal-body pt-0">
           <h3 class="modal-title mb-4" id="modalLabel">Add Education</h3>
           <div class="form-group institution">

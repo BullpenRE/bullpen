@@ -229,7 +229,7 @@ describe('Register', () => {
       .get('div#addWorkExperienceModal.modal.fade.show', { includeShadowDom: true})
       .get('div.modal-dialog.modal-dialog-centered.modal-md')
       .find('div.modal-content')
-      .find('form', { includeShadowDom: true}).first()
+      .find('form.work-experience', { includeShadowDom: true}).first()
       .should(($form) => {
         expect($form).to.have.length(1)
         expect($form).have.attr('action', '/freelancer_profile_steps/work_education_experience')
@@ -432,7 +432,7 @@ describe('Register', () => {
       .should('have.attr', 'type', 'submit')
       .should('have.attr', 'value', 'Save')
       .should('have.attr', 'data-disable-with', 'Save')
-      .get('form').first().submit()
+      .get('form.work-experience').first().submit()
       //  End of work experience modal
 
     cy.get('div.mb-5.education-experience')
@@ -490,7 +490,7 @@ describe('Register', () => {
       .get('div#addEducationModal.modal.fade.show', { includeShadowDom: true})
       .get('div.modal-dialog.modal-dialog-centered.modal-md.education')
       .get('div.modal-content.education')
-      .find('form', { includeShadowDom: true}).last()
+      .find('form.education', { includeShadowDom: true}).last()
       .should(($form) => {
         expect($form).to.have.length(1)
         expect($form).have.attr('action', '/freelancer_profile_steps/work_education_experience')
@@ -640,7 +640,7 @@ describe('Register', () => {
       .should('have.attr', 'type', 'submit')
       .should('have.attr', 'value', 'Save')
       .should('have.attr', 'data-disable-with', 'Save')
-      .get('form').last().submit()
+      .get('form.education').last().submit()
     //  End of education modal
 
     // Beginning of Work Experience Edit mode

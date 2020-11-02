@@ -114,13 +114,6 @@ describe('Register', () => {
       .get('div.col-md.experience')
       .find('div.form-group.mb-4')
       .find('label.bp-input-label')
-      .should(($label) => {
-        expect($label).to.have.length(1)
-      })
-      .then(($label) => {
-        expect($label).to.have.text('Years of professional experience')
-        expect($label).have.attr('for', 'yearsExperienceSelect')
-      })
       .get('div.w-100.yearsExperienceSelect')
       .find('div.dropdown.bootstrap-select.form-control')
       .find('select#freelancer_profile_professional_years_experience.form-control.selectpicker', {includeShadowDom: true})
@@ -135,15 +128,6 @@ describe('Register', () => {
       .get('form').submit()
 
     // => Add work experience modal
-    cy.get('button.btn.btn-outline-primary', { includeShadowDom: true}).first()
-      .click({force: true})
-      // .get('div#addWorkExperienceModal.modal.fade.show')
-      // .get('div.modal-dialog.modal-dialog-centered.modal-md')
-      // .find('div.modal-content')
-      // .find('div.modal-header')
-      // .find('button.close.mt-2').first()
-      // .wait(2000)
-      // .click()
 
     cy.get('div.mb-4.work-experience')
       .get('button.btn.btn-outline-primary').first()
@@ -151,7 +135,9 @@ describe('Register', () => {
       .get('div#addWorkExperienceModal.modal.fade.show', { includeShadowDom: true})
       .get('div.modal-dialog.modal-dialog-centered.modal-md')
       .find('div.modal-content')
-      .find('form', { includeShadowDom: true}).first()
+      .find('form.work-experience', { includeShadowDom: true}).first()
+      .find('div.modal-body.pt-0')
+      .find('h3')
       .get('div.form-group.job-title')
       .get('label.bp-input-label.job-title')
       .get('input#jobTitleInput.form-control')
@@ -198,18 +184,8 @@ describe('Register', () => {
       .get('div.modal-footer.justify-content-between.work-experience')
       .get('button.btn.btn-link.px-0.text-dark.cancel.work-experience')
       .get('input.btn.btn-primary.save')
-      .get('form').first().submit()
+      .get('form.work-experience').first().submit()
     //  End of work experience modal
-
-    // => Add education modal
-    cy.get('button.btn.btn-outline-primary.education', { includeShadowDom: true})
-      .click({force: true})
-      // .get('div#addEducationModal.modal.fade.show')
-      // .get('div.modal-dialog.modal-dialog-centered.modal-md.education')
-      // .find('div.modal-content.education')
-      // .find('div.modal-header.education')
-      // .get('button.close.mt-2.education')
-      // .click()
 
     cy.get('div.mb-5.education-experience')
       .get('button.btn.btn-outline-primary.education')
@@ -217,7 +193,7 @@ describe('Register', () => {
       .get('div#addEducationModal.modal.fade.show', { includeShadowDom: true})
       .get('div.modal-dialog.modal-dialog-centered.modal-md.education')
       .get('div.modal-content.education')
-      .find('form', { includeShadowDom: true}).last()
+      .find('form.education', { includeShadowDom: true}).last()
       .find('div.modal-body.pt-0')
       .find('h3')
       .get('div.form-group.institution')
@@ -251,11 +227,11 @@ describe('Register', () => {
       .get('div.modal-footer.justify-content-between.education')
       .get('button.btn.btn-link.px-0.text-dark.cancel.education')
       .get('input.btn.btn-primary.save-education')
-      .get('form').last().submit()
+      .get('form.education').submit()
     //  End of education modal
 
     cy.get('a#NextBtn.btn.btn-primary.work-education')
-      .click({force: true})
+      .click()
     // at least we got target page - summary
 
 
