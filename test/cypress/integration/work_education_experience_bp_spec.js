@@ -643,14 +643,6 @@ describe('Register', () => {
       .get('form').last().submit()
     //  End of education modal
 
-
-
-
-
-
-
-    // end of education modal
-
     cy.get('div.d-flex.justify-content-between')
       .get('a.btn.btn-link.px-0')
       .should(($a) => {
