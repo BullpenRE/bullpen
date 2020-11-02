@@ -643,8 +643,8 @@ describe('Register', () => {
       .get('form').last().submit()
     //  End of education modal
 
-    cy.get('div.d-flex.justify-content-between')
-      .get('a.btn.btn-link.px-0')
+    cy.get('div.d-flex.justify-content-between.work-education')
+      .get('a.btn.btn-link.px-0.work-education')
       .should(($a) => {
         expect($a).to.have.length(1)
       })
@@ -664,7 +664,7 @@ describe('Register', () => {
         expect($input).have.attr('data-disable-with', 'Next')
       })
       .click({force: true})
-      .get('a#NextBtn.btn.btn-primary')
+      .get('a#NextBtn.btn.btn-primary.work-education')
       .should(($a) => {
         expect($a).to.have.length(1)
       })
@@ -673,15 +673,7 @@ describe('Register', () => {
       })
       .should('have.attr', 'href', '/freelancer_profile_steps/summary')
       .click({force: true})
-      .get('input.btn.btn-primary')
-      .should(($input) => {
-        expect($input).to.have.length(1)
-        expect($input).have.attr('name', 'commit')
-        expect($input).have.attr('type', 'submit')
-        expect($input).have.attr('value', 'Next')
-        expect($input).have.attr('data-disable-with', 'Next')
-      })
-      .get('form').submit()
+      // .go('back')
   })
 
 })
