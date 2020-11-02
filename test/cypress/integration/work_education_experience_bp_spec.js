@@ -643,6 +643,7 @@ describe('Register', () => {
       .get('form').last().submit()
     //  End of education modal
 
+    // Beginning of Work Experience Edit mode
     cy.get('div.d-flex.align-items-center.justify-content-between.mb-3.work-experience-present')
       .get('div.w-100.work-experience-present')
       .get('div.row.work-experience-present.title')
@@ -668,8 +669,39 @@ describe('Register', () => {
       .then(($div) => {
         expect($div).to.have.text('\n                  July, 2007-October, 2020\n                ')
       })
+      .get('button.btn.btn-link.edit-work-experience')
+      .find('svg')
+      .should(($svg) => {
+        expect($svg).to.have.length(1)
+        expect($svg).have.attr('data-prefix', 'fas')
+        expect($svg).have.attr('data-icon', 'pencil-alt')
+        expect($svg).have.attr('role', 'img')
+      })
+      .click()
+      .get('div.modal.fade.edit-work-experience.show', { includeShadowDom: true})
+      .get('div.modal-dialog.modal-dialog-centered.modal-md.edit-work-experience')
+      .get('div.modal-content.edit-work-experience')
+      .get('form.edit-work-experience', { includeShadowDom: true})
+      .should(($form) => {
+        expect($form).to.have.length(1)
+        expect($form).have.attr('action', '/freelancer_profile_steps/work_education_experience')
+        expect($form).have.attr('accept-charset', 'UTF-8')
+        expect($form).have.attr('method', 'post')
+      })
+      .get('div.modal-footer.justify-content-between.edit-work-experience')
+      .get('button.btn.btn-link.px-0.text-dark.edit-work-experience')
+      .should(($button) => {
+        expect($button).to.have.length(1)
+        expect($button).to.have.text('Cancel')
+        expect($button).have.attr('type', 'button')
+        expect($button).have.attr('data-dismiss', 'modal')
+      })
+      .click()
+    // End of Work Experience Edit mode
 
+    // Beginning of Education Edit mode
 
+    // Beginning of Education Edit mode
 
     cy.get('div.d-flex.justify-content-between.work-education')
       .get('a.btn.btn-link.px-0.work-education')
