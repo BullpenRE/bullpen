@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(version: 2020_10_29_074519) do
     t.integer "professional_years_experience"
     t.text "professional_summary"
     t.integer "curation", default: 0
-    t.boolean "is_draft", default: true
+    t.boolean "draft", default: true
     t.string "current_step"
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
