@@ -643,6 +643,34 @@ describe('Register', () => {
       .get('form').last().submit()
     //  End of education modal
 
+    cy.get('div.d-flex.align-items-center.justify-content-between.mb-3.work-experience-present')
+      .get('div.w-100.work-experience-present')
+      .get('div.row.work-experience-present.title')
+      .get('div.col.mb-1.text.work-experience-present.title')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('Software engineer')
+      })
+      .get('div.row.bp-text-sm.work-experience-present.company-location')
+      .get('div.col-md.work-experience-present.company-location')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('Awesome company, Walnut Creek, CA')
+      })
+      .get('div.col-md.work-experience-present.job')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('\n                  July, 2007-October, 2020\n                ')
+      })
+
+
+
     cy.get('div.d-flex.justify-content-between.work-education')
       .get('a.btn.btn-link.px-0.work-education')
       .should(($a) => {
@@ -673,7 +701,7 @@ describe('Register', () => {
       })
       .should('have.attr', 'href', '/freelancer_profile_steps/summary')
       .click({force: true})
-      // .go('back')
+      .go('back')
   })
 
 })
