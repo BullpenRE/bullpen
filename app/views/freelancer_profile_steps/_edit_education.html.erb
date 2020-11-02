@@ -7,7 +7,7 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <%= form_for :freelancer_profile_education, url: wizard_path, method: :put do |f| %>
+      <%= form_for :freelancer_profile_education, html: {class: 'edit-education'}, url: wizard_path, method: :put do |f| %>
         <div class="modal-body pt-0">
           <h3 class="modal-title mb-4" id="modalLabel">Edit Education</h3>
           <div class="form-group">
@@ -48,11 +48,11 @@
           </div>
           <%= f.hidden_field :id, value: freelancer_profile_education.id %>
         </div>
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
-          <div>
-            <%= f.submit 'Delete', class: 'btn btn-outline-danger mr-2' %>
-            <%= f.submit 'Save', class: 'btn btn-primary' %>
+        <div class="modal-footer justify-content-between edit-education">
+          <button type="button" class="btn btn-link px-0 text-dark edit-education" data-dismiss="modal">Cancel</button>
+          <div class="edit-education delete-save-submits">
+            <%= f.submit 'Delete', class: 'btn btn-outline-danger mr-2 edit-education delete' %>
+            <%= f.submit 'Save', class: 'btn btn-primary edit-education save' %>
           </div>
         </div>
       <% end %>

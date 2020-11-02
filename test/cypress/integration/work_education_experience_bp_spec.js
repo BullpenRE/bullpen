@@ -689,6 +689,7 @@ describe('Register', () => {
         expect($form).have.attr('method', 'post')
       })
       .get('div.modal-footer.justify-content-between.edit-work-experience')
+
       .get('button.btn.btn-link.px-0.text-dark.edit-work-experience')
       .should(($button) => {
         expect($button).to.have.length(1)
@@ -700,8 +701,77 @@ describe('Register', () => {
     // End of Work Experience Edit mode
 
     // Beginning of Education Edit mode
+    cy.get('div.container.work-education')
+      .get('div.bp-card.mb-5.mx-auto.work-experience')
+      .get('div.mb-5.education-experience')
+      .find('div.d-flex.align-items-center.justify-content-between.mb-3.education-present', { includeShadowDom: true})
+      .get('div.w-100.education-present')
+      .get('div.row.education-present.institution')
+      .get('div.col.mb-1.text.education-present.institution')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('Some University')
+      })
+      .get('div.row.bp-text-sm.education-present')
+      .get('div.col-md.education-present.degree.course-of-study')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('Masters, Some course of study')
+      })
+      .get('div.col-md.graduation-year')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('1982')
+      })
+      .get('button.btn.btn-link.education')
+      .find('svg')
+      .should(($svg) => {
+        expect($svg).to.have.length(1)
+        expect($svg).have.attr('data-prefix', 'fas')
+        expect($svg).have.attr('data-icon', 'pencil-alt')
+        expect($svg).have.attr('role', 'img')
+      })
+      .click()
+      .get('form.edit-education', { includeShadowDom: true})
+      .should(($form) => {
+        expect($form).to.have.length(1)
+        expect($form).have.attr('action', '/freelancer_profile_steps/work_education_experience')
+        expect($form).have.attr('accept-charset', 'UTF-8')
+        expect($form).have.attr('method', 'post')
+      })
+      .get('div.modal-footer.justify-content-between.edit-education')
+      .get('input.btn.btn-outline-danger.mr-2.edit-education.delete')
+      .should(($input) => {
+        expect($input).to.have.length(1)
+        expect($input).have.attr('name', 'commit')
+        expect($input).have.attr('type', 'submit')
+        expect($input).have.attr('value', 'Delete')
+        expect($input).have.attr('data-disable-with', 'Delete')
+      })
+      .get('input.btn.btn-primary.edit-education.save')
+      .should(($input) => {
+        expect($input).to.have.length(1)
+        expect($input).have.attr('name', 'commit')
+        expect($input).have.attr('type', 'submit')
+        expect($input).have.attr('value', 'Save')
+        expect($input).have.attr('data-disable-with', 'Save')
+      })
+      .get('button.btn.btn-link.px-0.text-dark.edit-education')
+      .should(($button) => {
+        expect($button).to.have.length(1)
+        expect($button).to.have.text('Cancel')
+        expect($button).have.attr('type', 'button')
+        expect($button).have.attr('data-dismiss', 'modal')
+      })
+      .click()
 
-    // Beginning of Education Edit mode
+    // End of Education Edit mode
 
     cy.get('div.d-flex.justify-content-between.work-education')
       .get('a.btn.btn-link.px-0.work-education')
@@ -734,6 +804,7 @@ describe('Register', () => {
       .should('have.attr', 'href', '/freelancer_profile_steps/summary')
       .click({force: true})
       .go('back')
+      .go('forward')
   })
 
 })
