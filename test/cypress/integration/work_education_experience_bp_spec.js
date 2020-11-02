@@ -522,6 +522,91 @@ describe('Register', () => {
       .should('have.attr', 'name', 'freelancer_profile_education[institution]')
       .should('have.attr', 'type', 'text')
       .type('Some University')
+      .get('div.form-group.degree')
+      .get('label.bp-input-label.degree')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Degree')
+        expect($label).have.attr('for', 'degreeSelect')
+      })
+      .get('div.dropdown.bootstrap-select.form-control')
+      .find('select#degreeSelect.form-control.selectpicker')
+      .should(($select) => {
+        expect($select).to.have.length(1)
+      })
+      .should('have.attr', 'required', 'required')
+      .should('have.attr', 'name', 'freelancer_profile_education[degree]')
+      .should('have.attr', 'data-style', 'bp-btn-select-border')
+      .should('have.attr', 'title', 'Please make a selection')
+      .select('Masters', {force: true})
+      .get('div.form-group.course-of-study')
+      .get('label.bp-input-label.course-of-study')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Course of Study')
+        expect($label).have.attr('for', 'courseInput')
+      })
+      .get('input#courseInput.form-control')
+      .should((input) => {
+        expect(input).to.have.length(1)
+      })
+      .should('have.attr', 'placeholder', 'Enter your degree program')
+      .should('have.attr', 'name', 'freelancer_profile_education[course_of_study]')
+      .should('have.attr', 'type', 'text')
+      .type('Some course of study')
+      .get('div.form-group.graduation-year')
+      .get('label.bp-input-label.graduation-year')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Graduation Year')
+        expect($label).have.attr('for', 'graduationYear')
+      })
+      .get('div#graduationDateToggle.row.mb-2.collapse.show')
+      .find('div.col')
+      .find('div.dropdown.bootstrap-select.form-control')
+      .find('select#graduationYear.form-control.selectpicker')
+      .should(($select) => {
+        expect($select).to.have.length(1)
+      })
+      .should('have.attr', 'name', 'freelancer_profile_education[graduation_year]')
+      .should('have.attr', 'data-style', 'bp-btn-select-border')
+      .should('have.attr', 'title', 'Year')
+      .select('1982', {force: true})
+      .get('div.custom-control.custom-checkbox.current-studying')
+      .get('input').first()
+      .should(($input) => {
+        expect($input).to.have.length(1)
+      })
+      .should('have.attr', 'name', '_method')
+      .should('have.attr', 'type', 'hidden')
+      .should('have.attr', 'value', 'put')
+      .get('input#currentlyStudying.custom-control-input')
+      .should(($input) => {
+        expect($input).to.have.length(1)
+      })
+      .should('have.attr', 'type', 'checkbox')
+      .should('have.attr', 'data-toggle', 'collapse')
+      .should('have.attr', 'data-target', '#graduationDateToggle')
+      .should('have.attr', 'aria-expanded', 'false')
+      .should('have.attr', 'aria-controls', 'graduationDateToggle')
+      .should('have.attr', 'value', '1')
+      .should('have.attr', 'name', 'freelancer_profile_education[currently_studying]')
+      .get('label.custom-control-label.current-studying').first()
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Currently Studying')
+        expect($label).have.attr('for', 'currentlyStudying')
+      })
+
+
 
 
 
