@@ -311,6 +311,23 @@ describe('Register', () => {
         expect($input).have.attr('data-disable-with', 'Next')
       })
       .get('form').submit()
+      .go('back')
+    // Beginning  of avatar on navbar check
+    cy.get('nav.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.mb-5')
+      .get('div.container.navbar').first()
+      .get('div#navbarSupportedContent.collapse.navbar-collapse')
+      .get('ul.navbar-nav.ml-auto')
+      .get('li.nav-item.dropdown')
+      .get('a#navbarDropdown.nav-link.dropdown-toggle.d-flex.align-items-center', {includeShadowDom: true})
+      .wait(3000)
+      .find('div').first()
+      .should(($div) => {
+        expect($div).to.have.length(1)
+        expect($div).have.attr('style', 'font-size: 47px; line-height: 0;')
+      })
+      .find('img').first().invoke('attr', 'src').should('contain', 'http://localhost:5017/rails/active_storage/representations/')
+    //  End of avatar on navbar check
+    cy.go('forward')
   })
 
 })

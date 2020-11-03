@@ -49,6 +49,17 @@ describe('Register', () => {
         expect($svg).have.attr('data-icon', 'user-circle')
         expect($svg).have.attr('role', 'img')
       })
+      // .get('div.text-light.avatar-image.navbar')
+      // .should(($div) => {
+      //   expect($div).to.have.length(1)
+      //   expect($div).have.attr('style', 'font-size: 47px; line-height: 0;')
+      // })
+      // .find('img.rounded-circle.in-navbar')
+      // .should(($img) => {
+      //   expect($img).to.have.length(1)
+      //   expect($img).have.attr('style', 'padding-right: 5px')
+      //   expect($img).have.attr('src', 'http://localhost:3000/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBJdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--c315b887f686586ed22a756becd237995949528e/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxTU0lMTkRkNE5EY2hCam9HUlZRPSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--04ab6977c83eff5da0ac475e36a66058c0050a1a/mini_magick20201031-95553-1mm3c7o.jpg')
+      // })
 
     cy.get('a.nav-link.dropdown-toggle.d-flex.align-items-center')
       .get('span.pr-1')
@@ -98,15 +109,50 @@ describe('Register', () => {
     cy.get('input#uploadProfilePic.d-none')
       .attachFile(bestFixtureFile, {force: true})
 
+    // cy.get('nav.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.mb-5')
+    //   .get('div.container.navbar').first()
+    //   .get('div#navbarSupportedContent.collapse.navbar-collapse')
+    //   .get('ul.navbar-nav.ml-auto')
+    //   .get('li.nav-item.dropdown')
+    //   .get('a#navbarDropdown.nav-link.dropdown-toggle.d-flex.align-items-center', {includeShadowDom: true})
+    //   .wait(3000)
+    //   .find('div').first()
+    //   .should(($div) => {
+    //     expect($div).to.have.length(1)
+    //     expect($div).have.attr('style', 'font-size: 25px;line-height: 0;')
+    //   })
+    //   .find('img').first()
+    //   .should(($img) => {
+    //     expect($img).to.have.length(1)
+    //     expect($img).have.attr('style', 'padding-right: 5px')
+    //     expect($img).have.attr('src', 'http://localhost:3000/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBJdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--c315b887f686586ed22a756becd237995949528e/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxTU0lMTkRkNE5EY2hCam9HUlZRPSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--04ab6977c83eff5da0ac475e36a66058c0050a1a/mini_magick20201031-95553-1mm3c7o.jpg')
+    //   })
+
     cy.get('div.col-md.text-center.mb-5')
       .get('div.form-group.text-left')
       .get('input#freelancerLocationInput.form-control')
       .type('Walnut Creek, CA')
 
+
     cy.get('div.d-flex.justify-content-between')
       .get('input.btn.btn-primary')
-      // .click()
       .get('form').submit()
+
+    // Beginning  of avatar on navbar check
+    cy.get('nav.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.mb-5')
+      .get('div.container.navbar').first()
+      .get('div#navbarSupportedContent.collapse.navbar-collapse')
+      .get('ul.navbar-nav.ml-auto')
+      .get('li.nav-item.dropdown')
+      .get('a#navbarDropdown.nav-link.dropdown-toggle.d-flex.align-items-center', {includeShadowDom: true})
+      .wait(3000)
+      .find('div').first()
+      .should(($div) => {
+        expect($div).to.have.length(1)
+        expect($div).have.attr('style', 'font-size: 47px; line-height: 0;')
+      })
+      .find('img').first().invoke('attr', 'src').should('contain', 'http://localhost:5017/rails/active_storage/representations/')
+    //  End of avatar on navbar check
 
     cy.get('div.row')
       .get('input#professionalTitleInput.form-control')
