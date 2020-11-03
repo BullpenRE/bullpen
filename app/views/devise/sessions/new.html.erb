@@ -30,13 +30,13 @@
 </div>
 
 <script>
-  if (getCookie("email").length > 0 ) {
-      document.getElementById("user_email").autofocus = false;
-      document.getElementById("user_email").value = getCookie("email");
-      document.getElementById("user_password").autofocus = true;
-      deleteCookie("email");
-  };
-
+    $(document).ready(function() {
+        if (getCookie("email").length > 0) {
+            $('#user_email').val(getCookie("email"));
+            $('#user_password').focus() = true;
+            deleteCookie("email");
+        };
+    });
   function setCookie(name, value, options = {}) {
 
       options = {
