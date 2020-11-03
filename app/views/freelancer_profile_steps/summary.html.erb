@@ -38,15 +38,15 @@
             </div>
           </div>
         </div>
-        <div class="col-md-8">
-          <div class="card mb-4">
-            <div class="card-body">
+        <div class="col-md-8 application-summary">
+          <div class="card mb-4 application-submit">
+            <div class="card-body application-submit-card">
               <% if @freelancer_profile.draft == false && @freelancer_profile.pending? %>
-                <p class="card-text">
-                <div class="text-left mt-2 mb-4">
+                <p class="card-text ">
+                <div class="text-left mt-2 mb-4 application-submitting">
                   <h2>Application Submitted</h2>
                 </div>
-                <div class="text-left mb-4">
+                <div class="text-left mb-4 under-review">
                   Your information is currently under review. If you'd like to make corrections you can still do so.
                 </div>
                 <div class="row">

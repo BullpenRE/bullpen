@@ -342,6 +342,8 @@ describe('Register', () => {
       .then(($div) => {
         expect($div).to.have.text('Walnut Creek, CA')
       })
+      .get('div.col-md-8.application-summary')
+
     // Content Card. Step 4
 
   })
