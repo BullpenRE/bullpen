@@ -1,0 +1,60 @@
+<!--Form-->
+<%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
+  <%= f.hidden_field :job_id, value: job.id %>
+  <%= f.hidden_field 'step', value: 'qualifications' %>
+  <div class="form-group mb-4">
+    <div class="h5">What level of experience is required?</div>
+    <div class="custom-control custom-radio">
+      <%= f.radio_button :required_experience, 'junior', id: "experienceRadio1", class: "custom-control-input" %>
+      <label class="custom-control-label" for="experienceRadio1">Junior</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <%= f.radio_button :required_experience, 'intermediate', id: "experienceRadio2", class: "custom-control-input" %>
+      <label class="custom-control-label" for="experienceRadio2">Intermediate</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <%= f.radio_button :required_experience, 'senior', id: "experienceRadio3", class: "custom-control-input" %>
+      <label class="custom-control-label" for="experienceRadio3">Senior</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="skillsMultiselect" class="h5">What skills are required for this job?</label>
+    <%= f.select :job_skills,
+                 options_for_select(
+                   Skill.find_each.map{ |skill| [skill.description, skill.id] if skill.disable == false },
+                   job&.job_skills&.map do |skill|
+                     [skill.job_skill.description, skill.job_skill.id]
+                   end.flatten),
+                 {}, multiple: true, class: 'select2', required: true, style: "width: 100%" %>
+    <script>
+      $(function() {
+        $('.select2').select2({
+          placeholder: 'Select all that apply',
+          allowClear: true
+        });
+      });
+    </script>
+  </div>
+  <div class="form-group">
+    <label for="softwareMultiselect" class="h5">What software is required? <span class="text-dark font-weight-normal">(Optional)</span></label>
+    <%= f.select :job_softwares,
+                 options_for_select(
+                   Software.find_each.map{ |soft| [soft.description, soft.id] if soft.disable == false },
+                   job&.job_softwares&.map do |soft|
+                     [soft.job_softwares.description, soft.job_softwares.id]
+                   end.flatten),
+                 {}, multiple: true, class: 'select2', required: true, style: "width: 100%" %>
+  </div>
+  <div class="form-group mb-1">
+    <label for="regionalKnowledge" class="h5">Specify any regional knowledge that is required. <span class="text-dark font-weight-normal">(Optional)</span></label>
+    <%= f.text_field :required_regional_knowledge, class: "form-control", id: "regionalKnowledge", placeholder: "Enter the area (city, state, county, etc.)", required: true, value: job.required_regional_knowledge %>
+  </div>
+  <div class="modal-footer justify-content-between">
+    <%= link_to employer_jobs_path(id: :job_type, job_id: job.id), class: "btn btn-primary", remote: true do %>
+      <i class="fas fa-chevron-left mr-2"></i>Back
+    <% end %>
+    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+      Next<i class="fas fa-chevron-right ml-2"></i>
+    <% end %>
+  </div>
+<% end %>
