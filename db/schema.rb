@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 2020_11_03_022531) do
   create_table "freelancer_softwares", force: :cascade do |t|
     t.bigint "freelancer_profile_id", null: false
     t.bigint "software_id", null: false
-    t.boolean "license"
+    t.boolean "license", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["freelancer_profile_id"], name: "index_freelancer_softwares_on_freelancer_profile_id"
