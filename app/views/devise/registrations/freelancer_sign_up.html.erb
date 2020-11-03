@@ -77,6 +77,14 @@
           <%= f.label :email, class: "text-primary" %><br />
           <%= f.email_field :email, class: "form-control", id: "email", required: true %>
         </div>
+
+          <% if SignupPromos.find_by(user_type: 'freelancer'||'both', enabled: true) %>
+            <div class="mb-5 col-md-12">
+              <label for="promo_code" class="text-primary">Promo Code(Optional)</label>
+              <input type="text" class="form-control" id="promo_code" >
+            </div>
+          <% end %>
+
         <hr class="mb-4">
         <button class="form-control-lg btn btn-outline-secondary col-md-12 mb-3 nextBtn-2" type="button">Sign up as a freelancer</button>
 
@@ -292,6 +300,10 @@
         }
       });
     });
+
+      if ($('#promo_code').val() != "") {
+          document.cookie = "promo_code="+$('#promo_code').val();
+      };
 
     prevBtn.click(function(){
       $('#regForm').find('input:eq(0)').focus();

@@ -10,7 +10,6 @@ ActiveAdmin.register SignupPromos do
                 :enabled
 
   index do
-    column :users
     column :description
     column :code
     column :user_type
@@ -20,7 +19,6 @@ ActiveAdmin.register SignupPromos do
 
   show title: 'Promo' do |promo|
     attributes_table do
-      row :users
       row :description
       row :created_at
       row :updated_at
@@ -35,16 +33,10 @@ ActiveAdmin.register SignupPromos do
   form do |f|
     f.inputs "#{f.object&.users || 'New'} Promo" do
 
-      if f.object.new_record?
-        f.input :users,
-                as: :select,
-                collection: User.employers.order(:email).pluck(:email, :id),
-                label: "User (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
-      end
       f.input :description
       f.input :code
       f.input :user_type
-      f.input :enabled, as: :check_boxes
+      f.input :enabled, label: 'Enabled'
       f.actions
     end
   end

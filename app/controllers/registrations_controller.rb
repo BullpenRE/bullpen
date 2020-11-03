@@ -4,6 +4,8 @@ class RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
+  include Promo
+
   def new
     if params[:action] == 'freelancer_sign_up' || params[:action] == 'employer_sign_up'
       super
@@ -60,5 +62,13 @@ class RegistrationsController < Devise::RegistrationsController
 
   def employer_params
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email phone_number role])
+  end
+
+  def promo_code_execute?
+    cookies()[:promo_code].present?
+  end
+
+  def promo
+    SignupPromos.find_by(@promo_code)
   end
 end

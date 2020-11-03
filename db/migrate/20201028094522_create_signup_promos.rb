@@ -5,7 +5,6 @@ class CreateSignupPromos < ActiveRecord::Migration[6.0]
       t.string :code
       t.integer :user_type
       t.boolean :enabled, default: true
-      t.references :user, null: false, foreign_key: true
 
       t.timestamps
     end

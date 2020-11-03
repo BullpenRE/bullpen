@@ -218,10 +218,8 @@ ActiveRecord::Schema.define(version: 2020_10_29_074519) do
     t.string "code"
     t.integer "user_type"
     t.boolean "enabled", default: true
-    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_signup_promos_on_user_id"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -282,6 +280,5 @@ ActiveRecord::Schema.define(version: 2020_10_29_074519) do
   add_foreign_key "job_softwares", "jobs"
   add_foreign_key "job_softwares", "softwares"
   add_foreign_key "jobs", "users"
-  add_foreign_key "signup_promos", "users"
   add_foreign_key "users", "signup_promos", column: "signup_promos_id"
 end
