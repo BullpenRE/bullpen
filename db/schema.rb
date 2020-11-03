@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_29_003206) do
+ActiveRecord::Schema.define(version: 2020_11_03_022531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,6 +147,16 @@ ActiveRecord::Schema.define(version: 2020_10_29_003206) do
     t.index ["sector_id"], name: "index_freelancer_sectors_on_sector_id"
   end
 
+  create_table "freelancer_softwares", force: :cascade do |t|
+    t.bigint "freelancer_profile_id", null: false
+    t.bigint "software_id", null: false
+    t.boolean "license"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["freelancer_profile_id"], name: "index_freelancer_softwares_on_freelancer_profile_id"
+    t.index ["software_id"], name: "index_freelancer_softwares_on_software_id"
+  end
+
   create_table "job_questions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "description"
@@ -261,6 +271,8 @@ ActiveRecord::Schema.define(version: 2020_10_29_003206) do
   add_foreign_key "freelancer_profile_educations", "freelancer_profiles"
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
   add_foreign_key "freelancer_profiles", "users"
+  add_foreign_key "freelancer_softwares", "freelancer_profiles"
+  add_foreign_key "freelancer_softwares", "softwares"
   add_foreign_key "job_questions", "jobs"
   add_foreign_key "job_sectors", "jobs"
   add_foreign_key "job_sectors", "sectors"
