@@ -42,8 +42,8 @@
           <div class="card mb-4 application-submit">
             <div class="card-body application-submit-card">
               <% if @freelancer_profile.draft == false && @freelancer_profile.pending? %>
-                <p class="card-text ">
-                <div class="text-left mt-2 mb-4 application-submitting">
+                <p class="card-text">
+                <div class="text-left mt-2 mb-4">
                   <h2>Application Submitted</h2>
                 </div>
                 <div class="text-left mb-4 under-review">
@@ -72,21 +72,21 @@
                   </div>
                 </p>
               <% else %>
-                <p class="card-text">
-                <div class="text-left mt-2 mb-4">
+                <p class="card-text initial-submit">
+                <div class="text-left mt-2 mb-4 initial-submit">
                   <h2>Submit your application</h2>
                 </div>
-                <div class="text-left mb-4">
+                <div class="text-left mb-4 please-verify">
                   Please verify your information and click the submit button to complete the application process.
                 </div>
-                <%= form_for @freelancer_profile, url: wizard_path, method: :put do |f| %>
-                  <div class="row">
+                <%= form_for @freelancer_profile, html: {class: 'please-verify'}, url: wizard_path, method: :put do |f| %>
+                  <div class="row please-verify">
                     <%= f.hidden_field :draft, value: false %>
-                    <div class="col">
-                      <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
+                    <div class="col please-verify-back">
+                      <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0 please-verify-back" %>
                     </div>
-                    <div class="col text-right">
-                      <%= f.submit 'Submit application', class: 'btn btn-primary' %>
+                    <div class="col text-right please-verify-submit">
+                      <%= f.submit 'Submit application', class: 'btn btn-primary please-verify-submit' %>
                     </div>
                   </div>
                 <% end %>
@@ -94,19 +94,19 @@
               <% end %>
             </div>
             </div>
-          <div class="card">
-            <div class="card-body">
-              <p class="card-text">
-                <div class="text-left mb-4">
+          <div class="card application-summary">
+            <div class="card-body body-application-summary">
+              <p class="card-text application-summary">
+                <div class="text-left mb-4 text-application-summary">
                   <h2>Application Summary</h2>
                 </div>
-                <div class="row">
-                  <div class="col">
-                    <div class="form-group mb-3">
-                      <label class="bp-input-label">Skills</label>
-                      <div class="w-100">
+                <div class="row row-skills-sector">
+                  <div class="col col-skills">
+                    <div class="form-group mb-3 label-skills">
+                      <label class="bp-input-label label-skills">Skills</label>
+                      <div class="w-100 w-100-skills">
                         <%  @freelancer_profile&.freelancer_real_estate_skills&.each do |skill| %>
-                          <div class="btn btn-dark small mb-1" style="background-color: #005495; border: none; cursor: default;">
+                          <div class="btn btn-dark small mb-1 btn-skills" style="background-color: #005495; border: none; cursor: default;">
                             <%= skill.real_estate_skill.description %>
                           </div>
                         <% end %>

@@ -260,6 +260,7 @@ describe('Register', () => {
       .click()
     // at least we got target page - summary
 
+    // Beginning of Content Card - summary
     cy.get('div.container.summary')
       .get('div.row.summary')
       .get('div.col-md-12.summary')
@@ -343,8 +344,81 @@ describe('Register', () => {
         expect($div).to.have.text('Walnut Creek, CA')
       })
       .get('div.col-md-8.application-summary')
-
-    // Content Card. Step 4
-
+      .get('div.card.mb-4.application-submit')
+      .get('p.card-text.initial-submit')
+      .get('div.text-left.mt-2.mb-4.initial-submit')
+      .find('h2')
+      .should(($h2) => {
+        expect($h2).to.have.length(1)
+      })
+      .then(($h2) => {
+        expect($h2).to.have.text('Submit your application')
+      })
+      .get('div.text-left.mb-4.please-verify')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('\n                  Please verify your information and click the submit button to complete the application process.\n                ')
+      })
+      .get('form.please-verify')
+      .should(($form) => {
+        expect($form).to.have.length(1)
+        expect($form).have.attr('action', '/freelancer_profile_steps/summary')
+        expect($form).have.attr('accept-charset', 'UTF-8')
+        expect($form).have.attr('method', 'post')
+      })
+      .get('div.row.please-verify')
+      .get('div.col.please-verify-back')
+      .get('a.btn.btn-link.px-0.please-verify-back')
+      .should('have.attr', 'href', '/freelancer_profile_steps/work_education_experience')
+      .should(($a) => {
+        expect($a).to.have.length(1)
+        expect($a).have.text('Back')
+      })
+      .click()
+      .wait(3000)
+      .go('back')
+      .get('div.col.text-right.please-verify-submit')
+      .get('input.btn.btn-primary.please-verify-submit')
+      .should((input) => {
+        expect(input).to.have.length(1)
+      })
+      .should('have.attr', 'data-disable-with', 'Submit application')
+      .should('have.attr', 'name', 'commit')
+      .should('have.attr', 'type', 'submit')
+      .should('have.attr', 'value', 'Submit application')
+      .click()
+      .go('back')
+      .get('div.card-body.body-application-summary')
+      .get('p.card-text.application-summary')
+      .get('div.text-left.mb-4.text-application-summary')
+      .find('h2')
+      .should(($h2) => {
+        expect($h2).to.have.length(1)
+      })
+      .then(($h2) => {
+        expect($h2).to.have.text('Application Summary')
+      })
+      .get('div.row.row-skills-sector')
+      .get('div.col.col-skills')
+      .get('div.form-group.mb-3.label-skills')
+      .get('label.bp-input-label.label-skills')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Skills')
+      })
+      .get('div.w-100.w-100-skills')
+      .get('div.btn.btn-dark.small.mb-1.btn-skills').first()
+      .should(($div) => {
+        expect($div).to.have.length(1)
+        expect($div).have.attr('style', 'background-color: #005495; border: none; cursor: default;')
+      })
+      .then(($div) => {
+        expect($div).to.have.text('\n                            Underwriting\n                          ')
+      })
+    // End of Content Card - summary
   })
 })
