@@ -109,25 +109,6 @@ describe('Register', () => {
     cy.get('input#uploadProfilePic.d-none')
       .attachFile(bestFixtureFile, {force: true})
 
-    // cy.get('nav.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.mb-5')
-    //   .get('div.container.navbar').first()
-    //   .get('div#navbarSupportedContent.collapse.navbar-collapse')
-    //   .get('ul.navbar-nav.ml-auto')
-    //   .get('li.nav-item.dropdown')
-    //   .get('a#navbarDropdown.nav-link.dropdown-toggle.d-flex.align-items-center', {includeShadowDom: true})
-    //   .wait(3000)
-    //   .find('div').first()
-    //   .should(($div) => {
-    //     expect($div).to.have.length(1)
-    //     expect($div).have.attr('style', 'font-size: 25px;line-height: 0;')
-    //   })
-    //   .find('img').first()
-    //   .should(($img) => {
-    //     expect($img).to.have.length(1)
-    //     expect($img).have.attr('style', 'padding-right: 5px')
-    //     expect($img).have.attr('src', 'http://localhost:3000/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBJdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--c315b887f686586ed22a756becd237995949528e/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxTU0lMTkRkNE5EY2hCam9HUlZRPSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--04ab6977c83eff5da0ac475e36a66058c0050a1a/mini_magick20201031-95553-1mm3c7o.jpg')
-    //   })
-
     cy.get('div.col-md.text-center.mb-5')
       .get('div.form-group.text-left')
       .get('input#freelancerLocationInput.form-control')
@@ -145,7 +126,6 @@ describe('Register', () => {
       .get('ul.navbar-nav.ml-auto')
       .get('li.nav-item.dropdown')
       .get('a#navbarDropdown.nav-link.dropdown-toggle.d-flex.align-items-center', {includeShadowDom: true})
-      .wait(3000)
       .find('div').first()
       .should(($div) => {
         expect($div).to.have.length(1)
@@ -280,7 +260,88 @@ describe('Register', () => {
       .click()
     // at least we got target page - summary
 
-
+    cy.get('div.container.summary')
+      .get('div.row.summary')
+      .get('div.col-md-12.summary')
+      .get('div.row.summary_1')
+      .get('div.col-md-4.summary')
+      .get('div.card.summary')
+      .get('div.card-body.summary')
+      .get('p.card-text.summary')
+      .get('div.text-light.mb-3.avatar-image.text-center.summary')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+        expect($div).have.attr('style', 'font-size: 170px;line-height: 0;')
+      })
+      .find('img').first().invoke('attr', 'src').should('contain', 'http://localhost:5017/rails/active_storage/blobs/')
+      .get('div.text-center.mb-5.summary')
+      .find('h2')
+      .should(($h2) => {
+        expect($h2).to.have.length(1)
+      })
+      .then(($h2) => {
+        expect($h2).to.have.text(' First Last ')
+      })
+      .get('div.form-group.mb-3.summary.title')
+      .find('label.bp-input-label.summary.professional-title')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Professional Title')
+      })
+      .get('div.summary.professional-title')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('Owner')
+      })
+      .get('div.form-group.mb-3.summary-summary')
+      .find('label.bp-input-label.summary-professional-summary')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Professional Summary')
+      })
+      .get('div.summary-professional-summary')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('Some professional summary')
+      })
+      .get('div.form-group.mb-3.summary.email')
+      .find('label.bp-input-label.summary.email')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Email')
+      })
+      .get('div.summary-email')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('freelancer@yahoo.com')
+      })
+      .get('div.form-group.mb-3.summary.location')
+      .find('label.bp-input-label.summary.location')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Location')
+      })
+      .get('div.summary-location')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('Walnut Creek, CA')
+      })
     // Content Card. Step 4
 
   })

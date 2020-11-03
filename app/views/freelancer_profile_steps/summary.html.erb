@@ -1,38 +1,38 @@
 <%= render '/nav_bar/nav_bar' %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card">
-            <div class="card-body">
-              <p class="card-text">
+<div class="container summary">
+  <div class="row summary">
+    <div class="col-md-12 summary">
+      <div class="row summary_1">
+        <div class="col-md-4 summary">
+          <div class="card summary">
+            <div class="card-body summary">
+              <p class="card-text summary">
                 <% if @freelancer_profile.avatar.attached? %>
-                  <div class="text-light mb-3 avatar-image text-center" style="font-size: 170px;line-height: 0;">
-                    <%= image_tag @freelancer_profile.avatar, class: 'rounded-circle' %>
+                  <div class="text-light mb-3 avatar-image text-center summary" style="font-size: 170px;line-height: 0;">
+                    <%= image_tag @freelancer_profile.avatar, class: 'rounded-circle summary' %>
                   </div>
                 <% else %>
                   <div class="text-light mb-3 avatar-image text-center" style="font-size: 170px;line-height: 0;"><i class="fas fa-user-circle"></i></div>
                 <% end %>
-                <div class="text-center mb-5">
+                <div class="text-center mb-5 summary">
                   <h2> <%=  @user.first_name %> <%=  @user.last_name %> </h2>
                 </div>
-                <div class="form-group mb-3">
-                  <label class="bp-input-label">Professional Title</label>
-                  <div><%=  @freelancer_profile.professional_title %></div>
+                <div class="form-group mb-3 summary title">
+                  <label class="bp-input-label summary professional-title">Professional Title</label>
+                  <div class="summary professional-title"><%=  @freelancer_profile.professional_title %></div>
                 </div>
-                <div class="form-group mb-3">
-                  <label class="bp-input-label">Professional Summary</label>
-                  <div><%=  @freelancer_profile.professional_summary %></div>
+                <div class="form-group mb-3 summary-summary">
+                  <label class="bp-input-label summary-professional-summary">Professional Summary</label>
+                  <div class="summary-professional-summary"><%=  @freelancer_profile.professional_summary %></div>
                 </div>
-                <div class="form-group mb-3">
-                  <label class="bp-input-label">Email</label>
-                  <div><%=  @user.email %></div>
+                <div class="form-group mb-3 summary email">
+                  <label class="bp-input-label summary email">Email</label>
+                  <div class="summary-email"><%=  @user.email %></div>
                 </div>
-                <div class="form-group mb-3">
-                  <label class="bp-input-label">Location</label>
-                  <div><%=  @user.location %></div>
+                <div class="form-group mb-3 summary location">
+                  <label class="bp-input-label summary location">Location</label>
+                  <div class="summary-location"><%=  @user.location %></div>
                 </div>
               </p>
             </div>
