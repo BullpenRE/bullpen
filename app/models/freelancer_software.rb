@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FreelancerSoftware < ApplicationRecord
   belongs_to :freelancer_profile
   belongs_to :software
