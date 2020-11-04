@@ -71,4 +71,12 @@ RSpec.describe Certification, type: :model do
       expect(Certification.searchable).to_not include(custom_certification)
     end
   end
+
+  context 'Methods' do
+    it 'self.custom_id' do
+      expect(Certification.custom_id).to eq(custom_certification.id)
+      custom_certification.destroy
+      expect(Certification.custom_id).to be_nil
+    end
+  end
 end

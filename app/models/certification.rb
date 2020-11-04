@@ -8,6 +8,10 @@ class Certification < ApplicationRecord
   validate :blank_descriptions
   validates :description, uniqueness: true
 
+  def self.custom_id
+    Certification.find_by(custom: true)&.id
+  end
+
   private
 
   def blank_descriptions
