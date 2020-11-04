@@ -114,12 +114,12 @@
                     </div>
 
                   </div>
-                  <div class="col">
-                    <div class="form-group mb-3">
-                      <label class="bp-input-label">Sectors</label>
-                      <div class="w-100">
+                  <div class="col sector">
+                    <div class="form-group mb-3 form-group-sector">
+                      <label class="bp-input-label label-sector">Sectors</label>
+                      <div class="w-100 w-100-sector">
                         <%  @freelancer_profile&.freelancer_sectors&.map do |freelancer_sector| %>
-                          <div class="btn btn-dark small mb-1" style="background-color: #005495; border: none; cursor: default;">
+                          <div class="btn btn-dark small mb-1 btn-sector" style="background-color: #005495; border: none; cursor: default;">
                             <%= freelancer_sector.sector.description %>
                           </div>
                         <% end %>

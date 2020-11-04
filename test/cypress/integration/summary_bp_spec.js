@@ -411,13 +411,35 @@ describe('Register', () => {
         expect($label).to.have.text('Skills')
       })
       .get('div.w-100.w-100-skills')
-      .get('div.btn.btn-dark.small.mb-1.btn-skills').first()
+      .get('div.btn.btn-dark.small.mb-1.btn-skills')
       .should(($div) => {
-        expect($div).to.have.length(1)
-        expect($div).have.attr('style', 'background-color: #005495; border: none; cursor: default;')
+        expect($div).to.have.length(2)
+        expect($div.eq(0)).have.attr('style', 'background-color: #005495; border: none; cursor: default;')
+        expect($div.eq(1)).have.attr('style', 'background-color: #005495; border: none; cursor: default;')
       })
       .then(($div) => {
-        expect($div).to.have.text('\n                            Underwriting\n                          ')
+        expect($div.eq(0)).to.have.text('\n                            Underwriting\n                          ')
+        expect($div.eq(1)).to.have.text('\n                            Investment Memo\n                          ')
+      })
+      .get('div.col.sector')
+      .get('div.form-group.mb-3.form-group-sector')
+      .get('label.bp-input-label.label-sector')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Sectors')
+      })
+      .get('div.w-100.w-100-sector')
+      .get('div.btn.btn-dark.small.mb-1.btn-sector')
+      .should(($div) => {
+        expect($div).to.have.length(2)
+        expect($div.eq(0)).have.attr('style', 'background-color: #005495; border: none; cursor: default;')
+        expect($div.eq(1)).have.attr('style', 'background-color: #005495; border: none; cursor: default;')
+      })
+      .then(($div) => {
+        expect($div.eq(0)).to.have.text('\n                            HTC\n                          ')
+        expect($div.eq(0)).to.have.text('\n                            Affordable Housing\n                          ')
       })
     // End of Content Card - summary
   })
