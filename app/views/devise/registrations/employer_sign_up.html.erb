@@ -287,7 +287,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data['same_email'] == true) {
-                        $('.check-email').html('An account already exists with email address <b>' + data['email'] + '</b>. Click<%= link_to "here", new_user_session_path, class: "p-2" %>to try logging in.');
+                        $('.check-email').html('An account already exists with email address <b>' + data['email'] + '</b>. Click<%= link_to "here", new_user_session_path, class: "p-2", id: "session_redirect" %>to try logging in.');
+                        document.cookie = "email="+data['email'];
                     } else {
                         if (nameInputs[0].validity.valid && lastnameInputs[0].validity.valid && $('#email')[0].validity.valid){
                             var email = $('#email').val();

@@ -1,7 +1,7 @@
 ActiveAdmin.register FreelancerProfile do
   menu label: 'Freelancers'
 
-  includes :user, :freelancer_sectors, :freelancer_real_estate_skills, :freelancer_profile_educations, :freelancer_profile_experiences
+  includes :user, :freelancer_sectors, :freelancer_real_estate_skills, :freelancer_profile_educations, :freelancer_profile_experiences, :freelancer_softwares
 
   filter :user_email, as: :string, label: 'User Email'
   filter :draft
@@ -38,6 +38,9 @@ ActiveAdmin.register FreelancerProfile do
       end
       row 'Real Estate Skills' do
         freelancer_profile.real_estate_skills.pluck(:description)
+      end
+      row 'Software Licenses' do
+        freelancer_profile.softwares.pluck(:description)
       end
       row 'Education' do
         freelancer_profile.freelancer_profile_educations.map{|f_e| "#{'<i>(current)</i> ' if f_e.currently_studying}#{f_e.graduation_year} #{f_e.degree} in #{f_e.course_of_study} at #{f_e.institution}" }.push(link_to('Add/Edit/Remove', admin_freelancer_profile_educations_path(q: {freelancer_profile_id_eq: params[:id]}), target: '_blank')).join('<br>').html_safe
@@ -83,6 +86,7 @@ ActiveAdmin.register FreelancerProfile do
       f.input :professional_summary
       f.input :sectors, as: :check_boxes, collection: Sector.order(:description).pluck(:description, :id)
       f.input :real_estate_skills, as: :check_boxes, collection: RealEstateSkill.order(:description).pluck(:description, :id)
+      f.input :softwares, as: :check_boxes, collection: Software.order(:description).pluck(:description, :id)
       f.input :draft
       f.input :curation
       f.actions
@@ -108,7 +112,7 @@ ActiveAdmin.register FreelancerProfile do
 
       ApplicationRecord.transaction do
         freelancer_profile.save!
-        update_sectors_and_real_estate_skills(freelancer_profile)
+        update_many_to_many_attributes(freelancer_profile)
       rescue StandardError => e
         error_message = e.message
       end
@@ -122,7 +126,7 @@ ActiveAdmin.register FreelancerProfile do
       error_message = nil
 
       freelancer_profile = FreelancerProfile.find(params[:id])
-      update_sectors_and_real_estate_skills(freelancer_profile)
+      update_many_to_many_attributes(freelancer_profile)
 
       ApplicationRecord.transaction do
         freelancer_profile.update!(permitted_params[:freelancer_profile])
@@ -136,9 +140,10 @@ ActiveAdmin.register FreelancerProfile do
       redirect_to admin_freelancer_profile_path(freelancer_profile), flash: message
     end
 
-    def update_sectors_and_real_estate_skills(freelancer_profile)
+    def update_many_to_many_attributes(freelancer_profile)
       freelancer_profile.freelancer_sectors.destroy_all
       freelancer_profile.freelancer_real_estate_skills.destroy_all
+      freelancer_profile.freelancer_softwares.destroy_all
       freelancer_profile.reload
 
       params[:freelancer_profile][:sector_ids].reject(&:empty?).each do |sector_id|
@@ -147,9 +152,12 @@ ActiveAdmin.register FreelancerProfile do
       params[:freelancer_profile][:real_estate_skill_ids].reject(&:empty?).each do |real_estate_skill_id|
         freelancer_profile.freelancer_real_estate_skills.create(real_estate_skill_id: real_estate_skill_id)
       end
-
+      params[:freelancer_profile][:software_ids].reject(&:empty?).each do |software_id|
+        freelancer_profile.freelancer_softwares.create(software_id: software_id)
+      end
       params[:freelancer_profile].delete(:sector_ids)
       params[:freelancer_profile].delete(:real_estate_skill_ids)
+      params[:freelancer_profile].delete(:software_ids)
     end
   end
 end unless Rails.env.test?

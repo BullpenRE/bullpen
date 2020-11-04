@@ -115,6 +115,14 @@ When all work in for a story is done, create a pull request:
 
 After a pull request is made, Linear.app will automatically link it to your story (and visa versa) based on the branch name.
 
+### Workflow and Coding Standards
+ * See our our workflow guide (coming soon).
+ * Use Ruby on Rails best practices with [these additions and exceptions](https://docs.google.com/document/d/1r5R6SxVuz9TDE1hGc3yU9ocJxywwVi-lnmlQOEv9TI4/edit#heading=h.71frplvdndqk).
+ * After creating a pull request either fix or address all issues brought up by CodeClimate: [link to decision](https://bullpenre.slack.com/archives/C01A6KTQ35Z/p1600271307031300)
+ * Don't create custom CSS. Inline in views is OK: [link to decision](https://bullpenre.slack.com/archives/C01A6KTQ35Z/p1600107544007100)
+ * See our test coverage rules [here](https://docs.google.com/document/d/1qlU-_xOt6tgCBWO_8m4q4FJmYxc5gPgOmjfq91sVong/edit).
+ * For complex Javascript use classes via our Javascript guide (coming soon): [link to decision](https://bullpenre.slack.com/archives/C01A6KTQ35Z/p1601048239003000) 
+
 ### Heroku Deploy Setup
 Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to automatically deploy the master branch after pull requests are merged. In case you need to do manual pushes:
 
@@ -123,6 +131,7 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
 
         $ heroku login
         $ git remote add bullpen-staging git@heroku.com:bullpen-staging.git
+
 3. Run `$ git push bullpen-staging master` to deploy master. Before doing this you may need to switch Heroku's deploy from Github to Heroku Git [here](https://dashboard.heroku.com/apps/bullpen-staging/deploy/github).
 
 ### Cypress integration tests
