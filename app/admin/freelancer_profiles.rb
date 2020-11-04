@@ -25,8 +25,8 @@ ActiveAdmin.register FreelancerProfile do
 
   show title: 'Freelancer Profile' do |freelancer_profile|
     attributes_table do
-      row 'Email' do
-        freelancer_profile.user.email
+      row 'User' do
+        link_to freelancer_profile.user.email, admin_user_path(freelancer_profile.user_id)
       end
       row :created_at
       row :updated_at
@@ -49,7 +49,7 @@ ActiveAdmin.register FreelancerProfile do
         freelancer_profile.freelancer_profile_experiences.map{|f_e| "#{'<i>(current)</i> ' if f_e.current_job}#{f_e.start_date.year}#{"-#{f_e.end_date.year}" if f_e.end_date && f_e.end_date.year != f_e.start_date.year} #{f_e.job_title} at #{f_e.company}" }.push(link_to('Add/Edit/Remove', admin_freelancer_profile_experiences_path(q: {freelancer_profile_id_eq: params[:id]}), target: '_blank')).join('<br>').html_safe
       end
       row 'Certifications' do
-        freelancer_profile.freelancer_certifications.map{|f_c| "#{f_c.description}" }.push(link_to('Add/Edit/Remove', admin_freelancer_certifications_path(q: {freelancer_profile_id_eq: params[:id]}), target: '_blank')).join('<br>').html_safe
+        freelancer_profile.freelancer_certifications.order(:earned).map{|f_c| "#{f_c.earned.year}: #{f_c.description}" }.push(link_to('Add/Edit/Remove', admin_freelancer_certifications_path(q: {freelancer_profile_id_eq: params[:id]}), target: '_blank')).join('<br>').html_safe
       end
       row :draft
       row :curation

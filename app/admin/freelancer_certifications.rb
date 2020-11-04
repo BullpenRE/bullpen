@@ -10,7 +10,9 @@ ActiveAdmin.register FreelancerCertification do
 
 
   index do
-    column :user, label: 'User Email'
+    column 'Freelancer Profile' do |freelancer_certification|
+      link_to freelancer_certification.user.email, admin_freelancer_profile_path(freelancer_certification.freelancer_profile_id)
+    end
     column 'Searchable by' do |freelancer_certification|
       freelancer_certification.certification.description
     end
@@ -30,7 +32,9 @@ ActiveAdmin.register FreelancerCertification do
         end
       end
       row :description
-      row :earned
+      row 'Earned' do |freelancer_certification|
+        freelancer_certification.earned.year
+      end
       row :created_at
       row :updated_at
     end
@@ -43,9 +47,9 @@ ActiveAdmin.register FreelancerCertification do
               collection: FreelancerProfile.find_each.map{|fp| [fp.user.email, fp.id] }
       f.input :certification_id,
               as: :select,
-              collection: Certification.find_each.map{|c| [(c.custom ? 'CUSTOM' : c.description), c.id] }
+              collection: Certification.order(custom: :desc, description: :asc).each.map{|c| [(c.custom ? 'CUSTOM' : c.description), c.id] }
       f.input :description, label: 'Custom Description'
-      f.input :earned
+      f.input :earned, discard_day: true, discard_month: true, start_year: FreelancerCertification::AVAILABLE_YEARS.min, end_yaer: FreelancerCertification::AVAILABLE_YEARS.max
       f.actions
     end
   end
