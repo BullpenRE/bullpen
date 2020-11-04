@@ -439,7 +439,33 @@ describe('Register', () => {
       })
       .then(($div) => {
         expect($div.eq(0)).to.have.text('\n                            HTC\n                          ')
-        expect($div.eq(0)).to.have.text('\n                            Affordable Housing\n                          ')
+        expect($div.eq(1)).to.have.text('\n                            Affordable Housing\n                          ')
+      })
+      .get('div.row.row-work-experience')
+      .get('div.col.col-work-experience')
+      .get('div.form-group.mb-3.form-group-work-experience')
+      .get('label.bp-input-label.label-work-experience')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Work Experience')
+      })
+      .get('div.work_exp')
+      .get('div.work_exp-job-title')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('Software engineer')
+      })
+      .get('div.row.bp-text-sm.work_exp')
+      .get('div.col-md.work_exp-location')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('\n                            Awesome company, Walnut Creek, CA\n                          ')
       })
     // End of Content Card - summary
   })

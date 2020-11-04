@@ -128,18 +128,18 @@
                     </div>
                   </div>
                 </div>
-              <div class="row">
-                <div class="col">
-                  <div class="form-group mb-3">
-                    <label class="bp-input-label">Work Experience</label>
-                    <div>
+              <div class="row row-work-experience">
+                <div class="col col-work-experience">
+                  <div class="form-group mb-3 form-group-work-experience">
+                    <label class="bp-input-label label-work-experience">Work Experience</label>
+                    <div class="work_exp">
                       <% @freelancer_profile.freelancer_profile_experiences.each do |work_exp| %>
-                        <div><%= work_exp.job_title %></div>
-                        <div class="row bp-text-sm">
-                          <div class="col-md">
+                        <div class="work_exp-job-title"><%= work_exp.job_title %></div>
+                        <div class="row bp-text-sm work_exp">
+                          <div class="col-md work_exp-location">
                             <%= work_exp.company %>, <%= work_exp.location %>
                           </div>
-                          <div class="col-md">
+                          <div class="col-md work_exp-start-date">
                             <%= work_exp.start_date.strftime("%b, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%b, %Y") %>
                           </div>
                         </div>
