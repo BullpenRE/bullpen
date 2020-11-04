@@ -460,12 +460,26 @@ describe('Register', () => {
         expect($div).to.have.text('Software engineer')
       })
       .get('div.row.bp-text-sm.work_exp')
-      .get('div.col-md.work_exp-location')
+      .get('div.col-md.work_exp-company-location')
       .should(($div) => {
         expect($div).to.have.length(1)
       })
       .then(($div) => {
         expect($div).to.have.text('\n                            Awesome company, Walnut Creek, CA\n                          ')
+      })
+      .get('div.col-md.work_exp-start-date')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('\n                            Jul, 2007-Oct, 2020\n                          ')
+      })
+      .get('div.hr')
+      .get('hr.under-work-experience')
+      .should('be.visible')
+      .should(($hr) => {
+        expect($hr).to.have.length(1)
+        expect($hr).should('be.visible')
       })
     // End of Content Card - summary
   })
