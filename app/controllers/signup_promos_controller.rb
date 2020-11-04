@@ -5,15 +5,11 @@ module Promo
     before_action :set_current_promo
 
     def set_current_promo
-      session[:promo_code] = cookies()[:promo_code]
+      session[:promo_code] = cookies[:promo_code]
     end
 
     def promo_code
       @promo_code ||= SignupPromos.find_by(session[:promo_code])
-    end
-
-    def add_user_with_promo
-
     end
   end
 end
