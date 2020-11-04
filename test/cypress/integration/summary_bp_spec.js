@@ -49,17 +49,6 @@ describe('Register', () => {
         expect($svg).have.attr('data-icon', 'user-circle')
         expect($svg).have.attr('role', 'img')
       })
-      // .get('div.text-light.avatar-image.navbar')
-      // .should(($div) => {
-      //   expect($div).to.have.length(1)
-      //   expect($div).have.attr('style', 'font-size: 47px; line-height: 0;')
-      // })
-      // .find('img.rounded-circle.in-navbar')
-      // .should(($img) => {
-      //   expect($img).to.have.length(1)
-      //   expect($img).have.attr('style', 'padding-right: 5px')
-      //   expect($img).have.attr('src', 'http://localhost:3000/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBJdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--c315b887f686586ed22a756becd237995949528e/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxTU0lMTkRkNE5EY2hCam9HUlZRPSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--04ab6977c83eff5da0ac475e36a66058c0050a1a/mini_magick20201031-95553-1mm3c7o.jpg')
-      // })
 
     cy.get('a.nav-link.dropdown-toggle.d-flex.align-items-center')
       .get('span.pr-1')
@@ -518,6 +507,35 @@ describe('Register', () => {
       .should(($hr) => {
         expect($hr).to.have.length(1)
       })
+      .get('div.col-md-8.application-summary')
+      .get('div.card.mb-4.application-submit')
+      .get('div.card-body.application-submit-card')
+      .get('p.card-text.card-text-application-submitted')
+      .get('div.text-left.mt-2.mb-4.text-left-application-submitted')
+      .get('h2.h2-application-submitted')
+      .should(($h2) => {
+        expect($h2).to.have.length(1)
+      })
+      .then(($h2) => {
+        expect($h2).to.have.text('Application Submitted')
+      })
+      .get('div.text-left.mb-4.under-review')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('\n                  Your information is currently under review. If you\'d like to make corrections you can still do so.\n                ')
+      })
+      .get('div.row.row-under-review')
+      .get('div.col.col-under-review')
+      .get('a.btn.btn-primary.btn-under-review')
+      .should('have.attr', 'href', '/freelancer_profile_steps/work_education_experience')
+      .should(($a) => {
+        expect($a).to.have.length(1)
+        expect($a).have.text('Modify Application')
+      })
+      .click()
+      .go('back')
     // End of Content Card - summary
   })
 })
