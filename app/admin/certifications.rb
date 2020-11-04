@@ -1,6 +1,6 @@
 ActiveAdmin.register Certification do
   permit_params :description, :disable
-  actions :index, :show, :create, :edit, :update
+  actions :all, except: [:destroy]
 
   filter :description
   filter :disable
@@ -17,8 +17,14 @@ ActiveAdmin.register Certification do
     attributes_table do
       row :description
       row :disable
+      row 'Freelancers with certification' do |cert|
+        cert.freelancer_profiles.uniq.count
+      end
       row :created_at
       row :updated_at
+      row ' ' do |cert|
+        button_to 'Delete', destroy_certification_admin_certification_path(cert.id), action: :post, data: { confirm: 'Are you sure?' } if cert.freelancer_profiles.empty?
+      end
     end
   end
 
@@ -28,6 +34,13 @@ ActiveAdmin.register Certification do
       f.input :disable
       f.actions
     end
+  end
+
+  member_action :destroy_certification, method: :post do
+    certification = Certification.find(params[:id])
+    certification.destroy if certification.freelancer_profiles.none?
+
+    redirect_to admin_certifications_path, notice: 'Certification Deleted'
   end
 
   controller do
