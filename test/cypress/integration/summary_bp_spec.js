@@ -474,12 +474,20 @@ describe('Register', () => {
       .then(($div) => {
         expect($div).to.have.text('\n                            Jul, 2007-Oct, 2020\n                          ')
       })
-      .get('div.hr')
+      .get('div.hr-under-work-experience')
       .get('hr.under-work-experience')
       .should('be.visible')
       .should(($hr) => {
         expect($hr).to.have.length(1)
-        expect($hr).should('be.visible')
+      })
+      .get('div.col.col-education')
+      .get('div.form-group.mb-3.form-group-education')
+      .get('label.bp-input-label.label-education')
+      .should(($label) => {
+        expect($label).to.have.length(1)
+      })
+      .then(($label) => {
+        expect($label).to.have.text('Education')
       })
     // End of Content Card - summary
   })

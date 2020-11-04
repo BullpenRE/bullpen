@@ -143,25 +143,25 @@
                             <%= work_exp.start_date.strftime("%b, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%b, %Y") %>
                           </div>
                         </div>
-                        <div class="hr">
+                        <div class="hr-under-work-experience">
                           <hr class="under-work-experience">
                         </div>
                       <% end %>
                     </div>
                   </div>
                 </div>
-                <div class="col">
-                  <div class="form-group mb-3">
-                    <label class="bp-input-label">Education</label>
-                    <div>
+                <div class="col col-education">
+                  <div class="form-group mb-3 form-group-education">
+                    <label class="bp-input-label label-education">Education</label>
+                    <div class="div-education">
                       <% @freelancer_profile.freelancer_profile_educations.each do |education_exp| %>
-                        <div><%= education_exp.institution %></div>
-                        <div class="row bp-text-sm ">
-                          <div class="col-md"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
-                          <div class="col-md"><%= education_exp.currently_studying.present? ? "Currently Studying" : education_exp.graduation_year %></div>
+                        <div class="education_exp"><%= education_exp.institution %></div>
+                        <div class="row bp-text-sm row-education_exp">
+                          <div class="col-md education_exp-degree"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
+                          <div class="col-md education_exp-currently-studying"><%= education_exp.currently_studying.present? ? "Currently Studying" : education_exp.graduation_year %></div>
                         </div>
-                        <div>
-                          <hr>
+                        <div class="under-education">
+                          <hr class="under-education">
                         </div>
                       <% end %>
                     </div>
