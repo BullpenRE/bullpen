@@ -489,6 +489,35 @@ describe('Register', () => {
       .then(($label) => {
         expect($label).to.have.text('Education')
       })
+      .get('div.div-education')
+      .get('div.education_exp')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('Some University')
+      })
+      .get('div.row.bp-text-sm.row-education_exp')
+      .get('div.col-md.education_exp-degree')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('Masters, Some course of study')
+      })
+      .get('div.col-md.education_exp-currently-studying')
+      .should(($div) => {
+        expect($div).to.have.length(1)
+      })
+      .then(($div) => {
+        expect($div).to.have.text('1982')
+      })
+      .get('div.hr-under-education')
+      .get('hr.under-education')
+      .should('be.visible')
+      .should(($hr) => {
+        expect($hr).to.have.length(1)
+      })
     // End of Content Card - summary
   })
 })
