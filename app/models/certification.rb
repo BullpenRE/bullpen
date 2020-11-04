@@ -1,4 +1,7 @@
 class Certification < ApplicationRecord
+  has_many :freelancer_certifications
+  has_many :freelancer_profiles, through: :freelancer_certifications
+
   validate :blank_descriptions
   validates :description, uniqueness: true
 

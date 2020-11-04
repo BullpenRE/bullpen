@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_03_235518) do
+ActiveRecord::Schema.define(version: 2020_11_04_004611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,17 @@ ActiveRecord::Schema.define(version: 2020_11_03_235518) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["employer_profile_id"], name: "index_employer_sectors_on_employer_profile_id"
     t.index ["sector_id"], name: "index_employer_sectors_on_sector_id"
+  end
+
+  create_table "freelancer_certifications", force: :cascade do |t|
+    t.bigint "freelancer_profile_id", null: false
+    t.bigint "certification_id", null: false
+    t.string "description"
+    t.date "earned"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["certification_id"], name: "index_freelancer_certifications_on_certification_id"
+    t.index ["freelancer_profile_id"], name: "index_freelancer_certifications_on_freelancer_profile_id"
   end
 
   create_table "freelancer_profile_educations", force: :cascade do |t|
@@ -276,6 +287,8 @@ ActiveRecord::Schema.define(version: 2020_11_03_235518) do
   add_foreign_key "employer_profiles", "users"
   add_foreign_key "employer_sectors", "employer_profiles"
   add_foreign_key "employer_sectors", "sectors"
+  add_foreign_key "freelancer_certifications", "certifications"
+  add_foreign_key "freelancer_certifications", "freelancer_profiles"
   add_foreign_key "freelancer_profile_educations", "freelancer_profiles"
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
   add_foreign_key "freelancer_profiles", "users"

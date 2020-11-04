@@ -51,4 +51,17 @@ RSpec.describe Certification, type: :model do
       expect(duplicate).to be_valid
     end
   end
+
+  context 'Relationships' do
+    let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile) }
+    let!(:freelancer_certification) { FactoryBot.create(:freelancer_certification, freelancer_profile: freelancer_profile, certification: certification) }
+
+    it 'has many freelancer_certifications' do
+      expect(certification.freelancer_certifications).to include(freelancer_certification)
+    end
+
+    it 'has many freelancer_profiles through freelancer_certifications' do
+      expect(certification.freelancer_profiles).to include(freelancer_profile)
+    end
+  end
 end
