@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Certification < ApplicationRecord
   has_many :freelancer_certifications
   has_many :freelancer_profiles, through: :freelancer_certifications
@@ -7,12 +9,12 @@ class Certification < ApplicationRecord
   validates :description, uniqueness: true
 
   private
-  
+
   def blank_descriptions
     if custom?
       errors.add(:description, 'for custom must be blank') if description.present?
-    else
-      errors.add(:description, 'for non-custom must be present') if description.blank?
+    elsif description.blank?
+      errors.add(:description, 'for non-custom must be present')
     end
   end
 end

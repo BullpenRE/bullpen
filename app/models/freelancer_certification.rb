@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FreelancerCertification < ApplicationRecord
   belongs_to :freelancer_profile
   belongs_to :certification
