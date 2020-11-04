@@ -64,4 +64,11 @@ RSpec.describe Certification, type: :model do
       expect(certification.freelancer_profiles).to include(freelancer_profile)
     end
   end
+
+  context 'Scopes' do
+    it '.searchable' do
+      expect(Certification.searchable).to include(certification)
+      expect(Certification.searchable).to_not include(custom_certification)
+    end
+  end
 end

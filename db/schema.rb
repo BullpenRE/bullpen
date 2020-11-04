@@ -64,8 +64,8 @@ ActiveRecord::Schema.define(version: 2020_11_04_004611) do
 
   create_table "certifications", force: :cascade do |t|
     t.string "description"
-    t.boolean "disable"
-    t.boolean "custom"
+    t.boolean "disable", default: false
+    t.boolean "custom", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
