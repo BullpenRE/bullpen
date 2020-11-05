@@ -1,6 +1,8 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  host = 'localhost:3000'
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
@@ -45,8 +47,6 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
-
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
@@ -65,4 +65,14 @@ Rails.application.configure do
   # Added because letter_opener gem said so
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
+
+  # Needed for devise and mailers
+  config.action_mailer.preview_path = "#{Rails.root}/test/mailers/previews"
+  config.action_mailer.asset_host = "http://#{host}"
+  config.action_mailer.default_url_options = { host: host }
+  config.action_mailer.delivery_method = :letter_opener_web
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_caching = false
+
+  ENV['WEBSITE_URL'] = "http://#{host}"
 end

@@ -1,0 +1,8 @@
+
+<%= render partial: 'email/content_block', locals: { content: '<h2>Welcome to our awesome site!</h2>' } %>
+<%= render partial: 'email/content_block', locals: { content: '<p>Hi everyone! You can find this template in <i>app/views/test_mailer/formatting.html.erb</i>.</p>' } %>
+<br>
+  <%= render partial: 'email/button', locals: { button_txt: 'Call to Action!!', url: @url } %>
+<br>
+<%= render partial: 'email/content_block', locals: { content: '<p>Thanks for joining and have a great day!</p>' } %>
+
