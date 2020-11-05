@@ -29,6 +29,6 @@ class FreelancerProfileExperience < ApplicationRecord
   end
 
   def description_paragraphs
-    description&.split("\n").reject(&:blank?)
+    description.split("\n").reject(&:blank?)
   end
 end
