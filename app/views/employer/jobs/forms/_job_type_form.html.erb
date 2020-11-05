@@ -5,26 +5,26 @@
   <div class="form-group mb-4">
     <div class="h5">What best describes the length of this position?</div>
     <div class="custom-control custom-radio">
-      <%= f.radio_button :position_length, 'long-term', id: "lengthRadio1", class: "custom-control-input" %>
+      <%= f.radio_button :position_length, 'long-term', id: "lengthRadio1", class: "custom-control-input", required: true %>
       <label class="custom-control-label" for="lengthRadio1"><b>Long-term:</b> Ongoing duties or tasks</label>
     </div>
     <div class="custom-control custom-radio">
-      <%= f.radio_button :position_length, 'temporary', id: "lengthRadio2", class: "custom-control-input" %>
+      <%= f.radio_button :position_length, 'temporary', id: "lengthRadio2", class: "custom-control-input", required: true %>
       <label class="custom-control-label" for="lengthRadio2"><b>Temporary:</b> Limited duties or tasks</label>
     </div>
   </div>
   <div class="form-group mb-4">
     <div class="h5">What best describes the hours needed for this position?</div>
     <div class="custom-control custom-radio">
-      <%= f.radio_button :hours_needed, 'part-time', id: "hoursRadio1", class: "custom-control-input" %>
+      <%= f.radio_button :hours_needed, 'part-time', id: "hoursRadio1", class: "custom-control-input", required: true %>
       <label class="custom-control-label" for="hoursRadio1"><b>Part-time:</b> A few hours per day</label>
     </div>
     <div class="custom-control custom-radio">
-      <%= f.radio_button :hours_needed, 'on-call', id: "hoursRadio2", class: "custom-control-input" %>
+      <%= f.radio_button :hours_needed, 'on-call', id: "hoursRadio2", class: "custom-control-input", required: true %>
       <label class="custom-control-label" for="hoursRadio2"><b>On-call:</b> A few hours per week or month</label>
     </div>
     <div class="custom-control custom-radio">
-      <%= f.radio_button :hours_needed, 'project-based', id: "hoursRadio3", class: "custom-control-input" %>
+      <%= f.radio_button :hours_needed, 'project-based', id: "hoursRadio3", class: "custom-control-input", required: true %>
       <label class="custom-control-label" for="hoursRadio3"><b>Project-based:</b> Any available hours until task completion</label>
     </div>
   </div>
@@ -35,7 +35,7 @@
     </div>
   </div>
   <div class="modal-footer justify-content-between">
-    <%= link_to employer_jobs_path(id: :summary, job_id: job.id), class: "btn btn-primary", remote: true do %>
+    <%= link_to employer_jobs_path(id: :summary, job_id: job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
     <%= button_tag type: 'submit', class: "btn btn-primary" do %>

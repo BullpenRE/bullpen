@@ -2,7 +2,7 @@
 
 class Employer::JobsController < ApplicationController
   include Wicked::Wizard
-  steps :summary, :job_type, :qualifications, :details
+  steps :summary, :job_type, :qualifications, :details, :questions
   before_action :authenticate_user!
 
   def show
@@ -17,16 +17,18 @@ class Employer::JobsController < ApplicationController
 
   def update
     @user = current_user
+    @job = find_job
 
     summary_step_save ||
       job_type_save ||
-      qualifications_save
+      qualifications_save ||
+      details_save ||
+      questions_save
   end
 
   def summary_step_save
     return false unless params[:job][:step] == 'summary'
 
-    @job = params[:job][:job_id].blank? ? Job.create(user_id: @user.id) : Job.find_by(id: params[:job][:job_id])
     @job.update(summary_params)
 
     @job.job_sectors.destroy_all
@@ -42,7 +44,6 @@ class Employer::JobsController < ApplicationController
   def job_type_save
     return false unless params[:job][:step] == 'job_type'
 
-    @job = find_job
     @job.update(job_type_params)
     @job.update(daytime_availability_required: params[:daytime_availability_required])
 
@@ -54,11 +55,32 @@ class Employer::JobsController < ApplicationController
   def qualifications_save
     return false unless params[:job][:step] == 'qualifications'
 
-    @job = find_job
     @job.update(qualifications_params)
     save_job_skills_softwares
 
     respond_js_format(:details)
+
+    true
+  end
+
+  def details_save
+    return false unless params[:job][:step] == 'details'
+
+    @job.update(relevant_job_details: params[:job][:relevant_job_details])
+    respond_js_format(:questions)
+
+    true
+  end
+
+  def questions_save
+    return false unless params[:job][:step] == 'questions'
+
+    questions_descriptions = params[:job][:job_questions].values.reject(&:empty?)
+    questions_descriptions.each do |description|
+      @job.job_questions.create(description: description)
+    end
+
+    redirect_to employer_dashboard_path
 
     true
   end
@@ -108,6 +130,6 @@ class Employer::JobsController < ApplicationController
   end
 
   def find_job
-    @user.jobs.find_by(id: params[:job][:job_id])
+    params[:job][:job_id].blank? ? Job.create(user_id: @user.id) : Job.find_by(id: params[:job][:job_id])
   end
 end

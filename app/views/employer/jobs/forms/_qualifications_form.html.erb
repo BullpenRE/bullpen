@@ -1,19 +1,19 @@
 <!--Form-->
 <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
-  <%= f.hidden_field :job_id, value: job.id %>
+  <%= f.hidden_field :job_id, value: @job.id %>
   <%= f.hidden_field 'step', value: 'qualifications' %>
   <div class="form-group mb-4">
     <div class="h5">What level of experience is required?</div>
     <div class="custom-control custom-radio">
-      <%= f.radio_button :required_experience, 'junior', id: "experienceRadio1", class: "custom-control-input" %>
+      <%= f.radio_button :required_experience, 'junior', id: "experienceRadio1", class: "custom-control-input", required: true %>
       <label class="custom-control-label" for="experienceRadio1">Junior</label>
     </div>
     <div class="custom-control custom-radio">
-      <%= f.radio_button :required_experience, 'intermediate', id: "experienceRadio2", class: "custom-control-input" %>
+      <%= f.radio_button :required_experience, 'intermediate', id: "experienceRadio2", class: "custom-control-input", required: true %>
       <label class="custom-control-label" for="experienceRadio2">Intermediate</label>
     </div>
     <div class="custom-control custom-radio">
-      <%= f.radio_button :required_experience, 'senior', id: "experienceRadio3", class: "custom-control-input" %>
+      <%= f.radio_button :required_experience, 'senior', id: "experienceRadio3", class: "custom-control-input", required: true %>
       <label class="custom-control-label" for="experienceRadio3">Senior</label>
     </div>
   </div>
@@ -22,8 +22,8 @@
     <%= f.select :job_skills,
                  options_for_select(
                    Skill.find_each.map{ |skill| [skill.description, skill.id] if skill.disable == false },
-                   job&.job_skills&.map do |skill|
-                     [skill.job_skill.description, skill.job_skill.id]
+                   @job&.job_skills&.map do |job_skill|
+                     [job_skill.skill.description, job_skill.skill.id]
                    end.flatten),
                  {}, multiple: true, class: 'select2', required: true, style: "width: 100%" %>
     <script>
@@ -40,17 +40,19 @@
     <%= f.select :job_softwares,
                  options_for_select(
                    Software.find_each.map{ |soft| [soft.description, soft.id] if soft.disable == false },
-                   job&.job_softwares&.map do |soft|
-                     [soft.job_softwares.description, soft.job_softwares.id]
+                   @job&.job_softwares&.map do |soft|
+                     [soft.software.description, soft.software.id]
                    end.flatten),
-                 {}, multiple: true, class: 'select2', required: true, style: "width: 100%" %>
+                 {}, multiple: true, class: 'select2', style: "width: 100%" %>
   </div>
   <div class="form-group mb-1">
     <label for="regionalKnowledge" class="h5">Specify any regional knowledge that is required. <span class="text-dark font-weight-normal">(Optional)</span></label>
-    <%= f.text_field :required_regional_knowledge, class: "form-control", id: "regionalKnowledge", placeholder: "Enter the area (city, state, county, etc.)", required: true, value: job.required_regional_knowledge %>
+    <%= f.text_field :required_regional_knowledge, class: "form-control",
+                     id: "regionalKnowledge", placeholder: "Enter the area (city, state, county, etc.)",
+                     value: job.required_regional_knowledge %>
   </div>
   <div class="modal-footer justify-content-between">
-    <%= link_to employer_jobs_path(id: :job_type, job_id: job.id), class: "btn btn-primary", remote: true do %>
+    <%= link_to employer_jobs_path(id: :job_type, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
     <%= button_tag type: 'submit', class: "btn btn-primary" do %>
