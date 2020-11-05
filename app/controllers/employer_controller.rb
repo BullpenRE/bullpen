@@ -4,11 +4,9 @@ class EmployerController < ApplicationController
   before_action :authenticate_user!
   before_action :completed_profile
 
-  def index
-  end
+  def index; end
 
-  def show
-  end
+  def show; end
 
   private
 

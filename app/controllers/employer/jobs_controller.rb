@@ -9,10 +9,7 @@ class Employer::JobsController < ApplicationController
     @user = current_user
     @job = params[:start_flow].present? ? current_user.jobs.create : current_user.jobs.find_by(id: params[:job_id])
 
-    respond_to do |format|
-      format.html
-      format.js { render wizard_value(step), locals: { job: @job } }
-    end
+    respond_js_format(wizard_value(step))
   end
 
   def update
