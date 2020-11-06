@@ -29,8 +29,8 @@ class Employer::JobsController < ApplicationController
     @job.update(summary_params)
 
     @job.job_sectors.destroy_all
-    sectors_params&.each do |sector|
-      JobSector.create(job_id: @job.id, sector_id: sector)
+    sectors_params&.each do |sector_id|
+      JobSector.create(job_id: @job.id, sector_id: sector_id)
     end
 
     respond_js_format(:job_type)
@@ -41,8 +41,7 @@ class Employer::JobsController < ApplicationController
   def job_type_save
     return false unless params[:job][:step] == 'job_type'
 
-    @job.update(job_type_params)
-    @job.update(daytime_availability_required: params[:daytime_availability_required])
+    @job.update(job_type_params.merge({ 'daytime_availability_required': params['daytime_availability_required'] }))
 
     respond_js_format(:qualifications)
 
@@ -53,7 +52,8 @@ class Employer::JobsController < ApplicationController
     return false unless params[:job][:step] == 'qualifications'
 
     @job.update(qualifications_params)
-    save_job_skills_softwares
+    save_job_skills
+    save_job_softwares
 
     respond_js_format(:details)
 
@@ -84,12 +84,15 @@ class Employer::JobsController < ApplicationController
 
   private
 
-  def save_job_skills_softwares
+  def save_job_skills
     @job.job_skills.destroy_all
-    @job.job_softwares.destroy_all
     skills_params&.each do |skill|
       JobSkill.create(job_id: @job.id, skill_id: skill)
     end
+  end
+
+  def save_job_softwares
+    @job.job_softwares.destroy_all
     softwares_params&.each do |soft|
       JobSoftware.create(job_id: @job.id, software_id: soft)
     end
