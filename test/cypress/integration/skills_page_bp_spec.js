@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-describe('Register', () => {
+describe('SkillPage', () => {
   beforeEach(() => {
     // seed the database prior to every test
     cy.exec('RAILS_ENV=test rails db:seed')
