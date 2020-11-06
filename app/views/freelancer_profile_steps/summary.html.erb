@@ -27,16 +27,16 @@
         <div class="card-body">
           <div class="card-text">
             <div class="row">
-              <div class="col-lg-2">
+              <div class="col-lg-2 text-lg-center text-md-left">
                 <% if @freelancer_profile.avatar.attached? %>
-                  <div class="text-light mb-3 avatar-image text-center" style="line-height: 0;">
+                  <div class="text-light mb-3 avatar-image" style="line-height: 0;">
                     <%= image_tag @freelancer_profile.avatar, class: 'rounded-circle', width: '115px', height: '115px' %>
                   </div>
                 <% else %>
-                  <div class="text-light mb-3 avatar-image text-center" style="font-size: 113px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
+                  <div class="text-light mb-3 avatar-image" style="font-size: 113px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
                 <% end %>
               </div>
-              <div class="col-lg-10 text-left">
+              <div class="col-lg-10 ml-lg-0 pl-lg-0 ml-md-2 pl-md-2 text-left">
                 <h2><%= @user.first_name %> <%=  @user.last_name %></h2>
                 <div class="mb-2">
                   <%= @freelancer_profile.professional_title %><br>
@@ -45,7 +45,7 @@
                 <div class="mb-4"><%= @freelancer_profile.professional_summary %></div>
                 <div>
                   <%  @freelancer_profile.sectors.order(description: :asc)&.each do |sector| %>
-                    <span class="badge badge-secondary"><%= sector.description %></span>
+                    <span class="badge badge-secondary mb-1"><%= sector.description %></span>
                   <% end %>
                 </div>
               </div>
@@ -86,7 +86,7 @@
                         <div class="col-6 text-left"><b><%= work_experience.company %></b><br><%= work_experience.job_title %></div>
                         <div class="col-6 text-right"><i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date.strftime('%b %Y') %></i></div>
                       </div>
-                      <div>
+                      <div class="mb-1">
                         <ul style="padding-left: 19px;">
                           <% work_experience.description_paragraphs.each do |paragraph| %>
                             <li><%= paragraph %></li>
@@ -105,9 +105,14 @@
                       <label class="bp-input-label">Education</label>
                     </div>
                     <% @freelancer_profile.freelancer_profile_educations.order(currently_studying: :asc, graduation_year: :desc).each do |education| %>
-                      <div class="row">
+                      <div class="row mb-2">
                         <div class="col-6 text-left"><b><%= education.institution %></b><br><%= education.degree %> <%= education.course_of_study %></div>
                         <div class="col-6 text-right"><i><%= education.currently_studying ? 'Present' : education.graduation_year %></i></div>
+                        <div class="col-12 text-left">
+                          <% if education.description.present? %>
+                            <ul class="mb-0" style="padding-left: 19px;"><li><%= education.description %></li></ul>
+                          <% end %>
+                        </div>
                       </div>
                     <% end %>
                   <% end %>
@@ -132,10 +137,10 @@
                 <div class="form-group mt-4">
                     <div class="row">
                       <% if @freelancer_profile.ready_for_submission? %>
-                        <div class="col-6 text-left">
+                        <div class="col-sm-6 col-xs-12 text-sm-left text-center mb-3">
                           <%= link_to 'Edit', previous_wizard_path, class: "btn btn-outline-primary btn-lg" %>
                         </div>
-                        <div class="col-6 text-right">
+                        <div class="col-sm-6 col-xs-12 text-sm-right text-center">
                             <%= form_for @freelancer_profile, url: wizard_path, method: :put do |f| %>
                               <%= f.hidden_field :draft, value: false %>
                               <%= f.submit 'Submit application', class: 'btn btn-primary btn-lg' %>
