@@ -45,9 +45,7 @@
                 <div class="mb-4"><%= @freelancer_profile.professional_summary %></div>
                 <div>
                   <%  @freelancer_profile.sectors.order(description: :asc)&.each do |sector| %>
-                    <div class="btn btn-dark small mb-1" style="background-color: #005495; border: none; cursor: default;">
-                      <%= sector.description %>
-                    </div>
+                    <span class="badge badge-secondary"><%= sector.description %></span>
                   <% end %>
                 </div>
               </div>
@@ -84,12 +82,12 @@
                       <label class="bp-input-label">Experience</label>
                     </div>
                     <% @freelancer_profile.freelancer_profile_experiences.order(current_job: :desc, end_date: :desc).each do |work_experience| %>
-                      <div class="row">
+                      <div class="row mb-2">
                         <div class="col-6 text-left"><b><%= work_experience.company %></b><br><%= work_experience.job_title %></div>
                         <div class="col-6 text-right"><i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date.strftime('%b %Y') %></i></div>
                       </div>
                       <div>
-                        <ul>
+                        <ul style="padding-left: 19px;">
                           <% work_experience.description_paragraphs.each do |paragraph| %>
                             <li><%= paragraph %></li>
                           <% end %>
