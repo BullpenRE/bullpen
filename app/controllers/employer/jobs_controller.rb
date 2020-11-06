@@ -82,6 +82,11 @@ class Employer::JobsController < ApplicationController
     true
   end
 
+  def destroy
+    @job = current_user.jobs.find_by(id: params[:job_id])
+    @job.destroy
+  end
+
   private
 
   def save_job_skills
