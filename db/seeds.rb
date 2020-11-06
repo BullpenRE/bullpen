@@ -116,6 +116,16 @@ if Software.none?
                   ])
 end
 
+if Certification.none?
+  Certification.create([
+                         { description: 'Chartered Financial Analyst' },
+                         { description: 'Certified Commercial Investment Member' },
+                         { description: 'Licensed Salesperson' },
+                         { description: 'Licensed Broker' },
+                         { custom: true }
+                       ])
+end
+
 if Rails.env.development? && AdminUser.none?
   AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
 end

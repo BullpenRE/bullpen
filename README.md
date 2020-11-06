@@ -116,7 +116,7 @@ When all work in for a story is done, create a pull request:
 After a pull request is made, Linear.app will automatically link it to your story (and visa versa) based on the branch name.
 
 ### Workflow and Coding Standards
- * See our our workflow guide (coming soon).
+ * See our our [workflow guide](https://docs.google.com/document/d/1CHKSaYzk3-_K1hLxOlezKNXMxHzEnlSjo0TaFZZuFog/edit#).
  * Use Ruby on Rails best practices with [these additions and exceptions](https://docs.google.com/document/d/1r5R6SxVuz9TDE1hGc3yU9ocJxywwVi-lnmlQOEv9TI4/edit#heading=h.71frplvdndqk).
  * After creating a pull request either fix or address all issues brought up by CodeClimate: [link to decision](https://bullpenre.slack.com/archives/C01A6KTQ35Z/p1600271307031300)
  * Don't create custom CSS. Inline in views is OK: [link to decision](https://bullpenre.slack.com/archives/C01A6KTQ35Z/p1600107544007100)
