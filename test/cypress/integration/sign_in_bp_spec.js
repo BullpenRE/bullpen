@@ -59,7 +59,7 @@ describe('sign_in page', () => {
       .should("be.visible")
       .should('have.attr', 'href', '/join')
       .should('have.text', 'Sign up')
-      .click().go('back');
+      .click().wait(2000).go('back');
 
     // sign in with data
     signInPage.getEmail().type(this.dataJson.email);
