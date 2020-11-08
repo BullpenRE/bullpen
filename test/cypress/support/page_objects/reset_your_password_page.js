@@ -12,7 +12,7 @@ class ResetYourPasswordPage {
     return cy.get('.field > .text-primary');
   }
 
-  getEmail(){
+  getEmailInput(){
     return cy.get('#user_email');
   }
 

@@ -36,7 +36,7 @@ describe('reset your password page', () => {
       .should("be.visible")
       .should('have.text', 'Email');
 
-    resetYourPasswordPage.getEmail()
+    resetYourPasswordPage.getEmailInput()
       .should("be.visible")
       .should('have.attr', 'placeholder', 'Email address');
 
@@ -57,7 +57,7 @@ describe('reset your password page', () => {
       .click().go('back');
 
 
-    resetYourPasswordPage.getEmail().type(this.dataJson.email);
+    resetYourPasswordPage.getEmailInput().type(this.dataJson.email);
     resetYourPasswordPage.getSendPasswordResetButton().click();
 
     // sign in with not-registered_email email

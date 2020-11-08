@@ -28,7 +28,7 @@ describe('sign_in page', () => {
       .should("be.visible")
       .should('have.text', 'Email');
 
-    signInPage.getEmail()
+    signInPage.getEmailInput()
       .should("be.visible")
       .should('have.attr', 'placeholder', 'Email address');
 
@@ -36,7 +36,7 @@ describe('sign_in page', () => {
       .should("be.visible")
       .should('have.text', 'Password');
 
-    signInPage.getPassword()
+    signInPage.getPasswordInput()
       .should("be.visible")
       .should('have.attr', 'placeholder', 'Password');
 
@@ -62,8 +62,8 @@ describe('sign_in page', () => {
       .click().wait(2000).go('back');
 
     // sign in with data
-    signInPage.getEmail().type(this.dataJson.email);
-    signInPage.getPassword().type(this.dataJson.password);
+    signInPage.getEmailInput().type(this.dataJson.email);
+    signInPage.getPasswordInput().type(this.dataJson.password);
     signInPage.getLoginButton().click();
 
     // sign in with non-valid email

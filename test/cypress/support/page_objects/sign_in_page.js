@@ -8,7 +8,7 @@ class SignInPage {
     return cy.get('#new_user > :nth-child(1) > .text-primary');
   }
 
-  getEmail(){
+  getEmailInput(){
     return cy.get('#user_email');
   }
 
@@ -16,7 +16,7 @@ class SignInPage {
     return cy.get(':nth-child(2) > .text-primary');
   }
 
-  getPassword(){
+  getPasswordInput(){
     return cy.get('#user_password');
   }
 
