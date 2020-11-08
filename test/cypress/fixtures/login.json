@@ -1,0 +1,10 @@
+{
+  "first_name": "First",
+  "last_name": "Last",
+  "email": "tgoncharenko2013@gmail.com",
+  "password": "q1234567!Q",
+  "confirm_password": "q1234567!Q",
+  "not_valid_email": "t_gmail_com",
+  "new_password": "w1234567!Q"
+
+}

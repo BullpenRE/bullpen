@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-describe('Register', () => {
+describe('Join page', () => {
   it('register a new user', () => {
     cy.visit('/', {failOnStatusCode: false})
   });
