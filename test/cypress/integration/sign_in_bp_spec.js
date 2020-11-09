@@ -61,7 +61,7 @@ describe('sign_in page', () => {
       .should('have.text', 'Sign up')
       .click().wait(2000).go('back');
 
-    // sign in with data
+    // sign in with dataJson
     signInPage.getEmailInput().type(this.dataJson.email);
     signInPage.getPasswordInput().type(this.dataJson.password);
     signInPage.getLoginButton().click();

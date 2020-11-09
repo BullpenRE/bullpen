@@ -49,7 +49,6 @@ describe('join page', () => {
       .should('have.attr', 'href', '/employer_sign_up')
       .click().wait(2000).go('back')
 
-
     joinPage.getAlreadyHaveAccountText()
       .should("be.visible")
       .should('have.text', 'Already have an account? Login');
