@@ -1,8 +1,6 @@
 class Cypress::CleanupController < ActionController::Base
   def destroy
-    if !Rails.env.test?
-      return head(:bad_request)
-    end
+    return head(:bad_request) unless Rails.env.test?
 
     tables = ActiveRecord::Base.connection.tables
     tables.delete 'schema_migrations'

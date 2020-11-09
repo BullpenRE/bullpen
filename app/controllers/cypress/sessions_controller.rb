@@ -7,10 +7,6 @@ class Cypress::SessionsController < ActionController::Base
   private
 
   def user
-    if params[:email]
-      User.find_by!(email: params.fetch(:email))
-    else
-      User.first!
-    end
+    User.find_by(email: params[:email]) || User.first
   end
 end
