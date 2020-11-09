@@ -36,7 +36,7 @@
           <%= @freelancer_profile.professional_title %><br>
           <%= @user.location %>
         </div>
-        <div class="mb-4"><%= @freelancer_profile.professional_summary %></div>
+        <div class="mb-4" style="word-wrap: break-word; overflow-wrap: break-word;"><%= @freelancer_profile.professional_summary %></div>
         <div>
           <%  @freelancer_profile.sectors.order(description: :asc)&.each do |sector| %>
             <span class="badge badge-secondary mb-1"><%= sector.description %></span>
