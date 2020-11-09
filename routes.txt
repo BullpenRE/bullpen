@@ -118,6 +118,7 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                       admin_skill GET        /admin/skills/:id(.:format)                                                              admin/skills#show
                                                   PATCH      /admin/skills/:id(.:format)                                                              admin/skills#update
                                                   PUT        /admin/skills/:id(.:format)                                                              admin/skills#update
+                  destroy_software_admin_software POST       /admin/softwares/:id/destroy_software(.:format)                                          admin/softwares#destroy_software
                      batch_action_admin_softwares POST       /admin/softwares/batch_action(.:format)                                                  admin/softwares#batch_action
                                   admin_softwares GET        /admin/softwares(.:format)                                                               admin/softwares#index
                                                   POST       /admin/softwares(.:format)                                                               admin/softwares#create

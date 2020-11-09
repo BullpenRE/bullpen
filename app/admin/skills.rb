@@ -32,7 +32,7 @@ ActiveAdmin.register Skill do
     skill = Skill.find(params[:id])
     skill.destroy if skill.job_skills.empty?
 
-    redirect_to admin_skills_path, notice: 'Sector Deleted'
+    redirect_to admin_skills_path, notice: 'Skill Deleted'
   end
 
 end unless Rails.env.test?
