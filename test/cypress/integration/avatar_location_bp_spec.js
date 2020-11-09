@@ -329,5 +329,4 @@ describe('AvatarLocationPage', () => {
     //  End of avatar on navbar check
     cy.go('forward')
   })
-
 })

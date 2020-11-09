@@ -56,15 +56,8 @@ describe('reset your password page', () => {
       .should('have.text', 'Login')
       .click().go('back');
 
-
     resetYourPasswordPage.getEmailInput().type(this.dataJson.email);
     resetYourPasswordPage.getSendPasswordResetButton().click();
-
-    // sign in with not-registered_email email
-
-    // signInPage.getEmail().type(this.dataJson.not_valid_email);
-    // signInPage.getPassword().type(this.dataJson.password);
-    // signInPage.getLoginButton().click();
 
   })
 })

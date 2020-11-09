@@ -4,10 +4,6 @@ import EmployerSignUpPage from "../support/page_objects/employer_sign_up_page";
 
 describe('EmployerSignUpPage', () => {
 
-//   it('freelancer sign up page', () => {
-//     cy.visit('http://localhost:5017/employer_sign_up', {failOnStatusCode: false})
-//   })
-
   //usage of fixture data
   beforeEach(function(){
     cy.fixture('login').then(function (dataJson)
@@ -207,5 +203,4 @@ describe('EmployerSignUpPage', () => {
     employerSignUpPage.getConfirmPasswordInput().type(this.dataJson.confirm_password)
     employerSignUpPage.getCreateMyAccountInput().click()
   })
-
 })

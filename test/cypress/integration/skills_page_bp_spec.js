@@ -324,9 +324,6 @@ describe('SkillPage', () => {
       .should('have.attr', 'name', 'commit')
       .should('have.attr', 'value', 'Next')
       .should('have.attr', 'data-disable-with', 'Next')
-      // .click()
       .get('form').submit()
-
   });
-
 })

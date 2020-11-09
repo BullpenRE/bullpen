@@ -247,5 +247,4 @@ describe('ProfessionalHistoryPage', () => {
       })
       .get('form').submit()
   })
-
 })

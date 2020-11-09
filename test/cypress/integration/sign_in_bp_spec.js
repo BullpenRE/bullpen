@@ -65,12 +65,5 @@ describe('sign_in page', () => {
     signInPage.getEmailInput().type(this.dataJson.email);
     signInPage.getPasswordInput().type(this.dataJson.password);
     signInPage.getLoginButton().click();
-
-    // sign in with non-valid email
-
-    // signInPage.getEmail().type(this.dataJson.not_valid_email);
-    // signInPage.getPassword().type(this.dataJson.password);
-    // signInPage.getLoginButton().click();
-
   })
 })

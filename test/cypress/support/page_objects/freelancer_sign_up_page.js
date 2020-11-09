@@ -115,3 +115,4 @@ class FreelancerSignUpPage {
 
 }
 export default FreelancerSignUpPage
+

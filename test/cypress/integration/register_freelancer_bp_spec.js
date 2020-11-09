@@ -400,5 +400,5 @@ describe('FreelancerRegistrationPage', () => {
       .should('be.visible')
       .get('div#same_psw').contains('Same as your password')
   })
-
 })
+
