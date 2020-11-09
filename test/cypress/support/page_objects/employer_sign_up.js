@@ -1,46 +1,58 @@
-class FreelancerSignUpPage {
+class EmployerSignUpPage {
 
-  getBullpenNavImg(){
+  getBullpenNavImg() {
     return cy.get('img');
   }
 
-  getCreateAccountText1st(){
+  getCreateAccountText1st() {
     return cy.get('#step-1 > .mt-4');
   }
 
-  getFirstNameLabel(){
+  getFirstNameLabel() {
     return cy.get('.mb-4 > .text-primary');
   }
 
-  getFirstNameInput(){
+  getFirstNameInput() {
     return cy.get('#firstName');
   }
 
-  getLastNameLabel(){
+  getLastNameLabel() {
     return cy.get('.mb-3 > .text-primary');
   }
 
-  getLastNameInput(){
+  getLastNameInput() {
     return cy.get('#lastName');
   }
 
-  getEmailLabel(){
-    return cy.get('.mb-5.col-md-12 > .text-primary');
+  getEmailLabel() {
+    return cy.get(':nth-child(4) > .text-primary');
   }
 
-  getEmailInput(){
+  getEmailInput() {
     return cy.get('#email');
   }
 
-  getSignUpAsFreelancerButton(){
+  getPhoneNumberLabel() {
+    return cy.get(':nth-child(5) > .text-primary');
+  }
+
+  getPhoneNumberInput() {
+    return cy.get('#phone');
+  }
+
+  getDivider() {
+    return cy.get('#step-1 > hr.mb-4');
+  }
+
+  getSignUpAsCompanyButton() {
     return cy.get('#step-1 > .form-control-lg');
   }
 
-  getAlreadyHaveAccountText(){
+  getAlreadyHasAnAccountText() {
     return cy.get('h5');
   }
 
-  getLoginLink(){
+  getLoginLink() {
     return cy.get('.p-2');
   }
 
@@ -85,8 +97,8 @@ class FreelancerSignUpPage {
   getShowIconConfirmPassword(){
     return cy.get('svg.svg-inline--fa.fa-eye.fa-w-18.fa-fw');
   }
-  getDivider(){
-    return cy.get('#step-2');
+  getDivider1st(){
+    return cy.get('#step-2 > :nth-child(9)');
   }
 
   getCreateMyAccountInput(){
@@ -112,6 +124,5 @@ class FreelancerSignUpPage {
   getStripesConnectedAccountAuthLink(){
     return cy.get('#third > a');
   }
-
 }
-export default FreelancerSignUpPage
+export default EmployerSignUpPage
