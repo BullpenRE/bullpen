@@ -1,6 +1,6 @@
 ActiveAdmin.register RealEstateSkill do
   permit_params :description, :disable
-  actions :index, :show, :create, :edit, :update
+  actions :all, except: [:destroy]
 
   index do
     column :description

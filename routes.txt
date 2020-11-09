@@ -17,6 +17,7 @@
                                                   PATCH      /admin/admin_users/:id(.:format)                                                         admin/admin_users#update
                                                   PUT        /admin/admin_users/:id(.:format)                                                         admin/admin_users#update
                                                   DELETE     /admin/admin_users/:id(.:format)                                                         admin/admin_users#destroy
+        destroy_certification_admin_certification POST       /admin/certifications/:id/destroy_certification(.:format)                                admin/certifications#destroy_certification
                 batch_action_admin_certifications POST       /admin/certifications/batch_action(.:format)                                             admin/certifications#batch_action
                              admin_certifications GET        /admin/certifications(.:format)                                                          admin/certifications#index
                                                   POST       /admin/certifications(.:format)                                                          admin/certifications#create
@@ -35,6 +36,15 @@
                                                   PATCH      /admin/employer_profiles/:id(.:format)                                                   admin/employer_profiles#update
                                                   PUT        /admin/employer_profiles/:id(.:format)                                                   admin/employer_profiles#update
                                                   DELETE     /admin/employer_profiles/:id(.:format)                                                   admin/employer_profiles#destroy
+     batch_action_admin_freelancer_certifications POST       /admin/freelancer_certifications/batch_action(.:format)                                  admin/freelancer_certifications#batch_action
+                  admin_freelancer_certifications GET        /admin/freelancer_certifications(.:format)                                               admin/freelancer_certifications#index
+                                                  POST       /admin/freelancer_certifications(.:format)                                               admin/freelancer_certifications#create
+               new_admin_freelancer_certification GET        /admin/freelancer_certifications/new(.:format)                                           admin/freelancer_certifications#new
+              edit_admin_freelancer_certification GET        /admin/freelancer_certifications/:id/edit(.:format)                                      admin/freelancer_certifications#edit
+                   admin_freelancer_certification GET        /admin/freelancer_certifications/:id(.:format)                                           admin/freelancer_certifications#show
+                                                  PATCH      /admin/freelancer_certifications/:id(.:format)                                           admin/freelancer_certifications#update
+                                                  PUT        /admin/freelancer_certifications/:id(.:format)                                           admin/freelancer_certifications#update
+                                                  DELETE     /admin/freelancer_certifications/:id(.:format)                                           admin/freelancer_certifications#destroy
  batch_action_admin_freelancer_profile_educations POST       /admin/freelancer_profile_educations/batch_action(.:format)                              admin/freelancer_profile_educations#batch_action
               admin_freelancer_profile_educations GET        /admin/freelancer_profile_educations(.:format)                                           admin/freelancer_profile_educations#index
                                                   POST       /admin/freelancer_profile_educations(.:format)                                           admin/freelancer_profile_educations#create
@@ -85,13 +95,16 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
             batch_action_admin_real_estate_skills POST       /admin/real_estate_skills/batch_action(.:format)                                         admin/real_estate_skills#batch_action
                          admin_real_estate_skills GET        /admin/real_estate_skills(.:format)                                                      admin/real_estate_skills#index
                                                   POST       /admin/real_estate_skills(.:format)                                                      admin/real_estate_skills#create
+                      new_admin_real_estate_skill GET        /admin/real_estate_skills/new(.:format)                                                  admin/real_estate_skills#new
                      edit_admin_real_estate_skill GET        /admin/real_estate_skills/:id/edit(.:format)                                             admin/real_estate_skills#edit
                           admin_real_estate_skill GET        /admin/real_estate_skills/:id(.:format)                                                  admin/real_estate_skills#show
                                                   PATCH      /admin/real_estate_skills/:id(.:format)                                                  admin/real_estate_skills#update
                                                   PUT        /admin/real_estate_skills/:id(.:format)                                                  admin/real_estate_skills#update
+                      destroy_sector_admin_sector POST       /admin/sectors/:id/destroy_sector(.:format)                                              admin/sectors#destroy_sector
                        batch_action_admin_sectors POST       /admin/sectors/batch_action(.:format)                                                    admin/sectors#batch_action
                                     admin_sectors GET        /admin/sectors(.:format)                                                                 admin/sectors#index
                                                   POST       /admin/sectors(.:format)                                                                 admin/sectors#create
+                                 new_admin_sector GET        /admin/sectors/new(.:format)                                                             admin/sectors#new
                                 edit_admin_sector GET        /admin/sectors/:id/edit(.:format)                                                        admin/sectors#edit
                                      admin_sector GET        /admin/sectors/:id(.:format)                                                             admin/sectors#show
                                                   PATCH      /admin/sectors/:id(.:format)                                                             admin/sectors#update
@@ -99,6 +112,7 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                         batch_action_admin_skills POST       /admin/skills/batch_action(.:format)                                                     admin/skills#batch_action
                                      admin_skills GET        /admin/skills(.:format)                                                                  admin/skills#index
                                                   POST       /admin/skills(.:format)                                                                  admin/skills#create
+                                  new_admin_skill GET        /admin/skills/new(.:format)                                                              admin/skills#new
                                  edit_admin_skill GET        /admin/skills/:id/edit(.:format)                                                         admin/skills#edit
                                       admin_skill GET        /admin/skills/:id(.:format)                                                              admin/skills#show
                                                   PATCH      /admin/skills/:id(.:format)                                                              admin/skills#update
@@ -106,6 +120,7 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                      batch_action_admin_softwares POST       /admin/softwares/batch_action(.:format)                                                  admin/softwares#batch_action
                                   admin_softwares GET        /admin/softwares(.:format)                                                               admin/softwares#index
                                                   POST       /admin/softwares(.:format)                                                               admin/softwares#create
+                               new_admin_software GET        /admin/softwares/new(.:format)                                                           admin/softwares#new
                               edit_admin_software GET        /admin/softwares/:id/edit(.:format)                                                      admin/softwares#edit
                                    admin_software GET        /admin/softwares/:id(.:format)                                                           admin/softwares#show
                                                   PATCH      /admin/softwares/:id(.:format)                                                           admin/softwares#update
