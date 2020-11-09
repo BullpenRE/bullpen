@@ -33,7 +33,7 @@
     $(document).ready(function() {
         if (getCookie("email").length > 0) {
             $('#user_email').val(getCookie("email"));
-            $('#user_password').focus() = true;
+            $('#user_password').focus();
             deleteCookie("email");
         };
     });

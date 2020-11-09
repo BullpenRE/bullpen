@@ -163,6 +163,7 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
  https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements;
  https://docs.cypress.io/guides/getting-started/testing-your-app.html#Step-1-Start-your-server
  https://blog.simplificator.com/2019/10/11/setting-up-cypress-with-rails/
+ https://www.toolsqa.com/cypress/what-is-cypress/
 
 7. Best Practice: 
 Use data-* attributes to provide context to your selectors and isolate them from CSS or JS changes [here](https://docs.cypress.io/guides/references/best-practices.html)
