@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import FreelancerSignUpPage from "../support/page_objects/freelancer_sign_up";
+import FreelancerSignUpPage from "../support/page_objects/freelancer_sign_up_page";
 
 describe('FreelancerSignUpPage', () => {
 

@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import EmployerSignUpPage from "../support/page_objects/employer_sign_up";
+import EmployerSignUpPage from "../support/page_objects/employer_sign_up_page";
 
 describe('EmployerSignUpPage', () => {
 
