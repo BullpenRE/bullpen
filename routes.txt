@@ -92,6 +92,7 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   PATCH      /admin/jobs/:id(.:format)                                                                admin/jobs#update
                                                   PUT        /admin/jobs/:id(.:format)                                                                admin/jobs#update
                                                   DELETE     /admin/jobs/:id(.:format)                                                                admin/jobs#destroy
+destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_skills/:id/destroy_real_estate_skill(.:format)                        admin/real_estate_skills#destroy_real_estate_skill
             batch_action_admin_real_estate_skills POST       /admin/real_estate_skills/batch_action(.:format)                                         admin/real_estate_skills#batch_action
                          admin_real_estate_skills GET        /admin/real_estate_skills(.:format)                                                      admin/real_estate_skills#index
                                                   POST       /admin/real_estate_skills(.:format)                                                      admin/real_estate_skills#create
