@@ -25,6 +25,14 @@ ActiveAdmin.register SignupPromos do
       row :code
       row :user_type
       row :enabled
+
+      row 'Count of users'  do
+        User.select(:signup_promos_id).where(signup_promos_id: signup_promos.id).count
+      end
+      
+      row 'Users' do
+        User.where(signup_promos_id: signup_promos.id)
+      end
     end
 
     active_admin_comments

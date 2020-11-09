@@ -80,8 +80,8 @@
 
           <% if SignupPromos.find_by(user_type: 'freelancer'||'both', enabled: true) %>
             <div class="mb-5 col-md-12">
-              <label for="promo_code" class="text-primary">Promo Code(Optional)</label>
-              <input type="text" class="form-control" id="promo_code" >
+              <label for="f_promo_code" class="text-primary">Promo Code(Optional)</label>
+              <input type="text" class="form-control" id="f_promo_code" >
             </div>
           <% end %>
 
@@ -300,11 +300,11 @@
           }
         }
       });
-    });
 
-      if ($('#promo_code').val() != "") {
-          document.cookie = "promo_code="+$('#promo_code').val();
+      if ($('#f_promo_code').val() != "") {
+          document.cookie = "promo_code="+$('#f_promo_code').val();
       };
+    });
 
     prevBtn.click(function(){
       $('#regForm').find('input:eq(0)').focus();
