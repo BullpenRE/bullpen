@@ -14,6 +14,15 @@ ActiveAdmin.register Sector do
     attributes_table do
       row :description
       row :disable
+      row 'Freelancers with this sector' do |sector|
+        sector.freelancer_profiles.uniq.count
+      end
+      row 'Jobs with this sector' do |sector|
+        sector.jobs.uniq.count
+      end
+      row 'Employers with this sector' do |sector|
+        sector.employer_profiles.uniq.count
+      end
       row :created_at
       row :updated_at
       row ' ' do |sector|
