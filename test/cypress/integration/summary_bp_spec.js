@@ -150,7 +150,7 @@ describe('SummaryPage', () => {
       .get('div#addWorkExperienceModal.modal.fade.show', { includeShadowDom: true})
       .get('div.modal-dialog.modal-dialog-centered.modal-md')
       .find('div.modal-content')
-      .find('form.work-experience', { includeShadowDom: true}).first()
+      .find('form.cy-work-experience', { includeShadowDom: true}).first()
       .find('div.modal-body.pt-0')
       .find('h3')
       .get('div.form-group.job-title')
@@ -199,7 +199,7 @@ describe('SummaryPage', () => {
       .get('div.modal-footer.justify-content-between.work-experience')
       .get('button.btn.btn-link.px-0.text-dark.cancel.work-experience')
       .get('input.btn.btn-primary.save')
-      .get('form.work-experience').first().submit()
+      .get('form.cy-work-experience').first().submit()
     //  End of work experience modal
 
     cy.get('div.mb-5.education-experience')

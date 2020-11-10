@@ -213,7 +213,7 @@ describe('WorkEducationPage', () => {
         expect($button).have.attr('data-dismiss', 'modal')
         expect($button).have.attr('aria-label', 'Close')
       })
-      .find('span.close').first()
+      .find('span.cy-close').first()
       .should(($span) => {
         expect($span).to.have.length(1)
         expect($span).have.text('×')
@@ -229,7 +229,7 @@ describe('WorkEducationPage', () => {
       .get('div#addWorkExperienceModal.modal.fade.show', { includeShadowDom: true})
       .get('div.modal-dialog.modal-dialog-centered.modal-md')
       .find('div.modal-content')
-      .find('form.work-experience', { includeShadowDom: true}).first()
+      .find('form.cy-work-experience', { includeShadowDom: true}).first()
       .should(($form) => {
         expect($form).to.have.length(1)
         expect($form).have.attr('action', '/freelancer_profile_steps/work_education_experience')
@@ -432,7 +432,7 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'type', 'submit')
       .should('have.attr', 'value', 'Save')
       .should('have.attr', 'data-disable-with', 'Save')
-      .get('form.work-experience').first().submit()
+      .get('form.cy-work-experience').first().submit()
       //  End of work experience modal
 
     cy.get('div.mb-5.education-experience')
