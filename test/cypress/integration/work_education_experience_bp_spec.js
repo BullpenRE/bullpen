@@ -505,8 +505,8 @@ describe('WorkEducationPage', () => {
       .then(($h3) => {
         expect($h3).to.have.text('Add Education')
       })
-      .get('div.form-group.institution')
-      .get('label.bp-input-label.institution')
+      .get('div.form-group.cy-institution')
+      .get('label.bp-input-label.cy-institution')
       .should(($label) => {
         expect($label).to.have.length(1)
       })
