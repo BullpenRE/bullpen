@@ -102,15 +102,15 @@ class FreelancerSignUpPage {
   }
 
   getTermOfServiceLink(){
-    return cy.get('#first > a');
+    return cy.get('#cy-first > a');
   }
 
   getPrivacyAgreementLink(){
-    return cy.get('#second > a');
+    return cy.get('#cy-second > a');
   }
 
   getStripesConnectedAccountAuthLink(){
-    return cy.get('#third > a');
+    return cy.get('#cy-third > a');
   }
 
 }
