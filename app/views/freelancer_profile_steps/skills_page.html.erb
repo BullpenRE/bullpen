@@ -13,32 +13,46 @@
     <%= form_for @freelancer_profile, url: wizard_path, method: :put do |f| %>
       <div class="text-center">
         <h2>Tell us about your skills.</h2>
-        <p class="mb-4">Add tags to your application that represent your sector and operating knowledge.</p>
+        <p class="mb-4">
+          Add tags to your application that represent your sectors, operating knowledge and software licenses.
+        </p>
       </div>
       <div class="form-group mb-4">
         <label for="exampleFormControlMultiSelect" class="bp-input-label">Describe your real estate skills</label>
         <div class="w-100">
           <%= f.select :freelancer_real_estate_skills,
                        options_for_select(
-                           RealEstateSkill.find_each.map{ |skill| [skill.description, skill.id] if skill.disable == false },
-                           @freelancer_profile&.freelancer_real_estate_skills&.map do |skill|
-                             [skill.real_estate_skill.description, skill.real_estate_skill.id]
-                           end.flatten
+                         RealEstateSkill.find_each.map{ |skill| [skill.description, skill.id] if skill.disable == false },
+                         @freelancer_profile&.freelancer_real_estate_skills&.map do |skill|
+                           [skill.real_estate_skill.description, skill.real_estate_skill.id]
+                         end.flatten
                        ),
                        {}, multiple: true, class: 'select2', required: true %>
         </div>
       </div>
-      <div class="form-group mb-5">
-        <label for="exampleFormControlMultiSelect" class="bp-input-label">
+      <div class="form-group mb-4">
+        <label for="freelancerSectors" class="bp-input-label">
           In what sectors do you have experience?
         </label>
         <%= f.select :freelancer_sectors,
                      options_for_select(
-                         Sector.find_each.map{ |sector| [sector.description, sector.id] if sector.disable == false },
-                         @freelancer_profile&.freelancer_sectors&.map do |freelancer_sector|
-                           [freelancer_sector.sector.description, freelancer_sector.sector.id]
-                         end.flatten),
+                       Sector.find_each.map{ |sector| [sector.description, sector.id] if sector.disable == false },
+                       @freelancer_profile&.freelancer_sectors&.map do |freelancer_sector|
+                         [freelancer_sector.sector.description, freelancer_sector.sector.id]
+                       end.flatten),
                      {}, multiple: true, class: 'select2', required: true %>
+      </div>
+      <div class="form-group mb-5">
+        <label for="freelancerSoftwares" class="bp-input-label">
+          Software Licenses
+        </label>
+        <%= f.select :freelancer_softwares,
+                     options_for_select(
+                       Software.find_each.map{ |software| [software.description, software.id] if software.disable == false },
+                       @freelancer_profile&.freelancer_softwares&.map do |freelancer_software|
+                         [freelancer_software.software.description, freelancer_software.software.id]
+                       end.flatten),
+                     {}, multiple: true, class: 'select2' %>
       </div>
       <script>
         $(function() {
