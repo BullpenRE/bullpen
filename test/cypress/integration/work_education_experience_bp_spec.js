@@ -713,15 +713,15 @@ describe('WorkEducationPage', () => {
       .then(($div) => {
         expect($div).to.have.text('Some University')
       })
-      .get('div.row.bp-text-sm.education-present')
-      .get('div.col-md.education-present.degree.course-of-study')
+      .get('div.row.bp-text-sm.cy-education-present')
+      .get('div.col-md.cy-education-present.cy-degree.cy-course-of-study')
       .should(($div) => {
         expect($div).to.have.length(1)
       })
       .then(($div) => {
         expect($div).to.have.text('Masters, Some course of study')
       })
-      .get('div.col-md.graduation-year')
+      .get('div.col-md.cy-graduation-year')
       .should(($div) => {
         expect($div).to.have.length(1)
       })

@@ -50,9 +50,9 @@
               <div class="row cy-education-present cy-institution">
                 <div class="col mb-1 text cy-education-present cy-institution"><%= education_exp.institution %></div>
               </div>
-              <div class="row bp-text-sm education-present">
-                <div class="col-md education-present degree course-of-study"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
-                <div class="col-md graduation-year"><%= education_exp.currently_studying.present? ? "Currently Studying" : education_exp.graduation_year %></div>
+              <div class="row bp-text-sm cy-education-present">
+                <div class="col-md cy-education-present cy-degree cy-course-of-study"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
+                <div class="col-md cy-graduation-year"><%= education_exp.currently_studying.present? ? "Currently Studying" : education_exp.graduation_year %></div>
               </div>
             </div>
             <%= render 'edit_education', freelancer_profile_education: education_exp %>
