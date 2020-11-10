@@ -188,7 +188,7 @@ describe('SummaryPage', () => {
       .find('div.dropdown.bootstrap-select.form-control')
       .get('select#endMonth.form-control.selectpicker')
       .select('October', {force: true})
-      .get('div.col.end-year')
+      .get('div.col.cy-end-year')
       .get('div.dropdown.bootstrap-select.form-control')
       .get('select#endYear.form-control.selectpicker')
       .select('2020', {force: true})

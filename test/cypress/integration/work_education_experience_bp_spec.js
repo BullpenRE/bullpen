@@ -385,7 +385,7 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'data-style', 'bp-btn-select-border')
       .should('have.attr', 'title', 'Month')
       .select('October', {force: true})
-      .get('div.col.end-year')
+      .get('div.col.cy-end-year')
       .get('div.dropdown.bootstrap-select.form-control')
       .get('select#endYear.form-control.selectpicker')
       .should(($select) => {
