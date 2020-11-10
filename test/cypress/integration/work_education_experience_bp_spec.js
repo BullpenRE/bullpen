@@ -558,8 +558,8 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'name', 'freelancer_profile_education[course_of_study]')
       .should('have.attr', 'type', 'text')
       .type('Some course of study')
-      .get('div.form-group.graduation-year')
-      .get('label.bp-input-label.graduation-year')
+      .get('div.form-group.cy-graduation-year')
+      .get('label.bp-input-label.cy-graduation-year')
       .should(($label) => {
         expect($label).to.have.length(1)
       })
