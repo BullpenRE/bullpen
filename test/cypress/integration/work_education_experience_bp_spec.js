@@ -744,7 +744,7 @@ describe('WorkEducationPage', () => {
         expect($form).have.attr('accept-charset', 'UTF-8')
         expect($form).have.attr('method', 'post')
       })
-      .get('div.modal-footer.justify-content-between.edit-education')
+      .get('div.modal-footer.justify-content-between.cy-edit-education')
       .get('input.btn.btn-outline-danger.mr-2.edit-education.delete')
       .should(($input) => {
         expect($input).to.have.length(1)
@@ -761,7 +761,7 @@ describe('WorkEducationPage', () => {
         expect($input).have.attr('value', 'Save')
         expect($input).have.attr('data-disable-with', 'Save')
       })
-      .get('button.btn.btn-link.px-0.text-dark.edit-education')
+      .get('button.btn.btn-link.px-0.text-dark.cy-edit-education')
       .should(($button) => {
         expect($button).to.have.length(1)
         expect($button).to.have.text('Cancel')
