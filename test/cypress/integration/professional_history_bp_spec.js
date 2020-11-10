@@ -194,7 +194,7 @@ describe('ProfessionalHistoryPage', () => {
         expect($select).to.have.length(1)
       })
 
-    cy.get('div.form-group.mb-5.summary')
+    cy.get('div.form-group.mb-5.cy-summary')
       .find('label.bp-input-label')
       .should(($label) => {
         expect($label).to.have.length(1)

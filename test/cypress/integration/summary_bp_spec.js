@@ -134,7 +134,7 @@ describe('SummaryPage', () => {
       .find('select#freelancer_profile_professional_years_experience.form-control.selectpicker', {includeShadowDom: true})
       .select('>10', {force: true})
 
-    cy.get('div.form-group.mb-5.summary')
+    cy.get('div.form-group.mb-5.cy-summary')
       .get('textarea#professionalSummaryTextarea.form-control')
       .type('Some professional summary')
 
