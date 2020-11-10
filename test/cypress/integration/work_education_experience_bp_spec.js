@@ -308,7 +308,7 @@ describe('WorkEducationPage', () => {
         expect($label).have.attr('for', 'startMonth')
       })
       .get('div.row.mb-3.cy-start-date')
-      .get('div.col.start-month')
+      .get('div.col.cy-start-month')
       .get('select#startMonth.form-control.selectpicker')
       .should(($select) => {
         expect($select).to.have.length(1)
@@ -318,7 +318,7 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'data-style', 'bp-btn-select-border')
       .should('have.attr', 'title', 'Month')
       .select('July', {force: true})
-      .get('div.col.start-year')
+      .get('div.col.cy-start-year')
       .get('div.dropdown.bootstrap-select.form-control')
       .get('select#startYear.form-control.selectpicker')
       .should(($select) => {

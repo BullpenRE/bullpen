@@ -25,13 +25,13 @@
         <div class="form-group cy-start-date">
           <label for="startMonth" class="bp-input-label cy-start-date">Start Date</label>
           <div class="row mb-3 cy-start-date">
-            <div class="col start-month">
+            <div class="col cy-start-month">
               <%= f.select :start_month,
                            options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES),
                            {}, class: 'form-control selectpicker',
                            id: 'startMonth', required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
             </div>
-            <div class="col start-year">
+            <div class="col cy-start-year">
               <%= f.select :start_year,
                            options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS),
                            {}, class: 'form-control selectpicker',
