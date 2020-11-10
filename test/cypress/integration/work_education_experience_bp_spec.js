@@ -687,9 +687,9 @@ describe('WorkEducationPage', () => {
         expect($form).have.attr('accept-charset', 'UTF-8')
         expect($form).have.attr('method', 'post')
       })
-      .get('div.modal-footer.justify-content-between.edit-work-experience')
+      .get('div.modal-footer.justify-content-between.cy-edit-work-experience')
 
-      .get('button.btn.btn-link.px-0.text-dark.edit-work-experience')
+      .get('button.btn.btn-link.px-0.text-dark.cy-edit-work-experience')
       .should(($button) => {
         expect($button).to.have.length(1)
         expect($button).to.have.text('Cancel')
