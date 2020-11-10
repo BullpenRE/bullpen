@@ -329,7 +329,7 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'data-style', 'bp-btn-select-border')
       .should('have.attr', 'title', 'Year')
       .select('2007', {force: true})
-      .get('div.custom-control.custom-checkbox.current-job')
+      .get('div.custom-control.custom-checkbox.cy-current-job')
       .get('input').first()
       .should(($input) => {
         expect($input).to.have.length(1)

@@ -175,7 +175,7 @@ describe('SummaryPage', () => {
       .get('div.dropdown.bootstrap-select.form-control')
       .get('select#startYear.form-control.selectpicker')
       .select('2007', {force: true})
-      .get('div.custom-control.custom-checkbox.current-job')
+      .get('div.custom-control.custom-checkbox.cy-current-job')
       .get('input').first()
       .get('input#currentJob.custom-control-input')
       .get('label.custom-control-label').first()
