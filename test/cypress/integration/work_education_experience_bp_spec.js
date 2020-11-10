@@ -773,8 +773,8 @@ describe('WorkEducationPage', () => {
 
     // End of Education Edit mode
 
-    cy.get('div.d-flex.justify-content-between.work-education')
-      .get('a.btn.btn-link.px-0.work-education')
+    cy.get('div.d-flex.justify-content-between.cy-work-education')
+      .get('a.btn.btn-link.px-0.cy-work-education')
       .should(($a) => {
         expect($a).to.have.length(1)
       })
@@ -794,7 +794,7 @@ describe('WorkEducationPage', () => {
         expect($input).have.attr('data-disable-with', 'Next')
       })
       .click({force: true})
-      .get('a#NextBtn.btn.btn-primary.work-education')
+      .get('a#NextBtn.btn.btn-primary.cy-work-education')
       .should(($a) => {
         expect($a).to.have.length(1)
       })

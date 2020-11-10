@@ -245,7 +245,7 @@ describe('SummaryPage', () => {
       .get('form.cy-education').submit()
     //  End of education modal
 
-    cy.get('a#NextBtn.btn.btn-primary.work-education')
+    cy.get('a#NextBtn.btn.btn-primary.cy-work-education')
       .click()
     // at least we got target page - summary
 
