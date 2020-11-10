@@ -415,15 +415,15 @@ describe('WorkEducationPage', () => {
         expect($textarea).have.attr('name', 'freelancer_profile_experience[description]')
       })
       .type('Some description of my job')
-      .get('div.modal-footer.justify-content-between.work-experience')
-      .get('button.btn.btn-link.px-0.text-dark.cancel.work-experience')
+      .get('div.modal-footer.justify-content-between.cy-work-experience')
+      .get('button.btn.btn-link.px-0.text-dark.cy-cancel.cy-work-experience')
       .should(($button) => {
         expect($button).to.have.length(1)
         expect($button).to.have.text('Cancel')
         expect($button).have.attr('type', 'button')
         expect($button).have.attr('data-dismiss', 'modal')
       })
-      .get('input.btn.btn-primary.save')
+      .get('input.btn.btn-primary.cy-save')
       .should(($input) => {
         expect($input).to.have.length(1)
       })

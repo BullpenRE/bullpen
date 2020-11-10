@@ -196,9 +196,9 @@ describe('SummaryPage', () => {
       .get('label.bp-input-label.cy-description')
       .get('textarea#jobDescriptionTextarea.form-control')
       .type('Some description of my job')
-      .get('div.modal-footer.justify-content-between.work-experience')
-      .get('button.btn.btn-link.px-0.text-dark.cancel.work-experience')
-      .get('input.btn.btn-primary.save')
+      .get('div.modal-footer.justify-content-between.cy-work-experience')
+      .get('button.btn.btn-link.px-0.text-dark.cy-cancel.cy-work-experience')
+      .get('input.btn.btn-primary.cy-save')
       .get('form.cy-work-experience').first().submit()
     //  End of work experience modal
 
