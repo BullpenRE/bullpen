@@ -541,8 +541,8 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'data-style', 'bp-btn-select-border')
       .should('have.attr', 'title', 'Please make a selection')
       .select('Masters', {force: true})
-      .get('div.form-group.course-of-study')
-      .get('label.bp-input-label.course-of-study')
+      .get('div.form-group.cy-course-of-study')
+      .get('label.bp-input-label.cy-course-of-study')
       .should(($label) => {
         expect($label).to.have.length(1)
       })
