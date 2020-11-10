@@ -101,10 +101,10 @@ describe('SkillPage', () => {
 
     // Content Card. Step 1
 
-    cy.get('div.container.first')
+    cy.get('div.container.cy-first')
       .get('div.bp-card.mb-5.mx-auto')
       .get('form.edit_freelancer_profile')
-      .get('div.text-center.for-h2')
+      .get('div.text-center.cy-for-h2')
       .find('h2')
       .should(($h2) => {
         expect($h2).to.have.length(1)
@@ -113,7 +113,7 @@ describe('SkillPage', () => {
         expect($h2).to.have.text('Tell us about your skills.')
       })
 
-    cy.get('div.text-center.for-h2')
+    cy.get('div.text-center.cy-for-h2')
       .find('p.mb-4')
       .should(($p) => {
       expect($p).to.have.length(1)
