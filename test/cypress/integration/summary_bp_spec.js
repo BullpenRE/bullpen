@@ -203,12 +203,12 @@ describe('SummaryPage', () => {
     //  End of work experience modal
 
     cy.get('div.mb-5.education-experience')
-      .get('button.btn.btn-outline-primary.education')
+      .get('button.btn.btn-outline-primary.cy-education')
       .click()
       .get('div#addEducationModal.modal.fade.show', { includeShadowDom: true})
-      .get('div.modal-dialog.modal-dialog-centered.modal-md.education')
-      .get('div.modal-content.education')
-      .find('form.education', { includeShadowDom: true}).last()
+      .get('div.modal-dialog.modal-dialog-centered.modal-md.cy-education')
+      .get('div.modal-content.cy-education')
+      .find('form.cy-education', { includeShadowDom: true}).last()
       .find('div.modal-body.pt-0')
       .find('h3')
       .get('div.form-group.institution')
@@ -242,7 +242,7 @@ describe('SummaryPage', () => {
       .get('div.modal-footer.justify-content-between.education')
       .get('button.btn.btn-link.px-0.text-dark.cancel.education')
       .get('input.btn.btn-primary.save-education')
-      .get('form.education').submit()
+      .get('form.cy-education').submit()
     //  End of education modal
 
     cy.get('a#NextBtn.btn.btn-primary.work-education')

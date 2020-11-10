@@ -443,7 +443,7 @@ describe('WorkEducationPage', () => {
       .then(($div) => {
         expect($div).to.have.text('\n        Education\n      ')
       })
-      .get('button.btn.btn-outline-primary.education').last()
+      .get('button.btn.btn-outline-primary.cy-education').last()
       .should('have.attr', 'data-toggle', 'modal')
       .should('have.attr', 'data-target', '#addEducationModal')
       .should(($button) => {
@@ -461,36 +461,36 @@ describe('WorkEducationPage', () => {
       })
 
     // => Add education modal
-    cy.get('button.btn.btn-outline-primary.education', { includeShadowDom: true})
+    cy.get('button.btn.btn-outline-primary.cy-education', { includeShadowDom: true})
       .click({force: true})
       .get('div#addEducationModal.modal.fade.show')
-      .get('div.modal-dialog.modal-dialog-centered.modal-md.education')
-      .find('div.modal-content.education')
-      .find('div.modal-header.education')
-      .get('button.close.mt-2.education')
+      .get('div.modal-dialog.modal-dialog-centered.modal-md.cy-education')
+      .find('div.modal-content.cy-education')
+      .find('div.modal-header.cy-education')
+      .get('button.cy-close.mt-2.cy-education')
       .should(($button) => {
         expect($button).to.have.length(1)
         expect($button).have.attr('type', 'button')
         expect($button).have.attr('data-dismiss', 'modal')
         expect($button).have.attr('aria-label', 'Close')
       })
-      .find('span.education.close')
+      .find('span.cy-education.cy-close')
       .should(($span) => {
         expect($span).to.have.length(1)
         expect($span).have.text('×')
       })
-    cy.get('button.close.mt-2.education')
+    cy.get('button.cy-close.mt-2.cy-education')
       .should('be.visible')
       .wait(2000)
       .click()
 
     cy.get('div.mb-5.education-experience')
-      .get('button.btn.btn-outline-primary.education')
+      .get('button.btn.btn-outline-primary.cy-education')
       .click()
       .get('div#addEducationModal.modal.fade.show', { includeShadowDom: true})
-      .get('div.modal-dialog.modal-dialog-centered.modal-md.education')
-      .get('div.modal-content.education')
-      .find('form.education', { includeShadowDom: true}).last()
+      .get('div.modal-dialog.modal-dialog-centered.modal-md.cy-education')
+      .get('div.modal-content.cy-education')
+      .find('form.cy-education', { includeShadowDom: true}).last()
       .should(($form) => {
         expect($form).to.have.length(1)
         expect($form).have.attr('action', '/freelancer_profile_steps/work_education_experience')
@@ -640,7 +640,7 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'type', 'submit')
       .should('have.attr', 'value', 'Save')
       .should('have.attr', 'data-disable-with', 'Save')
-      .get('form.education').last().submit()
+      .get('form.cy-education').last().submit()
     //  End of education modal
 
     // Beginning of Work Experience Edit mode
