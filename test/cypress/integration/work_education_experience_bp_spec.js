@@ -357,7 +357,7 @@ describe('WorkEducationPage', () => {
         expect($label).have.attr('for', 'currentJob')
       })
       .get('div#endDateToggle.form-group.collapse.show')
-      .get('label.bp-input-label.end-date')
+      .get('label.bp-input-label.cy-end-date')
       .should(($label) => {
         expect($label).to.have.length(1)
       })
@@ -374,8 +374,8 @@ describe('WorkEducationPage', () => {
         expect($label).to.have.text('Start Date')
         expect($label).have.attr('for', 'startMonth')
       })
-      .get('div.row.end-date')
-      .get('div.col.end-date')
+      .get('div.row.cy-end-date')
+      .get('div.col.cy-end-date')
       .find('div.dropdown.bootstrap-select.form-control')
       .get('select#endMonth.form-control.selectpicker')
       .should(($select) => {
