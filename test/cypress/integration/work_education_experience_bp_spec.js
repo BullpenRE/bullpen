@@ -395,8 +395,8 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'data-style', 'bp-btn-select-border')
       .should('have.attr', 'title', 'Year')
       .select('2020', {force: true})
-      .get('div.form-group.mb-0.description')
-      .get('label.bp-input-label.description')
+      .get('div.form-group.mb-0.cy-description')
+      .get('label.bp-input-label.cy-description')
       .should(($label) => {
         expect($label).to.have.length(1)
       })
@@ -411,7 +411,6 @@ describe('WorkEducationPage', () => {
       .then(($textarea) => {
         expect($textarea).have.attr('placeholder', 'Enter your job description')
         expect($textarea).have.attr('rows', '3')
-        expect($textarea).have.attr('maxlength', '1000')
         expect($textarea).have.attr('required', 'required')
         expect($textarea).have.attr('name', 'freelancer_profile_experience[description]')
       })
