@@ -140,5 +140,5 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         params[:job].delete(:software_ids)
       end
     end
-    end
+  end
 end

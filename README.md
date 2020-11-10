@@ -1,7 +1,7 @@
 # Welcome to the Bullpen App
 
 The Bullpen application is built on:
- * Ruby 2.7.1
+ * Ruby 2.7.2
  * Rails 6.0.3.2
  * postgresql 10.0 or higher
  * Code complexity and security monitoring by CodeClimate (pending)
@@ -34,7 +34,7 @@ _Note: After installing something new it's generally a good idea to quit and res
 6. Generate and add SSH keys your Github account by following the instructions at https://help.github.com/articles/generating-ssh-keys/
 7. Install GPG using homebrew: `$ brew install gpg` (May be needed for RVM in next step)
 8. Install the latest version of RVM: https://rvm.io. The command is probably something like `$ \curl -sSL https://get.rvm.io | bash -s stable`.
-9. Install Ruby from terminal using RVM: `$ rvm install 2.7.1`
+9. Install Ruby from terminal using RVM: `$ rvm install 2.7.2`
 10. Install the latest version of NVM: https://github.com/nvm-sh/nvm.
 11. Install NodeJS from terminal using NVM: `nvm install node` and Yarn `npm install -g yarn`
 12. Install posgtresql from terminal: `$ brew install postgresql` and follow on screen instructions (very important)
@@ -45,7 +45,7 @@ Once your machine is set up for Rails development you can do the following to ge
 1. In your primary workspace directory run `$ git clone git@github.com:BullpenRE/bullpen.git` in terminal.
 2. Enter into the new directory: `$ cd bullpen`
 3. At this point you might be prompted to update your Ruby version. If so, follow the instructions in terminal.
-4. Enter the following command: `$ rvm list` -- verify that your currently selected Ruby version is 2.7.1.
+4. Enter the following command: `$ rvm list` -- verify that your currently selected Ruby version is 2.7.2.
 5. If you had to update your Ruby version in step 3, exit and enter the current directory: `$ cd ..`, then `$ cd bullpen`.
 6. Enter the following command: `$ rvm gemset list` -- verify that the current gemset is *bullpen*.
 7. Install missing gems in your currently selected gemset by running `$ bundle`
@@ -115,6 +115,14 @@ When all work in for a story is done, create a pull request:
 
 After a pull request is made, Linear.app will automatically link it to your story (and visa versa) based on the branch name.
 
+### Workflow and Coding Standards
+ * See our our [workflow guide](https://docs.google.com/document/d/1CHKSaYzk3-_K1hLxOlezKNXMxHzEnlSjo0TaFZZuFog/edit#).
+ * Use Ruby on Rails best practices with [these additions and exceptions](https://docs.google.com/document/d/1r5R6SxVuz9TDE1hGc3yU9ocJxywwVi-lnmlQOEv9TI4/edit#heading=h.71frplvdndqk).
+ * After creating a pull request either fix or address all issues brought up by CodeClimate: [link to decision](https://bullpenre.slack.com/archives/C01A6KTQ35Z/p1600271307031300)
+ * Don't create custom CSS. Inline in views is OK: [link to decision](https://bullpenre.slack.com/archives/C01A6KTQ35Z/p1600107544007100)
+ * See our test coverage rules [here](https://docs.google.com/document/d/1qlU-_xOt6tgCBWO_8m4q4FJmYxc5gPgOmjfq91sVong/edit).
+ * For complex Javascript use classes via our Javascript guide (coming soon): [link to decision](https://bullpenre.slack.com/archives/C01A6KTQ35Z/p1601048239003000) 
+
 ### Heroku Deploy Setup
 Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to automatically deploy the master branch after pull requests are merged. In case you need to do manual pushes:
 
@@ -123,6 +131,7 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
 
         $ heroku login
         $ git remote add bullpen-staging git@heroku.com:bullpen-staging.git
+
 3. Run `$ git push bullpen-staging master` to deploy master. Before doing this you may need to switch Heroku's deploy from Github to Heroku Git [here](https://dashboard.heroku.com/apps/bullpen-staging/deploy/github).
 
 ### Cypress integration tests

@@ -30,7 +30,7 @@ class FreelancerProfileStepsController < ApplicationController
   def summary_save
     return false unless wizard_value(step) == :summary
 
-    @freelancer_profile.is_draft = params[:freelancer_profile][:is_draft]
+    @freelancer_profile.draft = params[:freelancer_profile][:draft]
     @freelancer_profile.save
     render_wizard @user
 
@@ -38,6 +38,8 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   def finish_wizard_path
+    return wizard_path(:summary) if pending_profile?
+
     reset_session
     root_path
   end
@@ -88,6 +90,10 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   private
+
+  def pending_profile?
+    @freelancer_profile.draft == false && @freelancer_profile.pending?
+  end
 
   def save_current_step
     @freelancer_profile.current_step = wizard_value(next_step)

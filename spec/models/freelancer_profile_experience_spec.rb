@@ -32,5 +32,12 @@ RSpec.describe FreelancerProfileExperience, type: :model do
       freelancer_profile_experience.update(end_month: 2, end_year: 2020)
       expect(freelancer_profile_experience.end_date).to eq Date.strptime('2020-2', '%Y-%m')
     end
+
+    it '#description_paragraphs' do
+      freelancer_profile_experience.update(description: "Some point 1\n\nSome point 2\nSome point 3")
+      expect(freelancer_profile_experience.description_paragraphs).to eq(['Some point 1', 'Some point 2', 'Some point 3'])
+      freelancer_profile_experience.update(description: "A ")
+      expect(freelancer_profile_experience.reload.description_paragraphs).to eq(['A '])
+    end
   end
 end
