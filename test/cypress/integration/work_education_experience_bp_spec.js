@@ -624,8 +624,8 @@ describe('WorkEducationPage', () => {
         expect($textarea).have.attr('name', 'freelancer_profile_education[description]')
       })
       .type('Some description of my education')
-      .get('div.modal-footer.justify-content-between.education')
-      .get('button.btn.btn-link.px-0.text-dark.cancel.education')
+      .get('div.modal-footer.justify-content-between.cy-education')
+      .get('button.btn.btn-link.px-0.text-dark.cy-cancel.cy-education')
       .should(($button) => {
         expect($button).to.have.length(1)
         expect($button).to.have.text('Cancel')
