@@ -116,7 +116,7 @@ describe('FreelancerRegistrationPage', () => {
       .get('#email').type(email)
       .get('button.form-control-lg.btn.btn-outline-secondary.col-md-12.mb-3.nextBtn-2').click()
       .get('div#step-2')
-      .get('div#agree')
+      .get('div#cy-agree')
       .should(($div) => {
         expect($div).to.have.length(1)
       })
@@ -133,19 +133,19 @@ describe('FreelancerRegistrationPage', () => {
       .get('#email').type(email)
       .get('button.form-control-lg.btn.btn-outline-secondary.col-md-12.mb-3.nextBtn-2').click()
       .get('div#step-2')
-      .get('div#agree' )
+      .get('div#cy-agree' )
       .get('span#first')
       .find('a')
       .should('have.attr', 'href', 'https://bullpenre.com/terms-of-service/?_ga=2.176404525.943759142.1600229912-339552047.1597271456')
 
     cy.get('div#step-2')
-      .get('div#agree' )
+      .get('div#cy-agree' )
       .get('span#second')
       .find('a')
       .should('have.attr', 'href', 'https://bullpenre.com/privacy-policy/?_ga=2.79419548.943759142.1600229912-339552047.1597271456')
 
     cy.get('div#step-2')
-      .get('div#agree' )
+      .get('div#cy-agree' )
       .get('span#third')
       .find('a')
       .should('have.attr', 'href', 'https://stripe.com/connect-account/legal')
@@ -183,17 +183,17 @@ describe('FreelancerRegistrationPage', () => {
     cy.get('#email').type(email).clear()
     cy.get('div.invalid-feedback.has-error-min').contains('Valid first name is required - two symbols minimum.')
     cy.get('div.invalid-feedback.has-error-min').contains('Valid last name is required - two symbols minimum.')
-    cy.get('div.invalid-feedback.has-error-email').contains('Enter valid email - it has contain \"@\".')
+    cy.get('div.invalid-feedback.has-error-email').contains('Enter valid email - it has to contain \"@\".')
 
     cy.get('#firstName').clear().type(first_name)
     cy.get('#lastName').clear().type(last_name)
     cy.get('#email').type(email).clear()
-    cy.get('div.invalid-feedback.has-error-email').contains('Enter valid email - it has contain \"@\".')
+    cy.get('div.invalid-feedback.has-error-email').contains('Enter valid email - it has to contain \"@\".')
 
     cy.get('#firstName').clear().type(first_name)
     cy.get('#lastName').clear().type(last_name)
     cy.get('#email').clear().type('not-valid-email')
-    cy.get('div.invalid-feedback.has-error-email').contains('Enter valid email - it has contain \"@\".')
+    cy.get('div.invalid-feedback.has-error-email').contains('Enter valid email - it has to contain \"@\".')
   });
 
   it ('checks password and "eye" icon in input field', () => {

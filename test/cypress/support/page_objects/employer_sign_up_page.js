@@ -110,7 +110,7 @@ class EmployerSignUpPage {
   }
 
   getAgreeText(){
-    return cy.get('#agree');
+    return cy.get('#cy-agree');
   }
 
   getTermOfServiceLink(){
