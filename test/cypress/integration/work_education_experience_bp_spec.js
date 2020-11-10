@@ -632,7 +632,7 @@ describe('WorkEducationPage', () => {
         expect($button).have.attr('type', 'button')
         expect($button).have.attr('data-dismiss', 'modal')
       })
-      .get('input.btn.btn-primary.save-education')
+      .get('input.btn.btn-primary.cy-save-education')
       .should(($input) => {
         expect($input).to.have.length(1)
       })

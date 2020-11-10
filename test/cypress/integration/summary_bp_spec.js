@@ -241,7 +241,7 @@ describe('SummaryPage', () => {
       .type('Some description of my education')
       .get('div.modal-footer.justify-content-between.cy-education')
       .get('button.btn.btn-link.px-0.text-dark.cy-cancel.cy-education')
-      .get('input.btn.btn-primary.save-education')
+      .get('input.btn.btn-primary.cy-save-education')
       .get('form.cy-education').submit()
     //  End of education modal
 
