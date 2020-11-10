@@ -262,8 +262,8 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'type', 'text')
       .should('have.attr', 'required', 'required')
       .type('Software engineer')
-      .get('div.form-group.company')
-      .get('label.bp-input-label.company')
+      .get('div.form-group.cy-company')
+      .get('label.bp-input-label.cy-company')
       .should(($label) => {
         expect($label).to.have.length(1)
       })
@@ -280,8 +280,8 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'type', 'text')
       .should('have.attr', 'required', 'required')
       .type('Awesome company')
-      .get('div.form-group.location')
-      .get('label.bp-input-label.location')
+      .get('div.form-group.cy-location')
+      .get('label.bp-input-label.cy-location')
       .should(($label) => {
         expect($label).to.have.length(1)
       })
