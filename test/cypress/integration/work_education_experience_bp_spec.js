@@ -661,14 +661,14 @@ describe('WorkEducationPage', () => {
       .then(($div) => {
         expect($div).to.have.text('Awesome company, Walnut Creek, CA')
       })
-      .get('div.col-md.work-experience-present.job')
+      .get('div.col-md.cy-work-experience-present.cy-job')
       .should(($div) => {
         expect($div).to.have.length(1)
       })
       .then(($div) => {
         expect($div).to.have.text('\n                  July, 2007-October, 2020\n                ')
       })
-      .get('button.btn.btn-link.edit-work-experience')
+      .get('button.btn.btn-link.cy-edit-work-experience')
       .find('svg')
       .should(($svg) => {
         expect($svg).to.have.length(1)

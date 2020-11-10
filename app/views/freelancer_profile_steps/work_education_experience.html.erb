@@ -27,13 +27,13 @@
               </div>
               <div class="row bp-text-sm cy-work-experience-present cy-company-location">
                 <div class="col-md cy-work-experience-present cy-company-location"><%= work_exp.company %>, <%= work_exp.location %></div>
-                <div class="col-md work-experience-present job">
+                <div class="col-md cy-work-experience-present cy-job">
                   <%= work_exp.start_date.strftime("%B, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%B, %Y") %>
                 </div>
               </div>
             </div>
             <%= render 'edit_work_experience', freelancer_profile_experience: work_exp %>
-            <button class="btn btn-link edit-work-experience" type="button" data-toggle="modal" data-target="#editWorkExperienceModal-<%= work_exp.id %>"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
+            <button class="btn btn-link cy-edit-work-experience" type="button" data-toggle="modal" data-target="#editWorkExperienceModal-<%= work_exp.id %>"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
           </div>
         <% end %>
       <% end %>
