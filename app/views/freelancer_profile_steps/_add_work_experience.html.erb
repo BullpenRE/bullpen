@@ -22,9 +22,9 @@
           <label for="locationInput" class="bp-input-label cy-location">Location</label>
           <%= f.text_field :location, class: "form-control", id: "locationInput", placeholder: "e.g. San Francisco, CA", required: true %>
         </div>
-        <div class="form-group start-date">
-          <label for="startMonth" class="bp-input-label start-date">Start Date</label>
-          <div class="row mb-3 start-date">
+        <div class="form-group cy-start-date">
+          <label for="startMonth" class="bp-input-label cy-start-date">Start Date</label>
+          <div class="row mb-3 cy-start-date">
             <div class="col start-month">
               <%= f.select :start_month,
                            options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES),

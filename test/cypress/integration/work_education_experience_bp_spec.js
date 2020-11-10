@@ -298,8 +298,8 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'type', 'text')
       .should('have.attr', 'required', 'required')
       .type('Walnut Creek, CA')
-      .get('div.form-group.start-date')
-      .get('label.bp-input-label.start-date')
+      .get('div.form-group.cy-start-date')
+      .get('label.bp-input-label.cy-start-date')
       .should(($label) => {
         expect($label).to.have.length(1)
       })
@@ -307,7 +307,7 @@ describe('WorkEducationPage', () => {
         expect($label).to.have.text('Start Date')
         expect($label).have.attr('for', 'startMonth')
       })
-      .get('div.row.mb-3.start-date')
+      .get('div.row.mb-3.cy-start-date')
       .get('div.col.start-month')
       .get('select#startMonth.form-control.selectpicker')
       .should(($select) => {
@@ -365,8 +365,8 @@ describe('WorkEducationPage', () => {
         expect($label).to.have.text('End Date')
         expect($label).have.attr('for', 'endMonth')
       })
-      .get('div.form-group.start-date')
-      .get('label.bp-input-label.start-date')
+      .get('div.form-group.cy-start-date')
+      .get('label.bp-input-label.cy-start-date')
       .should(($label) => {
         expect($label).to.have.length(1)
       })
