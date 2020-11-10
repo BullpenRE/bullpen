@@ -745,7 +745,8 @@ describe('WorkEducationPage', () => {
         expect($form).have.attr('method', 'post')
       })
       .get('div.modal-footer.justify-content-between.cy-edit-education')
-      .get('input.btn.btn-outline-danger.mr-2.edit-education.delete')
+      .get('div.cy-edit-education.cy-delete-save-submits')
+      .get('input.btn.btn-outline-danger.mr-2.cy-edit-education.cy-delete')
       .should(($input) => {
         expect($input).to.have.length(1)
         expect($input).have.attr('name', 'commit')
@@ -753,7 +754,7 @@ describe('WorkEducationPage', () => {
         expect($input).have.attr('value', 'Delete')
         expect($input).have.attr('data-disable-with', 'Delete')
       })
-      .get('input.btn.btn-primary.edit-education.save')
+      .get('input.btn.btn-primary.cy-edit-education.cy-save')
       .should(($input) => {
         expect($input).to.have.length(1)
         expect($input).have.attr('name', 'commit')
