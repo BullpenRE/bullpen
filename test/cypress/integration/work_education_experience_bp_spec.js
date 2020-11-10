@@ -578,7 +578,7 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'data-style', 'bp-btn-select-border')
       .should('have.attr', 'title', 'Year')
       .select('1982', {force: true})
-      .get('div.custom-control.custom-checkbox.current-studying')
+      .get('div.custom-control.custom-checkbox.cy-current-studying')
       .get('input').first()
       .should(($input) => {
         expect($input).to.have.length(1)
@@ -597,7 +597,7 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'aria-controls', 'graduationDateToggle')
       .should('have.attr', 'value', '1')
       .should('have.attr', 'name', 'freelancer_profile_education[currently_studying]')
-      .get('label.custom-control-label.current-studying').first()
+      .get('label.custom-control-label.cy-current-studying').first()
       .should(($label) => {
         expect($label).to.have.length(1)
       })
