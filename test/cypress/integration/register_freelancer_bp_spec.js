@@ -134,19 +134,19 @@ describe('FreelancerRegistrationPage', () => {
       .get('button.form-control-lg.btn.btn-outline-secondary.col-md-12.mb-3.nextBtn-2').click()
       .get('div#step-2')
       .get('div#cy-agree' )
-      .get('span#cy-first')
+      .get('span#cy-terms-of-service')
       .find('a')
       .should('have.attr', 'href', 'https://bullpenre.com/terms-of-service/?_ga=2.176404525.943759142.1600229912-339552047.1597271456')
 
     cy.get('div#step-2')
       .get('div#cy-agree' )
-      .get('span#cy-second')
+      .get('span#cy-privacy-agreement')
       .find('a')
       .should('have.attr', 'href', 'https://bullpenre.com/privacy-policy/?_ga=2.79419548.943759142.1600229912-339552047.1597271456')
 
     cy.get('div#step-2')
       .get('div#cy-agree' )
-      .get('span#cy-third')
+      .get('span#cy-stripe-connected-accounts')
       .find('a')
       .should('have.attr', 'href', 'https://stripe.com/connect-account/legal')
   });

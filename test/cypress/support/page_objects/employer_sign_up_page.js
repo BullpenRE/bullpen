@@ -114,15 +114,15 @@ class EmployerSignUpPage {
   }
 
   getTermOfServiceLink(){
-    return cy.get('#cy-first > a');
+    return cy.get('#cy-terms-of-service > a');
   }
 
   getPrivacyAgreementLink(){
-    return cy.get('#cy-second > a');
+    return cy.get('#cy-privacy-agreement > a');
   }
 
   getStripesConnectedAccountAuthLink(){
-    return cy.get('#cy-third > a');
+    return cy.get('#cy-stripe-connected-accounts > a');
   }
 }
 export default EmployerSignUpPage
