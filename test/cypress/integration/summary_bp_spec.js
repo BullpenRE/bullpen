@@ -144,7 +144,7 @@ describe('SummaryPage', () => {
 
     // => Add work experience modal
 
-    cy.get('div.mb-4.work-experience')
+    cy.get('div.mb-4.cy-work-experience')
       .get('button.btn.btn-outline-primary').first()
       .click()
       .get('div#addWorkExperienceModal.modal.fade.show', { includeShadowDom: true})

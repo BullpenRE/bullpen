@@ -157,7 +157,7 @@ describe('WorkEducationPage', () => {
 
     // Content Card. Step 4
 
-    cy.get('div.bp-card.mb-5.mx-auto.work-experience')
+    cy.get('div.bp-card.mb-5.mx-auto.cy-work-experience')
       .find('div.text-center')
       .find('h2')
       .should(($h2) => {
@@ -166,7 +166,7 @@ describe('WorkEducationPage', () => {
       .then(($h2) => {
         expect($h2).to.have.text('Work experience and education')
       })
-      .get('p.mb-4.work-experience').first()
+      .get('p.mb-4.cy-work-experience').first()
       .should(($p) => {
         expect($p).to.have.length(1)
       })
@@ -174,7 +174,7 @@ describe('WorkEducationPage', () => {
         expect($p).to.have.text('Tell us about your work experience and educational background.')
       })
 
-    cy.get('div.mb-4.work-experience')
+    cy.get('div.mb-4.cy-work-experience')
       .find('div.bp-input-label')
       .should(($div) => {
         expect($div).to.have.length(1)
@@ -223,7 +223,7 @@ describe('WorkEducationPage', () => {
       .wait(2000)
       .click()
 
-    cy.get('div.mb-4.work-experience')
+    cy.get('div.mb-4.cy-work-experience')
       .get('button.btn.btn-outline-primary').first()
       .click()
       .get('div#addWorkExperienceModal.modal.fade.show', { includeShadowDom: true})
@@ -700,8 +700,8 @@ describe('WorkEducationPage', () => {
     // End of Work Experience Edit mode
 
     // Beginning of Education Edit mode
-    cy.get('div.container.work-education')
-      .get('div.bp-card.mb-5.mx-auto.work-experience')
+    cy.get('div.container.cy-work-education')
+      .get('div.bp-card.mb-5.mx-auto.cy-work-experience')
       .get('div.mb-5.education-experience')
       .find('div.d-flex.align-items-center.justify-content-between.mb-3.education-present', { includeShadowDom: true})
       .get('div.w-100.education-present')
