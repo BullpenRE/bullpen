@@ -605,8 +605,8 @@ describe('WorkEducationPage', () => {
         expect($label).to.have.text('Currently Studying')
         expect($label).have.attr('for', 'currentlyStudying')
       })
-      .get('div.form-group.mb-0.education-description')
-      .get('label.bp-input-label.education-description')
+      .get('div.form-group.mb-0.cy-education-description')
+      .get('label.bp-input-label.cy-education-description')
       .should(($label) => {
         expect($label).to.have.length(1)
       })
