@@ -1,177 +1,131 @@
-<%= render '/nav_bar/nav_bar' %>
-
-<div class="container summary">
-  <div class="row summary">
-    <div class="col-md-12 summary">
-      <div class="row summary_1">
-        <div class="col-md-4 summary">
-          <div class="card summary">
-            <div class="card-body summary">
-              <p class="card-text summary">
-                <% if @freelancer_profile.avatar.attached? %>
-                  <div class="text-light mb-3 avatar-image text-center summary" style="font-size: 170px;line-height: 0;">
-                    <%= image_tag @freelancer_profile.avatar, class: 'rounded-circle summary' %>
-                  </div>
-                <% else %>
-                  <div class="text-light mb-3 avatar-image text-center" style="font-size: 170px;line-height: 0;"><i class="fas fa-user-circle"></i></div>
-                <% end %>
-                <div class="text-center mb-5 summary">
-                  <h2> <%=  @user.first_name %> <%=  @user.last_name %> </h2>
-                </div>
-                <div class="form-group mb-3 summary title">
-                  <label class="bp-input-label summary professional-title">Professional Title</label>
-                  <div class="summary professional-title"><%=  @freelancer_profile.professional_title %></div>
-                </div>
-                <div class="form-group mb-3 summary-summary">
-                  <label class="bp-input-label summary-professional-summary">Professional Summary</label>
-                  <div class="summary-professional-summary"><%=  @freelancer_profile.professional_summary %></div>
-                </div>
-                <div class="form-group mb-3 summary email">
-                  <label class="bp-input-label summary email">Email</label>
-                  <div class="summary-email"><%=  @user.email %></div>
-                </div>
-                <div class="form-group mb-3 summary location">
-                  <label class="bp-input-label summary location">Location</label>
-                  <div class="summary-location"><%=  @user.location %></div>
-                </div>
-              </p>
-            </div>
-          </div>
+<div class="container mb-5">
+  <div class="mt-4">
+    <% if @freelancer_profile.ready_for_submission? %>
+      <h1>Please verify your information.</h1>
+    <% elsif @freelancer_profile.pending? %>
+      <div class="d-flex flex-row">
+        <div class="mr-auto p-2">
+          <h1>Application Submitted.</h1>
+          <p>Your information is currently under review. If you'd like to make corrections you can still do so.</p>
         </div>
-        <div class="col-md-8 application-summary">
-          <div class="card mb-4 application-submit">
-            <div class="card-body application-submit-card">
-              <% if @freelancer_profile.draft == false && @freelancer_profile.pending? %>
-                <p class="card-text card-text-application-submitted">
-                <div class="text-left mt-2 mb-4 text-left-application-submitted">
-                  <h2 class="h2-application-submitted">Application Submitted</h2>
-                </div>
-                <div class="text-left mb-4 under-review">
-                  Your information is currently under review. If you'd like to make corrections you can still do so.
-                </div>
-                <div class="row row-under-review">
-                  <div class="col col-under-review">
-                    <%= link_to 'Modify Application', previous_wizard_path, class: "btn btn-primary btn-under-review" %>
-                  </div>
-                  </div>
-                </p>
-              <% elsif @freelancer_profile.declined? %>
-                <p class="card-text">
-                  <div class="text-left mt-2 mb-4">
-                    <h2>Application Declined</h2>
-                  </div>
-                  <div class="text-left mb-4">
-                    We regret to inform you that your application did not meet the requirements to be a freelancer
-                    on the Bullpen platform. If you'd like to appeal please email your request to
-                    <%= mail_to('support@bullpenre.com', 'support@bullpenre.com', subject: 'Declined Application Appeal') %>.
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: "btn btn-primary" %>
-                    </div>
-                  </div>
-                </p>
-              <% else %>
-                <p class="card-text initial-submit">
-                <div class="text-left mt-2 mb-4 initial-submit">
-                  <h2>Submit your application</h2>
-                </div>
-                <div class="text-left mb-4 please-verify">
-                  Please verify your information and click the submit button to complete the application process.
-                </div>
-                <%= form_for @freelancer_profile, html: {class: 'please-verify'}, url: wizard_path, method: :put do |f| %>
-                  <div class="row please-verify">
-                    <%= f.hidden_field :draft, value: false %>
-                    <div class="col please-verify-back">
-                      <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0 please-verify-back" %>
-                    </div>
-                    <div class="col text-right please-verify-submit">
-                      <%= f.submit 'Submit application', class: 'btn btn-primary please-verify-submit' %>
-                    </div>
-                  </div>
-                <% end %>
-                </p>
-              <% end %>
-            </div>
-            </div>
-          <div class="card application-summary">
-            <div class="card-body body-application-summary">
-              <p class="card-text application-summary">
-                <div class="text-left mb-4 text-application-summary">
-                  <h2>Application Summary</h2>
-                </div>
-                <div class="row row-skills-sector">
-                  <div class="col col-skills">
-                    <div class="form-group mb-3 label-skills">
-                      <label class="bp-input-label label-skills">Skills</label>
-                      <div class="w-100 w-100-skills">
-                        <%  @freelancer_profile&.freelancer_real_estate_skills&.each do |skill| %>
-                          <div class="btn btn-dark small mb-1 btn-skills" style="background-color: #005495; border: none; cursor: default;">
-                            <%= skill.real_estate_skill.description %>
-                          </div>
-                        <% end %>
-                      </div>
-                    </div>
-
-                  </div>
-                  <div class="col sector">
-                    <div class="form-group mb-3 form-group-sector">
-                      <label class="bp-input-label label-sector">Sectors</label>
-                      <div class="w-100 w-100-sector">
-                        <%  @freelancer_profile&.freelancer_sectors&.map do |freelancer_sector| %>
-                          <div class="btn btn-dark small mb-1 btn-sector" style="background-color: #005495; border: none; cursor: default;">
-                            <%= freelancer_sector.sector.description %>
-                          </div>
-                        <% end %>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              <div class="row row-work-experience">
-                <div class="col col-work-experience">
-                  <div class="form-group mb-3 form-group-work-experience">
-                    <label class="bp-input-label label-work-experience">Work Experience</label>
-                    <div class="work_exp">
-                      <% @freelancer_profile.freelancer_profile_experiences.each do |work_exp| %>
-                        <div class="work_exp-job-title"><%= work_exp.job_title %></div>
-                        <div class="row bp-text-sm work_exp">
-                          <div class="col-md work_exp-company-location">
-                            <%= work_exp.company %>, <%= work_exp.location %>
-                          </div>
-                          <div class="col-md work_exp-start-date">
-                            <%= work_exp.start_date.strftime("%b, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%b, %Y") %>
-                          </div>
-                        </div>
-                        <div class="hr-under-work-experience">
-                          <hr class="under-work-experience">
-                        </div>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-                <div class="col col-education">
-                  <div class="form-group mb-3 form-group-education">
-                    <label class="bp-input-label label-education">Education</label>
-                    <div class="div-education">
-                      <% @freelancer_profile.freelancer_profile_educations.each do |education_exp| %>
-                        <div class="education_exp"><%= education_exp.institution %></div>
-                        <div class="row bp-text-sm row-education_exp">
-                          <div class="col-md education_exp-degree"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
-                          <div class="col-md education_exp-currently-studying"><%= education_exp.currently_studying.present? ? "Currently Studying" : education_exp.graduation_year %></div>
-                        </div>
-                        <div class="hr-under-education">
-                          <hr class="under-education">
-                        </div>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              </p>
-            </div>
-          </div>
+        <div class="p-2">
+          <%= link_to 'Edit', previous_wizard_path, class: "btn btn-outline-primary btn-lg" %>
         </div>
+      </div>
+    <% elsif @freelancer_profile.declined? %>
+      <h1>Application Declined.</h1>
+      <p>We regret to inform you that your application did not meet the requirements to be a freelancer
+      on the Bullpen platform. If you'd like to appeal please email your request to
+        <%= mail_to('support@bullpenre.com', 'support@bullpenre.com', subject: 'Declined Application Appeal') %>.</p>
+    <% end %>
+  </div>
+  <div class="container bp-card">
+    <div class="d-flex flex-sm-row flex-column">
+      <div class="mr-3">
+        <% if @freelancer_profile.avatar.attached? %>
+          <div class="text-light mb-3 avatar-image" style="line-height: 0;">
+            <%= image_tag @freelancer_profile.avatar, class: 'rounded-circle', width: '115px', height: '115px' %>
+          </div>
+        <% else %>
+          <div class="text-light mb-3 avatar-image" style="font-size: 113px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
+        <% end %>
+      </div>
+      <div class="">
+        <h2><%= @user.first_name %> <%=  @user.last_name %></h2>
+        <div class="mb-2">
+          <%= @freelancer_profile.professional_title %><br>
+          <%= @user.location %>
+        </div>
+        <div class="mb-4" style="word-wrap: break-word; overflow-wrap: break-word;"><%= @freelancer_profile.professional_summary %></div>
+        <div>
+          <%  @freelancer_profile.sectors.order(description: :asc)&.each do |sector| %>
+            <span class="badge badge-secondary mb-1"><%= sector.description %></span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <% if @freelancer_profile.real_estate_skills.any? || @freelancer_profile.softwares.any? %><hr><% end %>
+    <% if @freelancer_profile.real_estate_skills.any? %>
+      <div class="mt-3">
+        <h4>Skills</h4>
+        <div>
+          <%= @freelancer_profile.real_estate_skills.order(description: :asc).pluck(:description).join(', ') %>
+        </div>
+      </div>
+    <% end %>
+    <% if @freelancer_profile.softwares.any? %>
+      <div class="mt-3">
+        <h4>Software Licenses</h4>
+        <div>
+          <%= @freelancer_profile.softwares.order(description: :asc).pluck(:description).join(', ') %>
+        </div>
+      </div>
+    <% end %>
+    <% if @freelancer_profile.freelancer_profile_experiences.any? %>
+      <hr>
+      <div class="mt-3">
+        <h4>Experience</h4>
+        <% @freelancer_profile.freelancer_profile_experiences.order(current_job: :desc, end_date: :desc).each do |work_experience| %>
+          <div class="d-flex">
+            <div class="mb-2"><b><%= work_experience.company %></b><br><%= work_experience.job_title %></div>
+            <div class="ml-auto"><i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date.strftime('%b %Y') %></i></div>
+          </div>
+          <ul class="mr-lg-3 mr-1 pl-3">
+            <% work_experience.description_paragraphs.each do |paragraph| %>
+              <li style="word-wrap: break-word; overflow-wrap: break-word;"><%= paragraph %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+    <% if @freelancer_profile.freelancer_profile_educations.any? || @freelancer_profile.freelancer_certifications.any? %>
+      <hr>
+    <% end %>
+    <div class="mt-3">
+      <% if @freelancer_profile.freelancer_profile_educations.any? %>
+        <h4>Education</h4>
+        <% @freelancer_profile.freelancer_profile_educations.order(currently_studying: :desc, graduation_year: :desc).each do |education| %>
+          <div class="d-flex">
+            <div class="mb-2"><b><%= education.institution %></b><br><%= education.degree %> <%= education.course_of_study %></div>
+            <div class="ml-auto"><i><%= education.currently_studying ? 'Present' : education.graduation_year %></i></div>
+          </div>
+          <% if education.description.present? %>
+            <ul class="mr-lg-3 mr-1 pl-3">
+              <li style="word-wrap: break-word; overflow-wrap: break-word;"><%= education.description %></li>
+            </ul>
+          <% end %>
+        <% end %>
+      <% end %>
+      <% if @freelancer_profile.freelancer_certifications.any? %>
+        <h4 class="mt-3">Licenses &amp; Certifications</h4>
+
+        <% @freelancer_profile.freelancer_certifications.order(earned: :desc).each do |freelancer_certification| %>
+          <div class="d-flex mb-2">
+            <div><b><%= freelancer_certification.description %></b></div>
+            <div class="ml-auto"><i><%= freelancer_certification.earned.strftime("%b, %Y") %></i></div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <hr>
+    <div class="mt-3">
+      <h4>Email</h4>
+      <p><%= @freelancer_profile.user.email %></p>
+    </div>
+    <div class="mt-4">
+      <div class="d-flex">
+        <% if @freelancer_profile.ready_for_submission? %>
+          <div class="">
+            <%= link_to 'Edit', previous_wizard_path, class: "btn btn-outline-primary btn-lg" %>
+          </div>
+          <div class="ml-auto">
+            <%= form_for @freelancer_profile, url: wizard_path, method: :put do |f| %>
+              <%= f.hidden_field :draft, value: false %>
+              <%= f.submit 'Submit Application', class: 'btn btn-primary btn-lg d-none d-sm-block' %>
+              <%= f.submit 'Submit', class: 'btn btn-primary btn-lg d-sm-none' %>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
