@@ -22,11 +22,11 @@
   </div>
   <button type="button" class="btn btn-link py-0 new-question-button"><i class="fas fa-plus mr-2"></i>Add another question</button>
   <div class="modal-footer justify-content-between">
-    <%= link_to employer_jobs_path(id: :details, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
+    <%= link_to employer_job_flows_path(id: :details, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
     <div>
-      <%= button_tag type: 'submit', class: "btn btn-outline-primary mr-1" do %>
+      <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
         Save<span class="d-none d-sm-inline"> as Draft</span><i class="fas fa-chevron-right ml-2"></i>
       <% end %>
       <%= button_tag type: 'submit', class: "btn btn-primary" do %>
