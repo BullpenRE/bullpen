@@ -244,8 +244,8 @@ describe('WorkEducationPage', () => {
       .then(($h3) => {
         expect($h3).to.have.text('Add Experience')
       })
-      .get('div.form-group.job-title')
-      .get('label.bp-input-label.job-title')
+      .get('div.form-group.cy-job-title')
+      .get('label.bp-input-label.cy-job-title')
       .should(($label) => {
         expect($label).to.have.length(1)
       })
