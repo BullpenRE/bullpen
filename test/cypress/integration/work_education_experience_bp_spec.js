@@ -737,7 +737,7 @@ describe('WorkEducationPage', () => {
         expect($svg).have.attr('role', 'img')
       })
       .click()
-      .get('form.edit-education', { includeShadowDom: true})
+      .get('form.cy-edit-education', { includeShadowDom: true})
       .should(($form) => {
         expect($form).to.have.length(1)
         expect($form).have.attr('action', '/freelancer_profile_steps/work_education_experience')
