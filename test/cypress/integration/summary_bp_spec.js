@@ -129,7 +129,7 @@ describe('SummaryPage', () => {
       .get('div.col-md.cy-experience')
       .find('div.form-group.mb-4')
       .find('label.bp-input-label')
-      .get('div.w-100.yearsExperienceSelect')
+      .get('div.w-100.cy-yearsExperienceSelect')
       .find('div.dropdown.bootstrap-select.form-control')
       .find('select#freelancer_profile_professional_years_experience.form-control.selectpicker', {includeShadowDom: true})
       .select('>10', {force: true})

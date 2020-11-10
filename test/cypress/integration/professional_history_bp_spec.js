@@ -178,7 +178,7 @@ describe('ProfessionalHistoryPage', () => {
         expect($label).to.have.text('Years of professional experience')
         expect($label).have.attr('for', 'yearsExperienceSelect')
       })
-      .get('div.w-100.yearsExperienceSelect')
+      .get('div.w-100.cy-yearsExperienceSelect')
       .find('div.dropdown.bootstrap-select.form-control')
       .find('select#freelancer_profile_professional_years_experience.form-control.selectpicker', { includeShadowDom: true})
       .should(($select) => {
