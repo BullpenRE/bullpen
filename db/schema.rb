@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_004611) do
     t.boolean "motivation_augment"
     t.boolean "motivation_other"
     t.string "current_step"
+    t.boolean "completed", default: false
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 

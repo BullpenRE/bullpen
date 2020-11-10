@@ -24,8 +24,14 @@ Rails.application.routes.draw do
   resources :freelancer_profile_steps
   resources :employer_profile_steps
 
-  namespace 'employer' do
-    resources :dashboard
+  # resources :employer
+
+  namespace :employer do
+    get 'dashboard', to: 'dashboard#show'
+    resources :jobs
+    resources :billing
+    resources :refer
+    resources :talent
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
