@@ -248,7 +248,7 @@ describe('AvatarLocationPage', () => {
     //above lines are commented by the moment when problem of remove test images from storage will be solved
 
     cy.get('div.col-md.text-center.mb-5')
-      .find('h2.location')
+      .find('h2.cy-location')
       .should(($h2) => {
         expect($h2).to.have.length(1)
       })
