@@ -202,7 +202,7 @@ describe('SummaryPage', () => {
       .get('form.cy-work-experience').first().submit()
     //  End of work experience modal
 
-    cy.get('div.mb-5.education-experience')
+    cy.get('div.mb-5.cy-education-experience')
       .get('button.btn.btn-outline-primary.cy-education')
       .click()
       .get('div#addEducationModal.modal.fade.show', { includeShadowDom: true})

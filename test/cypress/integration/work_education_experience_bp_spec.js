@@ -434,7 +434,7 @@ describe('WorkEducationPage', () => {
       .get('form.cy-work-experience').first().submit()
       //  End of work experience modal
 
-    cy.get('div.mb-5.education-experience')
+    cy.get('div.mb-5.cy-education-experience')
       .find('div.bp-input-label')
       .should(($div) => {
         expect($div).to.have.length(1)
@@ -483,7 +483,7 @@ describe('WorkEducationPage', () => {
       .wait(2000)
       .click()
 
-    cy.get('div.mb-5.education-experience')
+    cy.get('div.mb-5.cy-education-experience')
       .get('button.btn.btn-outline-primary.cy-education')
       .click()
       .get('div#addEducationModal.modal.fade.show', { includeShadowDom: true})
@@ -702,7 +702,7 @@ describe('WorkEducationPage', () => {
     // Beginning of Education Edit mode
     cy.get('div.container.cy-work-education')
       .get('div.bp-card.mb-5.mx-auto.cy-work-experience')
-      .get('div.mb-5.education-experience')
+      .get('div.mb-5.cy-education-experience')
       .find('div.d-flex.align-items-center.justify-content-between.mb-3.education-present', { includeShadowDom: true})
       .get('div.w-100.education-present')
       .get('div.row.education-present.institution')
