@@ -314,7 +314,7 @@ describe('AvatarLocationPage', () => {
       .go('back')
     // Beginning  of avatar on navbar check
     cy.get('nav.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.mb-5')
-      .get('div.container.navbar').first()
+      .get('div.container.cy-navbar').first()
       .get('div#navbarSupportedContent.collapse.navbar-collapse')
       .get('ul.navbar-nav.ml-auto')
       .get('li.nav-item.dropdown')
