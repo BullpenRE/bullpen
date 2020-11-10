@@ -14,8 +14,8 @@
             <label for="institutionInput" class="bp-input-label cy-institution">Institution</label>
             <%= f.text_field :institution, class: "form-control", id: "institutionInput", placeholder: "Enter the school you attended" %>
           </div>
-          <div class="form-group degree">
-            <label for="degreeSelect" class="bp-input-label degree">Degree</label>
+          <div class="form-group cy-degree">
+            <label for="degreeSelect" class="bp-input-label cy-degree">Degree</label>
             <%= f.select :degree,
                          options_for_select(FreelancerProfileEducation.degrees.keys),
                          {}, class: 'form-control selectpicker',

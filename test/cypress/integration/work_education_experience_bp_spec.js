@@ -522,8 +522,8 @@ describe('WorkEducationPage', () => {
       .should('have.attr', 'name', 'freelancer_profile_education[institution]')
       .should('have.attr', 'type', 'text')
       .type('Some University')
-      .get('div.form-group.degree')
-      .get('label.bp-input-label.degree')
+      .get('div.form-group.cy-degree')
+      .get('label.bp-input-label.cy-degree')
       .should(($label) => {
         expect($label).to.have.length(1)
       })
