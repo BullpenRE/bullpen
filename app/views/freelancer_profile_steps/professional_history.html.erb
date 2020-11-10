@@ -9,20 +9,20 @@
 
 <!--Content Card, Step 3-->
 <div class="container">
-  <div class="bp-card mb-5 mx-auto professional" style="max-width: 700px;">
+  <div class="bp-card mb-5 mx-auto cy-professional" style="max-width: 700px;">
     <%= form_for @freelancer_profile, url: wizard_path, method: :put do |f| %>
       <div class="text-center">
         <h2>Professional History</h2>
         <p class="mb-4">Tell us about your professional history.</p>
       </div>
       <div class="row">
-        <div class="col-md title">
+        <div class="col-md cy-title">
           <div class="form-group mb-4">
             <label for="professionalTitleInput" class="bp-input-label">Professional Title</label>
             <%= f.text_field :professional_title, class: "form-control", id: "professionalTitleInput", placeholder: "e.g. Senior Analyst", required: true %>
           </div>
         </div>
-        <div class="col-md experience">
+        <div class="col-md cy-experience">
           <div class="form-group mb-4">
             <label for="yearsExperienceSelect" class="bp-input-label">Years of professional experience</label>
             <div class="w-100 yearsExperienceSelect">

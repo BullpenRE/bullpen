@@ -111,7 +111,7 @@ describe('WorkEducationPage', () => {
     cy.get('div.row')
       .get('input#professionalTitleInput.form-control')
       .type('Owner')
-      .get('div.col-md.experience')
+      .get('div.col-md.cy-experience')
       .find('div.form-group.mb-4')
       .find('label.bp-input-label')
       .should(($label) => {

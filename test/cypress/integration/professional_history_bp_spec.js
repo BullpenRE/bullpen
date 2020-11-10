@@ -130,7 +130,7 @@ describe('ProfessionalHistoryPage', () => {
 
       // Content Card. Step 3
 
-    cy.get('div.bp-card.mb-5.mx-auto.professional')
+    cy.get('div.bp-card.mb-5.mx-auto.cy-professional')
       .find('form.edit_freelancer_profile')
       .find('div.text-center')
       .find('h2').first()
@@ -149,7 +149,7 @@ describe('ProfessionalHistoryPage', () => {
       })
 
     cy.get('div.row')
-      .get('div.col-md.title')
+      .get('div.col-md.cy-title')
       .find('div.form-group.mb-4')
       .find('label.bp-input-label')
       .should(($label) => {
@@ -168,7 +168,7 @@ describe('ProfessionalHistoryPage', () => {
         expect($input).have.attr('name', 'freelancer_profile[professional_title]')
       })
       .type('Owner')
-      .get('div.col-md.experience')
+      .get('div.col-md.cy-experience')
       .find('div.form-group.mb-4')
       .find('label.bp-input-label')
       .should(($label) => {
