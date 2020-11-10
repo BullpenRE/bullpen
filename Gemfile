@@ -18,11 +18,11 @@ gem 'webpacker', '~> 5.2', '>= 5.2.1'       # Transpile app-like JavaScript. Rea
 gem 'wicked', '~> 1.3', '>= 1.3.2'          # Wicked is a Rails engine for producing easy wizard controllers
 gem 'mini_magick', '~> 4.10', '>= 4.10.1'   # Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
 
-group :development, :staging do
+group :development, :staging, :admin do
   gem 'activeadmin', '~> 2.8', '>= 2.8.1'     # Administration DSL out of a box: https://activeadmin.info/
 end
 
-group :production, :staging do
+group :production, :staging, :admin do
   gem 'aws-sdk-s3', '~> 1.83', '>= 1.83.1', require: false  # Amazon Simple Storage Service is a web service that provides highly scalable cloud storage
 end
 

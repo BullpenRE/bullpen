@@ -97,3 +97,10 @@ staging:
   compile: true
   extract_css: true
   cache_manifest: true
+
+admin:
+  <<: *default
+  # All settings should be the same as the production environment.
+  compile: true
+  extract_css: true
+  cache_manifest: true
