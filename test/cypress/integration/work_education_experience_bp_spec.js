@@ -643,18 +643,18 @@ describe('WorkEducationPage', () => {
     //  End of education modal
 
     // Beginning of Work Experience Edit mode
-    cy.get('div.d-flex.align-items-center.justify-content-between.mb-3.work-experience-present')
-      .get('div.w-100.work-experience-present')
-      .get('div.row.work-experience-present.title')
-      .get('div.col.mb-1.text.work-experience-present.title')
+    cy.get('div.d-flex.align-items-center.justify-content-between.mb-3.cy-work-experience-present')
+      .get('div.w-100.cy-work-experience-present')
+      .get('div.row.cy-work-experience-present.cy-title')
+      .get('div.col.mb-1.text.cy-work-experience-present.cy-title')
       .should(($div) => {
         expect($div).to.have.length(1)
       })
       .then(($div) => {
         expect($div).to.have.text('Software engineer')
       })
-      .get('div.row.bp-text-sm.work-experience-present.company-location')
-      .get('div.col-md.work-experience-present.company-location')
+      .get('div.row.bp-text-sm.cy-work-experience-present.cy-company-location')
+      .get('div.col-md.cy-work-experience-present.cy-company-location')
       .should(($div) => {
         expect($div).to.have.length(1)
       })
