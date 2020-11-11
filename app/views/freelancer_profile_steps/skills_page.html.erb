@@ -22,7 +22,7 @@
         <div class="w-100">
           <%= f.select :freelancer_real_estate_skills,
                        options_for_select(
-                         RealEstateSkill.find_each.map{ |skill| [skill.description, skill.id] if skill.disable == false },
+                         @real_estate_skills,
                          @freelancer_profile&.freelancer_real_estate_skills&.map do |skill|
                            [skill.real_estate_skill.description, skill.real_estate_skill.id]
                          end.flatten
@@ -36,7 +36,7 @@
         </label>
         <%= f.select :freelancer_sectors,
                      options_for_select(
-                       Sector.find_each.map{ |sector| [sector.description, sector.id] if sector.disable == false },
+                       @sectors,
                        @freelancer_profile&.freelancer_sectors&.map do |freelancer_sector|
                          [freelancer_sector.sector.description, freelancer_sector.sector.id]
                        end.flatten),
@@ -48,7 +48,7 @@
         </label>
         <%= f.select :freelancer_softwares,
                      options_for_select(
-                       Software.find_each.map{ |software| [software.description, software.id] if software.disable == false },
+                       @softwares,
                        @freelancer_profile&.freelancer_softwares&.map do |freelancer_software|
                          [freelancer_software.software.description, freelancer_software.software.id]
                        end.flatten),

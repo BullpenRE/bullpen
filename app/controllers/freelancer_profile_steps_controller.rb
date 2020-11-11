@@ -13,6 +13,9 @@ class FreelancerProfileStepsController < ApplicationController
       @user.reload
     end
     @freelancer_profile = @user.freelancer_profile
+    @real_estate_skills = RealEstateSkill.enabled.map{ |skill| [skill.description, skill.id] }
+    @sectors = Sector.enabled.map{ |sector| [sector.description, sector.id] }
+    @softwares = Software.enabled.map{ |software| [software.description, software.id] }
     render_wizard
   end
 
