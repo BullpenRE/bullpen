@@ -48,5 +48,9 @@ module Bullpen
     # https://stackoverflow.com/questions/14045858/syntax-to-skip-creating-tests-assets-helpers-for-rails-generate-controller
     config.generators.stylesheets = false
     config.generators.helper = false
+
+    # Stop activeadmin files from crashing on heroku.
+    # See https://stackoverflow.com/questions/57277351/rails-6-zeitwerknameerror-doesnt-load-class-from-module
+    config.autoloader = :classic
   end
 end
