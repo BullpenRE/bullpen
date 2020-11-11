@@ -92,6 +92,23 @@ At least once per day merge master into your story branch:
 
 If you have merge conflicts after merging master, work with your teammates to resolve them.
 
+### Backing Up and Restoring Development Databases
+The following rake command will import a database dump file containing a `*.dump` extension. 
+This file must be in the /bullpen directory. If you have multiple `*.dump` files it will choose the one with the most 
+recent timestamp (the one that was most recently written).
+
+        $ rake db:import
+
+In order to export your local development database to a `*.dump` file, run the following command:
+
+        $ rake db:export
+
+The name of the exported file will include a timestamp and look something like `2020-11-11_development.dump`.
+In order to specify a name while importing or exporting you can pass along a name, both for importing and exporting:
+
+        $ rake db:import\[rogers_test_database.dump\]
+        $ rake db:export\[my_database.dump\]
+
 
 ### Cherry Picking
 If you need to copy over a commit from one branch to another without merging:
