@@ -93,6 +93,7 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.errors.messages[:base]).to eq ['Uploaded files must not exceed 2MB.']
       end
     end
+
     describe 'correct_content_type?' do
       it 'without attached avatar' do
         expect(freelancer_profile).to be_valid
@@ -127,6 +128,21 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.declined?).to be_falsey
         expect(freelancer_profile.pending?).to be_truthy
       end
+    end
+
+    it '#ready_for_submission?' do
+      freelancer_profile.update(draft: true, curation: :pending)
+      expect(freelancer_profile.ready_for_submission?).to be_truthy
+      freelancer_profile.update(draft: true, curation: :accepted)
+      expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
+      freelancer_profile.update(draft: true, curation: :declined)
+      expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
+      freelancer_profile.update(draft: false, curation: :pending)
+      expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
+      freelancer_profile.update(draft: false, curation: :accepted)
+      expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
+      freelancer_profile.update(draft: false, curation: :declined)
+      expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
     end
   end
 end

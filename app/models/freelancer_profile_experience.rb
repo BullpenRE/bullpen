@@ -27,4 +27,8 @@ class FreelancerProfileExperience < ApplicationRecord
     end_date = "#{end_year}-#{end_month}"
     self.end_date = Date.strptime(end_date, '%Y-%m')
   end
+
+  def description_paragraphs
+    description.split("\n").reject(&:blank?)
+  end
 end
