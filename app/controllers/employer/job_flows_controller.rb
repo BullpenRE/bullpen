@@ -86,10 +86,6 @@ class Employer::JobFlowsController < ApplicationController
     true
   end
 
-  def destroy
-    job.destroy
-  end
-
   private
 
   def save_job_skills

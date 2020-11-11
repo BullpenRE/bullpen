@@ -18,7 +18,7 @@
         <p><%= job.relevant_job_details %></p>
          <hr>
          <li>This is <i class="text-secondary font-weight-bold"> <%= job.position_length %> </i> position</li>
-         <li><i class="text-secondary font-weight-bold"> <%= job.hours_needed.capitalize %> </i> hours are needed</li>
+         <li><i class="text-secondary font-weight-bold"> <%= job&.hours_needed&.capitalize %> </i> hours are needed</li>
          <div class="bp-text mb-2 mt-2">
           <% if (job.daytime_availability_required == true) %>
             <i class="far fa-clock text-secondary"></i> Daytime availability is required <span class="text-secondary font-weight-bold">(9AM-5PM PST)</span>
@@ -40,7 +40,7 @@
           </div>
           <div class="col-sm-4">
             <div class="text-secondary font-weight-bold"> Experience Level </div>
-            <li><%= job.required_experience.capitalize %></li>
+            <li><%= job&.required_experience&.capitalize %></li>
           </div>
         </div>
         <div class="bp-text mb-1 mt-2">
