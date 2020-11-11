@@ -3,7 +3,7 @@
   <div class="card md-2 shadow-sm">
     <p><h1 class="text-secondary">Do you have a job in mind?</h1></p>
     <div class="card-body">
-      <%= link_to 'Post a job', {}, class: "btn btn-outline-primary btn-lg" %>
+      <%= link_to 'Post a job', employer_jobs_path(start_flow: true), { remote: true, query: 'start_flow', 'data-toggle': "modal", 'data-target': "#postJobStep1", class: "btn btn-outline-primary btn-lg" } %>
       <p><h5 class="text-left">Tell us about your needs</h5></p>
       <p class="text-left">
         Job description, availability,
@@ -29,3 +29,4 @@
     </div>
   </div>
 </div>
+<div id="jobStepModal"></div>

@@ -14,4 +14,8 @@ class EmployerProfile < ApplicationRecord
     'Private Equity': 4,
     'Other': 5
   }
+
+  def completed?
+    completed == true
+  end
 end

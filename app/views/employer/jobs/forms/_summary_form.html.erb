@@ -1,0 +1,40 @@
+<!--Form-->
+<%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
+  <%= f.hidden_field :job_id, value: job.id %>
+  <%= f.hidden_field 'step', value: 'summary' %>
+  <div class="form-group">
+    <div class="d-flex justify-content-between">
+      <label for="jobTitle" class="h5">Job Title</label>
+    </div>
+    <%= f.text_field :title, class: "form-control", id: "jobTitle", placeholder: "Enter the job title", maxlength: "50", required: true, value: job.title %>
+  </div>
+  <div class="form-group">
+    <label for="jobShortDescription" class="h5">Short Description</label>
+    <%= f.text_area :short_description, class: "form-control",rows: "3", id: "jobShortDescription", placeholder: "Enter a short, compelling description of this job", maxlength: "250", required: true %>
+    <div class="bp-text-sm mt-1">Job seekers will see this summary on the search page.</div>
+  </div>
+  <div class="form-group mb-1">
+    <label for="sectorMultiselect" class="h5">What sectors are relevant to this job?</label>
+    <%= f.select :job_sectors,
+                 options_for_select(
+                   Sector.find_each.map{ |sector| [sector.description, sector.id] if sector.disable == false },
+                   job&.job_sectors&.map do |job_sector|
+                     [job_sector.sector.description, job_sector.sector.id]
+                   end.flatten),
+                 {}, multiple: true, class: 'select2', required: true, id: "sectorMultiselect", style: "width: 100%" %>
+    <script>
+      $(function() {
+        $('.select2').select2({
+          placeholder: 'Select all that apply',
+          allowClear: true
+        });
+      });
+    </script>
+  </div>
+  <div class="modal-footer justify-content-between">
+    <button type="button" class="btn btn-outline-primary invisible"><i class="fas fa-chevron-left mr-2"></i>Back</button>
+    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+      Next<i class="fas fa-chevron-right ml-2"></i>
+    <% end %>
+  </div>
+<% end %>

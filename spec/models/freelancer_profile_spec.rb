@@ -25,6 +25,8 @@ RSpec.describe FreelancerProfile, type: :model do
       let!(:real_estate_skill) { freelancer_real_estate_skill.real_estate_skill }
       let!(:freelancer_software) { FactoryBot.create(:freelancer_software, freelancer_profile: freelancer_profile) }
       let!(:software) { freelancer_software.software }
+      let!(:freelancer_certification) { FactoryBot.create(:freelancer_certification, freelancer_profile: freelancer_profile) }
+      let!(:certification) { freelancer_certification.certification }
 
       it 'can have many freelancer_sectors' do
         expect(freelancer_profile.freelancer_sectors).to include(freelancer_sector)
@@ -38,20 +40,27 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.freelancer_softwares).to include(freelancer_software)
       end
 
-      it 'getting destroyed destroys freelancer_sectors, freelance_real_estate_skills and freelancer_softwares but not parent sectors, real_estate_skills or softwares' do
+      it 'can have many freelancer_certificates' do
+        expect(freelancer_profile.freelancer_certifications).to include(freelancer_certification)
+      end
+
+      it 'getting destroyed destroys freelancer_sectors, freelance_real_estate_skills, freelancer_softwares, freelancer_certifications but not parent sectors, real_estate_skills, softwares, certificates' do
         expect(FreelancerSector.exists?(freelancer_sector.id)).to be_truthy
         expect(FreelancerRealEstateSkill.exists?(freelancer_real_estate_skill.id)).to be_truthy
         expect(FreelancerSoftware.exists?(freelancer_software.id)).to be_truthy
+        expect(FreelancerCertification.exists?(freelancer_certification.id)).to be_truthy
 
         freelancer_profile.destroy
 
         expect(FreelancerSector.exists?(freelancer_sector.id)).to be_falsey
         expect(FreelancerRealEstateSkill.exists?(freelancer_real_estate_skill.id)).to be_falsey
         expect(FreelancerSoftware.exists?(freelancer_software.id)).to be_falsey
+        expect(FreelancerCertification.exists?(freelancer_certification.id)).to be_falsey
 
         expect(Sector.exists?(sector.id)).to be_truthy
         expect(RealEstateSkill.exists?(real_estate_skill.id)).to be_truthy
         expect(Software.exists?(software.id)).to be_truthy
+        expect(Certification.exists?(certification.id)).to be_truthy
       end
 
       it 'can have sectors through freelancer_sectors' do
@@ -84,6 +93,7 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.errors.messages[:base]).to eq ['Uploaded files must not exceed 2MB.']
       end
     end
+
     describe 'correct_content_type?' do
       it 'without attached avatar' do
         expect(freelancer_profile).to be_valid
@@ -118,6 +128,21 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.declined?).to be_falsey
         expect(freelancer_profile.pending?).to be_truthy
       end
+    end
+
+    it '#ready_for_submission?' do
+      freelancer_profile.update(draft: true, curation: :pending)
+      expect(freelancer_profile.ready_for_submission?).to be_truthy
+      freelancer_profile.update(draft: true, curation: :accepted)
+      expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
+      freelancer_profile.update(draft: true, curation: :declined)
+      expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
+      freelancer_profile.update(draft: false, curation: :pending)
+      expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
+      freelancer_profile.update(draft: false, curation: :accepted)
+      expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
+      freelancer_profile.update(draft: false, curation: :declined)
+      expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
     end
   end
 end
