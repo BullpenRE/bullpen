@@ -110,19 +110,19 @@ class EmployerSignUpPage {
   }
 
   getAgreeText(){
-    return cy.get('#cy-agree');
+    return cy.get('.cy-agree');
   }
 
   getTermOfServiceLink(){
-    return cy.get('#cy-terms-of-service > a');
+    return cy.get('.cy-terms-of-service > a');
   }
 
   getPrivacyAgreementLink(){
-    return cy.get('#cy-privacy-agreement > a');
+    return cy.get('.cy-privacy-agreement > a');
   }
 
   getStripesConnectedAccountAuthLink(){
-    return cy.get('#cy-stripe-connected-accounts > a');
+    return cy.get('.cy-stripe-connected-accounts > a');
   }
 }
 export default EmployerSignUpPage
