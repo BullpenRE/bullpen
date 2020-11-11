@@ -7,14 +7,14 @@ class Employer::JobFlowsController < ApplicationController
 
   def show
     @user = current_user
-    @job = params[:start_flow].present? ? current_user.jobs.create : current_user.jobs.find_by(id: params[:job_id])
+    params[:start_flow].present? ? new_job : job
 
     respond_js_format(wizard_value(step))
   end
 
   def update
     @user = current_user
-    @job = find_job
+    params[:job][:job_id].blank? ? new_job : job
 
     summary_step_save ||
       job_type_save ||
@@ -26,11 +26,11 @@ class Employer::JobFlowsController < ApplicationController
   def summary_step_save
     return false unless params[:job][:step] == 'summary'
 
-    @job.update(summary_params)
+    job.update(summary_params)
 
-    @job.job_sectors.destroy_all
+    job.job_sectors.destroy_all
     sectors_params&.each do |sector_id|
-      JobSector.create(job_id: @job.id, sector_id: sector_id)
+      JobSector.create(job_id: job.id, sector_id: sector_id)
     end
 
     respond_js_format(:job_type)
@@ -41,7 +41,7 @@ class Employer::JobFlowsController < ApplicationController
   def job_type_save
     return false unless params[:job][:step] == 'job_type'
 
-    @job.update(job_type_params.merge({ 'daytime_availability_required': params['daytime_availability_required'] }))
+    job.update(job_type_params.merge({ 'daytime_availability_required': params['daytime_availability_required'] }))
 
     respond_js_format(:qualifications)
 
@@ -51,7 +51,7 @@ class Employer::JobFlowsController < ApplicationController
   def qualifications_save
     return false unless params[:job][:step] == 'qualifications'
 
-    @job.update(qualifications_params)
+    job.update(qualifications_params)
     save_job_skills
     save_job_softwares
 
@@ -63,7 +63,7 @@ class Employer::JobFlowsController < ApplicationController
   def details_save
     return false unless params[:job][:step] == 'details'
 
-    @job.update(relevant_job_details: params[:job][:relevant_job_details])
+    job.update(relevant_job_details: params[:job][:relevant_job_details])
     respond_js_format(:questions)
 
     true
@@ -74,12 +74,11 @@ class Employer::JobFlowsController < ApplicationController
 
     questions_descriptions = params[:job][:job_questions].values.reject(&:empty?)
     questions_descriptions.each do |description|
-      @job.job_questions.create(description: description)
+      job.job_questions.create(description: description)
     end
-    debugger
     if params[:button] != 'draft'
-      @job.draft = false
-      @job.save
+      job.draft = false
+      job.save
     end
 
     redirect_to employer_dashboard_path
@@ -88,23 +87,22 @@ class Employer::JobFlowsController < ApplicationController
   end
 
   def destroy
-    @job = current_user.jobs.find_by(id: params[:job_id])
-    @job.destroy
+    job.destroy
   end
 
   private
 
   def save_job_skills
-    @job.job_skills.destroy_all
+    job.job_skills.destroy_all
     skills_params&.each do |skill|
-      JobSkill.create(job_id: @job.id, skill_id: skill)
+      JobSkill.create(job_id: job.id, skill_id: skill)
     end
   end
 
   def save_job_softwares
-    @job.job_softwares.destroy_all
+    job.job_softwares.destroy_all
     softwares_params&.each do |soft|
-      JobSoftware.create(job_id: @job.id, software_id: soft)
+      JobSoftware.create(job_id: job.id, software_id: soft)
     end
   end
 
@@ -135,11 +133,15 @@ class Employer::JobFlowsController < ApplicationController
   def respond_js_format(step)
     respond_to do |format|
       format.html
-      format.js { render step.to_s, locals: { job: @job } }
+      format.js { render step.to_s, locals: { job: job } }
     end
   end
 
-  def find_job
-    params[:job][:job_id].blank? ? Job.create(user_id: @user.id) : Job.find_by(id: params[:job][:job_id])
+  def new_job
+    @job ||= current_user.jobs.create
+  end
+
+  def job
+    @job ||= current_user.jobs.find_by(id: (params[:job_id] || params[:job][:job_id]))
   end
 end
