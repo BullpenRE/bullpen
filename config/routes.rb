@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   namespace :employer do
     get 'dashboard', to: 'dashboard#show'
     resources :jobs
+    get '/jobs_list', to: 'jobs#jobs_list'
     resources :billing
     resources :refer
     resources :talent

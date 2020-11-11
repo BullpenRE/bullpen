@@ -5,6 +5,10 @@ class Employer::JobsController < ApplicationController
   steps :summary, :job_type, :qualifications, :details, :questions
   before_action :authenticate_user!
 
+  def jobs_list
+    @jobs = current_user.jobs
+  end
+
   def show
     @user = current_user
     @job = params[:start_flow].present? ? current_user.jobs.create : current_user.jobs.find_by(id: params[:job_id])
