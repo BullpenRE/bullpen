@@ -20,9 +20,9 @@ Rails.application.routes.draw do
     get '/password_reset', to: 'passwords#password_reset'
     get '/employer_sign_up', to: 'registrations#employer_sign_up'
     get '/freelancer_sign_up', to: 'registrations#freelancer_sign_up'
-
-    get '/promo/:code', to: redirect('/registrations/employer_sign_up/{%code}')
   end
+
+  get '/promo/:code', to: 'signup_promo#show'
 
   resources :avatar, only: %i[update destroy]
   resources :freelancer_profile_steps

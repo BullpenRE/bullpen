@@ -81,7 +81,7 @@
           <% if SignupPromos.find_by(user_type: 'freelancer'||'both', enabled: true) %>
             <div class="mb-5 col-md-12">
               <label for="f_promo_code" class="text-primary">Promo Code(Optional)</label>
-              <input type="text" class="form-control" id="f_promo_code" >
+              <input type="text" class="form-control" id="f_promo_code" value="<%= session[:code] %>">
             </div>
           <% end %>
 

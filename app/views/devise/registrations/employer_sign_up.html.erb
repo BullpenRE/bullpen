@@ -89,7 +89,7 @@
           <% if SignupPromos.find_by(user_type: 'employer'||'both', enabled: true) %>
           <div class="mb-5 col-md-12">
             <label for="promo_code" class="text-primary">Promo Code(Optional)</label>
-            <input type="text" class="form-control" id="promo_code" >
+            <input type="text" class="form-control" id="promo_code" value="<%= session[:code] %>">
           </div>
           <% end %>
 
