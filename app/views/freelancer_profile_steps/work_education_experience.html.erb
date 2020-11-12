@@ -75,12 +75,12 @@
                 <div class="col mb-1 text"><%= freelancer_certification.certification.description %></div>
               </div>
               <div class="row bp-text-sm">
-                <div class="col-md"><%= freelancer_certification.earned %>, <%= education_exp.course_of_study %></div>
+                <div class="col-md"><%= freelancer_certification.earned %></div>
 
               </div>
             </div>
-            <%= render 'edit_add_licences_or_certification', freelancer_profile_education: freelancer_certification %>
-            <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editLicenseCertificationModall-<%= education_exp.id %>"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
+            <%= render 'edit_licences_or_certification', freelancer_certification: freelancer_certification %>
+            <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editLicenseCertificationModall-<%= freelancer_certification.id %>"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
           </div>
         <% end %>
       <% end %>
