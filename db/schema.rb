@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_07_191600) do
+ActiveRecord::Schema.define(version: 2020_11_12_133942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -226,6 +226,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_191600) do
     t.boolean "draft", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "initial_creation", default: true
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
@@ -239,6 +240,15 @@ ActiveRecord::Schema.define(version: 2020_09_07_191600) do
   create_table "sectors", force: :cascade do |t|
     t.string "description", null: false
     t.boolean "disable", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "signup_promos", force: :cascade do |t|
+    t.string "description"
+    t.string "code"
+    t.integer "user_type"
+    t.boolean "enabled", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -279,9 +289,11 @@ ActiveRecord::Schema.define(version: 2020_09_07_191600) do
     t.string "phone_number"
     t.string "location"
     t.integer "role"
+    t.bigint "signup_promos_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["signup_promos_id"], name: "index_users_on_signup_promos_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -303,4 +315,5 @@ ActiveRecord::Schema.define(version: 2020_09_07_191600) do
   add_foreign_key "job_softwares", "jobs"
   add_foreign_key "job_softwares", "softwares"
   add_foreign_key "jobs", "users"
+  add_foreign_key "users", "signup_promos", column: "signup_promos_id"
 end
