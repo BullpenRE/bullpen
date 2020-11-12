@@ -3,7 +3,7 @@
 import FreelancerSkillPage from "../support/page_objects/freelancer_skill_page";
 import FreelancerSignUpPage from "../support/page_objects/freelancer_sign_up_page";
 
-describe('FreelancerSignUpPage', () => {
+describe('FreelancerSkillPage', () => {
   beforeEach(() => {
     // seed the database prior to every test
     cy.exec('RAILS_ENV=test rails db:seed');
@@ -12,7 +12,7 @@ describe('FreelancerSignUpPage', () => {
       this.dataJson=dataJson ;
     })
   })
-  it('visit skill page', function () {
+  it('visit skill page & check page elements presence', function () {
 
     const freelancerSignUpPage = new FreelancerSignUpPage();
     freelancerSignUpPage.visitFreelancerSignUpPage()

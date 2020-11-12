@@ -3,6 +3,7 @@ class FreelancerSignUpPage {
   visitFreelancerSignUpPage() {
     cy.visit('http://localhost:5017/freelancer_sign_up', {failOnStatusCode: false});
   }
+
   getBullpenNavImg(){
     return cy.get('img');
   }
