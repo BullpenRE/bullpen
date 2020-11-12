@@ -1,8 +1,10 @@
 <script>
   $('.close-job').on('click', () => {
-    $.ajax({
-      url: '/employer/jobs/<%= job.id %>',
-      method: 'DELETE'
-    })
+    if(<%= job.initial_creation %>) {
+      $.ajax({
+        url: '/employer/jobs/<%= job.id %>',
+        method: 'DELETE'
+      })
+    }
   })
 </script>

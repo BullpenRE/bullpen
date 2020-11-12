@@ -80,6 +80,7 @@ class Employer::JobFlowsController < ApplicationController
       job.draft = false
       job.save
     end
+    job.update(initial_creation: false)
 
     redirect_to employer_dashboard_path
 
