@@ -17,7 +17,7 @@ describe('FreelancerSignUpPage', () => {
     //Object Creation for PageObject Page Class and assigning it to a constant variable
     const freelancerSignUpPage = new FreelancerSignUpPage();
 
-    cy.visit('http://localhost:5017/freelancer_sign_up', {failOnStatusCode: false})
+    freelancerSignUpPage.visitFreelancerSignUpPage()
 
     // page elements check 1st step
 

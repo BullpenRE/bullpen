@@ -1,5 +1,10 @@
 class EmployerSignUpPage {
 
+  visitFreelancerSignUpPage() {
+    cy.visit('http://localhost:5017/employer_sign_up', {failOnStatusCode: false})
+  }
+
+
   getBullpenNavImg() {
     return cy.get('img');
   }
