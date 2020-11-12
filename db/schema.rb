@@ -244,15 +244,6 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "signup_promos", force: :cascade do |t|
-    t.string "description"
-    t.string "code"
-    t.integer "user_type"
-    t.boolean "enabled", default: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "skills", force: :cascade do |t|
     t.string "description"
     t.boolean "disable", default: false
@@ -289,11 +280,9 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
     t.string "phone_number"
     t.string "location"
     t.integer "role"
-    t.bigint "signup_promos_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["signup_promos_id"], name: "index_users_on_signup_promos_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -315,5 +304,4 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
   add_foreign_key "job_softwares", "jobs"
   add_foreign_key "job_softwares", "softwares"
   add_foreign_key "jobs", "users"
-  add_foreign_key "users", "signup_promos", column: "signup_promos_id"
 end
