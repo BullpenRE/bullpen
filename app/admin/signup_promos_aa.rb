@@ -25,11 +25,11 @@ ActiveAdmin.register SignupPromo do
       row :expires
 
       row 'Count of users'  do
-        User.select(:signup_promos_id).where(signup_promos_id: signup_promo.id).count
+        User.select(:signup_promo_id).where(signup_promo_id: signup_promo.id).count
       end
 
       row 'Users' do
-        User.where(signup_promos_id: signup_promo.id)
+        User.where(signup_promo_id: signup_promo.id)
       end
     end
 

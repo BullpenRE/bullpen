@@ -82,13 +82,13 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def set_promo_employer
-    params[:user].merge!(:signup_promos_id => promo_code.id.to_s)
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email phone_number role signup_promos_id])
+    params[:user].merge!(:signup_promo_id => promo_code.id.to_s)
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email phone_number role signup_promo_id])
   end
 
   def set_promo_freelancer
-    params[:user].merge!(:signup_promos_id => promo_code.id.to_s)
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email role signup_promos_id])
+    params[:user].merge!(:signup_promo_id => promo_code.id.to_s)
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email role signup_promo_id])
   end
 
 end
