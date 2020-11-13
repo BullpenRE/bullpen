@@ -30,7 +30,7 @@ import axios from 'axios'
 Cypress.Commands.add('cleanDatabase', (opts = { seed: true }) => {
     return axios({
         method: 'POST',
-        url: 'http://localhost:3000/test/clean_database',
+        url: 'http://localhost:5017/test/clean_database',
         data: { should_seed: opts.seed }
     })
 })
@@ -38,7 +38,7 @@ Cypress.Commands.add('cleanDatabase', (opts = { seed: true }) => {
 Cypress.Commands.add('seedPosts', (count) => {
     return axios({
         method: 'POST',
-        url: 'http://localhost:3000/test/seed_posts',
+        url: 'http://localhost:5017/test/seed_posts',
         data: { count }
     })
 })

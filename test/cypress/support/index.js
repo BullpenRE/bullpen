@@ -18,12 +18,20 @@ import './commands'
 import './on-rails'
 
 beforeEach(() => {
-  cy.resetDatabase()
+  cy.cleanDatabase()
 })
 
 after(() => {
-  cy.resetDatabase()
+  cy.cleanDatabase()
 })
+
+// beforeEach(() => {
+//   cy.resetDatabase()
+// })
+//
+// after(() => {
+//   cy.resetDatabase()
+// })
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

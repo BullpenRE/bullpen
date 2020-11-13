@@ -1,11 +1,11 @@
 /// <reference types="Cypress" />
 
 describe('FreelancerRegistrationPage', () => {
-  beforeEach(() => {
-    // seed the database prior to every test
-    cy.exec('RAILS_ENV=test rails db:seed')
-
-  })
+  // beforeEach(() => {
+  //   // seed the database prior to every test
+  //   cy.exec('RAILS_ENV=test rails db:seed')
+  //
+  // })
   const first_name = 'First'
   const last_name = 'Last'
   const email = 'freelancer@yahoo.com'

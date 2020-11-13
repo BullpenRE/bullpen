@@ -1,10 +1,10 @@
 /// <reference types="Cypress" />
 
 describe('SummaryPage', () => {
-  beforeEach(() => {
-    // seed the database prior to every test
-    cy.exec('RAILS_ENV=test rails db:seed')
-  })
+  // beforeEach(() => {
+  //   // seed the database prior to every test
+  //   cy.exec('RAILS_ENV=test rails db:seed')
+  // })
 
   it('successfully loads', () => {
     cy.visit('http://localhost:5017', {failOnStatusCode: false})

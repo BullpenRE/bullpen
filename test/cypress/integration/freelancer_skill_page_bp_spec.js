@@ -6,7 +6,7 @@ import FreelancerSignUpPage from "../support/page_objects/freelancer_sign_up_pag
 describe('FreelancerSkillPage', () => {
   beforeEach(() => {
     // seed the database prior to every test
-    cy.exec('RAILS_ENV=test rails db:seed');
+    // cy.exec('RAILS_ENV=test rails db:seed');
     cy.fixture('login').then(function (dataJson)
     {
       this.dataJson=dataJson ;
