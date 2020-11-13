@@ -728,7 +728,7 @@ describe('WorkEducationPage', () => {
       .then(($div) => {
         expect($div).to.have.text('1982')
       })
-      .get('button.btn.btn-link.education')
+      .get('button.btn.btn-link.cy-education')
       .find('svg')
       .should(($svg) => {
         expect($svg).to.have.length(1)
