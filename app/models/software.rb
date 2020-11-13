@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Software < ApplicationRecord
+  scope :enabled, -> { where.not(disable: true) }
+
   has_many :job_softwares, dependent: :destroy
   has_many :jobs, through: :job_softwares
   has_many :freelancer_softwares, dependent: :destroy

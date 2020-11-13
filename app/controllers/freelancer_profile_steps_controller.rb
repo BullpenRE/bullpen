@@ -13,6 +13,9 @@ class FreelancerProfileStepsController < ApplicationController
       @user.reload
     end
     @freelancer_profile = @user.freelancer_profile
+    @real_estate_skills = RealEstateSkill.enabled.map{ |skill| [skill.description, skill.id] }
+    @sectors = Sector.enabled.map{ |sector| [sector.description, sector.id] }
+    @softwares = Software.enabled.map{ |software| [software.description, software.id] }
     render_wizard
   end
 
@@ -78,11 +81,15 @@ class FreelancerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :skills_page
 
     destroy_old_re_skills_and_sectors
+    destroy_old_softwares
     real_estate_skill_params&.each do |skill|
       FreelancerRealEstateSkill.create(freelancer_profile_id: @freelancer_profile.id, real_estate_skill_id: skill)
     end
     sectors_params&.each do |sector|
       FreelancerSector.create(freelancer_profile_id: @freelancer_profile.id, sector_id: sector)
+    end
+    softwares_params&.each do |software|
+      FreelancerSoftware.create(freelancer_profile_id: @freelancer_profile.id, software_id: software)
     end
     render_wizard @user
 
@@ -105,12 +112,20 @@ class FreelancerProfileStepsController < ApplicationController
     @freelancer_profile&.freelancer_sectors&.destroy_all
   end
 
+  def destroy_old_softwares
+    @freelancer_profile&.freelancer_softwares&.destroy_all
+  end
+
   def real_estate_skill_params
     params[:freelancer_profile][:freelancer_real_estate_skills]&.reject(&:blank?)
   end
 
   def sectors_params
     params[:freelancer_profile][:freelancer_sectors]&.reject(&:blank?)
+  end
+
+  def softwares_params
+    params[:freelancer_profile][:freelancer_softwares]&.reject(&:blank?)
   end
 
   def history_params

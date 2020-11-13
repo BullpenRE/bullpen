@@ -26,4 +26,13 @@ RSpec.describe RealEstateSkill, type: :model do
     end
   end
 
+  context 'Scopes' do
+    it '.enabled' do
+      disabled_real_estate_skill = FactoryBot.create(:real_estate_skill, disable: true)
+      expect(real_estate_skill.disable).to be_falsey
+      expect(RealEstateSkill.enabled).to include(real_estate_skill)
+      expect(RealEstateSkill.enabled).to_not include(disabled_real_estate_skill)
+    end
+  end
+
 end
