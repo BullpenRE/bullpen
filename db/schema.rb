@@ -62,13 +62,6 @@ ActiveRecord::Schema.define(version: 2020_10_29_074519) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "asset_classes", force: :cascade do |t|
-    t.string "description", null: false
-    t.boolean "disable", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "certifications", force: :cascade do |t|
     t.string "description"
     t.boolean "disable", default: false
