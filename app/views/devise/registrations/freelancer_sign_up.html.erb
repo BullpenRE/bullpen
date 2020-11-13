@@ -78,10 +78,10 @@
           <%= f.email_field :email, class: "form-control", id: "email", required: true %>
         </div>
 
-          <% if SignupPromos.find_by(user_type: 'freelancer'||'both', enabled: true) %>
+          <% if SignupPromo.find_by(user_type: 'freelancer'||'both') %>
             <div class="mb-5 col-md-12">
-              <label for="f_promo_code" class="text-primary">Promo Code(Optional)</label>
-              <input type="text" class="form-control" id="f_promo_code" value="<%= session[:code] %>">
+              <label for="f_promo_code" class="text-primary">Promo Code (Optional)</label>
+              <input type="text" class="form-control" id="f_promo_code" value="<%= session[:promo_code] %>">
             </div>
           <% end %>
 
@@ -300,10 +300,6 @@
           }
         }
       });
-
-      if ($('#f_promo_code').val() != "") {
-          document.cookie = "promo_code="+$('#f_promo_code').val();
-      };
     });
 
     prevBtn.click(function(){

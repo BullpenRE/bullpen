@@ -86,10 +86,10 @@
             <%= f.hidden_field :role, value: :employer %>
           </div>
 
-          <% if SignupPromos.find_by(user_type: 'employer'||'both', enabled: true) %>
+          <% if SignupPromo.find_by(user_type: 'employer'||'both', enabled: true) %>
           <div class="mb-5 col-md-12">
-            <label for="promo_code" class="text-primary">Promo Code(Optional)</label>
-            <input type="text" class="form-control" id="promo_code" value="<%= session[:code] %>">
+            <label for="promo_code" class="text-primary">Promo Code (Optional)</label>
+            <input type="text" class="form-control" id="promo_code" value="<%= session[:promo_code] %>">
           </div>
           <% end %>
 
@@ -309,10 +309,6 @@
                     }
                 }
             });
-
-            if ($('#promo_code').val() != "") {
-                document.cookie = "promo_code="+$('#promo_code').val();
-            };
         });
 
         prevBtn.click(function(){

@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
-class SignupPromoController < ApplicationController
+class SignupPromosController < ApplicationController
+  before_action :session_promo
+
   def show
+    redirect_to join_path unless promo_exist?
     session_promo
-    promo_exist?
     type_user
-    #clear_session
   end
 
   def session_promo
-    session[:code] = request.fullpath.slice(7..)
+    session[:promo_code] = request.fullpath.slice(7..)
   end
 
   def promo_exist?
@@ -26,13 +27,14 @@ class SignupPromoController < ApplicationController
      else
        redirect_to employer_sign_up_path
      end
+
   end
 
   def clear_session
-    session.delete(:code)
+    session.delete(:promo_code)
   end
 
   def signup_promo
-    SignupPromos.find_by(code: session[:code])
+    @signup_promo ||= SignupPromo.find_by(code: session[:promo_code])
   end
 end

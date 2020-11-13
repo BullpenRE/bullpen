@@ -263,7 +263,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_004611) do
     t.string "description"
     t.string "code"
     t.integer "user_type"
-    t.boolean "enabled", default: true
+    t.datetime "expires"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

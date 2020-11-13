@@ -70,7 +70,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def promo_code_execute?
-    cookies[:promo_code].present?
+    session[:promo_code].present?
   end
 
   def promo_exist?
@@ -78,22 +78,17 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def promo_code
-    @promo_code ||= SignupPromos.find_by(code: cookies[:promo_code])
+    @promo_code ||= SignupPromo.find_by(code: session[:promo_code])
   end
 
   def set_promo_employer
     params[:user].merge!(:signup_promos_id => promo_code.id.to_s)
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email phone_number role signup_promos_id])
-    clean_cookies
   end
 
   def set_promo_freelancer
     params[:user].merge!(:signup_promos_id => promo_code.id.to_s)
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email role signup_promos_id])
-    clean_cookies
   end
 
-  def clean_cookies
-    cookies.delete :promo_code
-  end
 end
