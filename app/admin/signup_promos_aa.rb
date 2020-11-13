@@ -2,10 +2,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('si
 ActiveAdmin.register SignupPromo do
   menu label: 'Promo'
 
-  includes :users
-
-  permit_params :user_ids,
-                :description,
+  permit_params :description,
                 :code,
                 :user_type,
                 :expires
@@ -28,11 +25,11 @@ ActiveAdmin.register SignupPromo do
       row :expires
 
       row 'Count of users'  do
-        User.select(:signup_promos_id).where(signup_promos_id: signup_promos.id).count
+        User.select(:signup_promos_id).where(signup_promos_id: signup_promo.id).count
       end
-      
+
       row 'Users' do
-        User.where(signup_promos_id: signup_promos.id)
+        User.where(signup_promos_id: signup_promo.id)
       end
     end
 
