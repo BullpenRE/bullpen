@@ -27,6 +27,7 @@ class FreelancerSkillPage {
   getProgressBarPercentage() {
     return cy.get('.text-secondary');
   }
+
   getTellUsAboutText() {
     return cy.get('h2');
   }

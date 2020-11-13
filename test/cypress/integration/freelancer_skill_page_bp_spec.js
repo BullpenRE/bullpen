@@ -49,6 +49,7 @@ describe('FreelancerSkillPage', () => {
       .should("be.visible")
       .should('have.text', f_name + ' ' + l_name)
       .click()
+
     freelancerSkillPage.getNavbarLogoutItem()
       .should("exist")
       .should('have.attr', 'href', '/users/sign_out')
