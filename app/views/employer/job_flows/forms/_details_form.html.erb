@@ -6,7 +6,7 @@
     <%= f.text_area :relevant_job_details, class: "form-control",rows: "3", id: "jobDetailsTextarea", placeholder: "Enter any relevant job details", rows: "8", maxlength: "5000" %>
   </div>
   <div class="modal-footer justify-content-between">
-    <%= link_to employer_jobs_path(id: :qualifications, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
+    <%= link_to employer_job_flows_path(id: :qualifications, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
     <%= button_tag type: 'submit', class: "btn btn-primary" do %>
