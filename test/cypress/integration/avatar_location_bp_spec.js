@@ -85,10 +85,16 @@ describe('AvatarLocationPage', () => {
       .get('select.select2.select2-hidden-accessible', { includeShadowDom: true}).first()
       .select(['Underwriting', 'Investment Memo'], {force: true})
 
+    cy.get('div.form-group.mb-4')
+      .get('div.w-100')
+      // .get('select.select2.select2-hidden-accessible', { includeShadowDom: true})
+      .get(':nth-child(4) > .select2.select2-hidden-accessible', { includeShadowDom: true})
+      .select(['HTC','Affordable Housing'], {force: true})
+
     cy.get('div.form-group.mb-5')
       .get('select.select2.select2-hidden-accessible', { includeShadowDom: true})
       .last()
-      .select(['HTC','Affordable Housing'], {force: true})
+      .select(['Microsoft Suite', 'Yardi'], {force: true})
 
     cy.get('div.d-flex.justify-content-between')
       .get('input.btn.btn-primary')
@@ -217,35 +223,6 @@ describe('AvatarLocationPage', () => {
         expect($label).to.have.text('\n                Delete\n              ')
         expect($label).have.attr('for', 'deleteProfilePic')
       })
-
-    // below lines are commented by the moment when problem of remove test images from storage will be solved
-    // const fixtureFile = 'cat.png'
-    // cy.get('input#uploadProfilePic.d-none')
-    //   .attachFile(fixtureFile, { force: true })
-
-    // cy.get('div.text-light.mb-3.avatar-image')
-    //   .find('img.rounded-circle')
-    //   .should(($img) => {
-    //     expect($img).to.have.length(1)
-    //     const className = $img[0].className
-    //     expect(className).to.match(/rounded-circle/)
-    //   })
-
-    // cy.get('button#deleteProfilePic.delete-avatar.d-none', { includeShadowDom: true})
-    //   .should('not.be.visible')
-    //   .click( {force: true})
-
-    // cy.get('div.bp-card.mb-5.mx-auto')
-    //   .get('form.edit_user')
-    //   .get('div.row').first()
-    //   .get('div.col-md.text-center.mb-5.avatar')
-    //   .get('div.col-md.text-center.mb-5.avatar').last()
-    //   .get('div.text-light.mb-3')
-    //   .should(($div) => {
-    //     expect($div).css('font-size', '170px')
-    //     expect($div).css('line-height', '0px')
-    //   })
-    //above lines are commented by the moment when problem of remove test images from storage will be solved
 
     cy.get('div.col-md.text-center.mb-5')
       .find('h2.cy-location')

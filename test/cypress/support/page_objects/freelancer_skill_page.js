@@ -46,12 +46,21 @@ class FreelancerSkillPage {
   }
 
   getSectorsYouHaveExperienceLabel() {
-    return cy.get('.mb-5 > .bp-input-label');
+    return cy.get(':nth-child(4) > .bp-input-label');
   }
 
   setSectorsExperienceInput() {
-    return cy.get('select.select2.select2-hidden-accessible', { includeShadowDom: true}).last()
+    return cy.get(':nth-child(4) > .select2.select2-hidden-accessible', { includeShadowDom: true})
       .select(['HTC','Affordable Housing'], {force: true})
+  }
+
+  getSoftwareLicensesLabel() {
+    return cy.get('.mb-5 > .bp-input-label');
+  }
+
+  setSoftwareLicensesInput() {
+    return cy.get('select.select2.select2-hidden-accessible', { includeShadowDom: true}).last()
+      .select(['Microsoft Suite', 'Yardi'], {force: true})
   }
 
   getNextInput() {

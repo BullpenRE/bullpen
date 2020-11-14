@@ -82,13 +82,19 @@ describe('SummaryPage', () => {
 
     cy.get('div.form-group.mb-4')
       .get('div.w-100')
-      .get('select.select2.select2-hidden-accessible', {includeShadowDom: true}).first()
+      .get('select.select2.select2-hidden-accessible', { includeShadowDom: true}).first()
       .select(['Underwriting', 'Investment Memo'], {force: true})
 
+    cy.get('div.form-group.mb-4')
+      .get('div.w-100')
+      // .get('select.select2.select2-hidden-accessible', { includeShadowDom: true})
+      .get(':nth-child(4) > .select2.select2-hidden-accessible', { includeShadowDom: true})
+      .select(['HTC','Affordable Housing'], {force: true})
+
     cy.get('div.form-group.mb-5')
-      .get('select.select2.select2-hidden-accessible', {includeShadowDom: true})
+      .get('select.select2.select2-hidden-accessible', { includeShadowDom: true})
       .last()
-      .select(['HTC', 'Affordable Housing'], {force: true})
+      .select(['Microsoft Suite', 'Yardi'], {force: true})
 
     cy.get('div.d-flex.justify-content-between')
       .get('input.btn.btn-primary')

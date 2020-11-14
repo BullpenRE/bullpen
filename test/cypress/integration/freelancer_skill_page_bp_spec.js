@@ -71,11 +71,11 @@ describe('FreelancerSkillPage', () => {
 
     freelancerSkillPage.getAddTagsText()
       .should("be.visible")
-      .should('have.text', 'Add tags to your application that represent your sector and operating knowledge.');
+      .should('have.text', '\n          Add tags to your application that represent your sectors, operating knowledge and software licenses.\n        ');
 
     freelancerSkillPage.getDescribeYourRealEstatesSkillsLabel()
       .should("be.visible")
-      .should('have.text', 'Describe your real estate skills');
+      .should('have.text', 'Describe your real estate skills\n          In what sectors do you have experience?\n        ');
 
     freelancerSkillPage.setSelectRealEstateSkillsInput()
       .should(($select) => {
@@ -87,6 +87,15 @@ describe('FreelancerSkillPage', () => {
       .should('have.text', '\n          In what sectors do you have experience?\n        ');
 
     freelancerSkillPage.setSectorsExperienceInput()
+      .should(($select) => {
+        expect($select).to.have.length(1)
+      });
+
+    freelancerSkillPage.getSoftwareLicensesLabel()
+      .should("be.visible")
+      .should('have.text', '\n          Software Licenses\n        ');
+
+    freelancerSkillPage.setSoftwareLicensesInput()
       .should(($select) => {
         expect($select).to.have.length(1)
       });
