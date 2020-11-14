@@ -10,7 +10,7 @@ class SignupPromosController < ApplicationController
   end
 
   def session_promo
-    session[:promo_code] = request.fullpath.slice(7..)
+    session[:promo_code] = params[:promo_code]
   end
 
   def promo_exist?
@@ -25,13 +25,8 @@ class SignupPromosController < ApplicationController
      elsif signup_promo.user_type == 'freelancer'
        redirect_to freelancer_sign_up_path
      else
-       redirect_to employer_sign_up_path
+       redirect_to join_path
      end
-
-  end
-
-  def clear_session
-    session.delete(:promo_code)
   end
 
   def signup_promo
