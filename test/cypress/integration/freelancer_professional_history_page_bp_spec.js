@@ -5,7 +5,7 @@ import FreelancerSignUpPage from "../support/page_objects/freelancer_sign_up_pag
 import FreelancerAvatarLocationPage from "../support/page_objects/freelancer_avatar_location_page";
 import FreelancerProfessionalHistoryPage from "../support/page_objects/freelancer_professional_history_page";
 
-describe('FreelancerSkillPage', () => {
+describe('FreelancerProfessionalHistoryPage', () => {
   beforeEach(() => {
     // seed the database prior to every test
     // cy.exec('RAILS_ENV=test rails db:seed');
