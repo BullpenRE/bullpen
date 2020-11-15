@@ -20,6 +20,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
+    insert_promo_code_id if params[:promo_code]
     super
   end
 
@@ -50,45 +51,15 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def configure_sign_up_params
-    employer? ? employer_params : freelancer_params
-  end
-
-  def freelancer_params
-    if promo_code_execute? && promo_exist?
-      set_promo_freelancer
-    else
-      devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email role])
-    end
-  end
-  
-  def employer_params
-    if promo_code_execute? && promo_exist?
-      set_promo_employer
-    else
-      devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email phone_number role])
-    end
-  end
-
-  def promo_code_execute?
-    session[:promo_code].present?
-  end
-
-  def promo_exist?
-    promo_code.present?
-  end
-
-  def promo_code
-    @promo_code ||= SignupPromo.find_by(code: session[:promo_code])
-  end
-
-  def set_promo_employer
-    params[:user].merge!(:signup_promo_id => promo_code.id.to_s)
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email phone_number role signup_promo_id])
   end
 
-  def set_promo_freelancer
-    params[:user].merge!(:signup_promo_id => promo_code.id.to_s)
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email role signup_promo_id])
-  end
+  def insert_promo_code_id
+    signup_promo = SignupPromo.find_by(code: params[:promo_code])
+    return unless signup_promo
+    return if signup_promo.user_type != 'both' && signup_promo.user_type != params[:user][:role]
 
+    params[:user][:signup_promo_id] = signup_promo.id
+    session.delete(:promo_code)
+  end
 end
