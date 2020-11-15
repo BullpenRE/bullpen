@@ -17,4 +17,13 @@ RSpec.describe SignupPromo, type: :model do
   context 'Relationships' do
     it { expect(signup_promo).to have_many(:users) }
   end
+
+  context 'Scopes' do
+    let!(:expired_promo) { FactoryBot.create(:signup_promo, expires: 3.days.ago) }
+    let!(:valid_promo) { FactoryBot.create(:signup_promo, expires: 3.days.from_now) }
+    it '.stillvalid' do
+      expect(SignupPromo.stillvalid).to include(valid_promo)
+      expect(SignupPromo.stillvalid).to_not include(expired_promo)
+    end
+  end
 end

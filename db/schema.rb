@@ -98,15 +98,6 @@ ActiveRecord::Schema.define(version: 2020_10_29_074519) do
     t.index ["sector_id"], name: "index_employer_sectors_on_sector_id"
   end
 
-  create_table "freelancer_asset_classes", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "freelancer_profile_id"
-    t.bigint "asset_class_id"
-    t.index ["asset_class_id"], name: "index_freelancer_asset_classes_on_asset_class_id"
-    t.index ["freelancer_profile_id"], name: "index_freelancer_asset_classes_on_freelancer_profile_id"
-  end
-
   create_table "freelancer_certifications", force: :cascade do |t|
     t.bigint "freelancer_profile_id", null: false
     t.bigint "certification_id", null: false
