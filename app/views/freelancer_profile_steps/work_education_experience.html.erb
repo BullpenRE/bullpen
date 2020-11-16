@@ -68,15 +68,12 @@
         Work Licenses & Certifications
       </div>
       <% if @freelancer_profile.freelancer_certifications.present? %>
-        <% @freelancer_profile.freelancer_certifications.each do |freelancer_certification| %>
+        <% @freelancer_profile.freelancer_certifications.order(created_at: :desc).each do |freelancer_certification| %>
           <div class="d-flex align-items-center justify-content-between mb-3">
             <div class="w-100">
               <div class="row">
-                <div class="col mb-1 text"><%= freelancer_certification.certification.description %></div>
-              </div>
-              <div class="row bp-text-sm">
-                <div class="col-md"><%= freelancer_certification.earned %></div>
-
+                <div class="col-md text"><%= freelancer_certification&.description %></div>
+                <div class="col-md"> Earned <%= freelancer_certification&.earned&.strftime("%B, %Y") %></div>
               </div>
             </div>
             <%= render 'edit_licences_or_certification', freelancer_certification: freelancer_certification %>
@@ -104,4 +101,4 @@
 
 <%= render 'add_work_experience' %>
 <%= render 'add_education' %>
-<%= render 'add_licences_or_certification' %>
+<%= render 'add_licences_or_certification', certification: @certification %>
