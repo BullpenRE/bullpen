@@ -667,7 +667,7 @@ describe('WorkEducationPage', () => {
       .then(($div) => {
         expect($div).to.have.text('Awesome company, Walnut Creek, CA')
       })
-      .get('div.col-md.cy-work-experience-present.cy-job')
+      .get('div.col-md.cy-work-experience-present.cy-job-duration')
       .should(($div) => {
         expect($div).to.have.length(1)
       })

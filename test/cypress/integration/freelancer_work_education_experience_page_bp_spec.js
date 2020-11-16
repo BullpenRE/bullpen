@@ -120,9 +120,6 @@ describe('FreelancerWorkEducationExperiencePage', () => {
       .should('have.attr', 'aria-hidden', 'true')
       .should('have.text', '×');
 
-    // freelancerWorkEducationExperiencePage.setWorkExperienceModuleCloseButton();
-    // freelancerWorkEducationExperiencePage.setAddWorkExperienceButton();
-
     freelancerWorkEducationExperiencePage.getAddWorkExperienceModuleText()
       .should("be.visible")
       .should('have.text', 'Add Experience');
@@ -235,8 +232,9 @@ describe('FreelancerWorkEducationExperiencePage', () => {
       .should("exist")
       .should('have.attr', 'name', 'commit')
       .should('have.attr', 'type', 'submit')
-      .should('have.attr', 'data-disable-with', 'Save')
-      .click();
+      .should('have.attr', 'data-disable-with', 'Save');
+
+    freelancerWorkEducationExperiencePage.setWorkExperienceModuleSaveInput();
     // end of WorkExperienceModule
 
     freelancerWorkEducationExperiencePage.getAddEducationLabel()
@@ -361,14 +359,69 @@ describe('FreelancerWorkEducationExperiencePage', () => {
       .should("exist")
       .should('have.attr', 'href', '/freelancer_profile_steps/professional_history')
       .should('have.text', 'Back')
-      .click().wait(2000).go('back');
 
-    // freelancerProfessionalHistoryPage.setProfessionalYearsExperienceInputDrop();
+    freelancerWorkEducationExperiencePage.setBackLink();
 
     freelancerWorkEducationExperiencePage.getNextLink()
       .should("be.visible")
       .should('have.attr', 'href', '/freelancer_profile_steps/summary')
       .should('have.text', 'Next')
-      .click();
+
+    freelancerWorkEducationExperiencePage.setNextLink();
+
+    freelancerWorkEducationExperiencePage.getWorkResultTitle()
+      .should("be.visible")
+      .should('have.text', 'Software Engineer');
+
+    freelancerWorkEducationExperiencePage.getWorkResultCompanyLocation()
+      .should("be.visible")
+      .should('have.text', 'Awesome company, Walnut Creek, CA');
+
+    freelancerWorkEducationExperiencePage.getWorkResultJobDuration()
+      .should("be.visible")
+      .should('have.text', '\n                  July, 2007-July, 2020\n                ');
+
+    freelancerWorkEducationExperiencePage.getWorkResultEditButton()
+      .should("exist")
+      .should('have.attr', 'type', 'button');
+
+    freelancerWorkEducationExperiencePage.getWorkResultEditPencil()
+      .should("be.visible")
+      .should('have.attr', 'data-prefix', 'fas')
+      .should('have.attr', 'data-icon', 'pencil-alt')
+      .should('have.attr', 'role', 'img');
+
+    freelancerWorkEducationExperiencePage.setWorkResultEditPencil();
+    freelancerWorkEducationExperiencePage.setJobTitleWorkExperienceModuleInputEdit();
+    freelancerWorkEducationExperiencePage.setDescriptionWorkExperienceModuleTextAreaEdit();
+    freelancerWorkEducationExperiencePage.setWorkExperienceModuleSaveInputEdit();
+
+    freelancerWorkEducationExperiencePage.getEducationResultInstitution()
+      .should("be.visible")
+      .should('have.text', 'Some University');
+
+    freelancerWorkEducationExperiencePage.getEducationResultDegreeCourse()
+      .should("be.visible")
+      .should('have.text', 'Masters, Some Course');
+
+    freelancerWorkEducationExperiencePage.getEducationResultGraduationYear()
+      .should("be.visible")
+      .should('have.text', '1982');
+
+    freelancerWorkEducationExperiencePage.getEducationResultEditButton()
+      .should("exist")
+      .should('have.attr', 'type', 'button');
+
+    freelancerWorkEducationExperiencePage.getEducationResultEditPencil()
+      .should("be.visible")
+      .should('have.attr', 'data-prefix', 'fas')
+      .should('have.attr', 'data-icon', 'pencil-alt')
+      .should('have.attr', 'role', 'img');
+
+    freelancerWorkEducationExperiencePage.setEducationResultEditPencil();
+    freelancerWorkEducationExperiencePage.setInstitutionEducationModuleInputEdit();
+    freelancerWorkEducationExperiencePage.setEducationModuleSaveInputEdit();
+
+    freelancerWorkEducationExperiencePage.setNextFinalLink();
   })
 })

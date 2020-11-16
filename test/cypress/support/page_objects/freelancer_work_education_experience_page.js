@@ -89,6 +89,13 @@ class FreelancerWorkEducationExperiencePage {
       .type('Software Engineer');
   }
 
+  setJobTitleWorkExperienceModuleInputEdit() {
+    return cy.get('#editJobTitleInput')
+      .click()
+      .clear()
+      .type('Ruby on Rails Software Engineer');
+  }
+
   getCompanyWorkExperienceModuleText() {
     return cy.get('.form-group.cy-company > .bp-input-label');
   }
@@ -180,12 +187,34 @@ class FreelancerWorkEducationExperiencePage {
       .type('Some description');
   }
 
+  setDescriptionWorkExperienceModuleTextAreaEdit() {
+    return cy.get('#editJobDescriptionTextarea')
+      .click()
+      .clear()
+      .type('Some additional description');
+  }
+
   getWorkExperienceModuleCancelButton() {
     return cy.get('form.cy-work-experience > .modal-footer > .btn-link');
   }
 
+  setWorkExperienceModuleCancelButtonEdit() {
+    return cy.get('form.cy-work-experience > .modal-footer.justify-content-between.cy-edit-work-experience > .btn.btn-link.px-0.text-dark.cy-edit-work-experience')
+      .click({force: true});
+  }
+
   getWorkExperienceModuleSaveInput() {
     return cy.get('form.cy-work-experience > .modal-footer > .btn-primary');
+  }
+
+  setWorkExperienceModuleSaveInputEdit() {
+    return cy.get('form.cy-edit-work-experience > .modal-footer.justify-content-between.cy-edit-work-experience > .cy-edit-work-experience > .btn-primary')
+      .click({force: true});
+  }
+
+  setWorkExperienceModuleSaveInput() {
+    return cy.get('form.cy-work-experience > .modal-footer > .btn-primary')
+      .click({force: true});
   }
   // end of WorkExperienceModule
 
@@ -231,6 +260,13 @@ class FreelancerWorkEducationExperiencePage {
   setInstitutionEducationModuleInput() {
     return cy.get('#institutionInput')
       .type('Some University');
+  }
+
+  setInstitutionEducationModuleInputEdit() {
+    return cy.get('#editInstitutionInput')
+      .click()
+      .clear()
+      .type('Some Awesome University');
   }
 
   getDegreeEducationModuleLabel() {
@@ -300,15 +336,87 @@ class FreelancerWorkEducationExperiencePage {
   getEducationModuleSaveInput() {
     return cy.get('form.cy-education > .modal-footer > .btn-primary');
   }
+
+  setEducationModuleSaveInputEdit() {
+    // return cy.get('form.cy-edit-education > .modal-footer > cy-edit-education > btn.btn-primary')
+    return cy.get('.cy-delete-save-submits > .btn-primary')
+      .click({force: true});
+  }
   // End of Education Module
 
   getBackLink() {
     return cy.get('.btn.btn-link.px-0.cy-work-education');
   }
 
+  setBackLink() {
+    return cy.get('.btn.btn-link.px-0.cy-work-education')
+      .click().wait(2000).go('back');
+  }
+
   getNextLink() {
     return cy.get('#NextBtn.btn-primary');
   }
+
+  setNextLink() {
+    return cy.get('#NextBtn.btn-primary')
+      .click().wait(2000).go('back');
+  }
+
+  setNextFinalLink() {
+    return cy.get('#NextBtn.btn-primary')
+      .click({force: true});
+  }
+// Result page
+  getWorkResultTitle() {
+    return cy.get('.row.cy-title > .col');
+  }
+
+  getWorkResultCompanyLocation() {
+    return cy.get('.bp-text-sm > .cy-company-location');
+  }
+
+  getWorkResultJobDuration() {
+    return cy.get('.col-md.cy-work-experience-present.cy-job-duration');
+  }
+
+  getWorkResultEditButton() {
+    return cy.get('button.btn.btn-link.cy-edit-work-experience');
+  }
+
+  getWorkResultEditPencil() {
+    return cy.get('div.mb-4 > .d-flex > [data-toggle="modal"] > .svg-inline--fa');
+  }
+
+  setWorkResultEditPencil() {
+    return cy.get('div.mb-4 > .d-flex > [data-toggle="modal"] > .svg-inline--fa')
+      .click({force: true});
+  }
+
+  getEducationResultInstitution() {
+    return cy.get('.row.cy-institution > .col');
+  }
+
+  getEducationResultDegreeCourse() {
+    return cy.get('.bp-text-sm > .cy-education-present');
+  }
+
+  getEducationResultGraduationYear() {
+    return cy.get('.bp-text-sm > .cy-graduation-year');
+  }
+
+  getEducationResultEditButton() {
+    return cy.get('.d-flex.align-items-center.justify-content-between.mb-3.cy-education-present > .btn.btn-link.cy-education');
+  }
+
+  getEducationResultEditPencil() {
+    return cy.get('div.mb-5 > .d-flex > [data-toggle="modal"] > .svg-inline--fa');
+  }
+
+  setEducationResultEditPencil() {
+    return cy.get('div.mb-5 > .d-flex > [data-toggle="modal"] > .svg-inline--fa')
+      .click({force: true});
+  }
+
 }
 export default FreelancerWorkEducationExperiencePage
 
