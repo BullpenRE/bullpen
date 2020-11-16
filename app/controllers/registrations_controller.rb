@@ -35,14 +35,18 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def after_sign_up_path_for(resource)
-    employer? ? employer_profile_steps_path : freelancer_profile_steps_path
+    forward_user_to_steps
   end
 
   def after_inactive_sign_up_path_for(resource)
-    employer? ? employer_profile_steps_path : freelancer_profile_steps_path
+    forward_user_to_steps
   end
 
   def after_update_path_for(resource)
+    forward_user_to_steps
+  end
+
+  def forward_user_to_steps
     employer? ? employer_profile_steps_path : freelancer_profile_steps_path
   end
 
