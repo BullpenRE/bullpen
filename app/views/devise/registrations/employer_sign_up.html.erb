@@ -86,11 +86,11 @@
             <%= f.hidden_field :role, value: :employer %>
           </div>
 
-          <% if @show_promo_code = true %>
-          <div class="mb-5 col-md-12">
-            <label for="promo_code" class="text-primary">Promo Code (Optional)</label>
-            <input type="text" class="form-control" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
-          </div>
+          <% if @show_promo_code == true %>
+            <div class="mb-5 col-md-12">
+              <label for="promo_code" class="text-primary">Promo Code (Optional)</label>
+              <input type="text" class="form-control" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
+            </div>
           <% end %>
 
           <hr class="mb-4">

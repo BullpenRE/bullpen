@@ -78,9 +78,9 @@
           <%= f.email_field :email, class: "form-control", id: "email", required: true %>
         </div>
 
-          <% if @show_promo_code = true %>
+          <% if @show_promo_code == true %>
             <div class="mb-5 col-md-12">
-              <label for="f_promo_code" class="text-primary">Promo Code (Optional)</label>
+              <label for="promo_code" class="text-primary">Promo Code (Optional)</label>
               <input type="text" class="form-control" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
             </div>
           <% end %>

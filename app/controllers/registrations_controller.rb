@@ -12,10 +12,12 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def freelancer_sign_up
+    show_promo_code('freelancer')
     new
   end
 
   def employer_sign_up
+    show_promo_code('employer')
     new
   end
 
@@ -24,25 +26,21 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
-  def update
-    super
-  end
-
   protected
 
-  def after_sign_in_path_for(resource)
+  def after_sign_in_path_for(_resource)
     employer? ? employer_profile_steps_path(current_user) : freelancer_profile_steps_path(current_user)
   end
 
-  def after_sign_up_path_for(resource)
+  def after_sign_up_path_for(_resource)
     forward_user_to_steps
   end
 
-  def after_inactive_sign_up_path_for(resource)
+  def after_inactive_sign_up_path_for(_resource)
     forward_user_to_steps
   end
 
-  def after_update_path_for(resource)
+  def after_update_path_for(_resource)
     forward_user_to_steps
   end
 
@@ -65,5 +63,9 @@ class RegistrationsController < Devise::RegistrationsController
 
     params[:user][:signup_promo_id] = signup_promo.id
     session.delete(:promo_code)
+  end
+
+  def show_promo_code(user_type)
+    @show_promo_code ||= SignupPromo.stillvalid.where("user_type = ? OR user_type = ?", SignupPromo.user_types[user_type], SignupPromo.user_types['both']).any?
   end
 end
