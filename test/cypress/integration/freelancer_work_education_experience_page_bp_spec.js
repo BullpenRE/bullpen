@@ -123,7 +123,7 @@ describe('FreelancerWorkEducationExperiencePage', () => {
     // freelancerWorkEducationExperiencePage.setWorkExperienceModuleCloseButton();
     // freelancerWorkEducationExperiencePage.setAddWorkExperienceButton();
 
-    freelancerWorkEducationExperiencePage.getAddEducationModuleText()
+    freelancerWorkEducationExperiencePage.getAddWorkExperienceModuleText()
       .should("be.visible")
       .should('have.text', 'Add Experience');
 
@@ -239,5 +239,136 @@ describe('FreelancerWorkEducationExperiencePage', () => {
       .click();
     // end of WorkExperienceModule
 
+    freelancerWorkEducationExperiencePage.getAddEducationLabel()
+      .should("be.visible")
+      .should('have.text', '\n        Education\n      ');
+
+    freelancerWorkEducationExperiencePage.getAddEducationIcon()
+      .should("be.visible")
+      .should('have.attr', 'data-prefix', 'fas')
+      .should('have.attr', 'data-icon', 'plus')
+      .should('have.attr', 'role', 'img');
+
+    freelancerWorkEducationExperiencePage.getAddEducationButton()
+      .should("be.visible")
+      .should('have.attr', 'data-toggle', 'modal')
+      .should('have.attr', 'data-target', '#addEducationModal')
+      .should('have.text', 'Add Education');
+
+    freelancerWorkEducationExperiencePage.setAddEducationButton();
+
+    // Beginning of Education Module
+    freelancerWorkEducationExperiencePage.getEducationModuleCloseButton()
+      .should("exist")
+      .should('have.attr', 'data-dismiss', 'modal')
+      .should('have.attr', 'aria-label', 'Close');
+
+    freelancerWorkEducationExperiencePage.getEducationModuleCloseX()
+      .should("exist")
+
+      .should('have.text', '×');
+
+    freelancerWorkEducationExperiencePage.getAddEducationModuleText()
+      .should("be.visible")
+      .should('have.text', 'Add Education');
+
+    freelancerWorkEducationExperiencePage.getInstitutionEducationModuleLabel()
+      .should("be.visible")
+      .should('have.text', 'Institution')
+      .should('have.attr', 'for', 'institutionInput');
+
+    freelancerWorkEducationExperiencePage.getInstitutionEducationModuleInput()
+      .should("be.visible")
+      .should('have.attr', 'placeholder', 'Enter the school you attended')
+      .should('have.attr', 'type', 'text')
+      .should('have.attr', 'name', 'freelancer_profile_education[institution]');
+
+    freelancerWorkEducationExperiencePage.setInstitutionEducationModuleInput();
+
+    freelancerWorkEducationExperiencePage.getDegreeEducationModuleLabel()
+      .should("be.visible")
+      .should('have.text', 'Degree');
+
+    freelancerWorkEducationExperiencePage.getDegreeEducationModuleInputDrop()
+      .should("be.visible")
+      .should('have.text', 'Please make a selection');
+
+    freelancerWorkEducationExperiencePage.setDegreeEducationModuleInputDrop();
+
+    freelancerWorkEducationExperiencePage.getCourseOfStudyEducationModuleLabel()
+      .should("be.visible")
+      .should('have.text', 'Course of Study');
+
+    freelancerWorkEducationExperiencePage.getCourseOfStudyEducationModuleInput()
+      .should("be.visible")
+      .should('have.attr', 'placeholder', 'Enter your degree program')
+      .should('have.attr', 'type', 'text')
+      .should('have.attr', 'name', 'freelancer_profile_education[course_of_study]');
+
+    freelancerWorkEducationExperiencePage.setCourseOfStudyEducationModuleInput();
+
+    freelancerWorkEducationExperiencePage.getGraduationYearEducationModuleLabel()
+      .should("be.visible")
+      .should('have.text', 'Graduation Year');
+
+    freelancerWorkEducationExperiencePage.getGraduationYearEducationModuleInputDrop()
+      .should("be.visible")
+      .should('have.text', 'Year');
+
+    freelancerWorkEducationExperiencePage.setGraduationYearEducationModuleInputDrop();
+
+    freelancerWorkEducationExperiencePage.getCurrentlyStudyingEducationModuleInput()
+      .should("exist")
+      .should('have.attr', 'type', 'checkbox')
+      .should('have.attr', 'data-toggle', 'collapse')
+      .should('have.attr', 'data-target', '#graduationDateToggle')
+      .should('have.attr', 'aria-expanded', 'false')
+      .should('have.attr', 'aria-controls', 'graduationDateToggle')
+      .should('have.attr', 'value', '1')
+      .should('have.attr', 'name', 'freelancer_profile_education[currently_studying]');
+
+    freelancerWorkEducationExperiencePage.getCurrentlyStudyingYearEducationModuleLabel()
+      .should("be.visible")
+      .should('have.text', 'Currently Studying')
+      .should('have.attr', 'for', 'currentlyStudying');
+
+    freelancerWorkEducationExperiencePage.getDescriptionOptionalEducationModuleLabel()
+      .should("be.visible")
+      .should('have.text', 'Description (optional)');
+
+    freelancerWorkEducationExperiencePage.getDescriptionOptionalEducationModuleTextArea()
+      .should("exist")
+      .should('have.attr', 'placeholder', 'Enter a brief description')
+      .should('have.attr', 'rows', '3')
+      .should('have.attr', 'name', 'freelancer_profile_education[description]');
+
+    freelancerWorkEducationExperiencePage.setDescriptionOptionalEducationModuleTextArea();
+
+    freelancerWorkEducationExperiencePage.getEducationModuleCancelButton()
+      .should("exist")
+      .should('have.attr', 'data-dismiss', 'modal')
+      .should('have.text', 'Cancel')
+
+    freelancerWorkEducationExperiencePage.getEducationModuleSaveInput()
+      .should("exist")
+      .should('have.attr', 'name', 'commit')
+      .should('have.attr', 'type', 'submit')
+      .should('have.attr', 'data-disable-with', 'Save')
+      .click();
+    // End of Education Module
+
+    freelancerWorkEducationExperiencePage.getBackLink()
+      .should("exist")
+      .should('have.attr', 'href', '/freelancer_profile_steps/professional_history')
+      .should('have.text', 'Back')
+      .click().wait(2000).go('back');
+
+    // freelancerProfessionalHistoryPage.setProfessionalYearsExperienceInputDrop();
+
+    freelancerWorkEducationExperiencePage.getNextLink()
+      .should("be.visible")
+      .should('have.attr', 'href', '/freelancer_profile_steps/summary')
+      .should('have.text', 'Next')
+      .click();
   })
 })

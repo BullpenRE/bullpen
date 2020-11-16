@@ -72,7 +72,7 @@ class FreelancerWorkEducationExperiencePage {
       .click({force: true});
   }
 
-  getAddEducationModuleText() {
+  getAddWorkExperienceModuleText() {
     return cy.get('form.cy-work-experience > .modal-body > #modalLabel');
   }
 
@@ -168,7 +168,7 @@ class FreelancerWorkEducationExperiencePage {
   }
 
   getDescriptionWorkExperienceModuleLabel() {
-    return cy.get('form.cy-work-experience > .modal-body > .mb-0 > .bp-input-label');
+    return cy.get('form.cy-work-experience > .modal-body > .mb-0 > .bp-input-label', { includeShadowDom: true});
   }
 
   getDescriptionWorkExperienceModuleTextArea() {
@@ -202,6 +202,11 @@ class FreelancerWorkEducationExperiencePage {
     return cy.get('.mb-5 > .btn');
   }
 
+  setAddEducationButton() {
+    return cy.get('.mb-5 > .btn')
+      .click({force: true});
+  }
+
   // Beginning of Education Module
   getEducationModuleCloseButton() {
     return cy.get('#addEducationModal > .modal-dialog > .modal-content > .modal-header > .mt-2');
@@ -209,6 +214,10 @@ class FreelancerWorkEducationExperiencePage {
 
   getEducationModuleCloseX() {
     return cy.get('.mt-2 > .cy-education');
+  }
+
+  getAddEducationModuleText() {
+    return cy.get('form.cy-education > .modal-body.pt-0 > #modalLabel');
   }
 
   getInstitutionEducationModuleLabel() {
@@ -233,7 +242,7 @@ class FreelancerWorkEducationExperiencePage {
   }
 
   setDegreeEducationModuleInputDrop() {
-    return cy.get('.form-group.cy-degree > .dropdown > .btn > .filter-option > .filter-option-inner > .filter-option-inner-inner')
+    return cy.get('.form-group.cy-degree > .dropdown > #degreeSelect.form-control.selectpicker')
       .select('Masters', {force: true});
   }
 
@@ -241,7 +250,11 @@ class FreelancerWorkEducationExperiencePage {
     return cy.get('.form-group.cy-course-of-study > .bp-input-label');
   }
 
-  setCourseOfStudyEducationModuleInputDrop() {
+  getCourseOfStudyEducationModuleInput() {
+    return cy.get('#courseInput');
+  }
+
+  setCourseOfStudyEducationModuleInput() {
     return cy.get('#courseInput')
       .type('Some Course');
   }
@@ -255,11 +268,11 @@ class FreelancerWorkEducationExperiencePage {
   }
 
   setGraduationYearEducationModuleInputDrop() {
-    return cy.get('#graduationDateToggle > :nth-child(1) > .dropdown > .btn > .filter-option > .filter-option-inner > .filter-option-inner-inner')
+    return cy.get('#graduationDateToggle > :nth-child(1) > .dropdown > #graduationYear.form-control.selectpicker')
       .select('1982', {force: true});
   }
 
-  getCurrentlyStudyingYearEducationModuleInput() {
+  getCurrentlyStudyingEducationModuleInput() {
     return cy.get('.form-group.cy-graduation-year > .custom-control.custom-checkbox.cy-current-studying > #currentlyStudying.custom-control-input');
   }
 
@@ -287,16 +300,14 @@ class FreelancerWorkEducationExperiencePage {
   getEducationModuleSaveInput() {
     return cy.get('form.cy-education > .modal-footer > .btn-primary');
   }
-
-
   // End of Education Module
 
   getBackLink() {
-    return cy.get('.btn-link');
+    return cy.get('.btn.btn-link.px-0.cy-work-education');
   }
 
-  getNextInput() {
-    return cy.get('.btn-primary');
+  getNextLink() {
+    return cy.get('#NextBtn.btn-primary');
   }
 }
 export default FreelancerWorkEducationExperiencePage
