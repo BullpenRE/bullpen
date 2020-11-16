@@ -78,7 +78,7 @@
           <%= f.email_field :email, class: "form-control", id: "email", required: true %>
         </div>
 
-          <% if SignupPromo.where(user_type: 'freelancer').or(SignupPromo.where(user_type: 'both')).any? %>
+          <% if @show_promo_code = true %>
             <div class="mb-5 col-md-12">
               <label for="f_promo_code" class="text-primary">Promo Code (Optional)</label>
               <input type="text" class="form-control" id="f_promo_code" value="<%= session[:promo_code] %>">

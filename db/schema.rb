@@ -62,6 +62,13 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "asset_classes", force: :cascade do |t|
+    t.string "description", null: false
+    t.boolean "disable", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "certifications", force: :cascade do |t|
     t.string "description"
     t.boolean "disable", default: false
@@ -96,6 +103,15 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["employer_profile_id"], name: "index_employer_sectors_on_employer_profile_id"
     t.index ["sector_id"], name: "index_employer_sectors_on_sector_id"
+  end
+
+  create_table "freelancer_asset_classes", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "freelancer_profile_id"
+    t.bigint "asset_class_id"
+    t.index ["asset_class_id"], name: "index_freelancer_asset_classes_on_asset_class_id"
+    t.index ["freelancer_profile_id"], name: "index_freelancer_asset_classes_on_freelancer_profile_id"
   end
 
   create_table "freelancer_certifications", force: :cascade do |t|

@@ -86,7 +86,7 @@
             <%= f.hidden_field :role, value: :employer %>
           </div>
 
-          <% if SignupPromo.where(user_type: 'employer').or(SignupPromo.where(user_type: 'both')).any? %>
+          <% if @show_promo_code = true %>
           <div class="mb-5 col-md-12">
             <label for="promo_code" class="text-primary">Promo Code (Optional)</label>
             <input type="text" class="form-control" id="promo_code" value="<%= session[:promo_code] %>">
