@@ -1,7 +1,6 @@
 class SetStateForExistingJobs < ActiveRecord::Migration[6.0]
   def up
-    Job.all.each do |job|
-      job.draft == true ? job.update!(state: 0) : job.update!(state: 1)
-    end
+    Job.where(draft: true).update_all(state: Job.states['draft'])
+    Job.where.not(draft: true).update_all(state: Job.states['posted'])
   end
 end
