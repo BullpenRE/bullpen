@@ -4,7 +4,7 @@ class RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :check_signed_in
   # before_action :configure_account_update_params, only: [:update]
-  include RedirectPath
+  include LoggedInRedirects
 
   def new
     if params[:action] == 'freelancer_sign_up' || params[:action] == 'employer_sign_up'
@@ -33,7 +33,7 @@ class RegistrationsController < Devise::RegistrationsController
   protected
 
   def check_signed_in
-    redirect_to url_for_redirect if signed_in?
+    redirect_to current_signup_step_url if signed_in?
   end
 
   def after_sign_in_path_for(resource)
