@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class RegistrationsController < Devise::RegistrationsController
+  include LoggedInRedirects
   before_action :configure_sign_up_params, only: [:create]
+  before_action :check_signed_in
+  # before_action :configure_account_update_params, only: [:update]
 
   def new
     if params[:action] == 'freelancer_sign_up' || params[:action] == 'employer_sign_up'
@@ -27,6 +30,10 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   protected
+
+  def check_signed_in
+    redirect_to current_signup_step_url if signed_in?
+  end
 
   def after_sign_in_path_for(_resource)
     employer? ? employer_profile_steps_path(current_user) : freelancer_profile_steps_path(current_user)
