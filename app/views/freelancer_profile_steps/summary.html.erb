@@ -86,8 +86,8 @@
         <h4>Education</h4>
         <% @freelancer_profile.freelancer_profile_educations.order(currently_studying: :desc, graduation_year: :desc).each do |education| %>
           <div class="d-flex">
-            <div class="mb-2 text-wrap text-break"><b><%= education.institution %></b><br><%= education.degree %> <%= education.course_of_study %></div>
-            <div class="ml-auto ml-3"><i><%= education.currently_studying ? 'Present' : education.graduation_year %></i></div>
+            <div class="mb-2 mr-2 text-wrap text-break"><b><%= education.institution %></b><br><%= education.degree %> <%= education.course_of_study %></div>
+            <div class="ml-auto"><i><%= education.currently_studying ? 'Present' : education.graduation_year %></i></div>
           </div>
           <% if education.description.present? %>
             <ul class="mr-lg-3 mr-1 pl-3">
@@ -101,8 +101,8 @@
 
         <% @freelancer_profile.freelancer_certifications.order(earned: :desc).each do |freelancer_certification| %>
           <div class="d-flex mb-2">
-            <div><b><%= freelancer_certification.description %></b></div>
-            <div class="ml-auto ml-3"><i><%= freelancer_certification.earned.strftime("%b, %Y") %></i></div>
+            <div class="mr-2"><b><%= freelancer_certification.description %></b></div>
+            <div class="ml-auto"><i><%= freelancer_certification.earned.strftime("%b, %Y") %></i></div>
           </div>
         <% end %>
       <% end %>
