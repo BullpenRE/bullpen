@@ -51,4 +51,13 @@ RSpec.describe Software, type: :model do
     end
   end
 
+  context 'Scopes' do
+    it '.enabled' do
+      disabled_software = FactoryBot.create(:software, disable: true)
+      expect(software.disable).to be_falsey
+      expect(Software.enabled).to include(software)
+      expect(Software.enabled).to_not include(disabled_software)
+    end
+  end
+
 end
