@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 module RedirectPath
-  def user
-    User.find_by(id: session[:user_id])
-  end
-
   def current_step
-    user.role == 'employer' ?  user.employer_profile.current_step : user.freelancer_profile.current_step
+    current_user.role == 'employer' ?  current_user.employer_profile.current_step : current_user.freelancer_profile.current_step
   end
 
   def url_for_redirect
@@ -14,6 +10,6 @@ module RedirectPath
   end
 
   def set_path
-    user.role == 'employer' ? employer_profile_steps_path : freelancer_profile_steps_path
+    current_user.role == 'employer' ? employer_profile_steps_path : freelancer_profile_steps_path
   end
 end
