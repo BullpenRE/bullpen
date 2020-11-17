@@ -15,9 +15,9 @@ class SignupPromosController < ApplicationController
   end
 
   def forward_to_type_of_user
-    if signup_promo.present? && signup_promo.user_type == 'employer'
+    if signup_promo&.user_type == 'employer'
       redirect_to employer_sign_up_path
-    elsif signup_promo.present? &&  signup_promo.user_type == 'freelancer'
+    elsif signup_promo&.user_type == 'freelancer'
       redirect_to freelancer_sign_up_path
     else
       redirect_to join_path
