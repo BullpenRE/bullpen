@@ -11,6 +11,12 @@ class Employer::JobsController < ApplicationController
     job.destroy
   end
 
+  def post_job
+    job.update(state: 'posted')
+
+    redirect_to employer_jobs_path
+  end
+
   private
 
   def job

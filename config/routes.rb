@@ -29,8 +29,8 @@ Rails.application.routes.draw do
   # resources :employer
 
   namespace :employer do
-    get 'dashboard', to: 'dashboard#show'
     resources :jobs
+    get 'post_job', to: 'jobs#post_job'
     resources :job_flows
     resources :billing
     resources :refer
