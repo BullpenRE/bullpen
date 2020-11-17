@@ -6,7 +6,7 @@ module LoggedInRedirects
   end
 
   def current_signup_step_url
-    current_path+'/'+current_step
+    "#{current_path}/#{current_step}"
   end
 
   def current_path
