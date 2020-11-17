@@ -29,14 +29,14 @@
           <div class="col-12 mb-3 col-sm mb-sm-0">
             <div class="text-secondary font-weight-bold"> Required Skills </div>
             <% job.job_skills.each do |job_skill| %>
-              <li class=""><%= job_skill.skill.description %></li>
+              <li><%= job_skill.skill.description %></li>
             <% end %>
           </div>
           <% if job.job_softwares.any? %>
             <div class="col-12 mb-3 col-sm mb-sm-0">
               <div class="text-secondary font-weight-bold"> Required Software </div>
               <% job.job_softwares.each do |job_software| %>
-                <li class=""><%= job_software.software.description %></li>
+                <li><%= job_software.software.description %></li>
               <% end %>
             </div>
           <% end %>
