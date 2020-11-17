@@ -1,9 +1,10 @@
-<script>
-  $('.close-job').on('click', () => {
-    $.ajax({
-      url: '<%= employer_job_flows_path %>',
-      method: 'DELETE',
-      data: { job_id: <%= job.id %> }
+<% if job.initial_creation %>
+  <script>
+    $('.close-job').on('click', () => {
+      $.ajax({
+        url: '/employer/jobs/<%= job.id %>',
+        method: 'DELETE'
+      })
     })
-  })
-</script>
+  </script>
+<% end %>
