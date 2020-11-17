@@ -10,6 +10,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
       column :last_sign_in_at
       column :confirmed_at
       column :role
+      column :signup_promo
 
       actions defaults: true
     end
