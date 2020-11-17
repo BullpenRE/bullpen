@@ -3,6 +3,7 @@
 class FreelancerProfileStepsController < ApplicationController
   include Wicked::Wizard
   include WorkEducationExperience
+  include Sessions
   steps :skills_page, :avatar_location, :professional_history, :work_education_experience, :summary, :final_step
   before_action :authenticate_user!
 
@@ -17,6 +18,7 @@ class FreelancerProfileStepsController < ApplicationController
     @sectors = Sector.enabled.map{ |sector| [sector.description, sector.id] }
     @softwares = Software.enabled.map{ |software| [software.description, software.id] }
     render_wizard
+    set_session_params
   end
 
   def update

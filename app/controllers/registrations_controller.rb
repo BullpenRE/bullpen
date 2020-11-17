@@ -3,8 +3,11 @@
 class RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
+  include RedirectPath
 
   def new
+    return redirect_to url_for_redirect if current_user.present?
+
     if params[:action] == 'freelancer_sign_up' || params[:action] == 'employer_sign_up'
       super
     else

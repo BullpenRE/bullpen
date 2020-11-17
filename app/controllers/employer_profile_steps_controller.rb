@@ -2,6 +2,7 @@
 
 class EmployerProfileStepsController < ApplicationController
   include Wicked::Wizard
+  include Sessions
   before_action :step_variables, only: [:show]
 
   steps :about_company, :employee_count, :type_of_work, :sectors, :last_question
@@ -15,6 +16,7 @@ class EmployerProfileStepsController < ApplicationController
     end
     @employer_profile = @user.employer_profile
     render_wizard
+    set_session_params
   end
 
   def update
