@@ -25,6 +25,8 @@ describe User do
         user.destroy
         expect(FreelancerProfile.exists?(freelancer_profile.id)).to be_falsey
       end
+
+      it { should belong_to(:signup_promo).optional }
     end
 
     describe 'jobs' do
