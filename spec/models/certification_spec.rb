@@ -72,6 +72,13 @@ RSpec.describe Certification, type: :model do
     end
   end
 
+  it '.enabled' do
+    disabled_certification = FactoryBot.create(:certification, disable: true)
+    expect(certification.disable).to be_falsey
+    expect(Certification.enabled).to include(certification)
+    expect(Certification.enabled).to_not include(disabled_certification)
+  end
+
   context 'Methods' do
     it 'self.custom_id' do
       expect(Certification.custom_id).to eq(custom_certification.id)
