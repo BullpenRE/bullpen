@@ -2,9 +2,11 @@
 
 class JoinController < ApplicationController
   include RedirectPath
-  def index
-    return unless user.present?
+  before_action :check_signed_in
 
-    redirect_to url_for_redirect
+  def index; end
+
+  def check_signed_in
+    redirect_to url_for_redirect if signed_in?
   end
 end
