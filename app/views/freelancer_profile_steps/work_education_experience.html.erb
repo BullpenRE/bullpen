@@ -23,10 +23,10 @@
           <div class="d-flex align-items-center justify-content-between mb-3 cy-work-experience-present">
             <div class="w-100 cy-work-experience-present">
               <div class="row cy-work-experience-present cy-title">
-                <div class="col mb-1 text cy-work-experience-present cy-title"><%= work_exp.job_title %></div>
+                <div class="col mb-1 text text-wrap text-break cy-work-experience-present cy-title"><%= work_exp.job_title %></div>
               </div>
               <div class="row bp-text-sm cy-work-experience-present cy-company-location">
-                <div class="col-md cy-work-experience-present cy-company-location"><%= work_exp.company %>, <%= work_exp.location %></div>
+                <div class="col-md text-wrap text-break cy-work-experience-present cy-company-location"><%= work_exp.company %>, <%= work_exp.location %></div>
                 <div class="col-md cy-work-experience-present cy-job-duration">
                   <%= work_exp.start_date.strftime("%B, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%B, %Y") %>
                 </div>
@@ -48,10 +48,10 @@
           <div class="d-flex align-items-center justify-content-between mb-3 cy-education-present">
             <div class="w-100 cy-education-present">
               <div class="row cy-education-present cy-institution">
-                <div class="col mb-1 text cy-education-present cy-institution"><%= education_exp.institution %></div>
+                <div class="col mb-1 text text-wrap text-break cy-education-present cy-institution"><%= education_exp.institution %></div>
               </div>
               <div class="row bp-text-sm cy-education-present">
-                <div class="col-md cy-education-present cy-degree cy-course-of-study"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
+                <div class="col-md text-wrap text-break cy-education-present cy-degree cy-course-of-study"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
                 <div class="col-md cy-graduation-year"><%= education_exp.currently_studying.present? ? "Currently Studying" : education_exp.graduation_year %></div>
               </div>
             </div>

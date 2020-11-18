@@ -81,6 +81,12 @@ RSpec.describe Sector, type: :model do
   end
 
   context 'Scopes' do
+    describe 'default_scope' do
+      it 'orders by description alphabetically' do
+        ('A'..'Z').to_a.each { |letter| FactoryBot.create(:sector, description: "#{letter} Sector") }
+        expect(Sector.all.pluck(:description)).to match(Sector.order(description: :asc).pluck(:description))
+      end
+    end
     it '.enabled' do
       disabled_sector = FactoryBot.create(:sector, disable: true)
       expect(sector.disable).to be_falsey
