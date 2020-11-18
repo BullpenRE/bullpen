@@ -337,6 +337,11 @@ class FreelancerWorkEducationExperiencePage {
     return cy.get('form.cy-education > .modal-footer > .btn-primary');
   }
 
+  setEducationModuleSaveInput() {
+    return cy.get('form.cy-education > .modal-footer > .btn-primary')
+      .click({force: true});
+  }
+
   setEducationModuleSaveInputEdit() {
     // return cy.get('form.cy-edit-education > .modal-footer > cy-edit-education > btn.btn-primary')
     return cy.get('.cy-delete-save-submits > .btn-primary')

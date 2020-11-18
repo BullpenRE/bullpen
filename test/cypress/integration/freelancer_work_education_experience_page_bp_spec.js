@@ -14,7 +14,7 @@ describe('FreelancerWorkEducationExperiencePage', () => {
       this.dataJson = dataJson;
     })
   })
-  it('visit skill page & check page elements presence', function () {
+  it('visit work, education experience page & check page elements presence', function () {
 
     const freelancerSignUpPage = new FreelancerSignUpPage();
     freelancerSignUpPage.visitFreelancerSignUpPage()
@@ -352,7 +352,10 @@ describe('FreelancerWorkEducationExperiencePage', () => {
       .should('have.attr', 'name', 'commit')
       .should('have.attr', 'type', 'submit')
       .should('have.attr', 'data-disable-with', 'Save')
-      .click();
+      // .click();
+
+    freelancerWorkEducationExperiencePage.setEducationModuleSaveInput()
+
     // End of Education Module
 
     freelancerWorkEducationExperiencePage.getBackLink()
