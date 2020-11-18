@@ -27,7 +27,7 @@
           <div class="row mb-3">
             <div class="col">
               <%= f.select :start_month,
-                           options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES),
+                           options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES.each_with_index.collect { |m, i| [m, i] }),
                            {}, class: 'form-control selectpicker',
                            id: 'startMonth', required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
             </div>
@@ -48,7 +48,7 @@
           <div class="row">
             <div class="col">
               <%= f.select :end_month,
-                           options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES),
+                           options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES.each_with_index.collect { |m, i| [m, i] }),
                            {}, class: 'form-control selectpicker',
                            id: 'endMonth', 'data-style': "bp-btn-select-border", title: "Month" %>
             </div>

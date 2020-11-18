@@ -8,7 +8,6 @@ class FreelancerCertification < ApplicationRecord
   validates :description, presence: true, uniqueness: { scope: :freelancer_profile_id }
 
   AVAILABLE_YEARS = (40.years.ago.year..Time.now.year).reverse_each
-  AVAILABLE_MONTHNAMES = Date::MONTHNAMES.each_with_index.collect { |m, i| [m, i] }.drop(1)
 
   before_save :update_earned
   attr_accessor :earned_month, :earned_year

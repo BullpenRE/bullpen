@@ -13,7 +13,7 @@ class FreelancerProfileStepsController < ApplicationController
       @user.reload
     end
     @freelancer_profile = @user.freelancer_profile
-    @certification = certification
+    @certifications = certifications
     @real_estate_skills = RealEstateSkill.enabled.map{ |skill| [skill.description, skill.id] }
     @sectors = Sector.enabled.map{ |sector| [sector.description, sector.id] }
     @softwares = Software.enabled.map{ |software| [software.description, software.id] }
@@ -136,9 +136,7 @@ class FreelancerProfileStepsController < ApplicationController
       .permit(:professional_title, :professional_years_experience, :professional_summary)
   end
 
-  def certification
-    Certification.searchable.enabled.map do |certification|
-      [certification.description, certification.id]
-    end
+  def certifications
+    Certification.searchable.enabled.pluck(:description, :id)
   end
 end

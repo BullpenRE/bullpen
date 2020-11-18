@@ -38,7 +38,7 @@
               <div class="row mb-3">
                 <div class="col">
                   <%= f.select :earned_month,
-                               options_for_select(FreelancerCertification::AVAILABLE_MONTHNAMES),
+                               options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES.each_with_index.collect { |m, i| [m, i] }),
                                {}, class: 'form-control selectpicker',
                                id: 'earnedMonth', required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
                 </div>
