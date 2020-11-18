@@ -52,6 +52,12 @@ RSpec.describe Software, type: :model do
   end
 
   context 'Scopes' do
+    describe 'default_scope' do
+      it 'orders by description alphabetically' do
+        ('A'..'Z').to_a.each { |letter| FactoryBot.create(:software, description: "#{letter} Software") }
+        expect(Software.all.pluck(:description)).to match(Software.order(description: :asc).pluck(:description))
+      end
+    end
     it '.enabled' do
       disabled_software = FactoryBot.create(:software, disable: true)
       expect(software.disable).to be_falsey

@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     get '/freelancer_sign_up', to: 'registrations#freelancer_sign_up'
   end
 
+  get '/promo/:promo_code', to: 'signup_promos#show'
+
   resources :avatar, only: %i[update destroy]
   resources :freelancer_profile_steps
   resources :employer_profile_steps
