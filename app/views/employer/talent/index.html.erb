@@ -11,8 +11,10 @@
             <%= link_to 'Post a job', employer_job_flows_path(start_flow: true), { remote: true, 'data-toggle': "modal", 'data-target': "#postJobStep1", class: "btn btn-primary mr-2 d-none d-lg-inline-block" } %>
           </a>
         </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="employer_talent_index_path">Find Talent</a>
+        <li class="nav-item">
+          <a href="#" data-toggle="modal" data-target="#findTalent">
+            <%= link_to 'Find Talent', employer_talent_index_path(start_flow: true), { remote: true, 'data-toggle': "modal", 'data-target': "#findTalent", class: "btn btn-primary mr-2 d-none d-lg-inline-block" } %>
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Your Jobs</a>
