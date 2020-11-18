@@ -19,16 +19,16 @@
         Work Experience
       </div>
       <% if @freelancer_profile.freelancer_profile_experiences.present? %>
-        <% @freelancer_profile.freelancer_profile_experiences.each do |work_exp| %>
+        <% @freelancer_profile.freelancer_profile_experiences.order(current_job: :desc, end_date: :desc).each do |work_exp| %>
           <div class="d-flex align-items-center justify-content-between mb-3">
             <div class="w-100">
               <div class="row">
-                <div class="col mb-1 text"><%= work_exp.job_title %></div>
+                <div class="col mb-1 text text-wrap text-break"><%= work_exp.job_title %></div>
               </div>
               <div class="row bp-text-sm">
-                <div class="col-md"><%= work_exp.company %>, <%= work_exp.location %></div>
+                <div class="col-md text-wrap text-break"><%= work_exp.company %>, <%= work_exp.location %></div>
                 <div class="col-md">
-                  <%= work_exp.start_date.strftime("%B, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%B, %Y") %>
+                  <%= work_exp.start_date.strftime("%b %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%b %Y") %>
                 </div>
               </div>
             </div>
@@ -44,14 +44,14 @@
         Education
       </div>
       <% if @freelancer_profile.freelancer_profile_educations.present? %>
-        <% @freelancer_profile.freelancer_profile_educations.each do |education_exp| %>
+        <% @freelancer_profile.freelancer_profile_educations.order(currently_studying: :desc, graduation_year: :desc).each do |education_exp| %>
           <div class="d-flex align-items-center justify-content-between mb-3">
             <div class="w-100">
               <div class="row">
-                <div class="col mb-1 text"><%= education_exp.institution %></div>
+                <div class="col mb-1 text text-wrap text-break"><%= education_exp.institution %></div>
               </div>
               <div class="row bp-text-sm">
-                <div class="col-md"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
+                <div class="col-md text-wrap text-break"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
                 <div class="col-md"><%= education_exp.currently_studying.present? ? "Currently Studying" : education_exp.graduation_year %></div>
               </div>
             </div>
@@ -68,12 +68,12 @@
         Work Licenses & Certifications
       </div>
       <% if @freelancer_profile.freelancer_certifications.present? %>
-        <% @freelancer_profile.freelancer_certifications.order(created_at: :desc).each do |freelancer_certification| %>
+        <% @freelancer_profile.freelancer_certifications.order(earned: :desc).each do |freelancer_certification| %>
           <div class="d-flex align-items-center justify-content-between mb-3">
             <div class="w-100">
               <div class="row">
-                <div class="col-md text"><%= freelancer_certification&.description %></div>
-                <div class="col-md"> Earned <%= freelancer_certification&.earned&.strftime("%B, %Y") %></div>
+                <div class="col-md text text-wrap text-break"><%= freelancer_certification&.description %></div>
+                <div class="col-md"> Earned <%= freelancer_certification&.earned&.strftime("%b %Y") %></div>
               </div>
             </div>
             <%= render 'edit_licences_or_certification', freelancer_certification: freelancer_certification %>

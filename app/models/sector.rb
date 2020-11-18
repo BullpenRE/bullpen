@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Sector < ApplicationRecord
+  default_scope { order(description: :asc) }
   scope :enabled, -> { where.not(disable: true) }
 
   has_many :freelancer_sectors, dependent: :destroy

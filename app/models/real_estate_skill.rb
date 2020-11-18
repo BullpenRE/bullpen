@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class RealEstateSkill < ApplicationRecord
+  default_scope { order(description: :asc) }
   scope :enabled, -> { where.not(disable: true) }
 
   validates :description, presence: true, uniqueness: true
