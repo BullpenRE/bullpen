@@ -19,7 +19,7 @@ class Employer::JobFlowsController < ApplicationController
     params[:job][:job_id].blank? ? new_job : job
     @current_time_zone = job.time_zone || 'PST'
 
-      summary_step_save ||
+    summary_step_save ||
       job_type_save ||
       qualifications_save ||
       details_save ||
