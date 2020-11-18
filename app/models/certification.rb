@@ -4,6 +4,7 @@ class Certification < ApplicationRecord
   has_many :freelancer_certifications
   has_many :freelancer_profiles, through: :freelancer_certifications
   scope :searchable, -> { where(custom: false) }
+  scope :enabled, -> { where.not(disable: true) }
 
   validate :blank_descriptions
   validates :description, uniqueness: true
