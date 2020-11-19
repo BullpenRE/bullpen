@@ -19,16 +19,16 @@
         Work Experience
       </div>
       <% if @freelancer_profile.freelancer_profile_experiences.present? %>
-        <% @freelancer_profile.freelancer_profile_experiences.each do |work_exp| %>
+        <% @freelancer_profile.freelancer_profile_experiences.order(current_job: :desc, end_date: :desc).each do |work_exp| %>
           <div class="d-flex align-items-center justify-content-between mb-3 cy-work-experience-present">
             <div class="w-100 cy-work-experience-present">
               <div class="row cy-work-experience-present cy-title">
-                <div class="col mb-1 text cy-work-experience-present cy-title"><%= work_exp.job_title %></div>
+                <div class="col mb-1 text text-wrap text-break cy-work-experience-present cy-title"><%= work_exp.job_title %></div>
               </div>
-              <div class="row bp-text-sm cy-work-experience-present cy-company-location">
-                <div class="col-md cy-work-experience-present cy-company-location"><%= work_exp.company %>, <%= work_exp.location %></div>
+              <div class="row bp-text-sm" cy-work-experience-present cy-company-location>
+                <div class="col-md text-wrap text-break work-experience-present cy-company-location"><%= work_exp.company %>, <%= work_exp.location %></div>
                 <div class="col-md cy-work-experience-present cy-job-duration">
-                  <%= work_exp.start_date.strftime("%B, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%B, %Y") %>
+                  <%= work_exp.start_date.strftime("%b %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%b %Y") %>
                 </div>
               </div>
             </div>
@@ -39,19 +39,19 @@
       <% end %>
       <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addWorkExperienceModal"><i class="fas fa-plus mr-2"></i>Add Experience</button>
     </div>
-    <div class="mb-5 cy-education-experience">
+    <div class="mb-4 cy-education-experience">
       <div class="bp-input-label">
         Education
       </div>
       <% if @freelancer_profile.freelancer_profile_educations.present? %>
-        <% @freelancer_profile.freelancer_profile_educations.each do |education_exp| %>
+        <% @freelancer_profile.freelancer_profile_educations.order(currently_studying: :desc, graduation_year: :desc).each do |education_exp| %>
           <div class="d-flex align-items-center justify-content-between mb-3 cy-education-present">
             <div class="w-100 cy-education-present">
               <div class="row cy-education-present cy-institution">
-                <div class="col mb-1 text cy-education-present cy-institution"><%= education_exp.institution %></div>
+                <div class="col mb-1 text text-wrap text-break cy-education-present cy-institution"><%= education_exp.institution %></div>
               </div>
               <div class="row bp-text-sm cy-education-present">
-                <div class="col-md cy-education-present cy-degree cy-course-of-study"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
+                <div class="col-md text-wrap text-break cy-education-present cy-degree cy-course-of-study"><%= education_exp.degree %>, <%= education_exp.course_of_study %></div>
                 <div class="col-md cy-graduation-year"><%= education_exp.currently_studying.present? ? "Currently Studying" : education_exp.graduation_year %></div>
               </div>
             </div>
@@ -62,9 +62,30 @@
       <% end %>
       <button class="btn btn-outline-primary cy-education" data-toggle="modal" data-target="#addEducationModal"><i class="fas fa-plus mr-2"></i>Add Education</button>
     </div>
+    <div class="mb-5">
+      <div class="bp-input-label">
+        Work Licenses & Certifications
+      </div>
+      <% if @freelancer_profile.freelancer_certifications.present? %>
+        <% @freelancer_profile.freelancer_certifications.order(earned: :desc).each do |freelancer_certification| %>
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="w-100">
+              <div class="row">
+                <div class="col-md text text-wrap text-break"><%= freelancer_certification&.description %></div>
+                <div class="col-md"> Earned <%= freelancer_certification&.earned&.strftime("%b %Y") %></div>
+              </div>
+            </div>
+            <%= render 'edit_licences_or_certification', freelancer_certification: freelancer_certification %>
+            <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editLicenseCertificationModall-<%= freelancer_certification.id %>"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
+          </div>
+        <% end %>
+      <% end %>
+      <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addLicenseCertificationModal"><i class="fas fa-plus mr-2"></i>Add New</button>
+    </div>
+
     <div class="d-flex justify-content-between cy-work-education">
-      <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0 cy-work-education" %>
-      <%= link_to 'Next', next_wizard_path, class: "btn btn-primary cy-work-education", id: "NextBtn" %>
+      <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
+      <%= link_to 'Next', next_wizard_path, class: "btn btn-primary", id: "NextBtn" %>
     </div>
   </div>
 </div>
@@ -79,3 +100,4 @@
 
 <%= render 'add_work_experience' %>
 <%= render 'add_education' %>
+<%= render 'add_licences_or_certification', certification: @certification %>

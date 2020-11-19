@@ -77,6 +77,14 @@
           <%= f.label :email, class: "text-primary" %><br />
           <%= f.email_field :email, class: "form-control", id: "email", required: true %>
         </div>
+
+          <% if @show_promo_code %>
+            <div class="mb-5 col-md-12">
+              <label for="promo_code" class="text-primary">Promo Code (Optional)</label>
+              <input type="text" class="form-control" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
+            </div>
+          <% end %>
+
         <hr class="mb-4">
         <button class="form-control-lg btn btn-outline-secondary col-md-12 mb-3 nextBtn-2" type="button">Sign up as a freelancer</button>
 

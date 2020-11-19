@@ -13,6 +13,7 @@ class FreelancerProfileStepsController < ApplicationController
       @user.reload
     end
     @freelancer_profile = @user.freelancer_profile
+    @certifications = certifications
     @real_estate_skills = RealEstateSkill.enabled.map{ |skill| [skill.description, skill.id] }
     @sectors = Sector.enabled.map{ |sector| [sector.description, sector.id] }
     @softwares = Software.enabled.map{ |software| [software.description, software.id] }
@@ -22,6 +23,7 @@ class FreelancerProfileStepsController < ApplicationController
   def update
     @user = current_user
     @freelancer_profile = @user.freelancer_profile
+    @certification = certification
     save_current_step
     skills_page_save ||
       professional_history_save ||
@@ -62,6 +64,7 @@ class FreelancerProfileStepsController < ApplicationController
 
     freelancer_profile_education_save
     work_experience_save
+    certification_save
 
     render wizard_path(:work_education_experience)
 
@@ -131,5 +134,9 @@ class FreelancerProfileStepsController < ApplicationController
   def history_params
     params.require(:freelancer_profile)
       .permit(:professional_title, :professional_years_experience, :professional_summary)
+  end
+
+  def certifications
+    Certification.searchable.enabled.pluck(:description, :id)
   end
 end
