@@ -7,7 +7,7 @@ class Employer::JobFlowsController < ApplicationController
 
   def show
     @user = current_user
-    @time_zones = Job.time_zones
+    @available_time_zones = Job.time_zones
     params[:start_flow].present? ? new_job : job
 
     respond_js_format(wizard_value(step))
@@ -15,9 +15,9 @@ class Employer::JobFlowsController < ApplicationController
 
   def update
     @user = current_user
-    @time_zones = Job.time_zones
+    @available_time_zones = Job.time_zones
     params[:job][:job_id].blank? ? new_job : job
-    @current_time_zone = job.time_zone || 'PST'
+    @time_zone = job.time_zone || 'PST'
 
     summary_step_save ||
       job_type_save ||
