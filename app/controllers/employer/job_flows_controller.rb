@@ -76,13 +76,10 @@ class Employer::JobFlowsController < ApplicationController
     questions_descriptions.each do |description|
       job.job_questions.create(description: description)
     end
-    if params[:button] != 'draft'
-      job.draft = false
-      job.save
-    end
+    params[:button] != 'draft' ? job.update(state: 'posted') : job.update(state: 'draft')
     job.update(initial_creation: false)
 
-    redirect_to employer_dashboard_path
+    redirect_to employer_jobs_path
 
     true
   end
