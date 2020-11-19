@@ -4,6 +4,6 @@ class Freelancer::JobsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @jobs = Jobs.where(status: 'posted')
+    @jobs = Job.where(state: 'posted')
   end
 end
