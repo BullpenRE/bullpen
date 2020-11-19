@@ -2,14 +2,14 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title" id="showJobPostLabel"><%= job&.title&.capitalize %></h1>
+        <h1 class="modal-title" id="showJobPostLabel"><%= job.title&.capitalize %></h1>
         <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <div class="modal-body pt-0">
         <p><%= job.short_description %></p>
-        <% job&.job_sectors&.map do |job_sector| %>
+        <% job.job_sectors.each do |job_sector| %>
           <span class="badge badge-secondary mb-1">
             <%= job_sector.sector.description %>
           </span>
@@ -18,41 +18,43 @@
         <p><%= job.relevant_job_details %></p>
         <hr>
         <li>This is <i class="text-secondary font-weight-bold"> <%= job.position_length %> </i> position</li>
-        <li><i class="text-secondary font-weight-bold"> <%= job&.hours_needed&.capitalize %> </i> hours are needed</li>
+        <li><i class="text-secondary font-weight-bold"> <%= job.hours_needed&.capitalize %> </i> hours are needed</li>
         <div class="bp-text mb-2 mt-2">
-          <% if (job.daytime_availability_required == true) %>
+          <% if job.daytime_availability_required? %>
             <i class="far fa-clock text-secondary"></i> Daytime availability is required <span class="text-secondary font-weight-bold">(9AM-5PM PST)</span>
           <% end %>
         </div>
         <hr>
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-12 mb-3 col-sm mb-sm-0">
             <div class="text-secondary font-weight-bold"> Required Skills </div>
-            <% job&.job_skills&.map do |job_skill| %>
-              <li class=""><%= job_skill.skill.description %></li>
+            <% job.job_skills.each do |job_skill| %>
+              <li><%= job_skill.skill.description %></li>
             <% end %>
           </div>
-          <div class="col-sm-4">
-            <div class="text-secondary font-weight-bold"> Required Software </div>
-            <% job&.job_softwares&.map do |job_software| %>
-              <li class=""><%= job_software.software.description %></li>
-            <% end %>
-          </div>
-          <div class="col-sm-4">
-            <div class="text-secondary font-weight-bold"> Experience Level </div>
-            <li><%= job&.required_experience&.capitalize %></li>
-          </div>
-        </div>
-        <div class="bp-text mb-1 mt-2">
-          <% if (job.required_regional_knowledge.present?) %>
-            <i class="fas fa-map-marker-alt text-secondary"></i>  Regional knowledge of <span class="text-secondary font-weight-bold"><%= job.required_regional_knowledge.capitalize %></span> is required
+          <% if job.job_softwares.any? %>
+            <div class="col-12 mb-3 col-sm mb-sm-0">
+              <div class="text-secondary font-weight-bold"> Required Software </div>
+              <% job.job_softwares.each do |job_software| %>
+                <li><%= job_software.software.description %></li>
+              <% end %>
+            </div>
           <% end %>
+          <div class="col-12 col-sm">
+            <div class="text-secondary font-weight-bold"> Experience Level </div>
+            <li><%= job.required_experience&.capitalize %></li>
+          </div>
         </div>
-        <% if job&.job_questions.any? %>
+        <% if job.required_regional_knowledge.present? %>
+          <div class="bp-text mb-1 mt-3">
+            <i class="fas fa-map-marker-alt text-secondary"></i>  Regional knowledge of <span class="text-secondary font-weight-bold"><%= job.required_regional_knowledge.capitalize %></span> is required
+          </div>
+        <% end %>
+        <% if job.job_questions.any? %>
           <hr>
           <div class="text-secondary font-weight-bold"> Questions for Applicants </div>
-          <% job&.job_questions&.map do |job_question| %>
-            <li class=""><%= job_question.description %></li>
+          <% job.job_questions.each do |job_question| %>
+            <li><%= job_question.description %></li>
           <% end %>
         <% end %>
       </div>

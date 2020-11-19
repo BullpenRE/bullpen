@@ -27,6 +27,13 @@ RSpec.describe RealEstateSkill, type: :model do
   end
 
   context 'Scopes' do
+    describe 'default_scope' do
+      it 'orders by description alphabetically' do
+        ('A'..'Z').to_a.each { |letter| FactoryBot.create(:real_estate_skill, description: "#{letter} RE Skill") }
+        expect(RealEstateSkill.all.pluck(:description)).to match(RealEstateSkill.order(description: :asc).pluck(:description))
+      end
+    end
+
     it '.enabled' do
       disabled_real_estate_skill = FactoryBot.create(:real_estate_skill, disable: true)
       expect(real_estate_skill.disable).to be_falsey

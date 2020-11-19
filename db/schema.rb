@@ -244,6 +244,15 @@ ActiveRecord::Schema.define(version: 2020_11_17_173954) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "signup_promos", force: :cascade do |t|
+    t.string "description"
+    t.string "code"
+    t.integer "user_type"
+    t.datetime "expires"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "skills", force: :cascade do |t|
     t.string "description"
     t.boolean "disable", default: false
@@ -306,4 +315,5 @@ ActiveRecord::Schema.define(version: 2020_11_17_173954) do
   add_foreign_key "job_softwares", "jobs"
   add_foreign_key "job_softwares", "softwares"
   add_foreign_key "jobs", "users"
+  add_foreign_key "users", "signup_promos"
 end
