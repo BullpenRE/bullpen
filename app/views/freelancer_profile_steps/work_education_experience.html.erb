@@ -28,7 +28,7 @@
               <div class="row bp-text-sm cy-work-experience-present cy-company-location">
                 <div class="col-md text-wrap text-break cy-work-experience-present cy-company-location"><%= work_exp.company %>, <%= work_exp.location %></div>
                 <div class="col-md cy-work-experience-present cy-job-duration">
-                  <%= work_exp.start_date.strftime("%B, %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%B, %Y") %>
+                  <%= work_exp.start_date.strftime("%b %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%b %Y") %>
                 </div>
               </div>
             </div>
@@ -56,13 +56,12 @@
               </div>
             </div>
             <%= render 'edit_education', freelancer_profile_education: education_exp %>
-            <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editEducationModal-<%= education_exp.id %>"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
+            <button class="btn btn-link cy-education" type="button" data-toggle="modal" data-target="#editEducationModal-<%= education_exp.id %>"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
           </div>
         <% end %>
       <% end %>
       <button class="btn btn-outline-primary cy-education" data-toggle="modal" data-target="#addEducationModal"><i class="fas fa-plus mr-2"></i>Add Education</button>
     </div>
-
     <div class="mb-5">
       <div class="bp-input-label">
         Work Licenses & Certifications
@@ -85,8 +84,8 @@
     </div>
 
     <div class="d-flex justify-content-between cy-work-education">
-      <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0 cy-work-education" %>
-      <%= link_to 'Next', next_wizard_path, class: "btn btn-primary cy-work-education", id: "NextBtn" %>
+      <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
+      <%= link_to 'Next', next_wizard_path, class: "btn btn-primary", id: "NextBtn" %>
     </div>
   </div>
 </div>
