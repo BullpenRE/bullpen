@@ -16,7 +16,7 @@
           <div id="descriptionCertification" class="collapse multi-collapse <%= freelancer_certification.certification.custom? ? '' : 'show' %>">
             <div class="form-group mb-2">
               <%= f.select :certification_id,
-                            options_for_select(@certification, [freelancer_certification.description, freelancer_certification.certification_id]),
+                            options_for_select(@certifications, [freelancer_certification.description, freelancer_certification.certification_id]),
                             {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select-border", title: "Select an option..." %>
             </div>
             <a data-toggle="collapse" href=#descriptionCertification" data-target=".multi-collapse" aria-expanded="false" aria-controls="descriptionCertification customDescriptionCertification">
