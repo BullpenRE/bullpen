@@ -23,7 +23,7 @@ class FreelancerProfileStepsController < ApplicationController
   def update
     @user = current_user
     @freelancer_profile = @user.freelancer_profile
-    @certification = certification
+    @certifications = certifications
     save_current_step
     skills_page_save ||
       professional_history_save ||
