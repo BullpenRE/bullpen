@@ -25,6 +25,18 @@ module WorkEducationExperience
     end
   end
 
+  def certification_save
+    return unless params[:freelancer_certification].present?
+
+    if freelancer_certification.present? && params[:commit] == 'Delete'
+      freelancer_certification.destroy
+    elsif freelancer_certification.present?
+      freelancer_certification.update(checked_freelancer_certification_params)
+    else
+      @freelancer_profile.freelancer_certifications.create(checked_freelancer_certification_params)
+    end
+  end
+
   private
 
   def profile_experience_params
@@ -62,6 +74,18 @@ module WorkEducationExperience
     experience_params.merge(freelancer_profile_id: @freelancer_profile.id)
   end
 
+  def checked_freelancer_certification_params
+    if params[:freelancer_certification][:description].blank?
+      params.require(:freelancer_certification)
+        .permit(:certification_id, :earned_year, :earned_month)
+        .merge(description: Certification.find_by(id: params[:freelancer_certification][:certification_id]).description)
+    else
+      params.require(:freelancer_certification)
+        .permit(:description, :earned_year, :earned_month)
+        .merge(certification_id: Certification.custom_id)
+    end
+  end
+
   def current_job?
     params[:freelancer_profile_experience][:current_job] == true
   end
@@ -72,5 +96,9 @@ module WorkEducationExperience
 
   def education_profile_experience
     @freelancer_profile&.freelancer_profile_educations&.find_by(id: params[:freelancer_profile_education][:id])
+  end
+
+  def freelancer_certification
+    @freelancer_profile&.freelancer_certifications&.find_by(id: params[:freelancer_certification][:id])
   end
 end
