@@ -17,7 +17,7 @@ class Employer::JobFlowsController < ApplicationController
     @user = current_user
     @available_time_zones = Job.time_zones
     params[:job][:job_id].blank? ? new_job : job
-    @time_zone = job.time_zone || 'PST'
+    @time_zone = job.time_zone
 
     summary_step_save ||
       job_type_save ||
