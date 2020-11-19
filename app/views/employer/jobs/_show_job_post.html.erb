@@ -10,7 +10,7 @@
       <div class="modal-body pt-0">
         <p><%= job.short_description %></p>
         <% job&.job_sectors&.map do |job_sector| %>
-          <span class="badge badge-secondary">
+          <span class="badge badge-secondary mb-1">
             <%= job_sector.sector.description %>
           </span>
         <% end %>
