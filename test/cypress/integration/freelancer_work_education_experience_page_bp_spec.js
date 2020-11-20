@@ -93,7 +93,7 @@ describe('FreelancerWorkEducationExperiencePage', () => {
 
     freelancerWorkEducationExperiencePage.getAddWorkExperienceLabel()
       .should("be.visible")
-      .should('have.text', '\n        Work Experience\n      ');
+      .should('have.text', '\n        Work Experience\n      \n        Education\n      ');
 
     freelancerWorkEducationExperiencePage.getAddWorkExperienceIcon()
       .should("be.visible")
@@ -239,7 +239,7 @@ describe('FreelancerWorkEducationExperiencePage', () => {
 
     freelancerWorkEducationExperiencePage.getAddEducationLabel()
       .should("be.visible")
-      .should('have.text', '\n        Education\n      ');
+      .should('have.text', '\n        Work Licenses & Certifications\n      ');
 
     freelancerWorkEducationExperiencePage.getAddEducationIcon()
       .should("be.visible")
@@ -382,7 +382,7 @@ describe('FreelancerWorkEducationExperiencePage', () => {
 
     freelancerWorkEducationExperiencePage.getWorkResultJobDuration()
       .should("be.visible")
-      .should('have.text', '\n                  July, 2007-July, 2020\n                ');
+      .should('have.text', '\n                  Jun 2007-Jun 2020\n                ');
 
     freelancerWorkEducationExperiencePage.getWorkResultEditButton()
       .should("exist")

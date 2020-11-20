@@ -45,11 +45,11 @@ class FreelancerWorkEducationExperiencePage {
   }
 
   getAddWorkExperienceButton() {
-    return cy.get('div.mb-4 > .btn');
+    return cy.get('.bp-card > div.cy-work-experience > .btn');
   }
 
   setAddWorkExperienceButton() {
-    return cy.get('div.mb-4 > .btn')
+    return cy.get('.bp-card > div.cy-work-experience > .btn')
       .click({force: true});
   }
 
@@ -228,11 +228,11 @@ class FreelancerWorkEducationExperiencePage {
   }
 
   getAddEducationButton() {
-    return cy.get('.mb-5 > .btn');
+    return cy.get('.cy-education-experience > .btn');
   }
 
   setAddEducationButton() {
-    return cy.get('.mb-5 > .btn')
+    return cy.get('.cy-education-experience > .btn')
       .click({force: true});
   }
 
@@ -350,11 +350,11 @@ class FreelancerWorkEducationExperiencePage {
   // End of Education Module
 
   getBackLink() {
-    return cy.get('.btn.btn-link.px-0.cy-work-education');
+    return cy.get('.cy-work-education > .btn-link');
   }
 
   setBackLink() {
-    return cy.get('.btn.btn-link.px-0.cy-work-education')
+    return cy.get('.cy-work-education > .btn-link')
       .click().wait(2000).go('back');
   }
 
@@ -389,11 +389,11 @@ class FreelancerWorkEducationExperiencePage {
   }
 
   getWorkResultEditPencil() {
-    return cy.get('div.mb-4 > .d-flex > [data-toggle="modal"] > .svg-inline--fa');
+    return cy.get('div.mb-4 > .d-flex > [data-toggle="modal"] > .svg-inline--fa').first();
   }
 
   setWorkResultEditPencil() {
-    return cy.get('div.mb-4 > .d-flex > [data-toggle="modal"] > .svg-inline--fa')
+    return cy.get('div.mb-4 > .d-flex > [data-toggle="modal"] > .svg-inline--fa').first()
       .click({force: true});
   }
 
@@ -414,11 +414,11 @@ class FreelancerWorkEducationExperiencePage {
   }
 
   getEducationResultEditPencil() {
-    return cy.get('div.mb-5 > .d-flex > [data-toggle="modal"] > .svg-inline--fa');
+    return cy.get('.d-flex > .cy-education > .svg-inline--fa');
   }
 
   setEducationResultEditPencil() {
-    return cy.get('div.mb-5 > .d-flex > [data-toggle="modal"] > .svg-inline--fa')
+    return cy.get('.d-flex > .cy-education > .svg-inline--fa')
       .click({force: true});
   }
 
