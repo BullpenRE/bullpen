@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   get '/freelancer_style', to: 'style#freelancer'
   get '/employer_style', to: 'style#employer'
+  get '/employer_talent_style', to: 'style#employer_talent'
   get '/login_style', to: 'style#login'
   get '/employer_jobs_style', to: 'style#employer_jobs'
 
@@ -31,8 +32,8 @@ Rails.application.routes.draw do
   # resources :employer
 
   namespace :employer do
-    get 'dashboard', to: 'dashboard#show'
     resources :jobs
+    get 'post_job', to: 'jobs#post_job'
     resources :job_flows
     resources :billing
     resources :refer

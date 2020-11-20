@@ -7,6 +7,7 @@ class Employer::JobFlowsController < ApplicationController
 
   def show
     @user = current_user
+    @available_time_zones = Job.time_zones
     params[:start_flow].present? ? new_job : job
 
     respond_js_format(wizard_value(step))
@@ -14,7 +15,9 @@ class Employer::JobFlowsController < ApplicationController
 
   def update
     @user = current_user
+    @available_time_zones = Job.time_zones
     params[:job][:job_id].blank? ? new_job : job
+    @time_zone = job.time_zone
 
     summary_step_save ||
       job_type_save ||
@@ -76,13 +79,10 @@ class Employer::JobFlowsController < ApplicationController
     questions_descriptions.each do |description|
       job.job_questions.create(description: description)
     end
-    if params[:button] != 'draft'
-      job.draft = false
-      job.save
-    end
+    params[:button] != 'draft' ? job.update(state: 'posted') : job.update(state: 'draft')
     job.update(initial_creation: false)
 
-    redirect_to employer_dashboard_path
+    redirect_to employer_jobs_path
 
     true
   end
@@ -120,7 +120,7 @@ class Employer::JobFlowsController < ApplicationController
   end
 
   def job_type_params
-    params.require(:job).permit(:position_length, :hours_needed)
+    params.require(:job).permit(:position_length, :hours_needed, :time_zone)
   end
 
   def qualifications_params
