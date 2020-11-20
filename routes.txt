@@ -152,6 +152,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   DELETE     /admin/comments/:id(.:format)                                                            admin/comments#destroy
                                  freelancer_style GET        /freelancer_style(.:format)                                                              style#freelancer
                                    employer_style GET        /employer_style(.:format)                                                                style#employer
+                            employer_talent_style GET        /employer_talent_style(.:format)                                                         style#employer_talent
                                       login_style GET        /login_style(.:format)                                                                   style#login
                               employer_jobs_style GET        /employer_jobs_style(.:format)                                                           style#employer_jobs
                                              join GET        /join(.:format)                                                                          join#index
@@ -193,7 +194,6 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PATCH      /employer_profile_steps/:id(.:format)                                                    employer_profile_steps#update
                                                   PUT        /employer_profile_steps/:id(.:format)                                                    employer_profile_steps#update
                                                   DELETE     /employer_profile_steps/:id(.:format)                                                    employer_profile_steps#destroy
-                               employer_dashboard GET        /employer/dashboard(.:format)                                                            employer/dashboard#show
                                     employer_jobs GET        /employer/jobs(.:format)                                                                 employer/jobs#index
                                                   POST       /employer/jobs(.:format)                                                                 employer/jobs#create
                                  new_employer_job GET        /employer/jobs/new(.:format)                                                             employer/jobs#new
@@ -202,6 +202,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PATCH      /employer/jobs/:id(.:format)                                                             employer/jobs#update
                                                   PUT        /employer/jobs/:id(.:format)                                                             employer/jobs#update
                                                   DELETE     /employer/jobs/:id(.:format)                                                             employer/jobs#destroy
+                                employer_post_job GET        /employer/post_job(.:format)                                                             employer/jobs#post_job
                                employer_job_flows GET        /employer/job_flows(.:format)                                                            employer/job_flows#index
                                                   POST       /employer/job_flows(.:format)                                                            employer/job_flows#create
                             new_employer_job_flow GET        /employer/job_flows/new(.:format)                                                        employer/job_flows#new
