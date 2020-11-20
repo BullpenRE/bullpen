@@ -72,7 +72,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :title
         f.input :short_description
         f.input :position_length
-        f.input :time_zone, as: :select, collection: ActiveSupport::TimeZone.us_zones.map(&:name)
+        f.input :time_zone, as: :select, collection: Job.time_zones.keys
         f.input :draft
         f.input :daytime_availability_required
         f.input :required_experience
