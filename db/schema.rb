@@ -218,7 +218,7 @@ ActiveRecord::Schema.define(version: 2020_11_17_173954) do
     t.string "short_description"
     t.integer "position_length"
     t.integer "hours_needed"
-    t.string "time_zone"
+    t.integer "time_zone"
     t.boolean "daytime_availability_required"
     t.integer "required_experience"
     t.string "required_regional_knowledge"
