@@ -4,28 +4,32 @@
     <a class="navbar-brand" href="https://bullpenre.com/">
       <%= image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30') %>
     </a>
+    
     <div class="collapse navbar-collapse" id="navbarMenu">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a href="#" data-toggle="modal" data-target="#postJobStep1">
             <%= link_to 'Post a job', '#', { class: "btn btn-primary mr-2 d-none d-lg-inline-block" } %>
+            <%= link_to 'Post a job', '#', { class: "nav-link d-lg-none" } %>
           </a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#">Talent</a>
+          <a class="nav-link" href="#">Find Talent</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Jobs</a>
+          <a class="nav-link" href="#">Your Jobs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Interviews</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Contracts</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Refer a Friend</a>
-        </li>
       </ul>
     </div>
-
+    <button class="navbar-toggler mr-auto text-light" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
     <div class="dropdown">
       <span class="dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-user-circle bp-profile-placeholder mr-1"></i>
@@ -36,19 +40,45 @@
         <a class="dropdown-item" href="#">Manage Account</a>
         <a class="dropdown-item" href="#">Contact Support</a>
         <a class="dropdown-item" href="#">For Talent/Find Jobs</a>
-        <a class="dropdown-item" href="#">Logout</a>
+        <a class="dropdown-item" href="#">Log Out</a>
       </div>
     </div>
-    <button class="navbar-toggler ml-2 text-light" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
+    
   </div>
 </nav>
 
-<!--Job card-->
+<!--Talent card-->
 <div class="container mb-3">
-  <h1>Open Jobs</h1>
-
+  <div class="d-flex align-items-end">
+    <h1>Find Talent</h1>
+    <a href="#" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
+  </div>
+  <div class="bp-card mb-3">
+    <div class="d-flex justify-content-between flex-column flex-lg-row">
+      <div>
+        <div class="d-flex">
+          <div class="text-light mr-2" style="font-size: 80px;line-height: 0;"><i class="fas fa-user-circle"></i></div>
+          <div>
+            <h2 class="mb-1">Roger Graves</h2>
+            <div class="bp-text-sm mb-3">Analyst<br>Winchester OR</div>
+          </div>
+        </div>
+        <div>
+          <p>Narwhal lumbersexual plaid selvage whatever snackwave pok pok bicycle rights, taxidermy pop-up hoodie pork belly.</p>
+          <p class="text-secondary"><b>$150 per hour</b></p>
+          <span class="badge badge-secondary mt-1">Sector badge</span>
+          <span class="badge badge-secondary mt-1">Job type</span>
+          <span class="badge badge-secondary mt-1">Job hours</span>
+        </div>
+      </div>
+      <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
+      <div class="ml-auto">
+        <div class="d-flex">
+          <button class="btn btn-primary" type="button" id="sendInterviewRequestButton">Request Interview</button>
+          <button class="btn btn-outline-primary ml-2" type="button" id="showProfileButton">Show Profile</button>
+        </div>
+      </div>
+  </div>
 </div>
 
 
