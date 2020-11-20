@@ -349,6 +349,112 @@ class FreelancerWorkEducationExperiencePage {
   }
   // End of Education Module
 
+
+  getAddNewLicenceLabel() {
+    return cy.get('.mb-5 > .bp-input-label.cy-licence');
+  }
+
+  getAddNewLicenceIcon() {
+    return cy.get('.mb-5 > .btn.btn-outline-primary.cy-licence > .svg-inline--fa.fa-plus.fa-w-14.mr-2');
+  }
+
+  getAddNewLicenceButton() {
+    return cy.get('.mb-5 > .btn.btn-outline-primary.cy-licence');
+  }
+
+  setAddNewLicenceButton() {
+    return cy.get('.mb-5 > .btn.btn-outline-primary.cy-licence')
+      .click({force: true});
+  }
+
+  // Beginning of Licence Module
+  getLicenceModuleCloseButton() {
+    return cy.get('#addLicenseCertificationModal > .modal-dialog > .modal-content > .modal-header > .mt-2');
+  }
+
+  getLicenceModuleCloseX() {
+    return cy.get('#addLicenseCertificationModal > .modal-dialog > .modal-content > .modal-header > .close > span');
+  }
+
+  getAddLicencesOrCertificationModuleTLabel() {
+    return cy.get('#addLicenseCertificationModal > .modal-dialog > .modal-content > form > .modal-body > #modalLabel');
+  }
+
+  getChooseLicenceOrCertificationModuleLabel() {
+    return cy.get('.bp-input-label.mt-3');
+  }
+
+  getChooseLicenceOrCertificationModuleInput() {
+    return cy.get('#descriptionCertification');
+  }
+
+  setChooseLicenceOrCertificationModuleInputDrop() {
+    return cy.get('.form-group.mb-2.cy-certification > .dropdown > .form-control.selectpicker')
+      .select('Chartered Financial Analyst', {force: true});
+  }
+
+  getCreateCustomEntryModuleLink() {
+    return cy.get('#customEntry');
+  }
+
+  setCreateCustomEntryModuleLink() {
+    return cy.get('#customEntry')
+      .click();
+  }
+
+  getCreateCustomEntryModuleInput() {
+    return cy.get('#customDescriptionCertificate');
+  }
+
+  setCreateCustomEntryModuleInput() {
+    return cy.get('#customDescriptionCertificate')
+      .type('Some Special Certificate');
+  }
+
+  getDateOfCertificationModuleLabel() {
+    return cy.get('#addLicenseCertificationModal > .modal-dialog > .modal-content > form > .modal-body > :nth-child(5) > .bp-input-label');
+  }
+
+  getEarnMonthModuleInput() {
+    return cy.get('#addLicenseCertificationModal > .modal-dialog > .modal-content > form > .modal-body > :nth-child(5) > .row > :nth-child(1) > .dropdown > .btn > .filter-option > .filter-option-inner > .filter-option-inner-inner');
+  }
+
+  setEarnMonthModuleInput() {
+    return cy.get('#earnedMonth.form-control.selectpicker')
+      .select('July', {force: true});
+  }
+
+  getEarnYearModuleInput() {
+    return cy.get('#addLicenseCertificationModal > .modal-dialog > .modal-content > form > .modal-body > :nth-child(5) > .row > :nth-child(2) > .dropdown > .btn > .filter-option > .filter-option-inner > .filter-option-inner-inner');
+  }
+
+  setEarnYearModuleInput() {
+    return cy.get('#earnedYear.form-control.selectpicker')
+      .select('2020', {force: true});
+  }
+
+  getLicenceModuleCancelButton() {
+    return cy.get('form.cy-licence > .modal-footer > .btn-link');
+  }
+
+  setLicenceModuleCancelButton() {
+    return cy.get('form.cy-licence > .modal-footer > .btn-link')
+      .click();
+  }
+
+  getLicenceModuleSaveInput() {
+    return cy.get('form.cy-licence > .modal-footer > .btn-primary');
+  }
+
+  setLicenceModuleSaveInput() {
+    return cy.get('form.cy-licence > .modal-footer > .btn-primary')
+      .click({force: true});
+  }
+
+
+
+    // end of Licence Module
+
   getBackLink() {
     return cy.get('.cy-work-education > .btn-link');
   }

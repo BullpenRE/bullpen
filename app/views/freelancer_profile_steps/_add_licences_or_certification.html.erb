@@ -4,17 +4,17 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
+          <span class="cy-licence" aria-hidden="true">×</span>
         </button>
       </div>
-      <%= form_for :freelancer_certification, url: wizard_path, method: :put do |f| %>
+      <%= form_for :freelancer_certification, html: {class: 'cy-licence'}, url: wizard_path, method: :put do |f| %>
         <div class="modal-body pt-0">
           <h3 class="modal-title mb-4" id="modalLabel">Add Licences or Certification</h3>
           <label for="exampleFormControlMultiSelect" class="bp-input-label mt-3">
             Choose a licence or certification to add to your profile
           </label>
           <div id="descriptionCertification" class="collapse multi-collapse show">
-            <div class="form-group mb-2">
+            <div class="form-group mb-2 cy-certification">
               <%= f.select :certification_id,
                            @certifications,
                            {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select-border", title: "Select an option..." %>
