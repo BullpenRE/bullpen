@@ -3,8 +3,9 @@
 class FreelancerProfileStepsController < ApplicationController
   include Wicked::Wizard
   include WorkEducationExperience
+  include LoggedInRedirects
   steps :skills_page, :avatar_location, :professional_history, :work_education_experience, :summary, :final_step
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :freelancer_check
 
   def show
     @user = current_user

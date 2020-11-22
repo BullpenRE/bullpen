@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Employer::JobsController < ApplicationController
-  before_action :authenticate_user!
+  include LoggedInRedirects
+  before_action :authenticate_user!, :employer_check, :check_complete_employer_profile
 
   def index
     @jobs = current_user.jobs.order(created_at: :desc)
