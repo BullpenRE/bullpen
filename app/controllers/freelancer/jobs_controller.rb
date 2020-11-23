@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Freelancer::JobsController < ApplicationController
-  before_action :authenticate_user!
+  include LoggedInRedirects
+  before_action :authenticate_user!, :freelancer_check, :check_accept_freelancer_profile
 
   def index
     @jobs = Job.where(state: 'posted')
