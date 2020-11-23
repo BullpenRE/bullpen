@@ -1,14 +1,15 @@
 <script>
-<% if job.initial_creation %>
     $('.close-job').on('click', () => {
-      $.ajax({
-        url: '/employer/jobs/<%= job.id %>',
-        method: 'DELETE'
-      })
+        <% if job.initial_creation %>
+        $.ajax({
+            url: '/employer/jobs/<%= job.id %>',
+            method: 'DELETE',
+            success:function(_data) {
+                window.location.reload(true);
+            }
+        })
+        <% else %>
+        window.location.reload(true);
+        <% end %>
     });
-<% end %>
-
-  $('.close-job').click (function(){
-    window.location.reload(true);
-  });
 </script>
