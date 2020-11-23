@@ -4,7 +4,7 @@ class Employer::JobFlowsController < ApplicationController
   include Wicked::Wizard
   include LoggedInRedirects
   steps :summary, :job_type, :qualifications, :details, :questions
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :initial_check
 
   def show
     @user = current_user

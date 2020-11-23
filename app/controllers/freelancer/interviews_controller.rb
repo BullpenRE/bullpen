@@ -2,6 +2,6 @@
 
 class Freelancer::InterviewsController < ApplicationController
   include LoggedInRedirects
-  before_action :authenticate_user!, :freelancer_check, :check_accept_freelancer_profile
+  before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :incomplete_freelancer_profile_redirect
 
 end

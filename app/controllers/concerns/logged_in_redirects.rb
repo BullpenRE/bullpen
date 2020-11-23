@@ -5,29 +5,33 @@ module LoggedInRedirects
     "#{current_path}/#{current_step}"
   end
 
-  def freelancer_check
+  def initial_check
+    redirect_to root_path if current_user.role.blank?
+  end
+
+  def non_freelancer_redirect
     redirect_to employer_current_path unless current_user.freelancer?
   end
 
-  def employer_check
+  def non_employer_redirect
     redirect_to freelancer_current_path if current_user.freelancer?
   end
 
-  def check_complete_employer_profile
-    redirect_to current_signup_step_url unless completed_employer_profile?
+  def incomplete_employer_profile_redirect
+    redirect_to current_signup_step_url unless employer_profile_steps_path?
   end
 
-  def check_accept_freelancer_profile
-    redirect_to current_signup_step_url unless accepted_freelancer_profile?
+  def incomplete_freelancer_profile_redirect
+    redirect_to current_signup_step_url unless freelancer_profile_steps_path?
   end
 
   private
 
-  def completed_employer_profile?
+  def employer_profile_steps_path?
     current_user.employer? && current_user.employer_profile.completed?
   end
 
-  def accepted_freelancer_profile?
+  def freelancer_profile_steps_path?
     current_user.freelancer? && current_user.freelancer_profile.curation == 'accepted'
   end
 

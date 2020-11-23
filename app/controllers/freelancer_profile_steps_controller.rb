@@ -5,7 +5,7 @@ class FreelancerProfileStepsController < ApplicationController
   include WorkEducationExperience
   include LoggedInRedirects
   steps :skills_page, :avatar_location, :professional_history, :work_education_experience, :summary, :final_step
-  before_action :authenticate_user!, :freelancer_check
+  before_action :authenticate_user!, :initial_check, :non_freelancer_redirect
 
   def show
     @user = current_user

@@ -6,7 +6,7 @@ class EmployerProfileStepsController < ApplicationController
   before_action :step_variables, only: [:show]
 
   steps :about_company, :employee_count, :type_of_work, :sectors, :last_question
-  before_action :authenticate_user!, :employer_check
+  before_action :authenticate_user!, :initial_check, :non_employer_redirect
 
   def show
     @user = current_user
