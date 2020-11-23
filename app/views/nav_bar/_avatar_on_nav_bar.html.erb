@@ -12,6 +12,7 @@
           </div>
         <% end %>
         <span class="pr-1"><%= current_user.full_name %></span>
+        <i class="fas fa-chevron-down text-primary"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
         <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "dropdown-item" %>

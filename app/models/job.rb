@@ -15,4 +15,6 @@ class Job < ApplicationRecord
   enum position_length: { 'long-term': 0, 'temporary': 1 }
   enum hours_needed: { 'part-time': 0, 'on-call': 1, 'project-based': 2 }
   enum required_experience: { 'junior': 0, 'intermediate': 1, 'senior': 2 }
+  enum time_zone: { 'HST': 0, 'AKST': 1, 'PST': 2, 'MST': 3, 'CST': 4, 'EST': 5 }
+  enum state: { 'draft': 0, 'posted': 1, 'closed': 2 }
 end

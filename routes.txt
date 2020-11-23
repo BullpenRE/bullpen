@@ -110,6 +110,15 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                      admin_sector GET        /admin/sectors/:id(.:format)                                                             admin/sectors#show
                                                   PATCH      /admin/sectors/:id(.:format)                                                             admin/sectors#update
                                                   PUT        /admin/sectors/:id(.:format)                                                             admin/sectors#update
+                 batch_action_admin_signup_promos POST       /admin/signup_promos/batch_action(.:format)                                              admin/signup_promos#batch_action
+                              admin_signup_promos GET        /admin/signup_promos(.:format)                                                           admin/signup_promos#index
+                                                  POST       /admin/signup_promos(.:format)                                                           admin/signup_promos#create
+                           new_admin_signup_promo GET        /admin/signup_promos/new(.:format)                                                       admin/signup_promos#new
+                          edit_admin_signup_promo GET        /admin/signup_promos/:id/edit(.:format)                                                  admin/signup_promos#edit
+                               admin_signup_promo GET        /admin/signup_promos/:id(.:format)                                                       admin/signup_promos#show
+                                                  PATCH      /admin/signup_promos/:id(.:format)                                                       admin/signup_promos#update
+                                                  PUT        /admin/signup_promos/:id(.:format)                                                       admin/signup_promos#update
+                                                  DELETE     /admin/signup_promos/:id(.:format)                                                       admin/signup_promos#destroy
                         destroy_skill_admin_skill POST       /admin/skills/:id/destroy_skill(.:format)                                                admin/skills#destroy_skill
                         batch_action_admin_skills POST       /admin/skills/batch_action(.:format)                                                     admin/skills#batch_action
                                      admin_skills GET        /admin/skills(.:format)                                                                  admin/skills#index
@@ -143,6 +152,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   DELETE     /admin/comments/:id(.:format)                                                            admin/comments#destroy
                                  freelancer_style GET        /freelancer_style(.:format)                                                              style#freelancer
                                    employer_style GET        /employer_style(.:format)                                                                style#employer
+                            employer_talent_style GET        /employer_talent_style(.:format)                                                         style#employer_talent
                                       login_style GET        /login_style(.:format)                                                                   style#login
                               employer_jobs_style GET        /employer_jobs_style(.:format)                                                           style#employer_jobs
                                              join GET        /join(.:format)                                                                          join#index
@@ -164,6 +174,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                    password_reset GET        /password_reset(.:format)                                                                passwords#password_reset
                                  employer_sign_up GET        /employer_sign_up(.:format)                                                              registrations#employer_sign_up
                                freelancer_sign_up GET        /freelancer_sign_up(.:format)                                                            registrations#freelancer_sign_up
+                                                  GET        /promo/:promo_code(.:format)                                                             signup_promos#show
                                            avatar PATCH      /avatar/:id(.:format)                                                                    avatar#update
                                                   PUT        /avatar/:id(.:format)                                                                    avatar#update
                                                   DELETE     /avatar/:id(.:format)                                                                    avatar#destroy
@@ -183,14 +194,47 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PATCH      /employer_profile_steps/:id(.:format)                                                    employer_profile_steps#update
                                                   PUT        /employer_profile_steps/:id(.:format)                                                    employer_profile_steps#update
                                                   DELETE     /employer_profile_steps/:id(.:format)                                                    employer_profile_steps#destroy
-                         employer_dashboard_index GET        /employer/dashboard(.:format)                                                            employer/dashboard#index
-                                                  POST       /employer/dashboard(.:format)                                                            employer/dashboard#create
-                           new_employer_dashboard GET        /employer/dashboard/new(.:format)                                                        employer/dashboard#new
-                          edit_employer_dashboard GET        /employer/dashboard/:id/edit(.:format)                                                   employer/dashboard#edit
-                               employer_dashboard GET        /employer/dashboard/:id(.:format)                                                        employer/dashboard#show
-                                                  PATCH      /employer/dashboard/:id(.:format)                                                        employer/dashboard#update
-                                                  PUT        /employer/dashboard/:id(.:format)                                                        employer/dashboard#update
-                                                  DELETE     /employer/dashboard/:id(.:format)                                                        employer/dashboard#destroy
+                                    employer_jobs GET        /employer/jobs(.:format)                                                                 employer/jobs#index
+                                                  POST       /employer/jobs(.:format)                                                                 employer/jobs#create
+                                 new_employer_job GET        /employer/jobs/new(.:format)                                                             employer/jobs#new
+                                edit_employer_job GET        /employer/jobs/:id/edit(.:format)                                                        employer/jobs#edit
+                                     employer_job GET        /employer/jobs/:id(.:format)                                                             employer/jobs#show
+                                                  PATCH      /employer/jobs/:id(.:format)                                                             employer/jobs#update
+                                                  PUT        /employer/jobs/:id(.:format)                                                             employer/jobs#update
+                                                  DELETE     /employer/jobs/:id(.:format)                                                             employer/jobs#destroy
+                                employer_post_job GET        /employer/post_job(.:format)                                                             employer/jobs#post_job
+                               employer_job_flows GET        /employer/job_flows(.:format)                                                            employer/job_flows#index
+                                                  POST       /employer/job_flows(.:format)                                                            employer/job_flows#create
+                            new_employer_job_flow GET        /employer/job_flows/new(.:format)                                                        employer/job_flows#new
+                           edit_employer_job_flow GET        /employer/job_flows/:id/edit(.:format)                                                   employer/job_flows#edit
+                                employer_job_flow GET        /employer/job_flows/:id(.:format)                                                        employer/job_flows#show
+                                                  PATCH      /employer/job_flows/:id(.:format)                                                        employer/job_flows#update
+                                                  PUT        /employer/job_flows/:id(.:format)                                                        employer/job_flows#update
+                                                  DELETE     /employer/job_flows/:id(.:format)                                                        employer/job_flows#destroy
+                           employer_billing_index GET        /employer/billing(.:format)                                                              employer/billing#index
+                                                  POST       /employer/billing(.:format)                                                              employer/billing#create
+                             new_employer_billing GET        /employer/billing/new(.:format)                                                          employer/billing#new
+                            edit_employer_billing GET        /employer/billing/:id/edit(.:format)                                                     employer/billing#edit
+                                 employer_billing GET        /employer/billing/:id(.:format)                                                          employer/billing#show
+                                                  PATCH      /employer/billing/:id(.:format)                                                          employer/billing#update
+                                                  PUT        /employer/billing/:id(.:format)                                                          employer/billing#update
+                                                  DELETE     /employer/billing/:id(.:format)                                                          employer/billing#destroy
+                             employer_refer_index GET        /employer/refer(.:format)                                                                employer/refer#index
+                                                  POST       /employer/refer(.:format)                                                                employer/refer#create
+                               new_employer_refer GET        /employer/refer/new(.:format)                                                            employer/refer#new
+                              edit_employer_refer GET        /employer/refer/:id/edit(.:format)                                                       employer/refer#edit
+                                   employer_refer GET        /employer/refer/:id(.:format)                                                            employer/refer#show
+                                                  PATCH      /employer/refer/:id(.:format)                                                            employer/refer#update
+                                                  PUT        /employer/refer/:id(.:format)                                                            employer/refer#update
+                                                  DELETE     /employer/refer/:id(.:format)                                                            employer/refer#destroy
+                            employer_talent_index GET        /employer/talent(.:format)                                                               employer/talent#index
+                                                  POST       /employer/talent(.:format)                                                               employer/talent#create
+                              new_employer_talent GET        /employer/talent/new(.:format)                                                           employer/talent#new
+                             edit_employer_talent GET        /employer/talent/:id/edit(.:format)                                                      employer/talent#edit
+                                  employer_talent GET        /employer/talent/:id(.:format)                                                           employer/talent#show
+                                                  PATCH      /employer/talent/:id(.:format)                                                           employer/talent#update
+                                                  PUT        /employer/talent/:id(.:format)                                                           employer/talent#update
+                                                  DELETE     /employer/talent/:id(.:format)                                                           employer/talent#destroy
                                 check_users_email POST       /check_users_email(.:format)                                                             check_email#check_users_email
                                 letter_opener_web            /letter_opener                                                                           LetterOpenerWeb::Engine
                                        styleguide GET        /styleguide(.:format)                                                                    styleguide#index
