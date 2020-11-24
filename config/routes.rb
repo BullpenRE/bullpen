@@ -4,6 +4,9 @@ Rails.application.routes.draw do
     ActiveAdmin.routes(self)
   end
 
+  default_url_options protocol: ActionMailer::Base.default_url_options[:protocol],
+                      host: ActionMailer::Base.default_url_options[:host]
+
   get '/freelancer_style', to: 'style#freelancer'
   get '/employer_style', to: 'style#employer'
   get '/employer_talent_style', to: 'style#employer_talent'
