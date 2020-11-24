@@ -4,7 +4,7 @@ require File.expand_path('../production.rb', __FILE__)
 Rails.application.configure do
   # Here override any defaults
 
-  host = ENV['WEBSITE_URL']
+  host = ENV['DOMAIN_URL']
 
   # Setup copy/pasted from https://heroku.mailtrap.io/inboxes/1136108/messages
   # Click on My Inbox, SMTP Settings, then select RoR from Integrations
@@ -20,6 +20,7 @@ Rails.application.configure do
 
   config.action_mailer.asset_host = "https://#{host}"
   config.action_mailer.default_url_options = { host: host }
+  config.action_mailer.default_url_options = { protocol: 'https', host: ENV['DOMAIN_URL'] }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = true
 end

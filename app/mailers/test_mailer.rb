@@ -2,7 +2,7 @@
 
 class TestMailer < ApplicationMailer
   def formatting
-    @url = ENV['WEBSITE_URL']
+    @url = ENV['DOMAIN_URL']
     mail(to: 'test@bullpenre.com', subject: 'Welcome to my awesome site')
   end
 end
