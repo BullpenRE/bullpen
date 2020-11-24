@@ -1,0 +1,63 @@
+<!--Form-->
+<%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
+  <%= f.hidden_field :job_id, value: @job.id %>
+  <%= f.hidden_field 'step', value: 'job_type' %>
+  <div class="form-group mb-4">
+    <div class="h5">What best describes the length of this position?</div>
+    <div class="custom-control custom-radio">
+      <%= f.radio_button :position_length, 'long-term', id: "lengthRadio1", class: "custom-control-input", required: true %>
+      <label class="custom-control-label" for="lengthRadio1"><b>Long-term:</b> Ongoing duties or tasks</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <%= f.radio_button :position_length, 'temporary', id: "lengthRadio2", class: "custom-control-input", required: true %>
+      <label class="custom-control-label" for="lengthRadio2"><b>Temporary:</b> Limited duties or tasks</label>
+    </div>
+  </div>
+  <div class="form-group mb-4">
+    <div class="h5">What best describes the hours needed for this position?</div>
+    <div class="custom-control custom-radio">
+      <%= f.radio_button :hours_needed, 'part-time', id: "hoursRadio1", class: "custom-control-input", required: true %>
+      <label class="custom-control-label" for="hoursRadio1"><b>Part-time:</b> A few hours per day</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <%= f.radio_button :hours_needed, 'on-call', id: "hoursRadio2", class: "custom-control-input", required: true %>
+      <label class="custom-control-label" for="hoursRadio2"><b>On-call:</b> A few hours per week or month</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <%= f.radio_button :hours_needed, 'project-based', id: "hoursRadio3", class: "custom-control-input", required: true %>
+      <label class="custom-control-label" for="hoursRadio3"><b>Project-based:</b> Any available hours until task completion</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="custom-control custom-checkbox">
+      <%= check_box_tag :daytime_availability_required, true, false, class: "custom-control-input", id: "daytimeRequiredCheck1", checked: @job.daytime_availability_required %>
+      <label class="custom-control-label" for="daytimeRequiredCheck1">
+        <span class="text-secondary border-0">
+          <b>Daytime availability is required</b>
+        </span>
+        (9AM - 5PM <%= f.select :time_zone, options_for_select(@available_time_zones.keys, @time_zone), {}, class: "custom-select-sm border-0 pt-0" %>)
+      </label>
+    </div>
+  </div>
+  <div class="modal-footer justify-content-between">
+    <%= link_to employer_job_flows_path(id: :summary, job_id: job.id), class: "btn btn-outline-primary", remote: true do %>
+      <i class="fas fa-chevron-left mr-2"></i>Back
+    <% end %>
+    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+      Next<i class="fas fa-chevron-right ml-2"></i>
+    <% end %>
+  </div>
+<% end %>
+
+<% if job.time_zone.blank? %>
+  <script>
+    const zone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2];
+    const zones = ['HST', 'AKST', 'PST', 'MST', 'CST', 'EST'];
+
+    if (zones.includes(zone)) {
+      $('#job_time_zone').val(zone);
+    } else {
+      $('#job_time_zone').val('PST');
+    }
+  </script>
+<% end %>

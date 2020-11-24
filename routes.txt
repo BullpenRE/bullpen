@@ -17,6 +17,15 @@
                                                   PATCH      /admin/admin_users/:id(.:format)                                                         admin/admin_users#update
                                                   PUT        /admin/admin_users/:id(.:format)                                                         admin/admin_users#update
                                                   DELETE     /admin/admin_users/:id(.:format)                                                         admin/admin_users#destroy
+        destroy_certification_admin_certification POST       /admin/certifications/:id/destroy_certification(.:format)                                admin/certifications#destroy_certification
+                batch_action_admin_certifications POST       /admin/certifications/batch_action(.:format)                                             admin/certifications#batch_action
+                             admin_certifications GET        /admin/certifications(.:format)                                                          admin/certifications#index
+                                                  POST       /admin/certifications(.:format)                                                          admin/certifications#create
+                          new_admin_certification GET        /admin/certifications/new(.:format)                                                      admin/certifications#new
+                         edit_admin_certification GET        /admin/certifications/:id/edit(.:format)                                                 admin/certifications#edit
+                              admin_certification GET        /admin/certifications/:id(.:format)                                                      admin/certifications#show
+                                                  PATCH      /admin/certifications/:id(.:format)                                                      admin/certifications#update
+                                                  PUT        /admin/certifications/:id(.:format)                                                      admin/certifications#update
                                   admin_dashboard GET        /admin/dashboard(.:format)                                                               admin/dashboard#index
              batch_action_admin_employer_profiles POST       /admin/employer_profiles/batch_action(.:format)                                          admin/employer_profiles#batch_action
                           admin_employer_profiles GET        /admin/employer_profiles(.:format)                                                       admin/employer_profiles#index
@@ -27,6 +36,15 @@
                                                   PATCH      /admin/employer_profiles/:id(.:format)                                                   admin/employer_profiles#update
                                                   PUT        /admin/employer_profiles/:id(.:format)                                                   admin/employer_profiles#update
                                                   DELETE     /admin/employer_profiles/:id(.:format)                                                   admin/employer_profiles#destroy
+     batch_action_admin_freelancer_certifications POST       /admin/freelancer_certifications/batch_action(.:format)                                  admin/freelancer_certifications#batch_action
+                  admin_freelancer_certifications GET        /admin/freelancer_certifications(.:format)                                               admin/freelancer_certifications#index
+                                                  POST       /admin/freelancer_certifications(.:format)                                               admin/freelancer_certifications#create
+               new_admin_freelancer_certification GET        /admin/freelancer_certifications/new(.:format)                                           admin/freelancer_certifications#new
+              edit_admin_freelancer_certification GET        /admin/freelancer_certifications/:id/edit(.:format)                                      admin/freelancer_certifications#edit
+                   admin_freelancer_certification GET        /admin/freelancer_certifications/:id(.:format)                                           admin/freelancer_certifications#show
+                                                  PATCH      /admin/freelancer_certifications/:id(.:format)                                           admin/freelancer_certifications#update
+                                                  PUT        /admin/freelancer_certifications/:id(.:format)                                           admin/freelancer_certifications#update
+                                                  DELETE     /admin/freelancer_certifications/:id(.:format)                                           admin/freelancer_certifications#destroy
  batch_action_admin_freelancer_profile_educations POST       /admin/freelancer_profile_educations/batch_action(.:format)                              admin/freelancer_profile_educations#batch_action
               admin_freelancer_profile_educations GET        /admin/freelancer_profile_educations(.:format)                                           admin/freelancer_profile_educations#index
                                                   POST       /admin/freelancer_profile_educations(.:format)                                           admin/freelancer_profile_educations#create
@@ -56,6 +74,15 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   PATCH      /admin/freelancer_profiles/:id(.:format)                                                 admin/freelancer_profiles#update
                                                   PUT        /admin/freelancer_profiles/:id(.:format)                                                 admin/freelancer_profiles#update
                                                   DELETE     /admin/freelancer_profiles/:id(.:format)                                                 admin/freelancer_profiles#destroy
+                 batch_action_admin_job_questions POST       /admin/job_questions/batch_action(.:format)                                              admin/job_questions#batch_action
+                              admin_job_questions GET        /admin/job_questions(.:format)                                                           admin/job_questions#index
+                                                  POST       /admin/job_questions(.:format)                                                           admin/job_questions#create
+                           new_admin_job_question GET        /admin/job_questions/new(.:format)                                                       admin/job_questions#new
+                          edit_admin_job_question GET        /admin/job_questions/:id/edit(.:format)                                                  admin/job_questions#edit
+                               admin_job_question GET        /admin/job_questions/:id(.:format)                                                       admin/job_questions#show
+                                                  PATCH      /admin/job_questions/:id(.:format)                                                       admin/job_questions#update
+                                                  PUT        /admin/job_questions/:id(.:format)                                                       admin/job_questions#update
+                                                  DELETE     /admin/job_questions/:id(.:format)                                                       admin/job_questions#destroy
                           batch_action_admin_jobs POST       /admin/jobs/batch_action(.:format)                                                       admin/jobs#batch_action
                                        admin_jobs GET        /admin/jobs(.:format)                                                                    admin/jobs#index
                                                   POST       /admin/jobs(.:format)                                                                    admin/jobs#create
@@ -65,20 +92,51 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   PATCH      /admin/jobs/:id(.:format)                                                                admin/jobs#update
                                                   PUT        /admin/jobs/:id(.:format)                                                                admin/jobs#update
                                                   DELETE     /admin/jobs/:id(.:format)                                                                admin/jobs#destroy
+destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_skills/:id/destroy_real_estate_skill(.:format)                        admin/real_estate_skills#destroy_real_estate_skill
             batch_action_admin_real_estate_skills POST       /admin/real_estate_skills/batch_action(.:format)                                         admin/real_estate_skills#batch_action
                          admin_real_estate_skills GET        /admin/real_estate_skills(.:format)                                                      admin/real_estate_skills#index
                                                   POST       /admin/real_estate_skills(.:format)                                                      admin/real_estate_skills#create
+                      new_admin_real_estate_skill GET        /admin/real_estate_skills/new(.:format)                                                  admin/real_estate_skills#new
                      edit_admin_real_estate_skill GET        /admin/real_estate_skills/:id/edit(.:format)                                             admin/real_estate_skills#edit
                           admin_real_estate_skill GET        /admin/real_estate_skills/:id(.:format)                                                  admin/real_estate_skills#show
                                                   PATCH      /admin/real_estate_skills/:id(.:format)                                                  admin/real_estate_skills#update
                                                   PUT        /admin/real_estate_skills/:id(.:format)                                                  admin/real_estate_skills#update
+                      destroy_sector_admin_sector POST       /admin/sectors/:id/destroy_sector(.:format)                                              admin/sectors#destroy_sector
                        batch_action_admin_sectors POST       /admin/sectors/batch_action(.:format)                                                    admin/sectors#batch_action
                                     admin_sectors GET        /admin/sectors(.:format)                                                                 admin/sectors#index
                                                   POST       /admin/sectors(.:format)                                                                 admin/sectors#create
+                                 new_admin_sector GET        /admin/sectors/new(.:format)                                                             admin/sectors#new
                                 edit_admin_sector GET        /admin/sectors/:id/edit(.:format)                                                        admin/sectors#edit
                                      admin_sector GET        /admin/sectors/:id(.:format)                                                             admin/sectors#show
                                                   PATCH      /admin/sectors/:id(.:format)                                                             admin/sectors#update
                                                   PUT        /admin/sectors/:id(.:format)                                                             admin/sectors#update
+                 batch_action_admin_signup_promos POST       /admin/signup_promos/batch_action(.:format)                                              admin/signup_promos#batch_action
+                              admin_signup_promos GET        /admin/signup_promos(.:format)                                                           admin/signup_promos#index
+                                                  POST       /admin/signup_promos(.:format)                                                           admin/signup_promos#create
+                           new_admin_signup_promo GET        /admin/signup_promos/new(.:format)                                                       admin/signup_promos#new
+                          edit_admin_signup_promo GET        /admin/signup_promos/:id/edit(.:format)                                                  admin/signup_promos#edit
+                               admin_signup_promo GET        /admin/signup_promos/:id(.:format)                                                       admin/signup_promos#show
+                                                  PATCH      /admin/signup_promos/:id(.:format)                                                       admin/signup_promos#update
+                                                  PUT        /admin/signup_promos/:id(.:format)                                                       admin/signup_promos#update
+                                                  DELETE     /admin/signup_promos/:id(.:format)                                                       admin/signup_promos#destroy
+                        destroy_skill_admin_skill POST       /admin/skills/:id/destroy_skill(.:format)                                                admin/skills#destroy_skill
+                        batch_action_admin_skills POST       /admin/skills/batch_action(.:format)                                                     admin/skills#batch_action
+                                     admin_skills GET        /admin/skills(.:format)                                                                  admin/skills#index
+                                                  POST       /admin/skills(.:format)                                                                  admin/skills#create
+                                  new_admin_skill GET        /admin/skills/new(.:format)                                                              admin/skills#new
+                                 edit_admin_skill GET        /admin/skills/:id/edit(.:format)                                                         admin/skills#edit
+                                      admin_skill GET        /admin/skills/:id(.:format)                                                              admin/skills#show
+                                                  PATCH      /admin/skills/:id(.:format)                                                              admin/skills#update
+                                                  PUT        /admin/skills/:id(.:format)                                                              admin/skills#update
+                  destroy_software_admin_software POST       /admin/softwares/:id/destroy_software(.:format)                                          admin/softwares#destroy_software
+                     batch_action_admin_softwares POST       /admin/softwares/batch_action(.:format)                                                  admin/softwares#batch_action
+                                  admin_softwares GET        /admin/softwares(.:format)                                                               admin/softwares#index
+                                                  POST       /admin/softwares(.:format)                                                               admin/softwares#create
+                               new_admin_software GET        /admin/softwares/new(.:format)                                                           admin/softwares#new
+                              edit_admin_software GET        /admin/softwares/:id/edit(.:format)                                                      admin/softwares#edit
+                                   admin_software GET        /admin/softwares/:id(.:format)                                                           admin/softwares#show
+                                                  PATCH      /admin/softwares/:id(.:format)                                                           admin/softwares#update
+                                                  PUT        /admin/softwares/:id(.:format)                                                           admin/softwares#update
                          batch_action_admin_users POST       /admin/users/batch_action(.:format)                                                      admin/users#batch_action
                                       admin_users GET        /admin/users(.:format)                                                                   admin/users#index
                                                   POST       /admin/users(.:format)                                                                   admin/users#create
@@ -94,6 +152,7 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   DELETE     /admin/comments/:id(.:format)                                                            admin/comments#destroy
                                  freelancer_style GET        /freelancer_style(.:format)                                                              style#freelancer
                                    employer_style GET        /employer_style(.:format)                                                                style#employer
+                            employer_talent_style GET        /employer_talent_style(.:format)                                                         style#employer_talent
                                       login_style GET        /login_style(.:format)                                                                   style#login
                               employer_jobs_style GET        /employer_jobs_style(.:format)                                                           style#employer_jobs
                                              join GET        /join(.:format)                                                                          join#index
@@ -115,6 +174,7 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                    password_reset GET        /password_reset(.:format)                                                                passwords#password_reset
                                  employer_sign_up GET        /employer_sign_up(.:format)                                                              registrations#employer_sign_up
                                freelancer_sign_up GET        /freelancer_sign_up(.:format)                                                            registrations#freelancer_sign_up
+                                                  GET        /promo/:promo_code(.:format)                                                             signup_promos#show
                                            avatar PATCH      /avatar/:id(.:format)                                                                    avatar#update
                                                   PUT        /avatar/:id(.:format)                                                                    avatar#update
                                                   DELETE     /avatar/:id(.:format)                                                                    avatar#destroy
@@ -134,6 +194,47 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   PATCH      /employer_profile_steps/:id(.:format)                                                    employer_profile_steps#update
                                                   PUT        /employer_profile_steps/:id(.:format)                                                    employer_profile_steps#update
                                                   DELETE     /employer_profile_steps/:id(.:format)                                                    employer_profile_steps#destroy
+                                    employer_jobs GET        /employer/jobs(.:format)                                                                 employer/jobs#index
+                                                  POST       /employer/jobs(.:format)                                                                 employer/jobs#create
+                                 new_employer_job GET        /employer/jobs/new(.:format)                                                             employer/jobs#new
+                                edit_employer_job GET        /employer/jobs/:id/edit(.:format)                                                        employer/jobs#edit
+                                     employer_job GET        /employer/jobs/:id(.:format)                                                             employer/jobs#show
+                                                  PATCH      /employer/jobs/:id(.:format)                                                             employer/jobs#update
+                                                  PUT        /employer/jobs/:id(.:format)                                                             employer/jobs#update
+                                                  DELETE     /employer/jobs/:id(.:format)                                                             employer/jobs#destroy
+                                employer_post_job GET        /employer/post_job(.:format)                                                             employer/jobs#post_job
+                               employer_job_flows GET        /employer/job_flows(.:format)                                                            employer/job_flows#index
+                                                  POST       /employer/job_flows(.:format)                                                            employer/job_flows#create
+                            new_employer_job_flow GET        /employer/job_flows/new(.:format)                                                        employer/job_flows#new
+                           edit_employer_job_flow GET        /employer/job_flows/:id/edit(.:format)                                                   employer/job_flows#edit
+                                employer_job_flow GET        /employer/job_flows/:id(.:format)                                                        employer/job_flows#show
+                                                  PATCH      /employer/job_flows/:id(.:format)                                                        employer/job_flows#update
+                                                  PUT        /employer/job_flows/:id(.:format)                                                        employer/job_flows#update
+                                                  DELETE     /employer/job_flows/:id(.:format)                                                        employer/job_flows#destroy
+                           employer_billing_index GET        /employer/billing(.:format)                                                              employer/billing#index
+                                                  POST       /employer/billing(.:format)                                                              employer/billing#create
+                             new_employer_billing GET        /employer/billing/new(.:format)                                                          employer/billing#new
+                            edit_employer_billing GET        /employer/billing/:id/edit(.:format)                                                     employer/billing#edit
+                                 employer_billing GET        /employer/billing/:id(.:format)                                                          employer/billing#show
+                                                  PATCH      /employer/billing/:id(.:format)                                                          employer/billing#update
+                                                  PUT        /employer/billing/:id(.:format)                                                          employer/billing#update
+                                                  DELETE     /employer/billing/:id(.:format)                                                          employer/billing#destroy
+                             employer_refer_index GET        /employer/refer(.:format)                                                                employer/refer#index
+                                                  POST       /employer/refer(.:format)                                                                employer/refer#create
+                               new_employer_refer GET        /employer/refer/new(.:format)                                                            employer/refer#new
+                              edit_employer_refer GET        /employer/refer/:id/edit(.:format)                                                       employer/refer#edit
+                                   employer_refer GET        /employer/refer/:id(.:format)                                                            employer/refer#show
+                                                  PATCH      /employer/refer/:id(.:format)                                                            employer/refer#update
+                                                  PUT        /employer/refer/:id(.:format)                                                            employer/refer#update
+                                                  DELETE     /employer/refer/:id(.:format)                                                            employer/refer#destroy
+                            employer_talent_index GET        /employer/talent(.:format)                                                               employer/talent#index
+                                                  POST       /employer/talent(.:format)                                                               employer/talent#create
+                              new_employer_talent GET        /employer/talent/new(.:format)                                                           employer/talent#new
+                             edit_employer_talent GET        /employer/talent/:id/edit(.:format)                                                      employer/talent#edit
+                                  employer_talent GET        /employer/talent/:id(.:format)                                                           employer/talent#show
+                                                  PATCH      /employer/talent/:id(.:format)                                                           employer/talent#update
+                                                  PUT        /employer/talent/:id(.:format)                                                           employer/talent#update
+                                                  DELETE     /employer/talent/:id(.:format)                                                           employer/talent#destroy
                                 check_users_email POST       /check_users_email(.:format)                                                             check_email#check_users_email
                                 letter_opener_web            /letter_opener                                                                           LetterOpenerWeb::Engine
                                        styleguide GET        /styleguide(.:format)                                                                    styleguide#index

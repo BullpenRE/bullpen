@@ -9,12 +9,12 @@
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="field mb-3">
           <%= f.label :email, class: 'text-primary text-left' %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control center font-weight-light', placeholder: "Email address"%>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control center font-weight-light', placeholder: "Email address", id: "user_email"%>
         </div>
 
         <div class="field">
           <%= f.label :password, class: 'text-primary' %><br />
-          <%= f.password_field :password, autocomplete: "current-password", class: 'form-control center font-weight-light', placeholder: "Password" %>
+          <%= f.password_field :password, autocomplete: "current-password", class: 'form-control center font-weight-light', placeholder: "Password", id: "user_password" %>
         </div>
 
         <div class="field text-center mb-3">
@@ -28,5 +28,50 @@
     </div>
   </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        if (getCookie("email").length > 0) {
+            $('#user_email').val(getCookie("email"));
+            $('#user_password').focus() = true;
+            deleteCookie("email");
+        };
+    });
+  function setCookie(name, value, options = {}) {
+
+      options = {
+          path: '/'
+      };
+
+      if (options.expires instanceof Date) {
+          options.expires = options.expires.toUTCString();
+      }
+
+      let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+      for (let optionKey in options) {
+          updatedCookie += "; " + optionKey;
+          let optionValue = options[optionKey];
+          if (optionValue !== true) {
+              updatedCookie += "=" + optionValue;
+          }
+      }
+
+      document.cookie = updatedCookie;
+  }
+
+  function getCookie(name) {
+      let matches = document.cookie.match(new RegExp(
+          "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+      ));
+      return matches ? decodeURIComponent(matches[1]) : undefined;
+  };
+
+  function deleteCookie(name) {
+      setCookie(name, "", {
+          'max-age': -1
+      })
+  };
+</script>
 
 <%= render "devise/shared/links" %>

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/stympy/faker.git
-  revision: 86d563d6468f7eec6e8cd62ec25654498921a2df
+  revision: 9ea5a3d3d57f19cbf14024eca34a51e11f40c487
   specs:
     faker (2.14.0)
       i18n (>= 1.6, < 2)
@@ -82,7 +82,7 @@ GEM
       ruby2_keywords (>= 0.0.2, < 1.0)
     ast (2.4.1)
     aws-eventstream (1.1.0)
-    aws-partitions (1.388.0)
+    aws-partitions (1.387.0)
     aws-sdk-core (3.109.1)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
@@ -276,14 +276,14 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     rexml (3.2.4)
-    rspec-core (3.10.0)
-      rspec-support (~> 3.10.0)
-    rspec-expectations (3.10.0)
+    rspec-core (3.9.3)
+      rspec-support (~> 3.9.3)
+    rspec-expectations (3.9.3)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.10.0)
-    rspec-mocks (3.10.0)
+      rspec-support (~> 3.9.0)
+    rspec-mocks (3.9.1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.10.0)
+      rspec-support (~> 3.9.0)
     rspec-rails (4.0.1)
       actionpack (>= 4.2)
       activesupport (>= 4.2)
@@ -292,7 +292,7 @@ GEM
       rspec-expectations (~> 3.9)
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
-    rspec-support (3.10.0)
+    rspec-support (3.9.4)
     rubocop (0.90.0)
       parallel (~> 1.10)
       parser (>= 2.7.1.1)
@@ -361,7 +361,7 @@ GEM
     websocket-extensions (0.1.5)
     wicked (1.3.4)
       railties (>= 3.0.7)
-    zeitwerk (2.4.1)
+    zeitwerk (2.4.0)
 
 PLATFORMS
   java

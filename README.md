@@ -92,6 +92,23 @@ At least once per day merge master into your story branch:
 
 If you have merge conflicts after merging master, work with your teammates to resolve them.
 
+### Backing Up and Restoring Development Databases
+The following rake command will import a database dump file containing a `*.dump` extension. 
+This file must be in the /bullpen directory. If you have multiple `*.dump` files it will choose the one with the most 
+recent timestamp (the one that was most recently written).
+
+        $ rake db:import
+
+In order to export your local development database to a `*.dump` file, run the following command:
+
+        $ rake db:export
+
+The name of the exported file will include a timestamp and look something like `2020-11-11_development.dump`.
+In order to specify a name while importing or exporting you can pass along a name, both for importing and exporting:
+
+        $ rake db:import\[rogers_test_database.dump\]
+        $ rake db:export\[my_database.dump\]
+
 
 ### Cherry Picking
 If you need to copy over a commit from one branch to another without merging:
@@ -115,6 +132,14 @@ When all work in for a story is done, create a pull request:
 
 After a pull request is made, Linear.app will automatically link it to your story (and visa versa) based on the branch name.
 
+### Workflow and Coding Standards
+ * See our our [workflow guide](https://docs.google.com/document/d/1CHKSaYzk3-_K1hLxOlezKNXMxHzEnlSjo0TaFZZuFog/edit#).
+ * Use Ruby on Rails best practices with [these additions and exceptions](https://docs.google.com/document/d/1r5R6SxVuz9TDE1hGc3yU9ocJxywwVi-lnmlQOEv9TI4/edit#heading=h.71frplvdndqk).
+ * After creating a pull request either fix or address all issues brought up by CodeClimate: [link to decision](https://bullpenre.slack.com/archives/C01A6KTQ35Z/p1600271307031300)
+ * Don't create custom CSS. Inline in views is OK: [link to decision](https://bullpenre.slack.com/archives/C01A6KTQ35Z/p1600107544007100)
+ * See our test coverage rules [here](https://docs.google.com/document/d/1qlU-_xOt6tgCBWO_8m4q4FJmYxc5gPgOmjfq91sVong/edit).
+ * For complex Javascript use classes via our Javascript guide (coming soon): [link to decision](https://bullpenre.slack.com/archives/C01A6KTQ35Z/p1601048239003000) 
+
 ### Heroku Deploy Setup
 Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to automatically deploy the master branch after pull requests are merged. In case you need to do manual pushes:
 
@@ -123,6 +148,7 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
 
         $ heroku login
         $ git remote add bullpen-staging git@heroku.com:bullpen-staging.git
+
 3. Run `$ git push bullpen-staging master` to deploy master. Before doing this you may need to switch Heroku's deploy from Github to Heroku Git [here](https://dashboard.heroku.com/apps/bullpen-staging/deploy/github).
 
 ### Cypress integration tests

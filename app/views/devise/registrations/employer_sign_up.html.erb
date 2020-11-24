@@ -48,11 +48,13 @@
     }
 </style>
 
-<div class="align-items-center bg-white border-bottom shadow-sm mb-5">
-  <div class="text-left mt-2 mb-2 ml-5">
-    <%= image_pack_tag('bullpen-email-logo.png', width: 175, height: 55) %>
+<nav class="navbar navbar-expand-lg navbar-dark bg-header mb-4">
+  <div class="container">
+    <div class="text-left mt-2 mb-2 ml-5">
+      <%= image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30') %>
+    </div>
   </div>
-</div>
+</nav>
 
 <div class="row justify-content-center">
   <div class="col-md-4 shadow-sm">
@@ -85,6 +87,13 @@
           <div>
             <%= f.hidden_field :role, value: :employer %>
           </div>
+
+          <% if @show_promo_code %>
+            <div class="mb-5 col-md-12">
+              <label for="promo_code" class="text-primary">Promo Code (Optional)</label>
+              <input type="text" class="form-control" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
+            </div>
+          <% end %>
 
           <hr class="mb-4">
           <button class="form-control-lg btn btn-outline-secondary col-md-12 mb-3 nextBtn-2" type="button">Sign up as a Company</button>
@@ -286,7 +295,8 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data['same_email'] == true) {
-                        $('.check-email').html('An account already exists with email address <b>' + data['email'] + '</b>. Click<%= link_to "here", new_user_session_path, class: "p-2" %>to try logging in.');
+                        $('.check-email').html('An account already exists with email address <b>' + data['email'] + '</b>. Click<%= link_to "here", new_user_session_path, class: "p-2", id: "session_redirect" %>to try logging in.');
+                        document.cookie = "email="+data['email'];
                     } else {
                         if (nameInputs[0].validity.valid && lastnameInputs[0].validity.valid && $('#email')[0].validity.valid){
                             var email = $('#email').val();

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_29_003206) do
+ActiveRecord::Schema.define(version: 2020_11_17_173954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,14 @@ ActiveRecord::Schema.define(version: 2020_10_29_003206) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "certifications", force: :cascade do |t|
+    t.string "description"
+    t.boolean "disable", default: false
+    t.boolean "custom", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "employer_profiles", force: :cascade do |t|
     t.string "company_name"
     t.string "company_website"
@@ -77,6 +85,7 @@ ActiveRecord::Schema.define(version: 2020_10_29_003206) do
     t.boolean "motivation_augment"
     t.boolean "motivation_other"
     t.string "current_step"
+    t.boolean "completed", default: false
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
@@ -87,6 +96,17 @@ ActiveRecord::Schema.define(version: 2020_10_29_003206) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["employer_profile_id"], name: "index_employer_sectors_on_employer_profile_id"
     t.index ["sector_id"], name: "index_employer_sectors_on_sector_id"
+  end
+
+  create_table "freelancer_certifications", force: :cascade do |t|
+    t.bigint "freelancer_profile_id", null: false
+    t.bigint "certification_id", null: false
+    t.string "description"
+    t.date "earned"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["certification_id"], name: "index_freelancer_certifications_on_certification_id"
+    t.index ["freelancer_profile_id"], name: "index_freelancer_certifications_on_freelancer_profile_id"
   end
 
   create_table "freelancer_profile_educations", force: :cascade do |t|
@@ -147,6 +167,16 @@ ActiveRecord::Schema.define(version: 2020_10_29_003206) do
     t.index ["sector_id"], name: "index_freelancer_sectors_on_sector_id"
   end
 
+  create_table "freelancer_softwares", force: :cascade do |t|
+    t.bigint "freelancer_profile_id", null: false
+    t.bigint "software_id", null: false
+    t.boolean "license", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["freelancer_profile_id"], name: "index_freelancer_softwares_on_freelancer_profile_id"
+    t.index ["software_id"], name: "index_freelancer_softwares_on_software_id"
+  end
+
   create_table "job_questions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "description"
@@ -188,14 +218,15 @@ ActiveRecord::Schema.define(version: 2020_10_29_003206) do
     t.string "short_description"
     t.integer "position_length"
     t.integer "hours_needed"
-    t.string "time_zone"
+    t.integer "time_zone"
     t.boolean "daytime_availability_required"
     t.integer "required_experience"
     t.string "required_regional_knowledge"
     t.text "relevant_job_details"
-    t.boolean "draft", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "initial_creation", default: true
+    t.integer "state", default: 0
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
@@ -209,6 +240,15 @@ ActiveRecord::Schema.define(version: 2020_10_29_003206) do
   create_table "sectors", force: :cascade do |t|
     t.string "description", null: false
     t.boolean "disable", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "signup_promos", force: :cascade do |t|
+    t.string "description"
+    t.string "code"
+    t.integer "user_type"
+    t.datetime "expires"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -249,18 +289,24 @@ ActiveRecord::Schema.define(version: 2020_10_29_003206) do
     t.string "phone_number"
     t.string "location"
     t.integer "role"
+    t.bigint "signup_promo_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["signup_promo_id"], name: "index_users_on_signup_promo_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "employer_profiles", "users"
   add_foreign_key "employer_sectors", "employer_profiles"
   add_foreign_key "employer_sectors", "sectors"
+  add_foreign_key "freelancer_certifications", "certifications"
+  add_foreign_key "freelancer_certifications", "freelancer_profiles"
   add_foreign_key "freelancer_profile_educations", "freelancer_profiles"
   add_foreign_key "freelancer_profile_experiences", "freelancer_profiles"
   add_foreign_key "freelancer_profiles", "users"
+  add_foreign_key "freelancer_softwares", "freelancer_profiles"
+  add_foreign_key "freelancer_softwares", "softwares"
   add_foreign_key "job_questions", "jobs"
   add_foreign_key "job_sectors", "jobs"
   add_foreign_key "job_sectors", "sectors"
@@ -269,4 +315,5 @@ ActiveRecord::Schema.define(version: 2020_10_29_003206) do
   add_foreign_key "job_softwares", "jobs"
   add_foreign_key "job_softwares", "softwares"
   add_foreign_key "jobs", "users"
+  add_foreign_key "users", "signup_promos"
 end

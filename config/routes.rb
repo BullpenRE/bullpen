@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
+  if defined?(ActiveAdmin)
+    devise_for :admin_users, ActiveAdmin::Devise.config
+    ActiveAdmin.routes(self)
+  end
 
   get '/freelancer_style', to: 'style#freelancer'
   get '/employer_style', to: 'style#employer'
+  get '/employer_talent_style', to: 'style#employer_talent'
   get '/login_style', to: 'style#login'
   get '/employer_jobs_style', to: 'style#employer_jobs'
 
@@ -20,12 +23,29 @@ Rails.application.routes.draw do
     get '/freelancer_sign_up', to: 'registrations#freelancer_sign_up'
   end
 
+  get '/promo/:promo_code', to: 'signup_promos#show'
+
   resources :avatar, only: %i[update destroy]
   resources :freelancer_profile_steps
   resources :employer_profile_steps
 
-  namespace 'employer' do
-    resources :dashboard
+  # resources :employer
+
+  namespace :employer do
+    resources :jobs
+    get 'post_job', to: 'jobs#post_job'
+    resources :job_flows
+    resources :billing
+    resources :refer
+    resources :talent
+  end
+
+  namespace :freelancer do
+    resources :jobs
+    resources :applications
+    resources :interviews
+    resources :contracts
+    resource :profile
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

@@ -71,13 +71,15 @@ class EmployerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :last_question
 
     @employer_profile.update_attributes(last_question_params)
+    @employer_profile.completed = true
+    @employer_profile.save
     render_wizard @user
 
     true
   end
 
   def finish_wizard_path
-    employer_dashboard_path('finished')
+    employer_jobs_path
   end
 
   private
