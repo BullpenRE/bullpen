@@ -2,7 +2,7 @@
 
 class JoinController < ApplicationController
   include LoggedInRedirects
-  before_action :initial_check, :check_signed_in
+  before_action :check_signed_in
 
   def index; end
 
