@@ -13,7 +13,7 @@
           </a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#">Find Talent</a>
+            <%= link_to "Find Talent",  employer_talent_index_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Your Jobs</a>
@@ -53,40 +53,41 @@
     <a href="#" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
   </div>
   <% @freelancer_profiles.each do |freelancer_profile| %>
-  <div class="bp-card mb-3">
-    <div class="d-flex justify-content-between flex-column flex-lg-row">
-      <div>
-        <div class="d-flex">
-          <% if freelancer_profile.avatar.attached? %>
-            <div class="text-light mr-2 avatar-image" style="line-height: 0;">
-              <%= image_tag freelancer_profile.avatar, class: 'rounded-circle', width: '80px', height: '80px' %>
+    <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: freelancer_profile } %>
+    <div class="bp-card mb-3">
+      <div class="d-flex justify-content-between flex-column flex-lg-row">
+        <div>
+          <div class="d-flex">
+            <% if freelancer_profile.avatar.attached? %>
+              <div class="text-light mr-2 avatar-image" style="line-height: 0;">
+                <%= image_tag freelancer_profile.avatar, class: 'rounded-circle', width: '80px', height: '80px' %>
+              </div>
+            <% else %>
+              <div class="text-light mr-2 avatar-image" style="font-size: 80px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
+            <% end %>
+            <div>
+              <h2 class="mb-1"><%= freelancer_profile.first_name %> <%=  freelancer_profile.last_name %></h2>
+              <div class="bp-text-sm mb-3">
+                <%= freelancer_profile.professional_title %><br>
+                <%= freelancer_profile.location %></div>
             </div>
-          <% else %>
-            <div class="text-light mr-2 avatar-image" style="font-size: 80px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
-          <% end %>
+          </div>
           <div>
-            <h2 class="mb-1"><%= freelancer_profile.first_name %> <%=  freelancer_profile.last_name %></h2>
-            <div class="bp-text-sm mb-3">
-              <%= freelancer_profile.professional_title %><br>
-              <%= freelancer_profile.location %></div>
+            <p><%= freelancer_profile.professional_summary %></p>
+            <p class="text-secondary"><b>$100 per hour</b></p>
+            <%  freelancer_profile.sectors.order(description: :asc)&.each do |sector| %>
+              <span class="badge badge-secondary mb-1"><%= sector.description %></span>
+            <% end %>
           </div>
         </div>
-        <div>
-          <p><%= freelancer_profile.professional_summary %></p>
-          <p class="text-secondary"><b>$150 per hour</b></p>
-          <%  freelancer_profile.sectors.order(description: :asc)&.each do |sector| %>
-            <span class="badge badge-secondary mb-1"><%= sector.description %></span>
-          <% end %>
-        </div>
-      </div>
-      <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
-      <div class="ml-auto">
-        <div class="d-flex">
-          <button class="btn btn-primary" type="button" id="sendInterviewRequestButton">Request Interview</button>
-          <button class="btn btn-outline-primary ml-2" type="button" id="showProfileButton">Show Profile</button>
+        <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
+        <div class="ml-auto">
+          <div class="d-flex">
+            <button class="btn btn-primary" type="button" id="sendInterviewRequestButton">Request Interview</button>
+            <button class="btn btn-outline-primary ml-2" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   <% end %>
 </div>
