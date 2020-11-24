@@ -5,7 +5,7 @@ class FreelancerProfileStepsController < ApplicationController
   include WorkEducationExperience
   include LoggedInRedirects
   steps :skills_page, :avatar_location, :professional_history, :work_education_experience, :summary, :final_step
-  before_action :authenticate_user!, :initial_check, :non_freelancer_redirect
+  before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :accepted_profile_redirect
 
   def show
     @user = current_user
@@ -101,6 +101,10 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   private
+
+  def accepted_profile_redirect
+    redirect_to freelancer_jobs_path if current_user.freelancer_profile&.accepted?
+  end
 
   def pending_profile?
     @freelancer_profile.draft == false && @freelancer_profile.pending?
