@@ -9,6 +9,6 @@ FactoryBot.define do
     required_experience { Job::required_experiences.values.sample }
     required_regional_knowledge { Faker::Company.bs }
     relevant_job_details { Faker::Company.bs }
-    draft { false }
+    state { 0 }
   end
 end
