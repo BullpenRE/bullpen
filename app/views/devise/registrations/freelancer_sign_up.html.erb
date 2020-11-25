@@ -67,23 +67,23 @@
           <div class="row ml-1">
           <div class="col-md-6 mb-4 h4">
             <%= f.label :first_name, class: "text-secondary" %>
-            <%= f.text_field :first_name, class: "form-control", id: "firstName", required: true %>
+            <%= f.text_field :first_name, class: "form-control bg-white border-gray-dark", id: "firstName", required: true %>
           </div>
           <div class="col-md-6 mb-3 h4">
             <%= f.label :last_name, class: "text-secondary" %>
-            <%= f.text_field :last_name, class: "form-control", id: "lastName", required: true %>
+            <%= f.text_field :last_name, class: "form-control bg-white border-gray-dark", id: "lastName", required: true %>
           </div>
         </div>
 
         <div class="mb-5 col-md-12 h4">
           <%= f.label :email, class: "text-secondary" %><br />
-          <%= f.email_field :email, class: "form-control", id: "email", required: true %>
+          <%= f.email_field :email, class: "form-control bg-white border-gray-dark", id: "email", required: true %>
         </div>
 
           <% if @show_promo_code %>
             <div class="mb-5 col-md-12 h4">
               <label for="promo_code" class="text-secondary">Promo Code (Optional)</label>
-              <input type="text" class="form-control" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
+              <input type="text" class="form-control bg-white border-gray-dark" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
             </div>
           <% end %>
 

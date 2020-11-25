@@ -67,22 +67,22 @@
           <div class="row ml-1">
             <div class="col-md-6 mb-4 h4">
               <%= f.label :first_name, class: "text-secondary" %>
-              <%= f.text_field :first_name, class: "form-control", id: "firstName", required: true %>
+              <%= f.text_field :first_name, class: "form-control bg-white border-gray-dark", id: "firstName", required: true %>
             </div>
             <div class="col-md-6 mb-3 h4">
               <%= f.label :last_name, class: "text-secondary" %>
-              <%= f.text_field :last_name, class: "form-control", id: "lastName", required: true %>
+              <%= f.text_field :last_name, class: "form-control bg-white border-gray-dark", id: "lastName", required: true %>
             </div>
           </div>
 
           <div class="mb-5 col-md-12 h4">
             <%= f.label :email, class: "text-secondary" %><br />
-            <%= f.email_field :email, class: "form-control", id: "email", required: true %>
+            <%= f.email_field :email, class: "form-control bg-white border-gray-dark", id: "email", required: true %>
           </div>
 
           <div class="mb-5 col-md-12 h4">
             <%= f.label :phone_number, class: "text-secondary" %><br />
-            <%= f.phone_field :phone_number, class: "form-control", id: "phone", required: true %>
+            <%= f.phone_field :phone_number, class: "form-control bg-white border-gray-dark", id: "phone", required: true %>
           </div>
           <div>
             <%= f.hidden_field :role, value: :employer %>
@@ -91,7 +91,7 @@
           <% if @show_promo_code %>
             <div class="mb-5 col-md-12 h4">
               <label for="promo_code" class="text-primary">Promo Code (Optional)</label>
-              <input type="text" class="form-control" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
+              <input type="text" class="form-control bg-white border-gray-dark" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
             </div>
           <% end %>
 
