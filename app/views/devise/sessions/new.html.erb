@@ -1,19 +1,16 @@
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <h2 class="display-4 text-primary">Log In</h2>
-</div>
 <div class="row justify-content-center log-in-container">
 
-  <div class="card col-md-5 shadow-sm align-items-center">
-
+  <div class="card my-5 col-md-5 shadow-sm align-items-center">
+    <div class="h1 mt-4 text-secondary text-center">Log In</div>
     <div class="col-md-10 px-4 py-4">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="field mb-3">
-          <%= f.label :email, class: 'text-primary text-left' %><br />
+          <%= f.label :email, class: 'h4 text-secondary text-left' %><br />
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control center font-weight-light', placeholder: "Email address", id: "user_email"%>
         </div>
 
         <div class="field">
-          <%= f.label :password, class: 'text-primary' %><br />
+          <%= f.label :password, class: 'h4 text-secondary' %><br />
           <%= f.password_field :password, autocomplete: "current-password", class: 'form-control center font-weight-light', placeholder: "Password", id: "user_password" %>
         </div>
 
@@ -25,6 +22,9 @@
           <%= f.submit "Login", class: "btn btn-primary col-md-12" %>
         </div>
       <% end %>
+    </div>
+    <div class="bg-white card-footer text-center">
+      <%= render "devise/shared/links" %>
     </div>
   </div>
 </div>
@@ -73,5 +73,3 @@
       })
   };
 </script>
-
-<%= render "devise/shared/links" %>
