@@ -6,7 +6,7 @@ class EmployerProfileStepsController < ApplicationController
   before_action :step_variables, only: [:show]
 
   steps :about_company, :employee_count, :type_of_work, :sectors, :last_question
-  before_action :authenticate_user!, :initial_check, :non_employer_redirect
+  before_action :authenticate_user!, :initial_check, :non_employer_redirect, :completed_profile_redirect
 
   def show
     @user = current_user
@@ -84,6 +84,10 @@ class EmployerProfileStepsController < ApplicationController
   end
 
   private
+
+  def completed_profile_redirect
+    redirect_to employer_jobs_path if current_user.employer_profile.completed?
+  end
 
   def step_variables
     case wizard_value(step)
