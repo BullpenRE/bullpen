@@ -1,6 +1,6 @@
 if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('users')
   ActiveAdmin.register User do
-    permit_params :email, :first_name, :last_name, :confirmed_at
+    permit_params :email, :first_name, :last_name, :confirmed_at, :confirmation_sent_at
 
     index do
       column :email
@@ -25,6 +25,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
         f.input :first_name
         f.input :last_name
         f.input :role, as: :select
+        f.input :confirmation_sent_at, label: 'Confirmation sent at (UTC)'
         f.input :confirmed_at, label: 'Confirmed (UTC)'
         f.actions
       end
