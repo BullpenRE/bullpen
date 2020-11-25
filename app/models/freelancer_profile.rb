@@ -22,6 +22,7 @@ class FreelancerProfile < ApplicationRecord
   ACCEPTABLE_CONTENT_TYPE = %w[image/jpg image/jpeg image/png image/gif].freeze
 
   validate :correct_content_type?, :correct_size?
+  validates :slug, uniqueness: true
 
   def ready_for_submission?
     draft? && pending?

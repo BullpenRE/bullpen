@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   end
 
   namespace :public do
-    resource :freelancer_profile, param: :slug, only: %i[show]
+    get 'freelancer_profile/:slug', to: 'freelancer_profile#show'
   end
 
   namespace :freelancer do

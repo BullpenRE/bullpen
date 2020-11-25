@@ -75,6 +75,4 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   ENV['WEBSITE_URL'] = "http://#{host}"
-
-  ENV['SLUG_LENGTH'] = 10
 end
