@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  if defined?(ActiveAdmin)
-    devise_for :admin_users, ActiveAdmin::Devise.config
-    ActiveAdmin.routes(self)
-  end
+  # if defined?(ActiveAdmin)
+  #   devise_for :admin_users, ActiveAdmin::Devise.config
+  #   ActiveAdmin.routes(self)
+  # end
 
   get '/freelancer_style', to: 'style#freelancer'
   get '/employer_style', to: 'style#employer'
@@ -38,6 +38,10 @@ Rails.application.routes.draw do
     resources :billing
     resources :refer
     resources :talent
+  end
+
+  namespace :public do
+    resource :freelancer_profile, param: :slug, only: %i[show]
   end
 
   namespace :freelancer do

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class FreelancerProfile < ApplicationRecord
+  include Slugable
+
   belongs_to :user
   has_many :freelancer_real_estate_skills, dependent: :destroy
   has_many :real_estate_skills, through: :freelancer_real_estate_skills
