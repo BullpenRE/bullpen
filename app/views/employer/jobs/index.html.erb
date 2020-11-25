@@ -26,19 +26,19 @@
       </ul>
     </div>
 
+    <button class="navbar-toggler mr-auto text-light" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
     <div class="dropdown">
       <span class="dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-user-circle bp-profile-placeholder mr-1"></i>
         <span class="mr-1 d-none d-sm-inline text-light"><%= current_user.full_name %></span>
         <i class="fas fa-chevron-down text-primary"></i>
       </span>
-      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" id="navbar-dropdown">
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" href="#">Logout</a>
       </div>
     </div>
-    <button class="navbar-toggler mr-auto text-light" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
   </div>
 </nav>
 
@@ -128,8 +128,7 @@
 <div id="jobStepModal"></div>
 
 <script>
-    if (window.innerWidth <= 150) {
+    if (window.innerWidth <= 512) {
         $('#post-job').prop('className','nav-link');
-        $('#navbar-dropdown').removeClass('dropdown-menu-right').addClass('dropdown-menu-left');
     };
 </script>
