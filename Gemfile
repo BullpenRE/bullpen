@@ -17,6 +17,7 @@ gem 'turbolinks', '~> 5'                    # Turbolinks makes navigating your w
 gem 'webpacker', '~> 5.2', '>= 5.2.1'       # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'wicked', '~> 1.3', '>= 1.3.2'          # Wicked is a Rails engine for producing easy wizard controllers
 gem 'mini_magick', '~> 4.10', '>= 4.10.1'   # Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
+gem 'pagy', '~> 3.5'                        # Agnostic pagination in plain ruby
 
 group :development, :staging, :admin do
   gem 'activeadmin', '~> 2.8', '>= 2.8.1'     # Administration DSL out of a box: https://activeadmin.info/

@@ -5,7 +5,7 @@ class Employer::JobsController < ApplicationController
   before_action :authenticate_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
 
   def index
-    @jobs = current_user.jobs.order(created_at: :desc)
+    @pagy, @jobs = pagy(current_user.jobs.order(created_at: :desc), items: 3)
   end
 
   def destroy

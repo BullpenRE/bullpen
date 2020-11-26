@@ -206,6 +206,7 @@ GEM
     nokogiri (1.10.10-x86-mingw32)
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
+    pagy (3.10.0)
     parallel (1.19.2)
     parser (2.7.2.0)
       ast (~> 2.4.1)
@@ -387,6 +388,7 @@ DEPENDENCIES
   letter_opener_web
   listen
   mini_magick (~> 4.10, >= 4.10.1)
+  pagy (~> 3.5)
   pg (>= 0.18, < 2.0)
   premailer-rails (~> 1.11, >= 1.11.1)
   puma (~> 4.1)
