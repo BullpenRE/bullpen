@@ -40,7 +40,7 @@ module LoggedInRedirects
   end
 
   def employer_current_path
-    current_user.employer_profile.completed? ? employer_jobs_path : current_signup_step_url
+    current_user.employer_profile.completed? ? employer_talent_index_path : current_signup_step_url
   end
 
   def freelancer_current_path
