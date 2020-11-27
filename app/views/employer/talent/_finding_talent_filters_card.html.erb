@@ -27,7 +27,8 @@ height: 100%;
 
       <script>
         $('.close').click(function(){
-          $('#cardHeader').parent().fadeOut();
+          // $('#cardHeader').parent().fadeOut();
+          $('#cardHeader').parent().animate({'width':'toggle'}, 500)
         })
       </script>
 
