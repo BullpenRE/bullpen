@@ -28,6 +28,18 @@ class FreelancerProfile < ApplicationRecord
     draft? && pending?
   end
 
+  def first_name
+    user.first_name
+  end
+
+  def last_name
+    user.last_name
+  end
+
+  def location
+    user.location
+  end
+
   private
 
   def correct_content_type?

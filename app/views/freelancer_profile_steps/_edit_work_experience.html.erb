@@ -28,7 +28,7 @@
             <div class="col">
               <%= f.select :start_month,
                            options_for_select(
-                               FreelancerProfileExperience::AVAILABLE_MONTHNAMES.each_with_index.collect { |m, i| [m, i] },
+                               select_months_array,
                                freelancer_profile_experience.start_date.month
                            ),
                            {}, class: 'form-control selectpicker',
@@ -52,7 +52,7 @@
             <div class="col">
               <%= f.select :end_month,
                            options_for_select(
-                               FreelancerProfileExperience::AVAILABLE_MONTHNAMES.each_with_index.collect { |m, i| [m, i] },
+                               select_months_array,
                                freelancer_profile_experience.end_date&.month
                            ),
                            {}, class: 'form-control selectpicker',
