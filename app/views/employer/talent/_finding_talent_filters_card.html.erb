@@ -1,0 +1,83 @@
+<div id="showFindingTalentFilter" class="collapse" style="width: 18rem;">
+
+  <%= form_for @freelancer_profile, url: freelancer_profile_path, method: :put do |f| %>
+
+  <div class="container">
+    <div class="bp-card mb-0 px-2 py-1">
+      <div class="card-header container-fluid p-0 bg-white border border-secondary border-0" id="cardHeader">
+        <div class="row">
+          <div class="col">
+            <button type="button" class="close" aria-label="Close">
+              <span aria-hidden="true" onclick="location.reload();">&times;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        $('.close').click(function(){
+          $('#cardHeader').parent().fadeOut();
+        })
+      </script>
+
+      <!--Sectors-->
+      <div class="form-group mb-4">
+        <label for="findingTalentFilterSectors" class="bp-input-label">
+          Sectors
+        </label>
+        <%= f.select :freelancer_sectors,
+                     options_for_select(
+                         @sectors,
+                         @freelancer_profile&.freelancer_sectors&.map do |freelancer_sector|
+                           [freelancer_sector.sector.description, freelancer_sector.sector.id]
+                         end.flatten),
+                     {}, multiple: true, class: 'select2', required: true %>
+      </div>
+      <!-- Skills-->
+      <div class="form-group mb-4">
+        <label for="findingTalentFilterSkillsMultiSelect" class="bp-input-label">
+          Skills
+        </label>
+        <div class="w-100">
+          <%= f.select :freelancer_real_estate_skills,
+                       options_for_select(
+                           @real_estate_skills,
+                           @freelancer_profile&.freelancer_real_estate_skills&.map do |skill|
+                             [skill.real_estate_skill.description, skill.real_estate_skill.id]
+                           end.flatten
+                       ),
+                       {}, multiple: true, class: 'select2', required: true %>
+        </div>
+      </div>
+      <!-- Sofware-->
+      <div class="form-group mb-5">
+        <label for="findingTalentFilterSoftwares" class="bp-input-label">
+          Software
+        </label>
+        <%= f.select :freelancer_softwares,
+                     options_for_select(
+                         @softwares,
+                         @freelancer_profile&.freelancer_softwares&.map do |freelancer_software|
+                           [freelancer_software.software.description, freelancer_software.software.id]
+                         end.flatten),
+                     {}, multiple: true, class: 'select2' %>
+      </div>
+      <script>
+        $(function() {
+          $('.select2').select2({
+            // placeholder: 'Select all that apply',
+            placeholder: 'Any',
+            allowClear: true
+          });
+        });
+      </script>
+      <!-- Buttons  -->
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-primary mr-1">Reset Filters</button>
+        <%= f.submit 'Apply Filters', class: 'btn btn-primary' %>
+      </div>
+    </div>
+
+        </div>
+      <% end %>
+</div>

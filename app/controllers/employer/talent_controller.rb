@@ -11,5 +11,9 @@ before_action :authenticate_user!, :initial_check, :non_employer_redirect, :inco
                                                       :freelancer_certifications,
                                                       :freelancer_profile_educations,
                                                       :freelancer_profile_experiences).where(draft: false)
+    @freelancer_profile = FreelancerProfile.new
+    @real_estate_skills = RealEstateSkill.enabled.map{ |skill| [skill.description, skill.id] }
+    @sectors = Sector.enabled.map{ |sector| [sector.description, sector.id] }
+    @softwares = Software.enabled.map{ |software| [software.description, software.id] }
   end
 end

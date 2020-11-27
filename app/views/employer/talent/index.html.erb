@@ -50,8 +50,10 @@
 <div class="container mb-3">
   <div class="d-flex align-items-end">
     <h1>Find Talent</h1>
-    <a href="#" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
+      <button class="btn btn-link ml-auto" type="button" data-toggle="collapse" data-target="#showFindingTalentFilter" aria-expanded="false" >Show Filters <i class="fas fa-filter"></i></button>
   </div>
+  <%= render partial: 'employer/talent/finding_talent_filters_card' %>
+
   <% @freelancer_profiles.each do |freelancer_profile| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: freelancer_profile } %>
     <div class="bp-card mb-3">
