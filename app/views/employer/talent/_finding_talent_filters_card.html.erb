@@ -1,9 +1,20 @@
-<div id="showFindingTalentFilter" class="collapse" style="width: 18rem;">
+<style>
+#showFindingTalentFilter {
+position: fixed;
+top: 85px;
+left: 350px;
+z-index: 1;
+width: 18rem;
+height: 100%;
+}
+</style>
+
+<div id="showFindingTalentFilter" class="collapse" >
 
   <%= form_for @freelancer_profile, url: freelancer_profile_path, method: :put do |f| %>
 
   <div class="container">
-    <div class="bp-card mb-0 px-2 py-1">
+    <div class="bp-card mb-0 px-2 pt-1 pb-5">
       <div class="card-header container-fluid p-0 bg-white border border-secondary border-0" id="cardHeader">
         <div class="row">
           <div class="col">
@@ -65,7 +76,7 @@
       <script>
         $(function() {
           $('.select2').select2({
-            // placeholder: 'Select all that apply',
+            // placeholder: 'Select all that apply', - as in other places in the project
             placeholder: 'Any',
             allowClear: true
           });
@@ -81,3 +92,11 @@
         </div>
       <% end %>
 </div>
+
+<script>
+  $('[data-toggle="slide-collapse"]').on('click', function() {
+    $navMenuCont = $($(this).data('target'));
+    $navMenuCont.animate({'width':'toggle'}, 350);
+  });
+</script>
+
