@@ -74,5 +74,5 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
 
-  ENV['DOMAIN_URL'] = "http://#{host}"
+  ENV['DOMAIN_URL'] = host
 end
