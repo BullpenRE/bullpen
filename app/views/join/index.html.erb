@@ -1,13 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-header mb-4">
+<nav class="navbar navbar-expand-lg navbar-dark bg-header mb-sm-5">
   <div class="container">
-    <div class="text-left mt-2 mb-2 ml-5">
+    <div class="text-left mt-2 mb-2 ml-md-5">
       <%= image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30') %>
     </div>
   </div>
 </nav>
 
-<div class="container card my-3 shadow-sm">
-
+<div class="container card shadow-sm">
     <p><div class="h1 mt-3 text-secondary text-center">Join Bullpen</div></p>
     <br>
     <div class="container join">
@@ -17,8 +16,10 @@
           <h3 class="my-0 text-secondary text-center">Freelancer</h3>
 
           <div class="card-body">
-            <h5 class="card-title pricing-card-title text-muted">I'm individual and I'm looking for work. </h5>
             <div>
+              <h5 class="card-title pricing-card-title text-muted">I'm individual and I'm looking for work. </h5>
+            </div>
+            <div class="align-self-end">
               <%= link_to 'Apply', freelancer_sign_up_path, class: "btn btn-lg btn-block btn-primary" %>
             </div>
           </div>
@@ -27,8 +28,12 @@
           <br>
           <h3 class="my-0 text-secondary text-center">Company</h3>
           <div class="card-body">
-            <h5 class="card-title pricing-card-title text-muted">I'm a company interested in hiring. </h5>
-            <%= link_to 'Sign-Up', employer_sign_up_path, class: "btn btn-lg btn-block btn-primary" %>
+            <div>
+              <h5 class="card-title pricing-card-title text-muted">I'm a company interested in hiring. </h5>
+            </div>
+            <div class="align-self-end">
+              <%= link_to 'Sign-Up', employer_sign_up_path, class: "btn btn-lg btn-block btn-primary" %>
+            </div>
           </div>
         </div>
       </div>
