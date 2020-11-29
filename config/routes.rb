@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     resources :billing
     resources :refer
     resources :talent
+    post 'filter_freelancer_profiles', to: 'talent#filter_freelancer_profiles'
   end
 
   namespace :freelancer do

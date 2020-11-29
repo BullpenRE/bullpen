@@ -1,0 +1,90 @@
+<style>
+#showFindingTalentFilter {
+position: fixed;
+/*top: 85px;  - for Chrome */
+top: 60px;
+/*left: 350px;  - for Chrome */
+left: 50px;
+z-index: 1;
+width: 18rem;
+height: 100%;
+}
+</style>
+
+<div >
+  <div id="showFindingTalentFilter" class="collapse container">
+    <%= form_tag(employer_filter_freelancer_profiles_path, method: :post) do %>
+    <div class="bp-card mb-0 px-2 pt-1 pb-5">
+      <div class="card-header container-fluid p-0 bg-white border border-secondary border-0">
+        <div class="row">
+          <div class="col">
+            <button type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills-->
+      <div class="form-group mb-4">
+        <label for="findingTalentFilterSkillsMultiSelect" class="bp-input-label">
+          Skills
+        </label>
+        <div class="w-100">
+          <%= select_tag 'real_estate_skills_descriptions',
+                         options_for_select(real_estate_skills),
+                         multiple: 'multiple', class: 'select2', required: true %>
+        </div>
+      </div>
+      <!-- Buttons  -->
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-primary mr-1" id='reset-filters'>Reset Filters</button>
+        <%= submit_tag 'Apply Filters', class: 'btn btn-primary' %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  // Closes entire filters card
+  $('.close').on('click', function(){
+    $('#showFindingTalentFilter').animate({'width':'toggle'}, 500)
+  })
+
+  let selects = $('.select2').select2({
+    allowClear: true,
+    placeholder: {
+      id: '-1',
+      text: 'Any'
+    },
+  });
+
+  //
+  $('[data-toggle="slide-collapse"]').on('click', function() {
+    let $navMenuCont = $($(this).data('target'));
+    $navMenuCont.animate({'width':'toggle'}, 350);
+  });
+
+  // Sents ajax request to render profile selected filters
+  $('.btn-primary').on('click', function (e){
+    e.preventDefault();
+    let real_estate_skills_descriptions = $('#real_estate_skills_descriptions').val();
+    $.ajax({
+      method: "POST",
+      url: "<%= employer_filter_freelancer_profiles_path %>",
+      data: { real_estate_skills_descriptions }
+    })
+  })
+
+  $('#reset-filters').on('click', function (e){
+    e.preventDefault();
+    selects.val(null).trigger("change");
+    $.ajax({
+      method: "POST",
+      url: "<%= employer_filter_freelancer_profiles_path %>",
+      data: { }
+    })
+  })
+</script>
+
