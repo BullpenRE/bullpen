@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(version: 2020_11_27_034021) do
     t.integer "curation", default: 0
     t.boolean "draft", default: true
     t.string "current_step"
+    t.string "slug"
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
