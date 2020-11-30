@@ -7,6 +7,10 @@ z-index: 1;
 width: 18rem;
 height: 100%;
 }
+/*we need below data in order to see placeholder in initial select2 appearance, otherwise no placeholder*/
+.select2-selection--multiple .select2-search__field{
+    width:100%!important;
+}
 </style>
 
 <div >
@@ -93,13 +97,9 @@ height: 100%;
     $('.close-x').attr('hidden', true)
   })
 
-  // Tries to set initial placeholder 'Any' in select2 dropdowns
+  // Sets placeholder 'Type or select' in select2 input fields
   let selects = $('.select2').select2({
-    allowClear: true,
-    placeholder: {
-      id: '-1',
-      text: 'Any'
-    },
+    placeholder: "Type or select"
   });
 
   // Collapses Filters card left-right, not up-down
