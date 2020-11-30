@@ -136,7 +136,7 @@ class Employer::JobFlowsController < ApplicationController
   end
 
   def new_job
-    @job ||= current_user.jobs.create
+    @job ||= current_user.jobs.build
   end
 
   def job
