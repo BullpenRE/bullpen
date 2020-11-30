@@ -3,7 +3,7 @@
 class Employer::JobFlowsController < ApplicationController
   include Wicked::Wizard
   include LoggedInRedirects
-  steps :summary, :job_type, :qualifications, :details, :questions
+  steps :post_job_step_1, :post_job_step_2, :post_job_step_3, :post_job_step_4, :post_job_step_5
   before_action :authenticate_user!, :initial_check
 
   def show
@@ -28,7 +28,7 @@ class Employer::JobFlowsController < ApplicationController
   end
 
   def summary_step_save
-    return false unless params[:job][:step] == 'summary'
+    return false unless params[:job][:step] == 'post_job_step_1'
 
     job.update(summary_params)
 
@@ -37,44 +37,44 @@ class Employer::JobFlowsController < ApplicationController
       JobSector.create(job_id: job.id, sector_id: sector_id)
     end
 
-    respond_js_format(:job_type)
+    respond_js_format(:post_job_step_2)
 
     true
   end
 
   def job_type_save
-    return false unless params[:job][:step] == 'job_type'
+    return false unless params[:job][:step] == 'post_job_step_2'
 
     job.update(job_type_params.merge({ 'daytime_availability_required': params['daytime_availability_required'] }))
 
-    respond_js_format(:qualifications)
+    respond_js_format(:post_job_step_3)
 
     true
   end
 
   def qualifications_save
-    return false unless params[:job][:step] == 'qualifications'
+    return false unless params[:job][:step] == 'post_job_step_3'
 
     job.update(qualifications_params)
     save_job_skills
     save_job_softwares
 
-    respond_js_format(:details)
+    respond_js_format(:post_job_step_4)
 
     true
   end
 
   def details_save
-    return false unless params[:job][:step] == 'details'
+    return false unless params[:job][:step] == 'post_job_step_4'
 
     job.update(relevant_job_details: params[:job][:relevant_job_details])
-    respond_js_format(:questions)
+    respond_js_format(:post_job_step_5)
 
     true
   end
 
   def questions_save
-    return false unless params[:job][:step] == 'questions'
+    return false unless params[:job][:step] == 'post_job_step_5'
 
     questions_descriptions = params[:job][:job_questions].values.reject(&:empty?)
     questions_descriptions.each do |description|
