@@ -10,22 +10,5 @@ FactoryBot.define do
     required_regional_knowledge { Faker::Company.bs }
     relevant_job_details { Faker::Company.bs }
     state { 0 }
-
-    trait :complete do
-      after(:create) do |job, _|
-        (rand(4) + 1).times do
-          create :job_question, job: job
-        end
-        (rand(4) + 1).times do
-          create :job_software, job: job
-        end
-        (rand(4) + 1).times do
-          create :job_skill, job: job
-        end
-        (rand(4) + 1).times do
-          create :job_sector, job: job
-        end
-      end
-    end
   end
 end
