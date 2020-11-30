@@ -2,9 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Job, type: :model do
   let!(:job) { FactoryBot.create(:job) }
+  let(:complete_job) { FactoryBot.create(:job, :complete) }
 
   it 'factory works' do
     expect(job).to be_valid
+    expect(complete_job.job_questions.count).to be > 0
+    expect(complete_job.softwares.count).to be > 0
+    expect(complete_job.skills.count).to be > 0
+    expect(complete_job.sectors.count).to be > 0
   end
 
   context 'Validations' do
