@@ -1,5 +1,5 @@
 <br>
-<%= render partial: 'email/content_block', locals: { content: "Hi #{user.first_name}," } %>
+<%= render partial: 'email/content_block', locals: { content: "Hi #{@user.first_name}," } %>
 <%= render partial: 'email/content_block', locals: { content: "Thank you for your interest in joining Bullpen's talent network." } %>
 <%= render partial: 'email/content_block', locals: { content: "Unfortunately, we will not be proceeding with your application to join Bullpen. Your information will be archived, and we invite you to consider applying again in the future." } %>
 <%= render partial: 'email/content_block', locals: { content: "Bullpen talent requirements:<ol><li>Minimum 2 years of commercial real estate experience</li><li>Exceptional written and verbal communication skills</li><li>Displayed proficiency in common commercial real estate job functions</li><li>Located in the United States</li></ol>" } %>
