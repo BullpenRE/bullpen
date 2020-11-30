@@ -1,9 +1,7 @@
 <style>
 #showFindingTalentFilter {
 position: fixed;
-/*top: 85px;  - for Chrome */
 top: 60px;
-/*left: 350px;  - for Chrome */
 left: 50px;
 z-index: 1;
 width: 18rem;
@@ -36,10 +34,35 @@ height: 100%;
                          multiple: 'multiple', class: 'select2', required: true %>
         </div>
       </div>
+
+      <!--Sectors-->
+      <div class="form-group mb-4">
+        <label for="findingTalentFilterSectors" class="bp-input-label">
+          Sectors
+        </label>
+        <div class="w-100">
+          <%= select_tag 'sectors_descriptions',
+                         options_for_select(sectors),
+                         multiple: 'multiple', class: 'select2', required: true %>
+        </div>
+      </div>
+
+      <!-- Software-->
+      <div class="form-group mb-5">
+        <label for="findingTalentFilterSoftwares" class="bp-input-label">
+          Software
+        </label>
+        <div class="w-100">
+          <%= select_tag 'softwares_descriptions',
+                         options_for_select(softwares),
+                         multiple: 'multiple', class: 'select2', required: true %>
+        </div>
+      </div>
+
       <!-- Buttons  -->
       <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-outline-primary mr-1" id='reset-filters'>Reset Filters</button>
-        <%= submit_tag 'Apply Filters', class: 'btn btn-primary' %>
+        <button type="button" class="btn btn-outline-primary mr-1 reset-filters" id='reset-filters'>Reset Filters</button>
+        <%= submit_tag 'Apply Filters', class: 'btn btn-primary apply-filters' %>
       </div>
     </div>
     <% end %>
@@ -47,11 +70,30 @@ height: 100%;
 </div>
 
 <script>
-  // Closes entire filters card
+  // Closes entire Filters card via 'x' on the upper right corner of this card
   $('.close').on('click', function(){
     $('#showFindingTalentFilter').animate({'width':'toggle'}, 500)
   })
 
+  // Resets filtered profiles via 'x' near button 'Show Filters' on talent/index
+  $('.apply-filters').on('click', function(e){
+    e.preventDefault();
+    $('.close-x').attr('hidden', false)
+  })
+
+  // Hides 'x' near button 'Show Filters' on talent/index after 'x' is clicked
+  $('.close-x').on('click', function(e){
+    e.preventDefault();
+    $('.close-x').attr('hidden', true)
+  })
+
+  // Hides 'x' near button 'Show Filters' on talent/index after 'Reset Filters' button on Filters Card is clicked
+  $('.reset-filters').on('click', function(e){
+    e.preventDefault();
+    $('.close-x').attr('hidden', true)
+  })
+
+  // Tries to set initial placeholder 'Any' in select2 dropdowns
   let selects = $('.select2').select2({
     allowClear: true,
     placeholder: {
@@ -60,24 +102,26 @@ height: 100%;
     },
   });
 
-  //
+  // Collapses Filters card left-right, not up-down
   $('[data-toggle="slide-collapse"]').on('click', function() {
     let $navMenuCont = $($(this).data('target'));
     $navMenuCont.animate({'width':'toggle'}, 350);
   });
 
-  // Sents ajax request to render profile selected filters
+  // Sends ajax request to render profile selected filters
   $('.btn-primary').on('click', function (e){
     e.preventDefault();
     let real_estate_skills_descriptions = $('#real_estate_skills_descriptions').val();
+    let sectors_descriptions = $('#sectors_descriptions').val();
+    let softwares_descriptions = $('#softwares_descriptions').val();
     $.ajax({
       method: "POST",
       url: "<%= employer_filter_freelancer_profiles_path %>",
-      data: { real_estate_skills_descriptions }
+      data: { real_estate_skills_descriptions, sectors_descriptions, softwares_descriptions}
     })
   })
-
-  $('#reset-filters').on('click', function (e){
+  // Resets select2 filters on Filter card when button 'Reset Filters' is clicked
+  $('.reset-filters').on('click', function (e){
     e.preventDefault();
     selects.val(null).trigger("change");
     $.ajax({

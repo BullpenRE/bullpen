@@ -5,8 +5,6 @@ class Employer::TalentController < ApplicationController
   before_action :authenticate_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
 
   def index
-    @sectors = Sector.enabled.map{ |sector| [sector.description, sector.id] }
-    @softwares = Software.enabled.map{ |software| [software.description, software.id] }
   end
 
   def filter_freelancer_profiles
@@ -29,6 +27,16 @@ class Employer::TalentController < ApplicationController
   end
   helper_method :real_estate_skills
 
+  def sectors
+    @real_estate_skills = Sector.enabled.map(&:description)
+  end
+  helper_method :sectors
+
+  def softwares
+    @real_estate_skills = Software.enabled.map(&:description)
+  end
+  helper_method :softwares
+
   def freelancer_profiles
     @freelancer_profiles ||= FreelancerProfile
                                .includes(:real_estate_skills,
@@ -42,6 +50,18 @@ class Employer::TalentController < ApplicationController
 
       @freelancer_profiles = @freelancer_profiles.joins(:real_estate_skills).where(real_estate_skills: {
           description: filter_params[:real_estate_skills_descriptions]
+      })
+    end
+    if filter_params.include?(:sectors_descriptions)
+
+      @freelancer_profiles = @freelancer_profiles.joins(:sectors).where(sectors: {
+          description: filter_params[:sectors_descriptions]
+      })
+    end
+    if filter_params.include?(:softwares_descriptions)
+
+      @freelancer_profiles = @freelancer_profiles.joins(:softwares).where(softwares: {
+          description: filter_params[:softwares_descriptions]
       })
     end
     @freelancer_profiles
