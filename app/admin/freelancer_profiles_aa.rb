@@ -134,6 +134,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         freelancer_profile = FreelancerProfile.find(params[:id])
         update_many_to_many_attributes(freelancer_profile)
 
+        if update_curation?
+          accepted? ? FreelancerMailer.freelancer_approved(current_user).deliver_now : FreelancerMailer.freelancer_rejected(current_user).deliver_now
+        end
+
         ApplicationRecord.transaction do
           freelancer_profile.update!(permitted_params[:freelancer_profile])
         rescue StandardError => e
@@ -142,8 +146,6 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
 
         message = { alert: error_message } if error_message
         message ||= { notice: 'Successfully updated!' }
-
-        freelancer_profile.curation == 'accepted' ? FreelancerMailer.freelancer_approved(current_user).deliver_now : FreelancerMailer.freelancer_rejected(current_user).deliver_now
 
         redirect_to admin_freelancer_profile_path(freelancer_profile), flash: message
       end
@@ -167,6 +169,19 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         params[:freelancer_profile].delete(:real_estate_skill_ids)
         params[:freelancer_profile].delete(:software_ids)
       end
+
+      def update_curation?
+        return true if FreelancerProfile.find(params[:id]).curation != permitted_params[:freelancer_profile][:curation]
+
+        false
+      end
+
+      def accepted?
+        return true if permitted_params[:freelancer_profile][:curation] == 'accepted'
+
+        false
+      end
+
     end
   end
 end
