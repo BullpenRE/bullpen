@@ -1,7 +1,7 @@
 <!--Form-->
 <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
   <%= f.hidden_field :job_id, value: @job.id %>
-  <%= f.hidden_field 'step', value: 'qualifications' %>
+  <%= f.hidden_field 'step', value: 'post_job_step_3' %>
   <div class="form-group mb-4">
     <div class="h5">What level of experience is required?</div>
     <div class="custom-control custom-radio">
@@ -52,7 +52,7 @@
                      value: job.required_regional_knowledge %>
   </div>
   <div class="modal-footer justify-content-between">
-    <%= link_to employer_job_flows_path(id: :job_type, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
+    <%= link_to employer_job_flows_path(id: :post_job_step_2, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
     <%= button_tag type: 'submit', class: "btn btn-primary" do %>
