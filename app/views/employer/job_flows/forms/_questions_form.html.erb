@@ -1,6 +1,6 @@
 <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
   <%= f.hidden_field :job_id, value: @job.id %>
-  <%= f.hidden_field 'step', value: 'questions' %>
+  <%= f.hidden_field 'step', value: 'post_job_step_5' %>
   <div class="d-flex justify-content-between">
     <label class="h5">Are there questions you want answered when an application is submitted?</label>
     <div><a data-toggle="collapse" href="#questionsTip" role="button" aria-expanded="false" aria-controls="questionsTip"><i class="far fa-lightbulb align-middle mb-1" style="font-size:1.5rem"></i><span class="ml-1 d-none d-lg-inline">Quick Tip</span></a></div>
@@ -22,7 +22,7 @@
   </div>
   <button type="button" class="btn btn-link py-0 new-question-button"><i class="fas fa-plus mr-2"></i>Add another question</button>
   <div class="modal-footer justify-content-between">
-    <%= link_to employer_job_flows_path(id: :details, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
+    <%= link_to employer_job_flows_path(id: :post_job_step_4, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
     <div>
