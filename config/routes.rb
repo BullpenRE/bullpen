@@ -4,6 +4,9 @@ Rails.application.routes.draw do
     ActiveAdmin.routes(self)
   end
 
+  default_url_options protocol: ActionMailer::Base.default_url_options[:protocol],
+                      host: ActionMailer::Base.default_url_options[:host]
+
   get '/freelancer_style', to: 'style#freelancer'
   get '/employer_style', to: 'style#employer'
   get '/employer_talent_style', to: 'style#employer_talent'
@@ -14,7 +17,8 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: {
     passwords: 'passwords',
-    registrations: 'registrations'
+    registrations: 'registrations',
+    confirmations: 'confirmations'
   }
 
   devise_scope :user do
@@ -38,6 +42,10 @@ Rails.application.routes.draw do
     resources :billing
     resources :refer
     resources :talent
+  end
+
+  namespace :public do
+    get 'freelancer_profile/:slug', to: 'freelancer_profile#show', as: 'freelancer_profile'
   end
 
   namespace :freelancer do
