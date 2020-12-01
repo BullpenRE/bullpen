@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class FreelancerProfile < ApplicationRecord
+  include Slugable
+
   belongs_to :user
   has_many :freelancer_real_estate_skills, dependent: :destroy
   has_many :real_estate_skills, through: :freelancer_real_estate_skills
@@ -20,6 +22,7 @@ class FreelancerProfile < ApplicationRecord
   ACCEPTABLE_CONTENT_TYPE = %w[image/jpg image/jpeg image/png image/gif].freeze
 
   validate :correct_content_type?, :correct_size?
+  validates :slug, uniqueness: true
 
   def ready_for_submission?
     draft? && pending?
