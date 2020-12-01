@@ -1,0 +1,87 @@
+<div class="d-flex flex-sm-row flex-column">
+  <div class="mr-3">
+    <% if @freelancer_profile.avatar.attached? %>
+      <div class="text-light mb-3 avatar-image" style="line-height: 0;">
+        <%= image_tag @freelancer_profile.avatar, class: 'rounded-circle', width: '115px', height: '115px' %>
+      </div>
+    <% else %>
+      <div class="text-light mb-3 avatar-image" style="font-size: 113px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
+    <% end %>
+  </div>
+  <div class="">
+    <h2><%= @freelancer_profile.user.first_name %> <%=  @freelancer_profile.user.last_name %></h2>
+    <div class="mb-2 text-wrap text-break">
+      <%= @freelancer_profile.professional_title %><br>
+      <%= @freelancer_profile.user.location %>
+    </div>
+    <div class="text-wrap text-break mb-4"><%= @freelancer_profile.professional_summary %></div>
+    <div>
+      <%  @freelancer_profile.sectors.order(description: :asc)&.each do |sector| %>
+        <span class="badge badge-secondary mb-1"><%= sector.description %></span>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% if @freelancer_profile.real_estate_skills.any? || @freelancer_profile.softwares.any? %><hr><% end %>
+<% if @freelancer_profile.real_estate_skills.any? %>
+  <div class="mt-3">
+    <h4>Skills</h4>
+    <div>
+      <%= @freelancer_profile.real_estate_skills.order(description: :asc).pluck(:description).join(', ') %>
+    </div>
+  </div>
+<% end %>
+<% if @freelancer_profile.softwares.any? %>
+  <div class="mt-3">
+    <h4>Software Licenses</h4>
+    <div>
+      <%= @freelancer_profile.softwares.order(description: :asc).pluck(:description).join(', ') %>
+    </div>
+  </div>
+<% end %>
+<% if @freelancer_profile.freelancer_profile_experiences.any? %>
+  <hr>
+  <div class="mt-3">
+    <h4>Experience</h4>
+    <% @freelancer_profile.freelancer_profile_experiences.order(current_job: :desc, end_date: :desc).each do |work_experience| %>
+      <div class="d-flex">
+        <div class="mb-2 mr-2 text-wrap text-break"><b><%= work_experience.company %></b><br><%= work_experience.job_title %></div>
+        <div class="ml-auto"><i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date.strftime('%b %Y') %></i></div>
+      </div>
+      <ul class="mr-lg-3 mr-1 pl-3">
+        <% work_experience.description_paragraphs.each do |paragraph| %>
+          <li style="word-wrap: break-word; overflow-wrap: break-word;"><%= paragraph %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+<% end %>
+<% if @freelancer_profile.freelancer_profile_educations.any? || @freelancer_profile.freelancer_certifications.any? %>
+  <hr>
+<% end %>
+<div class="mt-3">
+  <% if @freelancer_profile.freelancer_profile_educations.any? %>
+    <h4>Education</h4>
+    <% @freelancer_profile.freelancer_profile_educations.order(currently_studying: :desc, graduation_year: :desc).each do |education| %>
+      <div class="d-flex">
+        <div class="mb-2 mr-2 text-wrap text-break"><b><%= education.institution %></b><br><%= education.degree %> <%= education.course_of_study %></div>
+        <div class="ml-auto"><i><%= education.currently_studying ? 'Present' : education.graduation_year %></i></div>
+      </div>
+      <% if education.description.present? %>
+        <ul class="mr-lg-3 mr-1 pl-3">
+          <li class="text-wrap text-break"><%= education.description %></li>
+        </ul>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if @freelancer_profile.freelancer_certifications.any? %>
+    <h4 class="mt-3">Licenses &amp; Certifications</h4>
+
+    <% @freelancer_profile.freelancer_certifications.order(earned: :desc).each do |freelancer_certification| %>
+      <div class="d-flex mb-2">
+        <div class="mr-2"><b><%= freelancer_certification.description %></b></div>
+        <div class="ml-auto"><i><%= freelancer_certification.earned.strftime("%b %Y") %></i></div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

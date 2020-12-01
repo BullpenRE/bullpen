@@ -45,6 +45,10 @@ Rails.application.routes.draw do
     post 'filter_freelancer_profiles', to: 'talent#filter_freelancer_profiles'
   end
 
+  namespace :public do
+    get 'freelancer_profile/:slug', to: 'freelancer_profile#show', as: 'freelancer_profile'
+  end
+
   namespace :freelancer do
     resources :jobs
     resources :applications
