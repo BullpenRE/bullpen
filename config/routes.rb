@@ -44,6 +44,10 @@ Rails.application.routes.draw do
     resources :talent
   end
 
+  namespace :public do
+    get 'freelancer_profile/:slug', to: 'freelancer_profile#show', as: 'freelancer_profile'
+  end
+
   namespace :freelancer do
     resources :jobs
     resources :applications
