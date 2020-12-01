@@ -82,5 +82,7 @@
     </div>
     <div class="d-flex d-lg-none mb-3"></div> <!--Shim for mobile views-->
   <% end %>
-  <%= pagy_bootstrap_nav(@pagy).html_safe if @pagy.pages > 1 %>
+  <div class="flex-lg-row">
+    <%= pagy_bootstrap_nav(@pagy).html_safe if @pagy.pages > 1 %>
+  </div>
 </div>
