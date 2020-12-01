@@ -7,8 +7,9 @@ z-index: 1;
 width: 18rem;
 height: 100%;
 }
-/*we need below 3 lines data in order to see placeholder in initial select2 appearance, otherwise placeholder is absent */
-/* these classes located inside of select2 service*/
+/* we need below 3 lines data in order to see placeholder in initial select2 appearance, otherwise placeholder is absent */
+/* these classes located inside of select2 service - https://stackoverflow.com/questions/28140705/select2-multiple-placeholder-does-not-work */
+/* https://stackoverflow.com/questions/50696987/select2-does-not-show-placeholder-if-initially-hidden */
 .select2-selection--multiple .select2-search__field{
     width:100%!important;
 }
