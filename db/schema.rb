@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_27_034021) do
+ActiveRecord::Schema.define(version: 2020_12_01_205326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,6 +178,30 @@ ActiveRecord::Schema.define(version: 2020_11_27_034021) do
     t.index ["software_id"], name: "index_freelancer_softwares_on_software_id"
   end
 
+  create_table "job_application_questions", force: :cascade do |t|
+    t.bigint "job_application_id"
+    t.bigint "job_question_id"
+    t.text "answer"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_application_id"], name: "index_job_application_questions_on_job_application_id"
+    t.index ["job_question_id"], name: "index_job_application_questions_on_job_question_id"
+  end
+
+  create_table "job_applications", force: :cascade do |t|
+    t.bigint "job_id"
+    t.bigint "user_id"
+    t.text "cover_letter"
+    t.boolean "template", default: false
+    t.integer "per_hour_bid"
+    t.boolean "available_during_work_hours"
+    t.integer "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_job_applications_on_job_id"
+    t.index ["user_id"], name: "index_job_applications_on_user_id"
+  end
+
   create_table "job_questions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "description"
@@ -308,6 +332,10 @@ ActiveRecord::Schema.define(version: 2020_11_27_034021) do
   add_foreign_key "freelancer_profiles", "users"
   add_foreign_key "freelancer_softwares", "freelancer_profiles"
   add_foreign_key "freelancer_softwares", "softwares"
+  add_foreign_key "job_application_questions", "job_applications"
+  add_foreign_key "job_application_questions", "job_questions"
+  add_foreign_key "job_applications", "jobs"
+  add_foreign_key "job_applications", "users"
   add_foreign_key "job_questions", "jobs"
   add_foreign_key "job_sectors", "jobs"
   add_foreign_key "job_sectors", "sectors"

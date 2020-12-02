@@ -9,6 +9,7 @@ class Job < ApplicationRecord
   has_many :job_sectors, dependent: :destroy
   has_many :sectors, through: :job_sectors
   has_many :job_questions, dependent: :destroy
+  has_many :job_applications, dependent: :destroy
 
   validates :user_id, presence: true
 
