@@ -4,38 +4,35 @@ class Employer::TalentController < ApplicationController
   include LoggedInRedirects
   before_action :authenticate_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
 
+  helper_method :filters_selected, :real_estate_skills, :sectors, :softwares, :freelancer_profiles
+
   def index
   end
 
   def filter_freelancer_profiles
-    @filters_selected = []
-    @filters_selected.push(filter_params[:real_estate_skills_descriptions]) if filter_params[:real_estate_skills_descriptions].present?
-    @filters_selected.push(filter_params[:sectors_descriptions]) if filter_params[:sectors_descriptions].present?
-    @filters_selected.push(filter_params[:softwares_descriptions]) if filter_params[:softwares_descriptions].present?
-    @filters_selected
+    filters_selected
   end
 
   private
 
   def filters_selected
     @filters_selected ||= []
+    @filters_selected = [filter_params[:real_estate_skills_descriptions],
+                         filter_params[:sectors_descriptions],
+                         filter_params[:softwares_descriptions]].compact
   end
-  helper_method :filters_selected
 
   def real_estate_skills
     @real_estate_skills = RealEstateSkill.enabled.map(&:description)
   end
-  helper_method :real_estate_skills
 
   def sectors
     @real_estate_skills = Sector.enabled.map(&:description)
   end
-  helper_method :sectors
 
   def softwares
     @real_estate_skills = Software.enabled.map(&:description)
   end
-  helper_method :softwares
 
   def freelancer_profiles
     @freelancer_profiles ||= FreelancerProfile
@@ -66,7 +63,6 @@ class Employer::TalentController < ApplicationController
     end
     @freelancer_profiles
   end
-  helper_method :freelancer_profiles
 
   def filter_params
     params.permit(:real_estate_skills_descriptions => [],
