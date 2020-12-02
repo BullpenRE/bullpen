@@ -27,11 +27,11 @@ class Employer::TalentController < ApplicationController
   end
 
   def sectors
-    @real_estate_skills = Sector.enabled.map(&:description)
+    @sectors = Sector.enabled.map(&:description)
   end
 
   def softwares
-    @real_estate_skills = Software.enabled.map(&:description)
+    @softwares = Software.enabled.map(&:description)
   end
 
   def freelancer_profiles
