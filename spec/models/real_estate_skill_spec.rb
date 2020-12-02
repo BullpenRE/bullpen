@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe RealEstateSkill, type: :model do
-  let!(:real_estate_skill) { FactoryBot.create(:real_estate_skill) }
+  let!(:real_estate_skill) { FactoryBot.create(:real_estate_skill, description: 'Something Cool') }
   it 'factory works' do
     expect(real_estate_skill).to be_valid
   end
@@ -29,13 +29,13 @@ RSpec.describe RealEstateSkill, type: :model do
   context 'Scopes' do
     describe 'default_scope' do
       it 'orders by description alphabetically' do
-        ('A'..'Z').to_a.each { |letter| FactoryBot.create(:real_estate_skill, description: "#{letter} RE Skill") }
+        ('A'..'Z').to_a.each_with_index { |letter, index| FactoryBot.create(:real_estate_skill, description: "#{letter} RE Skill #{index}") }
         expect(RealEstateSkill.all.pluck(:description)).to match(RealEstateSkill.order(description: :asc).pluck(:description))
       end
     end
 
     it '.enabled' do
-      disabled_real_estate_skill = FactoryBot.create(:real_estate_skill, disable: true)
+      disabled_real_estate_skill = FactoryBot.create(:real_estate_skill, description: 'MADskillz', disable: true)
       expect(real_estate_skill.disable).to be_falsey
       expect(RealEstateSkill.enabled).to include(real_estate_skill)
       expect(RealEstateSkill.enabled).to_not include(disabled_real_estate_skill)
