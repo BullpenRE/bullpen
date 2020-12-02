@@ -6,6 +6,6 @@ FactoryBot.define do
     course_of_study { Faker::Educator.subject }
     graduation_year { 2011 }
     currently_studying { false }
-    description { Faker::Lorem.sentences }
+    description { Faker::Hipster.paragraph }
   end
 end
