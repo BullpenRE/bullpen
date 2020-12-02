@@ -42,8 +42,10 @@ describe User do
     end
 
     describe 'freelancer_sectors and freelancer_real_estate_skills' do
-      let!(:freelancer_sector) { FactoryBot.create(:freelancer_sector, freelancer_profile: freelancer_profile) }
-      let!(:freelancer_real_estate_skill) { FactoryBot.create(:freelancer_real_estate_skill, freelancer_profile: freelancer_profile) }
+      let(:sector) { FactoryBot.create(:sector, description: 'Special Sector') }
+      let(:real_estate_skill) { FactoryBot.create(:real_estate_skill, description: 'Special Real Estate Skill') }
+      let!(:freelancer_sector) { FactoryBot.create(:freelancer_sector, freelancer_profile: freelancer_profile, sector: sector) }
+      let!(:freelancer_real_estate_skill) { FactoryBot.create(:freelancer_real_estate_skill, freelancer_profile: freelancer_profile, real_estate_skill: real_estate_skill) }
 
       it 'can have many through the freelance_profile' do
         expect(user.freelancer_sectors).to include(freelancer_sector)

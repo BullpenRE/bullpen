@@ -1,12 +1,12 @@
 <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
   <%= f.hidden_field :job_id, value: @job.id %>
-  <%= f.hidden_field 'step', value: 'details' %>
+  <%= f.hidden_field 'step', value: 'post_job_step_4' %>
   <div class="form-group mb-1">
     <label for="jobDetailsTextarea" class="h5">Describe responsibilities, provided resources, or any other requirements. <span class="text-dark font-weight-normal">(Optional)</span></label>
     <%= f.text_area :relevant_job_details, class: "form-control",rows: "3", id: "jobDetailsTextarea", placeholder: "Enter any relevant job details", rows: "8", maxlength: "5000" %>
   </div>
   <div class="modal-footer justify-content-between">
-    <%= link_to employer_job_flows_path(id: :qualifications, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
+    <%= link_to employer_job_flows_path(id: :post_job_step_3, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
     <%= button_tag type: 'submit', class: "btn btn-primary" do %>
