@@ -17,4 +17,14 @@ class Job < ApplicationRecord
   enum required_experience: { 'junior': 0, 'intermediate': 1, 'senior': 2 }
   enum time_zone: { 'HST': 0, 'AKST': 1, 'PST': 2, 'MST': 3, 'CST': 4, 'EST': 5 }
   enum state: { 'draft': 0, 'posted': 1, 'closed': 2 }
+
+  def ready_to_post?
+    title.present? &&
+      short_description.present? &&
+      sectors.present? &&
+      position_length.present? &&
+      hours_needed.present? &&
+      required_experience.present? &&
+      job_skills.present?
+  end
 end
