@@ -1,8 +1,8 @@
 <%= render partial: 'employer/navigation', locals: { section: 'talent' } %>
 
 <!--Talent card-->
-<div class="container mb-3">
-  <div class="d-flex align-items-end">
+<div class="container mb-3 appbar">
+  <div class="d-flex align-items-end sidebar-wrapper">
       <div class="col px-0"><h1>Find Talent</h1></div>
       <div class="col px-0">
         <h5 id="filters_selected" class="text-secondary">
@@ -17,7 +17,8 @@
             content_tag(:span, "×", class: "close-x", hidden: true)
           end%>
         </div>
-        <button class="btn btn-link ml-auto pr-0" type="button" data-toggle="slide-collapse" data-target="#showFindingTalentFilter" aria-expanded="false" >Show Filters <i class="fas fa-filter"></i></button>
+<!--        <button class="btn btn-link ml-auto pr-0" type="button" data-toggle="slide-collapse" data-target="#showFindingTalentFilter" aria-expanded="false" >Show Filters <i class="fas fa-filter"></i></button>-->
+        <button class="btn btn-link ml-auto pr-0 appbar-item appbar-menu-icon" id="toggle-sidebar-left"  >Show Filters <i class="fas fa-filter"></i></button>
       </div>
   </div>
   <%= render partial: 'employer/talent/talent_filters' %>
