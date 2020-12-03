@@ -14,7 +14,7 @@ require("bootstrap-select")
 require("select2")
 require("typeface-nunito-sans")
 require("typeface-ubuntu")
-require("@ctrlmaniac/simpler-sidebar")
+require("@ctrlmaniac/simpler-sidebar/lib")
 
 import 'src/stylesheets/application'
 const images = require.context('../images', true)
