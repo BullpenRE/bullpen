@@ -12,9 +12,9 @@
       <div class="modal-body py-0">
       <%= form_tag(employer_interview_request_path, method: :post) do %>
       <div class="form-group mb-3">
-        <label for="addPersonalMessageTextArea" class="bp-input-label">
-          <h5>Add a personal message.</h5>
-        </label>
+          <label for="addPersonalMessageTextArea" class="bp-input-label h5">
+            Add a personal message.
+          </label>
         <div class="w-100">
           <%= text_area_tag 'message', nil, class: "form-control mb-3",rows: "3", placeholder: "Enter your message" %>
         </div>
