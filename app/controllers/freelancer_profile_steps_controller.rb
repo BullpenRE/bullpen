@@ -10,7 +10,7 @@ class FreelancerProfileStepsController < ApplicationController
   def show
     @user = current_user
     Rails.logger.info "!!!!!!! user: #{@user.ai}"
-    @freelancer_profile = @user.freelancer_profile || @user.freelancer_profile.create
+    @freelancer_profile = @user.freelancer_profile || FreelancerProfile.create(user_id: @user.id)
     Rails.logger.info "!!!!!!! @freelancer_profile: #{@freelancer_profile.ai}"
     @certifications = certifications
     @real_estate_skills = RealEstateSkill.enabled.map{ |skill| [skill.description, skill.id] }
