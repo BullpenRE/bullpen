@@ -9,11 +9,9 @@ class FreelancerProfileStepsController < ApplicationController
 
   def show
     @user = current_user
-    if @user.freelancer_profile.blank?
-      FreelancerProfile.create(user_id: @user.id)
-      @user.reload
-    end
-    @freelancer_profile = @user.freelancer_profile
+    Rails.logger.info "!!!!!!! user: #{@user.ai}"
+    @freelancer_profile = @user.freelancer_profile || @user.freelancer_profile.create
+    Rails.logger.info "!!!!!!! @freelancer_profile: #{@freelancer_profile.ai}"
     @certifications = certifications
     @real_estate_skills = RealEstateSkill.enabled.map{ |skill| [skill.description, skill.id] }
     @sectors = Sector.enabled.map{ |sector| [sector.description, sector.id] }
