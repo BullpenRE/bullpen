@@ -8,14 +8,14 @@
 /*height: 100%;*/
 /*}*/
 
-.sidebar {
-    background-color: blueviolet;
-}
+/*.sidebar {*/
+/*    background-color: blueviolet;*/
+/*}*/
 
-.sidebar-wrapper {
-    overflow-y:auto;
-    padding:0 8px;
-}
+/*.sidebar-wrapper {*/
+/*    overflow-y:auto;*/
+/*    padding:0 8px;*/
+/*}*/
 
 /* we need below 3 lines data in order to see placeholder in initial select2 appearance, otherwise placeholder is absent */
 /* these classes located inside of select2 service - https://stackoverflow.com/questions/28140705/select2-multiple-placeholder-does-not-work */
@@ -25,7 +25,7 @@
 }
 </style>
 
-<div >
+<div>
 <!--  <div id="showFindingTalentFilter" class="collapse container">-->
   <div id="sidebar-left" class="sidebar container">
     <div class="sidebar-wrapper">
@@ -34,7 +34,7 @@
       <div class="card-header container-fluid p-0 bg-white border border-secondary border-0">
         <div class="row">
           <div class="col">
-            <button type="button" class="close" aria-label="Close">
+            <button type="button" class="close close-filter" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -90,26 +90,52 @@
 
 <script>
   // Test of @ctrlmaniac/simpler-sidebar
-  $("#sidebar-left").simplerSidebar({
-    align: "left", // default: 'right'
-    selectors: {
-      trigger: "#toggle-sidebar-left",
-      quitter: ".quit-sidebar-left"
-    }
+
+  $(function() {
+    $("#sidebar-left").simplerSidebar({
+      quitter: "close-filter",
+      toggler: "toggle-sidebar-left",
+      open: true,
+      align: 'left',
+      top: 61,
+      width: 300,
+      gap: 0,
+      zIndex: 3000,
+      freezePage: false,
+      animation: {
+        duration: 500,
+        easing: 'swing'
+      },
+      mask: {
+        display: true,
+        css: {
+          backgroundColor: "black",
+          opacity: 0,
+          filter: "Alpha(opacity=0)",
+        },
+      },
+      events: {
+        onOpen: function () { console.log("onOpen triggered"); },
+        afterOpen: function () { console.log("afterOpen triggered"); },
+        onClose: function () { console.log("onClose triggered"); },
+        afterClose: function () { console.log("afterClose triggered"); },
+        always: function () { console.log("always triggered"); },
+      },
+    });
   });
 
-  $("#sidebar-left").simplerSidebar({
-    mask: {
-      display: true,
-      css: {
-        backgroundColor: "black",
-        opacity: 0.5,
-        filter: "Alpha(opacity=50)",
-      }
-    }
-  });
+  // $("#sidebar-left").simplerSidebar({
+  //   mask: {
+  //     display: true,
+  //     css: {
+  //       backgroundColor: "black",
+  //       opacity: 0.5,
+  //       filter: "Alpha(opacity=50)",
+  //     }
+  //   }
+  // });
 
-
+/*
   $("#sidebar-left").simplerSidebar({
     animation: {
       duration: 500,
@@ -251,5 +277,6 @@
       data: { }
     })
   })
+  */
 </script>
 
