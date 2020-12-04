@@ -8,6 +8,7 @@
   </div>
   <% @freelancer_profiles.each do |freelancer_profile| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: freelancer_profile } %>
+    <%= render partial: 'employer/talent/interview_request', locals: { freelancer_profile: freelancer_profile } %>
     <div class="bp-card mb-3">
       <div class="d-flex justify-content-between flex-column flex-lg-row">
         <div>
@@ -37,7 +38,8 @@
         <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
         <div class="ml-auto">
           <div class="d-flex">
-            <button class="btn btn-primary" type="button" id="sendInterviewRequestButton">Request Interview</button>
+<!--            <button class="btn btn-primary" type="button" id="sendInterviewRequestButton">Request Interview</button>-->
+            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
             <button class="btn btn-outline-primary ml-2" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
           </div>
         </div>

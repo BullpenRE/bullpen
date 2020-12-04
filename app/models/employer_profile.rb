@@ -4,6 +4,7 @@ class EmployerProfile < ApplicationRecord
   belongs_to :user
   has_many :employer_sectors, dependent: :destroy
   has_many :sectors, through: :employer_sectors
+  has_many :interview_requests, dependent: :destroy
 
   enum available_employee_counts: { '1-10': 0, '11-50': 1, '51-100': 2, '101+': 3 }
   enum category: {

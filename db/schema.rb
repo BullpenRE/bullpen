@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_27_034021) do
+ActiveRecord::Schema.define(version: 2020_12_04_105249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,6 +178,16 @@ ActiveRecord::Schema.define(version: 2020_11_27_034021) do
     t.index ["software_id"], name: "index_freelancer_softwares_on_software_id"
   end
 
+  create_table "interview_requests", force: :cascade do |t|
+    t.bigint "employer_profile_id", null: false
+    t.bigint "freelancer_profile_id", null: false
+    t.integer "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employer_profile_id"], name: "index_interview_requests_on_employer_profile_id"
+    t.index ["freelancer_profile_id"], name: "index_interview_requests_on_freelancer_profile_id"
+  end
+
   create_table "job_questions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "description"
@@ -308,6 +318,8 @@ ActiveRecord::Schema.define(version: 2020_11_27_034021) do
   add_foreign_key "freelancer_profiles", "users"
   add_foreign_key "freelancer_softwares", "freelancer_profiles"
   add_foreign_key "freelancer_softwares", "softwares"
+  add_foreign_key "interview_requests", "employer_profiles"
+  add_foreign_key "interview_requests", "freelancer_profiles"
   add_foreign_key "job_questions", "jobs"
   add_foreign_key "job_sectors", "jobs"
   add_foreign_key "job_sectors", "sectors"

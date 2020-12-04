@@ -12,4 +12,9 @@ before_action :authenticate_user!, :initial_check, :non_employer_redirect, :inco
                                                       :freelancer_profile_educations,
                                                       :freelancer_profile_experiences).where(draft: false)
   end
+
+  def interview_request
+    @interview_request = InterviewRequest.new
+  end
+
 end
