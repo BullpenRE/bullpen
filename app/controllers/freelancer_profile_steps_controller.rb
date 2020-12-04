@@ -9,15 +9,10 @@ class FreelancerProfileStepsController < ApplicationController
 
   def show
     @user = current_user
-    if @user.freelancer_profile.blank?
-      FreelancerProfile.create(user_id: @user.id)
-      @user.reload
-    end
-    @freelancer_profile = @user.freelancer_profile
-    @certifications = certifications
-    @real_estate_skills = RealEstateSkill.enabled.map{ |skill| [skill.description, skill.id] }
-    @sectors = Sector.enabled.map{ |sector| [sector.description, sector.id] }
-    @softwares = Software.enabled.map{ |software| [software.description, software.id] }
+    @freelancer_profile = @user.freelancer_profile || FreelancerProfile.create(user_id: @user.id)
+    @user.reload unless @user.freelancer_profile.present?
+    populate_available_options_for_freelancer_data
+
     render_wizard
   end
 
@@ -141,7 +136,23 @@ class FreelancerProfileStepsController < ApplicationController
       .permit(:professional_title, :professional_years_experience, :professional_summary)
   end
 
+  def populate_available_options_for_freelancer_data
+    certifications && real_estate_skills && sectors && softwares
+  end
+
   def certifications
-    Certification.searchable.enabled.pluck(:description, :id)
+    @certifications ||= Certification.searchable.enabled.pluck(:description, :id)
+  end
+
+  def real_estate_skills
+    @real_estate_skills ||= RealEstateSkill.enabled.pluck(:description, :id)
+  end
+
+  def sectors
+    @sectors ||= Sector.enabled.pluck(:description, :id)
+  end
+
+  def softwares
+    @softwares ||= Software.enabled.pluck(:description, :id)
   end
 end
