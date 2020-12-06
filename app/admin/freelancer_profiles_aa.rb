@@ -100,14 +100,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
     member_action :accept, method: :post do
       freelancer_profile = FreelancerProfile.find(params[:id])
       freelancer_profile.update(curation: 'accepted')
-      FreelancerMailer.freelancer_approved(@user).deliver_now
+      FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_now
       redirect_to admin_freelancer_profile_path(freelancer_profile.id), { notice: 'Application Accepted.' }
     end
 
     member_action :decline, method: :post do
       freelancer_profile = FreelancerProfile.find(params[:id])
       freelancer_profile.update(curation: 'declined')
-      FreelancerMailer.freelancer_rejected(@user).deliver_now
+      FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_now
       redirect_to admin_freelancer_profile_path(freelancer_profile.id), { notice: 'Application Declined.' }
     end
 
