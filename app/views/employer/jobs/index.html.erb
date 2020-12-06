@@ -19,7 +19,7 @@
               <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start mr-3">
                 Posted
               </div>
-            <% else %>
+            <% elsif job.ready_to_post? %>
               <%= link_to 'Post Job', employer_post_job_path(id: job.id), class: "btn btn-primary mr-2" %>
             <% end %>
             <div class="dropdown my-3 my-md-0 align-self-md-center align-self-start">
