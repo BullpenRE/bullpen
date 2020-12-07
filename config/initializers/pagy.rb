@@ -64,7 +64,7 @@ require 'pagy/extras/bootstrap'
 
 # Multi size var used by the *_nav_js helpers
 # See https://ddnexus.github.io/pagy/extras/navs#steps
-# Pagy::VARS[:steps] = { 0 => [2,3,3,2], 540 => [3,5,5,3], 720 => [5,7,7,5] }   # example
+Pagy::VARS[:steps] = { 0 => [1,0,0,1], 540 => [1,0,0,1], 720 => [1,1,1,1] }    # example
 
 
 # Feature Extras
@@ -116,7 +116,7 @@ Pagy::VARS[:overflow] = :last_page    # default  (other options: :last_page and 
 
 # Other Variables
 # See https://ddnexus.github.io/pagy/api/pagy#other-variables
-# Pagy::VARS[:size]       = [1,4,4,1]                       # default
+Pagy::VARS[:size]       = [1,1,1,1]                       # default
 # Pagy::VARS[:page_param] = :page                           # default
 # Pagy::VARS[:params]     = {}                              # default
 # Pagy::VARS[:anchor]     = '#anchor'                       # example

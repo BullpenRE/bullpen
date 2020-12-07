@@ -3,7 +3,7 @@
 class Employer::JobsController < ApplicationController
   include LoggedInRedirects
   before_action :authenticate_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
-  ITEMS_PER_PAGE = 10
+  ITEMS_PER_PAGE = 3
 
   def index
     @pagy, @jobs = pagy(current_user.jobs.order(created_at: :desc), items: ITEMS_PER_PAGE, overflow: :last_page)
