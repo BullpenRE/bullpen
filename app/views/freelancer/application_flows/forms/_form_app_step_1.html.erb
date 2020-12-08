@@ -29,6 +29,7 @@
         <label class="btn btn-outline-primary upload-work-sample" for="uploadWorkSample">
           Attach a File
         </label>
+        <div class="file-name"></div>
       </div>
     <% end %>
   </div>
@@ -68,8 +69,8 @@
         processData: false,
         dataType: 'json',
         data: formData,
-        success: function() {
-          $('.work_sample').load(' .work_sample');
+        success: function(data) {
+          $('.file-name').text('This file was attached: ' + data['file_name']);
         },
         error: () => {
           const message = 'This file can not be attached';
@@ -87,7 +88,6 @@
       url: '/work_sample/destroy',
       method: 'DELETE',
       success: () => {
-        $('.work_sample').load(' .work_sample');
       }
     })
   });

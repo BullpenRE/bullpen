@@ -6,5 +6,6 @@ class Freelancer::JobsController < ApplicationController
 
   def index
     @jobs = Job.where(state: 'posted')
+    @job_applications = current_user.job_applications
   end
 end

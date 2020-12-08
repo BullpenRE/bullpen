@@ -1,0 +1,54 @@
+<%= form_for :job_application, url: wizard_path, method: :put, remote: true do |f| %>
+  <%= f.hidden_field :job_app_id, value: job_application.id %>
+  <%= f.hidden_field 'step', value: 'application_step_2' %>
+
+  <div class="mb-2">
+    <p> This offered rate is <b>$75 - $125</b> per hour.</p>
+  </div>
+  <div class="form-group">
+    <div class="d-flex justify-content-between">
+      <label for="perHourBid" class="h5">What's your bid? <i class="text-gray-dark">(per hour)</i></label>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.text_field :per_hour_bid, class: "form-control", id: "perHourBid", placeholder: "Enter your bid", required: true, value: job_application.per_hour_bid %>
+      </div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
+  </div>
+  <div class="mb-3 net-earnings"> Your net earnings will be $56 per hour.</div>
+
+  <label class="h5">Are you available from 9AM-5PM  <%= job_application.job.time_zone %>?</label>
+  <div class="custom-control custom-radio mb-1">
+    <%= f.radio_button :available_during_work_hours, 'yes', id: "worksHoursRadio1", class: "custom-control-input", required: true %>
+    <label class="custom-control-label" for="worksHoursRadio1"><b>Yes</b></label>
+  </div>
+  <div class="custom-control custom-radio mb-3">
+    <%= f.radio_button :available_during_work_hours, 'no', id: "worksHoursRadio2", class: "custom-control-input", required: true %>
+    <label class="custom-control-label" for="worksHoursRadio2"><b>No</b></label>
+  </div>
+  <% if job_application.job.job_questions.present? %>
+    <% job_application.job.job_questions.each do |question| %>
+      <div class="form-group">
+        <div class="d-flex justify-content-between">
+          <label for="jobQuestion" class="h5"><%= question.description %></label>
+        </div>
+        <%= text_area_tag "job_question_#{question.id}", nil, { class: "form-control", id: "jobQuestion", placeholder: "Enter your response", maxlength: "250", rows: "5", required: true } %>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="modal-footer justify-content-between">
+    <%= link_to freelancer_application_flows_path(id: :application_step_1, job_app: job_application), class: "btn btn-outline-primary", remote: true do %>
+      <i class="fas fa-chevron-left mr-2"></i>Back
+    <% end %>
+    <div>
+      <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
+        Save<span class="d-none d-sm-inline"> as Draft</span><i class="fas fa-chevron-right ml-2"></i>
+      <% end %>
+      <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+        Preview<span class="d-none d-sm-inline"> Job Post</span><i class="fas fa-chevron-right ml-2"></i>
+      <% end %>
+    </div>
+  </div>
+<% end %>

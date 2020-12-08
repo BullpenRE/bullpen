@@ -36,7 +36,24 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   end
 
   def application_step_2_save
+    return false unless params[:job_application][:step] == 'application_step_2'
 
+    per_hour_bid = params[:job_application][:per_hour_bid].split('$').reject(&:empty?).join.to_i
+    available_during_work_hours = params[:job_application][:available_during_work_hours] == 'yes' ? true : false
+    job_application.job.job_questions.each do |q|
+      JobApplicationQuestion.create(
+        job_question_id: q.id,
+        job_application_id: job_application.id,
+        answer: params["job_question_#{q.id}"]
+      )
+    end
+    job_application.update(
+      per_hour_bid: per_hour_bid,
+      available_during_work_hours: available_during_work_hours
+    )
+    job_application.update(state: 'draft') if params[:button] == 'draft'
+
+    redirect_to freelancer_jobs_path
   end
 
   private
@@ -57,6 +74,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   end
 
   def job_application
-    @job_application ||= current_user.job_applications.find_by(id: params[:job_application][:job_app_id])
+    @job_application ||= current_user.job_applications
+                           .find_by(id: (params[:job_app] || params[:job_application][:job_app_id]))
   end
 end
