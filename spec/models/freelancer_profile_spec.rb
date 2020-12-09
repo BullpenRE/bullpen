@@ -3,12 +3,20 @@ require 'rails_helper'
 RSpec.describe FreelancerProfile, type: :model do
   let(:user)  { FactoryBot.create(:user) }
   let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: user) }
+  let(:freelancer_profile_complete)  { FactoryBot.create(:freelancer_profile, :complete) }
   let(:avatar_image) { File.open(Rails.root.join('spec', 'support', 'assets', 'sample-avatar.jpg')) }
   let(:big_avatar_image) { File.open(Rails.root.join('spec', 'support', 'assets', 'big_avatar.jpg')) }
   let(:wrong_type_avatar) { File.open(Rails.root.join('spec', 'support', 'assets', 'wrong_type_avatar.numbers')) }
 
   it 'factory works' do
     expect(freelancer_profile).to be_valid
+    expect(freelancer_profile_complete).to be_valid
+    expect(freelancer_profile_complete.real_estate_skills).to_not be_empty
+    expect(freelancer_profile_complete.sectors).to_not be_empty
+    expect(freelancer_profile_complete.softwares).to_not be_empty
+    expect(freelancer_profile_complete.freelancer_profile_educations).to_not be_empty
+    expect(freelancer_profile_complete.freelancer_profile_experiences).to_not be_empty
+    expect(freelancer_profile_complete.freelancer_certifications).to_not be_empty
   end
 
   context 'Validations'
