@@ -5,7 +5,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     includes :user, :job_sectors, :job_skills, :job_softwares, :job_questions
 
     filter :user_email, as: :string, label: 'User Email'
-    filter :draft
+    filter :state
 
     permit_params :user_id,
                   :title,
@@ -42,7 +42,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         row :daytime_availability_required
         row :required_experience
         row :relevant_job_details
-        row :draft
+        row :state
         row 'Sectors' do
           job.sectors.pluck(:description)
         end
@@ -54,6 +54,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         end
         row 'Questions' do
           job.job_questions.map(&:description).push(link_to('Add/Edit/Remove', admin_job_questions_path(q: {job_id_eq: params[:id]}))).join('<br>').html_safe
+        end
+        row 'Job Application' do
+          job.job_applications.map(&:cover_letter).push(link_to('Add/Edit/Remove', admin_job_applications_path(q: {job_id_eq: params[:id]}))).join('<br>').html_safe
         end
       end
 
@@ -73,7 +76,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :short_description
         f.input :position_length
         f.input :time_zone, as: :select, collection: Job.time_zones.keys
-        f.input :draft
+        f.input :state
         f.input :daytime_availability_required
         f.input :required_experience
         f.input :relevant_job_details

@@ -74,6 +74,25 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   PATCH      /admin/freelancer_profiles/:id(.:format)                                                 admin/freelancer_profiles#update
                                                   PUT        /admin/freelancer_profiles/:id(.:format)                                                 admin/freelancer_profiles#update
                                                   DELETE     /admin/freelancer_profiles/:id(.:format)                                                 admin/freelancer_profiles#destroy
+     batch_action_admin_job_application_questions POST       /admin/job_application_questions/batch_action(.:format)                                  admin/job_application_questions#batch_action
+                  admin_job_application_questions GET        /admin/job_application_questions(.:format)                                               admin/job_application_questions#index
+                                                  POST       /admin/job_application_questions(.:format)                                               admin/job_application_questions#create
+               new_admin_job_application_question GET        /admin/job_application_questions/new(.:format)                                           admin/job_application_questions#new
+              edit_admin_job_application_question GET        /admin/job_application_questions/:id/edit(.:format)                                      admin/job_application_questions#edit
+                   admin_job_application_question GET        /admin/job_application_questions/:id(.:format)                                           admin/job_application_questions#show
+                                                  PATCH      /admin/job_application_questions/:id(.:format)                                           admin/job_application_questions#update
+                                                  PUT        /admin/job_application_questions/:id(.:format)                                           admin/job_application_questions#update
+                                                  DELETE     /admin/job_application_questions/:id(.:format)                                           admin/job_application_questions#destroy
+        destroy_work_sample_admin_job_application POST       /admin/job_applications/:id/destroy_work_sample(.:format)                                admin/job_applications#destroy_work_sample
+              batch_action_admin_job_applications POST       /admin/job_applications/batch_action(.:format)                                           admin/job_applications#batch_action
+                           admin_job_applications GET        /admin/job_applications(.:format)                                                        admin/job_applications#index
+                                                  POST       /admin/job_applications(.:format)                                                        admin/job_applications#create
+                        new_admin_job_application GET        /admin/job_applications/new(.:format)                                                    admin/job_applications#new
+                       edit_admin_job_application GET        /admin/job_applications/:id/edit(.:format)                                               admin/job_applications#edit
+                            admin_job_application GET        /admin/job_applications/:id(.:format)                                                    admin/job_applications#show
+                                                  PATCH      /admin/job_applications/:id(.:format)                                                    admin/job_applications#update
+                                                  PUT        /admin/job_applications/:id(.:format)                                                    admin/job_applications#update
+                                                  DELETE     /admin/job_applications/:id(.:format)                                                    admin/job_applications#destroy
                  batch_action_admin_job_questions POST       /admin/job_questions/batch_action(.:format)                                              admin/job_questions#batch_action
                               admin_job_questions GET        /admin/job_questions(.:format)                                                           admin/job_questions#index
                                                   POST       /admin/job_questions(.:format)                                                           admin/job_questions#create
@@ -238,6 +257,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PATCH      /employer/talent/:id(.:format)                                                           employer/talent#update
                                                   PUT        /employer/talent/:id(.:format)                                                           employer/talent#update
                                                   DELETE     /employer/talent/:id(.:format)                                                           employer/talent#destroy
+                        public_freelancer_profile GET        /public/freelancer_profile/:slug(.:format)                                               public/freelancer_profile#show
                                   freelancer_jobs GET        /freelancer/jobs(.:format)                                                               freelancer/jobs#index
                                                   POST       /freelancer/jobs(.:format)                                                               freelancer/jobs#create
                                new_freelancer_job GET        /freelancer/jobs/new(.:format)                                                           freelancer/jobs#new
