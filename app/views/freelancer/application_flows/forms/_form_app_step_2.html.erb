@@ -17,7 +17,7 @@
       <div class="col"></div>
     </div>
   </div>
-  <div class="mb-3 net-earnings"> Your net earnings will be $56 per hour.</div>
+  <div class="mb-3 net-earnings"> </div>
 
   <label class="h5">Are you available from 9AM-5PM  <%= job_application.job.time_zone %>?</label>
   <div class="custom-control custom-radio mb-1">
@@ -52,3 +52,11 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  $('#perHourBid').on('input', () => {
+    const per_hour_bid = $('#perHourBid').val().split('$').join('');
+    const net_earnings = parseInt(per_hour_bid, 10);
+    $('.net-earnings').text('Your net earnings will be $' + Math.round(net_earnings*0.7) +' per hour.');
+  });
+</script>
