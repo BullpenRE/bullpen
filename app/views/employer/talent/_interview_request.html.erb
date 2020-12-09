@@ -12,7 +12,6 @@
       <div class="modal-body py-0">
         <%= form_for (InterviewRequest.new), url: employer_interview_request_path do |f| %>
           <%= f.hidden_field :state, value: '0' %>
-          <%= f.hidden_field :id, value: freelancer_profile.id %>
       <div class="form-group mb-3">
           <label for="addPersonalMessageTextArea" class="bp-input-label h5">
             Add a personal message.

@@ -5,6 +5,7 @@ class User < ApplicationRecord
   scope :no_freelancer_data, -> { left_joins(:freelancer_profile).where(freelancer_profiles: { user_id: nil }) }
   scope :no_employer_data, -> { left_joins(:employer_profile).where(employer_profiles: { user_id: nil }) }
   scope :employers, -> { joins(:employer_profile) }
+  scope :freelancers, -> { joins(:freelancer_profile) }
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :confirmable
   validates :first_name, presence: true

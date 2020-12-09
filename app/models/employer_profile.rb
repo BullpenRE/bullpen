@@ -19,4 +19,8 @@ class EmployerProfile < ApplicationRecord
   def completed?
     completed == true
   end
+
+  def email
+    user.email
+  end
 end
