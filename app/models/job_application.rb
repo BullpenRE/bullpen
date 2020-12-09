@@ -4,6 +4,7 @@ class JobApplication < ApplicationRecord
   belongs_to :user
   belongs_to :job
   has_many :job_application_questions, dependent: :destroy
+  has_many :job_questions, through: :job_application_questions
   has_one_attached :work_sample
 
   validates :job_id, uniqueness: { scope: :user_id }
