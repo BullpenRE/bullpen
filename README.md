@@ -73,6 +73,13 @@ To check to make sure your code changes didn't break anything critical:
 
 Green dots are good, red F's are bad. Note that sometimes other people may have broken the build, so use your best judgement if the automated test errors were caused by your code or not (for example if you undo changes and re-run the test). You can also compare your local errors to that on our CI server (pending).
 
+### How to add libraries to Webpacker
+
+1. First install it using yarn, like so: `$ yarn add packagename`
+2. Require it in _app/javascript/packs/application.js_.
+
+Depending on how involved it is, it might require additional setup, for example in *config/webpack/environment.js*. Do a google search like *"add packagename to rails 6 webpacker"*
+
 ### How to attach your commits to the Linear.app story
 To push your code changes create a new branch that follows the patter `bp-X-story-description` where `X` is the Linear.app story number. When viewing the [story in Linear.app](https://linear.app/bullpen/team/BP/active) do `cmd`+`shift`+`.` to copy this branch name, then paste it when creating a new local branch.
 

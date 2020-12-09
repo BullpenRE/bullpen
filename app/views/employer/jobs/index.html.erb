@@ -19,7 +19,7 @@
               <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start mr-3">
                 Posted
               </div>
-            <% else %>
+            <% elsif job.ready_to_post? %>
               <%= link_to 'Post Job', employer_post_job_path(id: job.id), class: "btn btn-primary mr-2" %>
             <% end %>
             <div class="dropdown my-3 my-md-0 align-self-md-center align-self-start">
@@ -82,4 +82,10 @@
     </div>
     <div class="d-flex d-lg-none mb-3"></div> <!--Shim for mobile views-->
   <% end %>
+  <div class="d-none d-sm-block">
+    <%= pagy_bootstrap_nav(@pagy).html_safe if @pagy.pages > 1 %>
+  </div>
+  <div class="d-flex d-lg-none mb-3 d-sm-none bp-text-sm">
+    <%= pagy_bootstrap_nav(@pagy).html_safe if @pagy.pages > 1 %>
+  </div>
 </div>
