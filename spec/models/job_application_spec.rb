@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe JobApplication, type: :model do
   let(:job) { FactoryBot.create(:job) }
   let(:user) { FactoryBot.create(:user) }
-  let!(:job_application) { FactoryBot.create(:job_application, job: job, user: user) }
+  let!(:job_application) { FactoryBot.create(:job_application, job: job, user: user, template: true) }
 
   it 'factory works' do
     expect(job_application).to be_valid
@@ -25,6 +25,25 @@ RSpec.describe JobApplication, type: :model do
       expect(job_application).to be_valid
       job_application.per_hour_bid = -1
       expect(job_application).to_not be_valid
+    end
+
+    describe 'whenever a template is set to true' do
+      it 'on create, it is set to false for all other job_applications for the same user' do
+        expect(job_application.template).to be_truthy
+        FactoryBot.create(:job_application, user: user, template: true)
+        expect(job_application.reload.template).to be_falsey
+      end
+      it 'on update, it is set to false for all other job_applications' do
+        new_application_same_user = FactoryBot.create(:job_application, user: user, template: false)
+        expect(job_application.template).to be_truthy
+        new_application_same_user.update(template: true)
+        expect(job_application.reload.template).to be_falsey
+      end
+      it 'on create, template is not changed for other users' do
+        expect(job_application.template).to be_truthy
+        FactoryBot.create(:job_application, job: job, template: true)
+        expect(job_application.reload.template).to be_truthy
+      end
     end
   end
 
