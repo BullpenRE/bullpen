@@ -52,6 +52,16 @@ describe User do
         expect(user.freelancer_real_estate_skills).to include(freelancer_real_estate_skill)
       end
     end
+
+    describe 'job_applications' do
+      let!(:job_application) { FactoryBot.create(:job_application, user: user) }
+      it 'has many job_applications with dependent destroy' do
+        expect(user.job_applications).to include(job_application)
+        user.destroy
+        expect(JobApplication.exists?(job_application.id)).to be_falsey
+      end
+    end
+
   end
 
   context 'Scopes' do
