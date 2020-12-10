@@ -35,10 +35,14 @@
           </div>
         </div>
         <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
-        <div class="ml-auto">
-          <div class="d-flex">
-            <button class="btn btn-primary" type="button" id="sendInterviewRequestButton">Request Interview</button>
-            <button class="btn btn-outline-primary ml-2" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
+        <div class="ml-sm-auto">
+          <div class="d-flex flex-column flex-sm-row text-center">
+            <div class="mb-2 mb-sm-0">
+              <button class="btn btn-primary form-control" type="button" id="sendInterviewRequestButton">Request Interview</button>
+            </div>
+            <div class="ml-sm-2 center-block">
+              <button class="btn btn-outline-primary form-control" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
+            </div>
           </div>
         </div>
       </div>
