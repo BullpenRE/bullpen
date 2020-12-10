@@ -44,6 +44,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
         row :motivation_backfill
         row :motivation_augment
         row :motivation_other
+        row "ALL Interview Requests Sent to Freelancers", :interview_requests do
+          InterviewRequest.all.select{ |ir| ir.employer_profile_id == employer_profile.id }
+        end
       end
     end
 

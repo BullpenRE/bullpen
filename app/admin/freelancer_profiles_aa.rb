@@ -54,6 +54,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         end
         row :draft
         row :curation
+        row "ALL Interview Requests Received From Employers", :interview_requests do
+          InterviewRequest.all.select{ |ir| ir.freelancer_profile_id == freelancer_profile.id }
+        end
       end
 
       active_admin_comments

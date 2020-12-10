@@ -8,8 +8,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
 
     index do
       id_column
-      column :employer_profile
-      column :freelancer_profile
+      column 'Employer Email', :employer_profile
+      column 'Freelancer Email', :freelancer_profile
       column :state
       column :created_at
       column :updated_at
