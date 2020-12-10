@@ -55,8 +55,18 @@
 
 <script>
   $('#perHourBid').on('input', () => {
-    const per_hour_bid = $('#perHourBid').val().split('$').join('');
-    const net_earnings = parseInt(per_hour_bid, 10);
+    const per_hour_bid = $('#perHourBid').val();
+    const first_symbol = parseInt(per_hour_bid.charAt(0), 10);
+    const length = per_hour_bid.length;
+    const last_symbol = parseInt(per_hour_bid.charAt(length-1), 10);
+    let net_earnings;
+      if (isNaN(first_symbol)) {
+        net_earnings = parseInt(per_hour_bid.substring(1,length), 10);
+      } else if (isNaN(last_symbol)) {
+        net_earnings = parseInt(per_hour_bid.substring(0,(length-1)), 10);
+      } else {
+        net_earnings = parseInt(per_hour_bid, 10);
+      }
     $('.net-earnings').text('Your net earnings will be $' + Math.round(net_earnings*0.7) +' per hour.');
   });
 </script>

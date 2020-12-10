@@ -73,7 +73,17 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   end
 
   def cleaned_per_hour_bid
-    params[:job_application][:per_hour_bid].split('$').reject(&:empty?).join.to_i
+    first_el = params[:job_application][:per_hour_bid].chars.first.to_i
+    end_el = params[:job_application][:per_hour_bid].chars.last.to_i
+    per_hour_bid = params[:job_application][:per_hour_bid]
+
+    if first_el.zero?
+      per_hour_bid[1..(per_hour_bid.size - 1)]
+    elsif end_el.zero? && per_hour_bid.chars.last != '0'
+      per_hour_bid[0..(per_hour_bid.size - 2)]
+    else
+      per_hour_bid.to_i
+    end
   end
 
   def cleaned_available_during_work_hours
