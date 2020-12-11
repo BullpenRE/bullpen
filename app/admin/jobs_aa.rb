@@ -56,8 +56,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
           job.job_questions.map(&:description).push(link_to('Add', new_admin_job_question_path(:job_question => { :job_id => job.id }))).join('<br>').html_safe
         end
         row 'Job Applications' do
-          byebug
-          job.job_applications.map(&:cover_letter).push(link_to('Add', new_admin_job_application_path(:job_application=> { :job_id => job.id }))).join('<br>').html_safe
+           User.where(id: job.job_applications.map(&:user_id)).map{|user| "#{user.email} on #{user.created_at.strftime("%m-%Y")}" }.push(link_to('Add', new_admin_job_application_path(:job_application=> { :job_id => job.id }))).join('<br>').html_safe
         end
       end
 
