@@ -16,24 +16,23 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def update
     @user = current_user
 
-    job_application
-    @time_zone = job_application.job.time_zone
+    params[:job_application][:job_application_id].blank? ? new_job_application : job_application
+    @time_zone = job_application&.job&.time_zone
 
     application_step_1_save || application_step_2_save
   end
 
-  def application_step_1_save
-    return false unless params[:job_application][:step] == 'application_step_1'
-
-    job_application.update(step_1_params)
-
-    respond_js_format(:application_step_2)
-
-    true
-  end
-
   def application_step_2_save
     return false unless params[:job_application][:step] == 'application_step_2'
+
+    job_application.update(step_2_params)
+    job_application.update(state: 'draft') if params[:button] == 'draft'
+
+    redirect_to freelancer_jobs_path
+  end
+
+  def application_step_1_save
+    return false unless params[:job_application][:step] == 'application_step_1'
 
     job_application.job.job_questions.each do |job_question|
       job_question.job_application_questions.create(
@@ -45,31 +44,32 @@ class Freelancer::ApplicationFlowsController < ApplicationController
       per_hour_bid: cleaned_per_hour_bid,
       available_during_work_hours: cleaned_available_during_work_hours
     )
-    job_application.update(state: 'draft') if params[:button] == 'draft'
 
-    redirect_to freelancer_jobs_path
+    respond_js_format(:application_step_2)
+
+    true
   end
 
   private
 
-  def step_1_params
+  def step_2_params
     params.require(:job_application).permit(:cover_letter, :template)
   end
 
   def respond_js_format(step)
     respond_to do |format|
       format.html
-      format.js { render step.to_s, locals: { job_application: @job_application } }
+      format.js { render step.to_s, locals: { job_application: @job_application, job_id: params[:job_id] } }
     end
   end
 
   def new_job_application
-    @job_application ||= current_user.job_applications.create(job_id: params[:job_id])
+    @job_application ||= current_user.job_applications.build(job_id: (params[:job_id] || params[:job_application][:job_id]))
   end
 
   def job_application
     @job_application ||= current_user.job_applications
-                           .find_by(id: (params[:job_app] || params[:job_application][:job_app_id]))
+                           .find_by(id: (params[:job_app] || params[:job_application][:job_application_id]))
   end
 
   def cleaned_per_hour_bid
