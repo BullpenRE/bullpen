@@ -3,6 +3,7 @@
 class Freelancer::ApplicationFlowsController < ApplicationController
   include Wicked::Wizard
   include LoggedInRedirects
+  include ApplicationFlowsHelper
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :incomplete_freelancer_profile_redirect
   steps :application_step_1, :application_step_2
 
@@ -41,7 +42,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
       )
     end
     job_application.update(
-      per_hour_bid: cleaned_per_hour_bid,
+      per_hour_bid: cleaned_per_hour_bid(params[:job_application][:per_hour_bid]),
       available_during_work_hours: cleaned_available_during_work_hours
     )
 
@@ -70,20 +71,6 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def job_application
     @job_application ||= current_user.job_applications
                            .find_by(id: (params[:job_app] || params[:job_application][:job_application_id]))
-  end
-
-  def cleaned_per_hour_bid
-    first_el = params[:job_application][:per_hour_bid].chars.first.to_i
-    end_el = params[:job_application][:per_hour_bid].chars.last.to_i
-    per_hour_bid = params[:job_application][:per_hour_bid]
-
-    if first_el.zero?
-      per_hour_bid[1..(per_hour_bid.size - 1)]
-    elsif end_el.zero? && per_hour_bid.chars.last != '0'
-      per_hour_bid[0..(per_hour_bid.size - 2)]
-    else
-      per_hour_bid.to_i
-    end
   end
 
   def cleaned_available_during_work_hours
