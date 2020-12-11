@@ -62,9 +62,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         row :created_at
 
         if application.job.job_questions.present?
-          row 'Questions' do
-            application.job.job_questions.map{|job_question| link_to("#{job_question.description}", edit_admin_job_question_path(job_question.id)) }
-                .push(link_to('Add', new_admin_job_question_path(:job_question => { :job_id => application.job.id }))).join('<br>').html_safe
+          row 'Question Answers' do
+            application.job.job_questions.map{|job_application_question| link_to("#{job_application_question.description}", admin_job_question_path(job_application_question.id)) }
+                .push(link_to('Add', new_admin_job_question_path(:job_question => { :job_id => application.job.id }))).join('<br><br>').html_safe
           end
         end
       end
