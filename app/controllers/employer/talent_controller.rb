@@ -14,7 +14,14 @@ before_action :authenticate_user!, :initial_check, :non_employer_redirect, :inco
   end
 
   def interview_request
-    @interview_request = InterviewRequest.new
+    @interview_request = current_user.employer_profile.interview_requests.create(interview_request_params)
+    redirect_to employer_talent_index_path
   end
+
+private
+def interview_request_params
+  params.require(:interview_request).permit(:freelancer_profile_id, :state)
+end
+
 
 end

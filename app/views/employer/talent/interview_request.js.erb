@@ -1,0 +1,2 @@
+$('.modal-backdrop').hide();
+$("#interview-request").html("<%= escape_javascript(render partial: 'employer/job_flows/post_job_step_5', locals: { job: @job }) %>");
