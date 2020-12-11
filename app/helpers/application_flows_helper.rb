@@ -12,6 +12,6 @@ module ApplicationFlowsHelper
     else
       cleaned_bid = per_hour_bid
     end
-    cleaned_bid.split(',').join.to_i
+    cleaned_bid.delete(',').to_i
   end
 end
