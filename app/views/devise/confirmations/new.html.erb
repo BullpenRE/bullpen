@@ -12,7 +12,7 @@
     <div class="h1 mt-4 text-secondary text-center">Resend confirmation instructions</div>
     <div class="col-md-10 px-4 py-4">
       <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-        <%= render "devise/shared/error_messages", resource: resource %>
+        <%= render 'devise/shared/error_messages' %>
 
         <div class="field">
           <%= f.label :email, class: 'h4 text-secondary text-left' %><br />
