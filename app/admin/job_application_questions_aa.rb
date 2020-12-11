@@ -9,7 +9,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       f.inputs "Job Application Question" do
         f.input :job_application,
                 as: :select,
-                collection: JobApplication.find_each.map{|j| ["#{j.cover_letter} - #{j.user.email}", j.id]}
+                collection: JobApplication.find_each.map{|j| ["#{j.job.title} - #{j.user.email}", j.id]}
         f.input :job_question,
                 as: :select,
                 collection: JobQuestion.find_each.map{|j| ["#{j.description} - #{j.job.title}", j.id]}

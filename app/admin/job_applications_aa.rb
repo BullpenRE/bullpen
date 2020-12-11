@@ -15,10 +15,12 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     index do
       column :job
       column :user
-      column :cover_letter
       column :state
+      column :template
       column :per_hour_bid
       column :available_during_work_hours
+      column :created_at
+      column :updated_at
       actions
     end
 

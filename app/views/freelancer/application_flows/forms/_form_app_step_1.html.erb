@@ -8,7 +8,7 @@
     <%= f.text_area :cover_letter, class: "form-control", id: "coverLetter", placeholder: "Enter your cover letter", maxlength: "250", rows: "10", required: true, value: job_application.cover_letter %>
   </div>
   <div class="form-group work_sample">
-    <label for="workSample" class="h5">Work Samples</label><span> (Optional but recommended)</span>
+    <label for="workSample" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
     <% if job_application.work_sample.attached? %>
       <div class="text-light mb-3 work_sample" style="font-size: 170px;line-height: 0;">
         <%= link_to job_application.work_sample.filename, rails_blob_path(job_application.work_sample, disposition: :attachment) %>
@@ -29,6 +29,7 @@
         <label class="btn btn-outline-primary upload-work-sample" for="uploadWorkSample">
           Attach a File
         </label>
+        <div class="file-name text-break"></div>
       </div>
     <% end %>
   </div>
@@ -68,11 +69,11 @@
         processData: false,
         dataType: 'json',
         data: formData,
-        success: function() {
-          $('.work_sample').load(' .work_sample');
+        success: function(data) {
+          $('.file-name').html('This file was attached: ' + data['file_name']);
         },
         error: () => {
-          const message = 'This file can not be attached';
+          const message = 'File was not uploaded successfully.';
           Swal.fire({
             title: '<h5>Oops!</h5>',
             text: message
@@ -87,7 +88,6 @@
       url: '/work_sample/destroy',
       method: 'DELETE',
       success: () => {
-        $('.work_sample').load(' .work_sample');
       }
     })
   });
