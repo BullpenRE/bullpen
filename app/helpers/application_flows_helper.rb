@@ -10,8 +10,8 @@ module ApplicationFlowsHelper
     elsif end_el.zero? && per_hour_bid.chars.last != '0'
       cleaned_bid = per_hour_bid[0..(per_hour_bid.size - 2)]
     else
-      cleaned_bid = per_hour_bid.to_i
+      cleaned_bid = per_hour_bid
     end
-    cleaned_bid.to_i.round
+    cleaned_bid.split(',').join.to_i
   end
 end
