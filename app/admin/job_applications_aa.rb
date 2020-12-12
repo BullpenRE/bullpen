@@ -13,8 +13,12 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
 
 
     index do
-      column :job
-      column :user
+      column 'Job Title' do |job_application|
+        "#{job_application.job.title} by #{job_application.job.user.email}"
+      end
+      column 'User' do |job_application|
+        link_to(job_application.user.email, admin_user_path(job_application.user_id))
+      end
       column :state
       column :template
       column :per_hour_bid
@@ -27,7 +31,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     show title: 'Job Applications' do |application|
       attributes_table do
         row 'Job' do
-          link_to(application.job.short_description, admin_job_path(application.job_id))
+          link_to(application.job.title, admin_job_path(application.job_id))
         end
         row 'Employer email' do
           link_to(application.job.user.email, admin_user_path(application.job.user_id))
@@ -62,8 +66,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         row :created_at
 
         if application.job.job_questions.present?
-          row 'Questions' do
-            application.job.job_questions.map(&:description).push(link_to('Add/Edit/Remove', admin_job_application_questions_path(q: {job_id_eq: params[:id]}))).join('<br>').html_safe
+          row 'Question Answers' do
+            application.job
+                       .job_questions
+                       .map do |job_question|
+                          link_to("#{job_question.description}",
+                                  job_question.job_application_questions.find_by(job_application_id: application.id).present? ? admin_job_application_question_path(job_question.job_application_questions.find_by(job_application_id: application.id).id) : new_admin_job_application_question_path(:job_application_question => { :job_application_id => application.id, :job_question_id => job_question.id })
+                          )
+                        end.join('<br><br>').html_safe
           end
         end
       end
