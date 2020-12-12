@@ -1,5 +1,5 @@
-module EmployersPresenter
-  class FreelancersFilter
+module EmployerFreelancersHelper
+  class Filter
     def initialize(sector_ids: [], real_estate_skill_ids: [], software_ids: [])
       @sector_ids = sector_ids
       @real_estate_skill_ids = real_estate_skill_ids
