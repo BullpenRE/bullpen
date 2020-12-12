@@ -5,7 +5,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     includes :user, :job_sectors, :job_skills, :job_softwares, :job_questions
 
     filter :user_email, as: :string, label: 'User Email'
-    filter :state
+    filter :state, as: :select, collection: Job.states
 
     permit_params :user_id,
                   :title,
@@ -23,7 +23,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       column :user
       column :title
       column :short_description
-      column :draft
+      column :state
       actions
     end
 
@@ -53,10 +53,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
           job.softwares.pluck(:description)
         end
         row 'Questions' do
-          job.job_questions.map(&:description).push(link_to('Add', new_admin_job_question_path(:job_question => { :job_id => job.id }))).join('<br>').html_safe
+          job.job_questions.map{ |job_question| link_to(job_question.description, admin_job_question_path(job_question.id)) }.push(link_to('Add', new_admin_job_question_path(:job_question => { :job_id => job.id }))).join('<br><br>').html_safe
         end
         row 'Job Applications' do
-           User.where(id: job.job_applications.map(&:user_id)).map{|user| "#{user.email} on #{user.created_at.strftime("%m-%Y")}" }.push(link_to('Add', new_admin_job_application_path(:job_application=> { :job_id => job.id }))).join('<br>').html_safe
+           job.job_applications.map{ |job_application| link_to("#{job_application.user.email}: #{job_application.created_at.strftime("%m-%d-%Y")}", admin_job_application_path(job_application.id)) }.push(link_to('Add', new_admin_job_application_path(:job_application=> { :job_id => job.id }))).join('<br><br>').html_safe
         end
       end
 

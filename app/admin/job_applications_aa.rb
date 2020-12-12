@@ -31,7 +31,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     show title: 'Job Applications' do |application|
       attributes_table do
         row 'Job' do
-          link_to(application.job.short_description, admin_job_path(application.job_id))
+          link_to(application.job.title, admin_job_path(application.job_id))
         end
         row 'Employer email' do
           link_to(application.job.user.email, admin_user_path(application.job.user_id))
