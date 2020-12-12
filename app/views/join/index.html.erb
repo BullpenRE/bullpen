@@ -7,39 +7,39 @@
 </nav>
 
 <div class="container card shadow-sm">
-    <p><div class="h1 mt-3 text-secondary text-center">Join Bullpen</div></p>
-    <br>
-    <div class="container join">
-      <div class="card-deck mb-4 text-center">
-        <div class="card md-2 shadow-sm">
-          <br>
-          <h3 class="my-0 text-secondary text-center">Freelancer</h3>
+  <p><div class="h1 mt-3 text-secondary text-center">Join Bullpen</div></p>
+  <br>
+  <div class="container join">
+    <%= render 'devise/shared/error_messages' %>
+    <div class="card-deck mb-4 text-center">
+      <div class="card md-2 shadow-sm">
+        <br>
+        <h3 class="my-0 text-secondary text-center">Freelancer</h3>
 
-          <div class="card-body">
-            <div>
-              <h5 class="card-title pricing-card-title text-muted">I'm individual and I'm looking for work. </h5>
-            </div>
-            <div class="align-self-end">
-              <%= link_to 'Apply', freelancer_sign_up_path, class: "btn btn-lg btn-block btn-primary" %>
-            </div>
+        <div class="card-body">
+          <div>
+            <h5 class="card-title pricing-card-title text-muted">I'm individual and I'm looking for work. </h5>
           </div>
-        </div>
-        <div class="card md-2 shadow-sm">
-          <br>
-          <h3 class="my-0 text-secondary text-center">Company</h3>
-          <div class="card-body">
-            <div>
-              <h5 class="card-title pricing-card-title text-muted">I'm a company interested in hiring. </h5>
-            </div>
-            <div class="align-self-end">
-              <%= link_to 'Sign-Up', employer_sign_up_path, class: "btn btn-lg btn-block btn-primary" %>
-            </div>
+          <div class="align-self-end">
+            <%= link_to 'Apply', freelancer_sign_up_path, class: "btn btn-lg btn-block btn-primary" %>
           </div>
         </div>
       </div>
-      <div class="text-center card-footer bg-white">
-        Already have an account? <%= link_to "Login", new_user_session_path, class: "p-2" %>
+      <div class="card md-2 shadow-sm">
+        <br>
+        <h3 class="my-0 text-secondary text-center">Company</h3>
+        <div class="card-body">
+          <div>
+            <h5 class="card-title pricing-card-title text-muted">I'm a company interested in hiring. </h5>
+          </div>
+          <div class="align-self-end">
+            <%= link_to 'Sign-Up', employer_sign_up_path, class: "btn btn-lg btn-block btn-primary" %>
+          </div>
+        </div>
       </div>
     </div>
-
+    <div class="text-center card-footer bg-white">
+      Already have an account? <%= link_to "Login", new_user_session_path, class: "p-2" %>
+    </div>
+  </div>
 </div>
