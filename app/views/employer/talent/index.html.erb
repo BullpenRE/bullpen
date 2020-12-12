@@ -42,7 +42,7 @@
         <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
         <div class="ml-auto">
           <div class="d-flex">
-            <% if InterviewRequest.all.select{ |ir| ir.freelancer_profile_id == freelancer_profile.id }.none? %>
+            <% if current_user.employer_profile.interview_requests.where(freelancer_profile_id: freelancer_profile.id).none? %>
               <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
             <% end %>
             <button class="btn btn-outline-primary ml-2" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
