@@ -4,11 +4,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
 
     index do
       column :email
-      column :first_name
-      column :last_name
+      column 'Name', sortable: :first_name do |user|
+        "#{user.first_name} #{user.last_name}"
+      end
       column :created_at
       column :last_sign_in_at
-      column :confirmed_at
+      column 'Email confirmed', sortable: :confirmed_at do |user|
+        user.confirmed_at.present?
+      end
       column :role
       column :signup_promo
 
@@ -16,7 +19,6 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
     end
 
     filter :email
-    filter :confirmed, as: :boolean
 
     form do |f|
       f.inputs 'User Info' do

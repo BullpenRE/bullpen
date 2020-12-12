@@ -61,7 +61,7 @@
     <div class="col-md-12">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { novalidate: true, id: "regForm", class: "needs-validation" }) do |f| %>
         <div class="row-cols-1 setup-content-2" id="step-1">
-          <%= render "devise/shared/error_messages", resource: resource %>
+          <%= render 'devise/shared/error_messages' %>
           <div class="h1 mb-5 mt-4 display-5 ml-4 text-secondary text-center">Join us as a Freelancer</div>
           <div class="check-email mb-5 text-center"></div>
           <div class="row ml-1">
