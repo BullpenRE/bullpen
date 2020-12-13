@@ -6,21 +6,19 @@
     <div class="d-flex justify-content-between">
       <label for="coverLetter" class="h5">Cover Letter</label>
     </div>
-    <%= f.text_area :cover_letter, class: "form-control", id: "coverLetter", placeholder: "Enter your cover letter", maxlength: "250", rows: "10", required: true, value: job_application.cover_letter %>
+    <%= f.text_area :cover_letter, class: "form-control", id: "coverLetter", placeholder: "Enter your cover letter", rows: "10", required: true, value: job_application.cover_letter %>
   </div>
   <div class="form-group work_sample">
     <label for="workSample" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
     <% if job_application.work_sample.attached? %>
-      <div class="text-light mb-3 work_sample" style="font-size: 170px;line-height: 0;">
-        <%= link_to job_application.work_sample.filename, rails_blob_path(job_application.work_sample, disposition: :attachment) %>
-      </div>
+      <div class="file-name text-break mb-2">This file was attached: <%= job_application.work_sample.filename %></div>
       <div class="custom-file">
         <%= f.file_field :work_sample, multiple: false, name: 'work_sample', class: "d-none", id: "uploadWorkSample" %>
         <label class="btn btn-outline-primary upload-work-sample" for="uploadWorkSample">
           Edit your work sample
         </label>
         <button type="button" class="delete-work-sample d-none" id="deleteWorkSample"></button>
-        <label class="btn btn-outline-danger mr-2" for="deleteWorkSample">
+        <label class="btn btn-outline-danger mr-2 delete" for="deleteWorkSample">
           Delete
         </label>
       </div>
@@ -79,7 +77,7 @@
         processData: false,
         dataType: 'json',
         data: formData,
-        success: function(data) {
+        success: (data) => {
           $('.file-name').html('This file was attached: ' + data['file_name']);
         },
         error: () => {
@@ -94,11 +92,21 @@
   });
 
   $('.work_sample').on('click', '.delete-work-sample', () => {
+    const app_id = '<%= job_application.id %>';
+    const formData = new FormData();
+    formData.append('app_id', app_id);
     $.ajax({
       url: '/work_sample/destroy',
-      method: 'DELETE',
+      method: 'POST',
+      dataType: 'json',
+      contentType: false,
+      processData: false,
+      data: formData,
       success: () => {
-      }
+        $('.file-name').html('');
+        $('.upload-work-sample').text('Attach a File');
+        $('.delete').addClass('d-none');
+      },
     })
   });
 </script>
