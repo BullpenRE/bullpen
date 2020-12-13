@@ -1,0 +1,139 @@
+<style>
+  .sidenav {
+    height: 55%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 50px;
+    left: 100px;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 30px;
+  }
+
+  .sidenav select {
+    padding: 8px 8px 8px 32px;
+    font-size: 25px;
+    color: black;
+    display: block;
+  }
+
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 30px;
+    font-weight: bolder;
+    margin-left: 50px;
+    color: #6c757d;
+    margin-bottom: 20px;
+  }
+
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+  }
+</style>
+
+<div id="mySidenav" class="sidenav">
+  <a href="#" class="closebtn" onclick="closeNav()">&times;</a>
+
+  <div class="container">
+    <form>
+      <div class="form-group mt-4 mb-3">
+        <label for="exampleFormControlMultiSelect" class="bp-input-label">
+          Sectors
+        </label>
+        <select class="select2" name="state" multiple="multiple"  style="width: 100%">
+          <option>HTC</option>
+          <option>Affordable Housing</option>
+          <option>Condo</option>
+          <option>Hospitality</option>
+          <option>Industrial</option>
+          <option>Land Development</option>
+          <option>LIHTC</option>
+          <option>Medical</option>
+          <option>Mixed Use</option>
+          <option>Mobile Home</option>
+          <option>Multifamily</option>
+          <option>Office</option>
+          <option>Retail</option>
+          <option>Senior Housing</option>
+          <option>Student Housing</option>
+          <option>Single Family</option>
+          <option>Self Storage</option>
+          <option>Marina</option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label for="exampleFormControlMultiSelect" class="bp-input-label">Skills</label>
+        <select class="select2" name="state" multiple="multiple"  style="width: 100%">
+          <option>Underwriting</option>
+          <option>Investment Memo</option>
+          <option>Brokerage Memo</option>
+          <option>Acquisition Underwriting</option>
+          <option>Development Underwriting</option>
+          <option>Construction Management</option>
+          <option>Distribution Waterfall</option>
+          <option>Financial Modeling</option>
+          <option>Capital Markets</option>
+          <option>Acquisition Diligence</option>
+          <option>Development Diligence</option>
+          <option>Due Diligence</option>
+          <option>Market Research</option>
+          <option>Zoning Requirements</option>
+          <option>Debt Sizing</option>
+          <option>Asset Management</option>
+          <option>Property Review</option>
+          <option>Equity Memo</option>
+          <option>Debt Memo</option>
+          <option>Lease Audit</option>
+          <option>Legal Review</option>
+          <option>Copywriting</option>
+          <option>Marketing</option>
+          <option>Content Creation</option>
+          <option>Graphic Design</option>
+        </select>
+      </div>
+      <div class="form-group mb-5">
+        <label for="exampleFormControlMultiSelect" class="bp-input-label">Software</label>
+        <select class="select2" name="state" multiple="multiple"  style="width: 100%">
+          <option>Software1</option>
+          <option>Software2</option>
+          <option>Software3</option>
+        </select>
+      </div>
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-outline-primary">Reset Filters</button>
+        <button class="btn btn-primary">Apply Filters</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "300px";
+        document.getElementById("mySidenav").style.border = "1px solid #e9ecef"
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("mySidenav").style.border = "none"
+    }
+
+    $(function() {
+        $('.select2').select2({
+            placeholder: 'Any',
+            allowClear: true
+        });
+    });
+
+    $(function() {
+        const showFiltersBtn = document.getElementById("showFilters");
+        showFiltersBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openNav()
+        });
+    });
+</script>
