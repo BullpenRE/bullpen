@@ -56,7 +56,7 @@
               <div class="font-weight-bold"><h5>Work Samples</h5></div>
               <div class="text-primary mb-3 font-weight-bold">
                 <i class="fas fa-download"></i>
-                <%= job_application.work_sample.filename %>
+                <%= link_to job_application.work_sample.filename, rails_blob_path(job_application.work_sample, disposition: :attachment) %>
               </div>
             <% end %>
             <hr>

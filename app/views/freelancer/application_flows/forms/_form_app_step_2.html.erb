@@ -40,7 +40,7 @@
   </div>
 
   <div class="modal-footer justify-content-between">
-    <%= link_to freelancer_application_flows_path(id: :application_step_1, job_app: job_application), class: "btn btn-outline-primary", remote: true do %>
+    <%= button_tag type: 'submit', value: 'back', class: "btn btn-outline-primary" do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
     <div>

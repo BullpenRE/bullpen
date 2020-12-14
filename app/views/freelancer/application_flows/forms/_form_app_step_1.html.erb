@@ -34,7 +34,7 @@
         <div class="d-flex justify-content-between">
           <label for="jobQuestion" class="h5"><%= question.description %></label>
         </div>
-        <%= text_area_tag "job_question_#{question.id}", question.job_application_questions&.find_by(job_application_id: job_application.id)&.answer , { class: "form-control", id: "jobQuestion", placeholder: "Enter your response", rows: "5", required: true } %>
+        <%= text_area_tag "job_question_#{question.id}", (answers.present? ? answers[question.id] : nil), { class: "form-control", id: "jobQuestion", placeholder: "Enter your response", rows: "5", required: true } %>
       </div>
     <% end %>
   <% end %>

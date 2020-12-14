@@ -10,6 +10,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def show
     @user = current_user
     params[:start_flow].present? ? new_job_application : job_application
+    pre_populate_answer
 
     respond_js_format(wizard_value(step))
   end
@@ -19,6 +20,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
     params[:job_application][:job_application_id].blank? ? new_job_application : job_application
     @time_zone = job_application&.job&.time_zone
+    pre_populate_answer
 
     application_step_1_save || application_step_2_save || preview_application_save
   end
@@ -30,6 +32,8 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     if params[:button] == 'draft'
       job_application.update(state: 'draft')
       redirect_to freelancer_jobs_path
+    elsif params[:button] == 'back'
+      respond_js_format(:application_step_1)
     else
       respond_js_format(:preview_application)
     end
@@ -51,6 +55,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
         answer: params["job_question_#{job_question.id}"]
       )
     end
+    pre_populate_cover_letter_work_sample
 
     respond_js_format(:application_step_2)
 
@@ -71,6 +76,29 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
   private
 
+  def pre_populate_answer
+    if job_application.job_application_questions.any?
+      @answers = {}
+      job_application.job_application_questions.each do |job_application_question|
+        @answers.store(job_application_question.job_question.id, job_application_question.answer)
+      end
+    end
+  end
+
+  def application_template
+    @application_template ||= @user.job_applications.where.not(id: job_application.id).find_by(template: true)
+  end
+
+  def pre_populate_cover_letter_work_sample
+    return if application_template.blank?
+
+    if job_application.cover_letter.blank?
+      job_application.update(cover_letter: application_template.cover_letter)
+    elsif !job_application.work_sample.attached?
+      job_application.work_sample.attach(application_template.work_sample.blob)
+    end
+  end
+
   def step_2_params
     params.require(:job_application).permit(:cover_letter, :template)
   end
@@ -78,7 +106,12 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def respond_js_format(step)
     respond_to do |format|
       format.html
-      format.js { render step.to_s, locals: { job_application: @job_application, job_id: params[:job_id] } }
+      format.js do  render step.to_s, locals: {
+        job_application: @job_application,
+        job_id: params[:job_id],
+        answers: @answers.presence
+      }
+      end
     end
   end
 
