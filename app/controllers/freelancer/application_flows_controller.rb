@@ -92,11 +92,8 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def pre_populate_cover_letter_work_sample
     return if application_template.blank?
 
-    if job_application.cover_letter.blank?
-      job_application.update(cover_letter: application_template.cover_letter)
-    elsif !job_application.work_sample.attached?
-      job_application.work_sample.attach(application_template.work_sample.blob)
-    end
+    job_application.update(cover_letter: application_template.cover_letter) if job_application.cover_letter.blank?
+    job_application.work_sample.attach(application_template.work_sample.blob) if !job_application.work_sample.attached?
   end
 
   def step_2_params
