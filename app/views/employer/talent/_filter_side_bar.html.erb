@@ -33,75 +33,47 @@
   <a href="#" id="closeFilterNav" class="closebtn">&times;</a>
 
   <div class="container">
-    <form>
+    <%= form_for :search, url: employer_talent_index_path, method: :post, html: {class: 'talent-filters'} do |f| %>
       <div class="form-group mt-4 mb-3">
-        <label for="exampleFormControlMultiSelect" class="bp-input-label">
-          Sectors
-        </label>
-        <select class="select2" name="state" multiple="multiple"  style="width: 100%">
-          <option>HTC</option>
-          <option>Affordable Housing</option>
-          <option>Condo</option>
-          <option>Hospitality</option>
-          <option>Industrial</option>
-          <option>Land Development</option>
-          <option>LIHTC</option>
-          <option>Medical</option>
-          <option>Mixed Use</option>
-          <option>Mobile Home</option>
-          <option>Multifamily</option>
-          <option>Office</option>
-          <option>Retail</option>
-          <option>Senior Housing</option>
-          <option>Student Housing</option>
-          <option>Single Family</option>
-          <option>Self Storage</option>
-          <option>Marina</option>
-        </select>
+        <div>
+          <%= f.label :sector_ids, 'Sectors', class: 'bp-input-label' %>
+        </div>
+        <%= f.select :sector_ids, sectors_options_for_select,
+                     {selected: params.dig(:search, :sector_ids)},
+                     prompt: 'Any',
+                     multiple: true,
+                     style: "width: 100%",
+                     class: "form-control select2" %>
       </div>
+
       <div class="form-group mb-3">
-        <label for="exampleFormControlMultiSelect" class="bp-input-label">Skills</label>
-        <select class="select2" name="state" multiple="multiple"  style="width: 100%">
-          <option>Underwriting</option>
-          <option>Investment Memo</option>
-          <option>Brokerage Memo</option>
-          <option>Acquisition Underwriting</option>
-          <option>Development Underwriting</option>
-          <option>Construction Management</option>
-          <option>Distribution Waterfall</option>
-          <option>Financial Modeling</option>
-          <option>Capital Markets</option>
-          <option>Acquisition Diligence</option>
-          <option>Development Diligence</option>
-          <option>Due Diligence</option>
-          <option>Market Research</option>
-          <option>Zoning Requirements</option>
-          <option>Debt Sizing</option>
-          <option>Asset Management</option>
-          <option>Property Review</option>
-          <option>Equity Memo</option>
-          <option>Debt Memo</option>
-          <option>Lease Audit</option>
-          <option>Legal Review</option>
-          <option>Copywriting</option>
-          <option>Marketing</option>
-          <option>Content Creation</option>
-          <option>Graphic Design</option>
-        </select>
+        <div>
+          <%= f.label :real_estate_skill_ids, 'Skills', class: 'bp-input-label' %>
+        </div>
+        <%= f.select :real_estate_skill_ids, skill_options_for_select,
+                     {selected: params.dig(:search, :real_estate_skill_ids)},
+                     prompt: 'Any',
+                     multiple: true,
+                     style: "width: 100%",
+                     class: "form-control select2" %>
       </div>
+
       <div class="form-group mb-5">
-        <label for="exampleFormControlMultiSelect" class="bp-input-label">Software</label>
-        <select class="select2" name="state" multiple="multiple"  style="width: 100%">
-          <option>Software1</option>
-          <option>Software2</option>
-          <option>Software3</option>
-        </select>
+        <div>
+          <%= f.label :software_ids, 'Software', class: 'bp-input-label' %>
+        </div>
+        <%= f.select :software_ids, software_options_for_select,
+                     {selected: params.dig(:search, :software_ids)},
+                     prompt: 'Any',
+                     multiple: true,
+                     style: "width: 100%",
+                     class: "form-control select2" %>
       </div>
       <div class="d-flex justify-content-between">
-        <button class="btn btn-outline-primary">Reset Filters</button>
-        <button class="btn btn-primary">Apply Filters</button>
+        <button id="resetFilters" class="btn btn-outline-primary">Reset Filters</button>
+        <%= f.submit 'Apply Filters', id: 'applyFilters', class: 'btn btn-primary' %>
       </div>
-    </form>
+    <% end %>
   </div>
 </div>
 
@@ -120,7 +92,7 @@
         }
 
         $('.select2').select2({
-            placeholder: 'Any',
+            placeholder: 'Select all that apply',
             allowClear: true
         });
 
