@@ -12,13 +12,6 @@
     padding-top: 30px;
   }
 
-  .sidenav select {
-    padding: 8px 8px 8px 32px;
-    font-size: 25px;
-    color: black;
-    display: block;
-  }
-
   .sidenav .closebtn {
     position: absolute;
     top: 0;
@@ -28,6 +21,7 @@
     margin-left: 50px;
     color: #6c757d;
     margin-bottom: 20px;
+    text-decoration: none;
   }
 
   @media screen and (max-height: 450px) {
@@ -36,7 +30,7 @@
 </style>
 
 <div id="mySidenav" class="sidenav">
-  <a href="#" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#" id="closeFilterNav" class="closebtn">&times;</a>
 
   <div class="container">
     <form>
@@ -112,28 +106,37 @@
 </div>
 
 <script>
-    function openNav() {
-        document.getElementById("mySidenav").style.width = "300px";
-        document.getElementById("mySidenav").style.border = "1px solid #e9ecef"
-    }
+    $(document).on('turbolinks:load', function (e) {
+        function openNav() {
+            const mySidenav = document.getElementById("mySidenav");
+            mySidenav.style.width = "300px";
+            mySidenav.style.border = "1px solid #e9ecef"
+        }
 
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-        document.getElementById("mySidenav").style.border = "none"
-    }
+        function closeNav() {
+            const mySidenav = document.getElementById("mySidenav");
+            mySidenav.style.width = "0";
+            mySidenav.style.border = "none"
+        }
 
-    $(function() {
         $('.select2').select2({
             placeholder: 'Any',
             allowClear: true
         });
-    });
 
-    $(function() {
-        const showFiltersBtn = document.getElementById("showFilters");
-        showFiltersBtn.addEventListener('click', function(e) {
+        $('#showFilters').on('click', function (e) {
+            const isOpened = $('#mySidenav').width() > 0;
             e.preventDefault();
-            openNav()
+            if (isOpened) {
+                closeNav()
+            } else {
+                openNav()
+            }
+        });
+
+        $('#closeFilterNav').on('click', function (e) {
+            e.preventDefault();
+            closeNav()
         });
     });
 </script>
