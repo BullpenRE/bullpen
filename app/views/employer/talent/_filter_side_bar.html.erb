@@ -40,10 +40,10 @@
         </div>
         <%= f.select :sector_ids, sectors_options_for_select,
                      {selected: params.dig(:search, :sector_ids)},
-                     prompt: 'Any',
                      multiple: true,
                      style: "width: 100%",
-                     class: "form-control select2" %>
+                     class: "form-control select2",
+                     data: {placeholder: 'Any'} %>
       </div>
 
       <div class="form-group mb-3">
@@ -52,7 +52,6 @@
         </div>
         <%= f.select :real_estate_skill_ids, skill_options_for_select,
                      {selected: params.dig(:search, :real_estate_skill_ids)},
-                     prompt: 'Any',
                      multiple: true,
                      style: "width: 100%",
                      class: "form-control select2" %>
@@ -64,7 +63,6 @@
         </div>
         <%= f.select :software_ids, software_options_for_select,
                      {selected: params.dig(:search, :software_ids)},
-                     prompt: 'Any',
                      multiple: true,
                      style: "width: 100%",
                      class: "form-control select2" %>
@@ -92,9 +90,10 @@
         }
 
         $('.select2').select2({
-            placeholder: 'Select all that apply',
+            placeholder: 'Any',
             allowClear: true
         });
+        $('.select2-search__field').css('width', '100%');
 
         $('#showFilters').on('click', function (e) {
             const isOpened = $('#mySidenav').width() > 0;
