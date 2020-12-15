@@ -10,7 +10,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def show
     @user = current_user
     params[:start_flow].present? ? new_job_application : job_application
-    pre_populate_answer
+    pre_populate_answers if wizard_value(step) == :application_step_1
 
     respond_js_format(wizard_value(step))
   end
@@ -20,7 +20,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
     params[:job_application][:job_application_id].blank? ? new_job_application : job_application
     @time_zone = job_application&.job&.time_zone
-    pre_populate_answer
+    pre_populate_answers
 
     application_step_1_save || application_step_2_save || preview_application_save
   end
@@ -76,7 +76,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
   private
 
-  def pre_populate_answer
+  def pre_populate_answers
     if job_application.job_application_questions.any?
       @answers = {}
       job_application.job_application_questions.each do |job_application_question|
