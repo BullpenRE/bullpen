@@ -21,7 +21,13 @@
           </div>
         </div>
       </div>
-      <%= render partial: 'freelancer/shared/job_card', locals: { job: job } %>
+      <div>
+        <div class="bp-text-sm mb-3">
+          Posted <%= time_ago_in_words(job.created_at) %> ago
+          <%= job.count_job_applications %>
+        </div>
+        <%= render partial: 'freelancer/shared/job_card', locals: { job: job } %>
+      </div>
     </div>
     <div class="d-flex d-lg-none mb-3"></div> <!--Shim for mobile views-->
   <% end %>

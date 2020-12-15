@@ -1,25 +1,22 @@
-<div>
-  <div class="bp-text-sm mb-3">Posted <%= time_ago_in_words(job&.created_at) %> ago </div>
-  <div class="row">
-    <div class="col-lg-8">
-      <p class="text-wrap text-break"><%= job.short_description %></p>
-      <% job.job_sectors&.each do |job_sector| %>
+<div class="row">
+  <div class="col-lg-8">
+    <p class="text-wrap text-break"><%= job.short_description %></p>
+    <% job.job_sectors&.each do |job_sector| %>
               <span class="badge badge-secondary mt-1">
                <%= job_sector&.sector&.description %>
               </span>
+    <% end %>
+    <span class="badge badge-secondary mt-1"><%= job.position_length&.capitalize %></span>
+    <span class="badge badge-secondary mt-1"><%= job.hours_needed&.capitalize %></span>
+    <div class="bp-text-sm mb-2 mt-3">
+      <% if (job.daytime_availability_required == true) %>
+        <i class="far fa-clock text-secondary"></i> Daytime availability is required <span class="text-secondary">(9AM-5PM PST)</span>
       <% end %>
-      <span class="badge badge-secondary mt-1"><%= job.position_length&.capitalize %></span>
-      <span class="badge badge-secondary mt-1"><%= job.hours_needed&.capitalize %></span>
-      <div class="bp-text-sm mb-2 mt-3">
-        <% if (job.daytime_availability_required == true) %>
-          <i class="far fa-clock text-secondary"></i> Daytime availability is required <span class="text-secondary">(9AM-5PM PST)</span>
-        <% end %>
-      </div>
-      <div class="bp-text-sm mb-1">
-        <% if (job.required_regional_knowledge.present?) %>
-          <i class="fas fa-map-marker-alt text-secondary"></i>  Regional knowledge of <span class="text-secondary"><%= job.required_regional_knowledge %></span> is required
-        <% end %>
-      </div>
+    </div>
+    <div class="bp-text-sm mb-1">
+      <% if (job.required_regional_knowledge.present?) %>
+        <i class="fas fa-map-marker-alt text-secondary"></i>  Regional knowledge of <span class="text-secondary"><%= job.required_regional_knowledge %></span> is required
+      <% end %>
     </div>
   </div>
 </div>
