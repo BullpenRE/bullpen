@@ -12,6 +12,7 @@ class Job < ApplicationRecord
   has_many :job_applications, dependent: :destroy
 
   validates :user_id, presence: true
+  validate :pay_ranges_make_sense
 
   enum position_length: { 'long-term': 0, 'temporary': 1 }
   enum hours_needed: { 'part-time': 0, 'on-call': 1, 'project-based': 2 }
@@ -27,5 +28,13 @@ class Job < ApplicationRecord
       hours_needed.present? &&
       required_experience.present? &&
       job_skills.present?
+  end
+
+  private
+
+  def pay_ranges_make_sense
+    return true if pay_range_high.nil?
+
+    errors.add(:pay_range_high, 'must be higher than pay range low') if pay_range_high < pay_range_low
   end
 end

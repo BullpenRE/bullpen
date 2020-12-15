@@ -9,6 +9,22 @@ RSpec.describe Job, type: :model do
 
   context 'Validations' do
     it { is_expected.to validate_presence_of(:user_id) }
+    describe 'pay_ranges' do
+      it 'can be nil' do
+        job.pay_range_high = nil
+        expect(job).to be_valid
+        job.pay_range_low = nil
+        expect(job).to be_valid
+      end
+
+      it 'if not nil it must be greater than pay_range_low' do
+        job.pay_range_low = 100
+        job.pay_range_high = 150
+        expect(job).to be_valid
+        job.pay_range_high = 50
+        expect(job).to_not be_valid
+      end
+    end
   end
 
   context 'Relationships' do
