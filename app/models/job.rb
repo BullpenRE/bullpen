@@ -35,8 +35,8 @@ class Job < ApplicationRecord
 
   def pay_ranges_make_sense
     errors.add(:pay_range_high, 'must be higher than pay range low') if high_range_lesser_than_low_range?
-    errors.add(:pay_range_low, 'must be greater than 0') if !pay_range_low.nil? && pay_range_low.negative?
-    errors.add(:pay_range_high, 'must be greater than 0') if !pay_range_high.nil? && pay_range_high.negative?
+    errors.add(:pay_range_low, 'must be greater than 0') if pay_range_low&.negative?
+    errors.add(:pay_range_high, 'must be greater than 0') if pay_range_high&.negative?
   end
 
   def high_range_lesser_than_low_range?
