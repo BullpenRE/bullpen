@@ -14,11 +14,11 @@
       <div class="file-name text-break mb-2">This file was attached: <%= job_application.work_sample.filename %></div>
       <div class="custom-file">
         <%= f.file_field :work_sample, multiple: false, name: 'work_sample', class: "d-none", id: "uploadWorkSample" %>
-        <label class="btn btn-outline-primary upload-work-sample" for="uploadWorkSample">
+        <label class="btn btn-outline-primary upload-work-sample d-block d-sm-inline" for="uploadWorkSample">
           Edit your work sample
         </label>
         <button type="button" class="delete-work-sample d-none" id="deleteWorkSample"></button>
-        <label class="btn btn-outline-danger mr-2 delete" for="deleteWorkSample">
+        <label class="btn btn-outline-danger ml-sm-2 delete d-block d-sm-inline" for="deleteWorkSample">
           Delete
         </label>
       </div>
@@ -43,14 +43,20 @@
     <%= button_tag type: 'submit', value: 'back', class: "btn btn-outline-primary" do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
-    <div>
+    <div class="d-none d-sm-block">
       <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
-        Save<span class="d-none d-sm-inline"> as Draft</span><i class="fas fa-chevron-right ml-2"></i>
+        Save as Draft</span><i class="fas fa-chevron-right ml-2"></i>
       <% end %>
       <%= button_tag type: 'submit', class: "btn btn-primary" do %>
-        Preview<span class="d-none d-sm-inline"> Job Post</span><i class="fas fa-chevron-right ml-2"></i>
+        Preview Job Post</span><i class="fas fa-chevron-right ml-2"></i>
       <% end %>
     </div>
+    <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1 d-sm-none" do %>
+      Save <i class="fas fa-chevron-right ml-2"></i>
+    <% end %>
+    <%= button_tag type: 'submit', class: "btn btn-primary d-sm-none ml-auto" do %>
+      Preview <i class="fas fa-chevron-right ml-2"></i>
+    <% end %>
   </div>
 <% end %>
 
