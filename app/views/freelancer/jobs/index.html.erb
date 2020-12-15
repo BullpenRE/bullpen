@@ -24,7 +24,9 @@
       <div>
         <div class="bp-text-sm mb-3">
           Posted <%= time_ago_in_words(job.created_at) %> ago
-          <%= job.count_job_applications %>
+          <% if job.job_applications.size.positive? %>
+            | <%= job.job_applications.size %> applicant<%= 's' if job.job_applications.size > 1 %>
+          <% end %>
         </div>
         <%= render partial: 'freelancer/shared/job_card', locals: { job: job } %>
       </div>

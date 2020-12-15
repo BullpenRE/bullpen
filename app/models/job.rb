@@ -28,14 +28,4 @@ class Job < ApplicationRecord
       required_experience.present? &&
       job_skills.present?
   end
-
-  def count_job_applications
-    return '' if job_applications.blank?
-
-    if job_applications.count == 1
-      '| 1 applicant'
-    else
-      "| #{job_applications.count} applicants"
-    end
-  end
 end

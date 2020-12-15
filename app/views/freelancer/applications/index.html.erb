@@ -10,21 +10,14 @@
         <div class="d-flex flex-column flex-lg-row">
           <div class="mr-auto"><h2 class="text-wrap text-break"><%= job_application.job&.title&.capitalize %></h2></div>
           <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
-            <% if @job_applications.find_by(job_id: job_application.job.id).present? %>
-              <% if @job_applications.find_by(job_id: job_application.job.id).state == 'applied' %>
-                <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
-                  Applied
-                </div>
-              <% elsif @job_applications.find_by(job_id: job_application.job.id).state == 'draft' %>
-                <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
-                  Saved as draft
-                </div>
-                <div class="mr-sm-2">
-                  <%= link_to 'Apply', freelancer_application_flows_path(job_app: job_application.id), { remote: true, 'data-toggle': "modal", 'data-target': "#jobAppStep1", class: "btn btn-primary d-block" } %>
-                </div>
-              <% end %>
-            <% end %>
-            <% if @job_applications.find_by(job_id: job_application.job.id).blank? %>
+            <% if job_application.state == 'applied' %>
+              <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
+                Applied
+              </div>
+            <% elsif job_application.state == 'draft' %>
+              <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
+                Saved as draft
+              </div>
               <div class="mr-sm-2">
                 <%= link_to 'Apply', freelancer_application_flows_path(job_app: job_application.id), { remote: true, 'data-toggle': "modal", 'data-target': "#jobAppStep1", class: "btn btn-primary d-block" } %>
               </div>
