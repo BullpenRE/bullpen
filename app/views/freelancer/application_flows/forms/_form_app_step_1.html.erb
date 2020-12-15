@@ -21,11 +21,11 @@
 
   <label class="h5">Are you available from 9AM-5PM  <%= job_application.job.time_zone %>?</label>
   <div class="custom-control custom-radio mb-1">
-    <%= f.radio_button :available_during_work_hours, 'yes', id: "worksHoursRadio1", class: "custom-control-input", required: true %>
+    <%= f.radio_button :available_during_work_hours, 'true', id: "worksHoursRadio1", class: "custom-control-input", required: true %>
     <label class="custom-control-label" for="worksHoursRadio1"><b>Yes</b></label>
   </div>
   <div class="custom-control custom-radio mb-3">
-    <%= f.radio_button :available_during_work_hours, 'no', id: "worksHoursRadio2", class: "custom-control-input", required: true %>
+    <%= f.radio_button :available_during_work_hours, 'false', id: "worksHoursRadio2", class: "custom-control-input", required: true %>
     <label class="custom-control-label" for="worksHoursRadio2"><b>No</b></label>
   </div>
   <% if job_application.job.job_questions.present? %>
@@ -34,7 +34,7 @@
         <div class="d-flex justify-content-between">
           <label for="jobQuestion" class="h5"><%= question.description %></label>
         </div>
-        <%= text_area_tag "job_question_#{question.id}", nil, { class: "form-control", id: "jobQuestion", placeholder: "Enter your response", maxlength: "250", rows: "5", required: true } %>
+        <%= text_area_tag "job_question_#{question.id}", (answers.present? ? answers[question.id] : nil), { class: "form-control", id: "jobQuestion", placeholder: "Enter your response", rows: "5", required: true } %>
       </div>
     <% end %>
   <% end %>
