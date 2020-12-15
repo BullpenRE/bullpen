@@ -31,8 +31,5 @@ RSpec.describe InterviewRequest, type: :model do
     it 'belongs_to a freelancer_profile' do
       expect(interview_request.freelancer_profile).to eq(freelancer_profile)
     end
-
   end
-
-
 end
