@@ -103,12 +103,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
     member_action :accept, method: :post do
       freelancer_profile = FreelancerProfile.find(params[:id])
       freelancer_profile.update(curation: 'accepted')
+      FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_now
       redirect_to admin_freelancer_profile_path(freelancer_profile.id), { notice: 'Application Accepted.' }
     end
 
     member_action :decline, method: :post do
       freelancer_profile = FreelancerProfile.find(params[:id])
       freelancer_profile.update(curation: 'declined')
+      FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_now
       redirect_to admin_freelancer_profile_path(freelancer_profile.id), { notice: 'Application Declined.' }
     end
 
@@ -134,6 +136,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
 
         freelancer_profile = FreelancerProfile.find(params[:id])
         update_many_to_many_attributes(freelancer_profile)
+
+        if send_accept_or_reject_freelancer_email?
+          accepted? ? FreelancerMailer.freelancer_approved(current_user).deliver_now : FreelancerMailer.freelancer_rejected(current_user).deliver_now
+        end
 
         ApplicationRecord.transaction do
           freelancer_profile.update!(permitted_params[:freelancer_profile])
@@ -166,6 +172,15 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         params[:freelancer_profile].delete(:real_estate_skill_ids)
         params[:freelancer_profile].delete(:software_ids)
       end
+
+      def send_accept_or_reject_freelancer_email?
+        FreelancerProfile.find(params[:id]).curation != permitted_params[:freelancer_profile][:curation]
+      end
+
+      def accepted?
+        permitted_params[:freelancer_profile][:curation] == 'accepted'
+      end
+
     end
   end
 end

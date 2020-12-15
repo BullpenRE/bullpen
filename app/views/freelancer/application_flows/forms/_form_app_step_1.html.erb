@@ -1,0 +1,65 @@
+<%= form_for :job_application, url: wizard_path, method: :put, remote: true do |f| %>
+  <%= f.hidden_field :job_application_id, value: job_application.id %>
+  <%= f.hidden_field :job_id, value: job_id %>
+  <%= f.hidden_field 'step', value: 'application_step_1' %>
+  <div class="mb-2">
+    <p> This offered rate is <b>$75 - $125</b> per hour.</p>
+  </div>
+  <div class="form-group">
+    <div class="d-flex justify-content-between">
+      <label for="perHourBid" class="h5">What's your bid? <i class="text-gray-dark">(per hour)</i></label>
+    </div>
+    <div class="row">
+      <div class="col-auto">
+        <%= f.text_field :per_hour_bid, class: "form-control", id: "perHourBid", placeholder: "Enter your bid", required: true, value: job_application.per_hour_bid %>
+      </div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
+  </div>
+  <div class="mb-3 net-earnings"> </div>
+
+  <label class="h5">Are you available from 9AM-5PM  <%= job_application.job.time_zone %>?</label>
+  <div class="custom-control custom-radio mb-1">
+    <%= f.radio_button :available_during_work_hours, 'true', id: "worksHoursRadio1", class: "custom-control-input", required: true %>
+    <label class="custom-control-label" for="worksHoursRadio1"><b>Yes</b></label>
+  </div>
+  <div class="custom-control custom-radio mb-3">
+    <%= f.radio_button :available_during_work_hours, 'false', id: "worksHoursRadio2", class: "custom-control-input", required: true %>
+    <label class="custom-control-label" for="worksHoursRadio2"><b>No</b></label>
+  </div>
+  <% if job_application.job.job_questions.present? %>
+    <% job_application.job.job_questions.each do |question| %>
+      <div class="form-group">
+        <div class="d-flex justify-content-between">
+          <label for="jobQuestion" class="h5"><%= question.description %></label>
+        </div>
+        <%= text_area_tag "job_question_#{question.id}", (answers.present? ? answers[question.id] : nil), { class: "form-control", id: "jobQuestion", placeholder: "Enter your response", rows: "5", required: true } %>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="modal-footer justify-content-between">
+    <button type="button" class="btn btn-outline-primary invisible"><i class="fas fa-chevron-left mr-2"></i>Back</button>
+    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+      Next<i class="fas fa-chevron-right ml-2"></i>
+    <% end %>
+  </div>
+<% end %>
+
+<script>
+  $('#perHourBid').on('input', () => {
+    const per_hour_bid = $('#perHourBid').val();
+    const first_symbol = parseInt(per_hour_bid.charAt(0), 10);
+    const length = per_hour_bid.length;
+    const last_symbol = parseInt(per_hour_bid.charAt(length-1), 10);
+    let net_earnings;
+    if (isNaN(first_symbol)) {
+      net_earnings = parseInt(per_hour_bid.substring(1,length), 10);
+    } else if (isNaN(last_symbol)) {
+      net_earnings = parseInt(per_hour_bid.substring(0,(length-1)), 10);
+    } else {
+      net_earnings = parseInt(per_hour_bid, 10);
+    }
+    $('.net-earnings').text('Your net earnings will be $' + Math.round(net_earnings*0.7) +' per hour.');
+  });
+</script>

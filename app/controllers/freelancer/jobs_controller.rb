@@ -3,8 +3,10 @@
 class Freelancer::JobsController < ApplicationController
   include LoggedInRedirects
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :incomplete_freelancer_profile_redirect
+  ITEMS_PER_PAGE = 10
 
   def index
-    @jobs = Job.where(state: 'posted')
+    @pagy, @jobs = pagy(Job.where(state: 'posted'), items: ITEMS_PER_PAGE, overflow: :last_page)
+    @job_applications = current_user.job_applications
   end
 end

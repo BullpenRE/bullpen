@@ -30,6 +30,8 @@ Rails.application.routes.draw do
   get '/promo/:promo_code', to: 'signup_promos#show'
 
   resources :avatar, only: %i[update destroy]
+  resources :work_sample, only: :update
+  post '/work_sample/destroy', to: 'work_sample#destroy_work_sample'
   resources :freelancer_profile_steps
   resources :employer_profile_steps
 
@@ -52,6 +54,7 @@ Rails.application.routes.draw do
   namespace :freelancer do
     resources :jobs
     resources :applications
+    resources :application_flows
     resources :interviews
     resources :contracts
     resource :profile
