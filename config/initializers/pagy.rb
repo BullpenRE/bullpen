@@ -64,7 +64,7 @@
 
 # Multi size var used by the *_nav_js helpers
 # See https://ddnexus.github.io/pagy/extras/navs#steps
-Pagy::VARS[:steps] = { 0 => [1,0,0,1], 540 => [1,0,0,1], 720 => [2,3,3,2] }    # example
+Pagy::VARS[:steps] = { 0 => [1,0,0,1], 540 => [1,0,0,1], 720 => [1,1,1,1] }    # example
 
 
 # Feature Extras
