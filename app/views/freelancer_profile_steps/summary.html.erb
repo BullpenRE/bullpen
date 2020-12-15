@@ -1,7 +1,16 @@
 <div class="container mb-5">
   <div class="mt-4">
     <% if @freelancer_profile.ready_for_submission? %>
-      <h1>Please verify your information.</h1>
+      <div class="h1">
+        Please verify your information.
+        <% if mobile_device == "desktop" %>
+          <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: "btn btn-outline-primary btn-lg" %>
+        <% else %>
+          <%= link_to destroy_user_session_path, method: :delete do %>
+            <i class="fas fa-sign-out-alt"></i>
+          <% end %>
+        <% end %>
+      </div>
     <% elsif @freelancer_profile.pending? %>
       <div class="d-flex flex-row">
         <div class="mr-auto p-2">
@@ -44,3 +53,7 @@
     </div>
   </div>
 </div>
+
+<script>
+
+</script>
