@@ -16,7 +16,7 @@ class WorkSampleController < ApplicationController
     @errors.add(:base, 'File was not uploaded successfully.')
   end
 
-  def destroy
+  def destroy_work_sample
     return unless job_application.work_sample.attached?
 
     job_application.work_sample.purge_later
