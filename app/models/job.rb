@@ -19,6 +19,7 @@ class Job < ApplicationRecord
   enum required_experience: { 'junior': 0, 'intermediate': 1, 'senior': 2 }
   enum time_zone: { 'HST': 0, 'AKST': 1, 'PST': 2, 'MST': 3, 'CST': 4, 'EST': 5 }
   enum state: { 'draft': 0, 'posted': 1, 'closed': 2 }
+  enum contract_type: { 'hourly': 0, 'monthly_retainer_80': 1 }
 
   def ready_to_post?
     title.present? &&
@@ -33,8 +34,8 @@ class Job < ApplicationRecord
   private
 
   def pay_ranges_make_sense
-    return true if pay_range_high.nil?
-
-    errors.add(:pay_range_high, 'must be higher than pay range low') if pay_range_high < pay_range_low
+    errors.add(:pay_range_high, 'must be higher than pay range low') if !pay_range_high.nil? && !pay_range_low.nil? && pay_range_high < pay_range_low
+    errors.add(:pay_range_low, 'must be greater than 0') if !pay_range_low.nil? && pay_range_low < 0
+    errors.add(:pay_range_high, 'must be greater than 0') if !pay_range_high.nil? && pay_range_high < 0
   end
 end

@@ -24,6 +24,15 @@ RSpec.describe Job, type: :model do
         job.pay_range_high = 50
         expect(job).to_not be_valid
       end
+
+      it 'neither can be lower than 0' do
+        job.pay_range_low = -10
+        expect(job).to_not be_valid
+        job.pay_range_low = nil
+        expect(job).to be_valid
+        job.pay_range_high = -50
+        expect(job).to_not be_valid
+      end
     end
   end
 
