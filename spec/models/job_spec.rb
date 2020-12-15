@@ -33,6 +33,14 @@ RSpec.describe Job, type: :model do
         job.pay_range_high = -50
         expect(job).to_not be_valid
       end
+
+      it 'if contract_type is not hourly then pay_range_high must be nil' do
+        job.contract_type = 1
+        job.pay_range_high = nil
+        expect(job).to be_valid
+        job.pay_range_high = 2000
+        expect(job).to_not be_valid
+      end
     end
   end
 
