@@ -18,14 +18,13 @@ before_action :authenticate_user!, :initial_check, :non_employer_redirect, :inco
     @interview_request = current_user.employer_profile.interview_requests.create(interview_request_params)
     flash[:notice] = "<strong> Success!</strong> Your interview request has been sent to <a href='#' class='alert-link'>
          #{@interview_request.freelancer_profile.first_name} #{@interview_request.freelancer_profile.last_name}
-      </a>. We will send notification when it is accepted or declined." if @interview_request.valid?
+         </a>. We will send notification when it is accepted or declined." if @interview_request.valid?
     redirect_to employer_talent_index_path
   end
 
-private
-def interview_request_params
-  params.require(:interview_request).permit(:freelancer_profile_id, :state)
-end
+  private
 
-
+  def interview_request_params
+    params.require(:interview_request).permit(:freelancer_profile_id, :state)
+  end
 end
