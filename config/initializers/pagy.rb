@@ -34,7 +34,7 @@
 
 # Bootstrap extra: Add nav, nav_js and combo_nav_js helpers and templates for Bootstrap pagination
 # See https://ddnexus.github.io/pagy/extras/bootstrap
-require 'pagy/extras/bootstrap'
+# require 'pagy/extras/bootstrap'
 
 # Bulma extra: Add nav, nav_js and combo_nav_js helpers and templates for Bulma pagination
 # See https://ddnexus.github.io/pagy/extras/bulma
@@ -64,7 +64,7 @@ require 'pagy/extras/bootstrap'
 
 # Multi size var used by the *_nav_js helpers
 # See https://ddnexus.github.io/pagy/extras/navs#steps
-Pagy::VARS[:steps] = { 0 => [1,0,0,1], 540 => [1,0,0,1], 720 => [1,1,1,1] }    # example
+Pagy::VARS[:steps] = { 0 => [1,0,0,1], 540 => [1,0,0,1], 720 => [2,3,3,2] }    # example
 
 
 # Feature Extras
