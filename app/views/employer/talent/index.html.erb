@@ -2,8 +2,11 @@
 
 <!--Talent card-->
 <div class="container mb-3">
-  <div class="d-flex align-items-end">
+  <div class="d-flex justify-content-between">
     <h1>Find Talent</h1>
+    <% if @filters_list %>
+      <h4 class=""><%= @filters_list.join(', ') %></h4>
+    <% end %>
     <a href="#" id="showFilters" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
   </div>
   <%= render partial: 'employer/talent/filter_side_bar' %>

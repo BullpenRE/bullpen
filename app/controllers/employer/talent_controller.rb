@@ -10,6 +10,7 @@ class Employer::TalentController < ApplicationController
 
   def create
     filters_list unless invalid_filtering_parameters?
+    @pagy, @freelancer_profiles = pagy(freelancer_profiles_collection, items: 5)
     respond_to do |format|
       format.html { render :index }
     end
