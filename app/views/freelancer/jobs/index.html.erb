@@ -49,12 +49,8 @@
     </div>
     <div class="d-flex d-lg-none mb-3"></div> <!--Shim for mobile views-->
   <% end %>
-  <div class="d-none d-sm-block">
-    <%= pagy_bootstrap_nav(@pagy).html_safe if @pagy.pages > 1 %>
-  </div>
-  <div class="d-flex d-lg-none mb-3 d-sm-none bp-text-sm">
-    <%= pagy_bootstrap_nav(@pagy).html_safe if @pagy.pages > 1 %>
-  </div>
+
+  <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
 </div>
 
 <div id="jobAppStepModal"></div>
