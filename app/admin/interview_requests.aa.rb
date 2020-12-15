@@ -56,23 +56,5 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
       f.actions
       end
     end
-
-    controller do
-      def create
-        error_message = nil
-        interview_request = InterviewRequest.new(permitted_params[:interview_request])
-
-        ApplicationRecord.transaction do
-          interview_request.save!
-        rescue StandardError => e
-          error_message = e.message
-        end
-        message = { alert: error_message } if error_message
-        message ||= { notice: 'Successfully created!' }
-
-        redirect_to admin_interview_requests_path(interview_request), flash: message
-      end
-    end
-
   end
 end
