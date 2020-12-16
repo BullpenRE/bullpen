@@ -1,7 +1,14 @@
+<style>
+  .talent-cards {
+    position: relative;
+  }
+</style>
+
 <%= render partial: 'employer/navigation', locals: { section: 'talent' } %>
 
 <!--Talent card-->
-<div class="container mb-3">
+<div class="container mb-3 talent-cards">
+  <%= render partial: 'employer/talent/filter_side_bar' %>
   <div class="d-flex justify-content-between">
     <h1 class="">Find Talent</h1>
     <% if @filters_list %>
@@ -14,7 +21,6 @@
     <% end %>
     <a href="#" id="showFilters" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
   </div>
-  <%= render partial: 'employer/talent/filter_side_bar' %>
   <% @freelancer_profiles.each do |freelancer_profile| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: freelancer_profile } %>
     <div class="bp-card mb-3">
