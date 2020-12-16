@@ -1,6 +1,6 @@
 <style>
   .sidenav {
-    height: 55%;
+    height: 70%;
     width: 0;
     position: fixed;
     z-index: 1;
@@ -33,7 +33,7 @@
   <a href="#" id="closeFilterNav" class="closebtn">&times;</a>
 
   <div class="container">
-    <%= form_for :search, url: employer_talent_index_path, method: :post, html: {class: 'talent-filters'} do |f| %>
+    <%= form_for :search, url: employer_talent_index_path, method: :get, html: {class: 'talent-filters'} do |f| %>
       <div class="form-group mt-4 mb-3">
         <div>
           <%= f.label :sector_ids, 'Sectors', class: 'bp-input-label' %>

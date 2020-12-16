@@ -5,15 +5,8 @@ class Employer::TalentController < ApplicationController
   before_action :authenticate_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
 
   def index
-    @pagy, @freelancer_profiles = pagy(freelancer_profiles_collection, items: 5)
-  end
-
-  def create
     filters_list unless invalid_filtering_parameters?
     @pagy, @freelancer_profiles = pagy(freelancer_profiles_collection, items: 5)
-    respond_to do |format|
-      format.html { render :index }
-    end
   end
 
   private
