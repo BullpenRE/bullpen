@@ -58,4 +58,3 @@ class Employer::TalentController < ApplicationController
                       Software.where(id: software_ids).map(&:description)
   end
 end
-
