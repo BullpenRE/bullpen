@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EmployerFreelancersHelper
   class Filter
     def initialize(sector_ids: [], real_estate_skill_ids: [], software_ids: [])
@@ -14,19 +16,22 @@ module EmployerFreelancersHelper
 
     def freelancer_profile_ids
       return [] unless valid?
+
       matches = {}
       (sector_fp_ids + skills_fp_ids + software_fp_ids).each do |fp_id|
         matches[fp_id] = matches[fp_id].to_i.succ
       end
 
-      matches.reject {|_fp_id, count| count < total_matches_needed}.keys
+      matches.reject { |_fp_id, count| count < total_matches_needed }.keys
     end
 
     private
 
     def scrub_ids!
       @sector_ids = Sector.enabled.where(id: @sector_ids).pluck(:id) if @sector_ids.any?
-      @real_estate_skill_ids = RealEstateSkill.enabled.where(id: @real_estate_skill_ids).pluck(:id) if @real_estate_skill_ids.any?
+      if @real_estate_skill_ids.any?
+        @real_estate_skill_ids = RealEstateSkill.enabled.where(id: @real_estate_skill_ids).pluck(:id)
+      end
       @software_ids = Software.enabled.where(id: @software_ids).pluck(:id) if @software_ids.any?
     end
 
