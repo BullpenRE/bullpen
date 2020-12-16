@@ -1,44 +1,43 @@
 <%= form_for :job_application, url: wizard_path, method: :put, remote: true do |f| %>
-  <%= f.hidden_field :job_app_id, value: job_application.id %>
+  <%= f.hidden_field :job_application_id, value: job_application.id %>
+  <%= f.hidden_field :job_id, value: job_id %>
   <%= f.hidden_field 'step', value: 'application_step_1' %>
+  <div class="mb-2">
+    <p> This offered rate is <b>$75 - $125</b> per hour.</p>
+  </div>
   <div class="form-group">
     <div class="d-flex justify-content-between">
-      <label for="coverLetter" class="h5">Cover Letter</label>
+      <label for="perHourBid" class="h5">What's your bid? <i class="text-gray-dark">(per hour)</i></label>
     </div>
-    <%= f.text_area :cover_letter, class: "form-control", id: "coverLetter", placeholder: "Enter your cover letter", maxlength: "250", rows: "10", required: true, value: job_application.cover_letter %>
+    <div class="row">
+      <div class="col-auto">
+        <%= f.text_field :per_hour_bid, class: "form-control", id: "perHourBid", placeholder: "Enter your bid", required: true, value: job_application.per_hour_bid %>
+      </div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
   </div>
-  <div class="form-group work_sample">
-    <label for="workSample" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
-    <% if job_application.work_sample.attached? %>
-      <div class="text-light mb-3 work_sample" style="font-size: 170px;line-height: 0;">
-        <%= link_to job_application.work_sample.filename, rails_blob_path(job_application.work_sample, disposition: :attachment) %>
-      </div>
-      <div class="custom-file">
-        <%= f.file_field :work_sample, multiple: false, name: 'work_sample', class: "d-none", id: "uploadWorkSample" %>
-        <label class="btn btn-outline-primary upload-work-sample" for="uploadWorkSample">
-          Edit your work sample
-        </label>
-        <button type="button" class="delete-work-sample d-none" id="deleteWorkSample"></button>
-        <label class="btn btn-outline-danger mr-2" for="deleteWorkSample">
-          Delete
-        </label>
-      </div>
-    <% else %>
-      <div class="custom-file">
-        <%= f.file_field :work_sample, multiple: false, name: 'work_sample', class: "d-none", id: "uploadWorkSample" %>
-        <label class="btn btn-outline-primary upload-work-sample" for="uploadWorkSample">
-          Attach a File
-        </label>
-        <div class="file-name text-break"></div>
+  <div class="mb-3 net-earnings"> </div>
+
+  <label class="h5">Are you available from 9AM-5PM  <%= job_application.job.time_zone %>?</label>
+  <div class="custom-control custom-radio mb-1">
+    <%= f.radio_button :available_during_work_hours, 'true', id: "worksHoursRadio1", class: "custom-control-input", required: true %>
+    <label class="custom-control-label" for="worksHoursRadio1"><b>Yes</b></label>
+  </div>
+  <div class="custom-control custom-radio mb-3">
+    <%= f.radio_button :available_during_work_hours, 'false', id: "worksHoursRadio2", class: "custom-control-input", required: true %>
+    <label class="custom-control-label" for="worksHoursRadio2"><b>No</b></label>
+  </div>
+  <% if job_application.job.job_questions.present? %>
+    <% job_application.job.job_questions.each do |question| %>
+      <div class="form-group">
+        <div class="d-flex justify-content-between">
+          <label for="jobQuestion" class="h5"><%= question.description %></label>
+        </div>
+        <%= text_area_tag "job_question_#{question.id}", (answers.present? ? answers[question.id] : nil), { class: "form-control", id: "jobQuestion", placeholder: "Enter your response", rows: "5", required: true } %>
       </div>
     <% end %>
-  </div>
-  <div class="custom-control custom-checkbox mb-3">
-    <%= f.check_box :template,
-                    id: "template",
-                    :class => "custom-control-input" %>
-    <label class="custom-control-label h5 pt-1" for="template">Use this as a template for future applications</label>
-  </div>
+  <% end %>
   <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-outline-primary invisible"><i class="fas fa-chevron-left mr-2"></i>Back</button>
     <%= button_tag type: 'submit', class: "btn btn-primary" do %>
@@ -46,49 +45,21 @@
     <% end %>
   </div>
 <% end %>
-<script>
-  $('.work_sample').on('change', '#uploadWorkSample', (e) => {
-    const file = e.target.files[0];
-    const app_id = '<%= job_application.id %>';
-    const maxFileSize = 20971520;
-    if (file.size && file.size > maxFileSize) {
-      const message = "Uploaded files must not exceed 20MB\n";
-      Swal.fire({
-        title: '<h5>Oops!</h5>',
-        text: message
-      });
-    }
-    else {
-      const formData = new FormData();
-      formData.append('work_sample', file);
-      formData.append('app_id', app_id)
-      $.ajax({
-        url: '/work_sample/update',
-        method: 'PUT',
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        data: formData,
-        success: function(data) {
-          $('.file-name').html('This file was attached: ' + data['file_name']);
-        },
-        error: () => {
-          const message = 'File was not uploaded successfully.';
-          Swal.fire({
-            title: '<h5>Oops!</h5>',
-            text: message
-          });
-        }
-      });
-    }
-  });
 
-  $('.work_sample').on('click', '.delete-work-sample', () => {
-    $.ajax({
-      url: '/work_sample/destroy',
-      method: 'DELETE',
-      success: () => {
-      }
-    })
+<script>
+  $('#perHourBid').on('input', () => {
+    const per_hour_bid = $('#perHourBid').val();
+    const first_symbol = parseInt(per_hour_bid.charAt(0), 10);
+    const length = per_hour_bid.length;
+    const last_symbol = parseInt(per_hour_bid.charAt(length-1), 10);
+    let net_earnings;
+    if (isNaN(first_symbol)) {
+      net_earnings = parseInt(per_hour_bid.substring(1,length), 10);
+    } else if (isNaN(last_symbol)) {
+      net_earnings = parseInt(per_hour_bid.substring(0,(length-1)), 10);
+    } else {
+      net_earnings = parseInt(per_hour_bid, 10);
+    }
+    $('.net-earnings').text('Your net earnings will be $' + Math.round(net_earnings*0.7) +' per hour.');
   });
 </script>
