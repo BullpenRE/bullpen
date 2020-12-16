@@ -16,7 +16,7 @@
       <h2>How many people work at your company?</h2>
     </div>
 
-      <% EmployerProfile.available_employee_counts.each do |employee_count| %>
+      <% EmployerProfile.employee_counts.each do |employee_count| %>
         <div class="custom-control custom-radio mb-3">
           <%= f.radio_button :employee_count, employee_count[1],
                              :class => "custom-control-input",

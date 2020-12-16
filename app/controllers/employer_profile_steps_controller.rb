@@ -41,7 +41,7 @@ class EmployerProfileStepsController < ApplicationController
   def employee_count_save
     return false unless wizard_value(step) == :employee_count
 
-    @employer_profile.update(employee_count: params.require(:employer_profile).values.dig(0))
+    @employer_profile.update(employee_count: params.require(:employer_profile).values.dig(0).to_i)
     render_wizard @user
 
     true
