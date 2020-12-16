@@ -3,9 +3,14 @@
 <!--Talent card-->
 <div class="container mb-3">
   <div class="d-flex justify-content-between">
-    <h1>Find Talent</h1>
+    <h1 class="">Find Talent</h1>
     <% if @filters_list %>
-      <h4 class=""><%= @filters_list.join(', ') %></h4>
+      <h6 class="flex-grow-1 text-secondary text-right mx-3">
+        <%= @filters_list.join(', ') %>
+        <%= link_to employer_talent_index_path do %>
+          <i class="fa fa-times-circle fa-lg text-black-50 " aria-hidden="true"></i>
+        <% end %>
+      </h6>
     <% end %>
     <a href="#" id="showFilters" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
   </div>
