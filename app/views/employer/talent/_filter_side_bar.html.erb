@@ -10,6 +10,7 @@
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 30px;
+    padding-bottom: 15px;
   }
 
   .sidenav .closebtn {
@@ -25,7 +26,15 @@
   }
 
   @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
+    .sidenav {
+      padding-top: 10px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .sidenav {
+      left: 10px;
+    }
   }
 </style>
 
