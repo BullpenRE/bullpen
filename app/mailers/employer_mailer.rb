@@ -3,8 +3,9 @@
 class EmployerMailer < ApplicationMailer
   default from: 'support@bullpenre.com'
 
-  def new_job_application(user)
+  def new_job_application(user, job_application)
     @user = user
+    @job_application = job_application
     mail(to: user.email, subject: "New applicant for #{job_application.job.title}")
   end
 end

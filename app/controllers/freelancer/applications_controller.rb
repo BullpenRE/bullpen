@@ -6,6 +6,8 @@ class Freelancer::ApplicationsController < ApplicationController
   ITEMS_PER_PAGE = 10
 
   def index
+    byebug
     @pagy, @job_applications = pagy(current_user.job_applications, items: ITEMS_PER_PAGE, overflow: :last_page)
+    EmployerMailer.new_job_application(current_user, current_user.job_applications).deliver_now
   end
 end

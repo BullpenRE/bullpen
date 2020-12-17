@@ -1,11 +1,11 @@
 <br>
 <%= render partial: 'email/content_block', locals: { content: "<h1>You have a new applicant!</h1>" } %>
-<%= render partial: 'email/content_block', locals: { content: "#{@user.first_name} has applied to \"#{@job.title}\"" } %>
-<%= render partial: 'email/content_block', locals: { content: "Hourly Rate: {{rate}}" } %>
-<%= render partial: 'email/content_block', locals: { content: "About {{firstname}}:" } %>
-<%= render partial: 'email/content_block', locals: { content: "{{summary}}" } %>
+<%= render partial: 'email/content_block', locals: { content: "#{@user.first_name} has applied to #{@job_application.job.title}" } %>
+<%= render partial: 'email/content_block', locals: { content: "Hourly Rate: #{@job_application.per_hour_bid}" } %>
+<%= render partial: 'email/content_block', locals: { content: "About #{@user.first_name}:" } %>
+<%= render partial: 'email/content_block', locals: { content: "#{@user.freelancer_profile.professional_summary}" } %>
 <%= render partial: 'email/content_block', locals: { content: "View #{@user.first_name}`s application and others at the link below." } %>
 <%= render partial: 'email/content_block', locals: { content: "Have you already filled this position?" } %>
 <%= render partial: 'email/content_block', locals: { content: "Close the job to stop receiving new applicant notifications." } %>
 
-<%= render partial: 'email/button', locals: { button_txt: 'View Applicants', url: employer_jobs_url(open: job.id) } %>
+<%= render partial: 'email/button', locals: { button_txt: 'View Applicants', url: employer_jobs_url(@job_application.job.id) } %>
