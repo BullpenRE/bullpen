@@ -1,0 +1,27 @@
+<% if pagy.pages > 1 %>
+  <% link = pagy_link_proc(pagy, 'class="page-link"') -%>
+  <nav aria-label="pager" class="pagy-bootstrap-nav" role="navigation">
+    <ul class="pagination justify-content-center">
+      <% if pagy.prev -%>
+        <li class="page-item prev d-sm-none"><%== link.call(pagy.prev, '&laquo;', 'aria-label="previous"') %></li>
+        <li class="page-item prev d-none d-sm-inline"><%== link.call(pagy.prev, pagy_t('pagy.nav.prev'), 'aria-label="previous"') %></li>
+      <% else -%>
+        <li class="page-item prev disabled d-sm-none"><a href="#" class="page-link">&laquo;</a></li>
+        <li class="page-item prev disabled d-none d-sm-inline"><a href="#" class="page-link"><%== pagy_t('pagy.nav.prev') %></a></li>
+      <% end -%>
+      <% pagy.series.each do |item| # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36] -%>
+        <%   if    item.is_a?(Integer) -%>    <li class="page-item"><%== link.call(item) %></li>
+        <%   elsif item.is_a?(String)  -%>    <li class="page-item active"><%== link.call(item) %></li>
+        <%   elsif item == :gap        -%>    <li class="page-item disabled gap"><a href="#" class="page-link"><%== pagy_t('pagy.nav.gap') %></a></li>
+        <%   end                       -%>
+      <% end                         -%>
+      <% if pagy.next -%>
+        <li class="page-item next d-sm-none"><%== link.call(pagy.next, '&raquo;', 'aria-label="next"') %></li>
+        <li class="page-item next d-none d-sm-inline"><%== link.call(pagy.next, pagy_t('pagy.nav.next'), 'aria-label="next"') %></li>
+      <% else -%>
+        <li class="page-item next disabled d-sm-none"><a href="#" class="page-link">&raquo;</a></li>
+        <li class="page-item next disabled d-none d-sm-inline"><a href="#" class="page-link"><%== pagy_t('pagy.nav.next') %></a></li>
+      <% end -%>
+    </ul>
+  </nav>
+<% end %>

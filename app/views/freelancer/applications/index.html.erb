@@ -1,0 +1,44 @@
+<%= render partial: 'freelancer/navigation', locals: { section: 'applications' } %>
+
+<!--Job card-->
+<div class="container mb-3">
+  <h1>Applications</h1>
+  <% @job_applications.each do |job_application| %>
+    <%= render partial: 'employer/jobs/show_job_post', locals: { job: job_application.job } %>
+    <div class="bp-card mb-3">
+      <div>
+        <div class="d-flex flex-column flex-lg-row">
+          <div class="mr-auto"><h2 class="text-wrap text-break"><%= job_application.job&.title&.capitalize %></h2></div>
+          <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
+            <% if job_application.state == 'applied' %>
+              <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
+                Applied
+              </div>
+            <% elsif job_application.state == 'draft' %>
+              <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
+                Saved as draft
+              </div>
+              <div class="mr-sm-2">
+                <%= link_to 'Apply', freelancer_application_flows_path(job_app: job_application.id), { remote: true, 'data-toggle': "modal", 'data-target': "#jobAppStep1", class: "btn btn-primary d-block" } %>
+              </div>
+            <% end %>
+            <button class="btn btn-outline-primary my-3 my-md-0" type="button"  data-toggle="modal" data-target="#showJobPost<%= job_application.job.id %>">
+              Show Details
+            </button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="bp-text-sm mb-3">
+          Posted <%= time_ago_in_words(job_application.job.created_at) %> ago
+        </div>
+        <%= render partial: 'freelancer/shared/job_card', locals: { job: job_application.job } %>
+      </div>
+    </div>
+    <div class="d-flex d-lg-none mb-3"></div> <!--Shim for mobile views-->
+  <% end %>
+
+  <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
+</div>
+
+<div id="jobAppStepModal"></div>
