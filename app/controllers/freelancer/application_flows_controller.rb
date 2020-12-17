@@ -73,6 +73,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     else
       job_application.update(state: 'applied')
       flash_notice(false)
+      EmployerMailer.new_job_application(current_user, job_application).deliver_now
     end
     redirect_to freelancer_applications_path
   end
