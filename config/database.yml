@@ -8,8 +8,6 @@ default: &default
 development:
   <<: *default
   database: bullpen_development
-  username: superuser
-  password: password
 
 test:
   <<: *default

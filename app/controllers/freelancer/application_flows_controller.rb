@@ -31,7 +31,8 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     job_application.update(step_2_params)
     if params[:button] == 'draft'
       job_application.update(state: 'draft')
-      redirect_to freelancer_jobs_path
+      flash_notice(true)
+      redirect_to freelancer_applications_path
     elsif params[:button] == 'back'
       respond_js_format(:application_step_1)
     else
@@ -68,14 +69,26 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
     if params[:button] == 'draft'
       job_application.update(state: 'draft')
+      flash_notice(true)
     else
       job_application.update(state: 'applied')
+      flash_notice(false)
     end
-
-    redirect_to freelancer_jobs_path
+    redirect_to freelancer_applications_path
   end
 
   private
+
+  def flash_notice(draft)
+    flash[:notice] = if draft
+                      '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
+                      "A draft was created for #{job_application.job.title.capitalize}."
+                     else
+                       '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
+                       "#{job_application.job.title.capitalize} was applied for."
+                     end
+
+  end
 
   def pre_populate_answers
     if job_application.job_application_questions.any?
