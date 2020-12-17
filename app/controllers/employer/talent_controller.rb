@@ -16,9 +16,14 @@ class Employer::TalentController < ApplicationController
 
   def interview_request
     @interview_request = current_user.employer_profile.interview_requests.create(interview_request_params)
-    flash[:notice] = "<strong> Success!</strong> Your interview request has been sent to <a href='#' class='alert-link'>
-         #{@interview_request.freelancer_profile.first_name} #{@interview_request.freelancer_profile.last_name}
-         </a>. We will send notification when it is accepted or declined." if @interview_request.valid?
+
+    if @interview_request.valid?
+      flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
+      'Your interview request has been sent to '\
+      "<strong>#{@interview_request.freelancer_profile.full_name}</strong>. "\
+      'We will send you a notification when it is accepted or declined.'
+    end
+
     redirect_to employer_talent_index_path
   end
 

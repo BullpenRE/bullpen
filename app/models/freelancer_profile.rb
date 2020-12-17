@@ -37,6 +37,10 @@ class FreelancerProfile < ApplicationRecord
     user.last_name
   end
 
+  def full_name
+    user.full_name
+  end
+
   def email
     user.email
   end

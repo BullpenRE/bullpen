@@ -8,8 +8,12 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
 
     index do
       id_column
-      column 'Employer Email', :employer_profile
-      column 'Freelancer Email', :freelancer_profile
+      column 'Employer' do |interview_request|
+        link_to interview_request.employer_profile.email, admin_employer_profile_path(interview_request.employer_profile_id)
+      end
+      column 'Freelancer' do |interview_request|
+        link_to interview_request.freelancer_profile.email, admin_freelancer_profile_path(interview_request.freelancer_profile_id)
+      end
       column :state
       column :created_at
       column :updated_at
@@ -17,20 +21,17 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
       actions defaults: true
     end
 
-    filter :employer_profile,
-           as: :select,
-           label: 'Employer Email',
-           collection: EmployerProfile.find_each.map {|ep| [ep.user.email, ep.id] }
+    filter :employer_profile_user_email, as: :string, label: 'Employer Email'
+    filter :freelancer_profile_user_email, as: :string, label: 'Freelancer Email'
 
-    filter :freelancer_profile,
-           as: :select,
-           label: 'Freelancer Email',
-           collection: FreelancerProfile.find_each.map {|fp| [fp.user.email, fp.id] }
-
-    show title: 'Interview Requested' do
+    show title: 'Interview Requested' do |interview_request|
       attributes_table do
-        row :employer_profile
-        row :freelancer_profile
+        row 'Employer' do
+          link_to interview_request.employer_profile.email, admin_employer_profile_path(interview_request.employer_profile_id)
+        end
+        row 'Freelancer' do
+          link_to interview_request.freelancer_profile.email, admin_freelancer_profile_path(interview_request.freelancer_profile_id)
+        end
         row :created_at
         row :updated_at
         row :state

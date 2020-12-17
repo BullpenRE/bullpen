@@ -168,5 +168,15 @@ RSpec.describe FreelancerProfile, type: :model do
       freelancer_profile.update(draft: false, curation: :declined)
       expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
     end
+
+    describe 'user fields' do
+      it 'inherits first_name, last_name, full_name, email and location from user' do
+        expect(freelancer_profile.first_name).to eq(freelancer_profile.user.first_name)
+        expect(freelancer_profile.last_name).to eq(freelancer_profile.user.last_name)
+        expect(freelancer_profile.full_name).to eq(freelancer_profile.user.full_name)
+        expect(freelancer_profile.email).to eq(freelancer_profile.user.email)
+        expect(freelancer_profile.location).to eq(freelancer_profile.user.location)
+      end
+    end
   end
 end
