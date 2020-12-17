@@ -81,13 +81,12 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
   def flash_notice(draft)
     flash[:notice] = if draft
-                      '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                      "A draft was created for #{job_application.job.title.capitalize}."
+                       '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
+                       "A draft was created for #{job_application.job.title.capitalize}."
                      else
                        '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
                        "#{job_application.job.title.capitalize} was applied for."
                      end
-
   end
 
   def pre_populate_answers
