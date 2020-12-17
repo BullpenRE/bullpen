@@ -70,7 +70,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
       job_application.update(state: 'draft')
     else
       job_application.update(state: 'applied')
-      EmployerMailer.new_job_application(job_application.job.user, job_application).deliver_now
+      EmployerMailer.new_job_application(current_user, job_application).deliver_now
     end
 
     redirect_to freelancer_jobs_path

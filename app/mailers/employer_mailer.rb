@@ -6,6 +6,6 @@ class EmployerMailer < ApplicationMailer
   def new_job_application(user, job_application)
     @user = user
     @job_application = job_application
-    mail(to: user.email, subject: "New applicant for #{job_application.job.title}")
+    mail(to: job_application.job.user.email, subject: "New applicant for #{job_application.job.title}")
   end
 end
