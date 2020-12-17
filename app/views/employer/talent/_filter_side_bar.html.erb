@@ -1,7 +1,7 @@
 <style>
   .sidenav {
     height: 70%;
-    width: 0;
+    width: 300px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -9,6 +9,7 @@
     background-color: white;
     overflow-x: hidden;
     transition: 0.5s;
+    transform: translateX(-100%);
     padding-top: 30px;
     padding-bottom: 15px;
   }
@@ -75,14 +76,16 @@
     $(document).on('turbolinks:load', function (e) {
         function openNav() {
             const mySidenav = document.getElementById("mySidenav");
-            mySidenav.style.width = "300px";
-            mySidenav.style.border = "1px solid #e9ecef"
+            mySidenav.style.transform = 'translateX(0)';
+            mySidenav.style.border = "1px solid #e9ecef";
+            mySidenav.classList.add("in")
         }
 
         function closeNav() {
             const mySidenav = document.getElementById("mySidenav");
-            mySidenav.style.width = "0";
-            mySidenav.style.border = "none"
+            mySidenav.style.transform = 'translateX(-100%)';
+            mySidenav.style.border = "none";
+            mySidenav.classList.remove("in")
         }
 
         $('.select2').select2({
@@ -92,7 +95,7 @@
         $('.select2-search__field').css('width', '100%');
 
         $('#showFilters').on('click', function (e) {
-            const isOpened = $('#mySidenav').width() > 0;
+            const isOpened = document.getElementById("mySidenav").classList.contains("in");
             e.preventDefault();
             if (isOpened) {
                 closeNav()
