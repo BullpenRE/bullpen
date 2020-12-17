@@ -1,0 +1,118 @@
+<%= form_for :job_application, url: wizard_path, method: :put, remote: true do |f| %>
+  <%= f.hidden_field :job_application_id, value: job_application.id %>
+  <%= f.hidden_field 'step', value: 'application_step_2' %>
+
+  <div class="form-group">
+    <div class="d-flex justify-content-between">
+      <label for="coverLetter" class="h5">Cover Letter</label>
+    </div>
+    <%= f.text_area :cover_letter, class: "form-control", id: "coverLetter", placeholder: "Enter your cover letter", rows: "10", required: true, value: job_application.cover_letter %>
+  </div>
+  <div class="form-group work_sample">
+    <label for="workSample" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
+    <% if job_application.work_sample.attached? %>
+      <div class="file-name text-break mb-2">This file was attached: <%= job_application.work_sample.filename %></div>
+      <div class="custom-file">
+        <%= f.file_field :work_sample, multiple: false, name: 'work_sample', class: "d-none", id: "uploadWorkSample" %>
+        <label class="btn btn-outline-primary upload-work-sample d-block d-sm-inline" for="uploadWorkSample">
+          Edit your work sample
+        </label>
+        <button type="button" class="delete-work-sample d-none" id="deleteWorkSample"></button>
+        <label class="btn btn-outline-danger ml-sm-2 delete d-block d-sm-inline" for="deleteWorkSample">
+          Delete
+        </label>
+      </div>
+    <% else %>
+      <div class="custom-file">
+        <%= f.file_field :work_sample, multiple: false, name: 'work_sample', class: "d-none", id: "uploadWorkSample" %>
+        <label class="btn btn-outline-primary upload-work-sample" for="uploadWorkSample">
+          Attach a File
+        </label>
+        <div class="file-name text-break"></div>
+      </div>
+    <% end %>
+  </div>
+  <div class="custom-control custom-checkbox mb-3">
+    <%= f.check_box :template,
+                    id: "template",
+                    :class => "custom-control-input" %>
+    <label class="custom-control-label h5 pt-1" for="template">Use this as a template for future applications</label>
+  </div>
+
+  <div class="modal-footer justify-content-between">
+    <%= button_tag type: 'submit', value: 'back', class: "btn btn-outline-primary" do %>
+      <i class="fas fa-chevron-left mr-2"></i>Back
+    <% end %>
+    <div class="d-none d-sm-block">
+      <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
+        Save as Draft</span><i class="fas fa-chevron-right ml-2"></i>
+      <% end %>
+      <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+        Preview Job Post</span><i class="fas fa-chevron-right ml-2"></i>
+      <% end %>
+    </div>
+    <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1 d-sm-none" do %>
+      Save <i class="fas fa-chevron-right ml-2"></i>
+    <% end %>
+    <%= button_tag type: 'submit', class: "btn btn-primary d-sm-none ml-auto" do %>
+      Preview <i class="fas fa-chevron-right ml-2"></i>
+    <% end %>
+  </div>
+<% end %>
+
+<script>
+  $('.work_sample').on('change', '#uploadWorkSample', (e) => {
+    const file = e.target.files[0];
+    const app_id = '<%= job_application.id %>';
+    const maxFileSize = 20971520;
+    if (file.size && file.size > maxFileSize) {
+      const message = "Uploaded files must not exceed 20MB\n";
+      Swal.fire({
+        title: '<h5>Oops!</h5>',
+        text: message
+      });
+    }
+    else {
+      const formData = new FormData();
+      formData.append('work_sample', file);
+      formData.append('app_id', app_id)
+      $.ajax({
+        url: '/work_sample/update',
+        method: 'PUT',
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        data: formData,
+        success: (data) => {
+          $('.file-name').html('This file was attached: ' + data['file_name']);
+        },
+        error: () => {
+          const message = 'File was not uploaded successfully.';
+          Swal.fire({
+            title: '<h5>Oops!</h5>',
+            text: message
+          });
+        }
+      });
+    }
+  });
+
+  $('.work_sample').on('click', '.delete-work-sample', () => {
+    const app_id = '<%= job_application.id %>';
+    const formData = new FormData();
+    formData.append('app_id', app_id);
+    $.ajax({
+      url: '/work_sample/destroy',
+      method: 'POST',
+      dataType: 'json',
+      contentType: false,
+      processData: false,
+      data: formData,
+      success: () => {
+        $('.file-name').html('');
+        $('.upload-work-sample').text('Attach a File');
+        $('.delete').addClass('d-none');
+      },
+    })
+  });
+</script>
