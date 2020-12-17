@@ -51,22 +51,4 @@ module EmployerFreelancersHelper
       @total_matches_needed ||= (@sector_ids.count + @real_estate_skill_ids.count + @software_ids.count)
     end
   end
-
-  def sectors_options_for_select
-    Sector.all.map do |sector|
-      [sector.description, sector.id]
-    end
-  end
-
-  def skill_options_for_select
-    RealEstateSkill.all.map do |skill|
-      [skill.description, skill.id]
-    end
-  end
-
-  def software_options_for_select
-    Software.all.map do |software|
-      [software.description, software.id]
-    end
-  end
 end

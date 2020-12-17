@@ -3,6 +3,7 @@
 class Employer::TalentController < ApplicationController
   include LoggedInRedirects
   before_action :authenticate_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
+  before_action :sectors_options_for_select, :skill_options_for_select, :software_options_for_select
 
   def index
     filters_list unless invalid_filtering_parameters?
@@ -10,6 +11,18 @@ class Employer::TalentController < ApplicationController
   end
 
   private
+
+  def sectors_options_for_select
+    @sectors_options_for_select ||= Sector.enabled.pluck(:description, :id)
+  end
+
+  def skill_options_for_select
+    @skill_options_for_select ||= RealEstateSkill.enabled.pluck(:description, :id)
+  end
+
+  def software_options_for_select
+    @software_options_for_select ||= Software.enabled.pluck(:description, :id)
+  end
 
   def all_freelancer_profiles
     FreelancerProfile.includes(:real_estate_skills,
@@ -53,8 +66,8 @@ class Employer::TalentController < ApplicationController
   end
 
   def filters_list
-    @filters_list ||= Sector.where(id: sector_ids).map(&:description) +
+    @filters_list ||= (Sector.where(id: sector_ids).map(&:description) +
                       RealEstateSkill.where(id: real_estate_skill_ids).map(&:description) +
-                      Software.where(id: software_ids).map(&:description)
+                      Software.where(id: software_ids).map(&:description)).sort
   end
 end

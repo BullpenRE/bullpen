@@ -35,7 +35,7 @@
         <div>
           <%= f.label :sector_ids, 'Sectors', class: 'bp-input-label' %>
         </div>
-        <%= f.select :sector_ids, sectors_options_for_select,
+        <%= f.select :sector_ids, @sectors_options_for_select,
                      {selected: params.dig(:search, :sector_ids)},
                      multiple: true,
                      style: "width: 100%",
@@ -46,7 +46,7 @@
         <div>
           <%= f.label :real_estate_skill_ids, 'Skills', class: 'bp-input-label' %>
         </div>
-        <%= f.select :real_estate_skill_ids, skill_options_for_select,
+        <%= f.select :real_estate_skill_ids, @skill_options_for_select,
                      {selected: params.dig(:search, :real_estate_skill_ids)},
                      multiple: true,
                      style: "width: 100%",
@@ -57,7 +57,7 @@
         <div>
           <%= f.label :software_ids, 'Software', class: 'bp-input-label' %>
         </div>
-        <%= f.select :software_ids, software_options_for_select,
+        <%= f.select :software_ids, @software_options_for_select,
                      {selected: params.dig(:search, :software_ids)},
                      multiple: true,
                      style: "width: 100%",
