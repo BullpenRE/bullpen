@@ -12,6 +12,10 @@ class Employer::TalentController < ApplicationController
                                                                   :freelancer_profile_educations,
                                                                   :freelancer_profile_experiences).where(draft: false),
                                        items: 5)
+
+    @current_user_interview_request_freelancer_ids = current_user.employer_profile
+                                                                 .interview_requests
+                                                                 .pluck(:freelancer_profile_id)
   end
 
   def interview_request

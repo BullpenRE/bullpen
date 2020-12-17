@@ -48,12 +48,16 @@
           </div>
         </div>
         <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
-        <div class="ml-auto">
-          <div class="d-flex">
-            <% if current_user.employer_profile.interview_requests.where(freelancer_profile_id: freelancer_profile.id).none? %>
-              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
+        <div class="ml-sm-auto">
+          <div class="d-block d-sm-flex">
+            <% if @current_user_interview_request_freelancer_ids.exclude?(freelancer_profile.id) %>
+              <div class="d-block p-1 d-sm-inline-block">
+                <button class="btn btn-primary d-sm-in w-100" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
+              </div>
             <% end %>
-            <button class="btn btn-outline-primary ml-2" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
+            <div class="d-block p-1 d-sm-inline-block">
+              <button class="btn btn-outline-primary w-100" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
+            </div>
           </div>
         </div>
       </div>
