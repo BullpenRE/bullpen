@@ -55,7 +55,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         row :draft
         row :curation
         row "ALL Interview Requests Received From Employers", :interview_requests do
-          freelancer_profile.interview_requests
+          freelancer_profile.interview_requests.map{ |i_r| link_to(i_r.employer_profile.email, admin_interview_request_path(i_r.id)) }
         end
       end
 
