@@ -34,6 +34,23 @@ RSpec.describe EmployerProfile, type: :model do
         expect(employer_profile.sectors).to include(employer_sector.sector)
       end
     end
+
+    context 'interview requests' do
+      let(:employer_user)  { FactoryBot.create(:user) }
+      let(:employer_profile) { FactoryBot.create(:employer_profile, user: employer_user) }
+      let(:freelancer_user)  { FactoryBot.create(:user) }
+      let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
+      let!(:interview_request) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile) }
+
+      it 'can have many interview_requests' do
+        expect(employer_profile.interview_requests).to include(interview_request)
+      end
+
+      it 'getting destroyed destroys interview_requests' do
+        expect { employer_profile.destroy }.to change { InterviewRequest.count }.by(-1)
+      end
+    end
+
   end
 
   context 'Methods'
