@@ -103,4 +103,25 @@ RSpec.describe Job, type: :model do
       end
     end
   end
+
+  context 'Scopes' do
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:user_1) { FactoryBot.create(:user) }
+    let!(:job_1) { FactoryBot.create(:job) }
+    let!(:job_2) { FactoryBot.create(:job) }
+    let!(:job_application) { FactoryBot.create(:job_application, job: job, user: user) }
+    let!(:job_application_1) { FactoryBot.create(:job_application, job: job_1, user: user_1) }
+
+    it '.not_applied jobs for user' do
+      expect(Job.not_applied(user)).to include(job_1)
+      expect(Job.not_applied(user)).to include(job_2)
+      expect(Job.not_applied(user)).to_not include(job)
+    end
+
+    it '.not_applied jobs for user_1' do
+      expect(Job.not_applied(user_1)).to include(job)
+      expect(Job.not_applied(user_1)).to include(job_2)
+      expect(Job.not_applied(user_1)).to_not include(job_1)
+    end
+  end
 end
