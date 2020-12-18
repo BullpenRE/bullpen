@@ -26,6 +26,10 @@ $input-border-color: #E9ECEF;
 $modal-inner-padding: 1.25rem;
 $modal-header-border-width: 0;
 $modal-footer-border-width: 0;
+$nav-tabs-link-hover-border-color:  none;
+$nav-tabs-link-active-color: #24A878;
+$nav-tabs-link-active-bg: none;
+$nav-tabs-link-active-border-color: none;
 $pagination-border-width: 0;
 $progress-bar-bg: #005495;
 $progress-border-radius: 2rem;
@@ -74,4 +78,9 @@ h1, .h1, h2, .h2, h3, .h3 {
 //Bootstrap Select Style Overrides
 .bootstrap-select > .dropdown-toggle.bs-placeholder, .bootstrap-select > .dropdown-toggle.bs-placeholder:hover, .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
   color: #6c757d;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  border-bottom: 5px solid #005495;
+  border-radius: 0;
 }
