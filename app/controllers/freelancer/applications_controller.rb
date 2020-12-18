@@ -6,6 +6,6 @@ class Freelancer::ApplicationsController < ApplicationController
   ITEMS_PER_PAGE = 10
 
   def index
-    @pagy, @job_applications = pagy(current_user.job_applications, items: ITEMS_PER_PAGE, overflow: :last_page)
+    @pagy, @job_applications = pagy(current_user.job_applications.order(created_at: :desc), items: ITEMS_PER_PAGE, overflow: :last_page)
   end
 end
