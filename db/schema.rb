@@ -62,6 +62,13 @@ ActiveRecord::Schema.define(version: 2020_12_18_011332) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "asset_classes", force: :cascade do |t|
+    t.string "description", null: false
+    t.boolean "disable", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "certifications", force: :cascade do |t|
     t.string "description"
     t.boolean "disable", default: false
@@ -84,8 +91,6 @@ ActiveRecord::Schema.define(version: 2020_12_18_011332) do
     t.boolean "motivation_backfill"
     t.boolean "motivation_augment"
     t.boolean "motivation_other"
-    t.string "current_step"
-    t.boolean "completed", default: false
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
@@ -96,6 +101,15 @@ ActiveRecord::Schema.define(version: 2020_12_18_011332) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["employer_profile_id"], name: "index_employer_sectors_on_employer_profile_id"
     t.index ["sector_id"], name: "index_employer_sectors_on_sector_id"
+  end
+
+  create_table "freelancer_asset_classes", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "freelancer_profile_id"
+    t.bigint "asset_class_id"
+    t.index ["asset_class_id"], name: "index_freelancer_asset_classes_on_asset_class_id"
+    t.index ["freelancer_profile_id"], name: "index_freelancer_asset_classes_on_freelancer_profile_id"
   end
 
   create_table "freelancer_certifications", force: :cascade do |t|
@@ -144,8 +158,7 @@ ActiveRecord::Schema.define(version: 2020_12_18_011332) do
     t.integer "professional_years_experience"
     t.text "professional_summary"
     t.integer "curation", default: 0
-    t.boolean "draft", default: true
-    t.string "current_step"
+    t.boolean "is_draft", default: true
     t.string "slug"
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
@@ -176,16 +189,6 @@ ActiveRecord::Schema.define(version: 2020_12_18_011332) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["freelancer_profile_id"], name: "index_freelancer_softwares_on_freelancer_profile_id"
     t.index ["software_id"], name: "index_freelancer_softwares_on_software_id"
-  end
-
-  create_table "interview_requests", force: :cascade do |t|
-    t.bigint "employer_profile_id", null: false
-    t.bigint "freelancer_profile_id", null: false
-    t.integer "state"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["employer_profile_id"], name: "index_interview_requests_on_employer_profile_id"
-    t.index ["freelancer_profile_id"], name: "index_interview_requests_on_freelancer_profile_id"
   end
 
   create_table "job_application_questions", force: :cascade do |t|
@@ -326,8 +329,8 @@ ActiveRecord::Schema.define(version: 2020_12_18_011332) do
     t.string "first_name"
     t.string "last_name"
     t.string "phone_number"
+    t.boolean "is_employer"
     t.string "location"
-    t.integer "role"
     t.bigint "signup_promo_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -346,8 +349,6 @@ ActiveRecord::Schema.define(version: 2020_12_18_011332) do
   add_foreign_key "freelancer_profiles", "users"
   add_foreign_key "freelancer_softwares", "freelancer_profiles"
   add_foreign_key "freelancer_softwares", "softwares"
-  add_foreign_key "interview_requests", "employer_profiles"
-  add_foreign_key "interview_requests", "freelancer_profiles"
   add_foreign_key "job_application_questions", "job_applications"
   add_foreign_key "job_application_questions", "job_questions"
   add_foreign_key "job_applications", "jobs"
