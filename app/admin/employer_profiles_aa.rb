@@ -15,9 +15,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
       column :user
       column :company_name
       column :role_in_company
-      column 'Employee Count', sortable: :employee_count do |profile|
-        EmployerProfile::available_employee_counts.invert[profile.employee_count]
-      end
+      column :employee_count
       column :category
 
       actions
@@ -35,9 +33,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
           link_to(employer_profile.company_website, "#{employer_profile.company_website[0..3] == 'http' ? '' : 'http://'}#{employer_profile.company_website}", target: '_blank').html_safe
         end
         row :role_in_company
-        row 'Employee Count' do
-          EmployerProfile::available_employee_counts.invert[employer_profile.employee_count]
-        end
+        row :employee_count
         row :category
         row :motivation_one_time
         row :motivation_ongoing_support
@@ -62,7 +58,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
         f.input :company_name
         f.input :company_website
         f.input :role_in_company
-        f.input :employee_count, as: :select, collection: EmployerProfile::available_employee_counts
+        f.input :employee_count
         f.input :category
         f.inputs 'Motivations' do
           f.input :motivation_one_time, label: 'One Time'
