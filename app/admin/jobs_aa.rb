@@ -5,7 +5,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     includes :user, :job_sectors, :job_skills, :job_softwares, :job_questions
 
     filter :user_email, as: :string, label: 'User Email'
-    filter :draft
+    filter :state, as: :select, collection: Job.states
 
     permit_params :user_id,
                   :title,
@@ -17,13 +17,16 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
                   :required_experience,
                   :required_regional_knowledge,
                   :relevant_job_details,
-                  :draft
+                  :draft,
+                  :contract_type,
+                  :pay_range_low,
+                  :pay_range_high
 
     index do
       column :user
       column :title
       column :short_description
-      column :draft
+      column :state
       actions
     end
 
@@ -42,7 +45,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         row :daytime_availability_required
         row :required_experience
         row :relevant_job_details
-        row :draft
+        row :state
+        row :contract_type
+        row :pay_range_low
+        row :pay_range_high
         row 'Sectors' do
           job.sectors.pluck(:description)
         end
@@ -53,7 +59,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
           job.softwares.pluck(:description)
         end
         row 'Questions' do
-          job.job_questions.map(&:description).push(link_to('Add/Edit/Remove', admin_job_questions_path(q: {job_id_eq: params[:id]}))).join('<br>').html_safe
+          job.job_questions.map{ |job_question| link_to(job_question.description, admin_job_question_path(job_question.id)) }.push(link_to('Add', new_admin_job_question_path(:job_question => { :job_id => job.id }))).join('<br><br>').html_safe
+        end
+        row 'Job Applications' do
+           job.job_applications.map{ |job_application| link_to("#{job_application.user.email}: #{job_application.created_at.strftime("%m-%d-%Y")}", admin_job_application_path(job_application.id)) }.push(link_to('Add', new_admin_job_application_path(:job_application=> { :job_id => job.id }))).join('<br><br>').html_safe
         end
       end
 
@@ -73,10 +82,13 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :short_description
         f.input :position_length
         f.input :time_zone, as: :select, collection: Job.time_zones.keys
-        f.input :draft
+        f.input :state
         f.input :daytime_availability_required
         f.input :required_experience
         f.input :relevant_job_details
+        f.input :contract_type
+        f.input :pay_range_low
+        f.input :pay_range_high
         f.input :skills, as: :check_boxes, collection: Skill.order(:description).pluck(:description, :id)
         f.input :sectors, as: :check_boxes, collection: Sector.order(:description).pluck(:description, :id)
         f.input :softwares, as: :check_boxes, collection: Software.order(:description).pluck(:description, :id)

@@ -1,4 +1,4 @@
-<%= render '/nav_bar/nav_bar' %>
+<%= render '/nav_bar/signup_nav_bar' %>
 
 <!--Progress Meter, Step 2-->
 <div class="container mb-4">
@@ -12,20 +12,25 @@
 <div class="container">
   <div class="bp-card mb-5 mx-auto" style="max-width: 500px;">
     <%= form_for @employer_profile, url: wizard_path, method: :put do |f| %>
-    <div class="mb-4">
-      <h2>How many people work at your company?</h2>
-    </div>
-
-      <% EmployerProfile.available_employee_counts.each do |employee_count| %>
+      <div class="form-group mb-4">
+        <div class="h2 mb-4">How many people work at your company?</div>
         <div class="custom-control custom-radio mb-3">
-          <%= f.radio_button :employee_count, employee_count[1],
-                             :class => "custom-control-input",
-                             :id => "employeeCount#{employee_count[1]}",
-                             :value => "#{employee_count[1]}" %>
-          <%= f.label employee_count[0], :class => "custom-control-label",
-                                             :for => "employeeCount#{employee_count[1]}" %>
+          <%= f.radio_button :employee_count, '1-10', id: "experienceRadio1", class: "custom-control-input", required: true %>
+          <label class="custom-control-label" for="experienceRadio1">1-10</label>
         </div>
-      <% end %>
+        <div class="custom-control custom-radio mb-3">
+          <%= f.radio_button :employee_count, '11-50', id: "experienceRadio2", class: "custom-control-input", required: true %>
+          <label class="custom-control-label" for="experienceRadio2">11-50</label>
+        </div>
+        <div class="custom-control custom-radio mb-3">
+          <%= f.radio_button :employee_count, '51-100', id: "experienceRadio3", class: "custom-control-input", required: true %>
+          <label class="custom-control-label" for="experienceRadio3">51-100</label>
+        </div>
+        <div class="custom-control custom-radio mb-3">
+          <%= f.radio_button :employee_count, '101+', id: "experienceRadio3", class: "custom-control-input", required: true %>
+          <label class="custom-control-label" for="experienceRadio4">101+</label>
+        </div>
+      </div>
 
     <div class="d-flex justify-content-between">
       <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>

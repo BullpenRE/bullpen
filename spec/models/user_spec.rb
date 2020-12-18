@@ -42,14 +42,26 @@ describe User do
     end
 
     describe 'freelancer_sectors and freelancer_real_estate_skills' do
-      let!(:freelancer_sector) { FactoryBot.create(:freelancer_sector, freelancer_profile: freelancer_profile) }
-      let!(:freelancer_real_estate_skill) { FactoryBot.create(:freelancer_real_estate_skill, freelancer_profile: freelancer_profile) }
+      let(:sector) { FactoryBot.create(:sector, description: 'Special Sector') }
+      let(:real_estate_skill) { FactoryBot.create(:real_estate_skill, description: 'Special Real Estate Skill') }
+      let!(:freelancer_sector) { FactoryBot.create(:freelancer_sector, freelancer_profile: freelancer_profile, sector: sector) }
+      let!(:freelancer_real_estate_skill) { FactoryBot.create(:freelancer_real_estate_skill, freelancer_profile: freelancer_profile, real_estate_skill: real_estate_skill) }
 
       it 'can have many through the freelance_profile' do
         expect(user.freelancer_sectors).to include(freelancer_sector)
         expect(user.freelancer_real_estate_skills).to include(freelancer_real_estate_skill)
       end
     end
+
+    describe 'job_applications' do
+      let!(:job_application) { FactoryBot.create(:job_application, user: user) }
+      it 'has many job_applications with dependent destroy' do
+        expect(user.job_applications).to include(job_application)
+        user.destroy
+        expect(JobApplication.exists?(job_application.id)).to be_falsey
+      end
+    end
+
   end
 
   context 'Scopes' do
