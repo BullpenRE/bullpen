@@ -4,6 +4,7 @@
 // that code so it'll be compiled.
 
 require("jquery")
+require("jquery-slimscroll")
 require("@fortawesome/fontawesome-free/js/all")
 require("@rails/ujs").start()
 require("turbolinks").start()

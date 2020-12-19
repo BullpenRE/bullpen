@@ -1,6 +1,5 @@
 <style>
   .sidenav {
-    height: 70%;
     width: 300px;
     position: fixed;
     z-index: 1;
@@ -25,10 +24,21 @@
     margin-bottom: 20px;
     text-decoration: none;
   }
+
+  #scrollDown {
+    position: absolute;
+    top: 12px;
+    right: 55px;
+    font-size: 15px;
+    font-weight: bolder;
+    text-decoration: none;
+    margin-bottom: 20px;
+  }
 </style>
 
 <div id="mySidenav" class="sidenav">
   <a href="#" id="closeFilterNav" class="closebtn">&times;</a>
+  <a href="#" id="scrollDown" class=""><i class="fa fa-chevron-down fa-lg " aria-hidden="true"></i></a>
 
   <div class="container">
     <%= form_for :search, url: employer_talent_index_path, method: :get, html: {class: 'talent-filters'} do |f| %>
@@ -78,14 +88,21 @@
             const mySidenav = document.getElementById("mySidenav");
             mySidenav.style.transform = 'translateX(0)';
             mySidenav.style.border = "1px solid #e9ecef";
-            mySidenav.classList.add("in")
+            mySidenav.classList.add("in");
         }
 
         function closeNav() {
             const mySidenav = document.getElementById("mySidenav");
             mySidenav.style.transform = 'translateX(-100%)';
             mySidenav.style.border = "none";
-            mySidenav.classList.remove("in")
+            mySidenav.classList.remove("in");
+            $('.sidenav').slimScroll({destroy: true});
+        }
+
+        function scrollToTheEnd(scrollHeight) {
+            $('.sidenav').slimScroll({
+                scrollTo: scrollHeight + 'px'
+            })
         }
 
         $('.select2').select2({
@@ -114,6 +131,20 @@
             const $select2 = $('.select2');
             $select2.val('');
             $select2.trigger('change');
-        })
+        });
+
+        $('#scrollDown').on('click', function (e) {
+            e.preventDefault();
+            $('.sidenav').slimScroll({
+                height: document.documentElement.clientHeight + 'px',
+                width: '300px'
+            });
+            let scrollHeight = Math.max(
+                document.body.scrollHeight, document.documentElement.scrollHeight,
+                document.body.offsetHeight, document.documentElement.offsetHeight,
+                document.body.clientHeight, document.documentElement.clientHeight
+            );
+            scrollToTheEnd(scrollHeight)
+        });
     });
 </script>
