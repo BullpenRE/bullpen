@@ -14,7 +14,7 @@
     <% if @filters_list %>
       <h6 class="flex-grow-1 text-secondary text-right mx-3">
         <%= @filters_list.join(', ') %>
-        <%= link_to employer_talent_index_path do %>
+        <%= link_to "#", id: "rejectFilters", data: {url: employer_talent_index_path} do %>
           <i class="fa fa-times-circle fa-lg text-black-50 " aria-hidden="true"></i>
         <% end %>
       </h6>
