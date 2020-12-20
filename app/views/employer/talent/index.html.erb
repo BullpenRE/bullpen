@@ -21,6 +21,7 @@
     <% end %>
     <a href="#" id="showFilters" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
   </div>
+  <%= render 'devise/shared/error_messages' if @freelancer_profiles.empty? %>
   <% @freelancer_profiles.each do |freelancer_profile| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: freelancer_profile } %>
     <div class="bp-card mb-3">
@@ -65,3 +66,10 @@
   <% end %>
   <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
 </div>
+
+<script>
+    // alert auto close
+    $(".alert").delay(4000).slideUp(200, function () {
+        $(this).alert('close');
+    });
+</script>

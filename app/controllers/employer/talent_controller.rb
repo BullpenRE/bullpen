@@ -8,6 +8,8 @@ class Employer::TalentController < ApplicationController
   def index
     filters_list unless invalid_filtering_parameters?
     @pagy, @freelancer_profiles = pagy(freelancer_profiles_collection, items: 5)
+    flash[:notice] =
+      freelancer_profiles_collection.empty? ? 'No talent found that matches all of your search criteria.' : nil
   end
 
   private
