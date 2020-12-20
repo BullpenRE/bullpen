@@ -74,6 +74,15 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   PATCH      /admin/freelancer_profiles/:id(.:format)                                                 admin/freelancer_profiles#update
                                                   PUT        /admin/freelancer_profiles/:id(.:format)                                                 admin/freelancer_profiles#update
                                                   DELETE     /admin/freelancer_profiles/:id(.:format)                                                 admin/freelancer_profiles#destroy
+            batch_action_admin_interview_requests POST       /admin/interview_requests/batch_action(.:format)                                         admin/interview_requests#batch_action
+                         admin_interview_requests GET        /admin/interview_requests(.:format)                                                      admin/interview_requests#index
+                                                  POST       /admin/interview_requests(.:format)                                                      admin/interview_requests#create
+                      new_admin_interview_request GET        /admin/interview_requests/new(.:format)                                                  admin/interview_requests#new
+                     edit_admin_interview_request GET        /admin/interview_requests/:id/edit(.:format)                                             admin/interview_requests#edit
+                          admin_interview_request GET        /admin/interview_requests/:id(.:format)                                                  admin/interview_requests#show
+                                                  PATCH      /admin/interview_requests/:id(.:format)                                                  admin/interview_requests#update
+                                                  PUT        /admin/interview_requests/:id(.:format)                                                  admin/interview_requests#update
+                                                  DELETE     /admin/interview_requests/:id(.:format)                                                  admin/interview_requests#destroy
      batch_action_admin_job_application_questions POST       /admin/job_application_questions/batch_action(.:format)                                  admin/job_application_questions#batch_action
                   admin_job_application_questions GET        /admin/job_application_questions(.:format)                                               admin/job_application_questions#index
                                                   POST       /admin/job_application_questions(.:format)                                               admin/job_application_questions#create
@@ -200,6 +209,9 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                            avatar PATCH      /avatar/:id(.:format)                                                                    avatar#update
                                                   PUT        /avatar/:id(.:format)                                                                    avatar#update
                                                   DELETE     /avatar/:id(.:format)                                                                    avatar#destroy
+                                      work_sample PATCH      /work_sample/:id(.:format)                                                               work_sample#update
+                                                  PUT        /work_sample/:id(.:format)                                                               work_sample#update
+                              work_sample_destroy POST       /work_sample/destroy(.:format)                                                           work_sample#destroy_work_sample
                          freelancer_profile_steps GET        /freelancer_profile_steps(.:format)                                                      freelancer_profile_steps#index
                                                   POST       /freelancer_profile_steps(.:format)                                                      freelancer_profile_steps#create
                       new_freelancer_profile_step GET        /freelancer_profile_steps/new(.:format)                                                  freelancer_profile_steps#new
@@ -257,6 +269,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PATCH      /employer/talent/:id(.:format)                                                           employer/talent#update
                                                   PUT        /employer/talent/:id(.:format)                                                           employer/talent#update
                                                   DELETE     /employer/talent/:id(.:format)                                                           employer/talent#destroy
+                       employer_interview_request POST       /employer/interview_request(.:format)                                                    employer/talent#interview_request
                         public_freelancer_profile GET        /public/freelancer_profile/:slug(.:format)                                               public/freelancer_profile#show
                                   freelancer_jobs GET        /freelancer/jobs(.:format)                                                               freelancer/jobs#index
                                                   POST       /freelancer/jobs(.:format)                                                               freelancer/jobs#create
@@ -274,6 +287,14 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PATCH      /freelancer/applications/:id(.:format)                                                   freelancer/applications#update
                                                   PUT        /freelancer/applications/:id(.:format)                                                   freelancer/applications#update
                                                   DELETE     /freelancer/applications/:id(.:format)                                                   freelancer/applications#destroy
+                     freelancer_application_flows GET        /freelancer/application_flows(.:format)                                                  freelancer/application_flows#index
+                                                  POST       /freelancer/application_flows(.:format)                                                  freelancer/application_flows#create
+                  new_freelancer_application_flow GET        /freelancer/application_flows/new(.:format)                                              freelancer/application_flows#new
+                 edit_freelancer_application_flow GET        /freelancer/application_flows/:id/edit(.:format)                                         freelancer/application_flows#edit
+                      freelancer_application_flow GET        /freelancer/application_flows/:id(.:format)                                              freelancer/application_flows#show
+                                                  PATCH      /freelancer/application_flows/:id(.:format)                                              freelancer/application_flows#update
+                                                  PUT        /freelancer/application_flows/:id(.:format)                                              freelancer/application_flows#update
+                                                  DELETE     /freelancer/application_flows/:id(.:format)                                              freelancer/application_flows#destroy
                             freelancer_interviews GET        /freelancer/interviews(.:format)                                                         freelancer/interviews#index
                                                   POST       /freelancer/interviews(.:format)                                                         freelancer/interviews#create
                          new_freelancer_interview GET        /freelancer/interviews/new(.:format)                                                     freelancer/interviews#new

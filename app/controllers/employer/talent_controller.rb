@@ -10,9 +10,29 @@ class Employer::TalentController < ApplicationController
     @pagy, @freelancer_profiles = pagy(freelancer_profiles_collection, items: 5)
     flash[:notice] =
       freelancer_profiles_collection.empty? ? 'No talent found that matches all of your search criteria.' : nil
+    @current_user_interview_request_freelancer_ids = current_user.employer_profile
+                                                                 .interview_requests
+                                                                 .pluck(:freelancer_profile_id)
+  end
+
+  def interview_request
+    @interview_request = current_user.employer_profile.interview_requests.create(interview_request_params)
+
+    if @interview_request.valid?
+      flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
+      'Your interview request has been sent to '\
+      "<strong>#{@interview_request.freelancer_profile.full_name}</strong>. "\
+      'We will send you a notification when it is accepted or declined.'
+    end
+
+    redirect_to employer_talent_index_path
   end
 
   private
+
+  def interview_request_params
+    params.require(:interview_request).permit(:freelancer_profile_id, :state)
+  end
 
   def sectors_options_for_select
     @sectors_options_for_select ||= Sector.enabled.pluck(:description, :id)
