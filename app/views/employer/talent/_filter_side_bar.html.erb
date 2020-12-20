@@ -5,15 +5,16 @@
     position: fixed;
     top: 0;
     left: 0;
+    transition: 0.5s;
+    transform: translateX(-100%);
+    overflow-x: hidden;
     overflow-y: scroll;
   }
 
   .sidenav-base .sidenav {
     z-index: 1;
     background-color: white;
-    transition: 0.5s;
-    transform: translateX(-100%);
-    padding-bottom: 15px;
+    padding: 15px 0;
   }
 
   .sidenav-base .sidenav .closebtn {
@@ -79,17 +80,19 @@
 <script>
     $(document).on('turbolinks:load', function (e) {
         function openNav() {
+            const sidenavBase = document.getElementById("sidenavBase");
             const mySidenav = document.getElementById("mySidenav");
-            mySidenav.style.transform = 'translateX(0)';
+            sidenavBase.style.transform = 'translateX(0)';
             mySidenav.style.border = "1px solid #e9ecef";
-            mySidenav.classList.add("in");
+            sidenavBase.classList.add("in");
         }
 
         function closeNav() {
+            const sidenavBase = document.getElementById("sidenavBase");
             const mySidenav = document.getElementById("mySidenav");
-            mySidenav.style.transform = 'translateX(-100%)';
+            sidenavBase.style.transform = 'translateX(-100%)';
             mySidenav.style.border = "none";
-            mySidenav.classList.remove("in");
+            sidenavBase.classList.remove("in");
         }
 
         $('.select2').select2({
@@ -99,7 +102,7 @@
         $('.select2-search__field').css('width', '100%');
 
         $('#showFilters').on('click', function (e) {
-            const isOpened = document.getElementById("mySidenav").classList.contains("in");
+            const isOpened = document.getElementById("sidenavBase").classList.contains("in");
             e.preventDefault();
             if (isOpened) {
                 closeNav()
@@ -128,15 +131,13 @@
 
         $('.select2').on('change', function (e) {
             e.preventDefault();
-            let scrollHeight = Math.max(
+            const scrollHeight = Math.max(
                 document.body.scrollHeight, document.documentElement.scrollHeight,
                 document.body.offsetHeight, document.documentElement.offsetHeight,
                 document.body.clientHeight, document.documentElement.clientHeight
             );
-            const objDiv = document.getElementById("sidenavBase");
-            objDiv.scrollTop = scrollHeight;
-
-            console.log("scrollHeight = " + scrollHeight)
+            const sidenavBase = document.getElementById("sidenavBase");
+            sidenavBase.scrollTop = scrollHeight;
         });
     });
 </script>
