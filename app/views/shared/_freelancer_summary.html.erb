@@ -1,6 +1,6 @@
 <div class="d-flex flex-sm-row flex-column">
   <div class="mr-3">
-      <% if @freelancer_profile.avatar.attached? %>
+    <% if @freelancer_profile.avatar.attached? %>
       <div class="text-light mb-3 avatar-image" style="line-height: 0;">
         <%= image_tag @freelancer_profile.avatar, class: 'rounded-circle', width: '115px', height: '115px' %>
       </div>
@@ -11,9 +11,9 @@
   <div class="">
     <div class="d-flex flex-row flex-inline">
       <div class="d-flex-col">
-        <h2><%= @freelancer_profile.user.first_name %> <%=  @freelancer_profile.user.last_name %></h2>
+        <h2><%= @freelancer_profile.user.full_name %></h2>
       </div>
-      <% if @freelancer_profile.user.id == current_user&.id %>
+      <% if @freelancer_profile.editable?(current_user) %>
         <div class="d-flex-col ml-auto">
           <i class="fas fa-edit text-primary"></i>
         </div>
@@ -39,7 +39,7 @@
       <div class="d-flex-col">
         <%= @freelancer_profile.real_estate_skills.order(description: :asc).pluck(:description).join(', ') %>
       </div>
-      <% if @freelancer_profile.user.id == current_user&.id %>
+      <% if @freelancer_profile.editable?(current_user) %>
         <div class="d-flex-col ml-auto">
           <i class="fas fa-edit text-primary"></i>
         </div>
@@ -61,7 +61,7 @@
       <div class="d-flex">
         <div class="mb-2 mr-2 text-wrap text-break"><b><%= work_experience.company %></b><br><%= work_experience.job_title %></div>
         <div class="ml-auto mr-1"><i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date&.strftime('%b %Y') %></i></div>
-        <% if @freelancer_profile.user.id == current_user&.id %>
+        <% if @freelancer_profile.editable?(current_user) %>
           <i class="fas fa-edit text-primary ml-1"></i>
         <% end %>
       </div>
@@ -83,7 +83,7 @@
       <div class="d-flex">
         <div class="mb-2 mr-2 text-wrap text-break"><b><%= education.institution %></b><br><%= education.degree %> <%= education.course_of_study %></div>
         <div class="ml-auto mr-1"><i><%= education.currently_studying ? 'Present' : education.graduation_year %></i></div>
-        <% if @freelancer_profile.user.id == current_user&.id %>
+        <% if @freelancer_profile.editable?(current_user) %>
           <i class="fas fa-edit text-primary ml-1"></i>
         <% end %>
       </div>
@@ -101,7 +101,7 @@
       <div class="d-flex mb-2">
         <div class="mr-2"><b><%= freelancer_certification.description %></b></div>
         <div class="ml-auto mr-1"><i><%= freelancer_certification.earned.strftime("%b %Y") %></i></div>
-        <% if @freelancer_profile.user.id == current_user&.id %>
+        <% if @freelancer_profile.editable?(current_user) %>
           <i class="fas fa-edit text-primary ml-1"></i>
         <% end %>
       </div>
