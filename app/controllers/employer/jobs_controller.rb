@@ -6,7 +6,13 @@ class Employer::JobsController < ApplicationController
   ITEMS_PER_PAGE = 10
 
   def index
-    @pagy, @jobs = pagy(current_user.jobs.order(created_at: :desc), items: ITEMS_PER_PAGE, overflow: :last_page)
+    if params[:open].present?
+      index = jobs_collection.map(&:id).index(params[:open].to_i)
+      page = ((index + 1)/ITEMS_PER_PAGE.to_f).ceil
+      @pagy, @jobs = pagy(jobs_collection, page: page, items: ITEMS_PER_PAGE, overflow: :last_page)
+    else
+      @pagy, @jobs = pagy(jobs_collection, items: ITEMS_PER_PAGE, overflow: :last_page)
+    end
   end
 
   def destroy
@@ -23,5 +29,9 @@ class Employer::JobsController < ApplicationController
 
   def job
     @job ||= current_user.jobs.find_by(id: params[:id])
+  end
+
+  def jobs_collection
+    @jobs_collection ||= current_user.jobs.order(created_at: :desc)
   end
 end

@@ -71,7 +71,7 @@
               <i class="far fa-clock text-secondary"></i> Daytime availability is required <span class="text-secondary">(9AM-5PM PST)</span>
              <% end %>
             </div>
-            <div class="bp-text-sm mb-1">
+            <div class="bp-text-sm mb-2">
              <% if (job.required_regional_knowledge.present?) %>
                <i class="fas fa-map-marker-alt text-secondary"></i>  Regional knowledge of <span class="text-secondary"><%= job.required_regional_knowledge %></span> is required
              <% end %>
@@ -79,8 +79,44 @@
           </div>
         </div>
       </div>
+      <% if job.job_applications.any? %>
+        <div class="d-flex flex-column flex-lg-row">
+          <div class="mr-auto">
+            <a class="link_action<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
+              Applications <span class="text-secondary">(<%= job.job_applications.size %>)</span>
+            </a>
+          </div>
+          <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
+            <a class="link_action<%= job.id %> more-less<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
+              Show More<i class="fas fa-chevron-down ml-1"></i>
+            </a>
+            <a style="display: none" class="link_action<%= job.id %> more-less<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
+              Show Less<i class="fas fa-chevron-up ml-1"></i>
+            </a>
+          </div>
+        </div>
+        <div id="collapseApplications<%= job.id %>" class="collapse">
+          <hr>
+          <% job.job_applications.each do |job_application| %>
+            <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile } %>
+            <hr>
+          <% end %>
+        </div>
+        <script>
+          $('.link_action' + '<%= job.id %>').on('click', () => {
+            $('.more-less' + '<%= job.id %>').toggle();
+          })
+        </script>
+      <% end %>
     </div>
     <div class="d-flex d-lg-none mb-3"></div> <!--Shim for mobile views-->
   <% end %>
   <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
 </div>
+<script>
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const open_job = urlParams.get('open');
+  $('#collapseApplications' + open_job).collapse('show');
+  $('.more-less' + open_job).toggle();
+</script>
