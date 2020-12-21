@@ -50,7 +50,7 @@ class FreelancerProfile < ApplicationRecord
   end
 
   def editable?(current_user)
-    user.id == current_user&.id
+    user_id == current_user&.id
   end
 
   private
