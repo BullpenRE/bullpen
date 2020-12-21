@@ -8,7 +8,7 @@ class Employer::JobsController < ApplicationController
   def index
     if params[:open].present?
       index = jobs_collection.map(&:id).index(params[:open].to_i)
-      page = ((index + 1)/ITEMS_PER_PAGE.to_f).ceil
+      page = ((index + 1) / ITEMS_PER_PAGE.to_f).ceil
       @pagy, @jobs = pagy(jobs_collection, page: page, items: ITEMS_PER_PAGE, overflow: :last_page)
     else
       @pagy, @jobs = pagy(jobs_collection, items: ITEMS_PER_PAGE, overflow: :last_page)
