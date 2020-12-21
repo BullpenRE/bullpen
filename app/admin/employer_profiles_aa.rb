@@ -40,6 +40,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
         row :motivation_backfill
         row :motivation_augment
         row :motivation_other
+        row "ALL Interview Requests Sent to Freelancers", :interview_requests do
+          employer_profile.interview_requests.map{ |i_r| link_to(i_r.freelancer_profile.email, admin_interview_request_path(i_r.id)) }
+        end
       end
     end
 

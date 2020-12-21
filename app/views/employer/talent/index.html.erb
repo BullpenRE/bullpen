@@ -2,23 +2,38 @@
 
 <!--Talent card-->
 <div class="container mb-3">
+
+    <% if flash[:notice].present? %>
+      <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash[:notice].html_safe %>
+      </div>
+    <% end %>
+
   <div class="d-flex align-items-end">
     <h1>Find Talent</h1>
     <a href="#" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
   </div>
   <% @freelancer_profiles.each do |freelancer_profile| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: freelancer_profile } %>
+
+    <div id="interview-request">
+      <%= render partial: 'employer/talent/interview_request', locals: { freelancer_profile: freelancer_profile } %>
+    </div>
+
     <div class="bp-card mb-3">
       <div class="d-flex justify-content-between flex-column flex-lg-row">
         <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: freelancer_profile } %>
         <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
         <div class="ml-sm-auto">
-          <div class="d-flex flex-column flex-sm-row text-center">
-            <div class="mb-2 mb-sm-0">
-              <button class="btn btn-primary form-control" type="button" id="sendInterviewRequestButton">Request Interview</button>
-            </div>
-            <div class="ml-sm-2 center-block">
-              <button class="btn btn-outline-primary form-control" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
+          <div class="d-block d-sm-flex">
+            <% if @current_user_interview_request_freelancer_ids.exclude?(freelancer_profile.id) %>
+              <div class="d-block p-1 d-sm-inline-block">
+                <button class="btn btn-primary d-sm-in w-100" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
+              </div>
+            <% end %>
+            <div class="d-block p-1 d-sm-inline-block">
+              <button class="btn btn-outline-primary w-100" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
             </div>
           </div>
         </div>
