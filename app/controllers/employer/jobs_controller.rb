@@ -2,7 +2,7 @@
 
 class Employer::JobsController < ApplicationController
   include LoggedInRedirects
-  before_action :authenticate_current_user!, :initial_check, :non_employer_redirect,
+  before_action :check_for_open_then_authenticate_user, :initial_check, :non_employer_redirect,
                 :incomplete_employer_profile_redirect
   ITEMS_PER_PAGE = 10
 
@@ -14,6 +14,8 @@ class Employer::JobsController < ApplicationController
     else
       @pagy, @jobs = pagy(jobs_collection, items: ITEMS_PER_PAGE, overflow: :last_page)
     end
+
+    delete_session_variable
   end
 
   def destroy
@@ -36,11 +38,13 @@ class Employer::JobsController < ApplicationController
     @jobs_collection ||= current_user.jobs.order(created_at: :desc)
   end
 
-  def authenticate_current_user!
-    if params[:open].present? && !user_signed_in?
-      redirect_to new_user_session_path(open: params[:open])
-    else
-      authenticate_user!
-    end
+  def check_for_open_then_authenticate_user
+    return redirect_to new_user_session_path(open: params[:open]) if params[:open].present? && !user_signed_in?
+
+    authenticate_user!
+  end
+
+  def delete_session_variable
+    session.delete(:open)
   end
 end
