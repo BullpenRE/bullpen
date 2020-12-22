@@ -47,12 +47,6 @@ class Employer::JobsController < ApplicationController
     end
   end
 
-  # def check_for_open_then_authenticate_user
-  #   return redirect_to new_user_session_path(open: params[:open]) if params[:open].present? && !user_signed_in?
-  #
-  #   authenticate_user!
-  # end
-
   def delete_session_variable
     session.delete(:open)
   end
