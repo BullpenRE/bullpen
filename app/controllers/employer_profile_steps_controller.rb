@@ -90,11 +90,9 @@ class EmployerProfileStepsController < ApplicationController
   end
 
   def completed_profile_redirect
-    if current_user.employer_profile&.completed?
-      return redirect_to employer_jobs_path(open: session[:open]) if session[:open].present?
+    return redirect_to employer_jobs_path(open: session[:open]) if session[:open].present?
 
-      redirect_to employer_talent_index_path
-    end
+    redirect_to employer_talent_index_path if current_user.employer_profile&.completed?
   end
 
   def step_variables

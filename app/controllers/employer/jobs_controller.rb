@@ -2,7 +2,8 @@
 
 class Employer::JobsController < ApplicationController
   include LoggedInRedirects
-  before_action :authenticate_current_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
+  before_action :authenticate_current_user!, :initial_check, :non_employer_redirect,
+                :incomplete_employer_profile_redirect
   ITEMS_PER_PAGE = 10
 
   def index
