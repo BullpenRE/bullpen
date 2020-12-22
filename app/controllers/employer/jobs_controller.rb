@@ -2,7 +2,7 @@
 
 class Employer::JobsController < ApplicationController
   include LoggedInRedirects
-  before_action :save_open_if_not_logged_in, only: [:index]
+  before_action :save_open_in_session, only: [:index], if: -> { params[:open].present? && !user_signed_in? }
   before_action :authenticate_user!, :initial_check, :non_employer_redirect,
                 :incomplete_employer_profile_redirect
   ITEMS_PER_PAGE = 10
@@ -39,12 +39,10 @@ class Employer::JobsController < ApplicationController
     @jobs_collection ||= current_user.jobs.order(created_at: :desc)
   end
 
-  def save_open_if_not_logged_in
-    if params[:open].present? && !user_signed_in?
-      session[:open] = params[:open]
+  def save_open_in_session
+    session[:open] = params[:open]
 
-      redirect_to employer_jobs_path
-    end
+    redirect_to employer_jobs_path
   end
 
   def delete_session_variable
