@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     passwords: 'passwords',
     registrations: 'registrations',
-    confirmations: 'confirmations'
+    confirmations: 'confirmations',
+    sessions: 'sessions'
   }
 
   devise_scope :user do

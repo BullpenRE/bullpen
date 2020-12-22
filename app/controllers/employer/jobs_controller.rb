@@ -2,7 +2,7 @@
 
 class Employer::JobsController < ApplicationController
   include LoggedInRedirects
-  before_action :authenticate_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
+  before_action :authenticate_current_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
   ITEMS_PER_PAGE = 10
 
   def index
@@ -33,5 +33,14 @@ class Employer::JobsController < ApplicationController
 
   def jobs_collection
     @jobs_collection ||= current_user.jobs.order(created_at: :desc)
+  end
+
+  def authenticate_current_user!
+    if params[:open].present? && !user_signed_in?
+      redirect_to new_user_session_path(open: params[:open])
+    else
+      authenticate_user!
+    end
+
   end
 end

@@ -13,6 +13,7 @@
     <div class="col-md-10 px-4 py-4">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <%= render 'devise/shared/error_messages' %>
+        <%= f.hidden_field 'open', value: @open %>
         <div class="field mb-3">
           <%= f.label :email, class: 'h4 text-secondary text-left' %><br />
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control bg-white border-gray-dark', placeholder: "Email address", id: "user_email"%>
