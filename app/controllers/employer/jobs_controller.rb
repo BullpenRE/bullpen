@@ -41,6 +41,5 @@ class Employer::JobsController < ApplicationController
     else
       authenticate_user!
     end
-
   end
 end
