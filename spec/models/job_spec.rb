@@ -9,6 +9,39 @@ RSpec.describe Job, type: :model do
 
   context 'Validations' do
     it { is_expected.to validate_presence_of(:user_id) }
+    describe 'pay_ranges' do
+      it 'can be nil' do
+        job.pay_range_high = nil
+        expect(job).to be_valid
+        job.pay_range_low = nil
+        expect(job).to be_valid
+      end
+
+      it 'if not nil it must be greater than pay_range_low' do
+        job.pay_range_low = 100
+        job.pay_range_high = 150
+        expect(job).to be_valid
+        job.pay_range_high = 50
+        expect(job).to_not be_valid
+      end
+
+      it 'neither can be lower than 0' do
+        job.pay_range_low = -10
+        expect(job).to_not be_valid
+        job.pay_range_low = nil
+        expect(job).to be_valid
+        job.pay_range_high = -50
+        expect(job).to_not be_valid
+      end
+
+      it 'if contract_type is not hourly then pay_range_high must be nil' do
+        job.contract_type = 1
+        job.pay_range_high = nil
+        expect(job).to be_valid
+        job.pay_range_high = 2000
+        expect(job).to_not be_valid
+      end
+    end
   end
 
   context 'Relationships' do
@@ -68,6 +101,27 @@ RSpec.describe Job, type: :model do
         job.destroy
         expect(JobApplication.exists?(job_application.id)).to be_falsey
       end
+    end
+  end
+
+  context 'Scopes' do
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:user_1) { FactoryBot.create(:user) }
+    let!(:job_1) { FactoryBot.create(:job) }
+    let!(:job_2) { FactoryBot.create(:job) }
+    let!(:job_application) { FactoryBot.create(:job_application, job: job, user: user) }
+    let!(:job_application_1) { FactoryBot.create(:job_application, job: job_1, user: user_1) }
+
+    it '.not_applied jobs for user' do
+      expect(Job.not_applied(user)).to include(job_1)
+      expect(Job.not_applied(user)).to include(job_2)
+      expect(Job.not_applied(user)).to_not include(job)
+    end
+
+    it '.not_applied jobs for user_1' do
+      expect(Job.not_applied(user_1)).to include(job)
+      expect(Job.not_applied(user_1)).to include(job_2)
+      expect(Job.not_applied(user_1)).to_not include(job_1)
     end
   end
 end

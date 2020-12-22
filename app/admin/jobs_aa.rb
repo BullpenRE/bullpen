@@ -17,7 +17,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
                   :required_experience,
                   :required_regional_knowledge,
                   :relevant_job_details,
-                  :draft
+                  :draft,
+                  :contract_type,
+                  :pay_range_low,
+                  :pay_range_high
 
     index do
       column :user
@@ -43,6 +46,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         row :required_experience
         row :relevant_job_details
         row :state
+        row :contract_type
+        row :pay_range_low
+        row :pay_range_high
         row 'Sectors' do
           job.sectors.pluck(:description)
         end
@@ -80,6 +86,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :daytime_availability_required
         f.input :required_experience
         f.input :relevant_job_details
+        f.input :contract_type
+        f.input :pay_range_low
+        f.input :pay_range_high
         f.input :skills, as: :check_boxes, collection: Skill.order(:description).pluck(:description, :id)
         f.input :sectors, as: :check_boxes, collection: Sector.order(:description).pluck(:description, :id)
         f.input :softwares, as: :check_boxes, collection: Software.order(:description).pluck(:description, :id)

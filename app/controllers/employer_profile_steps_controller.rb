@@ -41,7 +41,7 @@ class EmployerProfileStepsController < ApplicationController
   def employee_count_save
     return false unless wizard_value(step) == :employee_count
 
-    @employer_profile.update(employee_count: params.require(:employer_profile).values.dig(0))
+    @employer_profile.update(employee_count_params)
     render_wizard @user
 
     true
@@ -84,6 +84,10 @@ class EmployerProfileStepsController < ApplicationController
   end
 
   private
+
+  def employee_count_params
+    params.require(:employer_profile).permit(:employee_count)
+  end
 
   def completed_profile_redirect
     redirect_to employer_talent_index_path if current_user.employer_profile&.completed?
