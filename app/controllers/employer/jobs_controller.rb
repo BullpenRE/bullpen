@@ -2,7 +2,8 @@
 
 class Employer::JobsController < ApplicationController
   include LoggedInRedirects
-  before_action :check_for_open_then_authenticate_user, :initial_check, :non_employer_redirect,
+  before_action :save_open_if_not_logged_in, only: [:index]
+  before_action :authenticate_user!, :initial_check, :non_employer_redirect,
                 :incomplete_employer_profile_redirect
   ITEMS_PER_PAGE = 10
 
@@ -38,11 +39,19 @@ class Employer::JobsController < ApplicationController
     @jobs_collection ||= current_user.jobs.order(created_at: :desc)
   end
 
-  def check_for_open_then_authenticate_user
-    return redirect_to new_user_session_path(open: params[:open]) if params[:open].present? && !user_signed_in?
+  def save_open_if_not_logged_in
+    if params[:open].present? && !user_signed_in?
+      session[:open] = params[:open]
 
-    authenticate_user!
+      redirect_to employer_jobs_path
+    end
   end
+
+  # def check_for_open_then_authenticate_user
+  #   return redirect_to new_user_session_path(open: params[:open]) if params[:open].present? && !user_signed_in?
+  #
+  #   authenticate_user!
+  # end
 
   def delete_session_variable
     session.delete(:open)
