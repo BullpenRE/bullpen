@@ -7,6 +7,7 @@ class FreelancerProfileExperience < ApplicationRecord
   validates :company, presence: true
   validates :location, presence: true
   validates :description, presence: true
+  validate :end_date_is_after_start_date
 
   AVAILABLE_YEARS = (1991..Time.now.year).reverse_each
   AVAILABLE_MONTHNAMES = Date::MONTHNAMES.drop(1)
@@ -30,5 +31,15 @@ class FreelancerProfileExperience < ApplicationRecord
 
   def description_paragraphs
     description.split("\n").reject(&:blank?)
+  end
+
+  private
+
+  def end_date_is_after_start_date
+    return if start_date.blank? || end_date.blank?
+    byebug
+    if start_date > end_date
+      errors.add(:end_date, 'must occur later than the start date')
+    end
   end
 end
