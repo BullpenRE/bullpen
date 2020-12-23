@@ -13,9 +13,21 @@
       <div class="modal-footer justify-content-between pt-0">
         <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
         <div>
-          <%= link_to 'Delete Draft', freelancer_jobs_path, class: "btn btn-primary d-block" %>
+          <button class="btn btn-primary d-block delete-job-application-draft-<%= job_application.id %>" type="button">Delete Job</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  $('.delete-job-application-draft-'+<%= job_application.id %>).click(() => {
+    $.ajax({
+      url: '/freelancer/applications/<%= job_application.id %>',
+      method: 'DELETE',
+      success: () => {
+        document.location.reload();
+      }
+    })
+  })
+</script>
