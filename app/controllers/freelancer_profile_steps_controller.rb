@@ -6,10 +6,9 @@ class FreelancerProfileStepsController < ApplicationController
   include LoggedInRedirects
   steps :skills_page, :avatar_location, :professional_history, :work_education_experience, :summary, :final_step
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :accepted_profile_redirect
+  before_action :set_user, :set_freelancer_profile
 
   def show
-    @user = current_user
-    @freelancer_profile = @user.freelancer_profile || FreelancerProfile.create(user_id: @user.id)
     @user.reload unless @user.freelancer_profile.present?
     populate_available_options_for_freelancer_data
 
@@ -17,8 +16,6 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   def update
-    @user = current_user
-    @freelancer_profile = @user.freelancer_profile
     @certifications = certifications
     save_current_step
     skills_page_save ||
@@ -59,7 +56,12 @@ class FreelancerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :work_education_experience
 
     freelancer_profile_education_save
-    work_experience_save
+
+    unless work_experience_save
+      flash[:alert] = 'End_date must occur later than the start date'
+      render wizard_path(:professional_history) && return
+    end
+
     certification_save
 
     render wizard_path(:work_education_experience)
@@ -96,6 +98,15 @@ class FreelancerProfileStepsController < ApplicationController
   end
 
   private
+
+  def set_user
+    @user ||= current_user
+  end
+
+  def set_freelancer_profile
+    @freelancer_profile = @user.freelancer_profile || FreelancerProfile.create(user_id: @user.id)
+
+  end
 
   def accepted_profile_redirect
     redirect_to freelancer_jobs_path if current_user.freelancer_profile&.accepted?

@@ -52,8 +52,8 @@ module LoggedInRedirects
   end
 
   def current_freelancer_step
-    return 'summary' if current_user.freelancer_profile.declined?
+    return 'summary' if current_user.freelancer_profile&.declined?
 
-    current_user.freelancer_profile.current_step
+    current_user.freelancer_profile&.current_step
   end
 end

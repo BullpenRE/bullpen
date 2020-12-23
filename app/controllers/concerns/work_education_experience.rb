@@ -23,6 +23,8 @@ module WorkEducationExperience
     else
       FreelancerProfileExperience.create(checked_profile_experience_params)
     end
+  rescue
+    false
   end
 
   def certification_save

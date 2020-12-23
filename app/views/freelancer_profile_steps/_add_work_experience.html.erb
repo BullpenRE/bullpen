@@ -20,12 +20,6 @@
 
           <div class="container">
             <div class="alert alert-warning d-none" role="alert"></div>
-            <% if flash[:alert].present? %>
-                <div class="alert alert-warning alert-dismissible fade show">
-                  <button type="button" class="close" data-dismiss="alert">&times;</button>
-                  <%= flash[:alert].html_safe %>
-                </div>
-            <% end %>
           </div>
 
           <div class="form-group">

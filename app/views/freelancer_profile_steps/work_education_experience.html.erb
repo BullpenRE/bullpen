@@ -14,6 +14,14 @@
       <h2>Work experience and education</h2>
       <p class="mb-4">Tell us about your work experience and educational background.</p>
     </div>
+
+    <% if flash[:alert].present? %>
+        <div class="alert alert-warning alert-dismissible fade show">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <%= flash[:alert].html_safe %>
+        </div>
+    <% end %>
+
     <div class="mb-4">
       <div class="bp-input-label">
         Work Experience
