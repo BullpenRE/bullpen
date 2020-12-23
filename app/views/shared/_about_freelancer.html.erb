@@ -16,7 +16,7 @@
   </div>
   <div>
     <p><%= freelancer_profile.professional_summary %></p>
-    <p class="text-secondary"><b>$100 per hour</b></p>
+    <p class="text-secondary"><b>$<%= job_application.present? ? job_application.per_hour_bid : '100' %> per hour</b></p>
     <%  freelancer_profile.sectors.order(description: :asc)&.each do |sector| %>
       <span class="badge badge-secondary mb-1"><%= sector.description %></span>
     <% end %>

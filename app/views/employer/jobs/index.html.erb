@@ -98,7 +98,7 @@
         <div id="collapseApplications<%= job.id %>" class="collapse">
           <hr>
           <% job.job_applications.each do |job_application| %>
-            <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile } %>
+            <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile, job_application: job_application } %>
             <hr>
           <% end %>
         </div>
