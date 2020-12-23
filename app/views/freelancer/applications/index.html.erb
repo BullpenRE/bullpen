@@ -37,9 +37,11 @@
                       <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#showJobPost<%= job_application.job.id %>">
                         Show Details
                       </button>
+                    <% if job_application.state == 'draft' %>
                       <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="#deleteApplicationDraft<%= job_application.id %>">
                         Delete Draft
                       </button>
+                    <% end %>
                   </div>
             </div>
           </div>
