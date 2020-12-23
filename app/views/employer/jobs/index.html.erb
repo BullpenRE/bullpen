@@ -116,7 +116,7 @@
 <script>
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const open_job = urlParams.get('open');
+  const open_job = urlParams.get('view_job');
   $('#collapseApplications' + open_job).collapse('show');
   $('.more-less' + open_job).toggle();
   $('html,body').animate({scrollTop: $('.card' + open_job).offset().top},'slow');
