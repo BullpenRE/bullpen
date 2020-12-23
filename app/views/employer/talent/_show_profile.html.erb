@@ -72,7 +72,7 @@
               <% freelancer_profile.freelancer_profile_experiences.order(current_job: :desc, end_date: :desc).each do |work_experience| %>
                 <div class="d-flex">
                   <div class="mb-2 mr-2 text-wrap text-break"><b><%= work_experience.company %></b><br><%= work_experience.job_title %></div>
-                  <div class="ml-auto"><i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date.strftime('%b %Y') %></i></div>
+                  <div class="ml-auto"><i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date&.strftime('%b %Y') %></i></div>
                 </div>
                 <ul class="mr-lg-3 mr-1 pl-3">
                   <% work_experience.description_paragraphs.each do |paragraph| %>

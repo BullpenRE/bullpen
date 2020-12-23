@@ -5,28 +5,28 @@
     <div class="alert alert-danger d-none" role="alert">
     </div>
   </div>
-  <div class="row">
-    <div class="col-4">
-      <label class="h5">Contact Type <i class="far fa-question-circle text-primary"></i></label>
-      <%= f.select :contract_type,
-                   options_for_select(
-                       { 'Hourly': 'hourly', 'Monthly Retainer - 80 hrs': 'monthly_retainer_80' },
-                       job.contract_type),
-                   {}, class: 'form-control', required: true, style: "width: 100%" %>
-    </div>
-    <div class="col">
-      <label class="h5 rangePay">Hourly Pay Range <span class="font-weight-normal text-dark">($100-S150 recommended)</span></label>
-      <div class="row">
-        <div class="form-group col">
+  <table class="table table-borderless table-sm">
+    <tbody>
+      <tr>
+        <td> <label class="h5">Contact Type <i class="far fa-question-circle text-primary"></i></label></td>
+        <td colspan="2"><label class="h5 rangePay">Hourly Pay Range <span class="font-weight-normal text-dark">($100-S150 recommended)</span></label></td>
+      </tr>
+      <tr>
+        <td style="width: 33%">
+          <%= f.select :contract_type,
+                       options_for_select(
+                         { 'Hourly': 'hourly', 'Monthly Retainer - 80 hrs': 'monthly_retainer_80' }, job.contract_type),
+                       {}, class: 'form-control', required: true, style: "width: 100%" %>
+        </td>
+        <td style="width: 33%">
           <%= f.text_field :pay_range_low, class: "form-control", placeholder: "$ Low", required: true %>
-        </div>
-        <div class="form-group col">
-          <%= f.text_field :pay_range_high, class: "form-control", placeholder: "$ High" %>
-        </div>
-      </div>
-    </div>
-  </div>
-
+        </td>
+        <td style="width: 33%">
+         <%= f.text_field :pay_range_high, class: "form-control", placeholder: "$ High" %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <div class="form-group mb-1 mt-3">
     <label for="jobDetailsTextarea" class="h5">Describe responsibilities, provided resources, or any other requirements. <span class="text-dark font-weight-normal">(Optional)</span></label>
     <%= f.text_area :relevant_job_details, class: "form-control",rows: "3", id: "jobDetailsTextarea", placeholder: "Enter any relevant job details", rows: "8", maxlength: "5000" %>
