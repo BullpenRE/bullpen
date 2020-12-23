@@ -100,7 +100,6 @@ class FreelancerProfileStepsController < ApplicationController
 
   def set_freelancer_profile
     @freelancer_profile = @user.freelancer_profile || FreelancerProfile.create(user_id: @user.id)
-
   end
 
   def accepted_profile_redirect
