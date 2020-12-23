@@ -3,6 +3,7 @@
 class Employer::JobFlowsController < ApplicationController
   include Wicked::Wizard
   include LoggedInRedirects
+  include ApplicationHelper
   steps :post_job_step_1, :post_job_step_2, :post_job_step_3, :post_job_step_4, :post_job_step_5
   before_action :authenticate_user!, :initial_check
 
@@ -67,7 +68,7 @@ class Employer::JobFlowsController < ApplicationController
   def details_save
     return false unless params[:job][:step] == 'post_job_step_4'
 
-    job.update(relevant_job_details: params[:job][:relevant_job_details])
+    job.update(details_params.merge(relevant_job_details: params[:job][:relevant_job_details]))
     respond_js_format(:post_job_step_5)
 
     true
@@ -89,6 +90,22 @@ class Employer::JobFlowsController < ApplicationController
   end
 
   private
+
+  def details_params
+    if params[:job][:contract_type] == 'hourly'
+      {
+        contract_type: 0,
+        pay_range_low: clean_currency_entry(params[:job][:pay_range_low]),
+        pay_range_high: clean_currency_entry(params[:job][:pay_range_high])
+      }
+    else
+      {
+        contract_type: 3,
+        pay_range_low: clean_currency_entry(params[:job][:pay_range_low]),
+        pay_range_high: nil
+      }
+    end
+  end
 
   def save_job_skills
     job.job_skills.destroy_all
