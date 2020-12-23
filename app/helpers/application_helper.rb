@@ -8,13 +8,4 @@ module ApplicationHelper
   def select_months_array
     FreelancerProfileExperience::AVAILABLE_MONTHNAMES.each_with_index.collect { |m, i| [m, i+1] }
   end
-
-  def mobile_device
-    agent = request.user_agent
-
-    return 'tablet' if agent =~ /(tablet|ipad)|(android(?!.*mobile))/i
-    return 'mobile' if agent =~ /Mobile/
-
-    'desktop'
-  end
 end
