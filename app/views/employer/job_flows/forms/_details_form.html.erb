@@ -1,7 +1,29 @@
 <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
   <%= f.hidden_field :job_id, value: @job.id %>
   <%= f.hidden_field 'step', value: 'post_job_step_4' %>
-  <div class="form-group mb-1">
+
+  <div class="row">
+    <div class="col-4">
+      <label class="h5">Contact Type</label> <i class="far fa-question-circle text-primary"></i>
+      <select class="custom-select">
+        <option data-toggle="collapse" class="custom-control-input" data-target="#hourlyRangePay" aria-controls="hourlyRangePay">Hourly</option><i class="fas fa-chevron-down"></i>
+        <option data-toggle="collapse" class="custom-control-input" data-target="#monthlyRangePay" aria-controls="monthlyRangePay">Monthly Retainer - 80 hrs</option>
+      </select>
+    </div>
+    <div class="col">
+      <label class="h5">Hourly Pay Range</label> <i>($100-S150 recommended)</i>
+      <div class="row">
+        <div class="form-group col">
+          <input type="text" class="form-control" id="lowPayInput" placeholder="$ Low">
+        </div>
+        <div class="form-group col">
+          <input type="text" class="form-control" id="highPayInput" placeholder="$ High">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group mb-1 mt-3">
     <label for="jobDetailsTextarea" class="h5">Describe responsibilities, provided resources, or any other requirements. <span class="text-dark font-weight-normal">(Optional)</span></label>
     <%= f.text_area :relevant_job_details, class: "form-control",rows: "3", id: "jobDetailsTextarea", placeholder: "Enter any relevant job details", rows: "8", maxlength: "5000" %>
   </div>
