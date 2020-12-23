@@ -19,12 +19,12 @@ module WorkEducationExperience
     if work_profile_experience.present? && params[:commit] == 'Delete'
       work_profile_experience.destroy
     elsif work_profile_experience.present?
-      work_profile_experience.update(checked_profile_experience_params)
+      work_profile_experience.update!(checked_profile_experience_params)
     else
       FreelancerProfileExperience.create!(checked_profile_experience_params)
     end
   rescue
-    flash[:alert] = 'End_date must occur later than the start date'
+    flash[:alert] = 'End date must occur later than the start date'
     render wizard_path(:professional_history) && return
   end
 
@@ -44,7 +44,7 @@ module WorkEducationExperience
 
   def profile_experience_params
     params.require(:freelancer_profile_experience)
-          .permit(:job_title, :company, :location, :description,
+          .permit(:id, :job_title, :company, :location, :description,
                   :start_month, :start_year, :end_month, :end_year, :current_job)
   end
 
