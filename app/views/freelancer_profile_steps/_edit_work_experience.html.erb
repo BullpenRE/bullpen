@@ -6,11 +6,16 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="container">
-        <div class="alert alert-danger d-none" role="alert">
-        </div>
-      </div>
+
       <%= form_for :freelancer_profile_experience, url: wizard_path, method: :put do |f| %>
+
+        <div class="container">
+          <% unless freelancer_profile_experience.valid? %>
+            <div class="alert alert-danger d-none" role="alert">
+            </div>
+          <% end %>
+        </div>
+
         <div class="modal-body pt-0">
         <h3 class="modal-title mb-4" id="modalLabel">Edit Experience</h3>
 
