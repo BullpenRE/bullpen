@@ -1,4 +1,10 @@
 <!--Add Work Experience Modal-->
+<style>
+  .collapsing {
+    transition-duration: unset;
+  }
+</style>
+
 <div class="modal fade" id="addWorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md" role="document">
     <div class="modal-content">
@@ -77,32 +83,4 @@
     </div>
   </div>
 </div>
-<style>
-  .collapsing {
-    transition-duration: unset;
-  }
-</style>
-<script>
-  $('.btn-primary').on('click', (e) => {
-    if (!$('#currentJob').prop('checked')) {
-      if ($('#endYear').val() < $('#startYear').val()) {
-        show_alert('You enter a starting data later than the ending date');
-        e.preventDefault();
-        e.stopPropagation();
-      } else if ($('#endYear').val() == $('#startYear').val()) {
-        if($('#endMonth').val() < $('#startMonth').val()) {
-          show_alert('You enter a starting data later than the ending date');
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      }
-    }
-  });
-
-  const show_alert = (message) => {
-    $('.alert').removeClass('d-none').addClass('d-block').append(message);
-    setTimeout(() => {
-      $('.alert').removeClass('d-block').addClass('d-none').text('');
-    }, 3000);
-  }
-</script>
+<%= render partial: 'freelancer_profile_steps/date_validation' %>
