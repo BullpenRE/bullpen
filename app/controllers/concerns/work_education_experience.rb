@@ -21,10 +21,11 @@ module WorkEducationExperience
     elsif work_profile_experience.present?
       work_profile_experience.update(checked_profile_experience_params)
     else
-      FreelancerProfileExperience.create(checked_profile_experience_params)
+      FreelancerProfileExperience.create!(checked_profile_experience_params)
     end
   rescue
-    false
+    flash[:alert] = 'End_date must occur later than the start date'
+    render wizard_path(:professional_history) && return
   end
 
   def certification_save

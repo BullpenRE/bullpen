@@ -56,12 +56,7 @@ class FreelancerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :work_education_experience
 
     freelancer_profile_education_save
-
-    unless work_experience_save
-      flash[:alert] = 'End_date must occur later than the start date'
-      render wizard_path(:professional_history) && return
-    end
-
+    work_experience_save
     certification_save
 
     render wizard_path(:work_education_experience)
