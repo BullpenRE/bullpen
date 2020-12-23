@@ -13,6 +13,7 @@ class FreelancerProfile < ApplicationRecord
   has_many :freelancer_softwares, dependent: :destroy
   has_many :softwares, through: :freelancer_softwares
   has_many :freelancer_certifications, dependent: :destroy
+  has_many :interview_requests, dependent: :destroy
   has_one_attached :avatar
 
   enum professional_years_experience: { '0-2': 0, '2-5': 1, '5-10': 2, '>10': 3 }
@@ -36,8 +37,20 @@ class FreelancerProfile < ApplicationRecord
     user.last_name
   end
 
+  def full_name
+    user.full_name
+  end
+
+  def email
+    user.email
+  end
+
   def location
     user.location
+  end
+
+  def editable?(current_user)
+    user_id == current_user&.id
   end
 
   private

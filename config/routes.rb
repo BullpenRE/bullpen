@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     resources :billing
     resources :refer
     resources :talent
+    post 'interview_request', to: 'talent#interview_request'
   end
 
   namespace :public do

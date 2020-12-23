@@ -2,6 +2,13 @@
 
 <!--Job card-->
 <div class="container mb-3">
+  <% if flash[:notice].present? %>
+    <div class="alert alert-success alert-dismissible fade show">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <%= flash[:notice].html_safe %>
+    </div>
+  <% end %>
+
   <h1>Applications</h1>
   <% @job_applications.each do |job_application| %>
     <%= render partial: 'employer/jobs/show_job_post', locals: { job: job_application.job } %>
@@ -40,7 +47,11 @@
       </div>
       <div>
         <div class="bp-text-sm mb-3">
-          Posted <%= time_ago_in_words(job_application.job.created_at) %> ago
+          <% if job_application.applied_at.nil? %>
+            Posted on <%= job_application.job.created_at.strftime("%b %d %Y") %>
+          <% else %>
+            Applied <%= time_ago_in_words(job_application.applied_at) %> ago for job posted on <%= job_application.job.created_at.strftime("%b %d %Y") %>
+          <% end %>
         </div>
         <%= render partial: 'freelancer/shared/job_card', locals: { job: job_application.job } %>
       </div>

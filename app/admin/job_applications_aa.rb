@@ -3,7 +3,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     menu label: 'Job Applications'
 
     permit_params :job_id, :user_id, :cover_letter, :template, :per_hour_bid, :available_during_work_hours,
-                  :state, :work_sample
+                  :state, :work_sample, :applied_at
     includes :job, :user
 
     filter :job_short_description, as: :string, label: 'Job description'
@@ -24,7 +24,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       column :per_hour_bid
       column :available_during_work_hours
       column :created_at
-      column :updated_at
+      column :applied_at
       actions
     end
 
@@ -63,6 +63,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
                       data: { confirm: 'Are you sure?' }
           end
         end
+        row :applied_at
         row :created_at
 
         if application.job.job_questions.present?
@@ -95,6 +96,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
           f.input :work_sample, as: :file, required: false
         end
         f.input :state
+        f.input :applied_at
         f.actions
       end
     end
