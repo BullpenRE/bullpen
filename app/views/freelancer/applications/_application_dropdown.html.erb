@@ -1,0 +1,14 @@
+<div class="dropdown">
+  <button class="btn btn-outline-primary dropdown-toggle pr-1" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    More<i class="fas fa-chevron-down ml-2"></i></button>
+  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+    <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#showJobPost<%= job_application.job.id %>">
+      Show Details
+    </button>
+    <% if job_application.state == 'draft' %>
+      <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="#deleteApplicationDraft<%= job_application.id %>">
+        Delete Draft
+      </button>
+    <% end %>
+  </div>
+</div>
