@@ -23,9 +23,8 @@ module WorkEducationExperience
     else
       FreelancerProfileExperience.create!(checked_profile_experience_params)
     end
-  rescue
+  rescue ActiveRecord::RecordInvalid
     flash[:alert] = 'End date must occur later than the start date'
-    render wizard_path(:professional_history) && return
   end
 
   def certification_save
@@ -50,7 +49,7 @@ module WorkEducationExperience
 
   def profile_education_params
     params.require(:freelancer_profile_education)
-          .permit(:institution, :degree, :course_of_study, :graduation_year, :currently_studying, :description)
+          .permit(:id, :institution, :degree, :course_of_study, :graduation_year, :currently_studying, :description)
   end
 
   def checked_profile_education_params
@@ -80,11 +79,11 @@ module WorkEducationExperience
   def checked_freelancer_certification_params
     if params[:freelancer_certification][:description].blank?
       params.require(:freelancer_certification)
-        .permit(:certification_id, :earned_year, :earned_month)
+        .permit(:id, :certification_id, :earned_year, :earned_month)
         .merge(description: Certification.find_by(id: params[:freelancer_certification][:certification_id]).description)
     else
       params.require(:freelancer_certification)
-        .permit(:description, :earned_year, :earned_month)
+        .permit(:id, :certification_id, :description, :earned_year, :earned_month)
         .merge(certification_id: Certification.custom_id)
     end
   end
