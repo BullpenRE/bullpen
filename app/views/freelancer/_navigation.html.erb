@@ -23,7 +23,7 @@
           <a class="nav-link" href="#">Contracts</a>
         </li>
         <li class="nav-item<%= ' active' if section == 'profile' %>">
-          <a class="nav-link" href="#">Your Profile</a>
+          <%= link_to 'Your Profile', freelancer_profile_path(current_user), class: 'nav-link' %>
         </li>
       </ul>
     </div>
