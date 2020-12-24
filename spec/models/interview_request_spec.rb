@@ -32,4 +32,13 @@ RSpec.describe InterviewRequest, type: :model do
       expect(interview_request.freelancer_profile).to eq(freelancer_profile)
     end
   end
+
+  context 'Methods' do
+    it '#message_paragraphs' do
+      interview_request.update(message: "Dear Madam!\n\nNice to e-meet you.\nYour resume looks awesome.")
+      expect( interview_request.message_paragraphs).to eq(['Dear Madam!', 'Nice to e-meet you.', 'Your resume looks awesome.'])
+      interview_request.update(message: "A ")
+      expect( interview_request.reload.message_paragraphs).to eq(['A '])
+    end
+  end
 end

@@ -18,7 +18,7 @@
             Add a personal message.
           </label>
         <div class="w-100">
-          <%= text_area_tag 'message', nil, class: "form-control mb-3",rows: "3", placeholder: "Enter your message" %>
+          <%= f.text_area :message, class: "form-control mb-3", id: "addPersonalMessageTextArea", placeholder: "Enter your message", rows: "8", maxlength: "5000" %>
         </div>
         <div class="d-flex justify-content-end">
           <%= f.submit 'Send Invitation', class: 'btn btn-primary mt-3 send-invitation' %>

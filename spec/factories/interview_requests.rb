@@ -3,5 +3,6 @@ FactoryBot.define do
     employer_profile
     freelancer_profile
     state { 0 }
+    message {Faker::Hipster.paragraph}
   end
 end

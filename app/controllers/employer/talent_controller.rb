@@ -34,6 +34,6 @@ class Employer::TalentController < ApplicationController
   private
 
   def interview_request_params
-    params.require(:interview_request).permit(:freelancer_profile_id, :state)
+    params.require(:interview_request).permit(:freelancer_profile_id, :state, :message)
   end
 end

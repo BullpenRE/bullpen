@@ -3,7 +3,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
     menu label: 'Interview Requests'
     includes :employer_profile, :freelancer_profile
 
-    permit_params :employer_profile_id, :freelancer_profile_id, :state
+    permit_params :employer_profile_id, :freelancer_profile_id, :state, :message
     actions :all
 
     index do
@@ -15,6 +15,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
         link_to interview_request.freelancer_profile.email, admin_freelancer_profile_path(interview_request.freelancer_profile_id)
       end
       column :state
+      column :message
       column :created_at
       column :updated_at
 
@@ -35,6 +36,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
         row :created_at
         row :updated_at
         row :state
+        row :message
       end
       active_admin_comments
     end
@@ -54,6 +56,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
                     label: "Freelancer (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
           end
           f.input :state, as: :select
+          f.input :message
       f.actions
       end
     end
