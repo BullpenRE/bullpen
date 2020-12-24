@@ -96,7 +96,7 @@ class Employer::JobFlowsController < ApplicationController
       {
         contract_type: 0,
         pay_range_low: clean_currency_entry(params[:job][:pay_range_low]),
-        pay_range_high: clean_currency_entry(params[:job][:pay_range_high])
+        pay_range_high: pay_range_high
       }
     else
       {
@@ -105,6 +105,10 @@ class Employer::JobFlowsController < ApplicationController
         pay_range_high: nil
       }
     end
+  end
+
+  def pay_range_high
+    params[:job][:pay_range_high].present? ? clean_currency_entry(params[:job][:pay_range_high]) : nil
   end
 
   def save_job_skills
