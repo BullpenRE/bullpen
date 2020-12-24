@@ -1,7 +1,11 @@
+<%= render partial: 'navigation', locals: { section: 'jobs' } %>
+
 <div class="container mb-5">
   <div class="mt-4">
     <% if @freelancer_profile.ready_for_submission? %>
-      <h1>Please verify your information.</h1>
+      <div class="h1">
+        Please verify your information.
+      </div>
     <% elsif @freelancer_profile.pending? %>
       <div class="d-flex flex-row">
         <div class="mr-auto p-2">
