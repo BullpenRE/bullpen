@@ -58,6 +58,7 @@ Rails.application.routes.draw do
     resources :interviews
     resources :contracts
     resource :profile
+    post 'change_software_licence', to: 'profile#change_software_licence'
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
