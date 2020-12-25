@@ -24,7 +24,7 @@ module WorkEducationExperience
       FreelancerProfileExperience.create!(checked_profile_experience_params)
     end
   rescue ActiveRecord::RecordInvalid
-    flash[:alert] = 'End date must occur later than the start date'
+    flash[:alert] = 'Ending date cannot occur before the starting date.'
   end
 
   def certification_save

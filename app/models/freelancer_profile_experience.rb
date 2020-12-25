@@ -39,6 +39,6 @@ class FreelancerProfileExperience < ApplicationRecord
     return if start_year.blank? || start_month.blank? || end_year.blank? || end_month.blank?
     return unless start_date > end_date
     
-    errors.add(:end_date, 'must occur later than the start date')
+    errors.add(:end_date, 'cannot occur before the starting date.')
   end
 end

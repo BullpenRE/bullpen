@@ -1,24 +1,16 @@
 <script>
     $('.btn-primary').on('click', (e) => {
-        if (!$('#currentJob').prop('checked')) {
-            if ($('#endYear').val() < $('#startYear').val()) {
-                show_alert('You entered a starting data later than the ending date');
-                e.preventDefault();
-                e.stopPropagation();
-            } else if ($('#endYear').val() == $('#startYear').val()) {
-                if($('#endMonth').val() < $('#startMonth').val()) {
-                    show_alert('You entered a starting data later than the ending date');
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-            }
+        const start_date = new Date($('#startYear').val(), ($('#startMonth').val() - 1));
+        const end_date = new Date($('#endYear').val(), ($('#endMonth').val() - 1));
+        const alertElement = document.getElementById("alertWarning");
+
+        debugger;
+
+        if (!$('#currentJob').prop('checked') && (start_date > end_date)) {
+            alertElement.classList.remove('d-none');
+            alertElement.classList.add('d-block');
+            e.preventDefault();
+            e.stopPropagation();
         }
     });
-
-    const show_alert = (message) => {
-        $('.alert').removeClass('d-none').addClass('d-block').append(message);
-        setTimeout(() => {
-            $('.alert').removeClass('d-block').addClass('d-none').text('');
-        }, 3000);
-    }
 </script>
