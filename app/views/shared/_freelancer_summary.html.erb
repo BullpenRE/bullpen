@@ -102,9 +102,10 @@
         <div class="mr-2"><b><%= freelancer_certification.description %></b></div>
         <div class="ml-auto mr-1"><i><%= freelancer_certification.earned.strftime("%b %Y") %></i></div>
         <% if @freelancer_profile.editable?(current_user) %>
-          <i class="fas fa-edit text-primary ml-1"></i>
+          <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editCertifications"></button>
         <% end %>
       </div>
+      <%= render 'shared/edit_certifications', freelancer_certifications: @freelancer_profile.freelancer_certifications %>
     <% end %>
   <% end %>
 </div>
