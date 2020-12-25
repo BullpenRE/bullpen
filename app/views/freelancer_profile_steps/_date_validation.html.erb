@@ -1,5 +1,5 @@
 <script>
-    $(document).on('turbolinks:load', function (e) {
+    $(document).on('turbolinks:load', function () {
         $('.submit-work-education').on('click', (e) => {
             const currentModalId = $(e.target).data('id');
             const start_date = new Date($('#startYear-' + currentModalId).val(), ($('#startMonth-' + currentModalId).val() - 1));
