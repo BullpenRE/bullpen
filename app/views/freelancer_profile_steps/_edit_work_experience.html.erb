@@ -11,8 +11,8 @@
         <div class="modal-body pt-0">
           <h3 class="modal-title mb-4" id="modalLabel">Edit Experience</h3>
 
-          <div class="container">
-            <div class="alert alert-warning d-none" role="alert">
+          <div id="alertWarning-<%= freelancer_profile_experience.id %>" class="d-none">
+            <div class="alert alert-warning" role="alert">
               Ending date cannot occur before the starting date.
             </div>
           </div>
@@ -39,13 +39,13 @@
                                  freelancer_profile_experience.start_date.month
                              ),
                              {}, class: 'form-control selectpicker',
-                             id: 'startMonth', required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
+                             id: "startMonth-#{freelancer_profile_experience.id}", required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
               </div>
               <div class="col">
                 <%= f.select :start_year,
                              options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS, freelancer_profile_experience.start_date.year),
                              {}, class: 'form-control selectpicker',
-                             id: 'startYear', required: true, 'data-style': "bp-btn-select-border", title: "Year" %>
+                             id: "startYear-#{freelancer_profile_experience.id}", required: true, 'data-style': "bp-btn-select-border", title: "Year" %>
               </div>
             </div>
             <div class="custom-control custom-checkbox">
@@ -54,7 +54,7 @@
             </div>
           </div>
           <div class="form-group collapse <%= freelancer_profile_experience.current_job ? '' : 'show' %>" id="editEndDateToggle-<%= freelancer_profile_experience.id %>">
-            <label for="endMonth" class="bp-input-label">End Date</label>
+            <label for="endMonth-<%= freelancer_profile_experience.id %>" class="bp-input-label">End Date</label>
             <div class="row">
               <div class="col">
                 <%= f.select :end_month,
@@ -63,18 +63,18 @@
                                  freelancer_profile_experience.end_date&.month
                              ),
                              {}, class: 'form-control selectpicker',
-                             id: 'endMonth', 'data-style': "bp-btn-select-border", title: "Month" %>
+                             id: "endMonth-#{freelancer_profile_experience.id}", 'data-style': "bp-btn-select-border", title: "Month" %>
               </div>
               <div class="col">
                 <%= f.select :end_year,
                              options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS, freelancer_profile_experience.end_date&.year),
                              {}, class: 'form-control selectpicker',
-                             id: 'endYear', 'data-style': "bp-btn-select-border", title: "Year" %>
+                             id: "endYear-#{freelancer_profile_experience.id}", 'data-style': "bp-btn-select-border", title: "Year" %>
               </div>
             </div>
           </div>
           <div class="form-group mb-0">
-            <label for="editJobDescriptionTextarea" class="bp-input-label">Description</label>
+            <label for="editJobDescriptionTextarea-<%= freelancer_profile_experience.id %>" class="bp-input-label">Description</label>
             <%= f.text_area :description, class: "form-control", id: "editJobDescriptionTextarea", placeholder: "Enter your job description", rows: 3, required: true, value: freelancer_profile_experience.description %>
           </div>
           <%= f.hidden_field :id, value: freelancer_profile_experience.id %>
@@ -83,7 +83,7 @@
           <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
           <div>
             <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2" %>
-            <%= f.submit 'Save', class: 'btn btn-primary' %>
+            <%= f.submit 'Save', class: 'btn btn-primary submit-work-education', data: { id: freelancer_profile_experience.id } %>
           </div>
         </div>
       <% end %>

@@ -107,6 +107,6 @@
     });
 </script>
 
-<%= render 'add_work_experience' %>
+<%= render 'add_work_experience', timestamp: Time.current.to_i %>
 <%= render 'add_education' %>
 <%= render 'add_licences_or_certification', certification: @certification %>
