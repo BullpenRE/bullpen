@@ -3,8 +3,7 @@
 // the trix-editor content (whether displayed or under editing). Feel free to incorporate this
 // inclusion directly in any other asset bundle and remove this file.
 //
-//= require trix/dist/trix
-
+@import "trix/dist/trix";
 // We need to override trix.css’s image gallery styles to accommodate the
 // <action-text-attachment> element we wrap around attachments. Otherwise,
 // images in galleries will be squished by the max-width: 33%; rule.
@@ -32,5 +31,12 @@
       padding: 0 !important;
       max-width: 100% !important;
     }
+  }
+}
+
+trix-editor {
+  &.form-control {
+    min-height: 16rem;
+    height: auto;
   }
 }

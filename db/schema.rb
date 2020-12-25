@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_24_162134) do
+ActiveRecord::Schema.define(version: 2020_12_25_121741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,7 +211,6 @@ ActiveRecord::Schema.define(version: 2020_12_24_162134) do
   create_table "job_applications", force: :cascade do |t|
     t.bigint "job_id"
     t.bigint "user_id"
-    t.text "cover_letter"
     t.boolean "template", default: false
     t.integer "per_hour_bid"
     t.boolean "available_during_work_hours"
