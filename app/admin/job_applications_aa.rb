@@ -39,7 +39,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         row 'Freelancer email' do
           link_to(application.user.email, admin_user_path(application.job.user_id))
         end
-        row :cover_letter
+        row 'Cover Letter' do
+          application.cover_letter.body.to_s
+        end
         row :template
         row :per_hour_bid
         row :available_during_work_hours
@@ -88,7 +90,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :user,
                 as: :select,
                 collection: User.freelancer.order(:email).pluck(:email, :id)
-        f.input :cover_letter
+        f.input :cover_letter, as: :text
         f.input :template
         f.input :per_hour_bid
         f.input :available_during_work_hours
