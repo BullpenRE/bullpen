@@ -4,9 +4,13 @@ RSpec.describe JobApplication, type: :model do
   let(:job) { FactoryBot.create(:job) }
   let(:user) { FactoryBot.create(:user) }
   let!(:job_application) { FactoryBot.create(:job_application, job: job, user: user, template: true) }
+  let(:job_application_with_attachments) { FactoryBot.create(:job_application, :with_attachments) }
 
   it 'factory works' do
     expect(job_application).to be_valid
+    expect(job_application_with_attachments).to be_valid
+    expect(job_application_with_attachments.work_sample.attached?).to be_truthy
+    expect(job_application_with_attachments.cover_letter).to_not be_blank
   end
 
   context 'Validations' do
