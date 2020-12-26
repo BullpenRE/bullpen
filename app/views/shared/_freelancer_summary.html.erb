@@ -54,7 +54,7 @@
     <h4>Software Licenses</h4>
     <div class="d-flex flex-row flex-inline">
       <div class="d-flex-col">
-        <%= @freelancer_profile.softwares.order(description: :asc).pluck(:description).join(', ') %>
+        <%= @freelancer_profile.softwares.pluck(:description).join(', ') %>
       </div>
       <% if @freelancer_profile.editable?(current_user) %>
         <div class="d-flex-col ml-auto">
