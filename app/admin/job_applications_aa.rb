@@ -88,7 +88,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :user,
                 as: :select,
                 collection: User.freelancer.order(:email).pluck(:email, :id)
-        f.input :cover_letter
+        f.input :cover_letter, as: :text
         f.input :template
         f.input :per_hour_bid
         f.input :available_during_work_hours
