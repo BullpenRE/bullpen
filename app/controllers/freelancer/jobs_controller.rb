@@ -13,6 +13,6 @@ class Freelancer::JobsController < ApplicationController
   private
 
   def jobs_collection
-    Job.where(state: 'posted').not_applied(current_user)
+    Job.where(state: 'posted').order(created_at: :desc).not_applied(current_user)
   end
 end

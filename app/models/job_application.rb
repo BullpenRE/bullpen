@@ -6,6 +6,7 @@ class JobApplication < ApplicationRecord
   has_many :job_application_questions, dependent: :destroy
   has_many :job_questions, through: :job_application_questions
   has_one_attached :work_sample
+  has_rich_text :cover_letter
 
   validates :job_id, uniqueness: { scope: :user_id }
   validate :correct_size?
