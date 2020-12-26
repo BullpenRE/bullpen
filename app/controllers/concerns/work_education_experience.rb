@@ -20,11 +20,11 @@ module WorkEducationExperience
       work_profile_experience.destroy
     elsif work_profile_experience.present?
       unless work_profile_experience.update(checked_profile_experience_params)
-        flash[:alert] = work_profile_experience.errors.full_messages.join(', ')
+        flash.now[:alert] = work_profile_experience.errors.full_messages.join(', ')
       end
     else
       object = FreelancerProfileExperience.create(checked_profile_experience_params)
-      flash[:alert] = object.errors.full_messages.join(', ') if object.errors.present?
+      flash.now[:alert] = object.errors.full_messages.join(', ') unless object.errors.count.zero?
     end
   end
 
