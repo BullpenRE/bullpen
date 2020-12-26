@@ -6,14 +6,11 @@
             const end_date = new Date($('#endYear-' + currentModalId).val(), ($('#endMonth-' + currentModalId).val() - 1));
             const alertElement = document.getElementById('alertWarning-' + currentModalId);
 
-            e.preventDefault();
-            e.stopPropagation();
-
             if (!$('#currentJob-' + currentModalId).prop('checked') && (start_date > end_date)) {
                 alertElement.classList.remove('d-none');
                 alertElement.classList.add('d-block');
-            } else {
-                $(e.target).parents('form').submit();
+                e.preventDefault();
+                e.stopPropagation();
             }
         });
     })

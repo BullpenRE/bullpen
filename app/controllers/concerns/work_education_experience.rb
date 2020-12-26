@@ -19,12 +19,13 @@ module WorkEducationExperience
     if work_profile_experience.present? && params[:commit] == 'Delete'
       work_profile_experience.destroy
     elsif work_profile_experience.present?
-      work_profile_experience.update!(checked_profile_experience_params)
+      unless work_profile_experience.update(checked_profile_experience_params)
+        flash[:alert] = work_profile_experience.errors.full_messages.join(', ')
+      end
     else
-      FreelancerProfileExperience.create!(checked_profile_experience_params)
+      object = FreelancerProfileExperience.create(checked_profile_experience_params)
+      flash[:alert] = object.errors.full_messages.join(', ') if object.errors.present?
     end
-  rescue ActiveRecord::RecordInvalid
-    flash[:alert] = 'Ending date cannot occur before the starting date.'
   end
 
   def certification_save
