@@ -94,13 +94,13 @@ class Employer::JobFlowsController < ApplicationController
   def details_params
     if params[:job][:contract_type] == 'hourly'
       {
-        contract_type: 0,
+        contract_type: params[:job][:contract_type],
         pay_range_low: clean_currency_entry(params[:job][:pay_range_low]),
         pay_range_high: pay_range_high
       }
     else
       {
-        contract_type: 3,
+        contract_type: params[:job][:contract_type],
         pay_range_low: clean_currency_entry(params[:job][:pay_range_low]),
         pay_range_high: nil
       }

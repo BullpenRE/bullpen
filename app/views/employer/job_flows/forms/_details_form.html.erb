@@ -1,10 +1,6 @@
 <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
   <%= f.hidden_field :job_id, value: @job.id %>
   <%= f.hidden_field 'step', value: 'post_job_step_4' %>
-  <div class="container">
-    <div class="alert alert-danger d-none" role="alert">
-    </div>
-  </div>
   <table class="table table-borderless table-sm">
     <tbody>
       <tr>
@@ -15,7 +11,10 @@
         <td style="width: 33%">
           <%= f.select :contract_type,
                        options_for_select(
-                         { 'Hourly': 'hourly', 'Monthly Retainer - 80 hrs': 'monthly_retainer_80' }, job.contract_type),
+                         { 'Hourly': 'hourly',
+                           'Monthly Retainer - 20 hrs': 'monthly_retainer_20',
+                           'Monthly Retainer - 40 hrs': 'monthly_retainer_40',
+                           'Monthly Retainer - 80 hrs': 'monthly_retainer_80' }, job.contract_type),
                        {}, class: 'form-control', required: true, style: "width: 100%" %>
         </td>
         <td style="width: 33%">
@@ -23,6 +22,7 @@
         </td>
         <td style="width: 33%">
          <%= f.text_field :pay_range_high, class: "form-control", placeholder: "$ High" %>
+          <span class="error_message text-danger"></span>
         </td>
       </tr>
     </tbody>
@@ -55,7 +55,13 @@
     } else {
       $('#job_pay_range_high').addClass('d-none');
       $('#job_pay_range_low').attr("placeholder", "$ Monthly amount");
-      $('.rangePay').html('Monthly Retainer Fee <span class="font-weight-normal text-dark">($7,000 recommended)</span>')
+      if ($("#job_contract_type").val() == 'monthly_retainer_20') {
+        $('.rangePay').html('Monthly Retainer Fee <span class="font-weight-normal text-dark">($3,000 recommended)</span>');
+      } else if ($("#job_contract_type").val() == 'monthly_retainer_40') {
+        $('.rangePay').html('Monthly Retainer Fee <span class="font-weight-normal text-dark">($4,500 recommended)</span>');
+      } else {
+        $('.rangePay').html('Monthly Retainer Fee <span class="font-weight-normal text-dark">($7,000 recommended)</span>');
+      }
     }
   };
 
@@ -63,16 +69,10 @@
     const job_pay_range_low = $('#job_pay_range_low').val().replace(/\$|a..zA..Z|,/g, '');
     const job_pay_range_high = $('#job_pay_range_high').val().replace(/\$|a..zA..Z|,/g, '');
     if ($("#job_contract_type").val() == 'hourly' && job_pay_range_high && (parseInt(job_pay_range_high, 10) < parseInt(job_pay_range_low, 10))) {
-      show_alert('You enter an incorrect data');
+      $('.error_message').text('Enter $' + $('#job_pay_range_low').val()+ ' or more');
+      $('#job_pay_range_high').addClass('error');
       e.preventDefault();
       e.stopPropagation();
     }
   });
-
-  function show_alert(message) {
-    $('.alert').removeClass('d-none').addClass('d-block').append(message);
-    setTimeout(() => {
-      $('.alert').removeClass('d-block').addClass('d-none').text('');
-    }, 3000);
-  }
 </script>
