@@ -39,7 +39,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         row 'Freelancer email' do
           link_to(application.user.email, admin_user_path(application.job.user_id))
         end
-        row :cover_letter
+        row 'Cover Letter' do
+          application.cover_letter.body.to_s
+        end
         row :template
         row :per_hour_bid
         row :available_during_work_hours
