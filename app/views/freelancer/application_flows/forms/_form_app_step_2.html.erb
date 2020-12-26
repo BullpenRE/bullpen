@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between">
       <label for="coverLetter" class="h5">Cover Letter</label>
     </div>
-    <%= f.text_area :cover_letter, class: "form-control", id: "coverLetter", placeholder: "Enter your cover letter", rows: "10", required: true, value: job_application.cover_letter %>
+    <%= f.rich_text_area :cover_letter, value: job_application.cover_letter, class: "form-control", id: "coverLetter", placeholder: "Enter your cover letter", rows: "10", required: true %>
   </div>
   <div class="form-group work_sample">
     <label for="workSample" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
