@@ -1,39 +1,48 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-header mb-md-5">
-  <div class="container">
-    <div class="text-left mt-2 mb-2 ml-md-5">
-      <%= link_to image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30'), join_path %>
-    </div>
-  </div>
-</nav>
+<%=  render 'nav_bar/login_nav_bar' %>
 
 <div class="row justify-content-center log-in-container">
 
-  <div class="card col-md-5 shadow-sm align-items-center">
-    <div class="h1 mt-4 text-secondary text-center">Log In</div>
-    <div class="col-md-10 px-4 py-4">
+  <div class="bp-card col-5 shadow-sm align-items-center">
+    <div class="h1 mt-2 text-secondary text-center">Log In to Bullpen</div>
+    <div class="">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <%= render 'devise/shared/error_messages' %>
         <div class="field mb-3">
-          <%= f.label :email, class: 'h4 text-secondary text-left' %><br />
+          <%= f.label 'Email Address', class: 'h4 text-secondary text-left' %><br />
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control bg-white border-gray-dark', placeholder: "Email address", id: "user_email"%>
         </div>
 
-        <div class="field">
+        <div class="field mb-2">
           <%= f.label :password, class: 'h4 text-secondary' %><br />
           <%= f.password_field :password, autocomplete: "current-password", class: 'form-control bg-white border-gray-dark', placeholder: "Password", id: "user_password" %>
         </div>
 
         <div class="field text-center mb-3">
-          <%= link_to "Forgot password?", new_password_path(resource_name), class: "text-center text-muted" %><br />
+          <%= link_to "Forgot your password?", new_password_path(resource_name), class: "text-center text-primary" %><br />
         </div>
 
         <div class="actions">
-          <%= f.submit "Login", class: "btn btn-primary col-md-12" %>
+          <%= f.submit "Log In", class: "btn btn-primary col-md-12" %>
+
         </div>
       <% end %>
+
+      <div class="or-container">
+        <div class="line-separator"></div>
+        <div class="or-label">or</div>
+        <div class="line-separator"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <%= link_to image_pack_tag('media/images/icons8-google-48.png', size: '20x20') + ' Log In with Gmail',
+                      join_path,
+                      class: "btn btn-google btn-block btn-outline-primary text-primary" %>
+        </div>
+      </div> <br>
+
     </div>
-    <div class="bg-white card-footer text-center">
-      <%= render "devise/shared/links" %>
+    <div class="bg-white bp-card-footer text-center text-break">
+      For help contact us at <%= mail_to('support@bullpenre.com') %><br />
     </div>
   </div>
 </div>
