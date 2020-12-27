@@ -95,12 +95,28 @@
             </a>
           </div>
         </div>
-        <div id="collapseApplications<%= job.id %>" class="collapse">
-          <hr>
-          <% job.job_applications.each do |job_application| %>
-            <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile, job_application: job_application } %>
+          <div id="collapseApplications<%= job.id %>" class="collapse">
             <hr>
-          <% end %>
+            <% job.job_applications.each do |job_application| %>
+              <div class="d-flex justify-content-between flex-column flex-lg-row">
+                <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile, job_application: job_application } %>
+                <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
+                  <div class="d-block p-1 d-sm-inline-block mt-1">
+                    <i class="far fa-heart btn-link"></i>
+                  </div>
+                  <div class="d-block p-1 d-sm-inline-block mt-1">
+                    <i class="fas fa-heart btn-link text-danger"></i>
+                  </div>
+                  <div class="d-block p-1 d-sm-inline-block">
+                    <button class="btn btn-primary">Send Message</button>
+                  </div>
+                  <div class="d-block p-1 d-sm-inline-block">
+                    <button class="btn btn-outline-primary">More</button>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+            <% end %>
         </div>
         <script>
           $('.link_action<%= job.id %>').on('click', () => {
