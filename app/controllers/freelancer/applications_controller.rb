@@ -8,4 +8,14 @@ class Freelancer::ApplicationsController < ApplicationController
   def index
     @pagy, @job_applications = pagy(current_user.job_applications.order(created_at: :desc), items: ITEMS_PER_PAGE, overflow: :last_page)
   end
+
+  def destroy
+    job_application.destroy
+  end
+
+  private
+
+  def job_application
+    @job_application ||= current_user.job_applications.find_by(id: params[:id])
+  end
 end
