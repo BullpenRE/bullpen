@@ -31,6 +31,7 @@
 .bp-card {
   background-color: white;
   padding: 1.25rem;
+  border-radius: 0.1875rem;
 }
 //To be depreciated for the H5 class
 .bp-input-label {
@@ -46,30 +47,20 @@
 .bp-text-sm {
   font-size: 0.875rem;
 }
-
-.btn-google {
-  color: #545454;
-  background-color: #ffffff;
-  box-shadow: 0 1px 2px 1px #ddd;
-  text-align: center;
-}
-
-.or-container {
-  align-items: center;
-  color: #ccc;
-  display: flex;
-  margin: 25px 0
-}
-
-.line-separator {
-  background-color: #ccc;
-  flex-grow: 5;
-  height: 1px
-}
-
-.or-label {
-  flex-grow: 1;
-  margin: 0 15px;
-  text-align: center;
-  color: #2E2F30;
+.bp-or-border {
+  position: relative;
+  z-index: 1;
+  &:before {
+      border-top: 1px solid #B4C8D8;
+      content:"";
+      margin: 0 auto; 
+      position: absolute;
+      top: 50%; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      z-index: -1;
+  }
+  span { 
+      background: #fff; 
+      padding: 0 0.5rem; 
+  }
 }
