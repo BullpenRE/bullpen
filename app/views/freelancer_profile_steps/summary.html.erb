@@ -21,7 +21,12 @@
     <% end %>
   </div>
   <div class="container bp-card">
-    <%= render 'shared/freelancer_summary' %>
+    <%= render 'shared/freelancer_summary_header',
+               freelancer_profile: @freelancer_profile,
+               editable: @freelancer_profile.editable?(current_user) %>
+    <%= render 'shared/freelancer_summary',
+               freelancer_profile: @freelancer_profile,
+               editable: @freelancer_profile.editable?(current_user) %>
     <hr>
     <div class="mt-3">
       <h4>Email</h4>

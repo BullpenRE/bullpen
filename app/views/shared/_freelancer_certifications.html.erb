@@ -1,0 +1,10 @@
+<h4 class="mt-3">Licenses &amp; Certifications</h4>
+<% freelancer_profile.freelancer_certifications.order(earned: :desc).each do |freelancer_certification| %>
+    <div class="d-flex mb-2">
+      <div class="mr-2"><b><%= freelancer_certification.description %></b></div>
+      <div class="ml-auto mr-1"><i><%= freelancer_certification.earned.strftime("%b %Y") %></i></div>
+      <% if editable %>
+          <i class="fas fa-edit text-primary ml-1"></i>
+      <% end %>
+    </div>
+<% end %>
