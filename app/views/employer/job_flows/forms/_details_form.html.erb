@@ -11,10 +11,7 @@
         <td style="width: 33%">
           <%= f.select :contract_type,
                        options_for_select(
-                         { 'Hourly': 'hourly',
-                           'Monthly Retainer - 20 hrs': 'monthly_retainer_20',
-                           'Monthly Retainer - 40 hrs': 'monthly_retainer_40',
-                           'Monthly Retainer - 80 hrs': 'monthly_retainer_80' }, job.contract_type),
+                         Job::CONTRACT_TYPE_DESCRIPTIONS, job.contract_type),
                        {}, class: 'form-control', required: true, style: "width: 100%" %>
         </td>
         <td style="width: 33%">
@@ -48,6 +45,9 @@
   });
 
   function change_contract_type() {
+    const retainer_fee_recommendations = { 'monthly_retainer_20': '$3,000', 'monthly_retainer_40': '$4,500', 'monthly_retainer_60': '$7,000'  };
+    const recommendation = retainer_fee_recommendations[$("#job_contract_type").val()];
+
     if ($("#job_contract_type").val() == 'hourly'){
       $('#job_pay_range_high').removeClass('d-none');
       $('#job_pay_range_low').attr("placeholder", "$ Low");
@@ -55,12 +55,8 @@
     } else {
       $('#job_pay_range_high').addClass('d-none');
       $('#job_pay_range_low').attr("placeholder", "$ Monthly amount");
-      if ($("#job_contract_type").val() == 'monthly_retainer_20') {
-        $('.rangePay').html('Monthly Retainer Fee <span class="font-weight-normal text-dark">($3,000 recommended)</span>');
-      } else if ($("#job_contract_type").val() == 'monthly_retainer_40') {
-        $('.rangePay').html('Monthly Retainer Fee <span class="font-weight-normal text-dark">($4,500 recommended)</span>');
-      } else {
-        $('.rangePay').html('Monthly Retainer Fee <span class="font-weight-normal text-dark">($7,000 recommended)</span>');
+      if(recommendation) {
+        $('.rangePay').html('Monthly Retainer Fee <span class="font-weight-normal text-dark">(' + recommendation + ' recommended)</span>');
       }
     }
   };
