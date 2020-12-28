@@ -22,12 +22,15 @@ class Employer::TalentController < ApplicationController
     @interview_request = current_user.employer_profile.interview_requests.create(interview_request_params)
 
     if @interview_request.valid?
+      FreelancerMailer.interview_request(@interview_request).deliver_now
+
       flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
       'Your interview request has been sent to '\
       "<strong>#{@interview_request.freelancer_profile.full_name}</strong>. "\
       'We will send you a notification when it is accepted or declined.'
+    else
+      flash[:notice] = 'Something went wrong when trying to submit your interview request'
     end
-    FreelancerMailer.interview_request(@interview_request).deliver_now
 
     redirect_to employer_talent_index_path
   end
