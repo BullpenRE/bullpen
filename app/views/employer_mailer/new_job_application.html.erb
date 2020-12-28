@@ -6,4 +6,4 @@
 <%= render partial: 'email/content_block', locals: { content: "Have you already filled this position?" } %>
 <%= render partial: 'email/content_block', locals: { content: "Close the job to stop receiving new applicant notifications." } %>
 
-<%= render partial: 'email/button', locals: { button_txt: 'View Applicants', url: employer_jobs_url(open: @job_application.job.id) } %>
+<%= render partial: 'email/button', locals: { button_txt: 'View Applicants', url: employer_jobs_url(view_job: @job_application.job.id) } %>

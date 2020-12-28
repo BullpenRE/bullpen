@@ -90,6 +90,8 @@ class EmployerProfileStepsController < ApplicationController
   end
 
   def completed_profile_redirect
+    return redirect_to employer_jobs_path(view_job: session[:view_job]) if session[:view_job].present?
+
     redirect_to employer_talent_index_path if current_user.employer_profile&.completed?
   end
 
