@@ -12,4 +12,10 @@ class FreelancerMailer < ApplicationMailer
     @user = user
     mail(to: user.email, subject: 'Your Bullpen Application')
   end
+
+  def interview_request(interview_request)
+    @interview_request = interview_request
+    freelancer_email = interview_request.freelancer_profile.user.email
+    mail(to: freelancer_email, subject: 'Congratulations! You received an interview request.')
+  end
 end

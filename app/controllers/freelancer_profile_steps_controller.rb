@@ -98,7 +98,13 @@ class FreelancerProfileStepsController < ApplicationController
   private
 
   def accepted_profile_redirect
+    return freelancer_interviews_redirect if session[:view_interview_request].present?
+
     redirect_to freelancer_jobs_path if current_user.freelancer_profile&.accepted?
+  end
+
+  def freelancer_interviews_redirect
+    redirect_to freelancer_interviews_path(view_interview_request: session[:view_interview_request])
   end
 
   def pending_profile?
