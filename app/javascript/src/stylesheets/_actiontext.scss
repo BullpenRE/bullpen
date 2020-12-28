@@ -40,3 +40,18 @@ trix-editor {
     height: auto;
   }
 }
+//Style overrides
+trix-toolbar .trix-button-group {
+  border: 1px solid #E9ECEF;
+  border-radius: 0.1875rem;
+}
+trix-toolbar .trix-button:not(:first-child) {
+  border-left: 1px solid #B4C8D8;
+}
+trix-toolbar .trix-button.trix-active {
+  background: #B4C8D8;
+}
+trix-toolbar .trix-button {
+  border-bottom: none;
+  background: #E9ECEF;
+}
