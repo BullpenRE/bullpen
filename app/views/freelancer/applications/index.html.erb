@@ -12,6 +12,7 @@
   <h1>Applications</h1>
   <% @job_applications.each do |job_application| %>
     <%= render partial: 'employer/jobs/show_job_post', locals: { job: job_application.job } %>
+    <%= render partial: 'freelancer/applications/delete_application_draft', locals: { job_application: job_application } %>
     <div class="bp-card mb-3">
       <div>
         <div class="d-flex flex-column flex-lg-row">
@@ -25,13 +26,11 @@
               <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
                 Saved as draft
               </div>
-              <div class="mr-sm-2">
+              <div class="mt-1 mr-md-2">
                 <%= link_to 'Apply', freelancer_application_flows_path(job_app: job_application.id), { remote: true, 'data-toggle': "modal", 'data-target': "#jobAppStep1", class: "btn btn-primary d-block" } %>
               </div>
             <% end %>
-            <button class="btn btn-outline-primary my-3 my-md-0" type="button"  data-toggle="modal" data-target="#showJobPost<%= job_application.job.id %>">
-              Show Details
-            </button>
+            <%= render partial: 'freelancer/applications/application_dropdown', locals: { job_application: job_application } %>
           </div>
         </div>
       </div>
