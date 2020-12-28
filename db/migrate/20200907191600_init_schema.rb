@@ -115,7 +115,7 @@ class InitSchema < ActiveRecord::Migration[6.0]
       t.string "company"
       t.string "location"
       t.date "start_date"
-      t.date "end unless table_exists?(:)_date"
+      t.date "end_date"
       t.boolean "current_job", default: false
       t.text "description"
       t.bigint "freelancer_profile_id"

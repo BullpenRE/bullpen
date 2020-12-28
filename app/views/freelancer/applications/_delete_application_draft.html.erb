@@ -1,0 +1,33 @@
+<div class="modal" id="deleteApplicationDraft<%= job_application.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content mt-3">
+      <div class="modal-header">
+        <h1 class="modal-title" id="deleteApplicationDraftLabel">Delete Draft</h1>
+        <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body pt-0">
+        <p>Are you sure you want to delete your <strong><%= job_application.job.title %></strong> draft application?</p>
+      </div>
+      <div class="modal-footer justify-content-between pt-0">
+        <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
+        <div>
+          <button class="btn btn-primary d-block delete-job-application-draft-<%= job_application.id %>" type="button">Delete Job</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.delete-job-application-draft-'+<%= job_application.id %>).click(() => {
+    $.ajax({
+      url: '/freelancer/applications/<%= job_application.id %>',
+      method: 'DELETE',
+      success: () => {
+        document.location.reload();
+      }
+    })
+  })
+</script>

@@ -1,18 +1,32 @@
+<style>
+  .talent-cards {
+    position: relative;
+  }
+</style>
+
 <%= render partial: 'employer/navigation', locals: { section: 'talent' } %>
 
 <!--Talent card-->
-<div class="container mb-3">
+<div class="container mb-3 talent-cards">
+  <% if flash[:notice].present? %>
+    <div class="alert alert-success alert-dismissible fade show">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <%= flash[:notice].html_safe %>
+    </div>
+  <% end %>
 
-    <% if flash[:notice].present? %>
-      <div class="alert alert-success alert-dismissible fade show">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <%= flash[:notice].html_safe %>
-      </div>
+  <%= render partial: 'employer/talent/filter_side_bar' %>
+  <div class="d-flex justify-content-between">
+    <h1 class="">Find Talent</h1>
+    <% if @filters_list %>
+      <h6 class="flex-grow-1 text-secondary text-right mx-3">
+        <%= @filters_list.join(', ') %>
+        <%= link_to "#", id: "rejectFilters", data: {url: employer_talent_index_path} do %>
+          <i class="fa fa-times-circle fa-lg text-black-50 " aria-hidden="true"></i>
+        <% end %>
+      </h6>
     <% end %>
-
-  <div class="d-flex align-items-end">
-    <h1>Find Talent</h1>
-    <a href="#" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
+    <a href="#" id="showFilters" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
   </div>
   <% @freelancer_profiles.each do |freelancer_profile| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: freelancer_profile } %>
