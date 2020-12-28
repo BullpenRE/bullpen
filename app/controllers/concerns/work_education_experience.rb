@@ -19,9 +19,12 @@ module WorkEducationExperience
     if work_profile_experience.present? && params[:commit] == 'Delete'
       work_profile_experience.destroy
     elsif work_profile_experience.present?
-      work_profile_experience.update(checked_profile_experience_params)
+      unless work_profile_experience.update(checked_profile_experience_params)
+        flash.now[:alert] = work_profile_experience.errors.full_messages.join(', ')
+      end
     else
-      FreelancerProfileExperience.create(checked_profile_experience_params)
+      object = FreelancerProfileExperience.create(checked_profile_experience_params)
+      flash.now[:alert] = object.errors.full_messages.join(', ') unless object.errors.count.zero?
     end
   end
 
@@ -41,13 +44,13 @@ module WorkEducationExperience
 
   def profile_experience_params
     params.require(:freelancer_profile_experience)
-          .permit(:job_title, :company, :location, :description,
+          .permit(:id, :job_title, :company, :location, :description,
                   :start_month, :start_year, :end_month, :end_year, :current_job)
   end
 
   def profile_education_params
     params.require(:freelancer_profile_education)
-          .permit(:institution, :degree, :course_of_study, :graduation_year, :currently_studying, :description)
+          .permit(:id, :institution, :degree, :course_of_study, :graduation_year, :currently_studying, :description)
   end
 
   def checked_profile_education_params
@@ -77,11 +80,11 @@ module WorkEducationExperience
   def checked_freelancer_certification_params
     if params[:freelancer_certification][:description].blank?
       params.require(:freelancer_certification)
-        .permit(:certification_id, :earned_year, :earned_month)
+        .permit(:id, :certification_id, :earned_year, :earned_month)
         .merge(description: Certification.find_by(id: params[:freelancer_certification][:certification_id]).description)
     else
       params.require(:freelancer_certification)
-        .permit(:description, :earned_year, :earned_month)
+        .permit(:id, :certification_id, :description, :earned_year, :earned_month)
         .merge(certification_id: Certification.custom_id)
     end
   end
