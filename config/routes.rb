@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     resources :contracts
     resource :profile
     post 'change_certifications', to: 'profile#change_certifications'
+    post 'change_skills', to: 'profile#change_skills'
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

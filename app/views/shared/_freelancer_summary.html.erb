@@ -41,8 +41,9 @@
       </div>
       <% if @freelancer_profile.editable?(current_user) %>
         <div class="d-flex-col ml-auto">
-          <i class="fas fa-edit text-primary"></i>
+          <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editSkills"></button>
         </div>
+        <%= render partial: 'freelancer/shared/edit_real_estate-skills', locals: { freelancer_profile: @freelancer_profile, real_estate_skills: @real_estate_skills } %>
       <% end %>
     </div>
   </div>
