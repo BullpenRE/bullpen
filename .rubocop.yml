@@ -1,9 +1,6 @@
 AllCops:
   TargetRubyVersion: 2.7
 
-Rails:
-  Enabled: true
-
 Style/FrozenStringLiteralComment:
   Enabled: true
 
@@ -11,9 +8,6 @@ Style/Documentation:
   Enabled: false
 
 Layout/EmptyLinesAroundClassBody:
-  Enabled: false
-
-Style/BracesAroundHashParameters:
   Enabled: false
 
 Style/SymbolProc:
@@ -24,7 +18,7 @@ Style/MultilineIfModifier:
   Exclude:
     - 'app/admin/**/*'
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
   Exclude:
     - '**/*_spec.rb'
