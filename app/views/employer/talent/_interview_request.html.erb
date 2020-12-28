@@ -14,11 +14,11 @@
           <%= f.hidden_field :state, value: 'pending' %>
           <%= f.hidden_field :freelancer_profile_id, value: freelancer_profile.id %>
       <div class="form-group mb-3">
-          <label for="addPersonalMessageTextArea" class="bp-input-label h5">
+          <label for="addPersonalMessageTextArea" class="h5">
             Add a personal message.
           </label>
         <div class="w-100">
-          <%= f.text_area :message, class: "form-control mb-3", id: "addPersonalMessageTextArea", placeholder: "Enter your message", rows: "8", maxlength: "5000" %>
+          <%= f.rich_text_area :message, class: "form-control mb-3", id: "addPersonalMessageTextArea", placeholder: "Enter your message", rows: "8", maxlength: "5000" %>
         </div>
         <div class="d-flex justify-content-end">
           <%= f.submit 'Send Invitation', class: 'btn btn-primary mt-3 send-invitation' %>
