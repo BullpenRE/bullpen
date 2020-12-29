@@ -19,7 +19,7 @@
             <%= f.select :freelancer_softwares,
                          options_for_select(
                            Software.enabled.pluck(:description, :id),
-                           @freelancer_profile&.freelancer_softwares&.map do |freelancer_software|
+                           freelancer_profile&.freelancer_softwares&.map do |freelancer_software|
                              [freelancer_software.software.description, freelancer_software.software.id]
                            end.flatten),
                          {}, multiple: true, class: 'select2' %>

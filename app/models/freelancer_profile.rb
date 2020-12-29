@@ -49,8 +49,8 @@ class FreelancerProfile < ApplicationRecord
     user.location
   end
 
-  def editable?(current_user)
-    user_id == current_user&.id
+  def editable?(user)
+    user_id == user&.id
   end
 
   private
