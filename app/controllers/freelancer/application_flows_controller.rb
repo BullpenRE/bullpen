@@ -3,7 +3,7 @@
 class Freelancer::ApplicationFlowsController < ApplicationController
   include Wicked::Wizard
   include LoggedInRedirects
-  include ApplicationFlowsHelper
+  include ApplicationHelper
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :incomplete_freelancer_profile_redirect
   steps :application_step_1, :application_step_2, :preview_application
 
@@ -46,7 +46,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     return false unless params[:job_application][:step] == 'application_step_1'
 
     job_application.update(
-      per_hour_bid: cleaned_per_hour_bid(params[:job_application][:per_hour_bid]),
+      per_hour_bid: clean_currency_entry(params[:job_application][:per_hour_bid]),
       available_during_work_hours: params[:job_application][:available_during_work_hours],
       state: 'draft'
     )

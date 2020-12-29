@@ -23,4 +23,17 @@ describe ApplicationHelper, type: :helper do
       expect(helper.select_months_array).to eq(expected_output)
     end
   end
+
+  describe '#clean_currency_entry' do
+    it 'checks results' do
+      expect(helper.clean_currency_entry('$43,334')).to eq(43334)
+      expect(helper.clean_currency_entry('$43334')).to eq(43334)
+      expect(helper.clean_currency_entry('43334')).to eq(43334)
+      expect(helper.clean_currency_entry('433.34')).to eq(433)
+      expect(helper.clean_currency_entry('4333.4')).to eq(4333)
+      expect(helper.clean_currency_entry('4.3334')).to eq(4)
+      expect(helper.clean_currency_entry('wefwef4333.4')).to eq(0)
+      expect(helper.clean_currency_entry('wefwefwef')).to eq(0)
+    end
+  end
 end
