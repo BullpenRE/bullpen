@@ -22,6 +22,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       column :state
       column :template
       column :per_hour_bid
+      column :liked
       column :available_during_work_hours
       column :created_at
       column :applied_at
@@ -46,6 +47,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         row :per_hour_bid
         row :available_during_work_hours
         row :state
+        row :liked
         row :work_sample do |jap|
           if jap.work_sample.attached?
             if jap.work_sample.previewable?
@@ -90,6 +92,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :user,
                 as: :select,
                 collection: User.freelancer.order(:email).pluck(:email, :id)
+        f.input :liked
         f.input :cover_letter, as: :text
         f.input :template
         f.input :per_hour_bid
