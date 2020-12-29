@@ -116,4 +116,9 @@
       },
     })
   });
+
+  // Disable trix from accepted pasted or dragged/dropped files
+  document.addEventListener("trix-file-accept", event => {
+    event.preventDefault();
+  });
 </script>
