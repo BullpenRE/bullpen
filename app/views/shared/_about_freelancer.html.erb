@@ -1,5 +1,5 @@
 <div>
-  <div class="d-flex">
+  <div class="d-flex flex-sm-row flex-column">
     <% if freelancer_profile.avatar.attached? %>
       <div class="text-light mr-2 avatar-image" style="line-height: 0;">
         <%= image_tag freelancer_profile.avatar, class: 'rounded-circle', width: '80px', height: '80px' %>
@@ -18,18 +18,18 @@
           </div>
         <% end %>
       </div>
-      <div class="mb-2 text-wrap text-break">
+      <div class="bp-text-sm mb-3 text-wrap text-break">
         <%= freelancer_profile.professional_title %><br>
         <%= freelancer_profile.user.location %>
       </div>
-      <div>
-        <p><%= freelancer_profile.professional_summary %></p>
-        <p class="text-secondary"><b>$<%= job_application.present? ? job_application.per_hour_bid : '100' %> per hour</b></p>
-        <%  freelancer_profile.sectors.order(description: :asc)&.each do |sector| %>
-          <span class="badge badge-secondary mb-1"><%= sector.description %></span>
-        <% end %>
-      </div>
     </div>
+  </div>
+  <div>
+    <p class="text-wrap text-break"><%= freelancer_profile.professional_summary %></p>
+    <p class="text-secondary"><b>$<%= job_application.present? ? job_application.per_hour_bid : '100' %> per hour</b></p>
+    <%  freelancer_profile.sectors.order(description: :asc)&.each do |sector| %>
+      <span class="badge badge-secondary mb-1"><%= sector.description %></span>
+    <% end %>
   </div>
 </div>
 
