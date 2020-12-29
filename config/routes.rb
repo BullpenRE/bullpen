@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     resources :interviews
     resources :contracts
     resource :profile
+    post 'change_software_licence', to: 'profile#change_software_licence'
     post 'change_skills', to: 'profile#change_skills'
   end
 

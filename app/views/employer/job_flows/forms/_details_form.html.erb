@@ -1,9 +1,32 @@
 <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
   <%= f.hidden_field :job_id, value: @job.id %>
   <%= f.hidden_field 'step', value: 'post_job_step_4' %>
-  <div class="form-group mb-1">
+  <table class="table table-borderless table-sm">
+    <tbody>
+      <tr>
+        <td> <label class="h5">Contact Type <i class="far fa-question-circle text-primary"></i></label></td>
+        <td colspan="2"><label class="h5 rangePay">Hourly Pay Range <span class="font-weight-normal text-dark">($100-S150 recommended)</span></label></td>
+      </tr>
+      <tr>
+        <td style="width: 33%">
+          <%= f.select :contract_type,
+                       options_for_select(
+                         Job::CONTRACT_TYPE_DESCRIPTIONS, job.contract_type),
+                       {}, class: 'form-control', required: true, style: "width: 100%" %>
+        </td>
+        <td style="width: 33%">
+          <%= f.text_field :pay_range_low, class: "form-control", placeholder: "$ Low", required: true %>
+        </td>
+        <td style="width: 33%">
+         <%= f.text_field :pay_range_high, class: "form-control", placeholder: "$ High" %>
+          <span class="error_message text-danger"></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="form-group mb-1 mt-3">
     <label for="jobDetailsTextarea" class="h5">Describe responsibilities, provided resources, or any other requirements. <span class="text-dark font-weight-normal">(Optional)</span></label>
-    <%= f.text_area :relevant_job_details, class: "form-control",rows: "3", id: "jobDetailsTextarea", placeholder: "Enter any relevant job details", rows: "8", maxlength: "5000" %>
+    <%= f.text_area :relevant_job_details, class: "form-control", id: "jobDetailsTextarea", placeholder: "Enter any relevant job details", rows: "8", maxlength: "5000" %>
   </div>
   <div class="modal-footer justify-content-between">
     <%= link_to employer_job_flows_path(id: :post_job_step_3, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
@@ -14,3 +37,38 @@
     <% end %>
   </div>
 <% end %>
+<script>
+  change_contract_type();
+
+  $('#job_contract_type').change(() => {
+    change_contract_type();
+  });
+
+  function change_contract_type() {
+    const retainer_fee_recommendations = { 'monthly_retainer_20': '$3,000', 'monthly_retainer_40': '$4,500', 'monthly_retainer_60': '$7,000'  };
+    const recommendation = retainer_fee_recommendations[$("#job_contract_type").val()];
+
+    if ($("#job_contract_type").val() == 'hourly'){
+      $('#job_pay_range_high').removeClass('d-none');
+      $('#job_pay_range_low').attr("placeholder", "$ Low");
+      $('.rangePay').html('Hourly Pay Range <span class="font-weight-normal text-dark">($100-S150 recommended)</span>')
+    } else {
+      $('#job_pay_range_high').addClass('d-none');
+      $('#job_pay_range_low').attr("placeholder", "$ Monthly amount");
+      if(recommendation) {
+        $('.rangePay').html('Monthly Retainer Fee <span class="font-weight-normal text-dark">(' + recommendation + ' recommended)</span>');
+      }
+    }
+  };
+
+  $('.btn-primary').on('click', (e) => {
+    const job_pay_range_low = $('#job_pay_range_low').val().replace(/\$|a..zA..Z|,/g, '');
+    const job_pay_range_high = $('#job_pay_range_high').val().replace(/\$|a..zA..Z|,/g, '');
+    if ($("#job_contract_type").val() == 'hourly' && job_pay_range_high && (parseInt(job_pay_range_high, 10) < parseInt(job_pay_range_low, 10))) {
+      $('.error_message').text('Enter $' + $('#job_pay_range_low').val()+ ' or more');
+      $('#job_pay_range_high').addClass('error');
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+</script>

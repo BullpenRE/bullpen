@@ -1,0 +1,11 @@
+<br>
+<%= render partial: 'email/content_block_left', locals: { content: "<h2 style='color: #005495;'>Congratulations! You received an interview request.</h2" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<b>Client information:</b>" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "#{@interview_request.employer_profile.user.full_name}" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "#{@interview_request.employer_profile.company_name}" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "#{@interview_request.employer_profile.company_website}" } %>
+<br>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<b>Message:</b>" } %>
+<%= render partial: 'email/content_block_left', locals: { content: "Accept or decline this interview request on your Bullpen dashboard." } %>
+<br>
+<%= render partial: 'email/button', locals: { button_txt: 'My Interview Request', url: freelancer_interviews_url(view_interview_request: @interview_request.id) } %>

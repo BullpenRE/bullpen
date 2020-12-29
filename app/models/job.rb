@@ -22,6 +22,13 @@ class Job < ApplicationRecord
   enum state: { 'draft': 0, 'posted': 1, 'closed': 2 }
   enum contract_type: { 'hourly': 0, 'monthly_retainer_20': 1, 'monthly_retainer_40': 2, 'monthly_retainer_80': 3 }
 
+  CONTRACT_TYPE_DESCRIPTIONS = {
+    'Hourly': contract_types.keys[0],
+    'Monthly Retainer - 20 hrs': contract_types.keys[1],
+    'Monthly Retainer - 40 hrs': contract_types.keys[2],
+    'Monthly Retainer - 80 hrs': contract_types.keys[3]
+  }.freeze
+
   def ready_to_post?
     title.present? &&
       short_description.present? &&
