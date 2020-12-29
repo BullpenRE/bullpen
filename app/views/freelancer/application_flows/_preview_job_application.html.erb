@@ -70,9 +70,7 @@
             <% end %>
           </div>
           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <%= render 'shared/freelancer_summary',
-                       freelancer_profile: job_application.user.freelancer_profile,
-                       editable: false %>
+            <%= render 'shared/freelancer_profile_tab', freelancer_profile: job_application.user.freelancer_profile %>
           </div>
         </div>
       </div>
