@@ -18,20 +18,22 @@ class Freelancer::ProfileController < ApplicationController
   def change_certifications
     @freelancer_profile = current_user.freelancer_profile
     @freelancer_profile&.freelancer_certifications&.destroy_all
-    certifications_params&.each do |certifications|
-      @freelancer_profile.freelancer_certifications.create(certifications_id: certifications)
-    end
+
+    freelancer_certification_options
+
+    redirect_to freelancer_profile_step_path(:summary)
+  end
+
+  def change_educations
+    @freelancer_profile = current_user.freelancer_profile
+    @freelancer_profile&.freelancer_profile_educations&.destroy_all
+
+    freelancer_education_options
+
+    redirect_to freelancer_profile_step_path(:summary)
   end
 
   private
-
-  def certifications_params
-    params[:freelancer_profile][:freelancer_certifications]&.reject(&:blank?)
-  end
-
-  def freelancer_certification
-    @freelancer_profile&.freelancer_certifications&.find_by(id: params[:freelancer_certification][:id])
-  end
 
   def real_estate_skill_params
     params[:freelancer_profile][:freelancer_real_estate_skills]&.reject(&:blank?)
