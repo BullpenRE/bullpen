@@ -3,7 +3,7 @@
 <div class="container mb-3">
   <h1>Interviews</h1>
   <% @interviews.each do |interview| %>
-    <div class="bp-card mb-3">
+    <div class="bp-card mb-3 card<%= interview.id %>">
       <div>
         <div class="d-flex flex-column flex-lg-row">
           <div class="text-light mb-1 ml-2 avatar-image" style="font-size: 113px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
@@ -33,5 +33,12 @@
   <% end %>
   <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
 </div>
+
+<script>
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const open_interview = urlParams.get('view_interview_request');
+  $('html,body').animate({scrollTop: $('.card' + open_interview).offset().top},'slow');
+</script>
 
 

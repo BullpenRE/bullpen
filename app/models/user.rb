@@ -42,8 +42,8 @@ class User < ApplicationRecord
 
   def avatar
     return nil if employer?
-    return nil unless freelancer_profile.avatar.attached?
+    return nil unless freelancer_profile&.avatar&.attached?
 
-    freelancer_profile.avatar
+    freelancer_profile&.avatar
   end
 end

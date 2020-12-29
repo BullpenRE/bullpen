@@ -48,12 +48,31 @@
     </div>
   </div>
 <% end %>
+
 <% if @freelancer_profile.softwares.any? %>
   <div class="mt-3">
     <h4>Software Licenses</h4>
-    <div><%= @freelancer_profile.softwares.order(description: :asc).pluck(:description).join(', ') %></div>
+    <div class="d-flex flex-row flex-inline">
+      <div class="d-flex-col">
+        <%= @freelancer_profile.softwares.pluck(:description).join(', ') %>
+      </div>
+      <% if @freelancer_profile.editable?(current_user) %>
+        <div class="d-flex-col ml-auto">
+          <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editSoftwareModal"></button>
+        </div>
+        <%= render 'shared/edit_freelancer_softwares', freelancer_softwares: @freelancer_profile.softwares %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="mt-3">
+    <%= render 'shared/edit_freelancer_softwares' %>
+    <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editSoftwareModal">
+      Add Software Licences
+    </button>
   </div>
 <% end %>
+
 <% if @freelancer_profile.freelancer_profile_experiences.any? %>
   <hr>
   <div class="mt-3">
@@ -74,6 +93,7 @@
     <% end %>
   </div>
 <% end %>
+
 <% if @freelancer_profile.freelancer_profile_educations.any? || @freelancer_profile.freelancer_certifications.any? %>
   <hr>
 <% end %>
@@ -95,6 +115,7 @@
       <% end %>
     <% end %>
   <% end %>
+
   <% if @freelancer_profile.freelancer_certifications.any? %>
     <h4 class="mt-3">Licenses &amp; Certifications</h4>
 
@@ -103,7 +124,7 @@
         <div class="mr-2"><b><%= freelancer_certification.description %></b></div>
         <div class="ml-auto mr-1"><i><%= freelancer_certification.earned.strftime("%b %Y") %></i></div>
         <% if @freelancer_profile.editable?(current_user) %>
-          <i class="fas fa-edit text-primary ml-1"></i>
+          <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editSoftwareModal"></button>
         <% end %>
       </div>
     <% end %>
