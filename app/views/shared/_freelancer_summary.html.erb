@@ -54,6 +54,7 @@
     <div><%= @freelancer_profile.softwares.order(description: :asc).pluck(:description).join(', ') %></div>
   </div>
 <% end %>
+
 <% if @freelancer_profile.freelancer_profile_experiences.any? %>
   <hr>
   <div class="mt-3">
@@ -74,6 +75,7 @@
     <% end %>
   </div>
 <% end %>
+
 <% if @freelancer_profile.freelancer_profile_educations.any? || @freelancer_profile.freelancer_certifications.any? %>
   <hr>
 <% end %>
@@ -95,6 +97,7 @@
       <% end %>
     <% end %>
   <% end %>
+
   <% if @freelancer_profile.freelancer_certifications.any? %>
     <h4 class="mt-3">Licenses &amp; Certifications</h4>
 

@@ -7,7 +7,7 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <%= form_for :freelancer_profile, url: freelancer_change_certifications_path do |f| %>
+      <%= form_for :freelancer_certifications, url: freelancer_change_certifications_path do |f| %>
         <div class="modal-body pt-0">
           <div class="form-group mb-4">
             <h4>Licence or Certification</h4>
@@ -34,7 +34,7 @@
                   <%= f.select :earned_month,
                                options_for_select(
                                  select_months_array,
-                                 @freelancer_profile&.freelancer_certification&.earned&.month),
+                                 @freelancer_profile&.freelancer_certifications[0]&.earned&.month),
                                {}, class: 'form-control selectpicker',
                                id: 'earnedMonth', required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
                 </div>
@@ -42,12 +42,12 @@
                   <%= f.select :earned_year,
                                options_for_select(
                                  FreelancerCertification::AVAILABLE_YEARS,
-                                 freelancer_profile&.freelancer_certification&.earned&.year),
+                                 @freelancer_profile&.freelancer_certifications[0]&.earned&.year),
                                {}, class: 'form-control selectpicker',
                                id: 'earnedYear', required: true, 'data-style': "bp-btn-select-border", title: "Year" %>
                 </div>
               </div>
-              <%= f.hidden_field :id, value: freelancer_certification.id %>
+              <%= f.hidden_field :id, value: freelancer_certifications[0].id %>
             </div>
           </div>
           <script>

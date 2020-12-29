@@ -21,6 +21,7 @@ class Freelancer::ProfileController < ApplicationController
     certifications_params&.each do |certifications|
       @freelancer_profile.freelancer_certifications.create(certifications_id: certifications)
     end
+  end
 
   private
 
