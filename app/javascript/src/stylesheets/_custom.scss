@@ -31,6 +31,7 @@
 .bp-card {
   background-color: white;
   padding: 1.25rem;
+  border-radius: 0.1875rem;
 }
 //To be depreciated for the H5 class
 .bp-input-label {
@@ -45,6 +46,23 @@
 }
 .bp-text-sm {
   font-size: 0.875rem;
+}
+.bp-or-border {
+  position: relative;
+  z-index: 1;
+  &:before {
+      border-top: 1px solid #B4C8D8;
+      content:"";
+      margin: 0 auto; 
+      position: absolute;
+      top: 50%; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      z-index: -1;
+  }
+  span { 
+      background: #fff; 
+      padding: 0 0.5rem; 
+  }
 }
 
 input.error { border: 1px solid #FB3640; }
