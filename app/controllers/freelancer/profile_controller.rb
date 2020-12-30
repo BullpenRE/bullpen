@@ -37,7 +37,7 @@ class Freelancer::ProfileController < ApplicationController
   end
 
   def redirect_after_change_profile
-    return redirect_to freelancer_profile_path(current_user) if freelancer_profile.accepted?
+    return redirect_to freelancer_profile_index_path if freelancer_profile.accepted?
 
     redirect_to freelancer_profile_step_path(:summary)
   end
