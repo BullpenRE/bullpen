@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe FreelancerCertification, type: :model do
   let(:freelancer_profile) { FactoryBot.create(:freelancer_profile) }
-
   let(:certification) { FactoryBot.create(:certification) }
   let!(:freelancer_certification) { FactoryBot.create(:freelancer_certification, freelancer_profile: freelancer_profile, certification: certification) }
 

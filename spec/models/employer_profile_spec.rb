@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe EmployerProfile, type: :model do
-  let(:user)  { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:user, :employer) }
   let!(:employer_profile) { FactoryBot.create(:employer_profile, user: user) }
+  let(:employer_profile_complete) { FactoryBot.create(:employer_profile, :complete) }
 
   it 'factory works' do
     expect(employer_profile).to be_valid
+    expect(employer_profile_complete).to be_valid
   end
 
   context 'Validations'
@@ -53,5 +55,16 @@ RSpec.describe EmployerProfile, type: :model do
 
   end
 
-  context 'Methods'
+  context 'Methods' do
+    it '#completed?' do
+      employer_profile.update(completed: true)
+      expect(employer_profile.completed?).to be_truthy
+      employer_profile.update(completed: false)
+      expect(employer_profile.reload.completed?).to be_falsey
+    end
+
+    it '#email' do
+      expect(employer_profile.email).to eq(user.email)
+    end
+  end
 end

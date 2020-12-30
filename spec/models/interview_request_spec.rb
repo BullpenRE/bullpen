@@ -1,14 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe InterviewRequest, type: :model do
-  let(:employer_user)  { FactoryBot.create(:user) }
+  let(:employer_user) { FactoryBot.create(:user, :employer) }
   let(:employer_profile) { FactoryBot.create(:employer_profile, user: employer_user) }
-  let(:freelancer_user)  { FactoryBot.create(:user) }
+  let(:freelancer_user)  { FactoryBot.create(:user, :freelancer) }
   let(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
   let!(:interview_request) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile) }
 
   it 'factory works' do
     expect(interview_request).to be_valid
+    expect(interview_request.message).to be_present
   end
 
   context 'Validations'do
