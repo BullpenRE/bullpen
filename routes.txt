@@ -311,13 +311,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PATCH      /freelancer/contracts/:id(.:format)                                                      freelancer/contracts#update
                                                   PUT        /freelancer/contracts/:id(.:format)                                                      freelancer/contracts#update
                                                   DELETE     /freelancer/contracts/:id(.:format)                                                      freelancer/contracts#destroy
-                           new_freelancer_profile GET        /freelancer/profile/new(.:format)                                                        freelancer/profiles#new
-                          edit_freelancer_profile GET        /freelancer/profile/edit(.:format)                                                       freelancer/profiles#edit
-                               freelancer_profile GET        /freelancer/profile(.:format)                                                            freelancer/profiles#show
-                                                  PATCH      /freelancer/profile(.:format)                                                            freelancer/profiles#update
-                                                  PUT        /freelancer/profile(.:format)                                                            freelancer/profiles#update
-                                                  DELETE     /freelancer/profile(.:format)                                                            freelancer/profiles#destroy
-                                                  POST       /freelancer/profile(.:format)                                                            freelancer/profiles#create
+                               freelancer_profile GET        /freelancer/profile/:id(.:format)                                                        freelancer/profile#show
                freelancer_change_software_licence POST       /freelancer/change_software_licence(.:format)                                            freelancer/profile#change_software_licence
                          freelancer_change_skills POST       /freelancer/change_skills(.:format)                                                      freelancer/profile#change_skills
                                 check_users_email POST       /check_users_email(.:format)                                                             check_email#check_users_email
