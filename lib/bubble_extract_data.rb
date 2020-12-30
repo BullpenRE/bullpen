@@ -25,7 +25,7 @@ class Bubble_extract_data
     end
 
     def process
-        return false if @api_results.length == 0 # if there is no data, do not process
+        return false if !@api_results
 
         hash = {}
         @api_results.map do |entry|
@@ -38,7 +38,15 @@ class Bubble_extract_data
     end
 
     def find_by(field, value)
+        return false if !@data
 
+        @data.each do |k,v|
+            result = v.find{|h_k,h_v| h_k == field and h_v == value}
+            if result != nil
+                return @data[k] if result.size > 0
+            end
+        end
+        return false
     end
 
     def data 
