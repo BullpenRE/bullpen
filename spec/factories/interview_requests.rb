@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :interview_request do
     employer_profile
     freelancer_profile
-    state { 0 }
+    state { InterviewRequest.states.values.sample }
+    message { Rack::Test::UploadedFile.new('spec/support/assets/interview_request_message.html', 'text/html') }
   end
 end

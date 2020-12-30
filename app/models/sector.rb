@@ -10,5 +10,6 @@ class Sector < ApplicationRecord
   has_many :jobs, through: :job_sectors
   has_many :employer_sectors, dependent: :destroy
   has_many :employer_profiles, through: :employer_sectors
+
   validates :description, presence: true, uniqueness: true
 end

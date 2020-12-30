@@ -2,13 +2,16 @@ require 'rails_helper'
 
 RSpec.describe Job, type: :model do
   let!(:job) { FactoryBot.create(:job) }
+  let(:retainer_job) { FactoryBot.create(:job, :retainer) }
 
   it 'factory works' do
     expect(job).to be_valid
+    expect(retainer_job).to be_valid
   end
 
   context 'Validations' do
     it { is_expected.to validate_presence_of(:user_id) }
+
     describe 'pay_ranges' do
       it 'can be nil' do
         job.pay_range_high = nil
@@ -105,23 +108,20 @@ RSpec.describe Job, type: :model do
   end
 
   context 'Scopes' do
-    let!(:user) { FactoryBot.create(:user) }
-    let!(:user_1) { FactoryBot.create(:user) }
-    let!(:job_1) { FactoryBot.create(:job) }
-    let!(:job_2) { FactoryBot.create(:job) }
-    let!(:job_application) { FactoryBot.create(:job_application, job: job, user: user) }
-    let!(:job_application_1) { FactoryBot.create(:job_application, job: job_1, user: user_1) }
+    let!(:jim) { FactoryBot.create(:user) }
+    let!(:jane) { FactoryBot.create(:user) }
+    let!(:attractive_job) { FactoryBot.create(:job) }
+    let!(:bad_looking_job) { FactoryBot.create(:job) }
+    let!(:jim_job_application) { FactoryBot.create(:job_application, job: job, user: jim) }
+    let!(:jane_attractive_job_application) { FactoryBot.create(:job_application, job: attractive_job, user: jane) }
 
-    it '.not_applied jobs for user' do
-      expect(Job.not_applied(user)).to include(job_1)
-      expect(Job.not_applied(user)).to include(job_2)
-      expect(Job.not_applied(user)).to_not include(job)
-    end
-
-    it '.not_applied jobs for user_1' do
-      expect(Job.not_applied(user_1)).to include(job)
-      expect(Job.not_applied(user_1)).to include(job_2)
-      expect(Job.not_applied(user_1)).to_not include(job_1)
+    it '.not_applied' do
+      expect(Job.not_applied(jim)).to include(attractive_job)
+      expect(Job.not_applied(jim)).to include(bad_looking_job)
+      expect(Job.not_applied(jim)).to_not include(job)
+      expect(Job.not_applied(jane)).to include(job)
+      expect(Job.not_applied(jane)).to include(bad_looking_job)
+      expect(Job.not_applied(jane)).to_not include(attractive_job)
     end
   end
 end
