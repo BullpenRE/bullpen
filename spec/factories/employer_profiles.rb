@@ -14,6 +14,8 @@ FactoryBot.define do
     completed { false }
 
     trait :complete do
+      completed { true }
+
       after(:create) do |employer_profile, _|
         create(:interview_request, employer_profile: employer_profile)
 
