@@ -1,5 +1,6 @@
 class Bubble_extract_data
-    @data = []
+    @api_results = []
+    @data = {}
 
     def initialize(type)
         @type = type
@@ -11,7 +12,7 @@ class Bubble_extract_data
         raw_data = body['response']['results']
 
         if call.success? && raw_data.length
-            @data = raw_data
+            @api_results = raw_data
             return true
         else
             return false
@@ -19,20 +20,33 @@ class Bubble_extract_data
     end
 
     def retrieve_all
-        @data = []
+        @api_results = []
         return repeat_request(0)
     end
 
     def process
-        
+        return false if @api_results.length == 0 # if there is no data, do not process
+
+        hash = {}
+        @api_results.map do |entry|
+            id = entry["_id"]
+            hash[id] = clean_hash(entry)
+        end
+
+        @data = hash
+        return true
     end
 
     def find_by(field, value)
 
     end
 
-    def view_data 
+    def data 
         @data
+    end
+
+    def results
+        @api_results
     end
 
     private
@@ -55,13 +69,27 @@ class Bubble_extract_data
         raw_data = body['response']['results']
         
         if call.success? && raw_data.length != 0 # check if the call was successfull and there are results
-            @data = @data.concat(raw_data)
+            @api_results = @api_results.concat(raw_data)
             remaining = body['response']['remaining']
             return repeat_request(cursor + 100) if remaining
         elsif call.success? && raw_data.length == 0 # catch for when the call is successfull and there are no further results
             return true
         else
             return false
+        end
+    end
+
+    # flattens nested hashes and removes keys that include "discontinued"
+    def clean_hash(hash)
+        hash.each_with_object({}) do |(k, v), h|
+            next if k =~ /discontinued/
+            if v.is_a? Hash
+                clean_hash(v).map do |h_k, h_v|
+                    h[h_k] = h_v
+                end
+            else 
+                h[k] = v
+            end
         end
     end
 end
