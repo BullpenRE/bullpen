@@ -57,7 +57,7 @@ Rails.application.routes.draw do
     resources :application_flows
     resources :interviews
     resources :contracts
-    resources :profile, only: :show
+    resources :profile, only: :index
     post 'change_software_licence', to: 'profile#change_software_licence'
     post 'change_skills', to: 'profile#change_skills'
   end

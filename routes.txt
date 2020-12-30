@@ -311,7 +311,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PATCH      /freelancer/contracts/:id(.:format)                                                      freelancer/contracts#update
                                                   PUT        /freelancer/contracts/:id(.:format)                                                      freelancer/contracts#update
                                                   DELETE     /freelancer/contracts/:id(.:format)                                                      freelancer/contracts#destroy
-                               freelancer_profile GET        /freelancer/profile/:id(.:format)                                                        freelancer/profile#show
+                         freelancer_profile_index GET        /freelancer/profile(.:format)                                                            freelancer/profile#index
                freelancer_change_software_licence POST       /freelancer/change_software_licence(.:format)                                            freelancer/profile#change_software_licence
                          freelancer_change_skills POST       /freelancer/change_skills(.:format)                                                      freelancer/profile#change_skills
                                 check_users_email POST       /check_users_email(.:format)                                                             check_email#check_users_email

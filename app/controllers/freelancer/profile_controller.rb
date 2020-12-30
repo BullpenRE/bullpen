@@ -4,7 +4,7 @@ class Freelancer::ProfileController < ApplicationController
   include LoggedInRedirects
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :freelancer_profile
 
-  def show
+  def index
     real_estate_skills
   end
 
