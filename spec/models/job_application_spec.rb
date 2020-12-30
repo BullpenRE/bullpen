@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe JobApplication, type: :model do
   let(:job) { FactoryBot.create(:job) }
-  let(:user) { FactoryBot.create(:user) }
-  let!(:job_application) { FactoryBot.create(:job_application, job: job, user: user, template: true) }
+  let!(:job_application) { FactoryBot.create(:job_application, job: job, template: true) }
+  let!(:user) { job_application.user }
   let(:job_application_with_attachments) { FactoryBot.create(:job_application, :with_attachments) }
 
   it 'factory works' do

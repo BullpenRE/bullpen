@@ -2,9 +2,13 @@ require 'rails_helper'
 
 RSpec.describe SignupPromo, type: :model do
   let!(:signup_promo) { FactoryBot.create(:signup_promo) }
+  let(:employer_signup_promo) { FactoryBot.create(:signup_promo, :employer) }
+  let(:freelancer_signup_promo) { FactoryBot.create(:signup_promo, :freelancer) }
 
   it 'factory works' do
     expect(signup_promo).to be_valid
+    expect(employer_signup_promo).to be_valid
+    expect(freelancer_signup_promo).to be_valid
   end
 
   context 'Validations' do

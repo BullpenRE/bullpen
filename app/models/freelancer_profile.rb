@@ -30,23 +30,23 @@ class FreelancerProfile < ApplicationRecord
   end
 
   def first_name
-    user.first_name
+    @first_name ||= user.first_name
   end
 
   def last_name
-    user.last_name
+    @last_name ||= user.last_name
   end
 
   def full_name
-    user.full_name
+    @full_name ||= user.full_name
   end
 
   def email
-    user.email
+    @email ||= user.email
   end
 
   def location
-    user.location
+    @location ||= user.location
   end
 
   def editable?(user)

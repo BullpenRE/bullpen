@@ -1,3 +1,8 @@
+<%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: @freelancer_profile, job_application: nil } %>
+<% if @freelancer_profile.real_estate_skills.any? || @freelancer_profile.softwares.any? %><hr><% end %>
+<%= render partial: 'shared/freelancer_skills_education', locals: { freelancer_profile: @freelancer_profile, job_application: nil } %>
+
+
 <% if freelancer_profile.real_estate_skills.any? %>
     <%= render 'shared/freelancer_real_estate_skills',
                freelancer_profile: freelancer_profile,
