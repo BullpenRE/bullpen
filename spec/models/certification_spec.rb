@@ -56,8 +56,10 @@ RSpec.describe Certification, type: :model do
     let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile) }
     let!(:freelancer_certification) { FactoryBot.create(:freelancer_certification, freelancer_profile: freelancer_profile, certification: certification) }
 
-    it 'has many freelancer_certifications' do
+    it 'has many freelancer_certifications with dependent destroy' do
       expect(certification.freelancer_certifications).to include(freelancer_certification)
+      certification.destroy
+      expect(FreelancerCertification.exists?(freelancer_certification.id)).to be_falsey
     end
 
     it 'has many freelancer_profiles through freelancer_certifications' do

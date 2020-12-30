@@ -8,11 +8,13 @@ RSpec.describe Skill, type: :model do
   end
 
   context 'Validations' do
-    it 'description is unique' do
+    it 'description is unique and present' do
       new_skill = FactoryBot.create(:skill)
       expect(new_skill).to be_valid
       new_skill.description = skill.description
       expect(new_skill).to_not be_valid
+      skill.description = ''
+      expect(skill).to_not be_valid
     end
   end
 
@@ -20,18 +22,15 @@ RSpec.describe Skill, type: :model do
     let!(:job_skill) { FactoryBot.create(:job_skill, skill: skill) }
     let!(:job) { job_skill.job }
 
-    it 'has many job_skills' do
+    it 'has many job_skills dependent destroy' do
       expect(skill.job_skills).to include(job_skill)
+      skill.destroy
+      expect(JobSkill.exists?(job_skill.id)).to be_falsey
+      expect(Job.exists?(job.id)).to be_truthy
     end
 
     it 'has many jobs through job_skills' do
       expect(skill.jobs).to include(job)
-    end
-
-    it 'job_skills are dependent destroyed, jobs are not' do
-      skill.destroy
-      expect(JobSkill.exists?(job_skill.id)).to be_falsey
-      expect(Job.exists?(job.id)).to be_truthy
     end
   end
 end
