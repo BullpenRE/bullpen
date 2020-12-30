@@ -6,8 +6,8 @@ class Freelancer::ProfileController < ApplicationController
 
   def show
     @freelancer_profile = current_user.freelancer_profile
+    real_estate_skills
   end
-
 
   def change_skills
     @freelancer_profile = current_user.freelancer_profile
@@ -16,6 +16,7 @@ class Freelancer::ProfileController < ApplicationController
       @freelancer_profile.freelancer_real_estate_skills.create(real_estate_skill_id: skill)
     end
 
+    return redirect_to freelancer_profile_path(current_user) if @freelancer_profile.accepted?
     redirect_to freelancer_profile_step_path(:summary)
   end
 
@@ -26,6 +27,7 @@ class Freelancer::ProfileController < ApplicationController
       @freelancer_profile.freelancer_softwares.create(software_id: software)
     end
 
+    return redirect_to freelancer_profile_path(current_user) if @freelancer_profile.accepted?
     redirect_to freelancer_profile_step_path(:summary)
   end
 
@@ -37,5 +39,9 @@ class Freelancer::ProfileController < ApplicationController
 
   def software_params
     params[:freelancer_softwares][:freelancer_softwares]
+  end
+
+  def real_estate_skills
+    @real_estate_skills ||= RealEstateSkill.enabled.pluck(:description, :id)
   end
 end
