@@ -85,7 +85,7 @@
 
     <% @freelancer_profile.freelancer_certifications.order(earned: :desc).each do |freelancer_certification| %>
       <div class="d-flex mb-2">
-        <div class="mr-2"><b><%= freelancer_certification.description %></b></div>
+        <div class="mr-2 text-wrap text-break"><b><%= freelancer_certification.description %></b></div>
         <div class="ml-auto mr-1"><i><%= freelancer_certification.earned.strftime("%b %Y") %></i></div>
         <% if @freelancer_profile.editable?(current_user) %>
           <i class="fas fa-edit text-primary ml-1"></i>
