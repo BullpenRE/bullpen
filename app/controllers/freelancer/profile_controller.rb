@@ -17,7 +17,6 @@ class Freelancer::ProfileController < ApplicationController
 
   def change_certifications
     @freelancer_profile = current_user.freelancer_profile
-    @freelancer_profile&.freelancer_certifications&.destroy_all
 
     freelancer_certification_options
 

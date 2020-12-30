@@ -112,12 +112,11 @@
       </div>
       <%= render 'freelancer/shared/edit_certifications', freelancer_certification: freelancer_certification %>
     <% end %>
-  <% else %>
     <div class="mt-3">
-      <%= render 'freelancer/shared/edit_certifications' %>
-      <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editSoftwareModal">
+      <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#addLicenseCertificationModal">
         Add Licence or Certification
       </button>
+      <%= render 'freelancer/shared/add_certification' %>
     </div>
   <% end %>
 </div>
