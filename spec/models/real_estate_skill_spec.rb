@@ -17,12 +17,21 @@ RSpec.describe RealEstateSkill, type: :model do
 
   context 'Relationships' do
     let!(:freelancer_real_estate_skill) { FactoryBot.create(:freelancer_real_estate_skill, real_estate_skill: real_estate_skill) }
+    let!(:freelancer_profile) { freelancer_real_estate_skill.freelancer_profile }
+
     it 'has many freelancer_real_estate_skills' do
       expect(real_estate_skill.freelancer_real_estate_skills).to include(freelancer_real_estate_skill)
     end
 
     it 'has many freelancer_profiles through freelancer_real_estate_skills' do
       expect(real_estate_skill.freelancer_profiles).to include(freelancer_real_estate_skill.freelancer_profile)
+    end
+
+    it 'is dependent destroy for freelancer_real_estate_skills but not freelancer_profiles' do
+      real_estate_skill.destroy
+
+      expect(FreelancerRealEstateSkill.exists?(freelancer_real_estate_skill.id)).to be_falsey
+      expect(FreelancerProfile.exists?(freelancer_profile.id)).to be_truthy
     end
   end
 

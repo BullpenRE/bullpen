@@ -16,11 +16,7 @@ class EmployerProfile < ApplicationRecord
     'Other': 5
   }
 
-  def completed?
-    completed == true
-  end
-
   def email
-    user.email
+    @email ||= user.email
   end
 end

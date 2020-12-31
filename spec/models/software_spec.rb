@@ -8,11 +8,13 @@ RSpec.describe Software, type: :model do
   end
 
   context 'Validations' do
-    it 'description is unique' do
+    it 'description is unique and required' do
       new_software = FactoryBot.create(:software)
       expect(new_software).to be_valid
       new_software.description = software.description
       expect(new_software).to_not be_valid
+      software.description = ''
+      expect(software).to_not be_valid
     end
   end
 
@@ -22,32 +24,26 @@ RSpec.describe Software, type: :model do
     let!(:freelancer_software) { FactoryBot.create(:freelancer_software, software: software) }
     let!(:freelancer_profile) { freelancer_software.freelancer_profile }
 
-    it 'has many job_softwares' do
+    it 'has many job_softwares dependent destroy' do
       expect(software.job_softwares).to include(job_software)
+      software.destroy
+      expect(JobSoftware.exists?(job_software.id)).to be_falsey
+      expect(Job.exists?(job.id)).to be_truthy
     end
 
     it 'has many jobs through job_softwares' do
       expect(software.jobs).to include(job)
     end
 
-    it 'job_softwares are dependent destroyed, jobs are not' do
-      software.destroy
-      expect(JobSoftware.exists?(job_software.id)).to be_falsey
-      expect(Job.exists?(job.id)).to be_truthy
-    end
-
-    it 'has many freelancer_softwares' do
+    it 'has many freelancer_softwares dependent destroy' do
       expect(software.freelancer_softwares).to include(freelancer_software)
+      software.destroy
+      expect(FreelancerSoftware.exists?(freelancer_software.id)).to be_falsey
+      expect(FreelancerProfile.exists?(freelancer_profile.id)).to be_truthy
     end
 
     it 'has many freelancer_profiles through freelancer_software' do
       expect(software.freelancer_profiles).to include(freelancer_profile)
-    end
-
-    it 'freelancer_softwares are dependent destroyed, freelancer_profiles are not' do
-      software.destroy
-      expect(FreelancerSoftware.exists?(freelancer_software.id)).to be_falsey
-      expect(FreelancerProfile.exists?(freelancer_profile.id)).to be_truthy
     end
   end
 

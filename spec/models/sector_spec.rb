@@ -28,12 +28,8 @@ RSpec.describe Sector, type: :model do
     describe 'freelancer_sectors' do
       let(:freelancer_sector) { FactoryBot.create(:freelancer_sector, sector: sector) }
 
-      it 'has many' do
+      it 'has many with dependent destroy' do
         expect(sector.freelancer_sectors).to include(freelancer_sector)
-      end
-
-      it 'destroying a sector also destroys its associated freelancer_sectors' do
-        expect(FreelancerSector.exists?(freelancer_sector.id)).to be_truthy
         sector.destroy
         expect(FreelancerSector.exists?(freelancer_sector.id)).to be_falsey
       end
@@ -46,12 +42,8 @@ RSpec.describe Sector, type: :model do
     describe 'employer_sectors' do
       let!(:employer_sector) { FactoryBot.create(:employer_sector, sector: sector) }
 
-      it 'has many' do
+      it 'has many with dependent destroy' do
         expect(sector.employer_sectors).to include(employer_sector)
-      end
-
-      it 'destroying a sector also destroys its associated freelancer_sectors' do
-        expect(EmployerSector.exists?(employer_sector.id)).to be_truthy
         sector.destroy
         expect(EmployerSector.exists?(employer_sector.id)).to be_falsey
       end
@@ -64,12 +56,8 @@ RSpec.describe Sector, type: :model do
     describe 'job_sectors' do
       let(:job_sector) { FactoryBot.create(:job_sector, sector: sector) }
 
-      it 'has many' do
+      it 'has many with dependent destroy' do
         expect(sector.job_sectors).to include(job_sector)
-      end
-
-      it 'destroying a sector also destroys its associate job_sectors' do
-        expect(JobSector.exists?(job_sector.id)).to be_truthy
         sector.destroy
         expect(JobSector.exists?(job_sector.id)).to be_falsey
       end
@@ -87,6 +75,7 @@ RSpec.describe Sector, type: :model do
         expect(Sector.all.pluck(:description)).to match(Sector.order(description: :asc).pluck(:description))
       end
     end
+
     it '.enabled' do
       disabled_sector = FactoryBot.create(:sector, disable: true)
       expect(sector.disable).to be_falsey
