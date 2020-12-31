@@ -36,4 +36,13 @@ describe ApplicationHelper, type: :helper do
       expect(helper.clean_currency_entry('wefwefwef')).to eq(0)
     end
   end
+   describe '#separate_comma' do
+    it 'checks results' do
+      expect(helper.separate_comma(43334)).to eq('43,334')
+      expect(helper.separate_comma(433)).to eq('433')
+      expect(helper.separate_comma(43334000)).to eq('43,334,000')
+      expect(helper.separate_comma(4.2)).to eq('4.2')
+      expect(helper.separate_comma(5)).to eq('5')
+    end
+  end
 end

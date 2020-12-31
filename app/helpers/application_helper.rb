@@ -12,4 +12,8 @@ module ApplicationHelper
   def clean_currency_entry(currency_entry)
     currency_entry.gsub(/\$|a..zA..Z|,/, '').to_i
   end
+
+  def separate_comma(currency)
+    currency.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+  end
 end
