@@ -1,0 +1,16 @@
+<p class="text-wrap text-break"><%= job.short_description %></p>
+<% if  Job::CONTRACT_TYPE_DESCRIPTIONS.key(job.contract_type).present?%>
+  <p class="text-wrap text-break text-secondary mt-2">
+    <% if job.contract_type == 'hourly' %>
+      <%= Job::CONTRACT_TYPE_DESCRIPTIONS.key(job.contract_type) %>
+      <span> - $<%= job.pay_range_low %><%= job.pay_range_high.present? ? " to $#{job.pay_range_high}" : '' %> per hour</span>
+    <% else %>
+      <%= Job::CONTRACT_TYPE_DESCRIPTIONS.key(job.contract_type) %><span>, $<%= job.pay_range_low %> per month</span>
+    <%end %>
+  </p>
+ <% end %>
+<% job.job_sectors&.each do |job_sector| %>
+  <span class="badge badge-secondary mt-1">
+    <%= job_sector&.sector&.description %>
+  </span>
+<% end %>
