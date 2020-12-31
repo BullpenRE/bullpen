@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :freelancer_profile do
-    user
+    association :user, :freelancer
     professional_title { Faker::Job.title }
     professional_years_experience { FreelancerProfile.professional_years_experiences.values.sample }
     professional_summary { Faker::Hipster.paragraph }

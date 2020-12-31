@@ -28,5 +28,4 @@ RSpec.describe FreelancerSector, type: :model do
       expect(freelancer_sector.sector).to eq(sector)
     end
   end
-
 end

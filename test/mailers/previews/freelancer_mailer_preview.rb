@@ -7,4 +7,8 @@ class FreelancerMailerPreview < ActionMailer::Preview
   def freelancer_rejected
     FreelancerMailer.freelancer_rejected(User.first)
   end
+
+  def interview_request
+    FreelancerMailer.interview_request(InterviewRequest.first)
+  end
 end
