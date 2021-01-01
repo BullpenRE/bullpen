@@ -1,0 +1,4 @@
+<div class="container bp-card">
+  <h1><%= @job.title&.capitalize %></h1>
+  <%= render partial: 'shared/show_job_post_content', locals: { job: @job } %>
+</div>

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Job < ApplicationRecord
+  include Slugable
+
   belongs_to :user
   has_many :job_skills, dependent: :destroy
   has_many :skills, through: :job_skills
