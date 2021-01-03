@@ -6,9 +6,13 @@
       Show Details
     </button>
     <% if job_application.state == 'draft' %>
-      <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="#deleteApplicationDraft<%= job_application.id %>">
-        Delete Draft
-      </button>
+        <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="#deleteApplicationDraft<%= job_application.id %>">
+          Delete Draft
+        </button>
+      <% else %>
+        <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="#deleteApplicationDraft<%= job_application.id %>">
+          Withdraw Application
+        </button>
     <% end %>
   </div>
 </div>
