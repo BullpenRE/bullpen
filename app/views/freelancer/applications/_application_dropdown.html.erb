@@ -16,9 +16,9 @@
       <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#previewApplicationDropdown-<%= job_application.id %>">
         Show Application
       </button>
-      <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#showJobPost<%= job_application.job.id %>">
+      <%= link_to freelancer_application_flows_path(id: :application_step_1, job_app: job_application), class: "dropdown-item", remote: true do %>
         Edit Application
-      </button>
+      <% end %>
       <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#showJobPost<%= job_application.job.id %>">
         Show Details
       </button>
