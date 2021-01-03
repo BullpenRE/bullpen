@@ -75,24 +75,24 @@
           <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">...</div>
         </div>
       </div>
-      <%#= form_for :job_application, url: wizard_path, method: :put, remote: true do |f| %>
-<!--        <div class="modal-footer justify-content-between">-->
-          <%#= f.hidden_field :job_application_id, value: job_application.id %>
-          <%#= f.hidden_field 'step', value: 'preview_application' %>
+      <%= form_for :job_application, url: wizard_path, method: :put, remote: true do |f| %>
+        <div class="modal-footer justify-content-between">
+          <%= f.hidden_field :job_application_id, value: job_application.id %>
+          <%= f.hidden_field 'step', value: 'preview_application' %>
 
-          <%#= link_to freelancer_application_flows_path(id: :application_step_1, job_app: job_application), class: "btn btn-outline-primary", remote: true do %>
-<!--            Edit Application-->
-          <%# end %>
-<!--          <div>-->
-            <%#= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
-<!--              Save<span class="d-none d-sm-inline"> as Draft</span>-->
-            <%# end %>
-            <%#= button_tag type: 'submit', class: "btn btn-primary" do %>
-<!--              Submit<span class="d-none d-sm-inline"> Application</span>-->
-            <%# end %>
-<!--          </div>-->
-<!--        </div>-->
-      <%# end %>
+          <%= link_to freelancer_application_flows_path(id: :application_step_1, job_app: job_application), class: "btn btn-outline-primary", remote: true do %>
+            Edit Application
+          <% end %>
+          <div>
+            <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
+              Save<span class="d-none d-sm-inline"> as Draft</span>
+            <% end %>
+            <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+              Submit<span class="d-none d-sm-inline"> Application</span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
