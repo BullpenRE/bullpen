@@ -1,42 +1,29 @@
 <% if freelancer_profile.real_estate_skills.any? %>
     <%= render 'shared/freelancer_real_estate_skills',
                freelancer_profile: freelancer_profile,
-               editable: freelancer_profile.editable?(current_user) %>
-<% end %>
-
-<% if freelancer_profile.softwares.any? %>
-    <%= render 'shared/freelancer_softwares',
-               freelancer_profile: freelancer_profile,
-               editable: freelancer_profile.editable?(current_user) %>
-<% else %>
-  <div class="mt-3">
-    <%= render 'shared/edit_freelancer_softwares', freelancer_profile: freelancer_profile %>
-    <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editSoftwareModal">
-      Add Software Licences
-    </button>
-  </div>
+               editable: false %>
 <% end %>
 
 <% if freelancer_profile.freelancer_profile_experiences.any? %>
     <%= render 'shared/freelancer_profile_experiences',
                freelancer_profile: freelancer_profile,
-               editable: freelancer_profile.editable?(current_user) %>
+               editable: false %>
 <% end %>
 
 <% if freelancer_profile.freelancer_profile_educations.any? || freelancer_profile.freelancer_certifications.any? %>
-  <hr>
+    <hr>
 <% end %>
 
 <div class="mt-3">
   <% if freelancer_profile.freelancer_profile_educations.any? %>
       <%= render 'shared/freelancer_profile_educations',
                  freelancer_profile: freelancer_profile,
-                 editable: freelancer_profile.editable?(current_user) %>
+                 editable: false %>
   <% end %>
 
   <% if freelancer_profile.freelancer_certifications.any? %>
       <%= render 'shared/freelancer_certifications',
                  freelancer_profile: freelancer_profile,
-                 editable: freelancer_profile.editable?(current_user) %>
+                 editable: false %>
   <% end %>
 </div>

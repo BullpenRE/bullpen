@@ -1,0 +1,18 @@
+<hr>
+<div class="mt-3">
+  <h4>Experience</h4>
+  <% freelancer_profile.freelancer_profile_experiences.order(current_job: :desc, end_date: :desc).each do |work_experience| %>
+      <div class="d-flex">
+        <div class="mb-2 mr-2 text-wrap text-break"><b><%= work_experience.company %></b><br><%= work_experience.job_title %></div>
+        <div class="ml-auto mr-1"><i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date&.strftime('%b %Y') %></i></div>
+        <% if editable %>
+            <i class="fas fa-edit text-primary ml-1"></i>
+        <% end %>
+      </div>
+      <ul class="mr-lg-3 mr-2 pl-3">
+        <% work_experience.description_paragraphs.each do |paragraph| %>
+            <li style="word-wrap: break-word; overflow-wrap: break-word;"><%= paragraph %></li>
+        <% end %>
+      </ul>
+  <% end %>
+</div>
