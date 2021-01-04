@@ -5,7 +5,7 @@ class JobApplication < ApplicationRecord
   belongs_to :job
   has_many :job_application_questions, dependent: :destroy
   has_many :job_questions, through: :job_application_questions
-  has_one_attached :work_sample
+  has_many_attached :work_samples
   has_rich_text :cover_letter
 
   validates :job_id, uniqueness: { scope: :user_id }
@@ -19,21 +19,21 @@ class JobApplication < ApplicationRecord
   MAX_FILE_SIZE = 20_971_520
 
   def correct_size?
-    return true if attachment_valid_correct_size?(work_sample)
+    return true if attachment_valid_correct_size?(work_samples)
 
     errors.add(:base, 'Uploaded files must not exceed 20MB.')
     false
   end
 
-  def attachment_valid_correct_size?(attachment)
-    return true if no_attachment_uploaded?(attachment)
-    return true if attachment.blob.byte_size < MAX_FILE_SIZE
+  def attachment_valid_correct_size?(attachments)
+    return true if no_attachment_uploaded?(attachments)
+    return true if attachments.all { |attachment| attachment.blob.byte_size < MAX_FILE_SIZE }
 
     false
   end
 
-  def no_attachment_uploaded?(attachment)
-    attachment.attached? == false
+  def no_attachment_uploaded?(attachments)
+    attachments.all { |attachment| attachment.attached? == false }
   end
 
   private

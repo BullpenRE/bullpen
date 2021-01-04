@@ -11,21 +11,26 @@
   </div>
   <div class="form-group work_sample">
     <label for="workSample" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
-    <% if job_application.work_sample.attached? %>
-      <div class="file-name text-break mb-2">This file was attached: <%= job_application.work_sample.filename %></div>
-      <div class="custom-file">
-        <%= f.file_field :work_sample, multiple: false, name: 'work_sample', class: "d-none", id: "uploadWorkSample" %>
-        <label class="btn btn-outline-primary upload-work-sample d-block d-sm-inline" for="uploadWorkSample">
-          Edit your work sample
-        </label>
-        <button type="button" class="delete-work-sample d-none" id="deleteWorkSample"></button>
-        <label class="btn btn-outline-danger ml-sm-2 delete d-block d-sm-inline" for="deleteWorkSample">
-          Delete
-        </label>
-      </div>
+    <% if job_application.work_samples.attached? %>
+      <% job_application.work_samples.each_with_index do |work_sample, index| %>
+
+        <div class="file-name text-break mb-2">
+          <button type="button" class="delete-work-sample d-none" id="deleteWorkSample-<%= index %>"></button>
+          <label class="btn btn-outline-danger ml-sm-2 delete d-block d-sm-inline" for="deleteWorkSample-<%= index %>">
+            Delete
+          </label>
+          <%= work_sample.filename %>
+        </div>
+      <% end %>
+        <div class="custom-file">
+          <%= f.file_field :work_samples, multiple: true, name: 'work_samples', class: "d-none", id: "uploadWorkSample" %>
+          <label class="btn btn-outline-primary upload-work-sample d-block d-sm-inline" for="uploadWorkSample">
+            Attach a File
+          </label>
+        </div>
     <% else %>
       <div class="custom-file">
-        <%= f.file_field :work_sample, multiple: false, name: 'work_sample', class: "d-none", id: "uploadWorkSample" %>
+        <%= f.file_field :work_sample, multiple: true, name: 'work_samples', class: "d-none", id: "uploadWorkSample" %>
         <label class="btn btn-outline-primary upload-work-sample" for="uploadWorkSample">
           Attach a File
         </label>
@@ -62,11 +67,16 @@
 <% end %>
 
 <script>
-  $('.work_sample').on('change', '#uploadWorkSample', (e) => {
-    const file = e.target.files[0];
-    const app_id = '<%= job_application.id %>';
+  function correctFilesSize(files) {
     const maxFileSize = 20971520;
-    if (file.size && file.size > maxFileSize) {
+      files.size && file.size > maxFileSize
+  }
+
+  $('.work_sample').on('change', '#uploadWorkSample', (e) => {
+    const files = e.target.files;
+    const app_id = '<%= job_application.id %>';
+
+    if (correctFilesSize(files)) {
       const message = "Uploaded files must not exceed 20MB\n";
       Swal.fire({
         title: '<h5>Oops!</h5>',
@@ -75,8 +85,8 @@
     }
     else {
       const formData = new FormData();
-      formData.append('work_sample', file);
-      formData.append('app_id', app_id)
+      formData.append('work_samples', files);
+      formData.append('app_id', app_id);
       $.ajax({
         url: '/work_sample/update',
         method: 'PUT',
@@ -88,7 +98,7 @@
           $('.file-name').html('This file was attached: ' + data['file_name']);
         },
         error: () => {
-          const message = 'File was not uploaded successfully.';
+          const message = 'File was not uploaded.';
           Swal.fire({
             title: '<h5>Oops!</h5>',
             text: message
