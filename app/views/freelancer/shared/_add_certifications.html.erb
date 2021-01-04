@@ -19,18 +19,26 @@
                            @certifications,
                            {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select-border", title: "Select an option..." %>
             </div>
-            <a id="customEntry" data-toggle="collapse" href=#descriptionCertification" data-target=".multi-collapse" aria-expanded="false" aria-controls="descriptionCertification customDescriptionCertification">
-              Create a custom entry
-            </a>
           </div>
+
           <div id="customDescriptionCertification" class="collapse multi-collapse">
             <div class="form-group mb-2">
               <%= f.text_field :description, class: "form-control", id: "customDescriptionCertificate", placeholder: "Custom License Entry" %>
             </div>
-            <a id="selectCertification" data-toggle="collapse" href=#descriptionCertification" data-target=".multi-collapse" aria-expanded="false" aria-controls="descriptionCertification customDescriptionCertification">
-              Choose from our list
-            </a>
           </div>
+
+          <div class="custom-control custom-checkbox">
+            <%= f.check_box :custom,
+                            class: "custom-control-input",
+                            id: "editCertificationCustom", type: "button",
+                            'data-toggle': "collapse",
+                            'data-target': ".multi-collapse",
+                            'aria-expanded': "false",
+                            'aria-controls': "descriptionCertification customDescriptionCertification",
+                            checked: "false" %>
+            <label class="custom-control-label" for="editCertificationCustom">Create a custom entry</label>
+          </div>
+
 
           <div class="form-group">
             <label for="earnedMonth" class="bp-input-label mt-5">Date Earned</label>

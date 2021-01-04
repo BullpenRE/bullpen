@@ -48,11 +48,17 @@
           </div>
           <%= f.hidden_field :id, value: freelancer_profile_education.id %>
         </div>
-        <div class="modal-footer justify-content-between">
-          <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2" %>
+        <div class="modal-footer">
+          <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
           <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
+<script>
+  <% if @freelancer_profile.freelancer_profile_educations.count > 1 %>
+    $('.modal-footer').addClass('justify-content-between');
+    $('.btn-outline-danger').removeClass('d-none');
+  <% end %>
+</script>

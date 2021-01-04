@@ -9,7 +9,6 @@
       </div>
       <%= form_for :freelancer_profile_education, url: wizard_path, method: :put do |f| %>
         <div class="modal-body pt-0">
-          <h3 class="modal-title mb-4" id="modalLabel">Edit Education</h3>
           <div class="form-group">
             <label for="editInstitutionInput" class="bp-input-label">Institution</label>
             <%= f.text_field :institution, class: "form-control", id: "editInstitutionInput", placeholder: "Enter the school you attended", value: freelancer_profile_education.institution %>
@@ -48,14 +47,17 @@
           </div>
           <%= f.hidden_field :id, value: freelancer_profile_education.id %>
         </div>
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
-          <div>
-            <%= f.submit 'Delete', class: 'btn btn-outline-danger mr-2' %>
-            <%= f.submit 'Save', class: 'btn btn-primary' %>
-          </div>
+        <div class="modal-footer">
+          <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
+          <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
+<script>
+  <% if @freelancer_profile.freelancer_profile_educations.count > 1 %>
+    $('.modal-footer').addClass('justify-content-between');
+    $('.btn-outline-danger').removeClass('d-none');
+  <% end %>
+</script>
