@@ -29,6 +29,11 @@ class Employer::JobsController < ApplicationController
     redirect_to employer_jobs_path
   end
 
+  def like_job_application
+    @job_application = JobApplication.find(params[:id])
+    @job_application.liked ? @job_application.update(liked: false) : @job_application.update(liked: true)
+  end
+
   private
 
   def job
