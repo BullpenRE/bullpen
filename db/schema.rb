@@ -218,6 +218,7 @@ ActiveRecord::Schema.define(version: 2021_01_01_085957) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "applied_at", precision: 6
+    t.boolean "liked", default: false
     t.index ["job_id"], name: "index_job_applications_on_job_id"
     t.index ["user_id"], name: "index_job_applications_on_user_id"
   end
