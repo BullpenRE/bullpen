@@ -157,7 +157,6 @@ ActiveRecord::Schema.define(version: 2021_01_01_085957) do
     t.boolean "draft", default: true
     t.string "current_step"
     t.string "slug"
-    t.integer "desired_hourly_rate"
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
