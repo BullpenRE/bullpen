@@ -1,20 +1,17 @@
 <%= form_for :job_application, url: wizard_path, method: :put, remote: true do |f| %>
+<div class="modal-body pt-0">
   <%= f.hidden_field :job_application_id, value: job_application.id %>
   <%= f.hidden_field :job_id, value: job_id %>
   <%= f.hidden_field 'step', value: 'application_step_1' %>
-  <div class="mb-2">
-    <p> This offered rate is <b>$75 - $125</b> per hour.</p>
-  </div>
-  <div class="form-group">
+  <div class="mb-3">This offered rate is <b>$75 - $125</b> per hour.</div>
+  <div class="form-group mb-1">
     <div class="d-flex justify-content-between">
-      <label for="perHourBid" class="h5">What's your bid? <i class="text-gray-dark">(per hour)</i></label>
+      <label for="perHourBid" class="h5">What's your bid? <span class="text-dark font-weight-normal">(per hour)</span></label>
     </div>
     <div class="row">
-      <div class="col-auto">
+      <div class="col col-lg-4">
         <%= f.text_field :per_hour_bid, class: "form-control", id: "perHourBid", placeholder: "Enter your bid", required: true, value: job_application.per_hour_bid %>
       </div>
-      <div class="col"></div>
-      <div class="col"></div>
     </div>
   </div>
   <div class="mb-3 net-earnings"> </div>
@@ -38,12 +35,13 @@
       </div>
     <% end %>
   <% end %>
-  <div class="modal-footer justify-content-between">
-    <button type="button" class="btn btn-outline-primary invisible"><i class="fas fa-chevron-left mr-2"></i>Back</button>
-    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
-      Next<i class="fas fa-chevron-right ml-2"></i>
-    <% end %>
-  </div>
+</div>
+<div class="modal-footer justify-content-between">
+  <button type="button" class="btn btn-outline-primary invisible"><i class="fas fa-chevron-left mr-2"></i>Back</button>
+  <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+    Next<i class="fas fa-chevron-right ml-2"></i>
+  <% end %>
+</div>
 <% end %>
 
 <script>
@@ -63,3 +61,4 @@
     $('.net-earnings').text('Your net earnings will be $' + Math.round(net_earnings*0.7) +' per hour.');
   });
 </script>
+
