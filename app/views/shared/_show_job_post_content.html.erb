@@ -1,9 +1,4 @@
-<p><%= job.short_description %></p>
-<% job.job_sectors.each do |job_sector| %>
-  <span class="badge badge-secondary mb-1">
-            <%= job_sector.sector.description %>
-          </span>
-<% end %>
+<%= render partial: 'shared/job_short_description', locals: { job: job } %>
 <div class="text-secondary font-weight-bold mb-1 mt-3"> Details </div>
 <p><%= job.relevant_job_details %></p>
 <hr>
@@ -47,3 +42,4 @@
     <li><%= job_question.description %></li>
   <% end %>
 <% end %>
+<%= render partial: 'shared/about_employer', locals: { job: job } %>
