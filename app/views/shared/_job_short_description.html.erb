@@ -4,7 +4,7 @@
     <%= Job::CONTRACT_TYPE_DESCRIPTIONS.key(job.contract_type) %><%= job.hourly? ? ' - ' : ', ' %>
     $<%= job.pay_range_low.to_s(:delimited) %>
     <% if job.hourly? %>
-      <%= job.pay_range_high.present? ? " to $#{job.pay_range_low.to_s(:delimited)}" : '' %> per hour
+      <%= job.pay_range_high.present? ? " to $#{job.pay_range_high.to_s(:delimited)}" : '' %> per hour
     <% else %>
       per month
     <%end %>
