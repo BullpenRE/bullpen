@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <% if job.job_applications.any? %>
+      <% if job.job_applications.applied.any? %>
         <div class="d-flex flex-column flex-lg-row">
           <div class="mr-auto">
             <a class="link_action<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
@@ -95,12 +95,48 @@
             </a>
           </div>
         </div>
-        <div id="collapseApplications<%= job.id %>" class="collapse">
-          <hr>
-          <% job.job_applications.each do |job_application| %>
-            <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile, job_application: job_application } %>
+          <div id="collapseApplications<%= job.id %>" class="collapse">
             <hr>
-          <% end %>
+            <% job.job_applications.applied.each do |job_application| %>
+              <div class="d-flex justify-content-between flex-column flex-lg-row">
+                <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile, job_application: job_application } %>
+                <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
+                  <div class="d-block p-1 d-sm-inline-block mt-1">
+                    <div id="like<%= job_application.id %>">
+                      <i class="<%= job_application.liked ? 'fas' : 'far' %> fa-heart btn-link <%= job_application.liked ? 'text-danger' : '' %> like<%= job_application.id %>"></i>
+                    </div>
+                  </div>
+                  <div class="d-block p-1 d-sm-inline-block">
+                    <button class="btn btn-primary">Send Message</button>
+                  </div>
+                  <div class="d-block p-1 d-sm-inline-block">
+                    <button class="btn btn-outline-primary">More</button>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+              <script>
+                $('#like<%= job_application.id %>').on('click', () => {
+                  const like = $('.like<%= job_application.id %>');
+                  const icon_fa_prefix = like.attr('data-prefix');
+
+                  $.ajax({
+                    url: 'like_job_application',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: { id: '<%= job_application.id %>' },
+                    success: function() {
+                      like.toggleClass('text-danger');
+                      if (icon_fa_prefix === 'fas') {
+                        like.attr('data-prefix', 'far');
+                      } else {
+                        like.attr('data-prefix', 'fas');
+                      }
+                    }
+                  });
+                });
+              </script>
+            <% end %>
         </div>
         <script>
           $('.link_action<%= job.id %>').on('click', () => {
