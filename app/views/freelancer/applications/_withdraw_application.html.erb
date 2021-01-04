@@ -23,8 +23,9 @@
 <script>
   $('.withdraw-job-application-'+<%= job_application.id %>).click(() => {
     $.ajax({
-      url: '/freelancer/applications/<%= job_application.id %>',
-      method: 'DELETE',
+      url: '/freelancer/set_withdrawn',
+      data: { id: '<%= job_application.id %>' },
+      method: 'POST',
       success: () => {
         document.location.reload();
       }

@@ -1,0 +1,3 @@
+<br>
+<%= render partial: 'email/content_block',
+           locals: { content: "<h2>Sorry, #{@job_application.user.full_name} withdrew their application from consideration for the #{@job_application.job.title} <a  href='#{@url}' target='_blank'>job post</a>.</h2>" } %>

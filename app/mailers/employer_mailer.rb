@@ -8,4 +8,10 @@ class EmployerMailer < ApplicationMailer
     @job_application = job_application
     mail(to: job_application.job.user.email, subject: "New applicant for #{job_application.job.title}")
   end
+
+  def job_application_was_withdrawn(job_application)
+    @job_application = job_application
+    @url = employer_jobs_url
+    mail(to: @job_application.job.user.email, subject: "#{@job_application.user.full_name} withdrew their application")
+  end
 end
