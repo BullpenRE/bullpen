@@ -1,0 +1,15 @@
+<h4>Education</h4>
+<% freelancer_profile.freelancer_profile_educations.order(currently_studying: :desc, graduation_year: :desc).each do |education| %>
+    <div class="d-flex">
+      <div class="mb-2 mr-2 text-wrap text-break"><b><%= education.institution %></b><br><%= education.degree %> <%= education.course_of_study %></div>
+      <div class="ml-auto mr-1"><i><%= education.currently_studying ? 'Present' : education.graduation_year %></i></div>
+      <% if editable %>
+          <i class="fas fa-edit text-primary ml-1"></i>
+      <% end %>
+    </div>
+    <% if education.description.present? %>
+        <ul class="mr-lg-3 mr-1 pl-3">
+          <li class="text-wrap text-break"><%= education.description %></li>
+        </ul>
+    <% end %>
+<% end %>

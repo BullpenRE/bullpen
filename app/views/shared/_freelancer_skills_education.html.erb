@@ -1,67 +1,32 @@
-<% if @freelancer_profile.real_estate_skills.any? %>
-  <div class="mt-3">
-    <h4>Skills</h4>
-    <div class="d-flex flex-row flex-inline">
-      <div class="d-flex-col">
-        <%= @freelancer_profile.real_estate_skills.order(description: :asc).pluck(:description).join(', ') %>
-      </div>
-      <% if @freelancer_profile.editable?(current_user) %>
-        <div class="d-flex-col ml-auto">
-          <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editSkills"></button>
-        </div>
-        <%= render partial: 'freelancer/shared/edit_real_estate-skills', locals: { freelancer_profile: @freelancer_profile, real_estate_skills: @real_estate_skills } %>
-      <% end %>
-    </div>
-  </div>
+<% if freelancer_profile.real_estate_skills.any? %>
+    <%= render 'shared/freelancer_real_estate_skills',
+               freelancer_profile: freelancer_profile,
+               editable: freelancer_profile.editable?(current_user) %>
 <% end %>
 
-<% if @freelancer_profile.softwares.any? %>
-  <div class="mt-3">
-    <h4>Software Licenses</h4>
-    <div class="d-flex flex-row flex-inline">
-      <div class="d-flex-col">
-        <%= @freelancer_profile.softwares.pluck(:description).join(', ') %>
-      </div>
-      <% if @freelancer_profile.editable?(current_user) %>
-        <div class="d-flex-col ml-auto">
-          <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editSoftwareModal"></button>
-        </div>
-        <%= render 'shared/edit_freelancer_softwares', freelancer_softwares: @freelancer_profile.softwares %>
-      <% end %>
-    </div>
-  </div>
+<% if freelancer_profile.softwares.any? %>
+    <%= render 'shared/freelancer_softwares',
+               freelancer_profile: freelancer_profile,
+               editable: freelancer_profile.editable?(current_user) %>
 <% else %>
   <div class="mt-3">
-    <%= render 'shared/edit_freelancer_softwares' %>
+    <%= render 'shared/edit_freelancer_softwares', freelancer_profile: freelancer_profile %>
     <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editSoftwareModal">
       Add Software Licences
     </button>
   </div>
 <% end %>
 
-<% if @freelancer_profile.freelancer_profile_experiences.any? %>
-  <hr>
-  <div class="mt-3">
-    <h4>Experience</h4>
-    <% @freelancer_profile.freelancer_profile_experiences.order(current_job: :desc, end_date: :desc).each do |work_experience| %>
-      <div class="d-flex">
-        <div class="mb-2 mr-2 text-wrap text-break"><b><%= work_experience.company %></b><br><%= work_experience.job_title %></div>
-        <div class="ml-auto mr-1"><i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date&.strftime('%b %Y') %></i></div>
-        <% if @freelancer_profile.editable?(current_user) %>
-          <i class="fas fa-edit text-primary ml-1"></i>
-        <% end %>
-      </div>
-      <ul class="mr-lg-3 mr-2 pl-3">
-        <% work_experience.description_paragraphs.each do |paragraph| %>
-          <li style="word-wrap: break-word; overflow-wrap: break-word;"><%= paragraph %></li>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
+<% if freelancer_profile.freelancer_profile_experiences.any? %>
+    <%= render 'shared/freelancer_profile_experiences',
+               freelancer_profile: freelancer_profile,
+               editable: freelancer_profile.editable?(current_user) %>
 <% end %>
-<% if @freelancer_profile.freelancer_profile_educations.any? || @freelancer_profile.freelancer_certifications.any? %>
+
+<% if freelancer_profile.freelancer_profile_educations.any? || freelancer_profile.freelancer_certifications.any? %>
   <hr>
 <% end %>
+
 <div class="mt-3">
   <% if @freelancer_profile.freelancer_profile_educations.any? %>
     <h4>Education</h4>
@@ -87,8 +52,6 @@
       <%= render 'freelancer/shared/add_educations' %>
     </div>
   <% end %>
-  <% if @freelancer_profile.freelancer_certifications.any? %>
-    <h4 class="mt-3">Licenses &amp; Certifications</h4>
 
     <% @freelancer_profile.freelancer_certifications.order(earned: :desc).each do |freelancer_certification| %>
       <div class="d-flex mb-2">
