@@ -4,10 +4,11 @@ FactoryBot.define do
     professional_title { Faker::Job.title }
     professional_years_experience { FreelancerProfile.professional_years_experiences.values.sample }
     professional_summary { Faker::Hipster.paragraph }
-    curation { 'accepted' }
+    curation { 'pending' }
     draft { false }
 
     trait :complete do
+      curation { 'accepted' }
       after(:create) do |freelancer_profile, _|
         create(:freelancer_profile_education, freelancer_profile: freelancer_profile)
         create(:freelancer_profile_experience, freelancer_profile: freelancer_profile, start_year: 2012, end_year: 2018)
