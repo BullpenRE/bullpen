@@ -1,5 +1,5 @@
 <div class="modal" id="withdrawApplication<%= job_application.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
+  <div class="modal-dialog modal-md" role="document">
     <div class="modal-content mt-3">
       <div class="modal-header">
         <h1 class="modal-title" id="deleteApplicationDraftLabel">Withdraw Request</h1>
@@ -8,12 +8,13 @@
         </button>
       </div>
       <div class="modal-body pt-0">
-        <p>Are you sure you want to delete your <strong><%= job_application.job.title %></strong> draft application?</p>
+        <p>Are you sure you want to withdraw your <strong><%= job_application.job.title %></strong> application? We’ll send a notification.
+        </p>
       </div>
       <div class="modal-footer justify-content-between pt-0">
         <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
         <div>
-          <button class="btn btn-primary d-block withdraw-job-application-<%= job_application.id %>" type="button">Delete Job</button>
+          <button class="btn btn-primary withdraw-job-application-<%= job_application.id %>" type="button">Withdraw Request</button>
         </div>
       </div>
     </div>
