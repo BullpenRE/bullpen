@@ -19,10 +19,17 @@ class Freelancer::InterviewsController < ApplicationController
     delete_session_variable
   end
 
+  def decline_interview
+    @interview_request = interview_requests_collection.find_by(id: params[:id])
+    @interview_request.update(state: 'declined')
+    EmployerMailer.interview_request_declined(@interview_request).deliver_now
+  end
+
   private
 
   def interview_requests_collection
-    current_user.freelancer_profile.interview_requests.order(state: :asc, created_at: :desc)
+    @interview_requests_collection ||= current_user.freelancer_profile
+                                                   .interview_requests.order(state: :asc, created_at: :desc)
   end
 
   def save_view_param_in_session
