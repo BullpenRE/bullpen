@@ -102,14 +102,17 @@ module WorkEducationExperience
   end
 
   def work_profile_experience
-    @work_profile_experience ||= @freelancer_profile&.freelancer_profile_experiences&.find_by(id: params[:freelancer_profile_experience][:id])
+    @work_profile_experience ||=
+      @freelancer_profile&.freelancer_profile_experiences&.find_by(id: params[:freelancer_profile_experience][:id])
   end
 
   def education_profile_experience
-    @education_profile_experience ||= @freelancer_profile&.freelancer_profile_educations&.find_by(id: params[:freelancer_profile_education][:id])
+    @education_profile_experience ||=
+      @freelancer_profile&.freelancer_profile_educations&.find_by(id: params[:freelancer_profile_education][:id])
   end
 
   def freelancer_certification
-    @freelancer_certification ||= @freelancer_profile&.freelancer_certifications&.find_by(id: params[:freelancer_certification][:id])
+    @freelancer_certification ||=
+      @freelancer_profile&.freelancer_certifications&.find_by(id: params[:freelancer_certification][:id])
   end
 end
