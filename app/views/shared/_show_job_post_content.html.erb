@@ -43,3 +43,10 @@
   <% end %>
 <% end %>
 <%= render partial: 'shared/about_employer', locals: { job: job } %>
+<hr>
+<div class="mt-3">
+  <h4>Sharable link</h4>
+  <p class="text-break">
+    <%= link_to public_job_url(job.slug), public_job_url(job.slug), target: '_blank' %>
+  </p>
+</div>
