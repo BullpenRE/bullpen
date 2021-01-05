@@ -49,6 +49,18 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.errors.messages[:base]).to eq ['Uploaded files must not exceed 2MB.']
       end
     end
+
+    describe 'desired_hourly_rate' do
+      it 'can be nil' do
+        freelancer_profile.desired_hourly_rate = nil
+        expect(freelancer_profile).to be_valid
+      end
+
+      it 'if not nil, then is a positive number' do
+        freelancer_profile.desired_hourly_rate = -32
+        expect(freelancer_profile).to_not be_valid
+      end
+    end
   end
 
   context 'Relationships' do
