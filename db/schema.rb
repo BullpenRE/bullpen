@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_27_172000) do
+ActiveRecord::Schema.define(version: 2021_01_01_085957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 2020_12_27_172000) do
     t.boolean "draft", default: true
     t.string "current_step"
     t.string "slug"
+    t.integer "desired_hourly_rate"
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
@@ -276,6 +277,7 @@ ActiveRecord::Schema.define(version: 2020_12_27_172000) do
     t.integer "contract_type"
     t.integer "pay_range_low"
     t.integer "pay_range_high"
+    t.string "slug"
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
