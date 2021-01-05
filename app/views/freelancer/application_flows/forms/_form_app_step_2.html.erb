@@ -1,4 +1,5 @@
 <%= form_for :job_application, url: wizard_path, method: :put, remote: true do |f| %>
+<div class="modal-body pt-0">
   <%= f.hidden_field :job_application_id, value: job_application.id %>
   <%= f.hidden_field 'step', value: 'application_step_2' %>
 
@@ -36,28 +37,28 @@
     <%= f.check_box :template,
                     id: "template",
                     :class => "custom-control-input" %>
-    <label class="custom-control-label h5 pt-1" for="template">Use this as a template for future applications</label>
+    <label class="custom-control-label text-secondary font-weight-bold" for="template">Use this as a template for future applications</label>
   </div>
-
-  <div class="modal-footer justify-content-between">
-    <%= button_tag type: 'submit', value: 'back', class: "btn btn-outline-primary" do %>
-      <i class="fas fa-chevron-left mr-2"></i>Back
+</div>
+<div class="modal-footer">
+  <%= button_tag type: 'submit', value: 'back', class: "btn btn-outline-primary" do %>
+    <i class="fas fa-chevron-left mr-2"></i>Back
+  <% end %>
+  <div class="d-none d-sm-block ml-auto">
+    <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
+      Save as Draft
     <% end %>
-    <div class="d-none d-sm-block">
-      <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
-        Save as Draft</span><i class="fas fa-chevron-right ml-2"></i>
-      <% end %>
-      <%= button_tag type: 'submit', class: "btn btn-primary" do %>
-        Preview Job Post</span><i class="fas fa-chevron-right ml-2"></i>
-      <% end %>
-    </div>
-    <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1 d-sm-none" do %>
-      Save <i class="fas fa-chevron-right ml-2"></i>
-    <% end %>
-    <%= button_tag type: 'submit', class: "btn btn-primary d-sm-none ml-auto" do %>
-      Preview <i class="fas fa-chevron-right ml-2"></i>
+    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+      Preview Application<i class="fas fa-chevron-right ml-2"></i>
     <% end %>
   </div>
+  <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1 d-sm-none ml-auto" do %>
+    Save</i>
+  <% end %>
+  <%= button_tag type: 'submit', class: "btn btn-primary d-sm-none" do %>
+    Preview<i class="fas fa-chevron-right ml-2"></i>
+  <% end %>
+</div>
 <% end %>
 
 <script>
@@ -114,5 +115,10 @@
         $('.delete').addClass('d-none');
       },
     })
+  });
+
+  // Disable trix from accepted pasted or dragged/dropped files
+  document.addEventListener("trix-file-accept", event => {
+    event.preventDefault();
   });
 </script>

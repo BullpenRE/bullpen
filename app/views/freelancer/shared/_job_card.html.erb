@@ -1,11 +1,6 @@
 <div class="row">
   <div class="col-lg-8">
-    <p class="text-wrap text-break"><%= job.short_description %></p>
-    <% job.job_sectors&.each do |job_sector| %>
-              <span class="badge badge-secondary mt-1">
-               <%= job_sector&.sector&.description %>
-              </span>
-    <% end %>
+    <%= render partial: 'shared/job_short_description', locals: { job: job } %>
     <span class="badge badge-secondary mt-1"><%= job.position_length&.capitalize %></span>
     <span class="badge badge-secondary mt-1"><%= job.hours_needed&.capitalize %></span>
     <div class="bp-text-sm mb-2 mt-3">
