@@ -7,6 +7,7 @@ class Freelancer::ProfileController < ApplicationController
 
   def index
     real_estate_skills
+    certifications
   end
 
   def change_skills
@@ -61,5 +62,9 @@ class Freelancer::ProfileController < ApplicationController
 
   def real_estate_skills
     @real_estate_skills ||= RealEstateSkill.enabled.pluck(:description, :id)
+  end
+
+  def certifications
+    @certifications ||= Certification.enabled.pluck(:description, :id)
   end
 end
