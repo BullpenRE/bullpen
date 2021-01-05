@@ -6,6 +6,7 @@ FactoryBot.define do
     professional_summary { Faker::Hipster.paragraph }
     curation { 'accepted' }
     draft { false }
+    desired_hourly_rate { [100, 125, 150, 250].sample }
 
     trait :complete do
       after(:create) do |freelancer_profile, _|

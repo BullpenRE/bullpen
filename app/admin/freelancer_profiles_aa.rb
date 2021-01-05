@@ -13,7 +13,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
                   :professional_title,
                   :professional_years_experience,
                   :curation,
-                  :draft
+                  :draft,
+                  :desired_hourly_rate
 
     index do
       column :user
@@ -54,6 +55,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         end
         row :draft
         row :curation
+        row :desired_hourly_rate
         row "ALL Interview Requests Received From Employers", :interview_requests do
           freelancer_profile.interview_requests.map{ |i_r| link_to(i_r.employer_profile.email, admin_interview_request_path(i_r.id)) }
         end
@@ -96,6 +98,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         f.input :softwares, as: :check_boxes, collection: Software.order(:description).pluck(:description, :id)
         f.input :draft
         f.input :curation
+        f.input :desired_hourly_rate
         f.actions
       end
     end
