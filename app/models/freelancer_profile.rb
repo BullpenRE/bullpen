@@ -24,6 +24,7 @@ class FreelancerProfile < ApplicationRecord
 
   validate :correct_content_type?, :correct_size?
   validates :slug, uniqueness: true
+  validates :desired_hourly_rate, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
   def ready_for_submission?
     draft? && pending?
