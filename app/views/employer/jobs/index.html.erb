@@ -78,7 +78,7 @@
         <div class="d-flex flex-column flex-lg-row">
           <div class="mr-auto">
             <a class="link_action<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
-              Applications <span class="text-secondary">(<%= job.job_applications.size %>)</span>
+              Applications <span class="text-secondary">(<%= job.job_applications.applied.size %>)</span>
             </a>
           </div>
           <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
