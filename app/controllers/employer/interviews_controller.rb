@@ -15,7 +15,7 @@ class Employer::InterviewsController < ApplicationController
   def interview_requests_collection
     @interview_requests_collection ||= current_user.employer_profile
                                                    .interview_requests
-                                                   .pending_accepted
+                                                   .not_rejected
                                                    .order(state: :asc, created_at: :desc)
   end
 end

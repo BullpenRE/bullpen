@@ -245,6 +245,14 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PATCH      /employer/job_flows/:id(.:format)                                                        employer/job_flows#update
                                                   PUT        /employer/job_flows/:id(.:format)                                                        employer/job_flows#update
                                                   DELETE     /employer/job_flows/:id(.:format)                                                        employer/job_flows#destroy
+                              employer_interviews GET        /employer/interviews(.:format)                                                           employer/interviews#index
+                                                  POST       /employer/interviews(.:format)                                                           employer/interviews#create
+                           new_employer_interview GET        /employer/interviews/new(.:format)                                                       employer/interviews#new
+                          edit_employer_interview GET        /employer/interviews/:id/edit(.:format)                                                  employer/interviews#edit
+                               employer_interview GET        /employer/interviews/:id(.:format)                                                       employer/interviews#show
+                                                  PATCH      /employer/interviews/:id(.:format)                                                       employer/interviews#update
+                                                  PUT        /employer/interviews/:id(.:format)                                                       employer/interviews#update
+                                                  DELETE     /employer/interviews/:id(.:format)                                                       employer/interviews#destroy
                            employer_billing_index GET        /employer/billing(.:format)                                                              employer/billing#index
                                                   POST       /employer/billing(.:format)                                                              employer/billing#create
                              new_employer_billing GET        /employer/billing/new(.:format)                                                          employer/billing#new
@@ -270,7 +278,9 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PUT        /employer/talent/:id(.:format)                                                           employer/talent#update
                                                   DELETE     /employer/talent/:id(.:format)                                                           employer/talent#destroy
                        employer_interview_request POST       /employer/interview_request(.:format)                                                    employer/talent#interview_request
+                    employer_like_job_application POST       /employer/like_job_application(.:format)                                                 employer/jobs#like_job_application
                         public_freelancer_profile GET        /public/freelancer_profile/:slug(.:format)                                               public/freelancer_profile#show
+                                       public_job GET        /public/job/:slug(.:format)                                                              public/job#show
                                   freelancer_jobs GET        /freelancer/jobs(.:format)                                                               freelancer/jobs#index
                                                   POST       /freelancer/jobs(.:format)                                                               freelancer/jobs#create
                                new_freelancer_job GET        /freelancer/jobs/new(.:format)                                                           freelancer/jobs#new
@@ -314,6 +324,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                          freelancer_profile_index GET        /freelancer/profile(.:format)                                                            freelancer/profile#index
                freelancer_change_software_licence POST       /freelancer/change_software_licence(.:format)                                            freelancer/profile#change_software_licence
                          freelancer_change_skills POST       /freelancer/change_skills(.:format)                                                      freelancer/profile#change_skills
+                     freelancer_decline_interview POST       /freelancer/decline_interview(.:format)                                                  freelancer/interviews#decline_interview
                                 check_users_email POST       /check_users_email(.:format)                                                             check_email#check_users_email
                                 letter_opener_web            /letter_opener                                                                           LetterOpenerWeb::Engine
                                        styleguide GET        /styleguide(.:format)                                                                    styleguide#index

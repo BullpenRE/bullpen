@@ -21,7 +21,7 @@
         <li class="nav-item<%= ' active' if section == 'jobs' %>">
           <%= link_to 'Your Jobs', employer_jobs_path, class: 'nav-link' %>
         </li>
-        <% if current_user.employer_profile.interview_requests.pending_accepted.any? %>
+        <% if current_user.employer_profile.interview_requests.not_rejected.any? %>
           <li class="nav-item<%= ' active' if section == 'interviews' %>">
             <%= link_to 'Interviews', employer_interviews_path, class: 'nav-link' %>
           </li>
