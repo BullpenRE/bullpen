@@ -71,7 +71,8 @@ class Freelancer::ApplicationFlowsController < ApplicationController
       job_application.update(state: 'draft')
       draft_flash_notice!
     else
-      EmployerMailer.new_job_application(current_user, job_application).deliver_now unless job_application.applied_at.present?
+      EmployerMailer.new_job_application(current_user, job_application)
+                    .deliver_now unless job_application.applied_at.present?
       job_application.update(state: 'applied', applied_at: Time.current)
       apply_flash_notice!
 
