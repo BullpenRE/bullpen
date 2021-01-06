@@ -31,13 +31,13 @@ class Freelancer::ProfileController < ApplicationController
   def change_certifications
     freelancer_certification_options
 
-    redirect_to freelancer_profile_step_path(:summary)
+    redirect_after_change_profile
   end
 
   def change_educations
     freelancer_education_options
 
-    redirect_to freelancer_profile_step_path(:summary)
+    redirect_after_change_profile
   end
 
   private
