@@ -21,9 +21,11 @@
         <li class="nav-item<%= ' active' if section == 'jobs' %>">
           <%= link_to 'Your Jobs', employer_jobs_path, class: 'nav-link' %>
         </li>
-        <li class="nav-item<%= ' active' if section == 'interviews' %>">
-          <a class="nav-link" href="#">Interviews</a>
-        </li>
+        <% if current_user.employer_profile.interview_requests.pending_accepted.any? %>
+          <li class="nav-item<%= ' active' if section == 'interviews' %>">
+            <%= link_to 'Interviews', employer_interviews_path, class: 'nav-link' %>
+          </li>
+        <% end %>
         <li class="nav-item<%= ' active' if section == 'contracts' %>">
           <a class="nav-link" href="#">Contracts</a>
         </li>
