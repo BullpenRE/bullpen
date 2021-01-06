@@ -45,10 +45,10 @@ RSpec.describe InterviewRequest, type: :model do
     let!(:interview_request_accepted) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_Dima, state: 'accepted') }
     let!(:interview_request_declined) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_Erik, state: 'declined') }
 
-    it '.pending_accepted' do
-      expect(InterviewRequest.pending_accepted).to include(interview_request_pending)
-      expect(InterviewRequest.pending_accepted).to include(interview_request_accepted)
-      expect(InterviewRequest.pending_accepted).to_not include(interview_request_declined)
+    it '.not_rejected' do
+      expect(InterviewRequest.not_rejected).to include(interview_request_pending)
+      expect(InterviewRequest.not_rejected).to include(interview_request_accepted)
+      expect(InterviewRequest.not_rejected).to_not include(interview_request_declined)
     end
   end
 end

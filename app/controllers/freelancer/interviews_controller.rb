@@ -30,7 +30,7 @@ class Freelancer::InterviewsController < ApplicationController
   def interview_requests_collection
     @interview_requests_collection ||= current_user.freelancer_profile
                                                    .interview_requests
-                                                   .pending_accepted
+                                                   .not_rejected
                                                    .order(state: :asc, created_at: :desc)
   end
 
