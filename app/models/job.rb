@@ -15,8 +15,8 @@ class Job < ApplicationRecord
 
   validates :user_id, presence: true
   scope :not_applied_or_withdrawn, ->(user) {
-                                               where.not(id: user.job_applications.pluck(:job_id))
-                                                    .or(where(id: user.job_applications.withdrawn.pluck(:job_id)))
+    where.not(id: user.job_applications.pluck(:job_id))
+         .or(where(id: user.job_applications.withdrawn.pluck(:job_id)))
   }
   validate :pay_ranges_make_sense
 
