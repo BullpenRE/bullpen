@@ -51,7 +51,8 @@ class Employer::TalentController < ApplicationController
   end
 
   def all_freelancer_profiles
-    FreelancerProfile.includes(:real_estate_skills,
+    FreelancerProfile.accepted
+                     .includes(:real_estate_skills,
                                :sectors,
                                :softwares,
                                :freelancer_certifications,
