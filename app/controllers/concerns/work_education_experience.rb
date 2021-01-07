@@ -22,34 +22,7 @@ module WorkEducationExperience
     end
   end
 
-  def certification_save
-    return unless params[:freelancer_certification].present?
-
-    freelancer_certification_options
-  end
-
   private
-
-  def freelancer_certification_options
-    if freelancer_certification.present? && params[:commit] == 'Delete'
-      freelancer_certification.destroy
-    elsif freelancer_certification.present?
-      return freelancer_custom_certificate_update if check_custom_certificate?
-
-      freelancer_certification.update(checked_freelancer_certification_params)
-    else
-      @freelancer_profile.freelancer_certifications.create(checked_freelancer_certification_params)
-    end
-  end
-
-  def check_custom_certificate?
-    freelancer_certification&.certification&.custom
-  end
-
-  def freelancer_custom_certificate_update
-    freelancer_certification.destroy
-    @freelancer_profile.freelancer_certifications.create(checked_freelancer_certification_params)
-  end
 
   def freelancer_education_options
     if education_profile_experience.present? && params[:commit] == 'Delete'
@@ -96,24 +69,6 @@ module WorkEducationExperience
     experience_params.merge(freelancer_profile_id: @freelancer_profile.id)
   end
 
-  def checked_freelancer_certification_params
-    if params[:freelancer_certification][:description].blank?
-      certification_params
-    else
-      return certification_params if check_custom_certificate? && freelancer_certification.present?
-
-      params.require(:freelancer_certification)
-        .permit(:id, :certification_id, :description, :earned_year, :earned_month)
-        .merge(certification_id: Certification.custom_id)
-    end
-  end
-
-  def certification_params
-    params.require(:freelancer_certification)
-        .permit(:id, :certification_id, :earned_year, :earned_month)
-        .merge(description: Certification.find_by(id: params[:freelancer_certification][:certification_id]).description)
-  end
-
   def current_job?
     params[:freelancer_profile_experience][:current_job] == true
   end
@@ -126,10 +81,5 @@ module WorkEducationExperience
   def education_profile_experience
     @education_profile_experience ||=
       @freelancer_profile&.freelancer_profile_educations&.find_by(id: params[:freelancer_profile_education][:id])
-  end
-
-  def freelancer_certification
-    @freelancer_certification ||=
-      @freelancer_profile&.freelancer_certifications&.find_by(id: params[:freelancer_certification][:id])
   end
 end
