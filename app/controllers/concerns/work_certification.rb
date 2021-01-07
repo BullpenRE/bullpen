@@ -14,7 +14,7 @@ module WorkCertification
       freelancer_certification.destroy
     elsif freelancer_certification.present?
       return freelancer_custom_certificate_update if check_edit_custom_certificate_field?
-      
+
       freelancer_certification.update(checked_freelancer_certification_params)
     else
       freelancer_certification_create
