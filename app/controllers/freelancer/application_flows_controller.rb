@@ -117,7 +117,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def respond_js_format(step)
     respond_to do |format|
       format.html
-      format.js do  render step.to_s, locals: {
+      format.js do render step.to_s, locals: {
         job_application: @job_application,
         job_id: params[:job_id],
         answers: @answers.presence

@@ -15,10 +15,9 @@
       <% job_application.work_samples.each do |work_sample| %>
         <div id="<%= work_sample.signed_id %>">
           <div class="file-name text-break mb-2">
-            <button type="button" class="delete-work-sample" id="deleteWorkSample-<%= work_sample.signed_id %>" data-id="<%= work_sample.signed_id %>"></button>
-            <label class="btn btn-outline-danger ml-sm-2 delete d-block d-sm-inline" for="deleteWorkSample-<%= work_sample.signed_id %>">
-              Delete
-            </label>
+            <%= link_to '#', class: 'delete-work-sample', data: {id: work_sample.signed_id.to_s} do %>
+                <i class="fa fa-trash text-danger mr-1"></i>
+            <% end %>
             <%= work_sample.filename.to_s %>
           </div>
         </div>
@@ -89,8 +88,7 @@
           dataType: 'json',
           data: formData,
           success: (data) => {
-              const fileName = data['file_name'];
-              $('.file-name').html('This file was attached: ' + fileName);
+              $('.file-name').html('This file was attached: ' + data['file_name']);
           },
           error: () => {
               const message = `File ${file.name} was not uploaded.`;
@@ -121,7 +119,7 @@
   });
 
   $('.work_sample').on('click', '.delete-work-sample', (e) => {
-    const clickedWorkSample = $(e.target).data('blob_key');
+    let clickedWorkSample = $(e.target).parents('a').data('id');
     const app_id = '<%= job_application.id %>';
     const formData = new FormData();
     formData.append('app_id', app_id);
