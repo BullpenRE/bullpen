@@ -8,4 +8,7 @@ class EmployerMailerPreview < ActionMailer::Preview
     EmployerMailer.job_application_was_withdrawn(JobApplication.first)
   end
 
+  def interview_request_declined
+    EmployerMailer.interview_request_declined(InterviewRequest.first)
+  end
 end
