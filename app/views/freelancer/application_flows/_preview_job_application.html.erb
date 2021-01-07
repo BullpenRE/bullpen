@@ -83,8 +83,10 @@
             Edit Application
           <% end %>
           <div>
-            <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
-              Save<span class="d-none d-sm-inline"> as Draft</span>
+            <% if !job_application.applied? %>
+              <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
+                Save<span class="d-none d-sm-inline"> as Draft</span>
+              <% end %>
             <% end %>
             <%= button_tag type: 'submit', class: "btn btn-primary" do %>
               Submit<span class="d-none d-sm-inline"> Application</span>
