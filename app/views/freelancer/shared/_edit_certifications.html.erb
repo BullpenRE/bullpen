@@ -1,5 +1,4 @@
-<!--Edit License or Certification Modal-->
-<div class="modal fade" id="editLicenseCertificationModall-<%= freelancer_certification.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+<div class="modal fade" id="editLicenseCertificationModal-<%= freelancer_certification.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -8,7 +7,7 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <%= form_for :freelancer_certification, url: wizard_path, method: :put do |f| %>
+      <%= form_for :freelancer_certification, url: freelancer_change_certifications_path do |f| %>
         <div class="modal-body pt-0">
           <label for="exampleFormControlMultiSelect" class="bp-input-label mt-3">
             Licence or Certification
@@ -59,20 +58,15 @@
         </div>
         <div class="modal-footer">
           <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
-          <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+          <%= f.submit 'Save Changes', class: 'btn btn-primary float-right' %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
-
 <script>
-  $('#editSelectCertification-' + <%= freelancer_certification.id %>).on('click', () => {
-    $('#customDescriptionCertificate-' + <%= freelancer_certification.id %>).val('');
-  })
   <% if @freelancer_profile.freelancer_certifications.count > 1 %>
     $('.modal-footer').addClass('justify-content-between');
     $('.btn-outline-danger').removeClass('d-none');
   <% end %>
 </script>
-

@@ -1,14 +1,14 @@
 <!--Add Education Modal-->
 <div class="modal fade" id="addEducationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title" id="modalLabel">Add Education</h1>
+        <h1 class="modal-title" id="postJobStep1Label">Edit Education</h1>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <%= form_for :freelancer_profile_education, url: wizard_path, method: :put do |f| %>
+      <%= form_for :freelancer_profile_education, url: freelancer_change_educations_path do |f| %>
         <div class="modal-body pt-0">
           <div class="form-group">
             <label for="institutionInput" class="bp-input-label">Institution</label>
@@ -34,22 +34,22 @@
                              options_for_select(FreelancerProfileEducation::AVAILABLE_YEARS),
                              {}, class: 'form-control selectpicker',
                              id: 'graduationYear', 'data-style': "bp-btn-select-border", title: "Year" %>
+              </div>
+              <div class="col"></div>
             </div>
-            <div class="col"></div>
+            <div class="custom-control custom-checkbox">
+              <%= f.check_box :currently_studying, class: "custom-control-input", id: "currentlyStudying", type: "button", 'data-toggle': "collapse", 'data-target': "#graduationDateToggle", 'aria-expanded': "false", 'aria-controls': "graduationDateToggle" %>
+              <label class="custom-control-label" for="currentlyStudying">Currently Studying</label>
+            </div>
           </div>
-          <div class="custom-control custom-checkbox">
-            <%= f.check_box :currently_studying, class: "custom-control-input", id: "currentlyStudying", type: "button", 'data-toggle': "collapse", 'data-target': "#graduationDateToggle", 'aria-expanded': "false", 'aria-controls': "graduationDateToggle" %>
-            <label class="custom-control-label" for="currentlyStudying">Currently Studying</label>
+          <div class="form-group mb-0">
+            <label for="educationDescriptionTextarea" class="bp-input-label">Description (optional)</label>
+            <%= f.text_area :description, class: "form-control", id: "educationDescriptionTextarea", placeholder: "Enter a brief description", rows: 3 %>
           </div>
         </div>
-        <div class="form-group mb-0">
-          <label for="educationDescriptionTextarea" class="bp-input-label">Description (optional)</label>
-          <%= f.text_area :description, class: "form-control", id: "educationDescriptionTextarea", placeholder: "Enter a brief description", rows: 3 %>
-        </div>
-      </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
-          <%= f.submit 'Save', class: 'btn btn-primary' %>
+          <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
         </div>
       <% end %>
     </div>
