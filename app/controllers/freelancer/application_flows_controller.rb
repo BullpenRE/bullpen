@@ -70,11 +70,9 @@ class Freelancer::ApplicationFlowsController < ApplicationController
       job_application.update(state: 'draft')
       draft_flash_notice!
     else
-      EmployerMailer.new_job_application(current_user, job_application)
-                    .deliver_now unless job_application.applied_at.present?
+      EmployerMailer.new_job_application(current_user, job_application).deliver_now if job_application.applied_at.nil?
       job_application.update(state: 'applied', applied_at: Time.current)
       apply_flash_notice!
-
     end
     redirect_to freelancer_applications_path
   end
@@ -118,11 +116,13 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def respond_js_format(step)
     respond_to do |format|
       format.html
-      format.js do  render step.to_s, locals: {
-        job_application: @job_application,
-        job_id: params[:job_id],
-        answers: @answers.presence
-      }
+      format.js do
+        render step.to_s, locals:
+        {
+          job_application: @job_application,
+          job_id: params[:job_id],
+          answers: @answers.presence
+        }
       end
     end
   end
@@ -133,6 +133,6 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
   def job_application
     @job_application ||= current_user.job_applications
-                           .find_by(id: (params[:job_app] || params[:job_application][:job_application_id]))
+                                     .find_by(id: (params[:job_app] || params[:job_application][:job_application_id]))
   end
 end
