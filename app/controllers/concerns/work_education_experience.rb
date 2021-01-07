@@ -43,7 +43,7 @@ module WorkEducationExperience
   end
 
   def check_custom_certificate?
-    freelancer_certification&.certification.custom
+    freelancer_certification&.certification&.custom
   end
 
   def freelancer_custom_certificate_update
@@ -98,11 +98,9 @@ module WorkEducationExperience
 
   def checked_freelancer_certification_params
     if params[:freelancer_certification][:description].blank?
-      params.require(:freelancer_certification)
-        .permit(:id, :certification_id, :earned_year, :earned_month)
-        .merge(description: Certification.find_by(id: params[:freelancer_certification][:certification_id]).description)
+      certification_params
     else
-      return custom_certification_params if check_custom_certificate? && freelancer_certification.present?
+      return certification_params if check_custom_certificate? && freelancer_certification.present?
 
       params.require(:freelancer_certification)
         .permit(:id, :certification_id, :description, :earned_year, :earned_month)
@@ -110,10 +108,10 @@ module WorkEducationExperience
     end
   end
 
-  def custom_certification_params
+  def certification_params
     params.require(:freelancer_certification)
-          .permit(:id, :certification_id, :earned_year, :earned_month)
-          .merge(description: Certification.find_by(id: params[:freelancer_certification][:certification_id]).description)
+        .permit(:id, :certification_id, :earned_year, :earned_month)
+        .merge(description: Certification.find_by(id: params[:freelancer_certification][:certification_id]).description)
   end
 
   def current_job?
