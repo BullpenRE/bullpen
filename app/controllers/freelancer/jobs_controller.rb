@@ -5,7 +5,7 @@ class Freelancer::JobsController < ApplicationController
   before_action :save_apply_for_job_in_session,
                 only: [:index], if: -> { params[:apply_for_job].present? && !user_signed_in? }
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :incomplete_freelancer_profile_redirect
-  ITEMS_PER_PAGE = 4
+  ITEMS_PER_PAGE = 10
 
   def index
     if params[:apply_for_job].present? && jobs_collection.find_by(slug: params[:apply_for_job]).present?
