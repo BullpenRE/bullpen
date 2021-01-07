@@ -13,7 +13,7 @@
     <label for="workSample" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
     <% if job_application.work_samples.attached? %>
       <% job_application.work_samples.each do |work_sample| %>
-        <div id="<%= work_sample.signed_id %>">
+        <div id="file-<%= work_sample.signed_id %>">
           <div class="file-name text-break mb-2">
             <%= link_to '#', class: 'delete-work-sample', data: {id: work_sample.signed_id.to_s} do %>
                 <i class="fa fa-trash text-danger mr-1"></i>
@@ -120,6 +120,7 @@
 
   $('.work_sample').on('click', '.delete-work-sample', (e) => {
     let clickedWorkSample = $(e.target).parents('a').data('id');
+    e.preventDefault();
     const app_id = '<%= job_application.id %>';
     const formData = new FormData();
     formData.append('app_id', app_id);
