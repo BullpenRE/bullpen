@@ -270,6 +270,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PUT        /employer/talent/:id(.:format)                                                           employer/talent#update
                                                   DELETE     /employer/talent/:id(.:format)                                                           employer/talent#destroy
                        employer_interview_request POST       /employer/interview_request(.:format)                                                    employer/talent#interview_request
+                    employer_like_job_application POST       /employer/like_job_application(.:format)                                                 employer/jobs#like_job_application
                         public_freelancer_profile GET        /public/freelancer_profile/:slug(.:format)                                               public/freelancer_profile#show
                                   freelancer_jobs GET        /freelancer/jobs(.:format)                                                               freelancer/jobs#index
                                                   POST       /freelancer/jobs(.:format)                                                               freelancer/jobs#create
@@ -313,7 +314,11 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   DELETE     /freelancer/contracts/:id(.:format)                                                      freelancer/contracts#destroy
                          freelancer_profile_index GET        /freelancer/profile(.:format)                                                            freelancer/profile#index
                freelancer_change_software_licence POST       /freelancer/change_software_licence(.:format)                                            freelancer/profile#change_software_licence
+                 freelancer_change_certifications POST       /freelancer/change_certifications(.:format)                                              freelancer/profile#change_certifications
+                    freelancer_add_certifications POST       /freelancer/add_certifications(.:format)                                                 freelancer/profile#change_certifications
                          freelancer_change_skills POST       /freelancer/change_skills(.:format)                                                      freelancer/profile#change_skills
+                     freelancer_change_educations POST       /freelancer/change_educations(.:format)                                                  freelancer/profile#change_educations
+                        freelancer_add_educations POST       /freelancer/add_educations(.:format)                                                     freelancer/profile#change_educations
                                 check_users_email POST       /check_users_email(.:format)                                                             check_email#check_users_email
                                 letter_opener_web            /letter_opener                                                                           LetterOpenerWeb::Engine
                                        styleguide GET        /styleguide(.:format)                                                                    styleguide#index
