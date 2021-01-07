@@ -5,7 +5,7 @@
   <% if job_application.state == 'draft' %>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
       <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#showJobPost<%= job_application.job.id %>">
-        Show Details
+        Show Job Details
       </button>
       <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="#deleteApplicationDraft<%= job_application.id %>">
         Delete Draft
