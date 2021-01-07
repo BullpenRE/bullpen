@@ -144,6 +144,16 @@ RSpec.describe FreelancerProfile, type: :model do
     end
   end
 
+  context 'Scopes' do
+    it '.accepted' do
+      expect(freelancer_profile.curation).to eq('pending')
+      expect(freelancer_profile_complete.curation).to eq('accepted')
+
+      expect(FreelancerProfile.accepted).to_not include(freelancer_profile)
+      expect(FreelancerProfile.accepted).to include(freelancer_profile_complete)
+    end
+  end
+
   context 'Methods' do
     describe 'curation states' do
       it '#accepted?' do
