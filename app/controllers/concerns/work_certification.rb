@@ -13,9 +13,7 @@ module WorkCertification
     if freelancer_certification.present? && params[:commit] == 'Delete'
       freelancer_certification.destroy
     elsif freelancer_certification.present?
-      return freelancer_custom_certificate_update if check_edit_custom_certificate_field?
-
-      freelancer_certification.update(checked_freelancer_certification_params)
+      freelancer_certification_update
     else
       freelancer_certification_create
     end
@@ -35,6 +33,12 @@ module WorkCertification
 
   def freelancer_certification_create
     @freelancer_profile.freelancer_certifications.create(checked_freelancer_certification_params)
+  end
+
+  def freelancer_certification_update
+    return freelancer_custom_certificate_update if check_edit_custom_certificate_field?
+
+    freelancer_certification.update(checked_freelancer_certification_params)
   end
 
   def checked_freelancer_certification_params
