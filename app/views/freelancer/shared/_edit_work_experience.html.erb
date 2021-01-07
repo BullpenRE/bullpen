@@ -1,0 +1,98 @@
+<div class="modal fade" id="editWorkExperienceModal-<%= freelancer_profile_experience.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-4" id="modalLabel">Edit Experience</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <%= form_for :freelancer_profile_experience, url: freelancer_change_work_experience_path do |f| %>
+        <div class="modal-body pt-0">
+
+          <div id="alertWarning-<%= freelancer_profile_experience.id %>" class="d-none">
+            <div class="alert alert-warning" role="alert">
+              Ending date cannot occur before the starting date.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editCompanyInput" class="bp-input-label">Company</label>
+            <%= f.text_field :company, class: "form-control", id: "editCompanyInput", placeholder: "Enter the company name", required: true, value: freelancer_profile_experience.company  %>
+          </div>
+
+          <div class="form-group">
+            <label for="editJobTitleInput" class="bp-input-label">Job Title</label>
+            <%= f.text_field :job_title, class: "form-control", id: "editJobTitleInput", placeholder: "Enter your job title", required: true, value: freelancer_profile_experience.job_title  %>
+          </div>
+
+          <div class="form-group">
+            <label for="editLocationInput" class="bp-input-label">Location</label>
+            <%= f.text_field :location, class: "form-control", id: "editLocationInput", placeholder: "e.g. San Francisco, CA", required: true, value: freelancer_profile_experience.location %>
+          </div>
+          <div class="form-group">
+            <label for="editStartMonth" class="bp-input-label">Start Date</label>
+            <div class="row mb-3">
+              <div class="col">
+                <%= f.select :start_month,
+                             options_for_select(
+                               select_months_array,
+                               freelancer_profile_experience.start_date.month
+                             ),
+                             {}, class: 'form-control selectpicker',
+                             id: "startMonth-#{freelancer_profile_experience.id}", required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
+              </div>
+              <div class="col">
+                <%= f.select :start_year,
+                             options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS, freelancer_profile_experience.start_date.year),
+                             {}, class: 'form-control selectpicker',
+                             id: "startYear-#{freelancer_profile_experience.id}", required: true, 'data-style': "bp-btn-select-border", title: "Year" %>
+              </div>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <%= f.check_box :current_job, class: "custom-control-input #{freelancer_profile_experience.current_job ? 'collapsed' : ''}", id: "editCurrentJob-#{freelancer_profile_experience.id}", type: "button", 'data-toggle': "collapse", 'data-target': "#editEndDateToggle-#{freelancer_profile_experience.id}", 'aria-expanded': "false", 'aria-controls': "editEndDateToggle-#{freelancer_profile_experience.id}", checked: "#{freelancer_profile_experience.current_job ? 'checked' : 'false'}" %>
+              <label class="custom-control-label" for="editCurrentJob-<%= freelancer_profile_experience.id %>">Current Job</label>
+            </div>
+          </div>
+          <div class="form-group collapse <%= freelancer_profile_experience.current_job ? '' : 'show' %>" id="editEndDateToggle-<%= freelancer_profile_experience.id %>">
+            <label for="endMonth-<%= freelancer_profile_experience.id %>" class="bp-input-label">End Date</label>
+            <div class="row">
+              <div class="col">
+                <%= f.select :end_month,
+                             options_for_select(
+                               select_months_array,
+                               freelancer_profile_experience.end_date&.month
+                             ),
+                             {}, class: 'form-control selectpicker',
+                             id: "endMonth-#{freelancer_profile_experience.id}", 'data-style': "bp-btn-select-border", title: "Month" %>
+              </div>
+              <div class="col">
+                <%= f.select :end_year,
+                             options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS, freelancer_profile_experience.end_date&.year),
+                             {}, class: 'form-control selectpicker',
+                             id: "endYear-#{freelancer_profile_experience.id}", 'data-style': "bp-btn-select-border", title: "Year" %>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mb-0">
+            <label for="editJobDescriptionTextarea-<%= freelancer_profile_experience.id %>" class="bp-input-label">Description</label>
+            <%= f.text_area :description, class: "form-control", id: "editJobDescriptionTextarea", placeholder: "Enter your job description", rows: 3, required: true, value: freelancer_profile_experience.description %>
+          </div>
+          <%= f.hidden_field :id, value: freelancer_profile_experience.id %>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
+          <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<%= render partial: 'freelancer_profile_steps/date_validation' %>
+<script>
+    <% if @freelancer_profile.freelancer_profile_educations.count > 1 %>
+    $('.modal-footer').addClass('justify-content-between');
+    $('.btn-outline-danger').removeClass('d-none');
+    <% end %>
+</script>

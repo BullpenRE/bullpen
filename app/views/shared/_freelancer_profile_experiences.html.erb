@@ -6,8 +6,9 @@
         <div class="mb-2 mr-2 text-wrap text-break"><b><%= work_experience.company %></b><br><%= work_experience.job_title %></div>
         <div class="ml-auto mr-1"><i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date&.strftime('%b %Y') %></i></div>
         <% if editable %>
-            <i class="fas fa-edit text-primary ml-1"></i>
+          <button class="fas fa-edit text-primary ml-1" type="button"  data-toggle="modal" data-target="#editWorkExperienceModal-<%= work_experience.id %>"></button>
         <% end %>
+        <%= render 'freelancer/shared/edit_work_experience', freelancer_profile_experience: work_experience %>
       </div>
       <ul class="mr-lg-3 mr-2 pl-3">
         <% work_experience.description_paragraphs.each do |paragraph| %>
@@ -15,4 +16,10 @@
         <% end %>
       </ul>
   <% end %>
+</div>
+<div class="mt-3">
+  <%= render 'freelancer/shared/add_work_experience', freelancer_profile: freelancer_profile %>
+  <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#addWorkExperienceModal">
+    Add a Job
+  </button>
 </div>
