@@ -323,7 +323,11 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   DELETE     /freelancer/contracts/:id(.:format)                                                      freelancer/contracts#destroy
                          freelancer_profile_index GET        /freelancer/profile(.:format)                                                            freelancer/profile#index
                freelancer_change_software_licence POST       /freelancer/change_software_licence(.:format)                                            freelancer/profile#change_software_licence
+                 freelancer_change_certifications POST       /freelancer/change_certifications(.:format)                                              freelancer/profile#change_certifications
+                    freelancer_add_certifications POST       /freelancer/add_certifications(.:format)                                                 freelancer/profile#change_certifications
                          freelancer_change_skills POST       /freelancer/change_skills(.:format)                                                      freelancer/profile#change_skills
+                     freelancer_change_educations POST       /freelancer/change_educations(.:format)                                                  freelancer/profile#change_educations
+                        freelancer_add_educations POST       /freelancer/add_educations(.:format)                                                     freelancer/profile#change_educations
                      freelancer_decline_interview POST       /freelancer/decline_interview(.:format)                                                  freelancer/interviews#decline_interview
                                 check_users_email POST       /check_users_email(.:format)                                                             check_email#check_users_email
                                 letter_opener_web            /letter_opener                                                                           LetterOpenerWeb::Engine

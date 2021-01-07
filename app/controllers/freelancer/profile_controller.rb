@@ -2,10 +2,13 @@
 
 class Freelancer::ProfileController < ApplicationController
   include LoggedInRedirects
+  include WorkEducationExperience
+  include WorkCertification
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :freelancer_profile
 
   def index
     real_estate_skills
+    certifications
   end
 
   def change_skills
@@ -22,6 +25,18 @@ class Freelancer::ProfileController < ApplicationController
     software_params&.each do |software|
       freelancer_profile.freelancer_softwares.create(software_id: software)
     end
+
+    redirect_after_change_profile
+  end
+
+  def change_certifications
+    freelancer_certification_options
+
+    redirect_after_change_profile
+  end
+
+  def change_educations
+    freelancer_education_options
 
     redirect_after_change_profile
   end
@@ -48,5 +63,9 @@ class Freelancer::ProfileController < ApplicationController
 
   def real_estate_skills
     @real_estate_skills ||= RealEstateSkill.enabled.pluck(:description, :id)
+  end
+
+  def certifications
+    @certifications ||= Certification.enabled.pluck(:description, :id)
   end
 end
