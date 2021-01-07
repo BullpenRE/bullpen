@@ -3,6 +3,7 @@
 class FreelancerProfileStepsController < ApplicationController
   include Wicked::Wizard
   include WorkEducationExperience
+  include WorkCertification
   include LoggedInRedirects
   steps :skills_page, :avatar_location, :professional_history, :work_education_experience, :summary, :final_step
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :accepted_profile_redirect
