@@ -25,15 +25,11 @@ class JobApplication < ApplicationRecord
     false
   end
 
-  def attachment_valid_correct_size?(attachments)
-    return true if no_attachment_uploaded?(attachments)
-    return true if attachments.all { |attachment| attachment.blob.byte_size < MAX_FILE_SIZE }
+  def attachment_valid_correct_size?(attachment)
+    return true if attachment.blobs[0].blank?
+    return true if attachment.blobs[0].byte_size < MAX_FILE_SIZE
 
     false
-  end
-
-  def no_attachment_uploaded?(attachments)
-    attachments.all { |attachment| attachment.attached? == false }
   end
 
   private

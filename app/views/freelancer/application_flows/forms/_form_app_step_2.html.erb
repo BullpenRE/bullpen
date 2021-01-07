@@ -12,31 +12,24 @@
   <div class="form-group work_sample">
     <label for="workSample" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
     <% if job_application.work_samples.attached? %>
-      <% job_application.work_samples.each_with_index do |work_sample, index| %>
-
-        <div class="file-name text-break mb-2">
-          <button type="button" class="delete-work-sample d-none" id="deleteWorkSample-<%= index %>"></button>
-          <label class="btn btn-outline-danger ml-sm-2 delete d-block d-sm-inline" for="deleteWorkSample-<%= index %>">
-            Delete
-          </label>
-          <%= work_sample.filename %>
+      <% job_application.work_samples.each do |work_sample| %>
+        <div id="<%= work_sample.signed_id %>">
+          <div class="file-name text-break mb-2">
+            <button type="button" class="delete-work-sample" id="deleteWorkSample-<%= work_sample.signed_id %>" data-id="<%= work_sample.signed_id %>"></button>
+            <label class="btn btn-outline-danger ml-sm-2 delete d-block d-sm-inline" for="deleteWorkSample-<%= work_sample.signed_id %>">
+              Delete
+            </label>
+            <%= work_sample.filename.to_s %>
+          </div>
         </div>
       <% end %>
-        <div class="custom-file">
-          <%= f.file_field :work_samples, multiple: true, name: 'work_samples', class: "d-none", id: "uploadWorkSample" %>
-          <label class="btn btn-outline-primary upload-work-sample d-block d-sm-inline" for="uploadWorkSample">
-            Attach a File
-          </label>
-        </div>
-    <% else %>
-      <div class="custom-file">
-        <%= f.file_field :work_sample, multiple: true, name: 'work_samples', class: "d-none", id: "uploadWorkSample" %>
-        <label class="btn btn-outline-primary upload-work-sample" for="uploadWorkSample">
-          Attach a File
-        </label>
-        <div class="file-name text-break"></div>
-      </div>
     <% end %>
+    <div class="custom-file">
+      <%= f.file_field :work_samples, multiple: true, name: 'work_samples', class: "d-none", id: "uploadWorkSample" %>
+      <label class="btn btn-outline-primary upload-work-sample d-block d-sm-inline" for="uploadWorkSample">
+        Attach a File
+      </label>
+    </div>
   </div>
   <div class="custom-control custom-checkbox mb-3">
     <%= f.check_box :template,
@@ -86,7 +79,7 @@
   function sendFile (file) {
       const app_id = '<%= job_application.id %>';
       const formData = new FormData();
-      formData.append('work_samples', file);
+      formData.append('work_sample', file);
       formData.append('app_id', app_id);
       $.ajax({
           url: '/work_sample/update',
@@ -127,10 +120,12 @@
     }
   });
 
-  $('.work_sample').on('click', '.delete-work-sample', () => {
+  $('.work_sample').on('click', '.delete-work-sample', (e) => {
+    const clickedWorkSample = $(e.target).data('blob_key');
     const app_id = '<%= job_application.id %>';
     const formData = new FormData();
     formData.append('app_id', app_id);
+    formData.append('blob_key', clickedWorkSample);
     $.ajax({
       url: '/work_sample/destroy',
       method: 'POST',
@@ -139,9 +134,7 @@
       processData: false,
       data: formData,
       success: () => {
-        $('.file-name').html('');
-        $('.upload-work-sample').text('Attach a File');
-        $('.delete').addClass('d-none');
+        $('#file-' + clickedWorkSample).addClass('d-none');
       },
     })
   });
