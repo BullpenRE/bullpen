@@ -33,4 +33,22 @@ RSpec.describe InterviewRequest, type: :model do
       expect(interview_request.freelancer_profile).to eq(freelancer_profile)
     end
   end
+
+  context 'Scopes' do
+    let(:freelancer_user_Dima)  { FactoryBot.create(:user, :freelancer) }
+    let(:freelancer_profile_Dima) { FactoryBot.create(:freelancer_profile, user: freelancer_user_Dima) }
+    let(:freelancer_user_Nata)  { FactoryBot.create(:user, :freelancer) }
+    let(:freelancer_profile_Nata) { FactoryBot.create(:freelancer_profile, user: freelancer_user_Nata) }
+    let(:freelancer_user_Erik)  { FactoryBot.create(:user, :freelancer) }
+    let(:freelancer_profile_Erik) { FactoryBot.create(:freelancer_profile, user: freelancer_user_Erik) }
+    let!(:interview_request_pending) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_Nata, state: 'pending') }
+    let!(:interview_request_accepted) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_Dima, state: 'accepted') }
+    let!(:interview_request_declined) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_Erik, state: 'declined') }
+
+    it '.not_rejected' do
+      expect(InterviewRequest.not_rejected).to include(interview_request_pending)
+      expect(InterviewRequest.not_rejected).to include(interview_request_accepted)
+      expect(InterviewRequest.not_rejected).to_not include(interview_request_declined)
+    end
+  end
 end

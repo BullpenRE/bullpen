@@ -66,6 +66,7 @@ Rails.application.routes.draw do
     post 'change_skills', to: 'profile#change_skills'
     post 'change_educations', to: 'profile#change_educations'
     post 'add_educations', to: 'profile#change_educations'
+    post 'decline_interview', to: 'interviews#decline_interview'
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
