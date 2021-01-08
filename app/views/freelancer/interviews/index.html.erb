@@ -20,7 +20,7 @@
               <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
                 <%= interview.state.capitalize %><%= ' Request' if interview.pending? %>
               </div>
-              <button class="btn btn-primary my-3 my-md-1 mr-2" type="button"  data-toggle="modal" data-target="#showJobPost">
+              <button class="btn btn-primary my-3 my-md-1 mr-md-2" type="button"  data-toggle="modal" data-target="#showJobPost">
                 Accept Request
               </button>
               <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#declineInterviewRequest<%= interview.id %>">
