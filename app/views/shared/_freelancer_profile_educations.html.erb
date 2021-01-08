@@ -3,7 +3,7 @@
   <div class="d-flex">
     <div class="mb-2 mr-2 text-wrap text-break"><b><%= education.institution %></b><br><%= education.degree %> <%= education.course_of_study %></div>
     <div class="ml-auto mr-1"><i><%= education.currently_studying ? 'Present' : education.graduation_year %></i></div>
-    <% if @freelancer_profile.editable?(current_user) %>
+    <% if @freelancer_profile&.editable?(current_user) %>
       <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editEducationModal-<%= education.id %>"></button>
     <% end %>
   </div>
