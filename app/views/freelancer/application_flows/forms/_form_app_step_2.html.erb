@@ -11,10 +11,10 @@
   </div>
   <div class="form-group work_sample">
     <label for="workSamples" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
-    <div id="workSamples">
+    <div id="workSamples" data-allowed="<%= JobApplication::MAX_WORK_SAMPLES_COUNT %>">
       <% if job_application.work_samples.attached? %>
         <% job_application.work_samples.each do |work_sample| %>
-          <div id="file-<%= work_sample.signed_id %>">
+          <div id="file-<%= work_sample.signed_id %>" class="work-sample-item">
             <div class="file-name text-break mb-2">
               <%= link_to '#', class: 'delete-work-sample', data: {id: work_sample.signed_id.to_s} do %>
                   <i class="fa fa-trash text-danger mr-1"></i>
@@ -25,7 +25,7 @@
         <% end %>
       <% end %>
     </div>
-    <div class="custom-file">
+    <div class="custom-file <%= 'd-none' unless job_application.add_work_samples_allowed? %>">
       <%= f.file_field :work_samples, multiple: true, name: 'work_samples', class: "d-none", id: "uploadWorkSample" %>
       <label class="btn btn-outline-primary upload-work-sample d-block d-sm-inline" for="uploadWorkSample">
         Attach a File
@@ -90,6 +90,23 @@
       `
   }
 
+  function toggleAttachButtonVisibility(operation) {
+    let currentCount;
+    const allowedCount = parseInt($('#workSamples').data('allowed'), 10);
+    if (operation === 'addition') {
+      currentCount = $('.work-sample-item').length + 1
+    }
+    if (operation === 'remove') {
+      currentCount = $('.work-sample-item').length - 1
+    }
+
+    if (currentCount < allowedCount) {
+      $('.custom-file').removeClass('d-none')
+    } else {
+      $('.custom-file').addClass('d-none')
+    }
+  }
+
   function sendFile (file) {
     const app_id = '<%= job_application.id %>';
     const step = 'application_step_2';
@@ -105,7 +122,8 @@
       dataType: 'json',
       data: formData,
       success: (data) => {
-        $('#workSamples').append(showNewWorkSample(data['fileName'], data['signedId']))
+        $('#workSamples').append(showNewWorkSample(data['fileName'], data['signedId']));
+        toggleAttachButtonVisibility('append')
       },
       error: () => {
         const message = `File ${file.name} was not uploaded.`;
@@ -120,7 +138,6 @@
   $('.work_sample').on('change', '#uploadWorkSample', (e) => {
     const fileListObject = e.target.files;
     const filesArray = getFilesArray(fileListObject);
-
 
     if (tooLargeFilesExist(filesArray)) {
       const message = "Uploaded files must not exceed 20MB\n";
@@ -151,6 +168,7 @@
       data: formData,
       success: () => {
         $('#file-' + clickedWorkSample).addClass('d-none');
+        toggleAttachButtonVisibility('remove')
       },
     })
   });

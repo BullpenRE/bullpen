@@ -17,12 +17,17 @@ class JobApplication < ApplicationRecord
   after_create :update_other_user_job_application_templates
 
   MAX_FILE_SIZE = 20_971_520
+  MAX_WORK_SAMPLES_COUNT = 10
 
   def correct_size?
     return true if attachment_valid_correct_size?(work_samples)
 
     errors.add(:base, 'Uploaded files must not exceed 20MB.')
     false
+  end
+
+  def add_work_samples_allowed?
+    work_samples.size < MAX_WORK_SAMPLES_COUNT
   end
 
   def attachment_valid_correct_size?(attachment)
