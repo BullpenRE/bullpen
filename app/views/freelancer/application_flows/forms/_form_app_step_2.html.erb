@@ -175,7 +175,7 @@
       processData: false,
       data: formData,
       success: () => {
-        $('#file-' + clickedWorkSample).addClass('d-none');
+        $('#file-' + clickedWorkSample).remove();
         toggleAttachButtonVisibility('remove')
       },
     })
