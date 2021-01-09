@@ -77,6 +77,12 @@
     return filesArray
   }
 
+  function groupAdditionRestricted(quantity)  {
+    const allowedCount = parseInt($('#workSamples').data('allowed'), 10);
+    const currentCount = $('.work-sample-item').length;
+    return (currentCount + quantity) > allowedCount
+  }
+
   function showNewWorkSample(fileName, signedId) {
     return `
       <div id="file-${signedId}">
@@ -88,6 +94,13 @@
           </div>
         </div>
       `
+  }
+
+  function showSwal(message) {
+    return Swal.fire({
+      title: '<h5>Oops!</h5>',
+      text: message
+    });
   }
 
   function toggleAttachButtonVisibility(operation) {
@@ -107,7 +120,7 @@
     }
   }
 
-  function sendFile (file) {
+  function sendFile(file) {
     const app_id = '<%= job_application.id %>';
     const step = 'application_step_2';
     const formData = new FormData();
@@ -127,10 +140,7 @@
       },
       error: () => {
         const message = `File ${file.name} was not uploaded.`;
-        Swal.fire({
-          title: '<h5>Oops!</h5>',
-          text: message
-        });
+        showSwal(message)
       }
     });
   }
@@ -140,11 +150,9 @@
     const filesArray = getFilesArray(fileListObject);
 
     if (tooLargeFilesExist(filesArray)) {
-      const message = "Uploaded files must not exceed 20MB\n";
-      Swal.fire({
-        title: '<h5>Oops!</h5>',
-        text: message
-      });
+      showSwal("Uploaded files must not exceed 20MB\n")
+    } else if (groupAdditionRestricted(filesArray.length)) {
+      showSwal("The total number of files is more than allowed")
     } else {
       filesArray.forEach(function(file) {
         sendFile(file)
