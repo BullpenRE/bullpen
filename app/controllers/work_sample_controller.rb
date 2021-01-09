@@ -5,10 +5,15 @@ class WorkSampleController < ApplicationController
   before_action :authenticate_user!
 
   def update
-    job_application.work_samples.attach(params[:work_sample]) if params[:work_sample].present?
+    return if params[:work_sample].blank?
 
-    render json: { status: :ok,
-                   file_name: params[:work_sample].original_filename.to_s }
+    job_application.work_samples.attach(params[:work_sample])
+    render json: {
+      status: :ok,
+      signedId: job_application.work_samples.last.signed_id.to_s,
+      fileName: job_application.work_samples.last.filename.to_s
+    }
+
   rescue StandardError
     job_application.errors.add(:base, 'File was not uploaded successfully.')
   end
