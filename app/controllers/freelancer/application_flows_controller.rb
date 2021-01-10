@@ -107,7 +107,9 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     return if application_template.blank?
 
     job_application.update(cover_letter: application_template.cover_letter) if job_application.cover_letter.blank?
-    job_application.work_samples.attach(application_template.work_samples.blobs) if !job_application.work_samples.attached?
+    unless job_application.work_samples.attached?
+      job_application.work_samples.attach(application_template.work_samples.blobs)
+    end
   end
 
   def step_2_params

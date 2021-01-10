@@ -39,8 +39,7 @@ class WorkSampleController < ApplicationController
   def find_blob_by_key
     @find_blob_by_key ||= ActiveStorage::Blob.find_signed(params[:blob_key])
   rescue ActiveSupport::MessageVerifier::InvalidSignature => _e
-    return []
-
+    []
   rescue ActiveRecord::RecordNotFound => _e
     render json: { status: :ok }
     @find_blob_by_key
