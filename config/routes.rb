@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     resources :jobs
     get 'post_job', to: 'jobs#post_job'
     resources :job_flows
+    resources :interviews
     resources :billing
     resources :refer
     resources :talent
