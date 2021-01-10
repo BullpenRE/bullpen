@@ -3,7 +3,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     menu label: 'Job Applications'
 
     permit_params :job_id, :user_id, :cover_letter, :template, :per_hour_bid, :available_during_work_hours,
-                  :state, :work_samples, :applied_at
+                  :state, :applied_at, work_samples: []
     includes :job, :user
 
     filter :job_short_description, as: :string, label: 'Job description'
@@ -90,11 +90,11 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       end
     end
 
-    form do |f|
-      f.inputs "Job Application" do
+    form html: { multipart: true } do |f|
+      f.inputs 'Job Application' do
         f.input :job,
                 as: :select,
-                collection: Job.find_each.map{|j| ["#{j.title} - #{j.user.email}", j.id]}
+                collection: Job.find_each.map{ |j| ["#{j.title} - #{j.user.email}", j.id] }
         f.input :user,
                 as: :select,
                 collection: User.freelancer.order(:email).pluck(:email, :id)
@@ -103,8 +103,13 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :template
         f.input :per_hour_bid
         f.input :available_during_work_hours
-        f.inputs "Work Samples" do
-          f.input :work_samples, as: :file, required: false
+        f.inputs do
+          f.input :work_samples, as: :file, required: false, input_html: { multiple: true }
+          f.object.work_samples.each do |w_s|
+            li class: 'item' do
+              link_to w_s.filename, rails_blob_path(w_s, disposition: :attachment)
+            end
+          end
         end
         f.input :state
         f.input :applied_at
