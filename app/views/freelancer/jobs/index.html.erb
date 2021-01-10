@@ -5,7 +5,7 @@
   <h1>Jobs</h1>
   <% @jobs.each do |job| %>
     <%= render partial: 'freelancer/jobs/show_job', locals: { job: job } %>
-    <div class="bp-card mb-3 card<%= job.slug %>">
+    <div class="bp-card mb-3 card<%= job.id %>">
       <div>
         <div class="d-flex flex-column flex-lg-row">
           <div class="mr-auto"><h2 class="text-wrap text-break"><%= job&.title&.capitalize %></h2></div>
@@ -36,14 +36,12 @@
 </div>
 
 <div id="jobAppStepModal"></div>
-
-<script>
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const open_job = urlParams.get('apply_for_job');
-  $('html,body').animate({scrollTop: $('.card' + open_job).offset().top},'slow');
-  if (open_job) {
-    $('.apply<%= @job_id %>')[0].click();
-    URLSearchParams.delete('apply_for_job');
-  }
-</script>
+<% if @apply_for_job_id.present? %>
+  <script>
+    const open_job = '<%= @apply_for_job_id %>';
+    $('html,body').animate({scrollTop: $('.card' + open_job).offset().top},'slow');
+    if (open_job) {
+      $('.apply<%= @apply_for_job_id %>')[0].click();
+    }
+  </script>
+<% end %>
