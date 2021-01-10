@@ -53,7 +53,11 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
             jap.work_samples.each do |work_sample|
               columns do
                 column do
-                  link_to work_sample.filename, rails_blob_path(work_sample, disposition: :attachment)
+                  if work_sample.previewable?
+                    image_tag work_sample.preview(resize: '400x400')
+                  else
+                    link_to work_sample.filename, rails_blob_path(work_sample, disposition: :attachment)
+                  end
                 end
                 column do
                   button_to 'Delete work sample',
