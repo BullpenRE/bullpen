@@ -66,6 +66,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
                 end
               end
             end
+            nil
           end
         end
         row :applied_at
