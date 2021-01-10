@@ -9,7 +9,7 @@ RSpec.describe JobApplication, type: :model do
   it 'factory works' do
     expect(job_application).to be_valid
     expect(job_application_with_attachments).to be_valid
-    expect(job_application_with_attachments.work_sample.attached?).to be_truthy
+    expect(job_application_with_attachments.work_samples.attached?).to be_truthy
     expect(job_application_with_attachments.cover_letter).to_not be_blank
   end
 
