@@ -8,7 +8,7 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <%= form_for :freelancer_profile_education, url: wizard_path, method: :put do |f| %>
+      <%= form_for :freelancer_profile_education, url: freelancer_change_educations_path do |f| %>
         <div class="modal-body pt-0">
           <div class="form-group">
             <label for="editInstitutionInput" class="bp-input-label">Institution</label>
@@ -57,7 +57,7 @@
   </div>
 </div>
 <script>
-  <% if @freelancer_profile.freelancer_profile_educations.count > 1 %>
+  <% if @freelancer_profile && @freelancer_profile.freelancer_profile_educations.count > 1 %>
     $('.modal-footer').addClass('justify-content-between');
     $('.btn-outline-danger').removeClass('d-none');
   <% end %>

@@ -4,13 +4,7 @@ module WorkEducationExperience
   def freelancer_profile_education_save
     return unless params[:freelancer_profile_education].present?
 
-    if education_profile_experience.present? && params[:commit] == 'Delete'
-      education_profile_experience.destroy
-    elsif education_profile_experience.present?
-      education_profile_experience.update(checked_profile_education_params)
-    else
-      FreelancerProfileEducation.create(checked_profile_education_params)
-    end
+    freelancer_education_options
   end
 
   def work_experience_save
@@ -28,19 +22,17 @@ module WorkEducationExperience
     end
   end
 
-  def certification_save
-    return unless params[:freelancer_certification].present?
+  private
 
-    if freelancer_certification.present? && params[:commit] == 'Delete'
-      freelancer_certification.destroy
-    elsif freelancer_certification.present?
-      freelancer_certification.update(checked_freelancer_certification_params)
+  def freelancer_education_options
+    if education_profile_experience.present? && params[:commit] == 'Delete'
+      education_profile_experience.destroy
+    elsif education_profile_experience.present?
+      education_profile_experience.update(checked_profile_education_params)
     else
-      @freelancer_profile.freelancer_certifications.create(checked_freelancer_certification_params)
+      FreelancerProfileEducation.create(checked_profile_education_params)
     end
   end
-
-  private
 
   def profile_experience_params
     params.require(:freelancer_profile_experience)
@@ -77,31 +69,17 @@ module WorkEducationExperience
     experience_params.merge(freelancer_profile_id: @freelancer_profile.id)
   end
 
-  def checked_freelancer_certification_params
-    if params[:freelancer_certification][:description].blank?
-      params.require(:freelancer_certification)
-        .permit(:id, :certification_id, :earned_year, :earned_month)
-        .merge(description: Certification.find_by(id: params[:freelancer_certification][:certification_id]).description)
-    else
-      params.require(:freelancer_certification)
-        .permit(:id, :certification_id, :description, :earned_year, :earned_month)
-        .merge(certification_id: Certification.custom_id)
-    end
-  end
-
   def current_job?
     params[:freelancer_profile_experience][:current_job] == true
   end
 
   def work_profile_experience
-    @freelancer_profile&.freelancer_profile_experiences&.find_by(id: params[:freelancer_profile_experience][:id])
+    @work_profile_experience ||=
+      @freelancer_profile&.freelancer_profile_experiences&.find_by(id: params[:freelancer_profile_experience][:id])
   end
 
   def education_profile_experience
-    @freelancer_profile&.freelancer_profile_educations&.find_by(id: params[:freelancer_profile_education][:id])
-  end
-
-  def freelancer_certification
-    @freelancer_profile&.freelancer_certifications&.find_by(id: params[:freelancer_certification][:id])
+    @education_profile_experience ||=
+      @freelancer_profile&.freelancer_profile_educations&.find_by(id: params[:freelancer_profile_education][:id])
   end
 end
