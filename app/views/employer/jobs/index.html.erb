@@ -78,7 +78,7 @@
         <div class="d-flex flex-column flex-lg-row">
           <div class="mr-auto">
             <a class="link_action<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
-              Applications <span class="text-secondary">(<%= job.job_applications.size %>)</span>
+              Applications <span class="text-secondary">(<%= job.job_applications.applied.size %>)</span>
             </a>
           </div>
           <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
@@ -94,7 +94,9 @@
             <hr>
             <% job.job_applications.applied.each do |job_application| %>
               <div class="d-flex justify-content-between flex-column flex-lg-row">
-                <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile, job_application: job_application } %>
+                <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile,
+                                                                         job_application: job_application,
+                                                                         editable: false } %>
                 <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
                   <div class="d-block p-1 d-sm-inline-block mt-1">
                     <div id="like<%= job_application.id %>">

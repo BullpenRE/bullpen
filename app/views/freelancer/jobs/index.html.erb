@@ -10,9 +10,14 @@
         <div class="d-flex flex-column flex-lg-row">
           <div class="mr-auto"><h2 class="text-wrap text-break"><%= job&.title&.capitalize %></h2></div>
           <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
-            <% if @job_applications.find_by(job_id: job.id).blank? %>
+            <% current_job_application = @job_applications.find_by(job_id: job.id) %>
+            <% if @job_applications.map(&:job_id).exclude?(job.id) %>
               <div class="mr-sm-2">
                 <%= link_to 'Apply', freelancer_application_flows_path(start_flow: true, job_id: job.id), { remote: true, 'data-toggle': "modal", 'data-target': "#jobAppStep1", class: "btn btn-primary d-block" } %>
+              </div>
+            <% elsif current_job_application.withdrawn? %>
+              <div class="mr-sm-2">
+                <%= link_to 'Apply', freelancer_application_flows_path(job_app: current_job_application.id, id: :application_step_1), { remote: true, 'data-toggle': "modal", 'data-target': "#jobAppStep1", class: "btn btn-primary d-block" } %>
               </div>
             <% end %>
             <button class="btn btn-outline-primary my-3 my-md-0" type="button"  data-toggle="modal" data-target="#showJobPost<%= job.id %>">

@@ -12,7 +12,7 @@
         <div class="d-flex-col">
           <h2><%= freelancer_profile.full_name %></h2>
         </div>
-        <% if freelancer_profile.editable?(current_user) %>
+        <% if editable %>
           <div class="d-flex-col ml-auto">
             <i class="fas fa-edit text-primary"></i>
           </div>
