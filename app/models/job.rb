@@ -14,7 +14,10 @@ class Job < ApplicationRecord
   has_many :job_applications, dependent: :destroy
 
   validates :user_id, presence: true
-  scope :not_applied, ->(user) { where.not(id: user.job_applications.pluck(:job_id)) }
+  scope :not_applied_or_withdrawn, lambda { |user|
+    where.not(id: user.job_applications.pluck(:job_id))
+         .or(where(id: user.job_applications.withdrawn.pluck(:job_id)))
+  }
   validate :pay_ranges_make_sense
 
   enum position_length: { 'long-term': 0, 'temporary': 1 }

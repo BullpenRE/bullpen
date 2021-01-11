@@ -44,15 +44,19 @@
     <i class="fas fa-chevron-left mr-2"></i>Back
   <% end %>
   <div class="d-none d-sm-block ml-auto">
-    <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
-      Save as Draft
+    <% if !job_application.applied? %>
+      <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
+        Save as Draft
+      <% end %>
     <% end %>
     <%= button_tag type: 'submit', class: "btn btn-primary" do %>
       Preview Application<i class="fas fa-chevron-right ml-2"></i>
     <% end %>
   </div>
-  <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1 d-sm-none ml-auto" do %>
-    Save</i>
+  <% if !job_application.applied? %>
+    <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1 d-sm-none ml-auto" do %>
+      Save
+    <% end %>
   <% end %>
   <%= button_tag type: 'submit', class: "btn btn-primary d-sm-none" do %>
     Preview<i class="fas fa-chevron-right ml-2"></i>
