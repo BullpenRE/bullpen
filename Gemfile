@@ -6,6 +6,7 @@ ruby '2.7.2'
 gem 'amazing_print', '~> 1.2', '>= 1.2.1'   # Replacement for awesome_print which is depreciated
 gem 'bootsnap', '>= 1.4.2', require: false  # Reduces boot times through caching; required in config/boot.rb
 gem 'devise', '~> 4.7', '>= 4.7.2'          # Flexible authentication solution for Rails with Warden
+gem 'google_sign_in', '~> 1.2'              # Sign in (or up) with Google for Rails applications: https://github.com/basecamp/google_sign_in
 gem 'jbuilder', '~> 2.7'                    # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'pg', '>= 0.18', '< 2.0'                # Use postgresql as the database for Active Record
 gem 'premailer-rails', '~> 1.11', '>= 1.11.1' # Styling HTML emails with CSS without having to do the hard work ourselves

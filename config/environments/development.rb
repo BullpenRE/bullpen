@@ -75,4 +75,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   ENV['DOMAIN_URL'] = host
+
+  ENV['GOOGLE_SIGN_IN_CLIENT_ID'] = '643730797896-imke97p03uhd2486gqkdhm35ucmh7qcb.apps.googleusercontent.com'
+  ENV['GOOGLE_SIGN_IN_CLIENT_SECRET'] = 'ZaS0BLghoHk3tlsw1J6sHVhH'
 end
