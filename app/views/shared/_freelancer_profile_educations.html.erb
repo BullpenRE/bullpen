@@ -14,9 +14,11 @@
   <% end %>
   <%= render 'freelancer/shared/edit_educations', freelancer_profile_education: education %>
 <% end %>
-<div class="mt-3">
-  <%= render 'freelancer/shared/add_educations', freelancer_profile: freelancer_profile %>
-  <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#addEducationModal">
-    Add an Education
-  </button>
-</div>
+<% if @freelancer_profile&.editable?(current_user) %>
+  <div class="mt-3">
+    <%= render 'freelancer/shared/add_educations', freelancer_profile: freelancer_profile %>
+    <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#addEducationModal">
+      Add an Education
+    </button>
+  </div>
+<% end %>
