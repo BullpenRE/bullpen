@@ -70,8 +70,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
       job_application.update(state: 'draft')
       draft_flash_notice!
     else
-      EmployerMailer.new_job_application(current_user, job_application)
-                    .deliver_now if job_application.applied_at.nil? || job_application.withdrawn?
+      EmployerMailer.new_job_application(current_user, job_application).deliver_now if mailing_condition
       job_application.update(state: 'applied', applied_at: Time.current)
       apply_flash_notice!
     end
@@ -88,6 +87,10 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def apply_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
                      "#{job_application.job.title.capitalize} was applied for."
+  end
+
+  def mailing_condition
+    job_application.applied_at.nil? || job_application.withdrawn?
   end
 
   def pre_populate_answers
