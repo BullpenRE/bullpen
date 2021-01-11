@@ -7,7 +7,7 @@ class Public::FreelancerProfileController < ApplicationController
     @freelancer_profile = FreelancerProfile.lookup(params[:slug])
   end
 
-   def request_interview
+  def request_interview
     session[:request_interview] = params[:request_interview]
 
     redirect_to employer_talent_index_path
