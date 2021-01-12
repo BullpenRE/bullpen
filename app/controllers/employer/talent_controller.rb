@@ -104,11 +104,18 @@ class Employer::TalentController < ApplicationController
 
   def page
     return params[:page] || 1 unless session[:request_interview]
+    return delete_session unless freelancer_profiles_collection.pluck(:slug).include?(session[:request_interview])
 
-    index = freelancer_profiles_collection.map(&:slug).uniq.index(session[:request_interview])
+    index = freelancer_profiles_collection.map(&:slug).index(session[:request_interview])
     @freelancer_profile_id = freelancer_profiles_collection[index].id
     session.delete(:request_interview)
 
     ((index + 1) / ITEMS_PER_PAGE.to_f).ceil
+  end
+
+  def delete_session
+    session.delete(:request_interview)
+
+    params[:page] || 1
   end
 end
