@@ -18,6 +18,7 @@ class Freelancer::ProfileController < ApplicationController
     end
 
     redirect_after_change_profile
+    freelancer_skills_edited_flash_notice!
   end
 
   def change_software_licence
@@ -27,18 +28,21 @@ class Freelancer::ProfileController < ApplicationController
     end
 
     redirect_after_change_profile
+    freelancer_software_licence_edited_flash_notice!
   end
 
   def change_certifications
     freelancer_certification_options
 
     redirect_after_change_profile
+    freelancer_certifications_edited_flash_notice!
   end
 
   def change_educations
     freelancer_education_options
 
     redirect_after_change_profile
+    freelancer_educations_edited_flash_notice!
   end
 
   private
@@ -67,5 +71,25 @@ class Freelancer::ProfileController < ApplicationController
 
   def certifications
     @certifications ||= Certification.enabled.pluck(:description, :id)
+  end
+
+  def freelancer_skills_edited_flash_notice!
+    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
+                     "Freelancer's skills data were edited."
+  end
+
+  def freelancer_software_licence_edited_flash_notice!
+    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
+                     "Freelancer's software licence data were edited."
+  end
+
+  def freelancer_certifications_edited_flash_notice!
+    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
+                     "Freelancer's certifications data were edited."
+  end
+
+  def freelancer_educations_edited_flash_notice!
+    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
+                     "Freelancer's educations data were edited."
   end
 end
