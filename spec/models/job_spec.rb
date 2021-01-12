@@ -112,16 +112,20 @@ RSpec.describe Job, type: :model do
     let!(:jane) { FactoryBot.create(:user) }
     let!(:attractive_job) { FactoryBot.create(:job) }
     let!(:bad_looking_job) { FactoryBot.create(:job) }
-    let!(:jim_job_application) { FactoryBot.create(:job_application, job: job, user: jim) }
+    let!(:job1) { FactoryBot.create(:job) }
+    let!(:jim_job_application) { FactoryBot.create(:job_application, state: 'draft', job: job, user: jim) }
+    let!(:jim_job_application_withdrawn) { FactoryBot.create(:job_application, state: 'withdrawn', job: job1, user: jim) }
     let!(:jane_attractive_job_application) { FactoryBot.create(:job_application, job: attractive_job, user: jane) }
 
-    it '.not_applied' do
-      expect(Job.not_applied(jim)).to include(attractive_job)
-      expect(Job.not_applied(jim)).to include(bad_looking_job)
-      expect(Job.not_applied(jim)).to_not include(job)
-      expect(Job.not_applied(jane)).to include(job)
-      expect(Job.not_applied(jane)).to include(bad_looking_job)
-      expect(Job.not_applied(jane)).to_not include(attractive_job)
+    it '.not_applied_or_withdrawn' do
+      expect(Job.not_applied_or_withdrawn(jim)).to include(attractive_job)
+      expect(Job.not_applied_or_withdrawn(jim)).to include(bad_looking_job)
+      expect(Job.not_applied_or_withdrawn(jim)).to_not include(job)
+      expect(Job.not_applied_or_withdrawn(jim)).to include(job1)
+
+      expect(Job.not_applied_or_withdrawn(jane)).to include(job)
+      expect(Job.not_applied_or_withdrawn(jane)).to include(bad_looking_job)
+      expect(Job.not_applied_or_withdrawn(jane)).to_not include(attractive_job)
     end
   end
 end

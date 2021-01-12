@@ -4,6 +4,10 @@ class EmployerMailerPreview < ActionMailer::Preview
     EmployerMailer.new_job_application(User.where(:role => 0).first, JobApplication.first)
   end
 
+  def job_application_was_withdrawn
+    EmployerMailer.job_application_was_withdrawn(JobApplication.first)
+  end
+
   def interview_request_declined
     EmployerMailer.interview_request_declined(InterviewRequest.first)
   end

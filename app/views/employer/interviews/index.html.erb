@@ -8,7 +8,9 @@
     </div>
     <div class="bp-card mb-3">
       <div class="d-flex justify-content-between flex-column flex-lg-row">
-        <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: interview.freelancer_profile, job_application: nil } %>
+        <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: interview.freelancer_profile,
+                                                                 job_application: nil,
+                                                                 editable: false } %>
       <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
         <div class="ml-sm-auto">
           <div class="d-block d-sm-flex">
