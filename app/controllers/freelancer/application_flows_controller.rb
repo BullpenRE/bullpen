@@ -23,6 +23,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     pre_populate_answers
 
     application_step_1_save || application_step_2_save || preview_application_save
+    job_application_was_edited_flash_notice!
   end
 
   def application_step_2_save
@@ -78,6 +79,11 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   end
 
   private
+
+  def job_application_was_edited_flash_notice!
+    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
+                     "#{job_application.job.title.capitalize} was edited."
+  end
 
   def draft_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
