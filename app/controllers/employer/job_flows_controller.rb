@@ -78,6 +78,7 @@ class Employer::JobFlowsController < ApplicationController
     return false unless params[:job][:step] == 'post_job_step_5'
 
     questions_descriptions = params[:job][:job_questions].values.reject(&:empty?)
+    job.job_questions.destroy_all if job.job_questions.any?
     questions_descriptions.each do |description|
       job.job_questions.create(description: description)
     end
