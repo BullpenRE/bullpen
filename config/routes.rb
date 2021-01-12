@@ -62,6 +62,7 @@ Rails.application.routes.draw do
     resources :interviews
     resources :contracts
     resources :profile, only: :index
+    post 'set_withdrawn', to: 'applications#set_withdrawn'
     post 'change_software_licence', to: 'profile#change_software_licence'
     post 'change_certifications', to: 'profile#change_certifications'
     post 'add_certifications', to: 'profile#change_certifications'
