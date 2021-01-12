@@ -23,6 +23,7 @@ class Freelancer::InterviewsController < ApplicationController
     @interview_request = current_user.freelancer_profile.interview_requests.find_by(id: params[:id])
     @interview_request.update(state: 'declined')
     EmployerMailer.interview_request_declined(@interview_request).deliver_now
+    freelancer_declined_interview_request_flash_notice!
   end
 
   private
@@ -42,5 +43,10 @@ class Freelancer::InterviewsController < ApplicationController
 
   def delete_session_variable
     session.delete(:view_interview_request)
+  end
+
+  def freelancer_declined_interview_request_flash_notice!
+    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
+                     "You declined interview request came from #{@interview_request.employer_profile.full_name}."
   end
 end
