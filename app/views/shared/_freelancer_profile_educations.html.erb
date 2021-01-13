@@ -16,7 +16,9 @@
 <% end %>
 <div class="mt-3">
   <%= render 'freelancer/shared/add_educations', freelancer_profile: freelancer_profile %>
-  <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#addEducationModal">
-    Add an Education
-  </button>
+  <% if @freelancer_profile&.editable?(current_user) %>
+    <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#addEducationModal">
+      Add an Education
+    </button>
+  <% end %>
 </div>
