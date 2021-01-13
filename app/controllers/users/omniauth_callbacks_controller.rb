@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
@@ -49,9 +51,9 @@ module Users
     end
 
     def updated_user(user, user_data)
-      user.uid = user_data[:uid] unless user.uid
-      user.provider = user_data[:provider] unless user.provider
-      user.confirmed_at = Time.current unless user.confirmed_at
+      user.uid = user_data[:uid]
+      user.provider = user_data[:provider]
+      user.confirmed_at = Time.current if user.confirmed_at.blank?
 
       user
     end
