@@ -127,22 +127,22 @@ class FreelancerProfileStepsController < ApplicationController
 
   def skill_page_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     "Your skills were entered."
+                     'Your skills were entered.'
   end
 
   def avatar_location_page_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     "Avatar and location data were entered."
+                     'Avatar and location data were entered.'
   end
 
   def professional_history_page_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     "Professional history were entered."
+                     'Professional history were entered.'
   end
 
   def work_education_certification_page_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     "Work, education and certification data were entered."
+                     'Work, education and certification data were entered.'
   end
 
   def destroy_old_re_skills_and_sectors

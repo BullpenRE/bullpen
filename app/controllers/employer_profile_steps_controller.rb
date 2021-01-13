@@ -140,26 +140,21 @@ class EmployerProfileStepsController < ApplicationController
 
   def about_company_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     "About company data were entered."
+                     'About company data were entered.'
   end
 
   def employee_count_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     "Employee's count data were entered."
+                     'Employee\'s count data were entered.'
   end
 
   def company_type_of_work_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     "Company type of work data were entered."
+                     'Company type of work data were entered.'
   end
 
   def company_sectors_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     "Company sectors data were entered."
+                     'Company sectors data were entered.'
   end
-
-  # def what_brings_you_here_flash_notice!
-  #   flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-  #                    "Company sectors data were entered."
-  # end
 end
