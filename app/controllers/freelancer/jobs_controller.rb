@@ -6,6 +6,7 @@ class Freelancer::JobsController < ApplicationController
   ITEMS_PER_PAGE = 10
 
   def index
+    @job_applications = current_user.job_applications
     @pagy, @jobs = pagy(jobs_collection, page: page, items: ITEMS_PER_PAGE, overflow: :last_page)
   end
 
