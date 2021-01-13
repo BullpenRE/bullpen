@@ -8,12 +8,21 @@
 
 <!--Talent card-->
 <div class="container mb-3 talent-cards">
-  <% if flash[:notice].present? %>
-    <div class="alert alert-success alert-dismissible fade show">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <%= flash[:notice].html_safe %>
-    </div>
-  <% end %>
+  <div class="container mb-3">
+    <% if flash[:notice].present? %>
+      <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash[:notice].html_safe %>
+      </div>
+    <% end %>
+
+    <% if flash[:alert].present? %>
+      <div class="alert alert-warning alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash[:alert].html_safe %>
+      </div>
+    <% end %>
+  </div>
 
   <%= render partial: 'employer/talent/filter_side_bar' %>
   <div class="d-flex justify-content-between">
