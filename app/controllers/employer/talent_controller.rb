@@ -30,7 +30,7 @@ class Employer::TalentController < ApplicationController
       "<strong>#{@interview_request.freelancer_profile.full_name}</strong>. "\
       'We will send you a notification when it is accepted or declined.'
     else
-      flash[:notice] = 'Something went wrong when trying to submit your interview request'
+      flash[:alert] = 'Something went wrong when trying to submit your interview request'
     end
 
     redirect_to employer_talent_index_path
