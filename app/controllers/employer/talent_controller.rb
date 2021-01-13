@@ -4,10 +4,14 @@ class Employer::TalentController < ApplicationController
   include LoggedInRedirects
   before_action :authenticate_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
   before_action :sectors_options_for_select, :skill_options_for_select, :software_options_for_select
+  ITEMS_PER_PAGE = 5
 
   def index
     filters_list unless invalid_filtering_parameters?
-    @pagy, @freelancer_profiles = pagy(freelancer_profiles_collection, items: 5)
+    @pagy, @freelancer_profiles = pagy(freelancer_profiles_collection,
+                                       page: page,
+                                       items: ITEMS_PER_PAGE,
+                                       overflow: :last_page)
     flash[:notice] =
       freelancer_profiles_collection.empty? ? 'No talent found that matches all of your search criteria.' : nil
     @current_user_interview_request_freelancer_ids = current_user.employer_profile
@@ -96,5 +100,22 @@ class Employer::TalentController < ApplicationController
     @filters_list ||= (Sector.where(id: sector_ids).map(&:description) +
                       RealEstateSkill.where(id: real_estate_skill_ids).map(&:description) +
                       Software.where(id: software_ids).map(&:description)).sort
+  end
+
+  def page
+    return params[:page] || 1 unless session[:request_interview]
+    return delete_session unless freelancer_profiles_collection.pluck(:slug).include?(session[:request_interview])
+
+    index = freelancer_profiles_collection.map(&:slug).index(session[:request_interview])
+    @freelancer_profile_id = freelancer_profiles_collection[index].id
+    session.delete(:request_interview)
+
+    ((index + 1) / ITEMS_PER_PAGE.to_f).ceil
+  end
+
+  def delete_session
+    session.delete(:request_interview)
+
+    params[:page] || 1
   end
 end
