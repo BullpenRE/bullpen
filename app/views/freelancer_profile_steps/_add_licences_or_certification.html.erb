@@ -1,4 +1,11 @@
 <!--Add License or Certification Modal-->
+<style>
+  @media (max-width: 350px) {
+  .dropdown-item {
+      white-space: normal;
+  }}
+</style>
+
 <div class="modal fade" id="addLicenseCertificationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
@@ -70,5 +77,5 @@
 <script>
   $('#selectCertification').on('click', () => {
     $('#customDescriptionCertificate').val('');
-  })
+  });
 </script>
