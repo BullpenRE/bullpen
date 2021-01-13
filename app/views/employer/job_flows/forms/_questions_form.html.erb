@@ -13,10 +13,16 @@
   </ul>
   </div>
   <div class="form-group job-questions">
+    <% questions = @job.job_questions %>
     <%= f.fields_for :job_questions do |q| %>
-      <%= q.text_field :description_1, { class: "form-control mb-2", id: "applicantQuestions1", placeholder: "Enter a question (optional)", maxlength: "250" } %>
-      <%= q.text_field :description_2, { class: "form-control mb-2", id: "applicantQuestions2", placeholder: "Enter a question (optional)", maxlength: "250" } %>
-      <%= q.text_field :description_3, { class: "form-control mb-2", id: "applicantQuestions3", placeholder: "Enter a question (optional)", maxlength: "250" } %>
+      <%= q.text_field :description_1, { class: "form-control mb-2", id: "applicantQuestions1", placeholder: "Enter a question (optional)", maxlength: "250", value: questions.first&.description } %>
+      <%= q.text_field :description_2, { class: "form-control mb-2", id: "applicantQuestions2", placeholder: "Enter a question (optional)", maxlength: "250", value: questions.second&.description } %>
+      <%= q.text_field :description_3, { class: "form-control mb-2", id: "applicantQuestions3", placeholder: "Enter a question (optional)", maxlength: "250", value: questions.third&.description } %>
+      <% if questions.size > 3 %>
+        <% questions.last(questions.size - 3).each do |question| %>
+          <%= q.text_field question.id, { class: "form-control mb-2", id: "applicantQuestions3", placeholder: "Enter a question (optional)", maxlength: "250", value: question.description } %>
+        <% end %>
+      <%end %>
       <div class="new-question"></div>
     <% end %>
   </div>
