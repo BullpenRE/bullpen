@@ -121,12 +121,12 @@
 </div>
 <%= render partial: 'freelancer_profile_steps/date_validation' %>
 <script>
-    $(document).on('turbolinks:load', function () {
-        <% if @freelancer_profile.freelancer_profile_educations.count > 1 %>
-        $('.modal-footer').addClass('justify-content-between');
-        $('.btn-outline-danger').removeClass('d-none');
-        <% end %>
+  <% if @freelancer_profile.freelancer_profile_experiences.count > 1 %>
+    $('.modal-footer').addClass('justify-content-between');
+    $('.btn-outline-danger').removeClass('d-none');
+  <% end %>
 
+    $(document).on('turbolinks:load', function () {
         function toggleEndDate(e) {
             e.preventDefault();
             const currentObjectId = $(e.target).data('id');

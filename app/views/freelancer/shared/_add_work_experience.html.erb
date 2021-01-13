@@ -103,11 +103,6 @@
 <%= render partial: 'freelancer_profile_steps/date_validation' %>
 <script>
     $(document).on('turbolinks:load', function () {
-        <% if @freelancer_profile.freelancer_profile_educations.count > 1 %>
-        $('.modal-footer').addClass('justify-content-between');
-        $('.btn-outline-danger').removeClass('d-none');
-        <% end %>
-
         function toggleEndDate(e) {
             e.preventDefault();
             const currentObjectState = $(e.target).is(':checked');
