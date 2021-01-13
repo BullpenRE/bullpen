@@ -9,6 +9,7 @@ class Freelancer::ProfileController < ApplicationController
   def index
     real_estate_skills
     certifications
+    sectors
   end
 
   def change_skills
@@ -41,6 +42,10 @@ class Freelancer::ProfileController < ApplicationController
     redirect_after_change_profile
   end
 
+  def change_profile
+
+  end
+
   private
 
   def freelancer_profile
@@ -67,5 +72,9 @@ class Freelancer::ProfileController < ApplicationController
 
   def certifications
     @certifications ||= Certification.enabled.pluck(:description, :id)
+  end
+
+  def sectors
+    @sectors ||= Sector.enabled.pluck(:description, :id)
   end
 end

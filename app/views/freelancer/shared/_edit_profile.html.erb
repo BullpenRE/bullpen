@@ -1,0 +1,185 @@
+<!--Edit Freelancer Profile Modal-->
+<div class="modal fade" id="editProfileModal-<%= freelancer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+      </div>
+
+
+        <div class="container">
+          <div class="error"><%= @errors %></div>
+          <div class="bp-card mb-5 mx-auto" style="max-width: 700px;">
+            <%= form_for @freelancer_profile, url: freelancer_change_profile_path do |f| %>
+
+                <div class="row-md mb-5 avatar">
+                  <% if @freelancer_profile.avatar.attached? %>
+                    <div class="text-light mb-3 avatar-image" style="font-size: 80px;line-height: 0;">
+                      <%= image_tag @freelancer_profile.avatar, class: 'rounded-circle' %>
+                    </div>
+                    <div class="custom-file">
+                      <%= f.file_field :freelancer_profile_avatar, multiple: false, name: 'avatar', class: "d-none", id: "uploadProfilePic" %>
+                      <label class="btn btn-outline-primary upload-avatar" for="uploadProfilePic">
+                        Upload photo
+                      </label>
+                      <button type="button" class="delete-avatar d-none" id="deleteProfilePic"></button>
+                      <label class="btn btn-outline-danger mr-2" for="deleteProfilePic">
+                        Remove photo
+                      </label>
+                    </div>
+                  <% else %>
+                    <div class="row">
+                      <div class="col-md-2">
+                    <div class="text-light" style="font-size: 80px;line-height: 0;"><i class="fas fa-user-circle"></i></div>
+                      </div>
+                      <div class="col">
+                        <div class="custom-file">
+                      <%= f.file_field :freelancer_profile_avatar, multiple: false, name: 'avatar', class: "d-none", id: "uploadProfilePic" %>
+                      <label class="btn btn-outline-primary upload-avatar" for="uploadProfilePic">
+                        Upload photo
+                      </label>
+                        </div>
+                    </div>
+                    </div>
+                  <% end %>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-group mb-4">
+                      <label for="professionalTitleInput" class="bp-input-label">First Name</label>
+                      <%= f.text_field :first_name, class: "form-control", id: "firstName", required: true %>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-group mb-4">
+                      <label for="professionalTitleInput" class="bp-input-label">Last Name</label>
+                      <%= f.text_field :last_name, class: "form-control", id: "lastName", required: true %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-group mb-4">
+                      <label for="professionalTitleInput" class="bp-input-label">Professional Title</label>
+                      <%= f.text_field :professional_title, class: "form-control", id: "professionalTitleInput", placeholder: "e.g. Senior Analyst", required: true %>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-group mb-4">
+                      <label for="yearsExperienceSelect" class="bp-input-label">Years of professional experience</label>
+                      <div class="w-100">
+                        <%= f.select :professional_years_experience,
+                                     FreelancerProfile.professional_years_experiences.keys.map { |w| [w.humanize, w] }, {},
+                                     html_options = { class: "form-control selectpicker", 'data-style': "bp-btn-select-border",
+                                                      selected: @freelancer_profile.professional_years_experience,
+                                                      style: "display:block !important",
+                                                      title: "Please make a selection", required: true } %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group text-left">
+                    <label for="freelancerLocationInput" class="bp-input-label">Location</label>
+                    <%= f.text_field :location, class: "form-control", id: "freelancerLocationInput", placeholder: "City, State abbreviation", required: true %>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group mb-5">
+                    <label for="professionalSummaryTextarea" class="bp-input-label">Professional Summary</label>
+                    <%= f.text_area :professional_summary, class: "form-control", id: "professionalSummaryTextarea", placeholder: "Describe your experience in a short elevator pitch",rows: "3", maxlength: "1000", required: true %>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">Desired Hourly Rate (optional)</div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group mb-4">
+                    <label for="freelancerSectors" class="bp-input-label">
+                      Sectors
+                    </label>
+                    <%= f.select :freelancer_sectors,
+                                 options_for_select(
+                                   @sectors,
+                                   @freelancer_profile&.freelancer_sectors&.map do |freelancer_sector|
+                                     [freelancer_sector.sector.description, freelancer_sector.sector.id]
+                                   end.flatten),
+                                 {}, multiple: true, class: 'select2', required: true %>
+                  </div>
+                </div>
+
+
+              <div class="d-flex justify-content-end">
+
+                <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+    $('.avatar').on('change', '#uploadProfilePic', (e) => {
+        const file = e.target.files[0];
+        const maxFileSize = 2097152;
+        if (file.size && file.size > maxFileSize) {
+            const message = "Uploaded files must not exceed 2MB\n";
+            Swal.fire({
+                title: '<h5>Oops!</h5>',
+                text: message
+            });
+        }
+        else if (file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
+            const message = "Please upload only a jpg, png or gif image\n";
+            Swal.fire({
+                title: '<h5>Oops!</h5>',
+                text: message
+            });
+        }
+        else {
+            const formData = new FormData();
+            formData.append('avatar', file);
+            $.ajax({
+                url: '/avatar/update',
+                method: 'PUT',
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                data: formData,
+                success: function() {
+                    $('.avatar').load(' .avatar');
+                },
+                error: () => {
+                    const message = 'This file can not be attached';
+                    Swal.fire({
+                        title: '<h5>Oops!</h5>',
+                        text: message
+                    });
+                }
+            });
+        }
+    });
+
+    $('.avatar').on('click', '.delete-avatar', () => {
+        $.ajax({
+            url: '/avatar/destroy',
+            method: 'DELETE',
+            success: () => {
+                $('.avatar').load(' .avatar');
+            }
+        })
+    });
+</script>
