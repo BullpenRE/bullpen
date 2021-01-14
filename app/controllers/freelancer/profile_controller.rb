@@ -43,7 +43,23 @@ class Freelancer::ProfileController < ApplicationController
   end
 
   def change_profile
+    first_name = params[:freelancer_profile][:first_name]
+    last_name = params[:freelancer_profile][:last_name]
+    location = params[:freelancer_profile][:location]
 
+    @freelancer_profile.user.update(first_name: first_name, last_name: last_name, location: location)
+    @freelancer_profile.update(profile_params)
+
+    change_freelancer_sectors
+
+    redirect_after_change_profile
+  end
+
+  def change_freelancer_sectors
+    freelancer_profile&.freelancer_sectors&.destroy_all
+    sectors_params&.each do |sector|
+      freelancer_profile.freelancer_sectors.create(sector_id: sector)
+    end
   end
 
   private
@@ -66,6 +82,15 @@ class Freelancer::ProfileController < ApplicationController
     params[:freelancer_softwares][:freelancer_softwares]
   end
 
+  def profile_params
+    params.require(:freelancer_profile)
+            .permit(:professional_title, :professional_years_experience, :professional_summary, :desired_hourly_rate)
+  end
+
+  def user_params
+
+  end
+
   def real_estate_skills
     @real_estate_skills ||= RealEstateSkill.enabled.pluck(:description, :id)
   end
@@ -76,5 +101,9 @@ class Freelancer::ProfileController < ApplicationController
 
   def sectors
     @sectors ||= Sector.enabled.pluck(:description, :id)
+  end
+
+  def sectors_params
+    params[:freelancer_profile][:freelancer_sectors]&.reject(&:blank?)
   end
 end

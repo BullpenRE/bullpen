@@ -1,7 +1,7 @@
 <br>
 <%= render partial: 'email/content_block', locals: { content: "<h2>You have a new applicant!</h2>" } %>
 <%= render partial: 'email/content_block', locals: { content: "#{@user.full_name} has applied to #{@job_application.job.title}" } %>
-<%= render partial: 'email/content_block_left', locals: { content: "Hourly Rate: #{@job_application.per_hour_bid}<br><br>About #{@user.first_name}:<br><br>#{@user.freelancer_profile.professional_summary}" } %>
+<%= render partial: 'email/content_block_left', locals: { content: "Hourly Rate: #{@job_application.c}<br><br>About #{@user.first_name}:<br><br>#{@user.freelancer_profile.professional_summary}" } %>
 <%= render partial: 'email/content_block', locals: { content: "View #{@user.first_name}`s application and others at the link below." } %>
 <%= render partial: 'email/content_block', locals: { content: "Have you already filled this position?" } %>
 <%= render partial: 'email/content_block', locals: { content: "Close the job to stop receiving new applicant notifications." } %>
