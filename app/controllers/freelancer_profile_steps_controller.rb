@@ -70,6 +70,7 @@ class FreelancerProfileStepsController < ApplicationController
 
     @freelancer_profile.update_attributes(history_params)
     render_wizard @user
+
     true
   end
 
