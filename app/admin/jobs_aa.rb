@@ -44,7 +44,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         row :time_zone
         row :daytime_availability_required
         row :required_experience
-        row :relevant_details
+        row 'Relevant Details' do
+          job.relevant_details.body.to_s
+        end
         row :state
         row :contract_type
         row :pay_range_low
@@ -85,7 +87,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :state
         f.input :daytime_availability_required
         f.input :required_experience
-        f.input :relevant_details
+        f.input :relevant_details, as: :text
         f.input :contract_type
         f.input :pay_range_low
         f.input :pay_range_high
