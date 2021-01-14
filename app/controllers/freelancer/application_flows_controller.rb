@@ -47,8 +47,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
     job_application.update(
       per_hour_bid: clean_currency_entry(params[:job_application][:per_hour_bid]),
-      available_during_work_hours: params[:job_application][:available_during_work_hours],
-      state: 'draft'
+      available_during_work_hours: params[:job_application][:available_during_work_hours]
     )
     job_application.job_application_questions.destroy_all
     job_application.job.job_questions.each do |job_question|
@@ -71,9 +70,9 @@ class Freelancer::ApplicationFlowsController < ApplicationController
       job_application.update(state: 'draft')
       draft_flash_notice!
     else
+      EmployerMailer.new_job_application(current_user, job_application).deliver_now if mailing_condition
       job_application.update(state: 'applied', applied_at: Time.current)
       apply_flash_notice!
-      EmployerMailer.new_job_application(current_user, job_application).deliver_now
     end
     redirect_to freelancer_applications_path
   end
@@ -88,6 +87,10 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def apply_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
                      "#{job_application.job.title.capitalize} was applied for."
+  end
+
+  def mailing_condition
+    job_application.applied_at.nil? || job_application.withdrawn?
   end
 
   def pre_populate_answers
@@ -119,11 +122,13 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def respond_js_format(step)
     respond_to do |format|
       format.html
-      format.js do  render step.to_s, locals: {
-        job_application: @job_application,
-        job_id: params[:job_id],
-        answers: @answers.presence
-      }
+      format.js do
+        render step.to_s, locals:
+        {
+          job_application: @job_application,
+          job_id: params[:job_id],
+          answers: @answers.presence
+        }
       end
     end
   end
@@ -134,6 +139,6 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
   def job_application
     @job_application ||= current_user.job_applications
-                           .find_by(id: (params[:job_app] || params[:job_application][:job_application_id]))
+                                     .find_by(id: (params[:job_app] || params[:job_application][:job_application_id]))
   end
 end

@@ -13,6 +13,11 @@ class Freelancer::ApplicationsController < ApplicationController
     job_application.destroy
   end
 
+  def set_withdrawn
+    job_application.update(state: 'withdrawn')
+    EmployerMailer.job_application_was_withdrawn(job_application).deliver_now
+  end
+
   private
 
   def job_application

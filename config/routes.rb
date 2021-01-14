@@ -52,6 +52,8 @@ Rails.application.routes.draw do
   namespace :public do
     get 'freelancer_profile/:slug', to: 'freelancer_profile#show', as: 'freelancer_profile'
     get 'job/:slug', to: 'job#show', as: 'job'
+    get 'apply_for_job', to: 'job#apply_for_job'
+    get 'request_interview', to: 'freelancer_profile#request_interview'
   end
 
   namespace :freelancer do
@@ -61,6 +63,7 @@ Rails.application.routes.draw do
     resources :interviews
     resources :contracts
     resources :profile, only: :index
+    post 'set_withdrawn', to: 'applications#set_withdrawn'
     post 'change_software_licence', to: 'profile#change_software_licence'
     post 'change_certifications', to: 'profile#change_certifications'
     post 'add_certifications', to: 'profile#change_certifications'
