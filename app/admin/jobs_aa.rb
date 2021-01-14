@@ -16,7 +16,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
                   :daytime_availability_required,
                   :required_experience,
                   :required_regional_knowledge,
-                  :relevant_job_details,
+                  :relevant_details,
                   :draft,
                   :contract_type,
                   :pay_range_low,
@@ -44,7 +44,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         row :time_zone
         row :daytime_availability_required
         row :required_experience
-        row :relevant_job_details
+        row :relevant_details
         row :state
         row :contract_type
         row :pay_range_low
@@ -85,7 +85,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :state
         f.input :daytime_availability_required
         f.input :required_experience
-        f.input :relevant_job_details
+        f.input :relevant_details
         f.input :contract_type
         f.input :pay_range_low
         f.input :pay_range_high
