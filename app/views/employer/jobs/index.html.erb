@@ -2,6 +2,7 @@
 
 <!--Job card-->
 <div class="container mb-3">
+  <%= render partial: 'notices_and_alerts/notice_and_alert' %>
   <h1>Jobs</h1>
   <% @jobs.each do |job| %>
     <%= render partial: 'employer/jobs/show_job_post', locals: { job: job } %>
