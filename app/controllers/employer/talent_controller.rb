@@ -12,9 +12,8 @@ class Employer::TalentController < ApplicationController
                                        page: page,
                                        items: ITEMS_PER_PAGE,
                                        overflow: :last_page)
-    if freelancer_profiles_collection.empty?
-      flash[:notice] = 'No talent found that matches all of your search criteria.'
-    end
+    flash[:notice] = 'No talent found that matches all of your '\
+    'search criteria.' if freelancer_profiles_collection.empty?
     @current_user_interview_request_freelancer_ids = current_user.employer_profile
                                                                  .interview_requests
                                                                  .pluck(:freelancer_profile_id)
