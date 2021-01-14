@@ -52,6 +52,8 @@ Rails.application.routes.draw do
   namespace :public do
     get 'freelancer_profile/:slug', to: 'freelancer_profile#show', as: 'freelancer_profile'
     get 'job/:slug', to: 'job#show', as: 'job'
+    get 'apply_for_job', to: 'job#apply_for_job'
+    get 'request_interview', to: 'freelancer_profile#request_interview'
   end
 
   namespace :freelancer do
