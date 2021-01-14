@@ -4,7 +4,7 @@ class Employer::JobFlowsController < ApplicationController
   include Wicked::Wizard
   include LoggedInRedirects
   include ApplicationHelper
-  steps :post_job_step_1, :post_job_step_2, :post_job_step_3, :post_job_step_4, :post_job_step_5
+  steps :post_job_step_1, :post_job_step_2, :post_job_step_3, :post_job_step_4, :post_job_step_5, :preview_job
   before_action :authenticate_user!, :initial_check
 
   def show
@@ -25,7 +25,8 @@ class Employer::JobFlowsController < ApplicationController
       job_type_save ||
       qualifications_save ||
       details_save ||
-      questions_save
+      questions_save ||
+      preview_job_save
   end
 
   def summary_step_save
@@ -78,11 +79,25 @@ class Employer::JobFlowsController < ApplicationController
     return false unless params[:job][:step] == 'post_job_step_5'
 
     questions_descriptions = params[:job][:job_questions].values.reject(&:empty?)
+    job.job_questions.destroy_all if job.job_questions.any?
     questions_descriptions.each do |description|
       job.job_questions.create(description: description)
     end
-    params[:button] != 'draft' ? job.update(state: 'posted') : job.update(state: 'draft')
     job.update(initial_creation: false)
+    if params[:button] == 'draft'
+      job.update(state: 'draft')
+      redirect_to employer_jobs_path
+    else
+      respond_js_format(:preview_job)
+    end
+
+    true
+  end
+
+  def preview_job_save
+    return false unless params[:job][:step] == 'preview_job'
+
+    params[:button] != 'draft' ? job.update(state: 'posted') : job.update(state: 'draft')
 
     redirect_to employer_jobs_path
 
