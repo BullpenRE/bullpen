@@ -9,7 +9,7 @@
       </div>
 
       <%= form_for :freelancer_profile_experience, url: wizard_path, method: :put do |f| %>
-        <%= render partial: 'freelancer/shared/form_edit_work_experience', locals: {freelancer_profile_experience: freelancer_profile_experience, f: f} %>
+        <%= render partial: 'freelancer/shared/form_work_experience', locals: { freelancer_profile_experience: freelancer_profile_experience, f: f} %>
       <% end %>
     </div>
   </div>

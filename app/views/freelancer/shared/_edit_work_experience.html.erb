@@ -9,11 +9,7 @@
       </div>
 
       <%= form_for :freelancer_profile_experience, url: freelancer_change_work_experience_path do |f| %>
-        <%= render partial: 'freelancer/shared/form_edit_work_experience', locals: {freelancer_profile_experience: freelancer_profile_experience, f: f} %>
-        <div class="modal-footer">
-          <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
-          <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
-        </div>
+        <%= render partial: 'freelancer/shared/form_work_experience', locals: { freelancer_profile_experience: freelancer_profile_experience, f: f } %>
       <% end %>
     </div>
   </div>
