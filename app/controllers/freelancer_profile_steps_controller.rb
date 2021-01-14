@@ -49,7 +49,6 @@ class FreelancerProfileStepsController < ApplicationController
     @user.location = params[:user][:location]
     @user.save
     render_wizard @user
-    avatar_location_page_flash_notice!
 
     true
   end
@@ -60,7 +59,6 @@ class FreelancerProfileStepsController < ApplicationController
     freelancer_profile_education_save
     work_experience_save
     certification_save
-    work_education_certification_page_flash_notice!
 
     render wizard_path(:work_education_experience)
 
@@ -72,7 +70,6 @@ class FreelancerProfileStepsController < ApplicationController
 
     @freelancer_profile.update_attributes(history_params)
     render_wizard @user
-    professional_history_page_flash_notice!
     true
   end
 
@@ -91,7 +88,6 @@ class FreelancerProfileStepsController < ApplicationController
       FreelancerSoftware.create(freelancer_profile_id: @freelancer_profile.id, software_id: software)
     end
     render_wizard @user
-    skill_page_flash_notice!
 
     true
   end
@@ -123,26 +119,6 @@ class FreelancerProfileStepsController < ApplicationController
   def save_current_step
     @freelancer_profile.current_step = wizard_value(next_step)
     @freelancer_profile.save
-  end
-
-  def skill_page_flash_notice!
-    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     'Your skills were entered.'
-  end
-
-  def avatar_location_page_flash_notice!
-    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     'Avatar and location data were entered.'
-  end
-
-  def professional_history_page_flash_notice!
-    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     'Professional history were entered.'
-  end
-
-  def work_education_certification_page_flash_notice!
-    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     'Work, education and certification data were entered.'
   end
 
   def destroy_old_re_skills_and_sectors

@@ -1,17 +1,7 @@
 <%= render partial: 'freelancer/navigation', locals: { section: 'profile' } %>
 
 <div class="container mb-3">
-
-  <!--success notice after freelancer's summary page data were edited-->
-  <div class="container mb-3">
-    <% if flash[:notice].present? %>
-      <div class="alert alert-success alert-dismissible fade show">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <%= flash[:notice].html_safe %>
-      </div>
-    <% end %>
-  </div>
-
+  <%= render partial: 'notices_and_alerts/notice_and_alert' %>
   <div class="container bp-card">
     <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: @freelancer_profile,
                                                              job_application: nil,

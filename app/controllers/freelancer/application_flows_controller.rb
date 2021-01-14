@@ -69,22 +69,15 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     if params[:button] == 'draft'
       job_application.update(state: 'draft')
       draft_flash_notice!
-    elsif mailing_condition
-      EmployerMailer.new_job_application(current_user, job_application).deliver_now
+    else
+      EmployerMailer.new_job_application(current_user, job_application).deliver_now if mailing_condition
       job_application.update(state: 'applied', applied_at: Time.current)
       apply_flash_notice!
-    else
-      job_application_was_edited_flash_notice!
     end
     redirect_to freelancer_applications_path
   end
 
   private
-
-  def job_application_was_edited_flash_notice!
-    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     "#{job_application.job.title.capitalize} was edited."
-  end
 
   def draft_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\

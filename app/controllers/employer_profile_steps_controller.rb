@@ -34,7 +34,6 @@ class EmployerProfileStepsController < ApplicationController
 
     @employer_profile.update_attributes(company_params)
     render_wizard @user
-    about_company_flash_notice!
 
     true
   end
@@ -44,7 +43,6 @@ class EmployerProfileStepsController < ApplicationController
 
     @employer_profile.update(employee_count_params)
     render_wizard @user
-    employee_count_flash_notice!
 
     true
   end
@@ -54,7 +52,6 @@ class EmployerProfileStepsController < ApplicationController
 
     @employer_profile.update(category: params.require(:employer_profile).values.dig(0))
     render_wizard @user
-    company_type_of_work_flash_notice!
 
     true
   end
@@ -67,7 +64,6 @@ class EmployerProfileStepsController < ApplicationController
       EmployerSector.create(employer_profile_id: @employer_profile.id, sector_id: sector)
     end
     render_wizard @user
-    company_sectors_flash_notice!
 
     true
   end
@@ -79,7 +75,6 @@ class EmployerProfileStepsController < ApplicationController
     @employer_profile.completed = true
     @employer_profile.save
     render_wizard @user
-    # what_brings_you_here_flash_notice!
 
     true
   end
@@ -136,25 +131,5 @@ class EmployerProfileStepsController < ApplicationController
   def save_current_step
     @employer_profile.current_step = wizard_value(next_step)
     @employer_profile.save
-  end
-
-  def about_company_flash_notice!
-    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     'About company data were entered.'
-  end
-
-  def employee_count_flash_notice!
-    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     'Employee\'s count data were entered.'
-  end
-
-  def company_type_of_work_flash_notice!
-    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     'Company type of work data were entered.'
-  end
-
-  def company_sectors_flash_notice!
-    flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     'Company sectors data were entered.'
   end
 end
