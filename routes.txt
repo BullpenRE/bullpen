@@ -281,6 +281,8 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                     employer_like_job_application POST       /employer/like_job_application(.:format)                                                 employer/jobs#like_job_application
                         public_freelancer_profile GET        /public/freelancer_profile/:slug(.:format)                                               public/freelancer_profile#show
                                        public_job GET        /public/job/:slug(.:format)                                                              public/job#show
+                             public_apply_for_job GET        /public/apply_for_job(.:format)                                                          public/job#apply_for_job
+                         public_request_interview GET        /public/request_interview(.:format)                                                      public/freelancer_profile#request_interview
                                   freelancer_jobs GET        /freelancer/jobs(.:format)                                                               freelancer/jobs#index
                                                   POST       /freelancer/jobs(.:format)                                                               freelancer/jobs#create
                                new_freelancer_job GET        /freelancer/jobs/new(.:format)                                                           freelancer/jobs#new
@@ -330,6 +332,8 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                      freelancer_change_educations POST       /freelancer/change_educations(.:format)                                                  freelancer/profile#change_educations
                         freelancer_add_educations POST       /freelancer/add_educations(.:format)                                                     freelancer/profile#change_educations
                      freelancer_decline_interview POST       /freelancer/decline_interview(.:format)                                                  freelancer/interviews#decline_interview
+                   freelancer_add_work_experience POST       /freelancer/add_work_experience(.:format)                                                freelancer/profile#change_work_experience
+                freelancer_change_work_experience POST       /freelancer/change_work_experience(.:format)                                             freelancer/profile#change_work_experience
                                 check_users_email POST       /check_users_email(.:format)                                                             check_email#check_users_email
                                 letter_opener_web            /letter_opener                                                                           LetterOpenerWeb::Engine
                                        styleguide GET        /styleguide(.:format)                                                                    styleguide#index
