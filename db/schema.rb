@@ -269,7 +269,6 @@ ActiveRecord::Schema.define(version: 2021_01_15_025440) do
     t.boolean "daytime_availability_required"
     t.integer "required_experience"
     t.string "required_regional_knowledge"
-    t.text "relevant_job_details"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "initial_creation", default: true
@@ -278,6 +277,7 @@ ActiveRecord::Schema.define(version: 2021_01_15_025440) do
     t.integer "pay_range_low"
     t.integer "pay_range_high"
     t.string "slug"
+    t.text "relevant_job_details"
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
@@ -350,6 +350,8 @@ ActiveRecord::Schema.define(version: 2021_01_15_025440) do
     t.string "location"
     t.integer "role"
     t.bigint "signup_promo_id"
+    t.string "uid"
+    t.string "provider"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
