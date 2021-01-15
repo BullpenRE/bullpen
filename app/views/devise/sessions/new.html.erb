@@ -53,7 +53,10 @@
             $('#user_email').val(getCookie("email"));
             $('#user_password').trigger('focus');
             deleteCookie("email");
-        };
+        } else if(getPassedEmailParam()) {
+          $('#user_email').val(getPassedEmailParam());
+          $('#user_password').trigger('focus');
+        }
     });
   function setCookie(name, value, options = {}) {
 
@@ -90,4 +93,9 @@
           'max-age': -1
       })
   };
+
+  function getPassedEmailParam() {
+    const obj = new URL(location.href);
+    return(obj.searchParams.get('email'));
+  }
 </script>
