@@ -17,7 +17,7 @@
     <label for="sectorMultiselect" class="h5">What sectors are relevant to this job?</label>
     <%= f.select :job_sectors,
                  options_for_select(
-                   Sector.all.map{ |sector| [sector.description, sector.id] },
+                   Sector.enabled.pluck(:description, :id),
                    job&.job_sectors&.map do |job_sector|
                      [job_sector.sector.description, job_sector.sector.id]
                    end.flatten),
