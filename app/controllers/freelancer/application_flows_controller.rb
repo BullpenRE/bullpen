@@ -142,7 +142,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
       format.js do
         render step.to_s, locals:
         {
-          job_application: @job_application,
+          job_application: job_application,
           job_id: params[:job_id],
           answers: @answers.presence
         }

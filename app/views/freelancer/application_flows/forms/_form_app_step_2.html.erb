@@ -128,12 +128,13 @@
     const job_app = '<%= job_application.id %>';
     const formData = new FormData();
     formData.append('work_sample', file);
+    formData.append('id', 'application_step_2');
     $.ajax({
       url: `/freelancer/application_flows/${job_app}/add_work_samples`,
       method: 'PUT',
-      contentType: false,
       processData: false,
-      dataType: 'json',
+      contentType: false,
+      dataType: 'script',
       data: formData,
       success: () => {
         return true
@@ -163,12 +164,13 @@
     const formData = new FormData();
     formData.append('job_app', job_app);
     formData.append('blob_key', clickedWorkSample);
+    formData.append('id', 'application_step_2');
     $.ajax({
       url: `/freelancer/application_flows/${job_app}/destroy_work_sample`,
       method: 'POST',
-      dataType: 'json',
-      contentType: false,
       processData: false,
+      contentType: false,
+      dataType: 'script',
       data: formData,
       success: () => {
         return true
