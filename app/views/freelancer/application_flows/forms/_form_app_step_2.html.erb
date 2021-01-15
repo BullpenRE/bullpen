@@ -125,26 +125,18 @@
   }
 
   function sendFile(file) {
-    const app_id = '<%= job_application.id %>';
-    const step = 'application_step_2';
+    const job_app = '<%= job_application.id %>';
     const formData = new FormData();
     formData.append('work_sample', file);
-    formData.append('app_id', app_id);
-    formData.append('step', step);
     $.ajax({
-      url: '/work_sample/update',
+      url: `/freelancer/application_flows/${job_app}/add_work_samples`,
       method: 'PUT',
       contentType: false,
       processData: false,
       dataType: 'json',
       data: formData,
-      success: (data) => {
-        $('#workSamples').append(showNewWorkSample(data['fileName'], data['signedId']));
-        toggleAttachButtonVisibility('append')
-      },
-      error: () => {
-        const message = `File ${file.name} was not uploaded.`;
-        showSwal(message)
+      success: () => {
+        return true
       }
     });
   }
@@ -167,20 +159,19 @@
   $('.work_sample').on('click', '.delete-work-sample', (e) => {
     let clickedWorkSample = $(e.target).parents('a').data('id');
     e.preventDefault();
-    const app_id = '<%= job_application.id %>';
+    const job_app = '<%= job_application.id %>';
     const formData = new FormData();
-    formData.append('app_id', app_id);
+    formData.append('job_app', job_app);
     formData.append('blob_key', clickedWorkSample);
     $.ajax({
-      url: '/work_sample/destroy',
+      url: `/freelancer/application_flows/${job_app}/destroy_work_sample`,
       method: 'POST',
       dataType: 'json',
       contentType: false,
       processData: false,
       data: formData,
       success: () => {
-        $('#file-' + clickedWorkSample).remove();
-        toggleAttachButtonVisibility('remove')
+        return true
       },
     })
   });
