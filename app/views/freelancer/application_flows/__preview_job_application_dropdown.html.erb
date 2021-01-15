@@ -57,14 +57,14 @@
       </div>
       <% if editable %>
         <%= form_for :job_application, url: freelancer_application_flows_path, method: :put, remote: true do |f| %>
-        <div class="modal-footer justify-content-between">
+          <div class="modal-footer justify-content-between">
             <%= f.hidden_field :job_application_id, value: job_application.id %>
             <%= f.hidden_field 'step', value: 'preview_application' %>
 
             <%= link_to freelancer_application_flows_path(id: :application_step_1, job_app: job_application), class: "btn btn-outline-primary editApplication", remote: true do %>
               Edit Application
             <% end %>
-        </div>
+          </div>
         <% end %>
       <% end %>
     </div>
