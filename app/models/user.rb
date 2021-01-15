@@ -7,7 +7,8 @@ class User < ApplicationRecord
   scope :employers, -> { joins(:employer_profile) }
   scope :freelancers, -> { joins(:freelancer_profile) }
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :confirmable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :confirmable,
+         :omniauthable, omniauth_providers: %i[google]
   validates :first_name, presence: true
   validates :last_name, presence: true
 
