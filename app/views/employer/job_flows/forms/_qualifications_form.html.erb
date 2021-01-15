@@ -39,7 +39,7 @@
     <label for="softwareMultiselect" class="h5">What software is required? <span class="text-dark font-weight-normal">(Optional)</span></label>
     <%= f.select :job_softwares,
                  options_for_select(
-                   Software.all.map{ |soft| [soft.description, soft.id] if soft.disable == false },
+                   Software.all.map{ |soft| [soft.description, soft.id] },
                    @job&.job_softwares&.map do |soft|
                      [soft.software.description, soft.software.id]
                    end.flatten),
