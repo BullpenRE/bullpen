@@ -7,6 +7,7 @@ RSpec.describe Message, type: :model do
 
   it 'factory works' do
     expect(message).to be_valid
+    expect(message.description.present?).to be_truthy
   end
 
   context 'Validations' do
