@@ -5,8 +5,13 @@ ruby '2.7.2'
 
 gem 'amazing_print', '~> 1.2', '>= 1.2.1'   # Replacement for awesome_print which is depreciated
 gem 'bootsnap', '>= 1.4.2', require: false  # Reduces boot times through caching; required in config/boot.rb
-gem 'devise', '~> 4.7', '>= 4.7.2'          # Flexible authentication solution for Rails with Warden
+gem 'devise', '~> 4.7', '>= 4.7.3'          # Flexible authentication solution for Rails with Warden
+gem 'google_sign_in', '~> 1.2'              # Sign in (or up) with Google for Rails applications: https://github.com/basecamp/google_sign_in
 gem 'jbuilder', '~> 2.7'                    # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'mini_magick', '~> 4.10', '>= 4.10.1'   # Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
+gem 'omniauth', '~> 1.9', '>= 1.9.1'        # Omniauth logins
+gem 'omniauth-google-oauth2', '~> 0.8.1'    # Omniauth for google
+gem 'pagy', '~> 3.5'                        # Agnostic pagination in plain ruby
 gem 'pg', '>= 0.18', '< 2.0'                # Use postgresql as the database for Active Record
 gem 'premailer-rails', '~> 1.11', '>= 1.11.1' # Styling HTML emails with CSS without having to do the hard work ourselves
 gem 'puma', '~> 4.1'                        # Use Puma as the app server
@@ -16,8 +21,6 @@ gem 'table_print', '~> 1.5', '>= 1.5.7'     # Allows viewing of data in console 
 gem 'turbolinks', '~> 5'                    # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'webpacker', '~> 5.2', '>= 5.2.1'       # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'wicked', '~> 1.3', '>= 1.3.2'          # Wicked is a Rails engine for producing easy wizard controllers
-gem 'mini_magick', '~> 4.10', '>= 4.10.1'   # Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
-gem 'pagy', '~> 3.5'                        # Agnostic pagination in plain ruby
 
 group :development, :staging, :admin do
   gem 'activeadmin', '~> 2.8', '>= 2.8.1'     # Administration DSL out of a box: https://activeadmin.info/
