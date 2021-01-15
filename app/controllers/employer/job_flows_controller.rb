@@ -69,7 +69,7 @@ class Employer::JobFlowsController < ApplicationController
   def details_save
     return false unless params[:job][:step] == 'post_job_step_4'
 
-    job.update(details_params.merge(relevant_job_details: params[:job][:relevant_job_details]))
+    job.update(details_params.merge(relevant_details: params[:job][:relevant_details]))
     respond_js_format(:post_job_step_5)
 
     true

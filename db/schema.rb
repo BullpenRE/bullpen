@@ -277,7 +277,6 @@ ActiveRecord::Schema.define(version: 2021_01_15_025440) do
     t.integer "pay_range_low"
     t.integer "pay_range_high"
     t.string "slug"
-    t.text "relevant_job_details"
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
