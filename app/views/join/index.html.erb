@@ -1,45 +1,36 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-header mb-sm-5">
   <div class="container">
-    <div class="text-left mt-2 mb-2 ml-md-5">
+    <div class="text-left ml-md-5">
       <%= image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30') %>
+    </div>
+    <div class="d-flex align-items-center text-white">
+      Have an account? <%= link_to "Log In", new_user_session_path, class: 'btn btn-primary ml-2' %><br /><br />
     </div>
   </div>
 </nav>
 
-<div class="container card shadow-sm">
-  <p><div class="h1 mt-3 text-secondary text-center">Join Bullpen</div></p>
-  <br>
-  <div class="container join">
-    <%= render 'devise/shared/error_messages' %>
-    <div class="card-deck mb-4 text-center">
-      <div class="card md-2 shadow-sm">
-        <br>
-        <h3 class="my-0 text-secondary text-center">Freelancer</h3>
+<div class="log-in-container">
+  <div class="bp-card m-auto text-center" style="max-width:500px">
+    <div class="h2 mb-3">Sign Up for Bullpen</div>
+    <div>
+      <%= form_for(:user, url: join_signup_path) do |f| %>
+        <%= render 'devise/shared/error_messages' %>
+        <div class="field mb-3 text-left">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: "Email address", id: "user_email"%>
+        </div>
 
-        <div class="card-body">
-          <div>
-            <h5 class="card-title pricing-card-title text-muted">I'm individual and I'm looking for work. </h5>
-          </div>
-          <div class="align-self-end">
-            <%= link_to 'Apply', freelancer_sign_up_path, class: "btn btn-lg btn-block btn-primary" %>
-          </div>
+        <div class="actions">
+          <%= f.submit "Sign Up with Email", class: "btn btn-primary btn-block" %>
         </div>
-      </div>
-      <div class="card md-2 shadow-sm">
-        <br>
-        <h3 class="my-0 text-secondary text-center">Company</h3>
-        <div class="card-body">
-          <div>
-            <h5 class="card-title pricing-card-title text-muted">I'm a company interested in hiring. </h5>
-          </div>
-          <div class="align-self-end">
-            <%= link_to 'Sign-Up', employer_sign_up_path, class: "btn btn-lg btn-block btn-primary" %>
-          </div>
-        </div>
-      </div>
+      <% end %>
+
+      <div class="bp-or-border my-3"><span>or</span></div>
+
+      <%= google_sign_in_button(image_pack_tag('media/images/icons8-google-48.png', size: '24x24', class: 'mr-2') + 'Sign Up with Gmail', proceed_to: user_google_omniauth_callback_path, class: "btn btn-outline-primary btn-block d-flex justify-content-center mb-3") %>
+
     </div>
-    <div class="text-center card-footer bg-white">
-      Already have an account? <%= link_to "Login", new_user_session_path, class: "p-2" %>
+    <div class="text-muted">
+      For help contact us at <%= mail_to('support@bullpenre.com') %>
     </div>
   </div>
 </div>
