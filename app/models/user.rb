@@ -20,6 +20,9 @@ class User < ApplicationRecord
   has_many :employer_sectors, through: :employer_profile
   has_many :job_applications, dependent: :destroy
 
+  has_many :sent_messages, class_name: 'Message', foreign_key: :from_user_id
+  has_many :received_messages, class_name: 'Message', foreign_key: :to_user_id
+
   enum role: { freelancer: 0, employer: 1 }
 
   belongs_to :signup_promo, optional: true
