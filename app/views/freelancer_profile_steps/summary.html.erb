@@ -1,6 +1,7 @@
 <%= render partial: 'navigation', locals: { section: 'jobs' } %>
 
 <div class="container mb-5">
+  <%= render partial: 'shared/notice_and_alert' %>
   <div class="mt-4">
     <% if @freelancer_profile.ready_for_submission? %>
       <div class="h1">
