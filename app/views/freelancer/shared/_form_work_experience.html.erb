@@ -121,7 +121,13 @@
 
         function toggleEndDate(e) {
             e.preventDefault();
-            const currentObjectId = $(e.target).data('id');
+
+            var currentObjectId = $(e.target).data('id');
+
+            if (currentObjectId === undefined) {
+                currentObjectId = '';
+            };
+
             const currentObjectState = $(e.target).is(':checked');
             const currentEndYear = $('#endYear-' + currentObjectId);
             const currentEndMonth = $('#endMonth-' + currentObjectId);
@@ -139,7 +145,7 @@
                 currentEndYear.selectpicker('refresh');
                 currentEndMonth.selectpicker('refresh');
             }
-        }
+        };
 
         $('.my-current-job').on('change', function (e) {
             toggleEndDate(e)
