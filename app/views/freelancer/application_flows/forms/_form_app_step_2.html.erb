@@ -87,41 +87,11 @@
     return (currentCount + quantity) > allowedCount
   }
 
-  function showNewWorkSample(fileName, signedId) {
-    return `
-      <div id="file-${signedId}">
-        <div class="file-name text-break mb-2">
-          <a class="delete-work-sample" data-id=${signedId}>
-            <i class="fa fa-trash text-danger mr-1"></i>
-          </a>
-          ${fileName}
-          </div>
-        </div>
-      `
-  }
-
   function showSwal(message) {
     return Swal.fire({
       title: '<h5>Oops!</h5>',
       text: message
     });
-  }
-
-  function toggleAttachButtonVisibility(operation) {
-    let currentCount;
-    const allowedCount = parseInt($('#workSamples').data('allowed'), 10);
-    if (operation === 'addition') {
-      currentCount = $('.work-sample-item').length + 1
-    }
-    if (operation === 'remove') {
-      currentCount = $('.work-sample-item').length - 1
-    }
-
-    if (currentCount < allowedCount) {
-      $('.custom-file').removeClass('d-none')
-    } else {
-      $('.custom-file').addClass('d-none')
-    }
   }
 
   function sendFile(file) {
