@@ -1,4 +1,5 @@
                                            Prefix Verb       URI Pattern                                                                              Controller#Action
+                                   google_sign_in            /google_sign_in                                                                          GoogleSignIn::Engine
                            new_admin_user_session GET        /admin/login(.:format)                                                                   active_admin/devise/sessions#new
                                admin_user_session POST       /admin/login(.:format)                                                                   active_admin/devise/sessions#create
                        destroy_admin_user_session DELETE|GET /admin/logout(.:format)                                                                  active_admin/devise/sessions#destroy
@@ -187,6 +188,8 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                  new_user_session GET        /users/sign_in(.:format)                                                                 devise/sessions#new
                                      user_session POST       /users/sign_in(.:format)                                                                 devise/sessions#create
                              destroy_user_session DELETE     /users/sign_out(.:format)                                                                devise/sessions#destroy
+                   user_google_omniauth_authorize GET|POST   /users/auth/google(.:format)                                                             users/omniauth_callbacks#passthru
+                    user_google_omniauth_callback GET|POST   /users/auth/google/callback(.:format)                                                    users/omniauth_callbacks#google
                                 new_user_password GET        /users/password/new(.:format)                                                            passwords#new
                                edit_user_password GET        /users/password/edit(.:format)                                                           passwords#edit
                                     user_password PATCH      /users/password(.:format)                                                                passwords#update
@@ -354,6 +357,10 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                rails_disk_service GET        /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
                         update_rails_disk_service PUT        /rails/active_storage/disk/:encoded_token(.:format)                                      active_storage/disk#update
                              rails_direct_uploads POST       /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
+
+Routes for GoogleSignIn::Engine:
+authorization POST /authorization(.:format) google_sign_in/authorizations#create
+     callback GET  /callback(.:format)      google_sign_in/callbacks#show
 
 Routes for LetterOpenerWeb::Engine:
 clear_letters DELETE /clear(.:format)                 letter_opener_web/letters#clear
