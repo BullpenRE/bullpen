@@ -7,7 +7,7 @@
       <button class="fas fa-edit text-primary ml-1" type="button"  data-toggle="modal" data-target="#editLicenseCertificationModal-<%= freelancer_certification.id %>"></button>
     <% end %>
   </div>
-  <%= render partial: 'freelancer/shared/edit_certifications', locals: { freelancer_certification: freelancer_certification, certifications: @certifications }%>
+  <%= render partial: 'freelancer/shared/edit_certifications', locals: { freelancer_certification: freelancer_certification, certifications: @certifications } if @freelancer_profile && @certifications %>
 <% end %>
 <% if @freelancer_profile&.editable?(current_user) %>
   <div class="mt-3">
