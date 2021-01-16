@@ -23,17 +23,8 @@
 
   <div class="form-group">
     <div class="row mb-3">
-      <div class="col">
+      <div class="col-12 col-md-6">
         <label for="startMonth" class="bp-input-label">Start Date</label>
-      </div>
-      <div class="col">
-        <label for="endMonth-<%= freelancer_profile_experience&.id %>" class="bp-input-label">End Date</label>
-      </div>
-    </div>
-
-    <div class="row mb-3">
-
-      <div class="col">
         <div class="row">
           <div class="col" style="padding-right: 5px;">
             <%= f.select :start_month,
@@ -56,9 +47,9 @@
           </div>
         </div>
       </div>
-
-      <div class="col" id="endDateToggle-<%= freelancer_profile_experience&.id %>">
-        <div class="row">
+      <div class="col-12 mt-3 col-md-6 mt-md-0">
+        <label for="endMonth-<%= freelancer_profile_experience&.id %>" class="bp-input-label">End Date</label>
+        <div class="row" id="endDateToggle-<%= freelancer_profile_experience&.id %>">
           <div class="col" style="padding-right: 5px;">
             <%= f.select :end_month,
                          options_for_select(
@@ -79,7 +70,6 @@
         </div>
       </div>
     </div>
-
     <div class="custom-control custom-checkbox">
       <%= f.check_box :current_job,
                       class: "custom-control-input my-current-job",
