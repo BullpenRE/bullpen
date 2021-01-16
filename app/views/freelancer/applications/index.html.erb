@@ -8,7 +8,7 @@
     <%= render partial: 'employer/jobs/show_job_post', locals: { job: job_application.job } %>
     <%= render partial: 'freelancer/applications/delete_application_draft', locals: { job_application: job_application } %>
     <%= render partial: 'freelancer/applications/withdraw_application', locals: { job_application: job_application } %>
-    <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application } %>
+    <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: true } %>
     <% if job_application.state == 'draft' || job_application.state == 'applied' %>
       <div class="bp-card mb-3">
         <div>
