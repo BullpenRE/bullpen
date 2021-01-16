@@ -9,7 +9,7 @@ FactoryBot.define do
     daytime_availability_required { [true, false].sample }
     required_experience { Job::required_experiences.values.sample }
     required_regional_knowledge { Faker::Company.bs }
-    relevant_job_details { Faker::Company.bs }
+    relevant_details { Faker::Company.bs }
     state { Job.states.values.sample }
     contract_type { 0 }
     pay_range_low { 100 }

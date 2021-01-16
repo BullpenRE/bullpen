@@ -19,4 +19,8 @@ class EmployerProfile < ApplicationRecord
   def email
     @email ||= user.email
   end
+
+  def full_name
+    @full_name ||= user.full_name
+  end
 end
