@@ -80,7 +80,13 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def add_work_samples
     return if params[:work_sample].blank?
 
-    job_application.work_samples.attach(params[:work_sample])
+    if job_application.adding_work_samples_allowed?
+      job_application.work_samples.attach(params[:work_sample])
+    else
+      job_application.errors.add(
+        :base, "Work samples limit: quantity must be #{JobApplication::MAX_WORK_SAMPLES_COUNT} or less"
+      )
+    end
     respond_js_format(:application_step_2)
   rescue StandardError
     job_application.errors.add(:base, 'File was not uploaded successfully.')
@@ -133,7 +139,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   end
 
   def step_2_params
-    params.require(:job_application).permit(:cover_letter, :template)
+    params.require(:job_application).permit(:cover_letter, :template, :job_application_id, :step)
   end
 
   def respond_js_format(step)
