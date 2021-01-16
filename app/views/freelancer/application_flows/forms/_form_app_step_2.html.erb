@@ -100,10 +100,12 @@
     });
   }
 
-  function sendFile(file) {
+  function sendFile(fileListObject) {
     const job_app = '<%= job_application.id %>';
     const formData = new FormData();
-    formData.append('work_sample', file);
+    Array.from(fileListObject).forEach((file) => {
+      formData.append('work_sample[]', file);
+    });
     formData.append('id', 'application_step_2');
     $.ajax({
       url: `/freelancer/application_flows/${job_app}/add_work_samples`,
@@ -112,8 +114,8 @@
       contentType: false,
       dataType: 'script',
       data: formData,
-      success: () => {
-        return true
+      success: (response) => {
+        console.log(response)
       }
     });
   }
@@ -127,9 +129,7 @@
     } else if (groupAdditionRestricted(filesArray.length)) {
       showSwal("The total number of files is more than allowed")
     } else {
-      filesArray.forEach(function(file) {
-        sendFile(file)
-      });
+      sendFile(fileListObject)
     }
   });
 
