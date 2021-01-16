@@ -26,7 +26,7 @@
   </table>
   <div class="form-group mb-1 mt-3">
     <label for="jobDetailsTextarea" class="h5">Describe responsibilities, provided resources, or any other requirements. <span class="text-dark font-weight-normal">(Optional)</span></label>
-    <%= f.text_area :relevant_job_details, class: "form-control", id: "jobDetailsTextarea", placeholder: "Enter any relevant job details", rows: "8", maxlength: "5000" %>
+    <%= f.rich_text_area :relevant_details, class: "form-control", id: "jobDetailsTextarea", placeholder: "Enter any relevant job details", rows: "8", maxlength: "5000" %>
   </div>
   <div class="modal-footer justify-content-between">
     <%= link_to employer_job_flows_path(id: :post_job_step_3, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
@@ -70,5 +70,9 @@
       e.preventDefault();
       e.stopPropagation();
     }
+  });
+
+  document.addEventListener("trix-file-accept", event => {
+    event.preventDefault();
   });
 </script>
