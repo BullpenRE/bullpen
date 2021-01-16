@@ -1,10 +1,11 @@
 <%= render partial: 'freelancer/navigation', locals: { section: 'profile' } %>
 
 <div class="container mb-3">
+  <%= render partial: 'shared/notice_and_alert' %>
   <div class="container bp-card">
     <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: @freelancer_profile,
                                                              job_application: nil,
-                                                             editable: freelancer_profile.editable?(current_user) } %>
+                                                             editable: @freelancer_profile.editable?(current_user) } %>
     <% if current_user.job_applications&.find_by(template: true)&.cover_letter %>
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">

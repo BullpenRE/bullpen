@@ -1,6 +1,6 @@
 <%= render partial: 'shared/job_short_description', locals: { job: job } %>
 <div class="text-secondary font-weight-bold mb-1 mt-3"> Details </div>
-<p><%= job.relevant_job_details %></p>
+<p><%= job.relevant_details %></p>
 <hr>
 <li>This is <i class="text-secondary font-weight-bold"> <%= job.position_length %> </i> position</li>
 <li><i class="text-secondary font-weight-bold"> <%= job.hours_needed&.capitalize %> </i> hours are needed</li>
