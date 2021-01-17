@@ -11,4 +11,8 @@ class FreelancerMailerPreview < ActionMailer::Preview
   def interview_request
     FreelancerMailer.interview_request(InterviewRequest.first)
   end
+
+  def send_message
+    FreelancerMailer.send_message(Message.last, Job.last)
+  end
 end

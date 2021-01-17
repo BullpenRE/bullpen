@@ -99,6 +99,7 @@
                                                                          job_application: job_application,
                                                                          editable: false } %>
                 <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
+                <%= render partial: 'employer/jobs/send_message', locals: { job_application: job_application } %>
                 <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
                   <div class="d-block p-1 d-sm-inline-block mt-1">
                     <div id="like<%= job_application.id %>">
@@ -116,8 +117,8 @@
                       <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#previewApplicationDropdown-<%= job_application.id %>">
                         Show Application
                       </button>
-                      <button class="dropdown-item" type="button"  data-toggle="modal" data-target="">
-                        Send s Message
+                      <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#sendMessage<%= job_application.id %>">
+                        Send a Message
                       </button>
                       <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="">
                         Decline

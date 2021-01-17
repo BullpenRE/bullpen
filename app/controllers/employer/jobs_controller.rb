@@ -34,7 +34,23 @@ class Employer::JobsController < ApplicationController
     @job_application.liked ? @job_application.update(liked: false) : @job_application.update(liked: true)
   end
 
+  def send_message
+    @job = current_user.jobs.find(params[:message][:job_id].to_i)
+    @message = Message.create(message_params)
+    FreelancerMailer.send_message(@message, @job).deliver_now
+
+    redirect_to employer_jobs_path
+  end
+
   private
+
+  def message_params
+    {
+      to_user_id: params[:message][:to_user].to_i,
+      from_user: current_user,
+      description: params[:message][:description]
+    }
+  end
 
   def job
     @job ||= current_user.jobs.find_by(id: params[:id])
