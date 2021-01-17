@@ -52,7 +52,7 @@ class Freelancer::ProfileController < ApplicationController
 
     change_freelancer_sectors
   end
-  
+
   def change_work_experience
     work_experience_save
 
