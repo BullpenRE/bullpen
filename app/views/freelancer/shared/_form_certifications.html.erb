@@ -1,0 +1,69 @@
+<div class="modal-body pt-0">
+  <label for="exampleFormControlMultiSelect" class="bp-input-label mt-3">
+    Licence or Certification
+  </label>
+  <div id="descriptionCertification" class="collapse multi-collapse <%= freelancer_certification&.certification&.custom? ? '' : 'show' %>">
+    <div class="form-group mb-2">
+      <%= f.select :certification_id,
+                   options_for_select(@certifications, [freelancer_certification&.description, freelancer_certification&.certification_id]),
+                   {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select-border", title: "Select an option..." %>
+    </div>
+  </div>
+  <div id="customDescriptionCertification" class="collapse multi-collapse <%= freelancer_certification&.certification&.custom? ? 'show' : '' %>">
+    <div class="form-group mb-2">
+      <%= f.text_field :description,
+                       class: "form-control",
+                       id: "customDescriptionCertificate-#{freelancer_certification&.id}",
+                       placeholder: "Custom License Entry",
+                       value: freelancer_certification&.description %>
+    </div>
+  </div>
+
+  <div class="custom-control custom-checkbox">
+    <%= f.check_box :custom,
+                    class: "custom-control-input #{freelancer_certification&.certification&.custom? ? 'show' : ''}",
+                    id: "editCertificationCustom-#{freelancer_certification&.id}", type: "button",
+                    'data-toggle': "collapse",
+                    'data-target': ".multi-collapse",
+                    'aria-expanded': "false",
+                    'aria-controls': "descriptionCertification customDescriptionCertification",
+                    checked: "#{freelancer_certification&.certification&.custom? ? 'checked' : 'false'}" %>
+    <label class="custom-control-label" for="editCertificationCustom-<%=freelancer_certification&.id %>">Create a custom entry</label>
+  </div>
+
+  <div class="form-group">
+    <label for="earnedMonth" class="bp-input-label mt-3">Date Earned</label>
+    <div class="row mb-3">
+      <div class="col">
+        <%= f.select :earned_month,
+                     options_for_select(select_months_array, freelancer_certification&.earned&.month),
+                     {}, class: 'form-control selectpicker',
+                     id: 'earnedMonth', required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
+      </div>
+      <div class="col">
+        <%= f.select :earned_year,
+                     options_for_select(FreelancerCertification::AVAILABLE_YEARS, freelancer_certification&.earned&.year),
+                     {}, class: 'form-control selectpicker',
+                     id: 'earnedYear', required: true, 'data-style': "bp-btn-select-border", title: "Year" %>
+      </div>
+    </div>
+    <%= f.hidden_field :id, value: freelancer_certification&.id %>
+  </div>
+</div>
+<% if freelancer_certification&.id&.present? %>
+  <div class="modal-footer">
+    <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
+    <%= f.submit 'Save Changes', class: 'btn btn-primary float-right' %>
+  </div>
+<% else %>
+  <div class="modal-footer justify-content-between">
+    <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
+    <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+<script>
+    <% if @freelancer_profile&.freelancer_certifications&.count > 1 %>
+    $('.modal-footer').addClass('justify-content-between');
+    $('.btn-outline-danger').removeClass('d-none');
+    <% end %>
+</script>
