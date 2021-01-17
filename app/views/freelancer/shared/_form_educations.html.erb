@@ -55,13 +55,13 @@
   <div class="modal-footer">
     <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
     <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+  </div>
 <% else %>
   <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
     <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
   </div>
 <% end %>
-</div>
 <script>
     <% if @freelancer_profile && @freelancer_profile.freelancer_profile_educations&.count > 1 %>
     $('.modal-footer').addClass('justify-content-between');

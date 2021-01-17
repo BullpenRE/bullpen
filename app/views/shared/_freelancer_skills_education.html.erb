@@ -10,7 +10,7 @@
                editable: freelancer_profile.editable?(current_user) %>
 <% else %>
   <div class="mt-3">
-    <%= render 'shared/edit_freelancer_softwares', freelancer_profile: freelancer_profile %>
+    <%= render 'freelancer/shared/edit_freelancer_softwares', freelancer_profile: freelancer_profile %>
     <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editSoftwareModal">
       Add Software Licences
     </button>
