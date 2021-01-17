@@ -96,7 +96,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     return if find_blob_by_key.blank?
 
     find_blob_by_key.attachments[0].purge_later if blob_attached?
-    find_blob_by_key.purge_later
+    find_blob_by_key.purge_later unless blob_attached?
     respond_js_format(:application_step_2)
   end
 
