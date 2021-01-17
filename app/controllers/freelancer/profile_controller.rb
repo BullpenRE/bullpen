@@ -84,11 +84,7 @@ class Freelancer::ProfileController < ApplicationController
 
   def profile_params
     params.require(:freelancer_profile)
-            .permit(:professional_title, :professional_years_experience, :professional_summary, :desired_hourly_rate)
-  end
-
-  def user_params
-
+          .permit(:professional_title, :professional_years_experience, :professional_summary, :desired_hourly_rate)
   end
 
   def real_estate_skills
