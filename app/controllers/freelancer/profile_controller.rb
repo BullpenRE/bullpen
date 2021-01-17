@@ -41,6 +41,12 @@ class Freelancer::ProfileController < ApplicationController
     redirect_after_change_profile
   end
 
+  def change_work_experience
+    work_experience_save
+
+    redirect_after_change_profile
+  end
+
   private
 
   def freelancer_profile
