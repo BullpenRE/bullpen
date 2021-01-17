@@ -95,8 +95,8 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def destroy_work_sample
     return if find_blob_by_key.blank?
 
-    find_blob_by_key.purge_later unless blob_attached?
     find_blob_by_key.attachments[0].purge_later if blob_attached?
+    find_blob_by_key.purge_later
     respond_js_format(:application_step_2)
   end
 
@@ -176,6 +176,6 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def blob_attached?
     return false if find_blob_by_key.blank?
 
-    find_blob_by_key.attachments.present?
+    find_blob_by_key.attachments[0].present?
   end
 end
