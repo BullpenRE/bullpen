@@ -51,6 +51,10 @@ class Freelancer::ProfileController < ApplicationController
     @freelancer_profile.update(profile_params)
 
     change_freelancer_sectors
+  end
+  
+  def change_work_experience
+    work_experience_save
 
     redirect_after_change_profile
   end
