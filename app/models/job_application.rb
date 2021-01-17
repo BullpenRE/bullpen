@@ -12,7 +12,7 @@ class JobApplication < ApplicationRecord
   validate :correct_size?
   validates :per_hour_bid, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   scope :draft_or_applied, -> { where(state: %w[draft applied]) }
-  enum state: { 'draft': 0, 'applied': 1, 'withdrawn': 2,'declined': 3  }
+  enum state: { 'draft': 0, 'applied': 1, 'withdrawn': 2, 'declined': 3 }
 
   after_save :update_other_user_job_application_templates
   after_create :update_other_user_job_application_templates
