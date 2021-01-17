@@ -15,7 +15,7 @@ class JobApplication < ApplicationRecord
 
   validates :job_id, uniqueness: { scope: :user_id }
   validates :work_samples,
-            limit: { min: 0, max: MAX_WORK_SAMPLES_COUNT, message: "quantity must be #{MAX_WORK_SAMPLES_COUNT} or less" }
+            limit: { max: MAX_WORK_SAMPLES_COUNT, message: "quantity must be #{MAX_WORK_SAMPLES_COUNT} or less" }
   validates :work_samples, size: { less_than: MAX_FILE_SIZE, message: 'must be less than 20MB in size' }
   validates :per_hour_bid, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   enum state: { 'draft': 0, 'applied': 1, 'withdrawn': 2 }

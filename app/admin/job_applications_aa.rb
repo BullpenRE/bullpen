@@ -94,7 +94,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       f.inputs 'Job Application' do
         f.input :job,
                 as: :select,
-                collection: Job.find_each.map{ |j| ["#{j.title} - #{j.user.email}", j.id] }
+                collection: Job.find_each.map { |j| ["#{j.title} - #{j.user.email}", j.id] }
         f.input :user,
                 as: :select,
                 collection: User.freelancer.order(:email).pluck(:email, :id)
@@ -105,15 +105,19 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :available_during_work_hours
         f.inputs do
           f.input :work_samples, as: :file, required: false, input_html: { multiple: true }
-          f.object.work_samples.each do |w_s|
-            li class: 'item' do
-              link_to w_s.filename, rails_blob_path(w_s, disposition: :attachment)
-            end
-          end
         end
         f.input :state
         f.input :applied_at
         f.actions
+      end
+    end
+
+    controller do
+      def update
+        super do |success, failure|
+          success.html { render action: :view }
+          failure.html { render action: :edit }
+        end
       end
     end
 
