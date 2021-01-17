@@ -77,7 +77,7 @@ RSpec.describe JobApplication, type: :model do
     end
   end
 
-    context 'Scopes' do
+  context 'Scopes' do
     let(:freelancer_user_Dima)  { FactoryBot.create(:user, :freelancer) }
     let(:freelancer_user_Nata)  { FactoryBot.create(:user, :freelancer) }
     let(:freelancer_user_Erik)  { FactoryBot.create(:user, :freelancer) }
