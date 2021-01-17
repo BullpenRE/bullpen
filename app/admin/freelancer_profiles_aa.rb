@@ -141,7 +141,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         update_many_to_many_attributes(freelancer_profile)
 
         if send_accept_or_reject_freelancer_email?
-          accepted? ? FreelancerMailer.freelancer_approved(current_user).deliver_now : FreelancerMailer.freelancer_rejected(current_user).deliver_now
+          accepted? ? FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_now : FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_now
         end
 
         ApplicationRecord.transaction do
