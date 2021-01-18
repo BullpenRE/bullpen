@@ -36,6 +36,8 @@ class Employer::JobsController < ApplicationController
 
   def decline_job_application
     @job_application = JobApplication.where(job: current_user.jobs).find(params[:id])
+    return unless @job_application
+
     @job_application.update(state: 'declined')
     FreelancerMailer.job_application_declined(@job_application).deliver_now
   end
