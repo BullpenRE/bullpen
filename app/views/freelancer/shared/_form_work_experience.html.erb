@@ -102,7 +102,7 @@
   </div>
 <% end %>
 <script>
-    <% if @freelancer_profile.freelancer_profile_experiences&.count > 1 %>
+    <% if @freelancer_profile && @freelancer_profile.freelancer_profile_experiences&.count > 1 %>
     $('.modal-footer').addClass('justify-content-between');
     $('.btn-outline-danger').removeClass('d-none');
     <% end %>
