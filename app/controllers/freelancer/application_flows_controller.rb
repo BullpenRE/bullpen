@@ -130,16 +130,14 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   end
 
   def can_attach_work_sample?
-    !job_application.work_sample.attached? && application_template.work_sample.attached?
+    !job_application.work_samples.attached? && application_template.work_samples.attached?
   end
 
   def pre_populate_cover_letter_work_sample
     return if application_template.blank?
 
     job_application.update(cover_letter: application_template.cover_letter) if job_application.cover_letter.blank?
-    if can_attach_work_sample?
-      job_application.work_samples.attach(application_template.work_samples.blobs)
-    end
+    job_application.work_samples.attach(application_template.work_samples.blobs) if can_attach_work_sample?
   end
 
   def step_2_params
