@@ -3,14 +3,14 @@
 class FreelancerMailer < ApplicationMailer
   default from: 'support@bullpenre.com'
 
-  def freelancer_approved(user)
-    @user = user
-    mail(to: user.email, subject: 'Congratulations - Welcome to Bullpen')
+  def freelancer_approved(freelancer_profile)
+    @freelancer_profile = freelancer_profile
+    mail(to: @freelancer_profile.email, subject: 'Congratulations - Welcome to Bullpen')
   end
 
-  def freelancer_rejected(user)
-    @user = user
-    mail(to: user.email, subject: 'Your Bullpen Application')
+  def freelancer_rejected(freelancer_profile)
+    @freelancer_profile = freelancer_profile
+    mail(to: @freelancer_profile.email, subject: 'Your Bullpen Application')
   end
 
   def interview_request(interview_request)
