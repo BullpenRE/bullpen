@@ -336,6 +336,8 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                      freelancer_change_educations POST       /freelancer/change_educations(.:format)                                                  freelancer/profile#change_educations
                         freelancer_add_educations POST       /freelancer/add_educations(.:format)                                                     freelancer/profile#change_educations
                      freelancer_decline_interview POST       /freelancer/decline_interview(.:format)                                                  freelancer/interviews#decline_interview
+                   freelancer_add_work_experience POST       /freelancer/add_work_experience(.:format)                                                freelancer/profile#change_work_experience
+                freelancer_change_work_experience POST       /freelancer/change_work_experience(.:format)                                             freelancer/profile#change_work_experience
                                 check_users_email POST       /check_users_email(.:format)                                                             check_email#check_users_email
                                 letter_opener_web            /letter_opener                                                                           LetterOpenerWeb::Engine
                                        styleguide GET        /styleguide(.:format)                                                                    styleguide#index
