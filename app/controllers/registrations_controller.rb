@@ -7,11 +7,10 @@ class RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   def new
-    if params[:action] == 'freelancer_sign_up' || params[:action] == 'employer_sign_up'
-      super
-    else
-      redirect_to root_path
-    end
+    redirect_to root_path unless session[:email].present?
+    @email = session[:email]
+
+    super
   end
 
   def freelancer_sign_up

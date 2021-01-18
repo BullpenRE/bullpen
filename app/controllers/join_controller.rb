@@ -8,7 +8,9 @@ class JoinController < ApplicationController
   def index; end
 
   def signup
-    redirect_to new_user_registration_path(action: :freelancer_sign_up)
+    session[:email] = user_email
+
+    redirect_to new_user_registration_path
   end
 
   private

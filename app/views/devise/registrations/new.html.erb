@@ -6,8 +6,9 @@
     <div>
       <%= form_for(:user, url: join_signup_path) do |f| %>
         <%= render 'devise/shared/error_messages' %>
+        <%= f.hidden_field :email, value: @email, id: "user_email" %>
         <div class="field mb-3 text-left">
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: "Email address", id: "user_email"%>
+          <%= f.hidden_field :email, value: @email, id: "user_email" %>
         </div>
 
         <div class="actions">
