@@ -22,6 +22,6 @@ class FreelancerMailer < ApplicationMailer
   def job_application_declined(job_application)
     @job_application = job_application
     freelancer_email = job_application.user.email
-    mail(to: freelancer_email, subject: "#{job_application.job.title.capitalize} is no longer available")
+    mail(to: freelancer_email, subject: "#{job_application.job.title} is no longer available")
   end
 end

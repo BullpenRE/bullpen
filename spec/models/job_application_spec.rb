@@ -78,14 +78,14 @@ RSpec.describe JobApplication, type: :model do
   end
 
   context 'Scopes' do
-    let(:freelancer_user_Dima)  { FactoryBot.create(:user, :freelancer) }
-    let(:freelancer_user_Nata)  { FactoryBot.create(:user, :freelancer) }
-    let(:freelancer_user_Erik)  { FactoryBot.create(:user, :freelancer) }
+    let(:freelancer_user_dima)  { FactoryBot.create(:user, :freelancer) }
+    let(:freelancer_user_nata)  { FactoryBot.create(:user, :freelancer) }
+    let(:freelancer_user_erik)  { FactoryBot.create(:user, :freelancer) }
     let(:employer_user)  { FactoryBot.create(:user, :employer) }
     let(:job)  { FactoryBot.create(:job, user: employer_user ) }
-    let!(:declined_job_application) { FactoryBot.create(:job_application, user: freelancer_user_Dima, job: job, state: 'declined') }
-    let!(:draft_job_application) { FactoryBot.create(:job_application, user: freelancer_user_Nata, job: job, state: 'draft') }
-    let!(:applied_job_application) { FactoryBot.create(:job_application, user: freelancer_user_Erik, job: job, state: 'applied') }
+    let!(:declined_job_application) { FactoryBot.create(:job_application, user: freelancer_user_dima, job: job, state: 'declined') }
+    let!(:draft_job_application) { FactoryBot.create(:job_application, user: freelancer_user_nata, job: job, state: 'draft') }
+    let!(:applied_job_application) { FactoryBot.create(:job_application, user: freelancer_user_erik, job: job, state: 'applied') }
 
     it '.not_rejected' do
       expect(JobApplication.draft_or_applied).to include(draft_job_application)

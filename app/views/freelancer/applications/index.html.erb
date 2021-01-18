@@ -4,7 +4,7 @@
 <div class="container mb-3">
   <%= render partial: 'shared/notice_and_alert' %>
   <h1>Applications</h1>
-  <% @job_applications.draft_or_applied.each do |job_application| %>
+  <% @job_applications.each do |job_application| %>
     <%= render partial: 'employer/jobs/show_job_post', locals: { job: job_application.job } %>
     <%= render partial: 'freelancer/applications/delete_application_draft', locals: { job_application: job_application } %>
     <%= render partial: 'freelancer/applications/withdraw_application', locals: { job_application: job_application } %>
