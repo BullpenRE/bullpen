@@ -129,11 +129,15 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     @application_template ||= @user.job_applications.where.not(id: job_application.id).find_by(template: true)
   end
 
+  def can_attach_work_sample?
+    !job_application.work_sample.attached? && application_template.work_sample.attached?
+  end
+
   def pre_populate_cover_letter_work_sample
     return if application_template.blank?
 
     job_application.update(cover_letter: application_template.cover_letter) if job_application.cover_letter.blank?
-    unless job_application.work_samples.attached?
+    if can_attach_work_sample?
       job_application.work_samples.attach(application_template.work_samples.blobs)
     end
   end

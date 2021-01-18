@@ -18,7 +18,8 @@ class JobApplication < ApplicationRecord
             limit: { max: MAX_WORK_SAMPLES_COUNT, message: "quantity must be #{MAX_WORK_SAMPLES_COUNT} or less" }
   validates :work_samples, size: { less_than: MAX_FILE_SIZE, message: 'must be less than 20MB in size' }
   validates :per_hour_bid, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  enum state: { 'draft': 0, 'applied': 1, 'withdrawn': 2 }
+  scope :draft_or_applied, -> { where(state: %w[draft applied]) }
+  enum state: { 'draft': 0, 'applied': 1, 'withdrawn': 2, 'declined': 3 }
 
   after_save :update_other_user_job_application_templates
   after_create :update_other_user_job_application_templates

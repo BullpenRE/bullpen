@@ -76,4 +76,21 @@ RSpec.describe JobApplication, type: :model do
       expect(JobQuestion.exists?(job_question.id)).to be_truthy
     end
   end
+
+  context 'Scopes' do
+    let(:freelancer_user_dima)  { FactoryBot.create(:user, :freelancer) }
+    let(:freelancer_user_nata)  { FactoryBot.create(:user, :freelancer) }
+    let(:freelancer_user_erik)  { FactoryBot.create(:user, :freelancer) }
+    let(:employer_user)  { FactoryBot.create(:user, :employer) }
+    let(:job)  { FactoryBot.create(:job, user: employer_user ) }
+    let!(:declined_job_application) { FactoryBot.create(:job_application, user: freelancer_user_dima, job: job, state: 'declined') }
+    let!(:draft_job_application) { FactoryBot.create(:job_application, user: freelancer_user_nata, job: job, state: 'draft') }
+    let!(:applied_job_application) { FactoryBot.create(:job_application, user: freelancer_user_erik, job: job, state: 'applied') }
+
+    it '.not_rejected' do
+      expect(JobApplication.draft_or_applied).to include(draft_job_application)
+      expect(JobApplication.draft_or_applied).to include(applied_job_application)
+      expect(JobApplication.draft_or_applied).to_not include(declined_job_application)
+    end
+  end
 end

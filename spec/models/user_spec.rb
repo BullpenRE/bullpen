@@ -66,6 +66,15 @@ describe User do
       end
     end
 
+    describe 'messages' do
+      let!(:sent_message) { FactoryBot.create(:message, from_user: user) }
+      let!(:received_message) { FactoryBot.create(:message, to_user: user) }
+
+      it 'can have many sent_messages and received_messages' do
+        expect(user.sent_messages).to include(sent_message)
+        expect(user.received_messages).to include(received_message)
+      end
+    end
   end
 
   context 'Scopes' do

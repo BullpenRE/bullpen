@@ -34,6 +34,14 @@ class Employer::JobsController < ApplicationController
     @job_application.liked ? @job_application.update(liked: false) : @job_application.update(liked: true)
   end
 
+  def decline_job_application
+    @job_application = JobApplication.where(job: current_user.jobs).find(params[:id])
+    return unless @job_application
+
+    @job_application.update(state: 'declined')
+    FreelancerMailer.job_application_declined(@job_application).deliver_now
+  end
+
   private
 
   def job

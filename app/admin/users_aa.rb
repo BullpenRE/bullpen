@@ -40,6 +40,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
         params[:user].delete('password') if params[:user][:password].blank?
 
         begin
+          user.skip_reconfirmation!
           user.update!(params.permit![:user])
         rescue StandardError => e
           error_message = e.message

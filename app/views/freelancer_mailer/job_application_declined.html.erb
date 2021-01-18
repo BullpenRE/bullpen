@@ -1,0 +1,4 @@
+<br>
+<%= render partial: 'email/content_block', locals: { content: "<h2>Sorry, the #{@job_application.job.title} position you applied to is no longer available.</h2>" } %>
+<%= render partial: 'email/button', locals: { button_txt: 'Go to Find Jobs', url: employer_jobs_url } %>
+<%= render partial: 'email/content_block', locals: { content: "to look for other jobs." } %>
