@@ -33,4 +33,20 @@ RSpec.describe Skill, type: :model do
       expect(skill.jobs).to include(job)
     end
   end
+
+  context 'Scopes' do
+    describe 'default_scope' do
+      it 'orders by description alphabetically' do
+        ('A'..'Z').to_a.each { |letter| FactoryBot.create(:skill, description: "#{letter} Skill") }
+        expect(Skill.all.pluck(:description)).to match(Skill.order(description: :asc).pluck(:description))
+      end
+    end
+
+    it '.enabled' do
+      disabled_skill = FactoryBot.create(:skill, disable: true)
+      expect(skill.disable).to be_falsey
+      expect(Skill.enabled).to include(skill)
+      expect(Skill.enabled).to_not include(disabled_skill)
+    end
+  end
 end
