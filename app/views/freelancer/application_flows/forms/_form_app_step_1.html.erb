@@ -4,7 +4,6 @@
   <%= f.hidden_field :job_id, value: job_id %>
   <%= f.hidden_field 'step', value: 'application_step_1' %>
   <div class="mb-3">This offered rate is
-<!--    $75 - $125-->
     <% if job_application.job.contract_type == 'hourly' %>
       <%= "<b>$#{job_application.job.pay_range_low} - $#{job_application.job.pay_range_high}</b>".html_safe + " per hour" %>
     <% else %>
@@ -14,7 +13,6 @@
   <div class="form-group mb-1">
     <div class="d-flex justify-content-between">
       <label for="perHourBid" class="h5">What's your bid? <span class="text-dark font-weight-normal">
-<!--        (per hour)-->
         <% if job_application.job.contract_type == 'hourly' %>
           <%= "(per hour)" %>
         <% else %>
