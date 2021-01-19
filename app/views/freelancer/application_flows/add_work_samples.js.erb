@@ -1,0 +1,6 @@
+$('.modal-backdrop').hide();
+$("#jobAppStepModal").html(
+  "<%= escape_javascript(render partial: 'freelancer/application_flows/job_app_step_2',
+   locals: { job_application: @job_application }) %>"
+);
+$('#jobAppStep2').modal('show');
