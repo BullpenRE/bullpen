@@ -110,10 +110,10 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     return if application_template.blank?
 
     job_application.update(cover_letter: application_template.cover_letter) if job_application.cover_letter.blank?
-    job_application.work_sample.attach(application_template.work_sample.blob) if check_attached_work_sample?
+    job_application.work_sample.attach(application_template.work_sample.blob) if none_attached_and_template_exists?
   end
 
-  def check_attached_work_sample?
+  def none_attached_and_template_exists?
     !job_application.work_sample.attached? && application_template.work_sample.attached?
   end
 
