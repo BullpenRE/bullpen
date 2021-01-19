@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     post 'interview_request', to: 'talent#interview_request'
     post 'like_job_application', to: 'jobs#like_job_application'
     post 'send_message', to: 'jobs#send_message'
+    post 'decline_job_application', to: 'jobs#decline_job_application'
   end
 
   namespace :public do
@@ -73,6 +74,8 @@ Rails.application.routes.draw do
     post 'change_educations', to: 'profile#change_educations'
     post 'add_educations', to: 'profile#change_educations'
     post 'decline_interview', to: 'interviews#decline_interview'
+    post 'add_work_experience', to: 'profile#change_work_experience'
+    post 'change_work_experience', to: 'profile#change_work_experience'
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

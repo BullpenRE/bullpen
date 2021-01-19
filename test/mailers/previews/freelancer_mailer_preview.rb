@@ -15,4 +15,8 @@ class FreelancerMailerPreview < ActionMailer::Preview
   def send_message
     FreelancerMailer.send_message(Message.last, Job.last)
   end
+
+  def job_application_declined
+    FreelancerMailer.job_application_declined(JobApplication.first)
+  end
 end
