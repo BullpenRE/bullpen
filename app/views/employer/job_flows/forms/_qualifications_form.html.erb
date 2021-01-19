@@ -21,7 +21,7 @@
     <label for="skillsMultiselect" class="h5">What skills are required for this job?</label>
     <%= f.select :job_skills,
                  options_for_select(
-                   Skill.find_each.map{ |skill| [skill.description, skill.id] if skill.disable == false },
+                   Skill.enabled.pluck(:description, :id),
                    @job&.job_skills&.map do |job_skill|
                      [job_skill.skill.description, job_skill.skill.id]
                    end.flatten),
@@ -39,7 +39,7 @@
     <label for="softwareMultiselect" class="h5">What software is required? <span class="text-dark font-weight-normal">(Optional)</span></label>
     <%= f.select :job_softwares,
                  options_for_select(
-                   Software.find_each.map{ |soft| [soft.description, soft.id] if soft.disable == false },
+                   Software.enabled.pluck(:description, :id),
                    @job&.job_softwares&.map do |soft|
                      [soft.software.description, soft.software.id]
                    end.flatten),
