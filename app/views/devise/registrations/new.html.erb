@@ -2,27 +2,97 @@
 
 <div class="log-in-container">
   <div class="bp-card m-auto text-center" style="max-width:500px">
-    <div class="h2 mb-3">Sign Up for Bullpen</div>
+    <div class="h2 mb-3">Create an Account</div>
     <div>
+      <%= render 'devise/shared/error_messages' %>
       <%= form_for(:user, url: join_signup_path) do |f| %>
-        <%= render 'devise/shared/error_messages' %>
         <%= f.hidden_field :email, value: @email, id: "user_email" %>
         <div class="field mb-3 text-left">
-          <%= f.hidden_field :email, value: @email, id: "user_email" %>
+          <%= f.label :first_name, class: "h5" %><br>
+          <%= f.text_field :first_name, class: 'form-control', id: "user_first_name" %>
         </div>
-
-        <div class="actions">
-          <%= f.submit "Sign Up with Email", class: "btn btn-primary btn-block" %>
+        <div class="field mb-3 text-left">
+          <%= f.label :last_name, class: "h5" %><br>
+          <%= f.text_field :last_name, class: 'form-control', id: "user_last_name" %>
+        </div>
+        <div class="field mb-3 text-left">
+          <%= f.label :password, 'Create a password', class: "h5" %><br>
+          <div class="row">
+            <div class="col ml-3">
+              <ul style="padding-left: 0;">
+                <li>A special character</li>
+                <li>A capital (uppercase) letter</li>
+              </ul>
+            </div>
+            <div class="col">
+              <ul style="padding-left: 0;">
+                <li>A number</li>
+                <li>Minimum 8 characters</li>
+              </ul>
+            </div>
+          </div>
+          <%= f.password_field :password, class: 'form-control show_password_content', id: 'user_password' %>
+        </div>
+        <div class="field mb-3 text-left">
+          <%= f.label :role, 'Make a Selection', class: "h5" %>
+          <div class="custom-control custom-radio" id="hide_phone_number">
+            <%= f.radio_button :role, 'freelancer', id: 'user_role_freelancer', class: "custom-control-input" %>
+            <%= f.label :role, 'I want to find jobs as a freelancer', for: 'user_role_freelancer', class: 'custom-control-label' %>
+          </div>
+          <div class="custom-control custom-radio" id="show_phone_number">
+            <%= f.radio_button :role, 'employer', id: 'user_role_employer', class: "custom-control-input" %>
+            <%= f.label :role, ' I want to hire talent as an employer', for: 'user_role_employer', class: 'custom-control-label' %>
+          </div>
+        </div>
+        <div class="field mb-3 text-left phone_number_block">
+          <%= f.label :phone_number, 'Phone Number', class: "h5" %> (optional)<br>
+          <%= f.text_field :phone_number, class: 'form-control', id: "user_phone_number" %>
+        </div>
+        <% unless @show_promo_code %>
+          <div class="field mb-3 text-left">
+            <label for="promo_code" class="h5">Promo Code</label> (Optional)<br>
+            <input type="text" class="form-control" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
+          </div>
+        <% end %>
+        <div class="text-left bp-text-sm mb-3">
+          By creating your account, you agree to
+          <a href="https://bullpenre.com/terms-of-service/?_ga=2.176404525.943759142.1600229912-339552047.1597271456">
+            Bullpen's Terms of Service
+          </a>,
+          <a href="https://bullpenre.com/privacy-policy/?_ga=2.79419548.943759142.1600229912-339552047.1597271456">
+            Privacy Agreement
+          </a>, and <a href="https://stripe.com/connect-account/legal">Stripe's Connected Accounts Authorization</a>
+        </div>
+        <div class="actions mt-3">
+          <%= f.submit "Create Account", class: "btn btn-primary btn-block" %>
         </div>
       <% end %>
 
-      <div class="bp-or-border my-3"><span>or</span></div>
-
-      <%= google_sign_in_button(image_pack_tag('media/images/icons8-google-48.png', size: '24x24', class: 'mr-2') + 'Sign Up with Gmail', proceed_to: user_google_omniauth_callback_path, class: "btn btn-outline-primary btn-block d-flex justify-content-center mb-3") %>
-
     </div>
-    <div class="text-muted">
+    <div class="text-muted mt-3">
       For help contact us at <%= mail_to('support@bullpenre.com') %>
     </div>
   </div>
 </div>
+
+<script>
+  function initiate() {
+    if($('#user_role_employer:checked').val() == 'employer') {
+      $('.phone_number_block').show();
+    } else {
+      $('.phone_number_block').hide();
+    }
+  }
+
+  $(function() {
+    $('#show_phone_number').on('click', function() {
+      $('.phone_number_block').slideDown();
+    });
+    $('#hide_phone_number').on('click', function() {
+      $('#user_role_freelancer').val('');
+      $('.phone_number_block').slideUp();
+    });
+
+    initiate();
+  });
+</script>
