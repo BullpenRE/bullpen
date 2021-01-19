@@ -10,28 +10,33 @@
     <%= f.rich_text_area :cover_letter, value: job_application.cover_letter, class: "form-control", id: "coverLetter", placeholder: "Enter your cover letter", rows: "10", required: true %>
   </div>
   <div class="form-group work_sample">
-    <label for="workSample" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
-    <% if job_application.work_sample.attached? %>
-      <div class="file-name text-break mb-2">This file was attached: <%= job_application.work_sample.filename %></div>
-      <div class="custom-file">
-        <%= f.file_field :work_sample, multiple: false, name: 'work_sample', class: "d-none", id: "uploadWorkSample" %>
-        <label class="btn btn-outline-primary upload-work-sample d-block d-sm-inline" for="uploadWorkSample">
-          Edit your work sample
-        </label>
-        <button type="button" class="delete-work-sample d-none" id="deleteWorkSample"></button>
-        <label class="btn btn-outline-danger ml-sm-2 delete d-block d-sm-inline" for="deleteWorkSample">
-          Delete
-        </label>
-      </div>
-    <% else %>
-      <div class="custom-file">
-        <%= f.file_field :work_sample, multiple: false, name: 'work_sample', class: "d-none", id: "uploadWorkSample" %>
-        <label class="btn btn-outline-primary upload-work-sample" for="uploadWorkSample">
-          Attach a File
-        </label>
-        <div class="file-name text-break"></div>
+    <label for="workSamples" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
+    <% if job_application.errors.any? %>
+      <div id="alertWarning" class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= job_application.errors.full_messages.join(', ') %>
       </div>
     <% end %>
+    <div id="workSamples" data-allowed="<%= JobApplication::MAX_WORK_SAMPLES_COUNT %>">
+      <% if job_application.work_samples.attached? %>
+        <% job_application.work_samples.each do |work_sample| %>
+          <div id="file-<%= work_sample.signed_id %>" class="work-sample-item">
+            <div class="file-name text-break mb-2">
+              <%= link_to '#', class: 'delete-work-sample', data: {id: work_sample.signed_id.to_s, confirm: 'Are you sure?'} do %>
+                <i class="far fa-trash-alt text-danger mr-1"></i>
+              <% end %>
+              <%= work_sample.filename.to_s %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="custom-file <%= 'd-none' unless job_application.adding_work_samples_allowed? %>">
+      <%= f.file_field :work_samples, multiple: true, name: 'work_samples', class: "d-none", id: "uploadWorkSample" %>
+      <label class="btn btn-outline-primary upload-work-sample d-block d-sm-inline" for="uploadWorkSample">
+        Attach a File
+      </label>
+    </div>
   </div>
   <div class="custom-control custom-checkbox mb-3">
     <%= f.check_box :template,
@@ -66,57 +71,85 @@
 <% end %>
 
 <script>
-  $('.work_sample').on('change', '#uploadWorkSample', (e) => {
-    const file = e.target.files[0];
-    const app_id = '<%= job_application.id %>';
+  function tooLargeFilesExist(files) {
     const maxFileSize = 20971520;
-    if (file.size && file.size > maxFileSize) {
-      const message = "Uploaded files must not exceed 20MB\n";
-      Swal.fire({
-        title: '<h5>Oops!</h5>',
-        text: message
-      });
+    const tooLargeFiles = files.filter(function(file) {
+      return (file.size && file.size > maxFileSize)
+    });
+    return tooLargeFiles.length > 0
+  }
+
+  function getFilesArray(fileListObject) {
+    let filesArray = [];
+    for (let i = 0; i < fileListObject.length; i++) {
+      filesArray.push(fileListObject[i])
     }
-    else {
-      const formData = new FormData();
-      formData.append('work_sample', file);
-      formData.append('app_id', app_id)
-      $.ajax({
-        url: '/work_sample/update',
-        method: 'PUT',
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        data: formData,
-        success: (data) => {
-          $('.file-name').html('This file was attached: ' + data['file_name']);
-        },
-        error: () => {
-          const message = 'File was not uploaded successfully.';
-          Swal.fire({
-            title: '<h5>Oops!</h5>',
-            text: message
-          });
-        }
-      });
+    return filesArray
+  }
+
+  function groupAdditionRestricted(quantity)  {
+    const allowedCount = parseInt($('#workSamples').data('allowed'), 10);
+    const currentCount = $('.work-sample-item').length;
+    return (currentCount + quantity) > allowedCount
+  }
+
+  function showSwal(message) {
+    return Swal.fire({
+      title: '<h5>Oops!</h5>',
+      text: message
+    });
+  }
+
+  function sendFile(fileListObject) {
+    const job_app = '<%= job_application.id %>';
+    const formData = new FormData();
+    Array.from(fileListObject).forEach((file) => {
+      formData.append('work_sample[]', file);
+    });
+    formData.append('id', 'application_step_2');
+    $.ajax({
+      url: `/freelancer/application_flows/${job_app}/add_work_samples`,
+      method: 'PUT',
+      processData: false,
+      contentType: false,
+      dataType: 'script',
+      data: formData,
+      success: (response) => {
+        console.log(response)
+      }
+    });
+  }
+
+  $('.work_sample').on('change', '#uploadWorkSample', (e) => {
+    const fileListObject = e.target.files;
+    const filesArray = getFilesArray(fileListObject);
+
+    if (tooLargeFilesExist(filesArray)) {
+      showSwal("Uploaded files must not exceed 20MB\n")
+    } else if (groupAdditionRestricted(filesArray.length)) {
+      showSwal("The total number of files is more than allowed")
+    } else {
+      sendFile(fileListObject)
     }
   });
 
-  $('.work_sample').on('click', '.delete-work-sample', () => {
-    const app_id = '<%= job_application.id %>';
+  $('.work_sample').on('click', '.delete-work-sample', (e) => {
+    let clickedWorkSample = $(e.target).parents('a').data('id');
+    e.preventDefault();
+    const job_app = '<%= job_application.id %>';
     const formData = new FormData();
-    formData.append('app_id', app_id);
+    formData.append('job_app', job_app);
+    formData.append('blob_key', clickedWorkSample);
+    formData.append('id', 'application_step_2');
     $.ajax({
-      url: '/work_sample/destroy',
+      url: `/freelancer/application_flows/${job_app}/destroy_work_sample`,
       method: 'POST',
-      dataType: 'json',
-      contentType: false,
       processData: false,
+      contentType: false,
+      dataType: 'script',
       data: formData,
       success: () => {
-        $('.file-name').html('');
-        $('.upload-work-sample').text('Attach a File');
-        $('.delete').addClass('d-none');
+        return true
       },
     })
   });
