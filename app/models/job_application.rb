@@ -10,7 +10,7 @@ class JobApplication < ApplicationRecord
 
   validates :job_id, uniqueness: { scope: :user_id }
   validate :correct_size?
-  validates :per_hour_bid, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :bid_amount, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   scope :draft_or_applied, -> { where(state: %w[draft applied]) }
   enum state: { 'draft': 0, 'applied': 1, 'withdrawn': 2, 'declined': 3 }
 

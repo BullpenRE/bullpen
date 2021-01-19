@@ -3,14 +3,28 @@
   <%= f.hidden_field :job_application_id, value: job_application.id %>
   <%= f.hidden_field :job_id, value: job_id %>
   <%= f.hidden_field 'step', value: 'application_step_1' %>
-  <div class="mb-3">This offered rate is <b>$75 - $125</b> per hour.</div>
+  <div class="mb-3">This offered rate is
+<!--    $75 - $125-->
+    <% if job_application.job.contract_type == 'hourly' %>
+      <%= "<b>$#{job_application.job.pay_range_low} - $#{job_application.job.pay_range_high}</b>".html_safe + " per hour" %>
+    <% else %>
+      <%=  "<b>#{job_application.job.pay_range_low}".html_safe + " for up to " + "<b>#{job_application.job.contract_type.split('_').last}".html_safe + " hours per month"%>
+    <% end %>
+  </div>
   <div class="form-group mb-1">
     <div class="d-flex justify-content-between">
-      <label for="perHourBid" class="h5">What's your bid? <span class="text-dark font-weight-normal">(per hour)</span></label>
+      <label for="perHourBid" class="h5">What's your bid? <span class="text-dark font-weight-normal">
+<!--        (per hour)-->
+        <% if job_application.job.contract_type == 'hourly' %>
+          <%= "(per hour)" %>
+        <% else %>
+          <%= "(per month)" %>
+        <% end %>
+      </span></label>
     </div>
     <div class="row">
       <div class="col col-lg-4">
-        <%= f.text_field :per_hour_bid, class: "form-control", id: "perHourBid", placeholder: "Enter your bid", required: true, value: job_application.per_hour_bid %>
+        <%= f.text_field :bid_amount, class: "form-control", id: "perHourBid", placeholder: "Enter your bid", required: true, value: job_application.bid_amount %>
       </div>
     </div>
   </div>
@@ -46,19 +60,21 @@
 
 <script>
   $('#perHourBid').on('input', () => {
-    const per_hour_bid = $('#perHourBid').val();
-    const first_symbol = parseInt(per_hour_bid.charAt(0), 10);
-    const length = per_hour_bid.length;
-    const last_symbol = parseInt(per_hour_bid.charAt(length-1), 10);
+    const bid_amount = $('#perHourBid').val();
+    const first_symbol = parseInt(bid_amount.charAt(0), 10);
+    const length = bid_amount.length;
+    const last_symbol = parseInt(bid_amount.charAt(length-1), 10);
     let net_earnings;
     if (isNaN(first_symbol)) {
-      net_earnings = parseInt(per_hour_bid.substring(1,length), 10);
+      net_earnings = parseInt(bid_amount.substring(1,length), 10);
     } else if (isNaN(last_symbol)) {
-      net_earnings = parseInt(per_hour_bid.substring(0,(length-1)), 10);
+      net_earnings = parseInt(bid_amount.substring(0,(length-1)), 10);
     } else {
-      net_earnings = parseInt(per_hour_bid, 10);
+      net_earnings = parseInt(bid_amount, 10);
     }
-    $('.net-earnings').text('Your net earnings will be $' + Math.round(net_earnings*0.7) +' per hour.');
+<!--    let additional_per_hour_fees = <%# job_application.bid_amount / job_application.job.contract_type.split('_').last.to_i %>-->
+    // $('.net-earnings').text('Your net earnings will be $' + Math.round(net_earnings*0.7*additional_per_hour_fees +' per month.'));
+    $('.net-earnings').text('Your net earnings will be $' + Math.round(net_earnings*0.7 +' per month.'));
   });
 </script>
 

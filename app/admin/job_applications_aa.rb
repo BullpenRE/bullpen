@@ -2,7 +2,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
   ActiveAdmin.register JobApplication do
     menu label: 'Job Applications'
 
-    permit_params :job_id, :user_id, :cover_letter, :template, :per_hour_bid, :available_during_work_hours,
+    permit_params :job_id, :user_id, :cover_letter, :template, :bid_amount, :available_during_work_hours,
                   :state, :work_sample, :applied_at
     includes :job, :user
 
@@ -21,7 +21,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       end
       column :state
       column :template
-      column :per_hour_bid
+      column :bid_amount
       column :liked
       column :available_during_work_hours
       column :created_at
@@ -44,7 +44,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
           application.cover_letter.body.to_s
         end
         row :template
-        row :per_hour_bid
+        row :bid_amount
         row :available_during_work_hours
         row :state
         row :liked
@@ -95,7 +95,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :liked
         f.input :cover_letter, as: :text
         f.input :template
-        f.input :per_hour_bid
+        f.input :bid_amount
         f.input :available_during_work_hours
         f.inputs "Work Sample" do
           f.input :work_sample, as: :file, required: false

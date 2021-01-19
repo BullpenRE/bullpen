@@ -46,7 +46,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     return false unless params[:job_application][:step] == 'application_step_1'
 
     job_application.update(
-      per_hour_bid: clean_currency_entry(params[:job_application][:per_hour_bid]),
+      bid_amount: clean_currency_entry(params[:job_application][:bid_amount]),
       available_during_work_hours: params[:job_application][:available_during_work_hours]
     )
     job_application.job_application_questions.destroy_all
