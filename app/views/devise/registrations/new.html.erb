@@ -5,26 +5,26 @@
     <div class="h2 mb-3">Create an Account</div>
     <div>
       <%= render 'devise/shared/error_messages' %>
-      <%= form_for(:user, url: join_signup_path) do |f| %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { novalidate: true, id: "regForm", class: "needs-validation" }) do |f| %>
         <%= f.hidden_field :email, value: @email, id: "user_email" %>
         <div class="field mb-3 text-left">
-          <%= f.label :first_name, class: "h5" %><br>
+          <%= f.label :first_name, 'First Name', class: "h5" %><br>
           <%= f.text_field :first_name, class: 'form-control', id: "user_first_name" %>
         </div>
         <div class="field mb-3 text-left">
-          <%= f.label :last_name, class: "h5" %><br>
+          <%= f.label :last_name, 'Last Name', class: "h5" %><br>
           <%= f.text_field :last_name, class: 'form-control', id: "user_last_name" %>
         </div>
         <div class="field mb-3 text-left">
-          <%= f.label :password, 'Create a password', class: "h5" %><br>
+          <%= f.label :password, 'Create a Password', class: "h5" %><br>
           <div class="row">
-            <div class="col ml-3">
-              <ul style="padding-left: 0;">
+            <div class="col-12 col-sm ml-3 mb-0">
+              <ul class="mb-0" style="padding-left: 0; padding-bottom: 0;">
                 <li>A special character</li>
                 <li>A capital (uppercase) letter</li>
               </ul>
             </div>
-            <div class="col">
+            <div class="col-12 col-sm ml-3 ml-sm-0 mt-0">
               <ul style="padding-left: 0;">
                 <li>A number</li>
                 <li>Minimum 8 characters</li>
@@ -36,11 +36,11 @@
         <div class="field mb-3 text-left">
           <%= f.label :role, 'Make a Selection', class: "h5" %>
           <div class="custom-control custom-radio" id="hide_phone_number">
-            <%= f.radio_button :role, 'freelancer', id: 'user_role_freelancer', class: "custom-control-input" %>
+            <%= f.radio_button :role, User.roles[:freelancer], id: 'user_role_freelancer', class: "custom-control-input" %>
             <%= f.label :role, 'I want to find jobs as a freelancer', for: 'user_role_freelancer', class: 'custom-control-label' %>
           </div>
           <div class="custom-control custom-radio" id="show_phone_number">
-            <%= f.radio_button :role, 'employer', id: 'user_role_employer', class: "custom-control-input" %>
+            <%= f.radio_button :role, User.roles[:employer], id: 'user_role_employer', class: "custom-control-input" %>
             <%= f.label :role, ' I want to hire talent as an employer', for: 'user_role_employer', class: 'custom-control-label' %>
           </div>
         </div>
