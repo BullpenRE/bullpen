@@ -26,6 +26,10 @@ module WorkCertification
       (params[:freelancer_certification][:custom] == '1')
   end
 
+  def custom?
+    freelancer_certification.certification.custom
+  end
+
   def freelancer_custom_certificate_update
     freelancer_certification.destroy
     freelancer_certification_create
@@ -45,7 +49,8 @@ module WorkCertification
     if params[:freelancer_certification][:description].blank?
       freelancer_certification_params
     else
-      return freelancer_certification_params if check_edit_custom_certificate_field?
+      return freelancer_certification_params if check_edit_custom_certificate_field? && custom?
+      return freelancer_certification_update_params if check_edit_custom_certificate_field? && !custom?
 
       params.require(:freelancer_certification)
             .permit(:id, :certification_id, :description, :earned_year, :earned_month)
@@ -57,6 +62,12 @@ module WorkCertification
     params.require(:freelancer_certification)
           .permit(:id, :certification_id, :earned_year, :earned_month)
           .merge(description: Certification.find_by(id: certification_params).description)
+  end
+
+  def freelancer_certification_update_params
+    params.require(:freelancer_certification)
+          .permit(:id, :certification_id, :earned_year, :earned_month)
+          .merge(description: params[:freelancer_certification][:description])
   end
 
   def certification_params
