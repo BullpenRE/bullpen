@@ -90,7 +90,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
                 as: :select,
                 collection: Job.find_each.map{|j| ["#{j.title} - #{j.user.email}", j.id]}
         f.input :user,
-                as: :select,
+                as: :select, input_html: { class: "select2" },
                 collection: User.freelancer.order(:email).pluck(:email, :id)
         f.input :liked
         f.input :cover_letter, as: :text
