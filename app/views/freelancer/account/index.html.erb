@@ -53,16 +53,16 @@
             <p>Send me an email when a new job is posted</p>
           </div>
           <div class="d-flex-col ml-auto">
-            <table class="table table-borderless table-sm mb-0">
+            <table class="table table-borderless table-sm mb-0 send-email">
               <tbody>
               <tr>
                 <th class="checkbox-state h6">
-                  Off
+                  On
                 </th>
                 <td class="pr-0">
                   <!-- Custom switch -->
                   <label class="switch">
-                    <input type="checkbox">
+                    <input type="checkbox" id="send-email" checked>
                     <span class="slider round"></span>
                   </label>
                 </td>
@@ -76,16 +76,16 @@
           <p>Show my profile to employers searching for talent</p>
         </div>
         <div class="d-flex-col ml-auto">
-          <table class="table table-borderless table-sm mb-0">
+          <table class="table table-borderless table-sm mb-0 show-profile">
             <tbody>
             <tr>
               <th class="checkbox-state h6">
-                Off
+                On
               </th>
               <td class="pr-0">
                 <!-- Custom switch -->
                 <label class="switch">
-                  <input type="checkbox">
+                  <input type="checkbox" id="show-profile" checked>
                   <span class="slider round"></span>
                 </label>
               </td>
@@ -153,3 +153,48 @@
     </div>
   </div><br>
 </div>
+
+<script>
+  function sendAjax(field, value) {
+    $.ajax({
+      url: 'freelancer/profile/preferences',
+      method: 'PATCH',
+      dataType: 'json',
+      data: {
+        id: <%= @freelancer_profile.id %>,
+        field: field,
+        value: value
+      },
+      success: function(data) {
+        return data.status
+      }
+    });
+  }
+
+  $(document).on('turbolinks:load', function (e) {
+    $(document).on('change', '#send-email', function() {
+      const checkboxState = $(this).parents('tr').find('.checkbox-state');
+      if ($(this).prop("checked")) {
+        checkboxState.text('On');
+        const response = sendAjax('new_jobs_alert', true);
+        console.log(response)
+      } else {
+        checkboxState.text('Off');
+        const response = sendAjax('new_jobs_alert', false);
+        console.log(response)
+      }
+    });
+    $(document).on('change', '#show-profile', function() {
+      const checkboxState = $(this).parents('tr').find('.checkbox-state');
+      if ($(this).prop("checked")) {
+        checkboxState.text('On');
+        const response = sendAjax('searchable', true);
+        console.log(response)
+      } else {
+        checkboxState.text('Off');
+        const response = sendAjax('searchable', false);
+        console.log(response)
+      }
+    })
+  })
+</script>
