@@ -1,0 +1,9 @@
+<br>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<h2 style='color: #005495;'>You received a message from #{@message.from_user.full_name}.</h2>" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<h3 style='color: #005495;'>#{@title}</h3>" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<h3>Message:</h3>" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "#{@message.description}" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<h3>Company information:</h3>" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "#{@message.from_user.employer_profile.company_name}" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<a href=#{@message.from_user.employer_profile.company_website}>#{@message.from_user.employer_profile.company_website}</a>" } %>
+<%= render partial: 'email/content_block_left', locals: { content: "Reply to this email to communicate directly with #{@message.from_user.first_name}" } %>
