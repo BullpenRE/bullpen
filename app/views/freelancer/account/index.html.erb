@@ -1,0 +1,155 @@
+<style>
+  .w-31 {
+    width: 31% !important;
+  }
+
+  .account-container {
+    max-width: 550px;
+  }
+</style>
+
+<%= render partial: 'shared/custom_switch' %>
+<%= render partial: 'freelancer/navigation', locals: { section: 'profile' } %>
+
+<div class="container account-container">
+  <%= render partial: 'shared/notice_and_alert' %>
+  <h1 class="mb-3 mt-6">Manage Account</h1>
+  <div class="container bp-card">
+    <div class="mr-auto">
+      <div class="d-flex flex-sm-row flex-column">
+        <% if @freelancer_profile.avatar.attached? %>
+            <div class="text-light mr-2 avatar-image" style="line-height: 0;">
+              <%= image_tag @freelancer_profile.avatar, class: 'rounded-circle', width: '80px', height: '80px' %>
+            </div>
+        <% else %>
+            <div class="text-light mr-2 avatar-image" style="font-size: 80px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
+        <% end %>
+        <div class="container pr-0">
+          <div class="d-flex flex-row flex-inline">
+            <div class="d-flex-col">
+              <h2><%= @freelancer_profile.full_name %></h2>
+            </div>
+              <div class="d-flex-col ml-auto text-primary ml-1">
+                <%= link_to freelancer_profile_index_path, class: '' do %>
+                    Edit
+                    <i class="fas fa-edit text-primary"></i>
+                <% end %>
+              </div>
+          </div>
+          <div class="bp-text-sm mb-3 text-wrap text-break">
+            <%= @freelancer_profile.location %><br>
+            <%= @freelancer_profile.user.email %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><br>
+
+  <div class="container bp-card">
+    <div class="mr-auto">
+      <h2>Preferences</h2>
+        <div class="d-flex flex-row flex-inline">
+          <div class="d-flex-col">
+            <p>Send me an email when a new job is posted</p>
+          </div>
+          <div class="d-flex-col ml-auto">
+            <table class="table table-borderless table-sm mb-0">
+              <tbody>
+              <tr>
+                <th class="checkbox-state h6">
+                  Off
+                </th>
+                <td class="pr-0">
+                  <!-- Custom switch -->
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <div class="d-flex flex-row flex-inline">
+        <div class="d-flex-col">
+          <p>Show my profile to employers searching for talent</p>
+        </div>
+        <div class="d-flex-col ml-auto">
+          <table class="table table-borderless table-sm mb-0">
+            <tbody>
+            <tr>
+              <th class="checkbox-state h6">
+                Off
+              </th>
+              <td class="pr-0">
+                <!-- Custom switch -->
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"></span>
+                </label>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div><br>
+
+  <div class="container bp-card">
+    <div class="mr-auto">
+      <div class="d-flex flex-row flex-inline">
+        <div class="d-flex-col">
+          <h2>Bank Information</h2>
+        </div>
+        <div class="d-flex-col">
+          <i class="far fa-question-circle fa-lg ml-2 text-primary" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="bank-info">
+        <p>Please add a bank account to receive payouts.</p>
+        <%= link_to 'Add a Bank Account', '#', class: 'btn btn-outline-primary' %>
+      </div>
+    </div>
+  </div><br>
+
+  <div class="container bp-card">
+    <div class="mr-auto">
+      <h2>Account Verification</h2>
+
+        <table class="table table-borderless table-sm">
+          <tbody>
+          <tr class="mb-1">
+            <th style="width: 33%" class="h5 text-right align-middle">Status</th>
+            <td class="pl-3 my-0 font-weight-light">Some text1</td>
+          </tr>
+          <tr class="mb-1">
+            <th style="width: 33%" class="h5 text-right align-middle">Date of Birth</th>
+            <td class="pl-3 my-0 font-weight-light">Some text1</td>
+          </tr>
+          <tr class="mb-1">
+            <th style="width: 33%" class="h5 text-right align-middle">Phone Number</th>
+            <td class="pl-3 pb-1 font-weight-light">Some text1</td>
+          </tr>
+          <tr class="mb-1">
+            <th style="width: 33%" class="h5 text-right align-middle">SSN</th>
+            <td class="pl-3 pb-1 font-weight-light">Some text1</td>
+          </tr>
+          <tr class="mb-1">
+            <th style="width: 33%" class="h5 text-right align-middle">Address</th>
+            <td class="pl-3 pb-1 font-weight-light">Some text1</td>
+          </tr>
+          <tr class="mb-1">
+            <th style="width: 33%" class="h5 text-right align-middle">Identity Document</th>
+            <td class="pl-3 pb-1 font-weight-light">Some text1</td>
+          </tr>
+          </tbody>
+        </table>
+        <p>
+          <%= link_to 'Contact us ', '#', class: 'text-primary' %>
+          if your personal information has changed.
+        </p>
+    </div>
+  </div><br>
+</div>
