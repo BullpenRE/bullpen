@@ -77,6 +77,29 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     redirect_to freelancer_applications_path
   end
 
+  def add_work_samples
+    return if params[:work_sample].blank?
+
+    if job_application.adding_work_samples_allowed?
+      job_application.work_samples.attach(params[:work_sample])
+    else
+      job_application.errors.add(
+        :base, "Work samples limit: quantity must be #{JobApplication::MAX_WORK_SAMPLES_COUNT} or less"
+      )
+    end
+    respond_js_format(:application_step_2)
+  rescue StandardError
+    job_application.errors.add(:base, 'File was not uploaded successfully.')
+  end
+
+  def destroy_work_sample
+    return if find_blob_by_key.blank?
+
+    find_blob_by_key.attachments[0].purge_later if blob_attached?
+    find_blob_by_key.purge_later unless blob_attached?
+    respond_js_format(:application_step_2)
+  end
+
   private
 
   def draft_flash_notice!
@@ -106,19 +129,23 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     @application_template ||= @user.job_applications.where.not(id: job_application.id).find_by(template: true)
   end
 
+  def can_attach_work_sample?
+    !job_application.work_samples.attached? && application_template.work_samples.attached?
+  end
+
   def pre_populate_cover_letter_work_sample
     return if application_template.blank?
 
     job_application.update(cover_letter: application_template.cover_letter) if job_application.cover_letter.blank?
-    job_application.work_sample.attach(application_template.work_sample.blob) if check_attached_work_sample?
+    job_application.work_sample.attach(application_template.work_sample.blob) if none_attached_and_template_exists?
   end
 
-  def check_attached_work_sample?
+  def none_attached_and_template_exists?
     !job_application.work_sample.attached? && application_template.work_sample.attached?
   end
 
   def step_2_params
-    params.require(:job_application).permit(:cover_letter, :template)
+    params.require(:job_application).permit(:cover_letter, :template, :job_application_id, :step)
   end
 
   def respond_js_format(step)
@@ -127,7 +154,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
       format.js do
         render step.to_s, locals:
         {
-          job_application: @job_application,
+          job_application: job_application,
           job_id: params[:job_id],
           answers: @answers.presence
         }
@@ -142,5 +169,19 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def job_application
     @job_application ||= current_user.job_applications
                                      .find_by(id: (params[:job_app] || params[:job_application][:job_application_id]))
+  end
+
+  def find_blob_by_key
+    @find_blob_by_key ||= ActiveStorage::Blob.find_signed(params[:blob_key])
+  rescue ActiveSupport::MessageVerifier::InvalidSignature => _e
+    []
+  rescue ActiveRecord::RecordNotFound => _e
+    @find_blob_by_key
+  end
+
+  def blob_attached?
+    return false if find_blob_by_key.blank?
+
+    find_blob_by_key.attachments[0].present?
   end
 end
