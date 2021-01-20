@@ -37,7 +37,7 @@ class Employer::JobsController < ApplicationController
   def send_message
     @job = current_user.jobs.find(params[:message][:job_id].to_i)
     @message = Message.create(message_params)
-    FreelancerMailer.send_message(@message, @job).deliver_now
+    FreelancerMailer.send_message(@message, @job.title).deliver_now
 
     redirect_to employer_jobs_path
   end
