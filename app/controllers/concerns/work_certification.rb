@@ -66,8 +66,9 @@ module WorkCertification
 
   def freelancer_certification_update_params
     params.require(:freelancer_certification)
-          .permit(:id, :certification_id, :earned_year, :earned_month)
-          .merge(description: params[:freelancer_certification][:description])
+          .permit(:id, :earned_year, :earned_month)
+          .merge(description: params[:freelancer_certification][:description],
+                 certification_id: Certification.custom_id )
   end
 
   def certification_params
