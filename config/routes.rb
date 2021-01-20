@@ -31,8 +31,6 @@ Rails.application.routes.draw do
   get '/promo/:promo_code', to: 'signup_promos#show'
 
   resources :avatar, only: %i[update destroy]
-  resources :work_sample, only: :update
-  post '/work_sample/destroy', to: 'work_sample#destroy_work_sample'
   resources :freelancer_profile_steps
   resources :employer_profile_steps
 
@@ -63,6 +61,12 @@ Rails.application.routes.draw do
     resources :jobs
     resources :applications
     resources :application_flows
+    put 'application_flows/:job_app/add_work_samples',
+        to: 'application_flows#add_work_samples',
+        as: 'add_work_samples'
+    post 'application_flows/:job_app/destroy_work_sample',
+         to: 'application_flows#destroy_work_sample',
+         as: 'destroy_work_sample'
     resources :interviews
     resources :contracts
     resources :profile, only: :index
