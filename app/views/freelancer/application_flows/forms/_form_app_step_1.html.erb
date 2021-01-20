@@ -4,29 +4,25 @@
   <%= f.hidden_field :job_id, value: job_id %>
   <%= f.hidden_field 'step', value: 'application_step_1' %>
   <div class="mb-3">This offered rate is
-    <% if job_application.job.contract_type == 'hourly' %>
-      <%= "<b>$#{job_application.job.pay_range_low} - $#{job_application.job.pay_range_high}</b>".html_safe + " per hour" %>
+    <% if job_application.job.hourly? %>
+      <%= "<b>$#{job_application.job.pay_range_low} - $#{job_application.job.pay_range_high}</b>".html_safe + " per hour." %>
     <% else %>
-      <%=  "<b>#{job_application.job.pay_range_low}".html_safe + " for up to " + "<b>#{job_application.job.contract_type.split('_').last}".html_safe + " hours per month"%>
+      <%=  "<b>$#{job_application.job.pay_range_low}</b>".html_safe + " for up to " + "#{job_application.job.contract_type.split('_').last}".html_safe + " hours per month."%>
     <% end %>
   </div>
   <div class="form-group mb-1">
     <div class="d-flex justify-content-between">
-      <label for="perHourBid" class="h5">What's your bid? <span class="text-dark font-weight-normal">
-        <% if job_application.job.contract_type == 'hourly' %>
-          <%= "(per hour)" %>
-        <% else %>
-          <%= "(per month)" %>
-        <% end %>
+      <label for="bidAmount" class="h5">What's your bid? <span class="text-dark font-weight-normal">
+        <%= job_application.job.hourly? ? "(per hour)" : "(per month)" %>
       </span></label>
     </div>
     <div class="row">
       <div class="col col-lg-4">
-        <%= f.text_field :bid_amount, class: "form-control", id: "perHourBid", placeholder: "Enter your bid", required: true, value: job_application.bid_amount %>
+        <%= f.text_field :bid_amount, class: "form-control", id: "bidAmount", placeholder: "Enter your bid", required: true, value: job_application.bid_amount %>
       </div>
     </div>
   </div>
-  <div class="mb-3 net-earnings"> </div>
+  <div class="bp-text-sm mb-2 mt-3 net-earnings"> </div>
 
   <label class="h5">Are you available from 9AM-5PM  <%= job_application.job.time_zone %>?</label>
   <div class="custom-control custom-radio mb-1">
@@ -57,8 +53,8 @@
 <% end %>
 
 <script>
-  $('#perHourBid').on('input', () => {
-    const bid_amount = $('#perHourBid').val();
+  $('#bidAmount').on('input', () => {
+    const bid_amount = $('#bidAmount').val();
     const first_symbol = parseInt(bid_amount.charAt(0), 10);
     const length = bid_amount.length;
     const last_symbol = parseInt(bid_amount.charAt(length-1), 10);
@@ -70,9 +66,14 @@
     } else {
       net_earnings = parseInt(bid_amount, 10);
     }
-<!--    let additional_per_hour_fees = <%# job_application.bid_amount / job_application.job.contract_type.split('_').last.to_i %>-->
-    // $('.net-earnings').text('Your net earnings will be $' + Math.round(net_earnings*0.7*additional_per_hour_fees +' per month.'));
-    $('.net-earnings').text('Your net earnings will be $' + Math.round(net_earnings*0.7 +' per month.'));
+
+    let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type.split('_').last %>';
+    if (hour_per_month === '1') {
+      $('.net-earnings').html(`Your net earnings will be <b>$${Math.round(net_earnings*0.7)}</b> per hour.`);
+    }
+    else {
+      $('.net-earnings').html(`Your net earnings will be <b>$${Math.round(net_earnings*0.7)}</b> per month for up to ${hour_per_month} hours, plus up to <b>$${Math.round(net_earnings/parseInt(hour_per_month, 10)*0.7)}</b> per additional hour.`);
+    }
   });
 </script>
 
