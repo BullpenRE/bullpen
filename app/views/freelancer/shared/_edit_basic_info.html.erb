@@ -10,7 +10,7 @@
 
       <div class="container">
         <div class="error"><%= @errors %></div>
-        <%= form_for :freelancer_profile, url: freelancer_change_profile_path do |f| %>
+        <%= form_for :freelancer_profile, url: freelancer_change_freelancer_basic_info_path do |f| %>
           <div class="row-md mb-4 avatar">
             <% if @freelancer_profile.avatar.attached? %>
               <div class="row">

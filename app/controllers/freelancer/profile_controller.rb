@@ -42,15 +42,17 @@ class Freelancer::ProfileController < ApplicationController
     redirect_after_change_profile
   end
 
-  def change_profile
+  def change_freelancer_basic_info
     first_name = params[:freelancer_profile][:first_name]
     last_name = params[:freelancer_profile][:last_name]
     location = params[:freelancer_profile][:location]
 
     @freelancer_profile.user.update(first_name: first_name, last_name: last_name, location: location)
-    @freelancer_profile.update(profile_params)
+    @freelancer_profile.update(change_basic_info_params)
 
     change_freelancer_sectors
+
+    redirect_after_change_profile
   end
 
   def change_work_experience
@@ -86,7 +88,7 @@ class Freelancer::ProfileController < ApplicationController
     params[:freelancer_softwares][:freelancer_softwares]
   end
 
-  def profile_params
+  def change_basic_info_params
     params.require(:freelancer_profile)
           .permit(:professional_title, :professional_years_experience, :professional_summary, :desired_hourly_rate)
   end
