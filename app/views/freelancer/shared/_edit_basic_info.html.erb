@@ -14,12 +14,12 @@
           <div class="row-md mb-4 avatar">
             <% if @freelancer_profile.avatar.attached? %>
               <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-2 text-center" style="margin-bottom: 20px;">
                   <div class="text-light avatar-image">
                     <%= image_tag @freelancer_profile.avatar.variant(resize: "80x80!").processed, class: 'rounded-circle' %>
                   </div>
                 </div>
-                <div class="col align-self-center">
+                <div class="col-md-5 align-self-center text-center">
                   <div class="custom-file">
                     <%= f.file_field :freelancer_profile_avatar,
                                      multiple: false,
