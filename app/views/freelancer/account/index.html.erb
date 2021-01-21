@@ -35,11 +35,11 @@
     <div class="d-flex mb-3 send_email">
       <div class="mr-auto pr-2">Send me an email when a new job is posted</div>
       <div class="text-secondary font-weight-bold checkbox-state">
-        Off
+        <%= @freelancer_profile.new_jobs_alert ? 'On' : 'Off' %>
       </div>
       <div class="ml-2">
         <label class="switch">
-          <input id="send-email" type="checkbox">
+          <%= check_box_tag :send_email, @freelancer_profile.id, @freelancer_profile.new_jobs_alert, id: 'send-email' %>
           <span class="slider round"></span>
         </label>
       </div>
@@ -47,11 +47,11 @@
     <div class="d-flex show_profile">
       <div class="mr-auto pr-2">Show my profile to employers searching for talent</div>
       <div class="text-secondary font-weight-bold checkbox-state">
-        Off
+        <%= @freelancer_profile.searchable ? 'On' : 'Off' %>
       </div>
       <div class="ml-2">
         <label class="switch">
-          <input id="show-profile" type="checkbox">
+          <%= check_box_tag :show_profile, @freelancer_profile.id, @freelancer_profile.searchable, id: 'show-profile' %>
           <span class="slider round"></span>
         </label>
       </div>
@@ -103,7 +103,7 @@
 <script>
   function sendAjax(field, value) {
     $.ajax({
-      url: 'freelancer/profile/preferences',
+      url: '/freelancer/profile/preferences',
       method: 'PATCH',
       dataType: 'json',
       data: {
@@ -112,7 +112,7 @@
         value: value
       },
       success: function(data) {
-        return data.status
+        console.log(data)
       }
     });
   }
@@ -122,14 +122,13 @@
       const checkboxState = $(this).parents('.send_email').find('.checkbox-state');
       if ($(this).prop("checked")) {
         checkboxState.text('On');
-        const response = sendAjax('new_jobs_alert', true);
-        console.log(response)
+        sendAjax('new_jobs_alert', true);
       } else {
         checkboxState.text('Off');
-        const response = sendAjax('new_jobs_alert', false);
-        console.log(response)
+        sendAjax('new_jobs_alert', false);
       }
     });
+    
     $(document).on('change', '#show-profile', function() {
       const checkboxState = $(this).parents('.show_profile').find('.checkbox-state');
       if ($(this).prop("checked")) {
