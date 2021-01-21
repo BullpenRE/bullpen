@@ -3,14 +3,18 @@
     <div class="text-left pt-2 pb-2 ml-md-5">
       <%= image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30') %>
     </div>
-    <% unless current_user&.employer? %>
+    <% if !current_user&.employer? && @job.posted? %>
       <div class="d-flex align-items-center text-white">
         <%= link_to "Apply", public_apply_for_job_path(apply_for_job: @job.slug), class: 'btn btn-primary ml-2' %><br /><br />
       </div>
     <% end %>
-   </div>
+  </div>
 </nav>
 <div class="container bp-card mb-sm-4">
-  <h1><%= @job.title&.capitalize %></h1>
-  <%= render partial: 'shared/show_job_post_content', locals: { job: @job } %>
+  <% if @job.posted? %>
+    <h1><%= @job.title&.capitalize %></h1>
+    <%= render partial: 'shared/show_job_post_content', locals: { job: @job } %>
+  <% else %>
+    <h1 class="text-center">Job not found.</h1>
+  <% end %>
 </div>
