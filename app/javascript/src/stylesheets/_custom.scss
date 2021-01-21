@@ -44,6 +44,12 @@
   font-size: 2rem;
   color: #E4E4E4;
 }
+.bp-account-table-padding {
+  margin-bottom: 0;
+  td, th {
+    padding:0 0 1.25rem 0;
+  }
+}
 .bp-text-sm {
   font-size: 0.875rem;
 }
