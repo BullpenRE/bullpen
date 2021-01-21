@@ -1,3 +1,8 @@
+<!--app/views/employer/jobs/index.html.erb == http://localhost:3000/employer/jobs-->
+<!--Modals:-->
+<!--app/views/freelancer/shared/_job_card.html.erb-->
+<!--app/views/shared/_show_job_post_content.html.erb-->
+
 <p class="text-wrap text-break"><%= job.short_description %></p>
 <% if  Job::CONTRACT_TYPE_DESCRIPTIONS.key(job.contract_type).present? %>
   <p class="text-wrap text-break text-secondary mt-2 font-weight-bold">
