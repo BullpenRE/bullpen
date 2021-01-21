@@ -1,4 +1,12 @@
 <!--Edit Freelancer Profile Modal-->
+<style>
+    @media screen and (min-width: 360px) {
+        #avatarButtons {
+            margin-top: 20px;
+            text-align: center;
+        }
+    }
+</style>
 <div class="modal fade" id="editProfileModal-<%= freelancer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -43,7 +51,7 @@
                     <i class="fas fa-user-circle"></i>
                   </div>
                 </div>
-                <div class="col-md-2 align-self-center text-center" id="uploadButton" style="padding-left: 0; margin-bottom: 20px;">
+                <div class="col-md-2 align-self-center text-center" id="uploadButton" style="margin-bottom: 20px;">
                   <div class="custom-file">
                     <%= f.file_field :freelancer_profile_avatar,
                                      multiple: false,
