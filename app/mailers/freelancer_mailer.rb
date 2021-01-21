@@ -19,6 +19,13 @@ class FreelancerMailer < ApplicationMailer
     mail(to: freelancer_email, subject: 'Congratulations! You received an interview request.')
   end
 
+  def send_message(message, title)
+    @message = message
+    @title = title
+    mail(to: @message.to_user.email, cc: @message.from_user.email,
+         subject: "#{@message.from_user.full_name} sent you a message.")
+  end
+
   def job_application_declined(job_application)
     @job_application = job_application
     freelancer_email = job_application.user.email

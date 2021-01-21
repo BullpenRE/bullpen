@@ -9,7 +9,7 @@ RSpec.describe JobApplication, type: :model do
   it 'factory works' do
     expect(job_application).to be_valid
     expect(job_application_with_attachments).to be_valid
-    expect(job_application_with_attachments.work_sample.attached?).to be_truthy
+    expect(job_application_with_attachments.work_samples.attached?).to be_truthy
     expect(job_application_with_attachments.cover_letter).to_not be_blank
   end
 
@@ -22,12 +22,12 @@ RSpec.describe JobApplication, type: :model do
       expect(duplicate).to_not be_valid
     end
 
-    it 'per_hour_bid must be either nil or greater than or equal to zero' do
-      job_application.per_hour_bid = nil
+    it 'pbid_amount must be either nil or greater than or equal to zero' do
+      job_application.bid_amount = nil
       expect(job_application).to be_valid
-      job_application.per_hour_bid = 0
+      job_application.bid_amount = 0
       expect(job_application).to be_valid
-      job_application.per_hour_bid = -1
+      job_application.bid_amount = -1
       expect(job_application).to_not be_valid
     end
 

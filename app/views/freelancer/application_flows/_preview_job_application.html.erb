@@ -30,12 +30,14 @@
               </div>
               <p class="text-wrap text-break"><%= job_application.cover_letter %></p>
             </div>
-            <% if job_application.work_sample.attached? %>
+            <% if job_application.work_samples.attached? %>
               <div class="font-weight-bold"><h5>Work Samples</h5></div>
-              <div class="text-primary mb-3 font-weight-bold">
-                <i class="fas fa-download"></i>
-                <%= link_to job_application.work_sample.filename, rails_blob_path(job_application.work_sample, disposition: :attachment) %>
-              </div>
+              <% job_application.work_samples.each do |work_sample| %>
+                <div class="text-primary mb-3 font-weight-bold">
+                  <i class="fas fa-download"></i>
+                  <%= link_to work_sample.filename, rails_blob_path(work_sample, disposition: :attachment) %>
+                </div>
+              <% end %>
             <% end %>
             <hr>
             <% if job_application.available_during_work_hours.present? %>
