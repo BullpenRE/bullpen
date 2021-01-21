@@ -32,26 +32,26 @@
 
   <div class="bp-card mb-3">
     <h2>Preferences</h2>
-    <div class="d-flex mb-3">
+    <div class="d-flex mb-3 send_email">
       <div class="mr-auto pr-2">Send me an email when a new job is posted</div>
       <div class="text-secondary font-weight-bold checkbox-state">
         Off
       </div>
       <div class="ml-2">
         <label class="switch">
-          <input type="checkbox">
+          <input id="send-email" type="checkbox">
           <span class="slider round"></span>
         </label>
       </div>
     </div>
-    <div class="d-flex">
+    <div class="d-flex show_profile">
       <div class="mr-auto pr-2">Show my profile to employers searching for talent</div>
       <div class="text-secondary font-weight-bold checkbox-state">
         Off
       </div>
       <div class="ml-2">
         <label class="switch">
-          <input type="checkbox">
+          <input id="show-profile" type="checkbox">
           <span class="slider round"></span>
         </label>
       </div>
@@ -119,7 +119,7 @@
 
   $(document).on('turbolinks:load', function (e) {
     $(document).on('change', '#send-email', function() {
-      const checkboxState = $(this).parents('tr').find('.checkbox-state');
+      const checkboxState = $(this).parents('.send_email').find('.checkbox-state');
       if ($(this).prop("checked")) {
         checkboxState.text('On');
         const response = sendAjax('new_jobs_alert', true);
@@ -131,7 +131,7 @@
       }
     });
     $(document).on('change', '#show-profile', function() {
-      const checkboxState = $(this).parents('tr').find('.checkbox-state');
+      const checkboxState = $(this).parents('.show_profile').find('.checkbox-state');
       if ($(this).prop("checked")) {
         checkboxState.text('On');
         const response = sendAjax('searchable', true);
