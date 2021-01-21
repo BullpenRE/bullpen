@@ -121,6 +121,15 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   PATCH      /admin/jobs/:id(.:format)                                                                admin/jobs#update
                                                   PUT        /admin/jobs/:id(.:format)                                                                admin/jobs#update
                                                   DELETE     /admin/jobs/:id(.:format)                                                                admin/jobs#destroy
+                      batch_action_admin_messages POST       /admin/messages/batch_action(.:format)                                                   admin/messages#batch_action
+                                   admin_messages GET        /admin/messages(.:format)                                                                admin/messages#index
+                                                  POST       /admin/messages(.:format)                                                                admin/messages#create
+                                new_admin_message GET        /admin/messages/new(.:format)                                                            admin/messages#new
+                               edit_admin_message GET        /admin/messages/:id/edit(.:format)                                                       admin/messages#edit
+                                    admin_message GET        /admin/messages/:id(.:format)                                                            admin/messages#show
+                                                  PATCH      /admin/messages/:id(.:format)                                                            admin/messages#update
+                                                  PUT        /admin/messages/:id(.:format)                                                            admin/messages#update
+                                                  DELETE     /admin/messages/:id(.:format)                                                            admin/messages#destroy
 destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_skills/:id/destroy_real_estate_skill(.:format)                        admin/real_estate_skills#destroy_real_estate_skill
             batch_action_admin_real_estate_skills POST       /admin/real_estate_skills/batch_action(.:format)                                         admin/real_estate_skills#batch_action
                          admin_real_estate_skills GET        /admin/real_estate_skills(.:format)                                                      admin/real_estate_skills#index
@@ -282,6 +291,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   DELETE     /employer/talent/:id(.:format)                                                           employer/talent#destroy
                        employer_interview_request POST       /employer/interview_request(.:format)                                                    employer/talent#interview_request
                     employer_like_job_application POST       /employer/like_job_application(.:format)                                                 employer/jobs#like_job_application
+                 employer_decline_job_application POST       /employer/decline_job_application(.:format)                                              employer/jobs#decline_job_application
                         public_freelancer_profile GET        /public/freelancer_profile/:slug(.:format)                                               public/freelancer_profile#show
                                        public_job GET        /public/job/:slug(.:format)                                                              public/job#show
                              public_apply_for_job GET        /public/apply_for_job(.:format)                                                          public/job#apply_for_job
@@ -335,6 +345,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                      freelancer_change_educations POST       /freelancer/change_educations(.:format)                                                  freelancer/profile#change_educations
                         freelancer_add_educations POST       /freelancer/add_educations(.:format)                                                     freelancer/profile#change_educations
                      freelancer_decline_interview POST       /freelancer/decline_interview(.:format)                                                  freelancer/interviews#decline_interview
+          freelancer_change_freelancer_basic_info POST       /freelancer/change_freelancer_basic_info(.:format)                                       freelancer/profile#change_freelancer_basic_info
                    freelancer_add_work_experience POST       /freelancer/add_work_experience(.:format)                                                freelancer/profile#change_work_experience
                 freelancer_change_work_experience POST       /freelancer/change_work_experience(.:format)                                             freelancer/profile#change_work_experience
                                 check_users_email POST       /check_users_email(.:format)                                                             check_email#check_users_email
