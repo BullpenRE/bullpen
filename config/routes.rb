@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     resources :talent
     post 'interview_request', to: 'talent#interview_request'
     post 'like_job_application', to: 'jobs#like_job_application'
+    post 'send_message', to: 'jobs#send_message'
     post 'decline_job_application', to: 'jobs#decline_job_application'
   end
 
