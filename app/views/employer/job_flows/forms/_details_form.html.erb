@@ -4,8 +4,8 @@
   <table class="table table-borderless table-sm">
     <tbody>
       <tr>
-        <td> <label class="h5">Contact Type <i class="far fa-question-circle text-primary"></i></label></td>
-        <td colspan="2"><label class="h5 rangePay">Hourly Pay Range <span class="font-weight-normal text-dark">($100-S150 recommended)</span></label></td>
+        <td> <label class="h5">Contract Type <i class="far fa-question-circle text-primary"></i></label></td>
+        <td colspan="2"><label class="h5 rangePay">Hourly Pay Range <span class="font-weight-normal text-dark rangePayRecomendation">($100-S150 recommended)</span></label></td>
       </tr>
       <tr>
         <td style="width: 33%">
@@ -45,19 +45,30 @@
   });
 
   function change_contract_type() {
-    const retainer_fee_recommendations = { 'monthly_retainer_20': '$3,000', 'monthly_retainer_40': '$4,500', 'monthly_retainer_60': '$7,000'  };
-    const recommendation = retainer_fee_recommendations[$("#job_contract_type").val()];
+    const required_experience = '<%= @job.required_experience %>'
+    const recommendation = retainer_fee_recommendations(required_experience)[$("#job_contract_type").val()];
+    const hourly_recommendation = retainer_fee_recommendations(required_experience)['hourly'];
 
-    if ($("#job_contract_type").val() == 'hourly'){
+    if ($("#job_contract_type").val() == 'hourly' || !$("#job_contract_type").val()){
       $('#job_pay_range_high').removeClass('d-none');
       $('#job_pay_range_low').attr("placeholder", "$ Low");
-      $('.rangePay').html('Hourly Pay Range <span class="font-weight-normal text-dark">($100-S150 recommended)</span>')
+      $('.rangePay').html('Hourly Pay Range <span class="font-weight-normal text-dark">(' + hourly_recommendation + ' recommended)</span>')
     } else {
       $('#job_pay_range_high').addClass('d-none');
       $('#job_pay_range_low').attr("placeholder", "$ Monthly amount");
       if(recommendation) {
         $('.rangePay').html('Monthly Retainer Fee <span class="font-weight-normal text-dark">(' + recommendation + ' recommended)</span>');
       }
+    }
+  };
+
+  function retainer_fee_recommendations(required_experience) {
+    if (required_experience == 'senior') {
+      return { 'hourly': '$115 - $185', 'monthly_retainer_20': '$2,300 - $3,700', 'monthly_retainer_40': '$4,140 - $6,660', 'monthly_retainer_60': '$7,360 - $11,840' }
+    } else if (required_experience == 'intermediate'){
+      return { 'hourly': '$75 - $125', 'monthly_retainer_20': '$1,500 - $2,500', 'monthly_retainer_40': '$2,700 - $4,500', 'monthly_retainer_60': '$4,800 - $8,000' }
+    } else {
+      return { 'hourly': '$40 - $85', 'monthly_retainer_20': '$800 - $1,700', 'monthly_retainer_40': '$1,440 - $3,060', 'monthly_retainer_60': '$2,560 - $5,440' }
     }
   };
 
