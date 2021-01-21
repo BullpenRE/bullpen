@@ -5,7 +5,7 @@ class CreateJobApplication < ActiveRecord::Migration[6.0]
       t.references :user, index: true, foreign_key: true
       t.text :cover_letter
       t.boolean :template, default: false
-      t.integer :per_hour_bid
+      t.integer :bid_amount
       t.boolean :available_during_work_hours
       t.integer :state
 
