@@ -215,7 +215,7 @@ ActiveRecord::Schema.define(version: 2021_01_19_204227) do
     t.bigint "job_id"
     t.bigint "user_id"
     t.boolean "template", default: false
-    t.integer "per_hour_bid"
+    t.integer "bid_amount"
     t.boolean "available_during_work_hours"
     t.integer "state"
     t.datetime "created_at", precision: 6, null: false

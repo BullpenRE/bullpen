@@ -99,6 +99,7 @@
                                                                          job_application: job_application,
                                                                          editable: false } %>
                 <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
+                <%= render partial: 'employer/jobs/send_message', locals: { job_application: job_application } %>
                 <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
                 <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
                   <div class="d-block p-1 d-sm-inline-block mt-1">
@@ -107,7 +108,7 @@
                     </div>
                   </div>
                   <div class="d-block p-1 d-sm-inline-block">
-                    <button class="btn btn-primary">Make an Offer</button>
+                    <button class="btn btn-primary container-fluid">Make an Offer</button>
                   </div>
                   <div class="dropdown">
                     <button class="btn btn-outline-primary dropdown-toggle pr-1 mt-1 container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -117,7 +118,7 @@
                       <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#previewApplicationDropdown-<%= job_application.id %>">
                         Show Application
                       </button>
-                      <button class="dropdown-item" type="button"  data-toggle="modal" data-target="">
+                      <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#sendMessage<%= job_application.id %>">
                         Send a Message
                       </button>
                       <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="#declineJobApplication<%= job_application.id %>">
