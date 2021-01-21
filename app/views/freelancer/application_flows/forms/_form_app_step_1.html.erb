@@ -1,3 +1,6 @@
+<!--Modals:-->
+<!--app/views/freelancer/application_flows/_job_app_step_1.html.erb-->
+
 <%= form_for :job_application, url: wizard_path, method: :put, remote: true do |f| %>
 <div class="modal-body pt-0">
   <%= f.hidden_field :job_application_id, value: job_application.id %>
