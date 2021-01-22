@@ -5,6 +5,7 @@ class Freelancer::AccountController < ApplicationController
 
   def index
     freelancer_profile
+    @sectors = Sector.enabled.pluck(:description, :id)
   end
 
   private

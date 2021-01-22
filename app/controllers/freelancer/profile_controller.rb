@@ -52,7 +52,7 @@ class Freelancer::ProfileController < ApplicationController
 
     change_freelancer_sectors
 
-    redirect_after_change_profile
+    params[:reference_path].present? ? redirect_to(params[:reference_path]) : redirect_after_change_profile
   end
 
   def change_work_experience
