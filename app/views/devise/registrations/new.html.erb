@@ -42,7 +42,7 @@
               </ul>
             </div>
           </div>
-          <%= f.password_field :password, class: 'show_password_content form-control', id: 'user_password' %>
+          <%= f.password_field :password, class: 'show_password_content form-control', id: 'user_password', pattern: "(?=.*[!@#$%^&*\?\+\-])(?=.*[A-Z]).{8,}", required: true %>
           <span toggle="#user_password" class="field-icon toggle-password"><i class="fas fa-fw fa-eye" aria-hidden="true"></i></span>
         </div>
         <div class="field mb-3 text-left">
@@ -99,10 +99,8 @@
 
     $('.role').on('change', function() {
       if( $('.role:checked').val() === 'employer') {
-        console.log("Showing Phone Number");
         $('.phone_number_block').slideDown();
       } else {
-        console.log("Hiding Phone Number");
         $('.phone_number_block').slideUp();
       }
     });
@@ -111,8 +109,8 @@
   function validateFormOnSubmit() {
     let form = $("#signup-form");
     $('#submit_button').on('click', function(event) {
-      console.log("Submit button pushed. form[0].checkValidity()", form[0].checkValidity());
-      if (form[0].checkValidity() === false || passwordIsInvalid()) {
+      const password_fails = passwordIsInvalid();
+      if (form[0].checkValidity() === false || password_fails) {
         event.preventDefault();
         event.stopPropagation();
       }
@@ -153,11 +151,6 @@
     flagAttribute($('#number'), password.match(numbers));
     flagAttribute($('#length'), password.length >= 8);
 
-    if($('#password_criteria').children().find($('.invalid')).length > 0) {
-      // TODO: if we can figure out how to make the password box red, do it here.
-      return(true);
-    } else {
-      return(false);
-    }
+    return($('#password_criteria').children().find($('.invalid')).length > 0);
   }
 </script>
