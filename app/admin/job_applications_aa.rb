@@ -2,8 +2,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
   ActiveAdmin.register JobApplication do
     menu label: 'Job Applications'
 
-    permit_params :job_id, :user_id, :cover_letter, :template, :per_hour_bid, :available_during_work_hours,
-                  :state, :work_sample, :applied_at
+    permit_params :job_id, :user_id, :cover_letter, :template, :bid_amount, :available_during_work_hours,
+                  :state, :work_sample, :applied_at, work_samples: []
     includes :job, :user
 
     filter :job_short_description, as: :string, label: 'Job description'
@@ -21,7 +21,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       end
       column :state
       column :template
-      column :per_hour_bid
+      column :bid_amount
       column :liked
       column :available_during_work_hours
       column :created_at
@@ -44,27 +44,33 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
           application.cover_letter.body.to_s
         end
         row :template
-        row :per_hour_bid
+        row :bid_amount
         row :available_during_work_hours
         row :state
         row :liked
-        row :work_sample do |jap|
-          if jap.work_sample.attached?
-            if jap.work_sample.previewable?
-              image_tag jap.work_sample.preview(resize: "400x400")
-            elsif jap.work_sample.variable?
-              image_tag jap.work_sample.variant(resize: "400x400")
-            else
-              link_to jap.work_sample.filename, rails_blob_path(jap.work_sample, disposition: :attachment)
+        row :work_samples do |jap|
+          if jap.work_samples.attached?
+            jap.work_samples.each do |work_sample|
+              columns do
+                column do
+                  if work_sample.previewable?
+                    image_tag work_sample.preview(resize: '400x400')
+                  else
+                    link_to work_sample.filename, rails_blob_path(work_sample, disposition: :attachment)
+                  end
+                end
+                column do
+                  button_to 'Delete work sample',
+                            destroy_work_sample_admin_job_application_path(
+                              id: job_application.id,
+                              destroy_work_sample_id: work_sample.signed_id
+                            ),
+                            action: :post,
+                            data: { confirm: 'Are you sure?' }
+                end
+              end
             end
-          end
-        end
-        row ' ' do |job_application|
-          if job_application.work_sample.attached?
-            button_to 'Delete work sample',
-                      "/admin/job_applications/#{job_application.id}/destroy_work_sample",
-                      action: :post,
-                      data: { confirm: 'Are you sure?' }
+            nil
           end
         end
         row :applied_at
@@ -84,21 +90,21 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       end
     end
 
-    form do |f|
-      f.inputs "Job Application" do
+    form html: { multipart: true } do |f|
+      f.inputs 'Job Application' do
         f.input :job,
                 as: :select,
-                collection: Job.find_each.map{|j| ["#{j.title} - #{j.user.email}", j.id]}
+                collection: Job.find_each.map { |j| ["#{j.title} - #{j.user.email}", j.id] }
         f.input :user,
                 as: :select, input_html: { class: "select2" },
                 collection: User.freelancer.order(:email).pluck(:email, :id)
         f.input :liked
         f.input :cover_letter, as: :text
         f.input :template
-        f.input :per_hour_bid
+        f.input :bid_amount
         f.input :available_during_work_hours
-        f.inputs "Work Sample" do
-          f.input :work_sample, as: :file, required: false
+        f.inputs do
+          f.input :work_samples, as: :file, required: false, input_html: { multiple: true }
         end
         f.input :state
         f.input :applied_at
@@ -106,12 +112,21 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       end
     end
 
-    member_action :destroy_work_sample, method: :post do
-      job_application = JobApplication.find(params[:id])
-      job_application.work_sample.purge_later
-      redirect_to admin_job_application_path(job_application.id), { notice: 'Work Sample deleted.' }
+    controller do
+      def update
+        super do |success, failure|
+          success.html { render action: :view }
+          failure.html { render action: :edit }
+        end
+      end
     end
 
+    member_action :destroy_work_sample, method: :post do
+      blob = ActiveStorage::Blob.find_signed(params[:destroy_work_sample_id])
+      job_application = JobApplication.find(params[:id])
+      blob.attachments[0].purge_later
+      redirect_to admin_job_application_path(job_application.id), { notice: 'Work Sample deleted.' }
+    end
   end
 end
 
