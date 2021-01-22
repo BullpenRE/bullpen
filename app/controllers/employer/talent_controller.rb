@@ -21,8 +21,22 @@ class Employer::TalentController < ApplicationController
   end
 
   def interview_request
-    @interview_request = current_user.employer_profile.interview_requests.create(interview_request_params)
+    if interview_id.present?
+      @interview_request = current_user.employer_profile.interview_requests.find(interview_id.to_i)
+      @interview_request.update(message: params[:interview_request][:message])
 
+      redirect_to employer_interviews_path
+    else
+      @interview_request = current_user.employer_profile.interview_requests.create(interview_request_params)
+      interview_request_flash_notice
+
+      redirect_to employer_talent_index_path
+    end
+  end
+
+  private
+
+  def interview_request_flash_notice
     if @interview_request.valid?
       FreelancerMailer.interview_request(@interview_request).deliver_now
 
@@ -33,11 +47,11 @@ class Employer::TalentController < ApplicationController
     else
       flash[:alert] = 'Something went wrong when trying to submit your interview request'
     end
-
-    redirect_to employer_talent_index_path
   end
 
-  private
+  def interview_id
+    params[:interview_request][:interview_id]
+  end
 
   def interview_request_params
     params.require(:interview_request).permit(:freelancer_profile_id, :state, :message)

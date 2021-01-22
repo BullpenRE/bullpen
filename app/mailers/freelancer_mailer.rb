@@ -31,4 +31,10 @@ class FreelancerMailer < ApplicationMailer
     freelancer_email = job_application.user.email
     mail(to: freelancer_email, subject: "#{job_application.job.title} is no longer available")
   end
+
+  def interview_request_was_withdrawn(interview_request)
+    @interview_request = interview_request
+    freelancer_email = interview_request.freelancer_profile.user.email
+    mail(to: freelancer_email, subject: "Interview request withdrawn")
+  end
 end
