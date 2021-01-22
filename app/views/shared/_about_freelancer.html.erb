@@ -1,7 +1,7 @@
 <div class="mr-auto">
   <div class="d-flex flex-sm-row flex-column">
     <% if freelancer_profile.avatar.attached? %>
-      <div class="text-light mr-2 avatar-image" style="line-height: 0;">
+      <div class="text-light mr-2 avatar-image text-center" style="line-height: 0; margin-bottom: 20px;">
         <%= image_tag freelancer_profile.avatar, class: 'rounded-circle', width: '80px', height: '80px' %>
       </div>
     <% else %>
@@ -14,8 +14,9 @@
         </div>
         <% if editable %>
           <div class="d-flex-col ml-auto">
-            <i class="fas fa-edit text-primary"></i>
+            <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editProfileModal-<%= freelancer_profile.id %>"></button>
           </div>
+          <%= render 'freelancer/shared/edit_basic_info', freelancer_profile: freelancer_profile, reference_path: '' %>
         <% end %>
       </div>
       <div class="bp-text-sm mb-3 text-wrap text-break">

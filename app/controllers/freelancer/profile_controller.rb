@@ -9,6 +9,7 @@ class Freelancer::ProfileController < ApplicationController
   def index
     real_estate_skills
     certifications
+    sectors
   end
 
   def change_skills
@@ -41,10 +42,30 @@ class Freelancer::ProfileController < ApplicationController
     redirect_after_change_profile
   end
 
+  def change_freelancer_basic_info
+    first_name = params[:freelancer_profile][:first_name]
+    last_name = params[:freelancer_profile][:last_name]
+    location = params[:freelancer_profile][:location]
+
+    @freelancer_profile.user.update(first_name: first_name, last_name: last_name, location: location)
+    @freelancer_profile.update(change_basic_info_params)
+
+    change_freelancer_sectors
+
+    params[:reference_path].present? ? redirect_to(params[:reference_path]) : redirect_after_change_profile
+  end
+
   def change_work_experience
     work_experience_save
 
     redirect_after_change_profile
+  end
+
+  def change_freelancer_sectors
+    freelancer_profile&.freelancer_sectors&.destroy_all
+    sectors_params&.each do |sector|
+      freelancer_profile.freelancer_sectors.create(sector_id: sector)
+    end
   end
 
   private
@@ -67,11 +88,24 @@ class Freelancer::ProfileController < ApplicationController
     params[:freelancer_softwares][:freelancer_softwares]
   end
 
+  def change_basic_info_params
+    params.require(:freelancer_profile)
+          .permit(:professional_title, :professional_years_experience, :professional_summary, :desired_hourly_rate)
+  end
+
   def real_estate_skills
     @real_estate_skills ||= RealEstateSkill.enabled.pluck(:description, :id)
   end
 
   def certifications
     @certifications ||= Certification.enabled.pluck(:description, :id)
+  end
+
+  def sectors
+    @sectors ||= Sector.enabled.pluck(:description, :id)
+  end
+
+  def sectors_params
+    params[:freelancer_profile][:freelancer_sectors]&.reject(&:blank?)
   end
 end
