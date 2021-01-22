@@ -31,8 +31,6 @@ Rails.application.routes.draw do
   get '/promo/:promo_code', to: 'signup_promos#show'
 
   resources :avatar, only: %i[update destroy]
-  resources :work_sample, only: :update
-  post '/work_sample/destroy', to: 'work_sample#destroy_work_sample'
   resources :freelancer_profile_steps
   resources :employer_profile_steps
 
@@ -48,6 +46,7 @@ Rails.application.routes.draw do
     resources :talent
     post 'interview_request', to: 'talent#interview_request'
     post 'like_job_application', to: 'jobs#like_job_application'
+    post 'send_message', to: 'jobs#send_message'
     post 'decline_job_application', to: 'jobs#decline_job_application'
   end
 
@@ -62,9 +61,16 @@ Rails.application.routes.draw do
     resources :jobs
     resources :applications
     resources :application_flows
+    put 'application_flows/:job_app/add_work_samples',
+        to: 'application_flows#add_work_samples',
+        as: 'add_work_samples'
+    post 'application_flows/:job_app/destroy_work_sample',
+         to: 'application_flows#destroy_work_sample',
+         as: 'destroy_work_sample'
     resources :interviews
     resources :contracts
     resources :profile, only: :index
+    resources :account, only: :index
     post 'set_withdrawn', to: 'applications#set_withdrawn'
     post 'change_software_licence', to: 'profile#change_software_licence'
     post 'change_certifications', to: 'profile#change_certifications'
@@ -73,6 +79,7 @@ Rails.application.routes.draw do
     post 'change_educations', to: 'profile#change_educations'
     post 'add_educations', to: 'profile#change_educations'
     post 'decline_interview', to: 'interviews#decline_interview'
+    post 'change_freelancer_basic_info', to: 'profile#change_freelancer_basic_info'
     post 'add_work_experience', to: 'profile#change_work_experience'
     post 'change_work_experience', to: 'profile#change_work_experience'
   end
