@@ -52,9 +52,11 @@ class Freelancer::ProfileController < ApplicationController
 
     change_freelancer_sectors
 
-    change_basic_info_params[:account_page] == 'true' ?
-      redirect_to(freelancer_account_index_path) :
+    if change_basic_info_params[:account_page] == 'true'
+      redirect_to(freelancer_account_index_path)
+    else
       redirect_after_change_profile
+    end
   end
 
   def change_work_experience
