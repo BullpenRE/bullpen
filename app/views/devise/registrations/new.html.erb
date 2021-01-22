@@ -42,17 +42,17 @@
               </ul>
             </div>
           </div>
-          <%= f.password_field :password, class: 'form-control show_password_content', id: 'user_password', required: true %>
+          <%= f.password_field :password, class: 'show_password_content form-control', id: 'user_password' %>
           <span toggle="#user_password" class="field-icon toggle-password"><i class="fas fa-fw fa-eye" aria-hidden="true"></i></span>
         </div>
         <div class="field mb-3 text-left">
           <%= f.label :role, 'Make a Selection', class: "h5" %>
           <div class="custom-control custom-radio" id="hide_phone_number">
-            <%= f.radio_button :role, User.roles[:freelancer], id: 'user_role_freelancer', class: 'custom-control-input', required: true %>
+            <%= f.radio_button :role, 'freelancer', id: 'user_role_freelancer', class: 'custom-control-input role', required: true %>
             <%= f.label :role, 'I want to find jobs as a freelancer', for: 'user_role_freelancer', class: 'custom-control-label' %>
           </div>
           <div class="custom-control custom-radio" id="show_phone_number">
-            <%= f.radio_button :role, User.roles[:employer], id: 'user_role_employer', class: 'custom-control-input', required: true %>
+            <%= f.radio_button :role, 'employer', id: 'user_role_employer', class: 'custom-control-input role', required: true %>
             <%= f.label :role, ' I want to hire talent as an employer', for: 'user_role_employer', class: 'custom-control-label' %>
           </div>
         </div>
@@ -76,7 +76,7 @@
           </a>, and <a href="https://stripe.com/connect-account/legal">Stripe's Connected Accounts Authorization</a>
         </div>
         <div class="actions mt-3">
-          <%= f.submit 'Create Account', class: 'btn btn-primary btn-block', id: 'submit_button', onclick: 'return checkPasswordValidity()' %>
+          <%= f.submit 'Create Account', class: 'btn btn-primary btn-block', id: 'submit_button' %>
         </div>
       <% end %>
 
@@ -89,22 +89,30 @@
 
 <script>
   $(function() {
-    $('#show_phone_number').on('click', function() {
-      $('.phone_number_block').slideDown();
-    });
-    $('#hide_phone_number').on('click', function() {
-      $('#user_role_freelancer').val('');
-      $('.phone_number_block').slideUp();
-    });
-
-    passwordToggling();
-    formValidation();
+    showOrHidePhoneNumber();
+    showOrHidePassword();
+    validateFormOnSubmit();
   });
 
-  function formValidation() {
+  function showOrHidePhoneNumber() {
+    $('.phone_number_block').hide();
+
+    $('.role').on('change', function() {
+      if( $('.role:checked').val() === 'employer') {
+        console.log("Showing Phone Number");
+        $('.phone_number_block').slideDown();
+      } else {
+        console.log("Hiding Phone Number");
+        $('.phone_number_block').slideUp();
+      }
+    });
+  }
+
+  function validateFormOnSubmit() {
     let form = $("#signup-form");
     $('#submit_button').on('click', function(event) {
-      if (form[0].checkValidity() === false) {
+      console.log("Submit button pushed. form[0].checkValidity()", form[0].checkValidity());
+      if (form[0].checkValidity() === false || passwordIsInvalid()) {
         event.preventDefault();
         event.stopPropagation();
       }
@@ -112,7 +120,7 @@
     });
   }
 
-  function passwordToggling() {
+  function showOrHidePassword() {
     $('.toggle-password').on('click', function() {
       $(this).find('svg').toggleClass('fa-eye fa-eye-slash');
       let input = $($(this).attr('toggle'));
@@ -126,38 +134,30 @@
 
   function flagAttribute(obj, valid) {
     if(valid) {
-      obj.addClass('valid');
-      obj.removeClass('invalid');
+      obj.addClass('valid').removeClass('invalid');
     } else {
-      obj.addClass('invalid');
-      obj.removeClass('valid');
+      obj.addClass('invalid').removeClass('valid');
     }
   }
 
 
-  function checkPasswordValidity() {
+  function passwordIsInvalid() {
     const password = $('#user_password').val();
 
-    // Validate lowercase letters
-    const specialCharacters = /[!@#$%^&*\?\+\-]/g;
+    const specialCharacters = /[!@#$%^&*\?\+\-]/g; // Validate lowercase letters
+    const upperCaseLetters = /[A-Z]/g; // Validate capital letters
+    const numbers = /[0-9]/g; // Validate numbers
+
     flagAttribute($('#special'), password.match(specialCharacters));
-
-    // Validate capital letters
-    const upperCaseLetters = /[A-Z]/g;
     flagAttribute($('#capital'), password.match(upperCaseLetters));
-
-    // Validate numbers
-    const numbers = /[0-9]/g;
     flagAttribute($('#number'), password.match(numbers));
-
-    // Validate length
     flagAttribute($('#length'), password.length >= 8);
 
     if($('#password_criteria').children().find($('.invalid')).length > 0) {
-      // Trigger password to being invalid here.
-      return(false);
-    } else {
+      // TODO: if we can figure out how to make the password box red, do it here.
       return(true);
+    } else {
+      return(false);
     }
   }
 </script>

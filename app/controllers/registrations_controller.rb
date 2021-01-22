@@ -4,7 +4,6 @@ class RegistrationsController < Devise::RegistrationsController
   include LoggedInRedirects
   before_action :configure_sign_up_params, only: [:create]
   before_action :check_signed_in
-  # before_action :configure_account_update_params, only: [:update]
 
   def new
     redirect_to root_path unless session[:email].present?
