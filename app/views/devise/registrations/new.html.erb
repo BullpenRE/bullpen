@@ -42,8 +42,14 @@
               </ul>
             </div>
           </div>
-          <%= f.password_field :password, class: 'show_password_content form-control', id: 'user_password', pattern: "(?=.*[!@#$%^&*\?\+\-])(?=.*[A-Z]).{8,}", required: true %>
-          <span toggle="#user_password" class="field-icon toggle-password"><i class="fas fa-fw fa-eye" aria-hidden="true"></i></span>
+          <div class="input-group">
+            <%= f.password_field :password, class: 'show_password_content form-control', id: 'user_password', pattern: "(?=.*[!@#$%^&*\?\+\-])(?=.*[A-Z]).{8,}", required: true %>
+            <div class="input-group-append">
+              <span toggle="#user_password" id="password_eye_icon" class="input-group-text">
+                <i class="fas fa-fw fa-eye"></i>
+              </span>
+            </div>
+          </div>
         </div>
         <div class="field mb-3 text-left">
           <%= f.label :role, 'Make a Selection', class: "h5" %>
@@ -119,7 +125,7 @@
   }
 
   function showOrHidePassword() {
-    $('.toggle-password').on('click', function() {
+    $('#password_eye_icon').on('click', function() {
       $(this).find('svg').toggleClass('fa-eye fa-eye-slash');
       let input = $($(this).attr('toggle'));
       if (input.attr('type') === 'password') {
