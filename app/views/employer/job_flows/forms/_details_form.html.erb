@@ -1,3 +1,5 @@
+<!--app/views/employer/job_flows/_post_job_step_4.html.erb-->
+
 <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
   <%= f.hidden_field :job_id, value: @job.id %>
   <%= f.hidden_field 'step', value: 'post_job_step_4' %>
