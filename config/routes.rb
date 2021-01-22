@@ -70,6 +70,7 @@ Rails.application.routes.draw do
     resources :interviews
     resources :contracts
     resources :profile, only: :index
+    resources :account, only: :index
     post 'set_withdrawn', to: 'applications#set_withdrawn'
     post 'change_software_licence', to: 'profile#change_software_licence'
     post 'change_certifications', to: 'profile#change_certifications'
@@ -78,6 +79,7 @@ Rails.application.routes.draw do
     post 'change_educations', to: 'profile#change_educations'
     post 'add_educations', to: 'profile#change_educations'
     post 'decline_interview', to: 'interviews#decline_interview'
+    post 'change_freelancer_basic_info', to: 'profile#change_freelancer_basic_info'
     post 'add_work_experience', to: 'profile#change_work_experience'
     post 'change_work_experience', to: 'profile#change_work_experience'
   end
