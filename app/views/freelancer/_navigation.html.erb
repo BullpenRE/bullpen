@@ -33,7 +33,7 @@
         </li>
       </ul>
     </div>
-    <button class="navbar-toggler ml-2 text-light" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler ml-auto mr-2 text-light" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>
     </button>
 
@@ -48,6 +48,7 @@
         <i class="fas fa-chevron-down text-primary"></i>
       </span>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+        <%= link_to 'Manage Account', freelancer_account_index_path, class: 'dropdown-item', id: 'manage-account' %>
         <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: "dropdown-item" %>
       </div>
     </div>
