@@ -22,7 +22,7 @@ class Employer::TalentController < ApplicationController
 
   def interview_request
     if interview_id.present?
-      @interview_request = current_user.employer_profile.interview_requests.find_by(id: interview_id.to_i)
+      @interview_request = current_user.employer_profile.interview_requests.find_by(id: interview_id)
       @interview_request.update(message: params[:interview_request][:message])
 
       redirect_to employer_interviews_path
