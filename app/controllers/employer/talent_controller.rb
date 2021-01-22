@@ -22,13 +22,13 @@ class Employer::TalentController < ApplicationController
 
   def interview_request
     if interview_id.present?
-      @interview_request = current_user.employer_profile.interview_requests.find(interview_id.to_i)
+      @interview_request = current_user.employer_profile.interview_requests.find_by(id: interview_id.to_i)
       @interview_request.update(message: params[:interview_request][:message])
 
       redirect_to employer_interviews_path
     else
       @interview_request = current_user.employer_profile.interview_requests.create(interview_request_params)
-      interview_request_flash_notice
+      email_interview_request
 
       redirect_to employer_talent_index_path
     end
@@ -36,7 +36,7 @@ class Employer::TalentController < ApplicationController
 
   private
 
-  def interview_request_flash_notice
+  def email_interview_request
     if @interview_request.valid?
       FreelancerMailer.interview_request(@interview_request).deliver_now
 
