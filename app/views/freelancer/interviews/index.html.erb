@@ -29,7 +29,7 @@
                   Decline
                 </button>
               <% elsif interview.accepted? %>
-                <button class="btn btn-primary my-3 my-md-1 mr-md-2" type="button"  data-toggle="modal" data-target="#sendMessage">
+                <button class="btn btn-primary my-3 my-md-1 mr-md-2" type="button"  data-toggle="modal" data-target="#sendMessage<%= interview.id %>">
                   Send Message
                 </button>
                 <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#remove<%= interview.id %>">
@@ -37,6 +37,7 @@
                 </button>
               <% end %>
               <%= render partial: 'freelancer/interviews/decline_interview_request', locals: { interview: interview } %>
+              <%= render partial: 'freelancer/interviews/send_message', locals: { interview: interview } %>
             </div>
           </div>
       </div>
