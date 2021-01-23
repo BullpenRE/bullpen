@@ -5,17 +5,18 @@
   <% @interviews.each do |interview| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: interview.freelancer_profile } %>
     <div id="interview-request">
-      <%= render partial: 'employer/talent/interview_request', locals: { freelancer_profile: interview.freelancer_profile } %>
+      <%= render partial: 'employer/talent/interview_request', locals: { freelancer_profile: interview.freelancer_profile, interview: interview  } %>
     </div>
     <div class="bp-card mb-3">
       <div class="d-flex justify-content-between flex-column flex-lg-row">
         <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: interview.freelancer_profile,
                                                                  job_application: nil,
                                                                  editable: false } %>
+        <%= render partial: 'employer/interviews/withdraw_request', locals: { interview_request: interview } %>
       <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
         <div class="ml-sm-auto">
           <div class="d-block d-sm-flex">
-            <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start mr-3">
+            <div class="bp-text-sm text-secondary font-weight-bold align-self-center align-self-start ml-1 mr-3">
               <%= interview.pending? ? 'Request Sent' : 'Request Accepted' %>
             </div>
             <div class="d-block p-1 d-sm-inline-block">
@@ -24,9 +25,8 @@
             <div class="dropdown p-1">
               <button class="btn btn-outline-primary dropdown-toggle pr-1" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More<i class="fas fa-chevron-down ml-1"></i></button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
-                  <button class="dropdown-item" type="button">Show Profile</button>
-                  <button class="dropdown-item" type="button">Make an Offer</button>
-                  <button class="dropdown-item text-danger" type="button">Remove</button>
+                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#interviewRequest<%= interview.freelancer_profile.id %>">Edit Request</button>
+                  <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#withdrawRequest<%= interview.id %>">Withdraw Request</button>
                </div>
             </div>
          </div>
