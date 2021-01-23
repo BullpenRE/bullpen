@@ -28,7 +28,7 @@
       <button class="fas fa-edit text-primary ml-auto" type="button" data-toggle="modal" data-target="#editProfileModal-<%= @freelancer_profile.id %>"></button>
     </div>
   </div>
-  <%= render 'freelancer/shared/edit_basic_info', freelancer_profile: @freelancer_profile, reference_path: 'freelancer_account_index_path' %>
+  <%= render 'freelancer/shared/edit_basic_info', freelancer_profile: @freelancer_profile, account_page: true %>
 
   <div class="bp-card mb-3">
     <h2>Preferences</h2>

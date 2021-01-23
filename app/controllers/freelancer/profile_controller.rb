@@ -52,7 +52,11 @@ class Freelancer::ProfileController < ApplicationController
 
     change_freelancer_sectors
 
-    params[:reference_path].present? ? redirect_to(params[:reference_path]) : redirect_after_change_profile
+    if change_basic_info_params[:account_page] == 'true'
+      redirect_to(freelancer_account_index_path)
+    else
+      redirect_after_change_profile
+    end
   end
 
   def change_work_experience
@@ -90,7 +94,11 @@ class Freelancer::ProfileController < ApplicationController
 
   def change_basic_info_params
     params.require(:freelancer_profile)
-          .permit(:professional_title, :professional_years_experience, :professional_summary, :desired_hourly_rate)
+          .permit(:professional_title,
+                  :professional_years_experience,
+                  :professional_summary,
+                  :account_page,
+                  :desired_hourly_rate)
   end
 
   def real_estate_skills

@@ -1,11 +1,50 @@
 <!--Edit Freelancer Profile Modal-->
 <style>
-    @media screen and (min-width: 360px) {
-        #avatarButtons {
-            margin-top: 20px;
-            text-align: center;
-        }
+  @media screen and (min-width: 360px) {
+    #avatarButtons {
+      margin-top: 20px;
+      text-align: center !important;
     }
+
+    .upload-avatar {
+      margin-right: 2px;
+    }
+
+    #uploadButton {
+      margin-bottom: 20px;
+      text-align: center !important;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .avatar-width-custom {
+      padding-right: 0;
+    }
+
+    #avatarButtons {
+      margin-top: 0;
+      flex: 0 0 65.5%;
+      max-width: 65.5%;
+      padding-left: 0;
+      text-align: left !important;
+    }
+
+    #uploadButton {
+      padding-left: 0;
+      align-self: center !important;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .avatar-width-custom {
+      flex: 0 0 14.5%;
+      max-width: 14.5%;
+    }
+
+    #avatarButtons {
+      padding-left: 5px;
+    }
+  }
 </style>
 <div class="modal fade" id="editProfileModal-<%= freelancer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -23,11 +62,12 @@
               <%= freelancer_profile.errors.full_messages.join(', ') %>
             </div>
         <% end %>
-        <%= form_for :freelancer_profile, url: freelancer_change_freelancer_basic_info_path(reference_path: reference_path) do |f| %>
+        <%= form_for :freelancer_profile, url: freelancer_change_freelancer_basic_info_path do |f| %>
+          <%= f.hidden_field :account_page, value: account_page %>
           <div class="row-md mb-4 avatar">
             <% if freelancer_profile.avatar.attached? %>
               <div class="row">
-                <div class="col-md-2 text-center">
+                <div class="col-md-3 text-center avatar-width-custom">
                   <div class="text-light avatar-image">
                     <%= image_tag freelancer_profile.avatar.variant(resize: "80x80!").processed, class: 'rounded-circle' %>
                   </div>
@@ -43,7 +83,7 @@
                       Upload photo
                     </label>
                     <button type="button" class="delete-avatar d-none" id="deleteProfilePic"></button>
-                    <label class="btn btn-outline-primary mr-2" for="deleteProfilePic">
+                    <label class="btn btn-outline-primary" for="deleteProfilePic">
                       Remove photo
                     </label>
                   </div>
@@ -51,12 +91,12 @@
               </div>
             <% else %>
               <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-2 avatar-width-custom">
                   <div class="text-light text-center" style="font-size: 80px;line-height: 0; margin-bottom: 20px;">
                     <i class="fas fa-user-circle"></i>
                   </div>
                 </div>
-                <div class="col-md-2 align-self-center text-center" id="uploadButton" style="margin-bottom: 20px;">
+                <div class="col-md-5 col-lg-2" id="uploadButton">
                   <div class="custom-file">
                     <%= f.file_field :freelancer_profile_avatar,
                                      multiple: false,
@@ -180,21 +220,7 @@
       placeholder: 'Select all that apply',
       allowClear: true
     });
-
-    if ($(document).width() > 360 && $(document).width() < 768) {
-      $('#avatarButtons').removeClass('col-md').addClass('col-md-5').addClass('text-center').css("margin-top", 20);
-      $('#uploadButton').css("padding-left", 20);
-    }
-    else if ($(document).width() == 768) {
-      $('#avatarButtons').removeClass('col-md-5').removeClass('text-center').addClass('col-md').css("padding-left", 40);
-      $('#uploadButton').removeClass('col-md-2').addClass('col-md-5').css("padding-left", 0);
-    }
-    else {
-      $('#avatarButtons').removeClass('col-md').addClass('col-md-5').css("padding-left", 0);
-      $('#uploadButton').css("padding-left", 0);
-    }
-  });
-
+  })
 </script>
 
 <%= render 'freelancer/shared/update_avatar' %>
