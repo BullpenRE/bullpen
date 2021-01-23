@@ -32,11 +32,12 @@
                 <button class="btn btn-primary my-3 my-md-1 mr-md-2" type="button"  data-toggle="modal" data-target="#sendMessage">
                   Send Message
                 </button>
-                <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#remove<%= interview.id %>">
+                <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#removeInterviewRequest<%= interview.id %>">
                   Remove
                 </button>
               <% end %>
               <%= render partial: 'freelancer/interviews/decline_interview_request', locals: { interview: interview } %>
+              <%= render partial: 'freelancer/interviews/remove_interview_request', locals: { interview: interview } %>
             </div>
           </div>
       </div>
