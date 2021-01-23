@@ -25,6 +25,13 @@ class Freelancer::InterviewsController < ApplicationController
     EmployerMailer.interview_request_declined(@interview_request).deliver_now
   end
 
+  def accept_request
+    @interview_request = current_user.freelancer_profile.interview_requests.find_by(id: params[:id])
+    @interview_request.update(state: 'accepted')
+    flash[:notice] = "You have accepted the interview with #{@interview_request.employer_profile.full_name}. "\
+                     'Select Send Message to introduce yourself and arrange a meeting.'
+  end
+
   private
 
   def interview_requests_collection
