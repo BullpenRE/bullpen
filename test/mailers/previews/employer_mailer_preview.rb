@@ -11,4 +11,8 @@ class EmployerMailerPreview < ActionMailer::Preview
   def interview_request_declined
     EmployerMailer.interview_request_declined(InterviewRequest.first)
   end
+
+  def send_message
+    EmployerMailer.send_message(Message.find_by(from_user: User.freelancers))
+  end
 end

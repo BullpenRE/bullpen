@@ -37,6 +37,14 @@ class Freelancer::InterviewsController < ApplicationController
     @interview_request.update(hide_from_freelancer: true)
   end
 
+  def send_message
+    @message = Message.create(message_params)
+    flash[:notice] = "Your message has been sent to #{@message.to_user.full_name} with you on copy."
+    EmployerMailer.send_message(@message).deliver_now
+
+    redirect_to freelancer_interviews_path
+  end
+
   private
 
   def interview_requests_collection
@@ -55,5 +63,13 @@ class Freelancer::InterviewsController < ApplicationController
 
   def delete_session_variable
     session.delete(:view_interview_request)
+  end
+
+  def message_params
+    {
+      to_user_id: params[:message][:to_user].to_i,
+      from_user: current_user,
+      description: params[:message][:description]
+    }
   end
 end
