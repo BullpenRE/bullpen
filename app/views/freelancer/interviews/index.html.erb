@@ -12,26 +12,47 @@
               <div class="mr-auto"><h2 class="mb-1"><%= interview.employer_profile.user.full_name %></h2></div>
               <div class="bp-text-sm mb-1"><br>
                 <%= interview.employer_profile.company_name %><br>
-                <%= interview.employer_profile.company_website %><br><br>
+                <%= link_to interview.employer_profile.company_website, interview.employer_profile.company_website, target: :_blank %><br><br>
                 <p> It will be a message from the employer </p>
-                <p>Sent on <%= distance_of_time_in_words(interview.created_at, Time.now) %></p>
+                <p>Sent on <%= time_ago_in_words(interview.created_at) %> ago</p>
               </div>
             </div>
             <div class="d-flex flex-column align-self-lg-baseline flex-md-row my-2 my-lg-0">
               <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
                 <%= interview.state.capitalize %><%= ' Request' if interview.pending? %>
               </div>
-              <button class="btn btn-primary my-3 my-md-1 mr-md-2" type="button"  data-toggle="modal" data-target="#showJobPost">
-                Accept Request
-              </button>
-              <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#declineInterviewRequest<%= interview.id %>">
-                Decline
-              </button>
+              <% if interview.pending? %>
+                <button class="btn btn-primary my-3 my-md-1 mr-md-2 accept_request<%= interview.id %>" type="button">
+                  Accept Request
+                </button>
+                <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#declineInterviewRequest<%= interview.id %>">
+                  Decline
+                </button>
+              <% elsif interview.accepted? %>
+                <button class="btn btn-primary my-3 my-md-1 mr-md-2" type="button"  data-toggle="modal" data-target="#sendMessage">
+                  Send Message
+                </button>
+                <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#remove<%= interview.id %>">
+                  Remove
+                </button>
+              <% end %>
               <%= render partial: 'freelancer/interviews/decline_interview_request', locals: { interview: interview } %>
             </div>
           </div>
       </div>
     </div>
+    <script>
+      $('.accept_request<%= interview.id %>').on('click', () => {
+        $.ajax({
+          url: '/freelancer/accept_request',
+          method: 'POST',
+          data: { id: <%= interview.id %> },
+          success: () => {
+            document.location.reload();
+          }
+        })
+      })
+    </script>
   <% end %>
   <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
 </div>
@@ -42,5 +63,4 @@
   const open_interview = urlParams.get('view_interview_request');
   $('html,body').animate({scrollTop: $('.card' + open_interview).offset().top},'slow');
 </script>
-
 
