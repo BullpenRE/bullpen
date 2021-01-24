@@ -23,11 +23,11 @@ class JoinController < ApplicationController
   end
 
   def check_existing_email
-    return unless User.find_by(email: user_email)
+    return if user_email.blank? || User.find_by(email: user_email).nil?
 
-    flash[:notice] = I18n.t 'devise.registrations.already_exists',
+    flash[:notice] = I18n.t('devise.registrations.already_exists',
                             email: user_email,
-                            path: new_user_session_path(email: user_email)
+                            path: new_user_session_path(email: user_email))
 
     redirect_to join_path
   end
