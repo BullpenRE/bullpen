@@ -17,6 +17,7 @@ class Employer::TalentController < ApplicationController
     end
     @current_user_interview_request_freelancer_ids = current_user.employer_profile
                                                                  .interview_requests
+                                                                 .not_rejected
                                                                  .pluck(:freelancer_profile_id)
   end
 
@@ -24,6 +25,7 @@ class Employer::TalentController < ApplicationController
     if interview_id.present?
       @interview_request = current_user.employer_profile.interview_requests.find_by(id: interview_id)
       @interview_request.update(message: params[:interview_request][:message])
+      @interview_request.update(state: 'pending') if @interview_request.withdrawn? || @interview_request.declined?
 
       redirect_to employer_interviews_path
     else
