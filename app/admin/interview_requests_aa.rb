@@ -39,7 +39,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
         row 'Message' do
           interview_request.message.body.to_s
         end
-        row :Hide_From_Freelancer
+        row :hide_from_freelancer
       end
       active_admin_comments
     end
