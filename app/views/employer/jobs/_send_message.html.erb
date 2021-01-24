@@ -1,4 +1,4 @@
-<div class="modal" id="sendMessage<%= job_application.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+<div class="modal" id="sendMessage<%= job_application.present? ? job_application.id : interview.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <!--  Header with '×'-->
@@ -11,20 +11,20 @@
       <!--Send Message Card-->
       <div class="modal-body py-0">
         <%= form_for :message, url:  employer_send_message_path do |f| %>
-          <%= f.hidden_field :to_user, value: job_application.user_id %>
-          <%= f.hidden_field :job_id, value: job_application.job_id %>
-        <div class="form-group mb-3">
-          <label for="addPersonalMessageTextArea" class="h5">
-            Message
-          </label>
-        <div class="w-100">
-          <%= f.rich_text_area :description, class: "form-control mb-3", id: "addPersonalMessageTextArea", placeholder: "Enter your message", rows: "8", maxlength: "5000" %>
-        </div>
-        <p> An email will be sent with you on copy.</p>
-        <div class="d-flex justify-content-end">
-          <%= f.submit 'Send Message', class: 'btn btn-primary mt-3 send-invitation' %>
-        </div>
-      </div>
+          <%= f.hidden_field :to_user, value: job_application.present? ? job_application.user_id : interview.freelancer_profile.user_id %>
+          <%= f.hidden_field :job_title, value: job_application.present? ? job_application.job.title : '' %>
+          <div class="form-group mb-3">
+            <label for="addPersonalMessageTextArea" class="h5">
+              Message
+            </label>
+            <div class="w-100">
+              <%= f.rich_text_area :description, class: "form-control mb-3", id: "addPersonalMessageTextArea", placeholder: "Enter your message", rows: "8", maxlength: "5000" %>
+            </div>
+            <p> An email will be sent with you on copy.</p>
+            <div class="d-flex justify-content-end">
+              <%= f.submit 'Send Message', class: 'btn btn-primary mt-3 send-invitation' %>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>

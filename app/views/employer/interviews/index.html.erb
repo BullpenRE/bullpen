@@ -10,29 +10,45 @@
     <div class="bp-card mb-3">
       <div class="d-flex justify-content-between flex-column flex-lg-row">
         <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: interview.freelancer_profile,
-                                                                 job_application: nil,
-                                                                 editable: false } %>
+                                                                job_application: nil,
+                                                                editable: false } %>
         <%= render partial: 'employer/interviews/withdraw_request', locals: { interview_request: interview } %>
-      <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
-        <div class="ml-sm-auto">
-          <div class="d-block d-sm-flex">
-            <div class="bp-text-sm text-secondary font-weight-bold align-self-center align-self-start ml-1 mr-3">
-              <%= interview.pending? ? 'Request Sent' : 'Request Accepted' %>
+        <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
+          <div class="ml-sm-auto">
+            <div class="d-block d-sm-flex">
+              <div class="bp-text-sm text-secondary text-nowrap font-weight-bold align-self-center align-self-start ml-1 mr-3">
+                <%= interview.pending? ? 'Request Sent' : 'Request Accepted' %>
+              </div>
+              <% if interview.pending? %>
+                <div class="d-block p-1 d-sm-inline-block">
+                  <button class="btn btn-primary w-100" type="button" data-toggle="modal" data-target="#showProfile<%= interview.freelancer_profile.id %>">Show Profile</button>
+                </div>
+                <div class="dropdown p-1">
+                  <button class="btn btn-outline-primary dropdown-toggle pr-1" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More<i class="fas fa-chevron-down ml-1"></i></button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
+                      <button class="dropdown-item" type="button" data-toggle="modal" data-target="#interviewRequest<%= interview.freelancer_profile.id %>">Edit Request</button>
+                      <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#withdrawRequest<%= interview.id %>">Withdraw Request</button>
+                    </div>
+                </div>
+              <% elsif interview.accepted? %>
+                <div class="d-block p-1 d-sm-inline-block">
+                  <button class="btn btn-primary w-100" type="button" data-toggle="modal" data-target="#sendMessage<%= interview.id %>">Send Message</button>
+                </div>
+                <div class="dropdown p-1">
+                  <button class="btn btn-outline-primary dropdown-toggle pr-1" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More<i class="fas fa-chevron-down ml-1"></i></button>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
+                    <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= interview.freelancer_profile.id %>">Show Profile</button>
+                    <button class="dropdown-item" type="button" data-toggle="modal" data-target="">Make an Offer</button>
+                    <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#removeInterviewRequest<%= interview.id %>">Remove</button>
+                  </div>
+                </div>
+              <% end %>
+              <%= render partial: 'employer/jobs/send_message', locals: { interview: interview, job_application: nil } %>
+              <%= render partial: 'employer/interviews/remove_interview_request', locals: { interview: interview } %>
             </div>
-            <div class="d-block p-1 d-sm-inline-block">
-              <button class="btn btn-primary w-100" type="button" data-toggle="modal" data-target="#showProfile<%= interview.freelancer_profile.id %>">Show Profile</button>
-            </div>
-            <div class="dropdown p-1">
-              <button class="btn btn-outline-primary dropdown-toggle pr-1" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More<i class="fas fa-chevron-down ml-1"></i></button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#interviewRequest<%= interview.freelancer_profile.id %>">Edit Request</button>
-                  <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#withdrawRequest<%= interview.id %>">Withdraw Request</button>
-               </div>
-            </div>
-         </div>
-       </div>
+          </div>
+        </div>
       </div>
-    </div>
   <% end %>
   <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
 </div>

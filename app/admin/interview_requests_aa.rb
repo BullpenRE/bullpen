@@ -3,7 +3,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
     menu label: 'Interview Requests'
     includes :employer_profile, :freelancer_profile
 
-    permit_params :employer_profile_id, :freelancer_profile_id, :state, :message, :hide_from_freelancer
+    permit_params :employer_profile_id, :freelancer_profile_id, :state, :message, :hide_from_freelancer,
+                  :hide_from_employer
     actions :all
 
     index do
@@ -18,6 +19,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
       column :created_at
       column :updated_at
       column :hide_from_freelancer
+      column :hide_from_employer
 
       actions defaults: true
     end
@@ -42,6 +44,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
         row 'Hide From Freelancer' do
           interview_request.hide_from_freelancer
         end
+        row 'Hide From Employer' do
+          interview_request.hide_from_employer
+        end
       end
       active_admin_comments
     end
@@ -63,6 +68,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
           f.input :state, as: :select
           f.input :message, as: :text
           f.input :hide_from_freelancer, as: :select
+          f.input :hide_from_employer, as: :select
       f.actions
       end
     end
