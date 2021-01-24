@@ -41,12 +41,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
         row 'Message' do
           interview_request.message.body.to_s
         end
-        row 'Hide From Freelancer' do
-          interview_request.hide_from_freelancer
-        end
-        row 'Hide From Employer' do
-          interview_request.hide_from_employer
-        end
+        row :hide_from_freelancer
+        row :hide_from_employer
       end
       active_admin_comments
     end
