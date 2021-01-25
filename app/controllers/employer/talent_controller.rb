@@ -2,6 +2,8 @@
 
 class Employer::TalentController < ApplicationController
   include LoggedInRedirects
+  include RequestReferer
+
   before_action :authenticate_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
   before_action :sectors_options_for_select, :skill_options_for_select, :software_options_for_select
   ITEMS_PER_PAGE = 5
@@ -34,7 +36,7 @@ class Employer::TalentController < ApplicationController
       flash[:alert] = 'Something went wrong when trying to submit your interview request'
     end
 
-    redirect_to employer_talent_index_path
+    redirect_to employer_talent_index_path(referer_page_params)
   end
 
   private
@@ -118,5 +120,10 @@ class Employer::TalentController < ApplicationController
     session.delete(:request_interview)
 
     params[:page] || 1
+  end
+
+  def referer_page_params
+    params_hash = referer_query_params.transform_values(&:first)
+    params_hash.select { |key, _| key.start_with?('page') }
   end
 end
