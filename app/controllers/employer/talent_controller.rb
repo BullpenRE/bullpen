@@ -27,7 +27,7 @@ class Employer::TalentController < ApplicationController
       @interview_request.update(message: params[:interview_request][:message])
       flash[:notice] = 'Your interview request message was successfully modified for '\
                        "<b>#{@interview_request.freelancer_profile.full_name}</b>. "\
-                       'No new emails were sent but they will see the new text when they review it.'
+                       'No new emails were sent but they will see the new text on their dashboard.'
       @interview_request.update(state: 'pending') if @interview_request.withdrawn? || @interview_request.declined?
 
       redirect_to employer_interviews_path
