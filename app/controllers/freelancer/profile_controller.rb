@@ -52,8 +52,8 @@ class Freelancer::ProfileController < ApplicationController
 
     change_freelancer_sectors
 
-    if change_basic_info_params[:account_page] == 'true'
-      redirect_to(freelancer_account_index_path)
+    if params.dig(:freelancer_profile, :redirect_reference) == 'account_page'
+      redirect_to freelancer_account_index_path
     else
       redirect_after_change_profile
     end
@@ -97,7 +97,6 @@ class Freelancer::ProfileController < ApplicationController
           .permit(:professional_title,
                   :professional_years_experience,
                   :professional_summary,
-                  :account_page,
                   :desired_hourly_rate)
   end
 

@@ -63,7 +63,7 @@
             </div>
         <% end %>
         <%= form_for :freelancer_profile, url: freelancer_change_freelancer_basic_info_path do |f| %>
-          <%= f.hidden_field :account_page, value: account_page %>
+          <%= f.hidden_field :redirect_reference, value: redirect_reference %>
           <div class="row-md mb-4 avatar">
             <% if freelancer_profile.avatar.attached? %>
               <div class="row">
