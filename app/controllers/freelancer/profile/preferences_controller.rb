@@ -18,7 +18,6 @@ module Freelancer
       private
 
       def set_freelancer_profile
-        print "X-CSRF-Token #{request.x_csrf_token}\n"
         @freelancer_profile = current_user.freelancer_profile
       end
 
