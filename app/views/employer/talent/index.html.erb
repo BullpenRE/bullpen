@@ -23,7 +23,7 @@
     <% end %>
     <a href="#" id="showFilters" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
   </div>
-  <% @freelancer_profiles.searchable.each do |freelancer_profile| %>
+  <% @freelancer_profiles.each do |freelancer_profile| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: freelancer_profile } %>
 
     <div id="interview-request">
