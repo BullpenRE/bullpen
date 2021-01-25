@@ -10,7 +10,7 @@ module Freelancer
           if update_new_jobs_alert || update_searchable
             format.json { render json: @freelancer_profile, status: :ok }
           else
-            format.json {render json: @freelancer_profile.errors, status: :unprocessable_entity }
+            format.json { render json: @freelancer_profile.errors, status: :unprocessable_entity }
           end
         end
       end
