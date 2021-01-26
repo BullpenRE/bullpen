@@ -20,4 +20,10 @@ class EmployerMailer < ApplicationMailer
     employer_email = interview_request.employer_profile.email
     mail(to: employer_email, subject: "Your interview request was declined by #{interview_request.freelancer_profile.full_name}")
   end
+
+  def send_message(message)
+    @message = message
+    mail(to: @message.to_user.email, cc: @message.from_user.email,
+         subject: "#{@message.from_user.full_name} sent you a message.")
+  end
 end
