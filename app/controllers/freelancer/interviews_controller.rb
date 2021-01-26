@@ -32,6 +32,11 @@ class Freelancer::InterviewsController < ApplicationController
                      'Select Send Message to introduce yourself and arrange a meeting.'
   end
 
+  def remove_interview_request
+    @interview_request = current_user.freelancer_profile.interview_requests.find_by(id: params[:id])
+    @interview_request.update(hide_from_freelancer: true)
+  end
+
   def send_message
     @message = Message.create(message_params)
     flash[:notice] = "Your message has been sent to <b>#{@message.to_user.full_name}</b> with you on copy."
@@ -46,6 +51,7 @@ class Freelancer::InterviewsController < ApplicationController
     @interview_requests_collection ||= current_user.freelancer_profile
                                                    .interview_requests
                                                    .not_rejected
+                                                   .freelancer_visible
                                                    .order(created_at: :desc)
   end
 
