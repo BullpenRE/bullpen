@@ -12,8 +12,15 @@
               <div class="mr-auto"><h2 class="mb-1"><%= interview.employer_profile.user.full_name %></h2></div>
               <div class="bp-text-sm mb-1"><br>
                 <%= interview.employer_profile.company_name %><br>
-                <%= link_to interview.employer_profile.company_website, interview.employer_profile.company_website, target: :_blank %><br><br>
-                <p> It will be a message from the employer </p>
+                <% url = interview.employer_profile.company_website&.downcase %>
+                <% unless url.blank? %>
+                  <% url_with_http = (url[0..3] == 'http' ? url : "http://#{url}") %>
+                  <%= link_to url, url_with_http, target: :_blank %><br>
+                <% end %>
+                <br>
+                <% if interview.message.body %>
+                  <p><%= interview.message.body.to_s %></p>
+                <% end %>
                 <p>Sent on <%= time_ago_in_words(interview.created_at) %> ago</p>
               </div>
             </div>
@@ -29,14 +36,16 @@
                   Decline
                 </button>
               <% elsif interview.accepted? %>
-                <button class="btn btn-primary my-3 my-md-1 mr-md-2" type="button"  data-toggle="modal" data-target="#sendMessage">
+                <button class="btn btn-primary my-3 my-md-1 mr-md-2" type="button"  data-toggle="modal" data-target="#sendMessage<%= interview.id %>">
                   Send Message
                 </button>
-                <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#remove<%= interview.id %>">
+                <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#removeInterviewRequest<%= interview.id %>">
                   Remove
                 </button>
               <% end %>
               <%= render partial: 'freelancer/interviews/decline_interview_request', locals: { interview: interview } %>
+              <%= render partial: 'freelancer/interviews/remove_interview_request', locals: { interview: interview } %>
+              <%= render partial: 'freelancer/interviews/send_message', locals: { interview: interview } %>
             </div>
           </div>
       </div>
