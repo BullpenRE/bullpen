@@ -3,7 +3,7 @@
 class JoinController < ApplicationController
   include LoggedInRedirects
   before_action :check_signed_in
-  before_action :check_blank_email, :check_existing_email, only: [:signup]
+  before_action :check_blank_email, :check_existing_email, :check_valid_email, only: [:signup]
 
   def index; end
 
@@ -28,6 +28,14 @@ class JoinController < ApplicationController
     flash[:notice] = I18n.t('devise.registrations.already_exists',
                             email: user_email,
                             path: new_user_session_path(email: user_email))
+
+    redirect_to join_path
+  end
+
+  def check_valid_email
+    return if user_email.match?(Devise.email_regexp)
+
+    flash[:notice] = I18n.t('devise.registrations.invalid_email', email: user_email)
 
     redirect_to join_path
   end
