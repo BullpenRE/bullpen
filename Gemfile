@@ -25,6 +25,7 @@ gem 'wicked', '~> 1.3', '>= 1.3.2'          # Wicked is a Rails engine for produ
 
 group :development, :staging, :admin do
   gem 'activeadmin', '~> 2.8', '>= 2.8.1'     # Administration DSL out of a box: https://activeadmin.info/
+  gem 'activeadmin_addons'
 end
 
 group :production, :staging, :admin do
