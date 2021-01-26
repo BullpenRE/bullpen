@@ -43,11 +43,11 @@ class Freelancer::ProfileController < ApplicationController
   end
 
   def change_freelancer_basic_info
-    first_name = params[:freelancer_profile][:first_name]
-    last_name = params[:freelancer_profile][:last_name]
-    location = params[:freelancer_profile][:location]
-
-    @freelancer_profile.user.update(first_name: first_name, last_name: last_name, location: location)
+    @freelancer_profile.user.update(
+      first_name: params[:freelancer_profile][:first_name],
+      last_name: params[:freelancer_profile][:last_name],
+      location: params[:freelancer_profile][:location]
+    )
     @freelancer_profile.update(change_basic_info_params)
 
     change_freelancer_sectors
