@@ -57,6 +57,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
         end
         f.input :state, as: :select
         f.input :message, as: :text
+        f.input :hide_from_freelancer
         f.actions
       end
     end
