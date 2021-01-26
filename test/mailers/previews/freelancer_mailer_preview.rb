@@ -19,4 +19,8 @@ class FreelancerMailerPreview < ActionMailer::Preview
   def job_application_declined
     FreelancerMailer.job_application_declined(JobApplication.first)
   end
+
+  def interview_request_was_withdrawn
+    FreelancerMailer.interview_request_was_withdrawn(InterviewRequest.first)
+  end
 end

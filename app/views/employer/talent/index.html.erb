@@ -27,7 +27,7 @@
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: freelancer_profile } %>
 
     <div id="interview-request">
-      <%= render partial: 'employer/talent/interview_request', locals: { freelancer_profile: freelancer_profile } %>
+      <%= render partial: 'employer/talent/interview_request', locals: { freelancer_profile: freelancer_profile, interview: nil } %>
     </div>
 
     <div class="bp-card mb-3 card<%= freelancer_profile.id %>">
