@@ -37,3 +37,11 @@
       <% end %>
   </div>
 </div>
+
+<script>
+  $('#companyWebsiteInput').on('focus', function() {
+      if ($('#companyWebsiteInput').val() === '') {
+          $('#companyWebsiteInput').val('http://')
+      }
+  })
+</script>
