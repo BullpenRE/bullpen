@@ -226,8 +226,9 @@
       allowClear: true
     });
 
-    if (!$.trim($('textarea input').val())) {
-      $('textarea').parents('.wrapper').addClass("highlight");
+    const $textarea = $('textarea');
+    if (!$.trim($textarea.val())) {
+      $textarea.parents('.wrapper').addClass("highlight");
     }
 
     $('.custom-validate').on('input change', function(e) {
