@@ -15,4 +15,3 @@ module Employer
     end
   end
 end
-
