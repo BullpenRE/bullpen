@@ -8,4 +8,4 @@
 <%= render partial: 'email/content_block_left_slim', locals: { content: "<b>Message:</b><br><blockquote>#{@interview_request.message.body.to_s}</blockquote>" } %>
 <%= render partial: 'email/content_block_left_slim', locals: { content: "Accept or decline this interview request on your Bullpen dashboard." } %>
 <br>
-<%= render partial: 'email/button', locals: { button_txt: 'My Interview Request', url: freelancer_interviews_url(view_interview_request: @interview_request.id) } %>
+<%= render partial: 'email/button', locals: { button_txt: 'View Interview Request', url: freelancer_interviews_url(view_interview_request: @interview_request.id) } %>
