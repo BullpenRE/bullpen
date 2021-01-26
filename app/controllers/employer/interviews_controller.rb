@@ -10,6 +10,12 @@ class Employer::InterviewsController < ApplicationController
     @pagy, @interviews = pagy(interview_requests_collection, items: ITEMS_PER_PAGE, overflow: :last_page)
   end
 
+  def withdraw_request
+    @interview_request = current_user.employer_profile.interview_requests.find_by(id: params[:id])
+    @interview_request.update(state: 'withdrawn')
+    FreelancerMailer.interview_request_was_withdrawn(@interview_request).deliver_now
+  end
+
   private
 
   def interview_requests_collection

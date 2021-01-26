@@ -56,6 +56,10 @@ class FreelancerProfile < ApplicationRecord
     user_id == user&.id
   end
 
+  def interview_request(employer_profile)
+    interview_requests.find_by(employer_profile: employer_profile)
+  end
+
   private
 
   def correct_content_type?
