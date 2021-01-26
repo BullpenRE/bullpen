@@ -81,6 +81,7 @@ Rails.application.routes.draw do
     post 'add_educations', to: 'profile#change_educations'
     post 'decline_interview', to: 'interviews#decline_interview'
     post 'accept_request', to: 'interviews#accept_request'
+    post 'send_message', to: 'interviews#send_message'
     post 'change_freelancer_basic_info', to: 'profile#change_freelancer_basic_info'
     post 'add_work_experience', to: 'profile#change_work_experience'
     post 'change_work_experience', to: 'profile#change_work_experience'
