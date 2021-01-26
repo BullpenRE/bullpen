@@ -66,7 +66,7 @@
           <%= f.label :phone_number, 'Phone Number', class: 'h5' %> (optional)<br>
           <%= f.text_field :phone_number, class: 'form-control', id: 'user_phone_number' %>
         </div>
-        <% unless @show_promo_code %>
+        <% if @show_promo_code %>
           <div class="field mb-3 text-left">
             <label for="promo_code" class="h5">Promo Code</label> (Optional)<br>
             <input type="text" class="form-control" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
