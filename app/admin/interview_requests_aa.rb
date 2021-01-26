@@ -17,9 +17,6 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
       end
       column :state
       column :created_at
-      column :updated_at
-      column :hide_from_freelancer
-      column :hide_from_employer
 
       actions defaults: true
     end
@@ -61,8 +58,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
         end
         f.input :state, as: :select
         f.input :message, as: :text
-        f.input :hide_from_freelancer, as: :select
-        f.input :hide_from_employer, as: :select
+        f.input :hide_from_freelancer
+        f.input :hide_from_employer
         f.actions
       end
     end
