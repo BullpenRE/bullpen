@@ -28,13 +28,21 @@ class Freelancer::InterviewsController < ApplicationController
   def accept_request
     @interview_request = current_user.freelancer_profile.interview_requests.find_by(id: params[:id])
     @interview_request.update(state: 'accepted')
-    flash[:notice] = "You have accepted the interview with #{@interview_request.employer_profile.full_name}. "\
+    flash[:notice] = "You have accepted an interview with <b>#{@interview_request.employer_profile.full_name}</b>. "\
                      'Select Send Message to introduce yourself and arrange a meeting.'
   end
 
   def remove_interview_request
     @interview_request = current_user.freelancer_profile.interview_requests.find_by(id: params[:id])
     @interview_request.update(hide_from_freelancer: true)
+  end
+
+  def send_message
+    @message = Message.create(message_params)
+    flash[:notice] = "Your message has been sent to <b>#{@message.to_user.full_name}</b> with you on copy."
+    EmployerMailer.send_message(@message).deliver_now
+
+    redirect_to freelancer_interviews_path
   end
 
   private
@@ -44,7 +52,7 @@ class Freelancer::InterviewsController < ApplicationController
                                                    .interview_requests
                                                    .not_rejected
                                                    .freelancer_visible
-                                                   .order(state: :asc, created_at: :desc)
+                                                   .order(created_at: :desc)
   end
 
   def save_view_param_in_session
@@ -55,5 +63,13 @@ class Freelancer::InterviewsController < ApplicationController
 
   def delete_session_variable
     session.delete(:view_interview_request)
+  end
+
+  def message_params
+    {
+      to_user_id: params[:message][:to_user].to_i,
+      from_user: current_user,
+      description: params[:message][:description]
+    }
   end
 end

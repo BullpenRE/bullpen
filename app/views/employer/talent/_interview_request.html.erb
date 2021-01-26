@@ -1,9 +1,10 @@
 <div class="modal" id="interviewRequest<%= freelancer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
+      <% interview ||= freelancer_profile.interview_request(current_user.employer_profile) %>
       <!--  Header with '×'-->
       <div class="modal-header">
-        <h1 class="modal-title" id="showRequestInterviewLabel">Request an interview with <%= freelancer_profile.user.full_name %></h1>
+        <h1 class="modal-title" id="showRequestInterviewLabel"><%= interview.present? ? 'Edit interview Request' : 'Request an interview'%> with <%= freelancer_profile.user.full_name %></h1>
         <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -12,16 +13,18 @@
       <div class="modal-body py-0">
         <%= form_for :interview_request, url: employer_interview_request_path do |f| %>
           <%= f.hidden_field :state, value: 'pending' %>
+          <%= f.hidden_field :interview_id, value: interview&.id %>
           <%= f.hidden_field :freelancer_profile_id, value: freelancer_profile.id %>
       <div class="form-group mb-3">
           <label for="addPersonalMessageTextArea" class="h5">
-            Add a personal message.
+            <%= interview.present? ? 'Edit your message here.' : 'Add a personal message.' %>
           </label>
         <div class="w-100">
-          <%= f.rich_text_area :message, class: "form-control mb-3", id: "addPersonalMessageTextArea", placeholder: "Enter your message", rows: "8", maxlength: "5000" %>
+          <%= f.rich_text_area :message, class: "form-control mb-3", value: interview&.message&.body&.to_s, id: "addPersonalMessageTextArea", placeholder: "Enter your message", rows: "8", maxlength: "5000" %>
         </div>
         <div class="d-flex justify-content-end">
-          <%= f.submit 'Send Invitation', class: 'btn btn-primary mt-3 send-invitation' %>
+          <% button_name = interview.present? ? 'Modify Invitation' : 'Send Invitation' %>
+          <%= f.submit button_name, class: 'btn btn-primary mt-3 send-invitation' %>
         </div>
       </div>
         <% end %>

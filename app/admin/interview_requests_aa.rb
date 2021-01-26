@@ -16,8 +16,6 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
       end
       column :state
       column :created_at
-      column :updated_at
-      column :hide_from_freelancer
 
       actions defaults: true
     end
@@ -46,22 +44,22 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
 
 
     form do |f|
-        f.inputs "Interview Requests" do
+      f.inputs 'Interview Requests' do
 
-          if f.object.new_record?
-            f.input :employer_profile_id,
-                    as: :select,
-                    collection: User.employers.order(:id).pluck(:email, :id),
-                    label: "Employer (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
-            f.input :freelancer_profile_id,
-                    as: :select,
-                    collection: User.freelancers.order(:id).pluck(:email, :id),
-                    label: "Freelancer (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
-          end
-          f.input :state, as: :select
-          f.input :message, as: :text
-          f.input :hide_from_freelancer, as: :select
-      f.actions
+        if f.object.new_record?
+          f.input :employer_profile_id,
+                  as: :select,
+                  collection: User.employers.order(:id).pluck(:email, :id),
+                  label: "Employer (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
+          f.input :freelancer_profile_id,
+                  as: :select,
+                  collection: User.freelancers.order(:id).pluck(:email, :id),
+                  label: "Freelancer (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
+        end
+        f.input :state, as: :select
+        f.input :message, as: :text
+        f.input :hide_from_freelancer
+        f.actions
       end
     end
   end
