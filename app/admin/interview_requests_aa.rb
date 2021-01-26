@@ -3,7 +3,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
     menu label: 'Interview Requests'
     includes :employer_profile, :freelancer_profile
 
-    permit_params :employer_profile_id, :freelancer_profile_id, :state, :message
+    permit_params :employer_profile_id, :freelancer_profile_id, :state, :message, :hide_from_freelancer
     actions :all
 
     index do
@@ -16,7 +16,6 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
       end
       column :state
       column :created_at
-      column :updated_at
 
       actions defaults: true
     end
@@ -38,27 +37,27 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
         row 'Message' do
           interview_request.message.body.to_s
         end
+        row :hide_from_freelancer
       end
       active_admin_comments
     end
 
-
     form do |f|
-        f.inputs "Interview Requests" do
+      f.inputs 'Interview Requests' do
 
-          if f.object.new_record?
-            f.input :employer_profile_id,
-                    as: :select, input_html: { class: "select2" },
-                    collection: EmployerProfile.users.order(:id).pluck(:email, :id),
-                    label: "Employer (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
-            f.input :freelancer_profile_id,
-                    as: :select, input_html: { class: "select2" },
-                    collection: FreelancerProfile.users.order(:id).pluck(:email, :id),
-                    label: "Freelancer (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
-          end
-          f.input :state, as: :select
-          f.input :message, as: :text
-      f.actions
+        if f.object.new_record?
+          f.input :employer_profile_id,
+                  as: :select, input_html: { class: "select2" },
+                  collection: EmployerProfile.users.order(:id).pluck(:email, :id),
+                  label: "Employer (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
+          f.input :freelancer_profile_id,
+                  as: :select, input_html: { class: "select2" },
+                  collection: FreelancerProfile.users.order(:id).pluck(:email, :id),
+                  label: "Freelancer (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
+        end
+        f.input :state, as: :select
+        f.input :message, as: :text
+        f.actions
       end
     end
   end
