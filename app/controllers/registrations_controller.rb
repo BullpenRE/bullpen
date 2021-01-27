@@ -2,7 +2,7 @@
 
 class RegistrationsController < Devise::RegistrationsController
   include LoggedInRedirects
-  before_action :configure_sign_up_params, only: %i[create update]
+  before_action :configure_sign_up_params, only: [:create]
   before_action :check_signed_in
 
   def new
@@ -68,10 +68,6 @@ class RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email phone_number role signup_promo_id])
   end
 
-  def google_signup_params
-    params.require(:user).permit(:first_name, :last_name, :phone_number, :role, :signup_promo_id)
-  end
-
   def insert_promo_code_id
     signup_promo = SignupPromo.find_by(code: params[:promo_code])
     return unless signup_promo
@@ -83,5 +79,11 @@ class RegistrationsController < Devise::RegistrationsController
 
   def show_promo_code
     @show_promo_code ||= SignupPromo.stillvalid.any?
+  end
+
+  private
+
+  def google_signup_params
+    params.require(:user).permit(:first_name, :last_name, :phone_number, :role, :signup_promo_id)
   end
 end
