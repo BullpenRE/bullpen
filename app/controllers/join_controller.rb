@@ -5,7 +5,9 @@ class JoinController < ApplicationController
   before_action :check_signed_in
   before_action :check_blank_email, :check_existing_email, :check_valid_email, only: [:signup]
 
-  def index; end
+  def index
+    @email = params[:email]
+  end
 
   def signup
     session[:email] = user_email

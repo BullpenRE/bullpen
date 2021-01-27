@@ -16,8 +16,8 @@
     <div class="h2 mb-3">Create an Account</div>
     <div>
       <%= render 'devise/shared/error_messages' %>
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: 'signup-form', class: 'needs-validation' }) do |f| %>
-        <%= f.hidden_field :email, value: @email, id: 'user_email' %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: 'signup-form', class: 'needs-validation', method: (user_signed_in? ? :put : :post) }) do |f| %>
+        <%= f.hidden_field :email, value: @email, id: 'user_email' if @email %>
         <div class="field mb-3 text-left">
           <%= f.label :first_name, 'First Name', class: 'h5' %><br>
           <%= f.text_field :first_name, class: 'form-control', id: 'user_first_name', required: true %>
@@ -26,31 +26,33 @@
           <%= f.label :last_name, 'Last Name', class: "h5" %><br>
           <%= f.text_field :last_name, class: 'form-control', id: 'user_last_name', required: true %>
         </div>
-        <div class="field mb-3 text-left">
-          <%= f.label :password, 'Create a Password', class: 'h5', required: true %><br>
-          <div class="row" id="password_criteria">
-            <div class="col-12 col-sm ml-3 mb-0">
-              <ul class="mb-0" style="padding-left: 0; padding-bottom: 0;">
-                <li id="special">A special character</li>
-                <li id="capital">A capital (uppercase) letter</li>
-              </ul>
+        <% unless @hide_password_section %>
+          <div class="field mb-3 text-left">
+            <%= f.label :password, 'Create a Password', class: 'h5', required: true %><br>
+            <div class="row" id="password_criteria">
+              <div class="col-12 col-sm ml-3 mb-0">
+                <ul class="mb-0" style="padding-left: 0; padding-bottom: 0;">
+                  <li id="special">A special character</li>
+                  <li id="capital">A capital (uppercase) letter</li>
+                </ul>
+              </div>
+              <div class="col-12 col-sm ml-3 ml-sm-0 mt-0">
+                <ul style="padding-left: 0;">
+                  <li id="number">A number</li>
+                  <li id="length">Minimum 8 characters</li>
+                </ul>
+              </div>
             </div>
-            <div class="col-12 col-sm ml-3 ml-sm-0 mt-0">
-              <ul style="padding-left: 0;">
-                <li id="number">A number</li>
-                <li id="length">Minimum 8 characters</li>
-              </ul>
+            <div class="input-group">
+              <%= f.password_field :password, class: 'show_password_content form-control', id: 'user_password', pattern: "(?=.*[!@#$%^&*\?\+\-])(?=.*[A-Z]).{8,}", required: true %>
+              <div class="input-group-append">
+                <span toggle="#user_password" id="password_eye_icon" class="input-group-text">
+                  <i class="fas fa-fw fa-eye"></i>
+                </span>
+              </div>
             </div>
           </div>
-          <div class="input-group">
-            <%= f.password_field :password, class: 'show_password_content form-control', id: 'user_password', pattern: "(?=.*[!@#$%^&*\?\+\-])(?=.*[A-Z]).{8,}", required: true %>
-            <div class="input-group-append">
-              <span toggle="#user_password" id="password_eye_icon" class="input-group-text">
-                <i class="fas fa-fw fa-eye"></i>
-              </span>
-            </div>
-          </div>
-        </div>
+        <% end %>
         <div class="field mb-3 text-left">
           <%= f.label :role, 'Make a Selection', class: "h5" %>
           <div class="custom-control custom-radio" id="hide_phone_number">
@@ -96,8 +98,8 @@
 <script>
   $(function() {
     showOrHidePhoneNumber();
-    showOrHidePassword();
     validateFormOnSubmit();
+    showOrHidePassword();
   });
 
   function showOrHidePhoneNumber() {
@@ -124,6 +126,23 @@
     });
   }
 
+  function passwordIsInvalid() {
+    if($('#user_password').length === 0) return(false);
+
+    const password = $('#user_password').val();
+
+    const specialCharacters = /[!@#$%^&*\?\+\-]/g; // Validate lowercase letters
+    const upperCaseLetters = /[A-Z]/g; // Validate capital letters
+    const numbers = /[0-9]/g; // Validate numbers
+
+    flagAttribute($('#special'), password.match(specialCharacters));
+    flagAttribute($('#capital'), password.match(upperCaseLetters));
+    flagAttribute($('#number'), password.match(numbers));
+    flagAttribute($('#length'), password.length >= 8);
+
+    return($('#password_criteria').children().find($('.invalid')).length > 0);
+  }
+
   function showOrHidePassword() {
     $('#password_eye_icon').on('click', function() {
       $(this).find('svg').toggleClass('fa-eye fa-eye-slash');
@@ -144,19 +163,4 @@
     }
   }
 
-
-  function passwordIsInvalid() {
-    const password = $('#user_password').val();
-
-    const specialCharacters = /[!@#$%^&*\?\+\-]/g; // Validate lowercase letters
-    const upperCaseLetters = /[A-Z]/g; // Validate capital letters
-    const numbers = /[0-9]/g; // Validate numbers
-
-    flagAttribute($('#special'), password.match(specialCharacters));
-    flagAttribute($('#capital'), password.match(upperCaseLetters));
-    flagAttribute($('#number'), password.match(numbers));
-    flagAttribute($('#length'), password.length >= 8);
-
-    return($('#password_criteria').children().find($('.invalid')).length > 0);
-  }
 </script>

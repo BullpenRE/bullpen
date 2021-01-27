@@ -13,6 +13,13 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+  def edit
+    @hide_password_section = user_signed_in?
+    show_promo_code
+
+    render 'devise/registrations/new'
+  end
+
   def create
     insert_promo_code_id if params[:promo_code]
     session.delete(:email)
@@ -20,10 +27,17 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+  def update
+    insert_promo_code_id if params[:promo_code]
+    current_user.update(google_signup_params)
+
+    redirect_to forward_user_to_steps
+  end
+
   protected
 
   def check_signed_in
-    redirect_to current_signup_step_url if signed_in?
+    redirect_to current_signup_step_url if signed_in? && current_user.role.present?
   end
 
   def after_sign_in_path_for(_resource)
@@ -47,7 +61,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def employer?
-    params[:user][:role] == 'employer'
+    current_user&.role == 'employer' || (params[:user] && params[:user][:role] == 'employer')
   end
 
   def configure_sign_up_params
@@ -65,5 +79,11 @@ class RegistrationsController < Devise::RegistrationsController
 
   def show_promo_code
     @show_promo_code ||= SignupPromo.stillvalid.any?
+  end
+
+  private
+
+  def google_signup_params
+    params.require(:user).permit(:first_name, :last_name, :phone_number, :role, :signup_promo_id)
   end
 end
