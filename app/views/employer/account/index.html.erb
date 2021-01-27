@@ -1,0 +1,102 @@
+<%= render partial: 'employer/navigation', locals: { section: 'profile' } %>
+
+<div class="container" style="max-width:540px"> <!--This will need to change if the spacer size changes-->
+  
+  <%= render partial: 'shared/notice_and_alert' %>
+  
+  <h1 class="mb-2 mt-6">Manage Account</h1>
+  
+  <div class="bp-card mb-3">
+    <div class="d-flex"> <!--Create a row for the avatar, profile info, and edit icon-->
+      <div class="d-flex flex-sm-row flex-column"> <!--Stack avatar and profile info on small devices-->
+        <% if @employer_profile.avatar.attached? %>
+          <div class="text-light avatar-image mr-3" style="line-height: 0;">
+            <%= image_tag @employer_profile.avatar, class: 'rounded-circle', width: '80px', height: '80px' %>
+          </div>
+        <% else %>
+          <div class="text-light avatar-image mr-3" style="font-size: 80px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
+        <% end %>
+        <div class="d-block d-sm-none m-1"></div> <!--Show a vertical margin shim on small devices-->
+        <div class="align-self-center"> <!--Vertically align profile info to the avatar-->
+          <h2 class="mb-2"><%= @employer_profile.full_name %></h2>
+          <div class="bp-text-sm">
+            <%= @employer_profile.user.email %>
+          </div>
+        </div>
+      </div>
+      <i class="fas fa-edit text-primary ml-auto"></i>
+    </div>
+  </div>
+
+  <div class="bp-card mb-3">  
+    <h2 class="mb-3">Credit Cards<i class="far fa-question-circle ml-2 text-primary" aria-hidden="true"></i></h2> <!--Remove the "text-primary" class when the icon becomes a link-->
+
+    <div class="d-flex flex-row flex-inline mb-3">
+      <div class="d-flex-col">
+        <div class="pr-2">Visa ending in 4424 (Default)</div>
+        <div class="small">Expires 04/22</div>
+      </div>
+      <div class="d-flex-col ml-auto">
+        <button class="btn btn-outline-primary" type="button"  data-toggle="modal" data-target="#">Edit Card</button>
+      </div>
+    </div>
+    <div class="d-flex flex-row flex-inline mb-3">
+      <div class="d-flex-col">
+        <div class="pr-2">American Express ending in 3098</div>
+        <div class="small text-danger">Expires 08/20</div>
+      </div>
+      <div class="d-flex-col ml-auto">
+        <button class="btn btn-outline-primary" type="button"  data-toggle="modal" data-target="#">Edit Card</button>
+      </div>
+    </div>
+    <div class="d-flex flex-row flex-inline mb-3">
+      <div class="d-flex-col">
+        <div class="pr-2">Discover ending in 5432</div>
+        <div class="small">Expires 02/24</div>
+      </div>
+      <div class="d-flex-col ml-auto">
+        <button class="btn btn-outline-primary" type="button"  data-toggle="modal" data-target="#">
+          Options
+          <i class="fas fa-chevron-down fa-w-14 text-primary"></i>
+        </button>
+      </div>
+    </div>
+    <%= link_to 'Add a Credit Card', '#', class: 'btn btn-outline-primary' %>
+  </div>
+
+  <div class="bp-card mb-5">
+    <div class="d-flex flex-row flex-inline mb-3">
+      <div class="d-flex-col">
+        <div class="h2">Company Information</div>
+      </div>
+      <div class="d-flex-col ml-auto">
+        <i class="fas fa-edit text-primary ml-auto"></i>
+      </div>
+    </div>
+
+    <table class="table table-borderless table-sm bp-account-table-padding" style="width:auto;">
+      <tbody>
+        <tr>
+          <th class="text-secondary text-right">Name</th>
+          <td class="pl-3"><%= @employer_profile.company_name %></td>
+        </tr>
+        <tr>
+          <th class="text-secondary text-right">Location</th>
+          <td class="pl-3"><%= current_user.location %></td>
+        </tr>
+        <tr>
+          <th class="text-secondary text-right">Website</th>
+          <td class="pl-3"><%= @employer_profile.company_website %></td>
+        </tr>
+        <tr>
+          <th class="text-secondary text-right">Function</th>
+          <td class="pl-3"><%= @employer_profile.category&.capitalize %></td>
+        </tr>
+        <tr>
+          <th class="text-secondary text-right">Employees</th>
+          <td class="pl-3"><%= @employer_profile.employee_count %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
