@@ -3,7 +3,7 @@
 class RegistrationsController < Devise::RegistrationsController
   include LoggedInRedirects
   before_action :configure_sign_up_params, only: [:create]
-  before_action :check_signed_in
+  before_action :check_signed_in, except: [:edit]
 
   def new
     redirect_to root_path unless session[:email].present?
@@ -11,6 +11,12 @@ class RegistrationsController < Devise::RegistrationsController
     show_promo_code
 
     super
+  end
+
+  def edit
+    @user = current_user
+
+    render 'devise/registrations/new'
   end
 
   def create
