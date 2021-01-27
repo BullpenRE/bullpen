@@ -15,6 +15,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def edit
     @hide_password_section = user_signed_in?
+    show_promo_code
 
     render 'devise/registrations/new'
   end
