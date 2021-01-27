@@ -4,7 +4,7 @@
     $('.avatar').off('change').on('change', '#uploadProfilePic', (e) => {
       const file = e.target.files[0];
       const maxFileSize = 2097152;
-      if (file.size && file.size > maxFileSize) {
+      if (file && file.size && file.size > maxFileSize) {
         const message = "Uploaded files must not exceed 2MB\n";
         Swal.fire({
           title: '<h5>Oops!</h5>',
