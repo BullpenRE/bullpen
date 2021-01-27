@@ -12,7 +12,7 @@ class AvatarController < ApplicationController
 
     render json: { status: :ok }
   rescue StandardError
-    @freelancer_profile.avatar.purge_later
+    destroy_obsolete_avatar!
     @errors.add(:base, 'Avatar deleted due errors')
   end
 
@@ -26,8 +26,8 @@ class AvatarController < ApplicationController
   private
 
   def destroy_obsolete_avatar!
-    find_blob.purge_later unless find_blob.attachments[0].present?
     find_blob.attachments[0].purge_later if find_blob.attachments[0].present?
+    find_blob.purge_later unless find_blob.attachments[0].present?
   end
 
   def process_and_save_new_image!
