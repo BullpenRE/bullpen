@@ -1,4 +1,15 @@
-<%=  render 'nav_bar/login_nav_bar' %>
+<nav class="navbar navbar-expand-lg navbar-dark bg-header mb-sm-5">
+  <div class="container">
+    <div class="text-left ml-md-5">
+      <%= image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30') %>
+    </div>
+    <%- if devise_mapping.registerable? && controller_name != 'registrations'  && controller_name != 'passwords' %>
+      <div class="d-flex align-items-center text-white">
+        Need an account? <%= link_to "Sign up", join_path, class: 'btn btn-primary ml-2' %><br /><br />
+      </div>
+    <% end %>
+  </div>
+</nav>
 
 <div class="log-in-container">
   <div class="bp-card m-auto text-center" style="max-width:500px">
@@ -42,7 +53,10 @@
             $('#user_email').val(getCookie("email"));
             $('#user_password').trigger('focus');
             deleteCookie("email");
-        };
+        } else if(getPassedEmailParam()) {
+          $('#user_email').val(getPassedEmailParam());
+          $('#user_password').trigger('focus');
+        }
     });
   function setCookie(name, value, options = {}) {
 
@@ -79,4 +93,9 @@
           'max-age': -1
       })
   };
+
+  function getPassedEmailParam() {
+    const obj = new URL(location.href);
+    return(obj.searchParams.get('email'));
+  }
 </script>
