@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get '/employer_jobs_style', to: 'style#employer_jobs'
 
   get '/join', to: 'join#index'
+  post '/join/signup', to: 'join#signup'
 
   devise_for :users, controllers: {
     passwords: 'passwords',
@@ -44,6 +45,7 @@ Rails.application.routes.draw do
     resources :billing
     resources :refer
     resources :talent
+    resources :account, only: :index
     post 'interview_request', to: 'talent#interview_request'
     post 'like_job_application', to: 'jobs#like_job_application'
     post 'send_message', to: 'jobs#send_message'

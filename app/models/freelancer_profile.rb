@@ -16,6 +16,8 @@ class FreelancerProfile < ApplicationRecord
   has_many :interview_requests, dependent: :destroy
   has_one_attached :avatar
 
+  scope :users, -> { joins(:user) }
+
   enum professional_years_experience: { '0-2': 0, '2-5': 1, '5-10': 2, '>10': 3 }
   enum curation: { pending: 0, declined: 1, accepted: 2 }
 
