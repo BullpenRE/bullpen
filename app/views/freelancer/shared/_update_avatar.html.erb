@@ -10,7 +10,7 @@
           title: '<h5>Oops!</h5>',
           text: message
         });
-      } else if (file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
+      } else if (file && file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
         const message = "Please upload only a jpg, png or gif image\n";
         Swal.fire({
           title: '<h5>Oops!</h5>',
