@@ -48,6 +48,7 @@ module Users
       user = User.find_by(email: authorizer.email)
 
       if user.present?
+        set_flash_message(:notice, :success, { kind: authorizer.provider.capitalize })
         sign_in_user(updated_user(user, authorizer.user_data))
       else
         set_flash_message(:alert, :not_found, { email: authorizer.email, path: join_path(email: authorizer.email) })
