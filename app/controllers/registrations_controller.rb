@@ -4,28 +4,19 @@ class RegistrationsController < Devise::RegistrationsController
   include LoggedInRedirects
   before_action :configure_sign_up_params, only: [:create]
   before_action :check_signed_in
-  # before_action :configure_account_update_params, only: [:update]
 
   def new
-    if params[:action] == 'freelancer_sign_up' || params[:action] == 'employer_sign_up'
-      super
-    else
-      redirect_to root_path
-    end
-  end
+    redirect_to root_path unless session[:email].present?
+    @email = session[:email]
+    show_promo_code
 
-  def freelancer_sign_up
-    show_promo_code('freelancer')
-    new
-  end
-
-  def employer_sign_up
-    show_promo_code('employer')
-    new
+    super
   end
 
   def create
     insert_promo_code_id if params[:promo_code]
+    session.delete(:email)
+
     super
   end
 
@@ -72,7 +63,7 @@ class RegistrationsController < Devise::RegistrationsController
     session.delete(:promo_code)
   end
 
-  def show_promo_code(user_type)
-    @show_promo_code ||= SignupPromo.stillvalid.where("user_type = ? OR user_type = ?", SignupPromo.user_types[user_type], SignupPromo.user_types['both']).any?
+  def show_promo_code
+    @show_promo_code ||= SignupPromo.stillvalid.any?
   end
 end

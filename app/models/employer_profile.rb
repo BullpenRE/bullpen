@@ -7,6 +7,8 @@ class EmployerProfile < ApplicationRecord
   has_many :interview_requests, dependent: :destroy
   has_one_attached :avatar
 
+  scope :users, -> { joins(:user) }
+
   enum employee_count: { '1-10': 0, '11-50': 1, '51-100': 2, '101+': 3 }
   enum category: {
     'Brokerage': 0,

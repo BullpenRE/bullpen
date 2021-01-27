@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get '/employer_jobs_style', to: 'style#employer_jobs'
 
   get '/join', to: 'join#index'
+  post '/join/signup', to: 'join#signup'
 
   devise_for :users, controllers: {
     passwords: 'passwords',
