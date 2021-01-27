@@ -19,6 +19,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
     end
 
     filter :email
+    filter :role, as: :select, collection: -> { User.roles }
+    filter :last_name, as: :select, input_html: { class: "select2" }
 
     form do |f|
       f.inputs 'User Info' do

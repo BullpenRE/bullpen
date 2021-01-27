@@ -21,7 +21,7 @@
             <%= link_to 'Applications', freelancer_applications_path, class: 'nav-link' %>
           </li>
         <% end %>
-        <% if current_user.freelancer_profile.interview_requests.any? %>
+        <% if current_user.freelancer_profile.interview_requests.freelancer_visible.any? %>
           <li class="nav-item<%= ' active' if section == 'interviews' %>">
             <%= link_to 'Interviews', freelancer_interviews_path, class: 'nav-link' %>
           </li>
