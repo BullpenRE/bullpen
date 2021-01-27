@@ -40,7 +40,7 @@
       }
     });
 
-    $('.avatar').on('click', '.delete-avatar', () => {
+    $('.avatar').off('click').on('click', '.delete-avatar', () => {
       $.ajax({
         url: '/avatar/destroy',
         method: 'DELETE',
