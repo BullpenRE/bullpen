@@ -32,7 +32,7 @@ class EmployerProfileStepsController < ApplicationController
   def about_company_save
     return false unless wizard_value(step) == :about_company
 
-    @employer_profile.update_attributes(company_params)
+    @employer_profile.update(company_params)
     render_wizard @user
 
     true
@@ -71,7 +71,7 @@ class EmployerProfileStepsController < ApplicationController
   def last_question_save
     return false unless wizard_value(step) == :last_question
 
-    @employer_profile.update_attributes(last_question_params)
+    @employer_profile.update(last_question_params)
     @employer_profile.completed = true
     @employer_profile.save
     render_wizard @user
