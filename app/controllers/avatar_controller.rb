@@ -7,13 +7,13 @@ class AvatarController < ApplicationController
   def update
     @user = current_user
     @freelancer_profile = @user.freelancer_profile
-    destroy_obsolete_avatar! if params[:avatar].present? && @freelancer_profile.avatar.attached?
+    @freelancer_profile.avatar.purge_later if params[:avatar].present? && @freelancer_profile.avatar.attached?
     process_and_save_new_image! if params[:avatar].present?
 
     render json: { status: :ok }
   rescue StandardError
-    destroy_obsolete_avatar!
-    @errors.add(:base, 'Avatar deleted due errors')
+    @freelancer_profile.avatar.purge_later
+    @errors.add(:base, 'Avatar was deleted due to errors')
   end
 
   def destroy
@@ -25,11 +25,6 @@ class AvatarController < ApplicationController
 
   private
 
-  def destroy_obsolete_avatar!
-    find_blob.attachments[0].purge_later if find_blob.attachments[0].present?
-    find_blob.purge_later unless find_blob.attachments[0].present?
-  end
-
   def process_and_save_new_image!
     image = MiniMagick::Image.open(params.require(:avatar).path)
     service = AvatarFormatService.new(image)
@@ -37,9 +32,5 @@ class AvatarController < ApplicationController
     converted_image = service.image
     file = File.open(converted_image.path)
     @freelancer_profile.avatar.attach(io: file, filename: File.basename(image.path), content_type: 'image/jpg')
-  end
-
-  def find_blob
-    @find_blob ||= @freelancer_profile.avatar.blob
   end
 end
