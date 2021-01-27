@@ -112,6 +112,7 @@ GEM
     byebug (11.1.3)
     colorize (0.8.1)
     concurrent-ruby (1.1.8)
+    connection_pool (2.2.3)
     crass (1.0.6)
     css_parser (1.8.0)
       addressable
@@ -317,6 +318,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.2.5)
     regexp_parser (2.0.3)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -369,6 +371,10 @@ GEM
     semantic_range (2.3.1)
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
+    sidekiq (6.1.3)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     spring (2.1.1)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -451,6 +457,7 @@ DEPENDENCIES
   rubocop (~> 0.90.0)
   sass-rails (>= 6)
   shoulda-matchers
+  sidekiq (~> 6.1, >= 6.1.3)
   spring
   table_print (~> 1.5, >= 1.5.7)
   turbolinks (~> 5)
@@ -463,4 +470,4 @@ RUBY VERSION
    ruby 2.7.2p137
 
 BUNDLED WITH
-   2.2.2
+   2.2.3

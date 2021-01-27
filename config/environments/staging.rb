@@ -22,5 +22,6 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: host }
   config.action_mailer.default_url_options = { protocol: 'https', host: ENV['DOMAIN_URL'] }
   config.action_mailer.raise_delivery_errors = true
+  config.active_job.queue_adapter = :sidekiq
   config.action_mailer.perform_caching = true
 end

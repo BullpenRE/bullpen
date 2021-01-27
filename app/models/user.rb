@@ -50,4 +50,8 @@ class User < ApplicationRecord
 
     freelancer_profile&.avatar
   end
+
+  def bullpen_dev?
+    Rails.env.development? || emails =~ /@bullpenre.com$/
+  end
 end

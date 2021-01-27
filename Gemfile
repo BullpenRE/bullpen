@@ -23,6 +23,7 @@ gem 'table_print', '~> 1.5', '>= 1.5.7'     # Allows viewing of data in console 
 gem 'turbolinks', '~> 5'                    # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'webpacker', '~> 5.2', '>= 5.2.1'       # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'wicked', '~> 1.3', '>= 1.3.2'          # Wicked is a Rails engine for producing easy wizard controllers
+gem 'sidekiq', '~> 6.1', '>= 6.1.3'         # Simple, efficient background processing for Ruby.
 
 group :development, :staging, :admin do
   gem 'activeadmin', '~> 2.8', '>= 2.8.1'     # Administration DSL out of a box: https://activeadmin.info/
