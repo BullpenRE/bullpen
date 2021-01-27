@@ -2,8 +2,8 @@
 
 class RegistrationsController < Devise::RegistrationsController
   include LoggedInRedirects
-  before_action :configure_sign_up_params, only: [:create]
-  before_action :check_signed_in, except: [:edit]
+  before_action :configure_sign_up_params, only: %i[create update]
+  before_action :check_signed_in, except: %i[edit update]
 
   def new
     redirect_to root_path unless session[:email].present?
@@ -14,7 +14,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
-    @user = current_user
+    @hide_password_section = user_signed_in?
 
     render 'devise/registrations/new'
   end
@@ -24,6 +24,13 @@ class RegistrationsController < Devise::RegistrationsController
     session.delete(:email)
 
     super
+  end
+
+  def update
+    insert_promo_code_id if params[:promo_code]
+    current_user.update(google_signup_params)
+
+    redirect_to forward_user_to_steps
   end
 
   protected
@@ -58,6 +65,10 @@ class RegistrationsController < Devise::RegistrationsController
 
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name email phone_number role signup_promo_id])
+  end
+
+  def google_signup_params
+    params.require(:user).permit(:first_name, :last_name, :phone_number, :role, :signup_promo_id)
   end
 
   def insert_promo_code_id
