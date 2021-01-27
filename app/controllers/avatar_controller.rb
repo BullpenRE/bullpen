@@ -7,13 +7,13 @@ class AvatarController < ApplicationController
   def update
     @user = current_user
     @freelancer_profile = @user.freelancer_profile
-    @freelancer_profile.avatar.purge_later if params[:avatar].present? && @freelancer_profile.avatar.attached?
+    destroy_obsolete_avatar if params[:avatar].present? && @freelancer_profile.avatar.attached?
     process_and_save_new_image! if params[:avatar].present?
 
     render json: { status: :ok }
   rescue StandardError
     @freelancer_profile.avatar.purge_later
-    @errors.add(:base, 'hghghhg')
+    @errors.add(:base, 'Avatar deleted due errors')
   end
 
   def destroy
@@ -24,6 +24,10 @@ class AvatarController < ApplicationController
   end
 
   private
+
+  def destroy_obsolete_avatar
+    @freelancer_profile.avatar.purge_later
+  end
 
   def process_and_save_new_image!
     image = MiniMagick::Image.open(params.require(:avatar).path)
