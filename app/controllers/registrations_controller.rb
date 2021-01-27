@@ -3,7 +3,7 @@
 class RegistrationsController < Devise::RegistrationsController
   include LoggedInRedirects
   before_action :configure_sign_up_params, only: %i[create update]
-  before_action :check_signed_in, except: %i[edit update]
+  before_action :check_signed_in
 
   def new
     redirect_to root_path unless session[:email].present?
@@ -36,7 +36,7 @@ class RegistrationsController < Devise::RegistrationsController
   protected
 
   def check_signed_in
-    redirect_to current_signup_step_url if signed_in?
+    redirect_to current_signup_step_url if signed_in? && current_user.role.present?
   end
 
   def after_sign_in_path_for(_resource)
@@ -60,7 +60,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def employer?
-    params[:user][:role] == 'employer'
+    current_user&.role == 'employer' || (params[:user] && params[:user][:role] == 'employer')
   end
 
   def configure_sign_up_params
