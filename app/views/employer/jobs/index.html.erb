@@ -98,7 +98,7 @@
                 <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile,
                                                                          job_application: job_application,
                                                                          editable: false } %>
-                <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
+                <%= render partial: 'freelancer/application_flows/preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
                 <%= render partial: 'employer/jobs/send_message', locals: { job_application: job_application } %>
                 <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
                 <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
