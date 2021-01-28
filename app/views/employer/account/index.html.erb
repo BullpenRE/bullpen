@@ -24,9 +24,10 @@
           </div>
         </div>
       </div>
-      <i class="fas fa-edit text-primary ml-auto"></i>
+      <button class="fas fa-edit text-primary ml-auto" type="button"  data-toggle="modal" data-target="#editEmployerProfileModal-<%= @employer_profile.id %>"></button>
     </div>
   </div>
+  <%= render 'employer/shared/edit_basic_info', employer_profile: @employer_profile %>
 
   <div class="bp-card mb-3">  
     <h2 class="mb-3">Credit Cards<i class="far fa-question-circle ml-2 text-primary" aria-hidden="true"></i></h2> <!--Remove the "text-primary" class when the icon becomes a link-->

@@ -1,0 +1,53 @@
+<script>
+  $(document).on('turbolinks:load', function (e) {
+    $('.avatar').off('change').on('change', '#uploadProfilePic', (e) => {
+      const file = e.target.files[0];
+      const maxFileSize = 2097152;
+      if (!file) { return }
+      if (file.size && file.size > maxFileSize) {
+        const message = "Uploaded files must not exceed 2MB\n";
+        Swal.fire({
+          title: '<h5>Oops!</h5>',
+          text: message
+        });
+      } else if (file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
+        const message = "Please upload only a jpg, png or gif image\n";
+        Swal.fire({
+          title: '<h5>Oops!</h5>',
+          text: message
+        });
+      } else {
+        const formData = new FormData();
+        formData.append('avatar', file);
+        $.ajax({
+          url: '/employer/avatar/update',
+          method: 'PUT',
+          contentType: false,
+          processData: false,
+          dataType: 'json',
+          data: formData,
+          success: function () {
+            $('.avatar').load(' .avatar');
+          },
+          error: () => {
+            const message = 'This file can not be attached';
+            Swal.fire({
+              title: '<h5>Oops!</h5>',
+              text: message
+            });
+          }
+        });
+      }
+    });
+
+    $('.avatar').off('click').on('click', '.delete-avatar', () => {
+      $.ajax({
+        url: '/employer/avatar/destroy',
+        method: 'DELETE',
+        success: () => {
+          $('.avatar').load(' .avatar');
+        }
+      })
+    });
+  })
+</script>
