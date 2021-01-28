@@ -1,11 +1,55 @@
 <!--Edit Freelancer Profile Modal-->
 <style>
-    @media screen and (min-width: 360px) {
-        #avatarButtons {
-            margin-top: 20px;
-            text-align: center;
-        }
+  @media screen and (min-width: 360px) {
+    #avatarButtons {
+      margin-top: 20px;
+      text-align: center !important;
     }
+
+    .upload-avatar {
+      margin-right: 2px;
+    }
+
+    #uploadButton {
+      margin-bottom: 20px;
+      text-align: center !important;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .avatar-width-custom {
+      padding-right: 0;
+    }
+
+    #avatarButtons {
+      margin-top: 0;
+      flex: 0 0 65.5%;
+      max-width: 65.5%;
+      padding-left: 0;
+      text-align: left !important;
+    }
+
+    #uploadButton {
+      padding-left: 0;
+      align-self: center !important;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .avatar-width-custom {
+      flex: 0 0 14.5%;
+      max-width: 14.5%;
+    }
+
+    #avatarButtons {
+      padding-left: 5px;
+    }
+  }
+
+  .highlight {
+    border: 2px solid red;
+    border-radius: 5px;
+  }
 </style>
 <div class="modal fade" id="editProfileModal-<%= freelancer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -17,14 +61,20 @@
       </div>
 
       <div class="container">
-        <div class="error"><%= @errors %></div>
+        <% if freelancer_profile.errors.any? %>
+            <div id="alertWarning" class="alert alert-warning alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <%= freelancer_profile.errors.full_messages.join(', ') %>
+            </div>
+        <% end %>
         <%= form_for :freelancer_profile, url: freelancer_change_freelancer_basic_info_path do |f| %>
+          <%= f.hidden_field :redirect_reference, value: redirect_reference %>
           <div class="row-md mb-4 avatar">
-            <% if @freelancer_profile.avatar.attached? %>
+            <% if freelancer_profile.avatar.attached? %>
               <div class="row">
-                <div class="col-md-2 text-center">
+                <div class="col-md-3 text-center avatar-width-custom">
                   <div class="text-light avatar-image">
-                    <%= image_tag @freelancer_profile.avatar.variant(resize: "80x80!").processed, class: 'rounded-circle' %>
+                    <%= image_tag freelancer_profile.avatar.variant(resize: "80x80!").processed, class: 'rounded-circle' %>
                   </div>
                 </div>
                 <div class="col-md-5 align-self-center" id='avatarButtons'>
@@ -38,7 +88,7 @@
                       Upload photo
                     </label>
                     <button type="button" class="delete-avatar d-none" id="deleteProfilePic"></button>
-                    <label class="btn btn-outline-primary mr-2" for="deleteProfilePic">
+                    <label class="btn btn-outline-primary" for="deleteProfilePic">
                       Remove photo
                     </label>
                   </div>
@@ -46,12 +96,12 @@
               </div>
             <% else %>
               <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-2 avatar-width-custom">
                   <div class="text-light text-center" style="font-size: 80px;line-height: 0; margin-bottom: 20px;">
                     <i class="fas fa-user-circle"></i>
                   </div>
                 </div>
-                <div class="col-md-2 align-self-center text-center" id="uploadButton" style="margin-bottom: 20px;">
+                <div class="col-md-5 col-lg-2" id="uploadButton">
                   <div class="custom-file">
                     <%= f.file_field :freelancer_profile_avatar,
                                      multiple: false,
@@ -69,34 +119,34 @@
 
           <div class="row">
             <div class="col-md">
-              <div class="form-group mb-4">
+              <div class="form-group mb-4 wrapper">
                 <label for="professionalTitleInput" class="bp-input-label">First Name</label>
-                <%= f.text_field :first_name, class: "form-control", id: "firstName", required: true %>
+                <%= f.text_field :first_name, class: "form-control custom-validate", id: "firstName", required: true %>
               </div>
             </div>
             <div class="col-md">
-              <div class="form-group mb-4">
+              <div class="form-group mb-4 wrapper">
                 <label for="professionalTitleInput" class="bp-input-label">Last Name</label>
-                <%= f.text_field :last_name, class: "form-control", id: "lastName", required: true %>
+                <%= f.text_field :last_name, class: "form-control custom-validate", id: "lastName", required: true %>
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col-md">
-              <div class="form-group mb-4">
+              <div class="form-group mb-4 wrapper">
                 <label for="professionalTitleInput" class="bp-input-label">Professional Title</label>
-                <%= f.text_field :professional_title, class: "form-control", id: "professionalTitleInput", placeholder: "e.g. Senior Analyst", required: true %>
+                <%= f.text_field :professional_title, class: "form-control custom-validate", id: "professionalTitleInput", placeholder: "e.g. Senior Analyst", required: true %>
               </div>
             </div>
             <div class="col-md">
-              <div class="form-group mb-4">
+              <div class="form-group mb-4 wrapper">
                 <label for="yearsExperienceSelect" class="bp-input-label">Years of professional experience</label>
                 <div class="w-100">
                   <%= f.select :professional_years_experience,
                                FreelancerProfile.professional_years_experiences.keys.map { |w| [w.humanize, w] }, {},
-                               html_options = { class: "form-control selectpicker", 'data-style': "bp-btn-select-border",
-                                                selected: @freelancer_profile.professional_years_experience,
+                               html_options = { class: "form-control selectpicker custom-validate", 'data-style': "bp-btn-select-border",
+                                                selected: freelancer_profile.professional_years_experience,
                                                 style: "display:block !important",
                                                 title: "Please make a selection", required: true } %>
                 </div>
@@ -106,10 +156,10 @@
 
           <div class="row">
             <div class="col-md">
-              <div class="form-group text-left">
+              <div class="form-group text-left wrapper">
                 <label for="freelancerLocationInput" class="bp-input-label">Location</label>
                 <%= f.text_field :location,
-                                 class: "form-control",
+                                 class: "form-control custom-validate",
                                  id: "freelancerLocationInput",
                                  placeholder: "City, State abbreviation",
                                  required: true %>
@@ -119,69 +169,82 @@
 
           <div class="row">
             <div class="col-md">
-              <div class="form-group mb-4">
+              <div class="form-group mb-4 wrapper">
                 <label for="professionalSummaryTextarea" class="bp-input-label">Professional Summary</label>
-                <%= f.text_area :professional_summary, class: "form-control", id: "professionalSummaryTextarea", placeholder: "Describe your experience in a short elevator pitch", rows: "3", maxlength: "1000", required: true %>
+                <%= f.text_area :professional_summary, class: "form-control custom-validate", id: "professionalSummaryTextarea", placeholder: "Describe your experience in a short elevator pitch", rows: "3", maxlength: "1000", required: true %>
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col-md">
-              <div class="form-group mb-4">
+              <div class="form-group mb-4 wrapper">
                 <label for="perHourBid" class="bp-input-label">
                   Desired Hourly Rate
                 </label>
                 <span class="text-dark"> (optional) </span>
                 <%= f.text_field :desired_hourly_rate,
-                                 class: "form-control",
+                                 class: "form-control custom-validate",
                                  id: "perHourBid",
                                  placeholder: "Enter your bid",
                                  required: true,
-                                 value: @freelancer_profile.desired_hourly_rate %>
+                                 value: freelancer_profile.desired_hourly_rate %>
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col-md">
-              <div class="form-group mb-4">
+              <div class="form-group mb-4 wrapper">
                 <label for="freelancerSectors" class="bp-input-label">
                   Sectors
                 </label>
                 <%= f.select :freelancer_sectors,
                              options_for_select(
                                @sectors,
-                               @freelancer_profile&.freelancer_sectors&.map do |freelancer_sector|
+                               freelancer_profile&.freelancer_sectors&.map do |freelancer_sector|
                                  [freelancer_sector.sector.description, freelancer_sector.sector.id]
                                end.flatten),
-                             {}, multiple: true, class: 'select2', required: true %>
+                             {}, multiple: true, class: 'select2 custom-validate', required: true %>
               </div>
             </div>
           </div>
 
           <div class="modal-footer justify-content-end">
-            <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+            <%= f.submit 'Save Changes', class: 'btn btn-primary save-changes-submit' %>
           </div>
         <% end %>
       </div>
     </div>
   </div>
 </div>
+<%= render 'freelancer/shared/update_avatar' %>
 
 <script>
-  if ($(document).width() > 360 && $(document).width() < 768) {
-      $('#avatarButtons').removeClass('col-md').addClass('col-md-5').addClass('text-center').css("margin-top", 20);
-      $('#uploadButton').css("padding-left", 20);
-  }
-  else if ($(document).width() == 768) {
-      $('#avatarButtons').removeClass('col-md-5').removeClass('text-center').addClass('col-md').css("padding-left", 40);
-      $('#uploadButton').removeClass('col-md-2').addClass('col-md-5').css("padding-left", 0);
-  }
-  else {
-      $('#avatarButtons').removeClass('col-md').addClass('col-md-5').css("padding-left", 0);
-      $('#uploadButton').css("padding-left", 0);
-  };
-</script>
+  $(document).on('turbolinks:load', function (e) {
+    $('.select2').select2({
+      placeholder: 'Select all that apply',
+      allowClear: true
+    });
 
-<%= render 'freelancer/shared/update_avatar' %>
+    const $textarea = $('textarea');
+    if (!$.trim($textarea.val())) {
+      $textarea.parents('.wrapper').addClass("highlight");
+    }
+
+    $('.custom-validate').on('input change', function(e) {
+      const $targetElement = $(e.target);
+      if (!$.trim($targetElement.val())) {
+        $(this).parents('.wrapper').addClass("highlight");
+      } else {
+        $targetElement.parents('.wrapper').removeClass("highlight");
+      }
+    });
+
+    $('.save-changes-submit').on('click', function (e) {
+      if ($('.highlight').length) {
+        e.preventDefault();
+      }
+    })
+  })
+</script>

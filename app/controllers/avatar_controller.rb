@@ -13,7 +13,7 @@ class AvatarController < ApplicationController
     render json: { status: :ok }
   rescue StandardError
     @freelancer_profile.avatar.purge_later
-    @errors.add(:base, 'hghghhg')
+    @errors.add(:base, 'Avatar was deleted due to errors')
   end
 
   def destroy
