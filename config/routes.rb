@@ -101,7 +101,7 @@ Rails.application.routes.draw do
   get '/styleguide', to: 'styleguide#index'
 
   root 'join#index'
-  authenticate :user, ->(u) { u.bullpen_dev? } do
+  authenticate :user, ->(u) { u.bullpen_personnel? } do
     mount Sidekiq::Web => '/sidekiq'
   end
 end

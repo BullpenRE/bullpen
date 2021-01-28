@@ -51,7 +51,7 @@ class User < ApplicationRecord
     freelancer_profile&.avatar
   end
 
-  def bullpen_dev?
-    Rails.env.development? || emails =~ /@bullpenre.com$/
+  def bullpen_personnel?
+    email.match?('@bullpenre.com') && confirmed_at.present?
   end
 end
