@@ -32,26 +32,26 @@
 
   <div class="bp-card mb-3">
     <h2>Preferences</h2>
-    <div class="d-flex mb-3">
+    <div class="d-flex mb-3 custom_switch_wrapper">
       <div class="mr-auto pr-2">Send me an email when a new job is posted</div>
-      <div class="text-secondary font-weight-bold">
-        Off
+      <div class="text-secondary font-weight-bold checkbox-state">
+        <%= @freelancer_profile.new_jobs_alert ? 'On' : 'Off' %>
       </div>
       <div class="ml-2">
         <label class="switch">
-          <input type="checkbox">
+          <%= check_box_tag :new_jobs_alert, @freelancer_profile.id, @freelancer_profile.new_jobs_alert, id: 'new_jobs_alert' %>
           <span class="slider round"></span>
         </label>
       </div>
     </div>
-    <div class="d-flex">
+    <div class="d-flex custom_switch_wrapper">
       <div class="mr-auto pr-2">Show my profile to employers searching for talent</div>
-      <div class="text-secondary font-weight-bold">
-        Off
+      <div class="text-secondary font-weight-bold checkbox-state">
+        <%= @freelancer_profile.searchable ? 'On' : 'Off' %>
       </div>
       <div class="ml-2">
         <label class="switch">
-          <input type="checkbox">
+          <%= check_box_tag :searchable, @freelancer_profile.id, @freelancer_profile.searchable, id: 'searchable' %>
           <span class="slider round"></span>
         </label>
       </div>
@@ -99,3 +99,52 @@
     </span>
   </div>
 </div>
+
+<script>
+  $(document).on('turbolinks:load', function (e) {
+    function toggleCustomSwitch(data, field) {
+      const checkboxStateText = {
+        'true': 'On',
+        'false': 'Off'
+      };
+      const $selector = $(`#${field}`);
+      const key = data[field];
+      const $checkboxState = $selector.parents('.custom_switch_wrapper').find('.checkbox-state');
+      $checkboxState.text(checkboxStateText[key]);
+    }
+
+    function sendAjax(field, value) {
+      $.ajax({
+        url: '/freelancer/profile/preferences',
+        method: 'PATCH',
+        dataType: 'json',
+        data: {
+          field: field,
+          value: value
+        },
+        success: function(data) {
+          toggleCustomSwitch(data, field)
+        },
+        error: function(data) {
+          console.log(data)
+        }
+      });
+    }
+
+    $(document).on('change', '#new_jobs_alert', function() {
+      if ($(this).prop("checked")) {
+        sendAjax('new_jobs_alert', true);
+      } else {
+        sendAjax('new_jobs_alert', false);
+      }
+    });
+
+    $(document).on('change', '#searchable', function() {
+      if ($(this).prop("checked")) {
+        sendAjax('searchable', true);
+      } else {
+        sendAjax('searchable', false);
+      }
+    })
+  })
+</script>
