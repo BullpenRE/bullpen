@@ -18,6 +18,7 @@ gem 'pg', '>= 0.18', '< 2.0'                # Use postgresql as the database for
 gem 'premailer-rails', '~> 1.11', '>= 1.11.1' # Styling HTML emails with CSS without having to do the hard work ourselves
 gem 'puma', '~> 4.1'                        # Use Puma as the app server
 gem 'rails', '~> 6.1', '>= 6.1.1'           # If you're not sure what this is for then you're in the wrong place ;)
+gem 'redis', '~> 4.2', '>= 4.2.5'           # Service used for running Action Cable on heroku
 gem 'sass-rails', '>= 6'                    # Use SCSS for stylesheets
 gem 'table_print', '~> 1.5', '>= 1.5.7'     # Allows viewing of data in console in nice ways, including table joins: http://tableprintgem.com/ (video)
 gem 'turbolinks', '~> 5'                    # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -66,5 +67,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]    # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 
 # The gems below were recommended by the base Rails install
-# gem 'redis', '~> 4.0'                   # Use Redis adapter to run Action Cable in production
 # gem 'bcrypt', '~> 3.1.7'                # Use Active Model has_secure_password
