@@ -1,0 +1,10 @@
+<br>
+<%= render partial: 'email/content_block_left', locals: { content: "A new work opportunity has been added to Buullpen`s job board" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<h2 style='color: #005495;'> #{@posted_job.title}</h2>" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<p style='color: #005495; font-weight: bold;'>Job Details</p><div style='display: inline-block; text-align: left; margin-left: auto;'><p><span style='font-weight: bold;'>Type:</span> #{@posted_job.position_length}</p><p><span style='font-weight: bold;'>Required geographic knowledge:</span> #{@posted_job.required_regional_knowledge}</p><p style='font-weight: bold;'>Daytime availability #{@posted_job.daytime_availability_required == true ? "(9 AM - 5PM #{@posted_job.time_zone})" : "is not required"}</p></div>" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<p style='color: #005495; font-weight: bold;'> Job Description</p><div style='display: inline-block; text-align: left; margin-left: auto;'><p>#{@posted_job.short_description}</p>" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<p style='color: #005495; font-weight: bold;'> Budget</p><div style='display: inline-block; text-align: left; margin-left: auto;'><p>#{ @posted_job.contract_type == "hourly" ? "$#{@posted_job.pay_range_low} - $#{@posted_job.pay_range_high} per hour." : "#{Job::CONTRACT_TYPE_DESCRIPTIONS.key(@posted_job.contract_type)}" " for $" "#{@posted_job.pay_range_low}" }" } %>
+<br>
+<%= render partial: 'email/button', locals: { button_txt: 'APPLY NOW', url: public_apply_for_job_url(apply_for_job: @posted_job.slug) } %>
+<br>
+<%= render partial: 'email/content_block', locals: { content: "<a href=freelancer_account_index style='color: #24A878;'>Unsubscribe</a> from job notification" } %>

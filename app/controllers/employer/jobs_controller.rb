@@ -25,6 +25,8 @@ class Employer::JobsController < ApplicationController
 
   def post_job
     job.update(state: 'posted')
+    # worker
+    # send_emails_all_freelancers
 
     redirect_to employer_jobs_path
   end
@@ -37,7 +39,7 @@ class Employer::JobsController < ApplicationController
   def send_message
     @job = current_user.jobs.find(params[:message][:job_id].to_i)
     @message = Message.create(message_params)
-    FreelancerMailer.send_message(@message, @job.title).deliver_now
+    FreelancerMailer.send_message(@message, @job.title).deliver_later
 
     redirect_to employer_jobs_path
   end
@@ -47,7 +49,7 @@ class Employer::JobsController < ApplicationController
     return unless @job_application
 
     @job_application.update(state: 'declined')
-    FreelancerMailer.job_application_declined(@job_application).deliver_now
+    FreelancerMailer.job_application_declined(@job_application).deliver_later
   end
 
   private
