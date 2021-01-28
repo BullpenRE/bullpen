@@ -14,12 +14,25 @@ class Freelancer::JobsController < ApplicationController
 
   def page
     return params[:page] || 1 unless session[:apply_for_job]
+    return delete_session unless jobs_collection.pluck(:slug).include?(session[:apply_for_job])
 
     index = jobs_collection.pluck(:slug).index(session[:apply_for_job])
     @apply_for_job_id = jobs_collection[index].id
     session.delete(:apply_for_job)
 
     ((index + 1) / ITEMS_PER_PAGE.to_f).ceil
+  end
+
+  def delete_session
+    job = Job.find_by(slug: session[:apply_for_job])
+    session.delete(:apply_for_job)
+    flash[:notice] = if job.present?
+                       "Sorry, <b>#{job.title}</b> is no longer available."
+                     else
+                       "Sorry, this job is no longer available."
+                     end
+
+    params[:page] || 1
   end
 
   def jobs_collection

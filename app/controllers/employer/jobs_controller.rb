@@ -25,6 +25,8 @@ class Employer::JobsController < ApplicationController
 
   def post_job
     job.update(state: 'posted')
+    # worker
+    # send_emails_all_freelancers
 
     redirect_to employer_jobs_path
   end
