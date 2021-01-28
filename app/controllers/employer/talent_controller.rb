@@ -2,6 +2,8 @@
 
 class Employer::TalentController < ApplicationController
   include LoggedInRedirects
+  include RequestReferer
+
   before_action :authenticate_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
   before_action :sectors_options_for_select, :skill_options_for_select, :software_options_for_select
   ITEMS_PER_PAGE = 5
@@ -17,12 +19,31 @@ class Employer::TalentController < ApplicationController
     end
     @current_user_interview_request_freelancer_ids = current_user.employer_profile
                                                                  .interview_requests
+                                                                 .not_rejected
                                                                  .pluck(:freelancer_profile_id)
   end
 
   def interview_request
-    @interview_request = current_user.employer_profile.interview_requests.create(interview_request_params)
+    if interview_id.present?
+      @interview_request = current_user.employer_profile.interview_requests.find_by(id: interview_id)
+      @interview_request.update(message: params[:interview_request][:message])
+      flash[:notice] = 'Your interview request message was successfully modified for '\
+                       "<b>#{@interview_request.freelancer_profile.full_name}</b>. "\
+                       'No new emails were sent but they will see the new text on their dashboard.'
+      @interview_request.update(state: 'pending') if @interview_request.withdrawn? || @interview_request.declined?
 
+      redirect_to employer_interviews_path
+    else
+      @interview_request = current_user.employer_profile.interview_requests.create(interview_request_params)
+      email_interview_request
+
+      redirect_to employer_talent_index_path(referer_page_params)
+    end
+  end
+
+  private
+
+  def email_interview_request
     if @interview_request.valid?
       FreelancerMailer.interview_request(@interview_request).deliver_later
 
@@ -33,11 +54,11 @@ class Employer::TalentController < ApplicationController
     else
       flash[:alert] = 'Something went wrong when trying to submit your interview request'
     end
-
-    redirect_to employer_talent_index_path
   end
 
-  private
+  def interview_id
+    params[:interview_request][:interview_id]
+  end
 
   def interview_request_params
     params.require(:interview_request).permit(:freelancer_profile_id, :state, :message)
@@ -118,5 +139,10 @@ class Employer::TalentController < ApplicationController
     session.delete(:request_interview)
 
     params[:page] || 1
+  end
+
+  def referer_page_params
+    params_hash = referer_query_params.transform_values(&:first)
+    params_hash.select { |key, _| key.start_with?('page') }
   end
 end
