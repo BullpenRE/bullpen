@@ -1,0 +1,35 @@
+<div class="modal" id="withdrawRequest<%= interview_request.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content mt-3">
+      <div class="modal-header">
+        <h1 class="modal-title" id="deleteRequestDraftLabel">Withdraw Request</h1>
+        <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body pt-0">
+        <p>Are you sure you want to withdraw your interview request with <strong><%= interview_request.freelancer_profile.full_name %></strong>? We’ll send a notification.
+        </p>
+      </div>
+      <div class="modal-footer justify-content-between pt-0">
+        <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
+        <div>
+          <button class="btn btn-primary withdraw-interview-request-<%= interview_request.id %>" type="button">Withdraw Request</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.withdraw-interview-request-'+<%= interview_request.id %>).click(() => {
+    $.ajax({
+      url: '/employer/withdraw_request',
+      data: { id: '<%= interview_request.id %>' },
+      method: 'POST',
+      success: () => {
+        document.location.reload();
+      }
+    })
+  })
+</script>

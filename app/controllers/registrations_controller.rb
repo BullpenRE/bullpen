@@ -4,35 +4,40 @@ class RegistrationsController < Devise::RegistrationsController
   include LoggedInRedirects
   before_action :configure_sign_up_params, only: [:create]
   before_action :check_signed_in
-  # before_action :configure_account_update_params, only: [:update]
 
   def new
-    if params[:action] == 'freelancer_sign_up' || params[:action] == 'employer_sign_up'
-      super
-    else
-      redirect_to root_path
-    end
+    redirect_to root_path unless session[:email].present?
+    @email = session[:email]
+    show_promo_code
+
+    super
   end
 
-  def freelancer_sign_up
-    show_promo_code('freelancer')
-    new
-  end
+  def edit
+    @hide_password_section = user_signed_in?
+    show_promo_code
 
-  def employer_sign_up
-    show_promo_code('employer')
-    new
+    render 'devise/registrations/new'
   end
 
   def create
     insert_promo_code_id if params[:promo_code]
+    session.delete(:email)
+
     super
+  end
+
+  def update
+    insert_promo_code_id if params[:promo_code]
+    current_user.update(google_signup_params)
+
+    redirect_to forward_user_to_steps
   end
 
   protected
 
   def check_signed_in
-    redirect_to current_signup_step_url if signed_in?
+    redirect_to current_signup_step_url if signed_in? && current_user.role.present?
   end
 
   def after_sign_in_path_for(_resource)
@@ -56,7 +61,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def employer?
-    params[:user][:role] == 'employer'
+    current_user&.role == 'employer' || (params[:user] && params[:user][:role] == 'employer')
   end
 
   def configure_sign_up_params
@@ -72,7 +77,13 @@ class RegistrationsController < Devise::RegistrationsController
     session.delete(:promo_code)
   end
 
-  def show_promo_code(user_type)
-    @show_promo_code ||= SignupPromo.stillvalid.where("user_type = ? OR user_type = ?", SignupPromo.user_types[user_type], SignupPromo.user_types['both']).any?
+  def show_promo_code
+    @show_promo_code ||= SignupPromo.stillvalid.any?
+  end
+
+  private
+
+  def google_signup_params
+    params.require(:user).permit(:first_name, :last_name, :phone_number, :role, :signup_promo_id)
   end
 end
