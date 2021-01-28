@@ -90,7 +90,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
 
         if f.object.new_record?
           f.input :user,
-                  as: :select,
+                  as: :select, input_html: { class: "select2" },
                   collection: User.no_freelancer_data.order(:email).pluck(:email, :id),
                   label: "User (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
         end

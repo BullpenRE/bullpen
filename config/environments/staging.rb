@@ -10,12 +10,12 @@ Rails.application.configure do
   # Click on My Inbox, SMTP Settings, then select RoR from Integrations
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :user_name => '3c17b298c43c62',
-    :password => '540c0a40654388',
-    :address => 'smtp.mailtrap.io',
-    :domain => 'smtp.mailtrap.io',
-    :port => '2525',
-    :authentication => :cram_md5
+    user_name: ENV['SMTP_USER_NAME'],
+    password: ENV['SMTP_PASSWORD'],
+    address: ENV['SMTP_ADDRESS'],
+    domain: ENV['SMTP_DOMAIN'],
+    port: ENV['SMTP_PORT'],
+    authentication: ENV['SMTP_AUTHENTICATION'].to_sym
   }
 
   config.action_mailer.asset_host = "https://#{host}"

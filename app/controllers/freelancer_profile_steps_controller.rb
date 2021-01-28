@@ -68,7 +68,7 @@ class FreelancerProfileStepsController < ApplicationController
   def professional_history_save
     return false unless wizard_value(step) == :professional_history
 
-    @freelancer_profile.update_attributes(history_params)
+    @freelancer_profile.update(history_params)
     render_wizard @user
 
     true
