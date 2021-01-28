@@ -112,14 +112,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
     member_action :accept, method: :post do
       freelancer_profile = FreelancerProfile.find(params[:id])
       freelancer_profile.update(curation: 'accepted')
-      FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_now
+      FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_later
       redirect_to admin_freelancer_profile_path(freelancer_profile.id), { notice: 'Application Accepted.' }
     end
 
     member_action :decline, method: :post do
       freelancer_profile = FreelancerProfile.find(params[:id])
       freelancer_profile.update(curation: 'declined')
-      FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_now
+      FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_later
       redirect_to admin_freelancer_profile_path(freelancer_profile.id), { notice: 'Application Declined.' }
     end
 
@@ -147,7 +147,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         update_many_to_many_attributes(freelancer_profile)
 
         if send_accept_or_reject_freelancer_email?
-          accepted? ? FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_now : FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_now
+          accepted? ? FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_later : FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_later
         end
 
         ApplicationRecord.transaction do
