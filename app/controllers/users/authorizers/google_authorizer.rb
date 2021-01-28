@@ -31,6 +31,19 @@ module Users
         }
       end
 
+      def find_or_create_user!(merge_data = {})
+        raise(EmailNotPresentError, 'No email present in token.email_address') unless email
+
+        User.find_by(email: email) || User.create(new_user_params.merge(merge_data))
+      end
+
+      def new_user_params
+        user_data.merge(
+          password: Devise.friendly_token[6, 15].split('').push('!').shuffle.join,
+          confirmed_at: Time.current
+        )
+      end
+
       protected
 
       def uid

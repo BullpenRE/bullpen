@@ -42,18 +42,17 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
       active_admin_comments
     end
 
-
     form do |f|
       f.inputs 'Interview Requests' do
 
         if f.object.new_record?
           f.input :employer_profile_id,
-                  as: :select,
-                  collection: User.employers.order(:id).pluck(:email, :id),
+                  as: :select, input_html: { class: "select2" },
+                  collection: EmployerProfile.users.order(:id).pluck(:email, :id),
                   label: "Employer (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
           f.input :freelancer_profile_id,
-                  as: :select,
-                  collection: User.freelancers.order(:id).pluck(:email, :id),
+                  as: :select, input_html: { class: "select2" },
+                  collection: FreelancerProfile.users.order(:id).pluck(:email, :id),
                   label: "Freelancer (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
         end
         f.input :state, as: :select

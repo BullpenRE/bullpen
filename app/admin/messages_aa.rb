@@ -45,11 +45,11 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('me
       f.inputs "Message" do
         if f.object.new_record?
           f.input :from_user_id,
-                  as: :select,
+                  as: :select, input_html: { class: "select2" },
                   collection: User.pluck(:email, :id),
                   label: "From User (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
           f.input :to_user_id,
-                  as: :select,
+                  as: :select, input_html: { class: "select2" },
                   collection: User.pluck(:email, :id),
                   label: "To User (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
         end

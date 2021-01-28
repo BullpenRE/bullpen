@@ -2,7 +2,7 @@
 
 The Bullpen application is built on:
  * Ruby 2.7.2
- * Rails 6.0.3.2
+ * Rails 6.1.1
  * postgresql 10.0 or higher
  * Code complexity and security monitoring by CodeClimate (pending)
  
