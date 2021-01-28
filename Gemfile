@@ -8,7 +8,7 @@ gem 'amazing_print', '~> 1.2', '>= 1.2.1'   # Replacement for awesome_print whic
 gem 'bootsnap', '>= 1.4.2', require: false  # Reduces boot times through caching; required in config/boot.rb
 gem 'devise', '~> 4.7', '>= 4.7.3'          # Flexible authentication solution for Rails with Warden
 gem 'google_sign_in', '~> 1.2'              # Sign in (or up) with Google for Rails applications: https://github.com/basecamp/google_sign_in
-gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.2'            # Provides higher-level image processing helpers that are commonly needed when handling image uploads
 gem 'jbuilder', '~> 2.7'                    # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'mini_magick', '~> 4.10', '>= 4.10.1'   # Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
 gem 'omniauth', '~> 1.9', '>= 1.9.1'        # Omniauth logins
