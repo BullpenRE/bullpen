@@ -34,7 +34,7 @@ RSpec.describe Contract, type: :model do
       end
 
       describe 'when created via a job it inherits' do
-        let(:new_contract) { job.contracts.create(employer_profile: employer_profile, freelancer_profile: freelancer_profile) }
+        let(:new_contract) { job.contracts.create(employer_profile: employer_profile, freelancer_profile: freelancer_profile, title: '', job_description: '') }
         let(:new_contract_with_title) { job.contracts.create(employer_profile: employer_profile, freelancer_profile: freelancer_profile, title: 'Cool Job!') }
 
         it 'job_title, short_description, contract_type if blank' do
