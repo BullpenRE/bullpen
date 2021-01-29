@@ -15,14 +15,6 @@ class Contract < ApplicationRecord
 
   after_create :inherit_job_attributes, if: -> { job_id }
 
-  def from_description
-    @from_description ||= "#{employer_profile.user.full_name}, #{employer_profile.company_name}"
-  end
-
-  def to_description
-    @to_description ||= freelancer_profile.user.full_name
-  end
-
   private
 
   def between_different_parties
