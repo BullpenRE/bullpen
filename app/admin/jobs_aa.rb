@@ -67,7 +67,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
           job.job_applications.map { |job_application| link_to("#{job_application.user.email}: #{job_application.created_at.strftime("%m-%d-%Y")}", admin_job_application_path(job_application.id)) }.push(link_to('Add', new_admin_job_application_path(:job_application=> { :job_id => job.id }))).join('<br>').html_safe
         end
         row 'Contracts' do
-          job.contracts.map { |contract| link_to("#{contract.from_user.email} hiring #{contract.to_user.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.push(link_to('Add', new_admin_contract_path(:contract=> { :job_id => job.id }))).join('<br>').html_safe
+          job.contracts.map { |contract| link_to("#{contract.employer_profile.email} hiring #{contract.freelancer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.push(link_to('Add', new_admin_contract_path(:contract=> { :job_id => job.id }))).join('<br>').html_safe
         end
       end
 

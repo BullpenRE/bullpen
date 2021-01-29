@@ -37,12 +37,6 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
         row :sign_in_count
         row :last_sign_in_at
         row :confirmed_at
-        row 'Sent Contracts' do
-          user.sent_contracts.map { |contract| link_to("Hired #{contract.to_user.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe
-        end
-        row 'Received Contracts' do
-          user.received_contracts.map { |contract| link_to("Hired by #{contract.from_user.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe
-        end
       end
     end
 
