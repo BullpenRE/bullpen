@@ -45,7 +45,7 @@ class Employer::TalentController < ApplicationController
 
   def email_interview_request
     if @interview_request.valid?
-      FreelancerMailer.interview_request(@interview_request).deliver_now
+      FreelancerMailer.interview_request(@interview_request).deliver_later
 
       flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
       'Your interview request has been sent to '\

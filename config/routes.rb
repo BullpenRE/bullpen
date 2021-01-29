@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   if defined?(ActiveAdmin)
     devise_for :admin_users, ActiveAdmin::Devise.config
@@ -108,5 +110,7 @@ Rails.application.routes.draw do
   get '/styleguide', to: 'styleguide#index'
 
   root 'join#index'
-
+  authenticate :user, ->(u) { u.bullpen_personnel? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end
