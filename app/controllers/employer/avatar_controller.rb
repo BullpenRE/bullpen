@@ -2,24 +2,23 @@
 
 module Employer
   class AvatarController < ApplicationController
-    include ImageProcessing
-
     before_action :authenticate_user!, :user, :employer_profile
 
     def update
-      @employer_profile.avatar.purge_later if params[:avatar].present? && @employer_profile.avatar.attached?
-      process_and_save_new_image!(@employer_profile) if params[:avatar].present?
+      return unless params[:avatar].present?
+
+      create_image
 
       render json: { status: :ok }
     rescue StandardError
-      @employer_profile.avatar.purge_later
-      @errors.add(:base, 'Avatar was deleted due to errors')
+      employer_profile.avatar.purge_later
+      employer_profile.errors.add(:base, 'Avatar was deleted due to errors')
     end
 
     def destroy
-      return unless current_user.employer_profile.avatar.attached?
+      return unless employer_profile.avatar.attached?
 
-      current_user.employer_profile.avatar.purge_later
+      employer_profile.avatar.purge_later
       render json: { status: :ok }
     end
 
@@ -31,6 +30,20 @@ module Employer
 
     def employer_profile
       @employer_profile ||= current_user.employer_profile
+    end
+
+    def create_image
+      employer_profile.avatar.purge_later if employer_profile.avatar.attached?
+      process_and_save_new_image!(params.require(:avatar).path)
+    end
+
+    def process_and_save_new_image!(path)
+      image = MiniMagick::Image.open(path)
+      service = AvatarFormatService.new(image)
+      service.convert
+      converted_image = service.image
+      file = File.open(converted_image.path)
+      employer_profile.avatar.attach(io: file, filename: File.basename(image.path), content_type: 'image/jpg')
     end
   end
 end
