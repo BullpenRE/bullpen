@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Contract, type: :model do
-  let(:employer_user) { FactoryBot.create(:user, :employer) }
-  let(:freelancer_user) { FactoryBot.create(:user, :freelancer) }
-  let!(:contract) { FactoryBot.create(:contract, from_user: employer_user, to_user: freelancer_user) }
-  let(:job) { FactoryBot.create(:job, user: employer_user) }
+  let(:employer_profile) { FactoryBot.create(:employer_profile) }
+  let(:freelancer_profile) { FactoryBot.create(:freelancer_profile) }
+  let!(:contract) { FactoryBot.create(:contract, employer_profile: employer_profile, freelancer_profile: freelancer_profile) }
+  let(:job) { FactoryBot.create(:job, user: employer_profile.user) }
   let(:contract_with_job) { FactoryBot.create(:contract, :with_job, job: job) }
 
   it 'factories work' do
@@ -14,18 +14,18 @@ RSpec.describe Contract, type: :model do
 
   context 'Validations' do
     it 'the from and to user cannot be the same person' do
-      contract.to_user_id = contract.from_user_id
+      contract.employer_profile.user_id = contract.freelancer_profile.user_id
       expect(contract).to_not be_valid
     end
   end
 
   context 'Relationships' do
-    it 'belongs to a from_user' do
-      expect(contract.from_user).to eq(employer_user)
+    it 'belongs to a employer_profile' do
+      expect(contract.employer_profile).to eq(employer_profile)
     end
 
-    it 'belongs to a to_user' do
-      expect(contract.to_user).to eq(freelancer_user)
+    it 'belongs to a freelancer_profile' do
+      expect(contract.freelancer_profile).to eq(freelancer_profile)
     end
 
     describe 'job' do
@@ -34,8 +34,8 @@ RSpec.describe Contract, type: :model do
       end
 
       describe 'when created via a job it inherits' do
-        let(:new_contract) { job.contracts.create(from_user: employer_user, to_user: freelancer_user) }
-        let(:new_contract_with_title) { job.contracts.create(from_user: employer_user, to_user: freelancer_user, title: 'Cool Job!') }
+        let(:new_contract) { job.contracts.create(employer_profile: employer_profile, freelancer_profile: freelancer_profile) }
+        let(:new_contract_with_title) { job.contracts.create(employer_profile: employer_profile, freelancer_profile: freelancer_profile, title: 'Cool Job!') }
 
         it 'job_title, short_description, contract_type if blank' do
           expect(new_contract.title).to eq(job.title)

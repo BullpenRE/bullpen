@@ -1,9 +1,9 @@
 class CreateContracts < ActiveRecord::Migration[6.1]
   def change
     create_table :contracts do |t|
-      t.references :from_user, null: false, foreign_key: { to_table: :users }
-      t.references :to_user, null: false, foreign_key: { to_table: :users }
-      t.bigint :job_id, null: true, index: true
+      t.references :employer_profile, null: false, foreign_key: true
+      t.references :freelancer_profile, null: false, foreign_key: true
+      t.references :job, null: true, foreign_key: true
       t.string :title
       t.string :short_description
       t.integer :contract_type

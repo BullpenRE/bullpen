@@ -14,6 +14,7 @@ class FreelancerProfile < ApplicationRecord
   has_many :softwares, through: :freelancer_softwares
   has_many :freelancer_certifications, dependent: :destroy
   has_many :interview_requests, dependent: :destroy
+  has_many :contracts, dependent: :destroy
   has_one_attached :avatar
 
   scope :users, -> { joins(:user) }

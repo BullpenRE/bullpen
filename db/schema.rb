@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(version: 2021_01_28_193142) do
   end
 
   create_table "contracts", force: :cascade do |t|
-    t.bigint "from_user_id", null: false
-    t.bigint "to_user_id", null: false
+    t.bigint "employer_profile_id", null: false
+    t.bigint "freelancer_profile_id", null: false
     t.bigint "job_id"
     t.string "title"
     t.string "short_description"
@@ -98,9 +98,9 @@ ActiveRecord::Schema.define(version: 2021_01_28_193142) do
     t.integer "state"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["from_user_id"], name: "index_contracts_on_from_user_id"
+    t.index ["employer_profile_id"], name: "index_contracts_on_employer_profile_id"
+    t.index ["freelancer_profile_id"], name: "index_contracts_on_freelancer_profile_id"
     t.index ["job_id"], name: "index_contracts_on_job_id"
-    t.index ["to_user_id"], name: "index_contracts_on_to_user_id"
   end
 
   create_table "employer_profiles", force: :cascade do |t|
@@ -385,8 +385,9 @@ ActiveRecord::Schema.define(version: 2021_01_28_193142) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "contracts", "users", column: "from_user_id"
-  add_foreign_key "contracts", "users", column: "to_user_id"
+  add_foreign_key "contracts", "employer_profiles"
+  add_foreign_key "contracts", "freelancer_profiles"
+  add_foreign_key "contracts", "jobs"
   add_foreign_key "employer_profiles", "users"
   add_foreign_key "employer_sectors", "employer_profiles"
   add_foreign_key "employer_sectors", "sectors"

@@ -1,6 +1,6 @@
 class Contract < ApplicationRecord
-  belongs_to :from_user, class_name: 'User', foreign_key: :from_user_id
-  belongs_to :to_user, class_name: 'User', foreign_key: :to_user_id
+  belongs_to :freelancer_profile
+  belongs_to :employer_profile
   belongs_to :job, optional: true
 
   scope :visible, -> { where.not(state: 'declined').where.not(state: 'withdrawn') }
@@ -15,7 +15,9 @@ class Contract < ApplicationRecord
   private
 
   def between_different_parties
-    errors.add(:to_user_id, "can't make a contract with yourself") if to_user_id == from_user_id
+    return unless freelancer_profile.user_id == employer_profile.user_id
+
+    errors.add(:to_user_id, "can't make a contract with yourself")
   end
 
   def inherit_job_attributes
