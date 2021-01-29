@@ -71,9 +71,10 @@
         <div class="h2">Company Information</div>
       </div>
       <div class="d-flex-col ml-auto">
-        <i class="fas fa-edit text-primary ml-auto"></i>
+        <button class="fas fa-edit text-primary ml-auto" type="button"  data-toggle="modal" data-target="#editEmployerCompanyModal-<%= @employer_profile.id %>"></button>
       </div>
     </div>
+    <%= render 'employer/account/edit_company_info', employer_profile: @employer_profile %>
 
     <table class="table table-borderless table-sm bp-account-table-padding" style="width:auto;">
       <tbody>
