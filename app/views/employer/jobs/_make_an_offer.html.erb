@@ -1,0 +1,50 @@
+<div class="modal" id="makeAnOffer<%= job_application.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <!--  Header with '×'-->
+      <div class="modal-header">
+        <h1 class="modal-title" id="showSendMessageLabel">Make an Offer <i class="far fa-question-circle text-primary"></i> </h1>
+        <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Make an Offer Card-->
+      <div class="modal-body py-0">
+        <div class="row mb-3">
+          <div class="col">
+            <h5>From</h5>
+            <%= job_application.job.user.employer_profile.full_name %>, <%= job_application.job.user.employer_profile.company_name %>
+          </div>
+          <div class="col">
+            <h5>To</h5>
+            <%= job_application.user.full_name %>
+          </div>
+        </div>
+        <%= form_for :message, url:  employer_send_message_path do |f| %>
+          <%= f.hidden_field :to_user, value: job_application.user_id %>
+          <%= f.hidden_field :job_id, value: job_application.job_id %>
+          <div class="form-group">
+            <label for="JobTitleInput" class="h5">Job Title</label>
+            <input type="text" class="form-control" id="JobTitleInput" placeholder="Enter your job title">
+          </div>
+          <div class="form-group mb-3">
+            <label for="JobDescriptionInput" class="h5">Job Description</label>
+            <div class="w-100">
+              <%= f.rich_text_area :description, class: "form-control mb-3", id: "JobDescriptionInput", placeholder: "Enter Job Description", rows: "4", maxlength: "5000" %>
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <%= f.submit 'Send Offer', class: 'btn btn-primary mt-3 send-invitation' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener("trix-file-accept", event => {
+        event.preventDefault();
+    });
+</script>

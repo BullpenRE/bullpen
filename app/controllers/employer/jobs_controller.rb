@@ -50,6 +50,10 @@ class Employer::JobsController < ApplicationController
     FreelancerMailer.job_application_declined(@job_application).deliver_later
   end
 
+  def make_an_offer
+
+  end
+
   private
 
   def message_params
