@@ -61,10 +61,13 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
           job.softwares.pluck(:description)
         end
         row 'Questions' do
-          job.job_questions.map{ |job_question| link_to(job_question.description, admin_job_question_path(job_question.id)) }.push(link_to('Add', new_admin_job_question_path(:job_question => { :job_id => job.id }))).join('<br><br>').html_safe
+          job.job_questions.map { |job_question| link_to(job_question.description, admin_job_question_path(job_question.id)) }.push(link_to('Add', new_admin_job_question_path(:job_question => { :job_id => job.id }))).join('<br>').html_safe
         end
         row 'Job Applications' do
-           job.job_applications.map{ |job_application| link_to("#{job_application.user.email}: #{job_application.created_at.strftime("%m-%d-%Y")}", admin_job_application_path(job_application.id)) }.push(link_to('Add', new_admin_job_application_path(:job_application=> { :job_id => job.id }))).join('<br><br>').html_safe
+          job.job_applications.map { |job_application| link_to("#{job_application.user.email}: #{job_application.created_at.strftime("%m-%d-%Y")}", admin_job_application_path(job_application.id)) }.push(link_to('Add', new_admin_job_application_path(:job_application=> { :job_id => job.id }))).join('<br>').html_safe
+        end
+        row 'Contracts' do
+          job.contracts.map { |contract| link_to("#{contract.from_user.email} hiring #{contract.to_user.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.push(link_to('Add', new_admin_contract_path(:contract=> { :job_id => job.id }))).join('<br>').html_safe
         end
       end
 

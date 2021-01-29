@@ -22,6 +22,30 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
     filter :role, as: :select, collection: -> { User.roles }
     filter :last_name, as: :select, input_html: { class: "select2" }
 
+    show title: 'User' do |user|
+      attributes_table do
+        row :email
+        row :first_name
+        row :last_name
+        row :phone_number
+        row :location
+        row :role
+        row :signup_promo
+        row :provider
+        row :freelancer_profile
+        row :employer_profile
+        row :sign_in_count
+        row :last_sign_in_at
+        row :confirmed_at
+        row 'Sent Contracts' do
+          user.sent_contracts.map { |contract| link_to("Hired #{contract.to_user.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe
+        end
+        row 'Received Contracts' do
+          user.received_contracts.map { |contract| link_to("Hired by #{contract.from_user.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe
+        end
+      end
+    end
+
     form do |f|
       f.inputs 'User Info' do
         f.input :email
