@@ -26,7 +26,6 @@ class User < ApplicationRecord
 
   enum role: { freelancer: 0, employer: 1 }
 
-
   def self.ransackable_scopes(_auth_object = nil)
     [:confirmed]
   end

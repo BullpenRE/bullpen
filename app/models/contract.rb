@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Contract < ApplicationRecord
   belongs_to :freelancer_profile
   belongs_to :employer_profile
