@@ -101,8 +101,7 @@ class Employer::JobFlowsController < ApplicationController
       job.update(state: 'draft')
     elsif job.draft?
       job.update(state: 'posted')
-      # worker
-      # send_emails_all_freelancers
+      SendEmailsAboutPostedJobWorker.perform_async(job.id)
     end
 
     redirect_to employer_jobs_path
