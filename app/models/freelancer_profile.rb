@@ -28,6 +28,8 @@ class FreelancerProfile < ApplicationRecord
   validates :slug, uniqueness: true
   validates :desired_hourly_rate, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
+  scope :searchable, -> { where(searchable: true) }
+
   def ready_for_submission?
     draft? && pending?
   end

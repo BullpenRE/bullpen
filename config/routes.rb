@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   if defined?(ActiveAdmin)
     devise_for :admin_users, ActiveAdmin::Devise.config
@@ -88,6 +90,10 @@ Rails.application.routes.draw do
     post 'change_freelancer_basic_info', to: 'profile#change_freelancer_basic_info'
     post 'add_work_experience', to: 'profile#change_work_experience'
     post 'change_work_experience', to: 'profile#change_work_experience'
+
+    namespace :profile do
+      resource :preferences, only: :update
+    end
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
@@ -104,5 +110,7 @@ Rails.application.routes.draw do
   get '/styleguide', to: 'styleguide#index'
 
   root 'join#index'
-
+  authenticate :user, ->(u) { u.bullpen_personnel? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end
