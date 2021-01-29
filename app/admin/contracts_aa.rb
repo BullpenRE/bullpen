@@ -3,7 +3,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
     menu label: 'Contracts'
     includes :employer_profile, :freelancer_profile, :job
 
-    permit_params :freelancer_profile_id, :employer_profile_id, :job_id, :title, :short_description, :contract_type, :pay_rate, :state
+    permit_params :freelancer_profile_id, :employer_profile_id, :job_id, :title, :job_description, :contract_type, :pay_rate, :state
     actions :all
 
     index do
@@ -12,7 +12,6 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
       column :freelancer_profile
       column :job
       column :title
-      column :short_description
       column :contract_type
       column :pay_rate
       column :state
@@ -32,7 +31,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
         row :freelancer_profile
         row :job
         row :title
-        row :short_description
+        row 'Job Description' do
+          contract.job_description.body.to_s
+        end
         row :contract_type
         row :pay_rate
         row :state
@@ -59,7 +60,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
                 collection: Job.find_each.map{ |job| ["#{job.title} by #{job.user.email}", job.id] },
                 label: "Job (#{link_to('Create new', new_admin_job_path, target: '_blank')})".html_safe
         f.input :title
-        f.input :short_description, as: :text
+        f.input :job_description, as: :text
         f.input :contract_type
         f.input :pay_rate
         f.input :state

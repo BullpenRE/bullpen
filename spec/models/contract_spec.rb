@@ -39,13 +39,13 @@ RSpec.describe Contract, type: :model do
 
         it 'job_title, short_description, contract_type if blank' do
           expect(new_contract.title).to eq(job.title)
-          expect(new_contract.short_description).to eq(job.short_description)
+          expect(new_contract.job_description.body.to_plain_text).to eq(job.short_description)
           expect(new_contract.contract_type).to eq(job.contract_type)
         end
 
         it 'does not inherit if not blank' do
           expect(new_contract_with_title.title).to eq('Cool Job!')
-          expect(new_contract_with_title.short_description).to eq(job.short_description)
+          expect(new_contract_with_title.job_description.body.to_plain_text).to eq(job.short_description)
           expect(new_contract_with_title.contract_type).to eq(job.contract_type)
         end
       end

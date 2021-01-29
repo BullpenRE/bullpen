@@ -2,6 +2,7 @@ class Contract < ApplicationRecord
   belongs_to :freelancer_profile
   belongs_to :employer_profile
   belongs_to :job, optional: true
+  has_rich_text :job_description
 
   scope :visible, -> { where.not(state: 'declined').where.not(state: 'withdrawn') }
 
@@ -24,7 +25,7 @@ class Contract < ApplicationRecord
     return unless job.present?
 
     self.title = job.title unless title
-    self.short_description = job.short_description unless short_description
+    self.job_description = job.short_description unless job_description.present?
     self.contract_type = job.contract_type unless contract_type
     save
   end

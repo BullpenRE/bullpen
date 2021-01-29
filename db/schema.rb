@@ -92,7 +92,6 @@ ActiveRecord::Schema.define(version: 2021_01_28_193142) do
     t.bigint "freelancer_profile_id", null: false
     t.bigint "job_id"
     t.string "title"
-    t.string "short_description"
     t.integer "contract_type"
     t.integer "pay_rate"
     t.integer "state"
