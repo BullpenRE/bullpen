@@ -16,6 +16,10 @@ class FreelancerMailerPreview < ActionMailer::Preview
     FreelancerMailer.send_message(Message.find_by(from_user: User.employers), Job.last.title)
   end
 
+  def send_message_from_interview_page
+    FreelancerMailer.send_message(Message.find_by(from_user: User.employers), '')
+  end
+
   def job_application_declined
     FreelancerMailer.job_application_declined(JobApplication.first)
   end
