@@ -53,6 +53,7 @@ Rails.application.routes.draw do
     post 'send_message', to: 'jobs#send_message'
     post 'decline_job_application', to: 'jobs#decline_job_application'
     post 'withdraw_request', to: 'interviews#withdraw_request'
+    post 'remove_interview_request', to: 'interviews#remove_interview_request'
   end
 
   namespace :public do

@@ -220,6 +220,7 @@ ActiveRecord::Schema.define(version: 2021_01_28_193142) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "hide_from_freelancer", default: false
+    t.boolean "hide_from_employer", default: false
     t.index ["employer_profile_id"], name: "index_interview_requests_on_employer_profile_id"
     t.index ["freelancer_profile_id"], name: "index_interview_requests_on_freelancer_profile_id"
   end
