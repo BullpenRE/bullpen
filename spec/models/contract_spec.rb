@@ -72,4 +72,14 @@ RSpec.describe Contract, type: :model do
       expect(Contract.visible).to_not include(declined_contract, withdrawn_contract)
     end
   end
+
+  context 'Methods' do
+    it '#from' do
+      expect(contract.from_description).to eq("#{employer_profile.user.full_name}, #{employer_profile.company_name}")
+    end
+
+    it '#to' do
+      expect(contract.to_description).to eq(freelancer_profile.user.full_name)
+    end
+  end
 end
