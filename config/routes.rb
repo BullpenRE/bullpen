@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   resources :avatar, only: %i[update destroy]
   resources :freelancer_profile_steps
   resources :employer_profile_steps
-  resources :user, only: :update
+  resources :users, only: :update
 
   # resources :employer
 
