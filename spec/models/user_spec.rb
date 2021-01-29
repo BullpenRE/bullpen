@@ -31,6 +31,23 @@ describe User do
       end
 
       it { should belong_to(:signup_promo).optional }
+
+      describe 'contracts' do
+        let!(:received_contract) { FactoryBot.create(:contract, to_user: user) }
+        let!(:sent_contract) { FactoryBot.create(:contract, from_user: user) }
+
+        it 'can have offered_contracts, dependent destroy' do
+          expect(user.received_contracts).to include(received_contract)
+          user.destroy
+          expect(Contract.exists?(received_contract.id)).to be_falsey
+        end
+
+        it 'can have received_contracts, dependent destroy' do
+          expect(user.sent_contracts).to include(sent_contract)
+          user.destroy
+          expect(Contract.exists?(sent_contract.id)).to be_falsey
+        end
+      end
     end
 
     describe 'jobs' do
