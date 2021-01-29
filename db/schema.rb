@@ -166,6 +166,8 @@ ActiveRecord::Schema.define(version: 2021_01_24_074703) do
     t.string "current_step"
     t.string "slug"
     t.integer "desired_hourly_rate"
+    t.boolean "new_jobs_alert", default: true
+    t.boolean "searchable", default: true
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 

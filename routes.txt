@@ -222,9 +222,6 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                            avatar PATCH      /avatar/:id(.:format)                                                                    avatar#update
                                                   PUT        /avatar/:id(.:format)                                                                    avatar#update
                                                   DELETE     /avatar/:id(.:format)                                                                    avatar#destroy
-                                      work_sample PATCH      /work_sample/:id(.:format)                                                               work_sample#update
-                                                  PUT        /work_sample/:id(.:format)                                                               work_sample#update
-                              work_sample_destroy POST       /work_sample/destroy(.:format)                                                           work_sample#destroy_work_sample
                          freelancer_profile_steps GET        /freelancer_profile_steps(.:format)                                                      freelancer_profile_steps#index
                                                   POST       /freelancer_profile_steps(.:format)                                                      freelancer_profile_steps#create
                       new_freelancer_profile_step GET        /freelancer_profile_steps/new(.:format)                                                  freelancer_profile_steps#new
@@ -321,6 +318,8 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PATCH      /freelancer/application_flows/:id(.:format)                                              freelancer/application_flows#update
                                                   PUT        /freelancer/application_flows/:id(.:format)                                              freelancer/application_flows#update
                                                   DELETE     /freelancer/application_flows/:id(.:format)                                              freelancer/application_flows#destroy
+                      freelancer_add_work_samples PUT        /freelancer/application_flows/:job_app/add_work_samples(.:format)                        freelancer/application_flows#add_work_samples
+                   freelancer_destroy_work_sample POST       /freelancer/application_flows/:job_app/destroy_work_sample(.:format)                     freelancer/application_flows#destroy_work_sample
                             freelancer_interviews GET        /freelancer/interviews(.:format)                                                         freelancer/interviews#index
                                                   POST       /freelancer/interviews(.:format)                                                         freelancer/interviews#create
                          new_freelancer_interview GET        /freelancer/interviews/new(.:format)                                                     freelancer/interviews#new
@@ -338,6 +337,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PUT        /freelancer/contracts/:id(.:format)                                                      freelancer/contracts#update
                                                   DELETE     /freelancer/contracts/:id(.:format)                                                      freelancer/contracts#destroy
                          freelancer_profile_index GET        /freelancer/profile(.:format)                                                            freelancer/profile#index
+                         freelancer_account_index GET        /freelancer/account(.:format)                                                            freelancer/account#index
                          freelancer_set_withdrawn POST       /freelancer/set_withdrawn(.:format)                                                      freelancer/applications#set_withdrawn
                freelancer_change_software_licence POST       /freelancer/change_software_licence(.:format)                                            freelancer/profile#change_software_licence
                  freelancer_change_certifications POST       /freelancer/change_certifications(.:format)                                              freelancer/profile#change_certifications
@@ -349,6 +349,8 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
           freelancer_change_freelancer_basic_info POST       /freelancer/change_freelancer_basic_info(.:format)                                       freelancer/profile#change_freelancer_basic_info
                    freelancer_add_work_experience POST       /freelancer/add_work_experience(.:format)                                                freelancer/profile#change_work_experience
                 freelancer_change_work_experience POST       /freelancer/change_work_experience(.:format)                                             freelancer/profile#change_work_experience
+                   freelancer_profile_preferences PATCH      /freelancer/profile/preferences(.:format)                                                freelancer/profile/preferences#update
+                                                  PUT        /freelancer/profile/preferences(.:format)                                                freelancer/profile/preferences#update
                                 check_users_email POST       /check_users_email(.:format)                                                             check_email#check_users_email
                                 letter_opener_web            /letter_opener                                                                           LetterOpenerWeb::Engine
                                        styleguide GET        /styleguide(.:format)                                                                    styleguide#index

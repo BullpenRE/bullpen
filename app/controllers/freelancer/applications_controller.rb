@@ -16,7 +16,7 @@ class Freelancer::ApplicationsController < ApplicationController
 
   def set_withdrawn
     job_application.update(state: 'withdrawn')
-    EmployerMailer.job_application_was_withdrawn(job_application).deliver_now
+    EmployerMailer.job_application_was_withdrawn(job_application).deliver_later
   end
 
   private

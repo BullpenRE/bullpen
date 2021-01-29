@@ -52,6 +52,8 @@ Once your machine is set up for Rails development you can do the following to ge
 8. Install NodeJS packages: `$ yarn isntall`
 8. Instantiate the local database: `$ rails db:create`
 9. Test it out: `$ rails s` and then navigate to http://localhost:3000
+10. Open a new tab and start redis: `$ redis-server`. If you have an error such as `Address already in use` you can use command `$ redis-server --port 6360`
+11. Open a new tab and start sidekiq: `$ sidekiq`
 
 ### Running the application locally and making changes
 Every time you are ready to start work, do the following terminal commands in the bullpen directory:
@@ -63,6 +65,8 @@ Every time you are ready to start work, do the following terminal commands in th
 Then if your server isn't started yet:
 
         $ rails s
+        $ redis-server
+        $ sidekiq
 
 At this point you can point your browser to http://localhost:3000/ and start development work.
 To stop the server click CNTL-C.

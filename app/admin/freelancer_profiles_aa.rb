@@ -14,6 +14,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
                   :professional_years_experience,
                   :curation,
                   :draft,
+                  :new_jobs_alert,
+                  :searchable,
                   :desired_hourly_rate
 
     index do
@@ -54,6 +56,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
           freelancer_profile.freelancer_certifications.order(:earned).map{|f_c| "#{f_c.earned.year}: #{f_c.description}" }.push(link_to('Add/Edit/Remove', admin_freelancer_certifications_path(q: {freelancer_profile_id_eq: params[:id]}), target: '_blank')).join('<br>').html_safe
         end
         row :draft
+        row :new_jobs_alert
+        row :searchable
         row :curation
         row :desired_hourly_rate
         row "ALL Interview Requests Received From Employers", :interview_requests do
@@ -97,6 +101,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         f.input :real_estate_skills, as: :check_boxes, collection: RealEstateSkill.order(:description).pluck(:description, :id)
         f.input :softwares, as: :check_boxes, collection: Software.order(:description).pluck(:description, :id)
         f.input :draft
+        f.input :new_jobs_alert
+        f.input :searchable
         f.input :curation
         f.input :desired_hourly_rate
         f.actions
@@ -106,14 +112,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
     member_action :accept, method: :post do
       freelancer_profile = FreelancerProfile.find(params[:id])
       freelancer_profile.update(curation: 'accepted')
-      FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_now
+      FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_later
       redirect_to admin_freelancer_profile_path(freelancer_profile.id), { notice: 'Application Accepted.' }
     end
 
     member_action :decline, method: :post do
       freelancer_profile = FreelancerProfile.find(params[:id])
       freelancer_profile.update(curation: 'declined')
-      FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_now
+      FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_later
       redirect_to admin_freelancer_profile_path(freelancer_profile.id), { notice: 'Application Declined.' }
     end
 
@@ -141,7 +147,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         update_many_to_many_attributes(freelancer_profile)
 
         if send_accept_or_reject_freelancer_email?
-          accepted? ? FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_now : FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_now
+          accepted? ? FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_later : FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_later
         end
 
         ApplicationRecord.transaction do

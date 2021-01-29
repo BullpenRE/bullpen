@@ -16,7 +16,7 @@
           <div class="d-flex-col ml-auto">
             <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editProfileModal-<%= freelancer_profile.id %>"></button>
           </div>
-          <%= render 'freelancer/shared/edit_basic_info', freelancer_profile: freelancer_profile %>
+          <%= render 'freelancer/shared/edit_basic_info', freelancer_profile: freelancer_profile, redirect_reference: '' %>
         <% end %>
       </div>
       <div class="bp-text-sm mb-3 text-wrap text-break">
