@@ -2,14 +2,13 @@
 
 module Employer
   class AvatarController < ApplicationController
+    include ImageProcessing
 
-    before_action :authenticate_user!
+    before_action :authenticate_user!, :user, :employer_profile
 
     def update
-      @user = current_user
-      @employer_profile = @user.employer_profile
       @employer_profile.avatar.purge_later if params[:avatar].present? && @employer_profile.avatar.attached?
-      process_and_save_new_image! if params[:avatar].present?
+      process_and_save_new_image!(@employer_profile) if params[:avatar].present?
 
       render json: { status: :ok }
     rescue StandardError
@@ -26,13 +25,12 @@ module Employer
 
     private
 
-    def process_and_save_new_image!
-      image = MiniMagick::Image.open(params.require(:avatar).path)
-      service = AvatarFormatService.new(image)
-      service.convert
-      converted_image = service.image
-      file = File.open(converted_image.path)
-      @employer_profile.avatar.attach(io: file, filename: File.basename(image.path), content_type: 'image/jpg')
+    def user
+      @user ||= current_user
+    end
+
+    def employer_profile
+      @employer_profile ||= current_user.employer_profile
     end
   end
 end
