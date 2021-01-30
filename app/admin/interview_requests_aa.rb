@@ -3,7 +3,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
     menu label: 'Interview Requests'
     includes :employer_profile, :freelancer_profile
 
-    permit_params :employer_profile_id, :freelancer_profile_id, :state, :message, :hide_from_freelancer
+    permit_params :employer_profile_id, :freelancer_profile_id, :state, :message, :hide_from_freelancer,
+                  :hide_from_employer
     actions :all
 
     index do
@@ -38,13 +39,13 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
           interview_request.message.body.to_s
         end
         row :hide_from_freelancer
+        row :hide_from_employer
       end
       active_admin_comments
     end
 
     form do |f|
       f.inputs 'Interview Requests' do
-
         if f.object.new_record?
           f.input :employer_profile_id,
                   as: :select, input_html: { class: "select2" },
@@ -58,6 +59,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('in
         f.input :state, as: :select
         f.input :message, as: :text
         f.input :hide_from_freelancer
+        f.input :hide_from_employer
         f.actions
       end
     end

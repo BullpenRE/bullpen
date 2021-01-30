@@ -53,6 +53,16 @@ RSpec.describe EmployerProfile, type: :model do
       end
     end
 
+    describe 'contracts' do
+      let!(:contract) { FactoryBot.create(:contract, employer_profile: employer_profile) }
+
+      it 'can have contracts, dependent destroy' do
+        expect(employer_profile.contracts).to include(contract)
+        employer_profile.destroy
+        expect(Contract.exists?(contract.id)).to be_falsey
+      end
+    end
+
   end
 
   context 'Methods' do
