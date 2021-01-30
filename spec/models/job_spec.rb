@@ -120,9 +120,10 @@ RSpec.describe Job, type: :model do
   context 'Scopes' do
     let!(:jim) { FactoryBot.create(:user) }
     let!(:jane) { FactoryBot.create(:user) }
-    let!(:attractive_job) { FactoryBot.create(:job) }
-    let!(:bad_looking_job) { FactoryBot.create(:job) }
+    let!(:attractive_job) { FactoryBot.create(:job, state: 'posted') }
+    let!(:bad_looking_job) { FactoryBot.create(:job, state: 'posted') }
     let!(:job1) { FactoryBot.create(:job) }
+    let!(:job2) { FactoryBot.create(:job, job_announced: true) }
     let!(:jim_job_application) { FactoryBot.create(:job_application, state: 'draft', job: job, user: jim) }
     let!(:jim_job_application_withdrawn) { FactoryBot.create(:job_application, state: 'withdrawn', job: job1, user: jim) }
     let!(:jane_attractive_job_application) { FactoryBot.create(:job_application, job: attractive_job, user: jane) }
@@ -136,6 +137,14 @@ RSpec.describe Job, type: :model do
       expect(Job.not_applied_or_withdrawn(jane)).to include(job)
       expect(Job.not_applied_or_withdrawn(jane)).to include(bad_looking_job)
       expect(Job.not_applied_or_withdrawn(jane)).to_not include(attractive_job)
+    end
+
+    it '.ready_for_announcement' do
+      job1.update(state: 'closed')
+      expect(Job.ready_for_announcement).to include(attractive_job)
+      expect(Job.ready_for_announcement).to include(bad_looking_job)
+      expect(Job.ready_for_announcement).to_not include(job1)
+      expect(Job.ready_for_announcement).to_not include(job2)
     end
   end
 end
