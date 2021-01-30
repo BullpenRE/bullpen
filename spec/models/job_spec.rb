@@ -105,6 +105,16 @@ RSpec.describe Job, type: :model do
         expect(JobApplication.exists?(job_application.id)).to be_falsey
       end
     end
+
+    describe 'contracts' do
+      let!(:contract) { FactoryBot.create(:contract, job: job) }
+      it 'has_many jobs, dependent nullify' do
+        expect(job.contracts).to include(contract)
+        job.destroy
+        expect(Contract.exists?(contract.id)).to be_truthy
+        expect(contract.reload.job_id).to be_nil
+      end
+    end
   end
 
   context 'Scopes' do

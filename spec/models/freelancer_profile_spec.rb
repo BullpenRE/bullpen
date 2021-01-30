@@ -142,6 +142,17 @@ RSpec.describe FreelancerProfile, type: :model do
       end
 
     end
+
+    describe 'contracts' do
+      let!(:contract) { FactoryBot.create(:contract, freelancer_profile: freelancer_profile) }
+
+      it 'can have contracts, dependent destroy' do
+        expect(freelancer_profile.contracts).to include(contract)
+        freelancer_profile.destroy
+        expect(Contract.exists?(contract.id)).to be_falsey
+      end
+    end
+
   end
 
   context 'Scopes' do
