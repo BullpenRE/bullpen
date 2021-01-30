@@ -29,7 +29,7 @@ class FreelancerProfile < ApplicationRecord
   validates :desired_hourly_rate, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
   scope :searchable, -> { where(searchable: true) }
-  scope :new_jobs_alert, -> { where(new_jobs_alert: true)  }
+  scope :ready_for_announcement, -> { where(curation: 'accepted', new_jobs_alert: true) }
 
   def ready_for_submission?
     draft? && pending?

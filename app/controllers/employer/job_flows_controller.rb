@@ -97,12 +97,7 @@ class Employer::JobFlowsController < ApplicationController
   def preview_job_save
     return false unless params[:job][:step] == 'preview_job'
 
-    if params[:button] == 'draft'
-      job.update(state: 'draft')
-    elsif job.draft?
-      job.update(state: 'posted')
-      SendEmailsAboutPostedJobWorker.perform_async(job.id)
-    end
+    params[:button] != 'draft' ? job.update(state: 'posted') : job.update(state: 'draft')
 
     redirect_to employer_jobs_path
 

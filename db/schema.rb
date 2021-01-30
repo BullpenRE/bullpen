@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_23_162059) do
+ActiveRecord::Schema.define(version: 2021_01_29_135701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -287,6 +287,7 @@ ActiveRecord::Schema.define(version: 2021_01_23_162059) do
     t.integer "pay_range_low"
     t.integer "pay_range_high"
     t.string "slug"
+    t.boolean "job_announced", default: false
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 

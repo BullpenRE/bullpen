@@ -25,7 +25,6 @@ class Employer::JobsController < ApplicationController
 
   def post_job
     job.update(state: 'posted')
-    SendEmailsAboutPostedJobWorker.perform_async(job.id)
 
     redirect_to employer_jobs_path
   end
