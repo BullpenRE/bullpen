@@ -43,7 +43,7 @@ class Employer::JobsController < ApplicationController
   end
 
   def decline_job_application
-    @job_application = JobApplication.where(job: current_user.jobs).find(params[:id])
+    @job_application = JobApplication.where(job: current_user.jobs).find_by(id: params[:id])
     return unless @job_application
 
     @job_application.update(state: 'declined')
@@ -51,10 +51,27 @@ class Employer::JobsController < ApplicationController
   end
 
   def make_an_offer
+    @job = current_user.jobs.find_by(id: params[:make_an_offer][:job_id])
+    @contract = current_user.employer_profile.contracts.create(make_an_offer_params.merge(state: 'pending'))
+    job_state_modify
 
+    flash[:notice] = "Your <strong>#{@contract.title}</strong> offer has been sent to
+                      <strong>#{@contract.freelancer_profile.full_name}</strong>.
+                      We'll send a notification when it's accepted."
+    FreelancerMailer.offer_made(@contract).deliver_later
+    redirect_to employer_jobs_path
   end
 
   private
+
+  def make_an_offer_params
+    params.require(:make_an_offer)
+          .permit(:job_id, :job_description, :title, :freelancer_profile_id, :contract_type, :pay_rate)
+  end
+
+  def job_state_modify
+    @job.update(state: 'closed') if params[:make_an_offer][:state] == '1'
+  end
 
   def message_params
     {
