@@ -75,92 +75,162 @@
           </div>
         </div>
       </div>
-      <% if job.job_applications.applied.any? %>
-        <div class="d-flex flex-column flex-lg-row">
-          <div class="mr-auto">
-            <a class="link_action<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
+      <% if job.job_applications.applied.any? || job.contracts.hire_group.any? %>
+        <div class="d-flex justify-content-end align-items-center flex-row">
+        <a class="link_action<%= job.id %> more-less<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
+          Show More<i class="fas fa-chevron-down ml-1"></i>
+        </a>
+        <a style="display: none" class="link_action<%= job.id %> more-less<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
+          Show Less<i class="fas fa-chevron-up ml-1"></i>
+        </a>
+        </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="application-tab" data-toggle="tab" href="#application" role="tab" aria-controls="application" aria-selected="true">
               Applications <span class="text-secondary">(<%= job.job_applications.applied.size %>)</span>
             </a>
-          </div>
-          <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
-            <a class="link_action<%= job.id %> more-less<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
-              Show More<i class="fas fa-chevron-down ml-1"></i>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link passive" id="hire-tab" data-toggle="tab" href="#hire" role="tab" aria-controls="hire" aria-selected="false">
+              Hire <span class="text-secondary">(<%= job.contracts.hire_group.size %>)</span>
             </a>
-            <a style="display: none" class="link_action<%= job.id %> more-less<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
-              Show Less<i class="fas fa-chevron-up ml-1"></i>
-            </a>
-          </div>
-        </div>
-          <div id="collapseApplications<%= job.id %>" class="collapse">
-            <hr>
-            <% job.job_applications.applied.each do |job_application| %>
-              <div class="d-flex justify-content-between flex-column flex-lg-row">
-                <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile,
-                                                                         job_application: job_application,
-                                                                         editable: false } %>
-                <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
-                <%= render partial: 'employer/jobs/send_message', locals: { job_application: job_application } %>
-                <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
-                <%= render partial: 'employer/jobs/make_an_offer', locals: { job_application: job_application } %>
-                <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
-                  <div class="d-block p-1 d-sm-inline-block mt-1">
-                    <div id="like<%= job_application.id %>">
-                      <i class="<%= job_application.liked ? 'fas' : 'far' %> fa-heart btn-link <%= job_application.liked ? 'text-danger' : '' %> like<%= job_application.id %>"></i>
+          </li>
+        </ul>
+        <div id="collapseApplications<%= job.id %>" class="collapse">
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="application" role="tabpanel" aria-labelledby="application-tab">
+              <% job.job_applications.applied.each do |job_application| %>
+                <hr style="margin-top:0;">
+                <div class="d-flex justify-content-between flex-column flex-lg-row">
+                  <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile,
+                                                                             job_application: job_application,
+                                                                             editable: false } %>
+                  <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
+                  <%= render partial: 'employer/jobs/send_message', locals: { job_application: job_application } %>
+                  <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
+                  <%= render partial: 'employer/jobs/make_an_offer', locals: { job_application: job_application } %>
+                  <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
+                    <div class="d-block p-1 d-sm-inline-block mt-1">
+                      <div id="like<%= job_application.id %>">
+                        <i class="<%= job_application.liked ? 'fas' : 'far' %> fa-heart btn-link <%= job_application.liked ? 'text-danger' : '' %> like<%= job_application.id %>"></i>
+                      </div>
                     </div>
-                  </div>
-                  <div class="d-block p-1 d-sm-inline-block">
-                    <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#makeAnOffer<%= job_application.id %>">Make an Offer</button>
-                  </div>
-                  <div class="dropdown">
+                    <div class="d-block p-1 d-sm-inline-block">
+                      <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#makeAnOffer<%= job_application.id %>">Make an Offer</button>
+                    </div>
+                    <div class="dropdown">
                     <button class="btn btn-outline-primary dropdown-toggle pr-1 mt-1 container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      More <i class="fas fa-chevron-down text-primary"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                      <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#previewApplicationDropdown-<%= job_application.id %>">
-                        Show Application
-                      </button>
-                      <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#sendMessage<%= job_application.id %>">
-                        Send a Message
-                      </button>
-                      <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="#declineJobApplication<%= job_application.id %>">
-                        Decline
-                      </button>
+                          More <i class="fas fa-chevron-down text-primary"></i>
+                        </button>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                          <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#previewApplicationDropdown-<%= job_application.id %>">
+                            Show Application
+                          </button>
+                          <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#sendMessage<%= job_application.id %>">
+                            Send a Message
+                          </button>
+                          <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="#declineJobApplication<%= job_application.id %>">
+                            Decline
+                          </button>
+                        </div>
                     </div>
                   </div>
-                  <hr>
                 </div>
-              </div>
-              <script>
-                $('#like<%= job_application.id %>').on('click', () => {
-                  const like = $('.like<%= job_application.id %>');
-                  const icon_fa_prefix = like.attr('data-prefix');
+                <script>
+                  $('#like<%= job_application.id %>').on('click', () => {
+                      const like = $('.like<%= job_application.id %>');
+                      const icon_fa_prefix = like.attr('data-prefix');
 
-                  $.ajax({
-                    url: 'like_job_application',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: { id: '<%= job_application.id %>' },
-                    success: function() {
-                      like.toggleClass('text-danger');
-                      if (icon_fa_prefix === 'fas') {
-                        like.attr('data-prefix', 'far');
-                      } else {
-                        like.attr('data-prefix', 'fas');
-                      }
-                    }
-                  });
-                });
-              </script>
-            <% end %>
+                      $.ajax({
+                        url: 'like_job_application',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: { id: '<%= job_application.id %>' },
+                        success: function() {
+                          like.toggleClass('text-danger');
+                          if (icon_fa_prefix === 'fas') {
+                            like.attr('data-prefix', 'far');
+                          } else {
+                            like.attr('data-prefix', 'fas');
+                          }
+                        }
+                      });
+                    });
+                </script>
+              <% end %>
+            </div>
+
+            <script>
+              $('.link_action<%= job.id %>').on('click', () => {
+                $('.more-less<%= job.id %>').toggle();
+              })
+            </script>
+
+            <div class="tab-pane fade show" id="hire" role="tabpanel" aria-labelledby="hire-tab">
+              <% job.contracts.hire_group.each do |contract| %>
+                <hr style="margin-top:0;">
+                <div class="d-flex justify-content-between flex-column flex-lg-row">
+                  <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: contract.freelancer_profile,
+                                                                           job_application: nil,
+                                                                           editable: false } %>
+                  <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
+                  <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
+                    <div class="d-block p-1 d-sm-inline-block">
+                      <div class="bp-text-sm text-secondary text-nowrap font-weight-bold align-self-center align-self-start ml-1 mr-2 mt-1">
+                        <%= contract.closed? ? 'Closed' : "Offer #{contract.state}" %>
+                      </div>
+                    </div>
+                    <div class="d-block p-1 d-sm-inline-block">
+                      <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#sendMessage">Send Message</button>
+                    </div>
+                    <% if contract.pending?%>
+                      <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle pr-1 mt-1 container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          More <i class="fas fa-chevron-down text-primary"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modifyOffer">
+                            Modify Offer
+                          </button>
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
+                           Show Profile
+                          </button>
+                          <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#withdrawOffer">
+                            Withdraw Offer
+                          </button>
+                        </div>
+                      </div>
+                    <% elsif contract.accepted? %>
+                      <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
+                        <div class="dropdown">
+                          <button class="btn btn-outline-primary dropdown-toggle pr-1 mt-1 container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            More <i class="fas fa-chevron-down text-primary"></i>
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#offerAnotherJob">
+                              Offer Another Job
+                            </button>
+                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#goToContract">
+                              Go to Contract
+                            </button>
+                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
+                              Show Profile
+                            </button>
+                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#writeReview">
+                              Write a Review
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
         </div>
-        <script>
-          $('.link_action<%= job.id %>').on('click', () => {
-            $('.more-less<%= job.id %>').toggle();
-          })
-        </script>
       <% end %>
     </div>
-    <div class="d-flex d-lg-none mb-3"></div> <!--Shim for mobile views-->
   <% end %>
   <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
 </div>

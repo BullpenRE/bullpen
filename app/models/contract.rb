@@ -8,6 +8,7 @@ class Contract < ApplicationRecord
 
   enum state: { 'pending': 0, 'declined': 1, 'withdrawn': 2, 'accepted': 3, 'closed': 4 }
   enum contract_type: Job.contract_types
+  scope :hire_group, -> { where(state: %w[pending accepted closed]) }
 
   validate :between_different_parties
 
