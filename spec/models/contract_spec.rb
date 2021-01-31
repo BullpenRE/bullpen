@@ -34,7 +34,7 @@ RSpec.describe Contract, type: :model do
       end
 
       describe 'when created via a job it inherits' do
-        let(:new_contract) { job.contracts.create(employer_profile: employer_profile, freelancer_profile: freelancer_profile) }
+        let(:new_contract) { job.contracts.create(employer_profile: employer_profile, freelancer_profile: freelancer_profile, title: '', job_description: '') }
         let(:new_contract_with_title) { job.contracts.create(employer_profile: employer_profile, freelancer_profile: freelancer_profile, title: 'Cool Job!') }
 
         it 'job_title, short_description, contract_type if blank' do
@@ -56,20 +56,13 @@ RSpec.describe Contract, type: :model do
     let!(:pending_contract) { FactoryBot.create(:contract, state: 'pending') }
     let!(:declined_contract) { FactoryBot.create(:contract, state: 'declined') }
     let!(:withdrawn_contract) { FactoryBot.create(:contract, state: 'withdrawn') }
-    let!(:active_contract) { FactoryBot.create(:contract, state: 'active') }
-    let!(:closed_contract) { FactoryBot.create(:contract, state: 'closed') }
+    let!(:accepted_contract) { FactoryBot.create(:contract, state: 'accepted') }
 
-    it '.pending, .declined, .withdrawn, .active, .closed' do
+    it '.pending, .declined, .withdrawn, .accepted, .closed' do
       expect(Contract.pending).to include(pending_contract)
       expect(Contract.declined).to include(declined_contract)
       expect(Contract.withdrawn).to include(withdrawn_contract)
-      expect(Contract.active).to include(active_contract)
-      expect(Contract.closed).to include(closed_contract)
-    end
-
-    it '.visible' do
-      expect(Contract.visible).to include(pending_contract, active_contract, closed_contract)
-      expect(Contract.visible).to_not include(declined_contract, withdrawn_contract)
+      expect(Contract.accepted).to include(accepted_contract)
     end
   end
 end

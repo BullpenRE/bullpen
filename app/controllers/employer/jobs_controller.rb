@@ -35,11 +35,11 @@ class Employer::JobsController < ApplicationController
   end
 
   def send_message
-    @job = current_user.jobs.find(params[:message][:job_id].to_i)
+    job_title = params[:message][:job_title]
     @message = Message.create(message_params)
-    FreelancerMailer.send_message(@message, @job.title).deliver_later
+    FreelancerMailer.send_message(@message, job_title).deliver_later
 
-    redirect_to employer_jobs_path
+    redirect_to redirect_path_after_send_message(job_title)
   end
 
   def decline_job_application
@@ -71,6 +71,12 @@ class Employer::JobsController < ApplicationController
 
   def job_state_modify
     @job.update(state: 'closed') if params[:make_an_offer][:state] == '1'
+  end
+
+  def redirect_path_after_send_message(job_title)
+    return employer_jobs_path if job_title.present?
+
+    employer_interviews_path
   end
 
   def message_params
