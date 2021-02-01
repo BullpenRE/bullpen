@@ -7,7 +7,7 @@ module Employer
     before_action :authenticate_user!, :initial_check, :non_employer_redirect, :employer_profile
 
     def update
-      if @employer_profile.update(profile_params)
+      if employer_profile.update(profile_params)
         redirect_to employer_account_index_path, flash: {
           notice: 'Company was updated successfully'
         }
