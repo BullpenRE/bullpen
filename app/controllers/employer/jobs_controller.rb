@@ -53,7 +53,7 @@ class Employer::JobsController < ApplicationController
   def make_an_offer
     @job = current_user.jobs.find_by(id: params[:make_an_offer][:job_id])
     @contract = current_user.employer_profile.contracts.create(make_an_offer_params.merge(state: 'pending'))
-    job_state_modify
+    close_job_if_offer_is_made
 
     flash[:notice] = "Your <strong>#{@contract.title}</strong> offer has been sent to
                       <strong>#{@contract.freelancer_profile.full_name}</strong>.
@@ -69,7 +69,7 @@ class Employer::JobsController < ApplicationController
           .permit(:job_id, :job_description, :title, :freelancer_profile_id, :contract_type, :pay_rate)
   end
 
-  def job_state_modify
+  def close_job_if_offer_is_made
     @job.update(state: 'closed') if params[:make_an_offer][:state] == '1'
   end
 
