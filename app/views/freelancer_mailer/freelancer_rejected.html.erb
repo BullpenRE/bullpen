@@ -1,0 +1,6 @@
+<br>
+<%= render partial: 'email/content_block', locals: { content: "Hi #{@freelancer_profile.first_name}," } %>
+<%= render partial: 'email/content_block', locals: { content: "Thank you for your interest in joining Bullpen's talent network." } %>
+<%= render partial: 'email/content_block', locals: { content: "Unfortunately, we will not be proceeding with your application to join Bullpen. Your information will be archived, and we invite you to consider applying again in the future." } %>
+<%= render partial: 'email/content_block', locals: { content: "<p>Bullpen talent requirements:</p><div style='display: inline-block; text-align: left; margin-left: auto;'><ol><li>Minimum 2 years of commercial real estate experience</li><li>Exceptional written and verbal communication skills</li><li>Displayed proficiency in common commercial real estate job functions</li><li>Located in the United States</li></ol></div>" } %>
+<%= render partial: 'email/content_block', locals: { content: 'Have we made a mistake? Send us an email at <a href="mailto:talent@bullpenre.com">talent@bullpenre.com</a>.' } %>

@@ -1,10 +1,7 @@
-<% if job.initial_creation %>
-  <script>
-    $('.close-job').on('click', () => {
-      $.ajax({
-        url: '/employer/jobs/<%= job.id %>',
-        method: 'DELETE'
-      })
-    })
-  </script>
-<% end %>
+<script>
+  $('.modal').on('hidden.bs.modal', () => {
+    if($(location).attr('pathname').split('/').pop() == 'jobs') {
+      window.location.reload(true);
+    }
+  });
+</script>

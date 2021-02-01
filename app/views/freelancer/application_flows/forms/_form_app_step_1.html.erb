@@ -1,0 +1,79 @@
+<%= form_for :job_application, url: wizard_path, method: :put, remote: true do |f| %>
+<div class="modal-body pt-0">
+  <%= f.hidden_field :job_application_id, value: job_application.id %>
+  <%= f.hidden_field :job_id, value: job_id %>
+  <%= f.hidden_field 'step', value: 'application_step_1' %>
+  <div class="mb-3">The offered rate is
+    <% if job_application.job.hourly? %>
+      <%= "<b>$#{job_application.job.pay_range_low} - $#{job_application.job.pay_range_high}</b>".html_safe + " per hour." %>
+    <% else %>
+      <%=  "a retainer fee of <b>$#{job_application.job.pay_range_low}</b>".html_safe + " for up to " + "#{job_application.job.contract_type.split('_').last}".html_safe + " hours per month."%>
+    <% end %>
+  </div>
+  <div class="form-group mb-1">
+    <div class="d-flex justify-content-between">
+      <label for="bidAmount" class="h5">What's your bid? <span class="text-dark font-weight-normal">
+        <%= job_application.job.hourly? ? "(per hour)" : "(per month)" %>
+      </span></label>
+    </div>
+    <div class="row">
+      <div class="col col-lg-4">
+        <%= f.text_field :bid_amount, class: "form-control", id: "bidAmount", placeholder: "Enter your bid", required: true, value: job_application.bid_amount %>
+      </div>
+    </div>
+  </div>
+  <div class="bp-text-sm mb-2 mt-3 net-earnings"> </div>
+
+  <label class="h5">Are you available from 9AM-5PM  <%= job_application.job.time_zone %>?</label>
+  <div class="custom-control custom-radio mb-1">
+    <%= f.radio_button :available_during_work_hours, 'true', id: "worksHoursRadio1", class: "custom-control-input", required: true %>
+    <label class="custom-control-label" for="worksHoursRadio1"><b>Yes</b></label>
+  </div>
+  <div class="custom-control custom-radio mb-3">
+    <%= f.radio_button :available_during_work_hours, 'false', id: "worksHoursRadio2", class: "custom-control-input", required: true %>
+    <label class="custom-control-label" for="worksHoursRadio2"><b>No</b></label>
+  </div>
+  <% if job_application.job.job_questions.present? %>
+    <% job_application.job.job_questions.each do |question| %>
+      <div class="form-group">
+        <div class="d-flex justify-content-between">
+          <label for="jobQuestion" class="h5"><%= question.description %></label>
+        </div>
+        <%= text_area_tag "job_question_#{question.id}", (answers.present? ? answers[question.id] : nil), { class: "form-control", id: "jobQuestion", placeholder: "Enter your response", rows: "5", required: true } %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+<div class="modal-footer justify-content-between">
+  <button type="button" class="btn btn-outline-primary invisible"><i class="fas fa-chevron-left mr-2"></i>Back</button>
+  <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+    Next<i class="fas fa-chevron-right ml-2"></i>
+  <% end %>
+</div>
+<% end %>
+
+<script>
+  $('#bidAmount').on('input', () => {
+    const bid_amount = $('#bidAmount').val();
+    const first_symbol = parseInt(bid_amount.charAt(0), 10);
+    const length = bid_amount.length;
+    const last_symbol = parseInt(bid_amount.charAt(length-1), 10);
+    let net_earnings;
+    if (isNaN(first_symbol)) {
+      net_earnings = parseInt(bid_amount.substring(1,length), 10);
+    } else if (isNaN(last_symbol)) {
+      net_earnings = parseInt(bid_amount.substring(0,(length-1)), 10);
+    } else {
+      net_earnings = parseInt(bid_amount, 10);
+    }
+
+    let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type.split('_').last %>';
+    if (hour_per_month === '1') {
+      $('.net-earnings').html(`Your net earnings will be <b>$${Math.round(net_earnings*0.7)}</b> per hour.`);
+    }
+    else {
+      $('.net-earnings').html(`Your net earnings will be <b>$${Math.round(net_earnings*0.7)}</b> per month for up to ${hour_per_month} hours, plus up to <b>$${Math.round(net_earnings/parseInt(hour_per_month, 10)*0.7)}</b> per additional hour.`);
+    }
+  });
+</script>
+

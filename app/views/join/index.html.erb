@@ -1,41 +1,35 @@
-<div class="align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-  <h5 class="text-center my-0 mr-md-auto font-weight-normal">Bullpen</h5>
+<%= render 'nav_bar/link_to_login' %>
 
-</div>
-
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <h2 class="display-4 text-primary">Join Bullpen</h2>
-
-</div>
-
-<div class="container join">
-  <div class="card-deck mb-4 text-center">
-
-    <div class="card md-2 shadow-sm">
-
-      <h1 class="my-0 font-weight-normal text-primary">Freelancer</h1>
-
-      <div class="card-body">
-        <h5 class="card-title pricing-card-title text-muted">I'm individual and I'm looking for work. </h5>
-
-        <div>
-          <%= link_to 'Apply', freelancer_sign_up_path, class: "btn btn-lg btn-block btn-primary" %>
+<div class="log-in-container">
+  <div class="bp-card m-auto text-center" style="max-width:500px">
+    <div class="h2 mb-3">Sign Up for Bullpen</div>
+    <div>
+      <%= form_for(:user, url: join_signup_path) do |f| %>
+        <%= render 'devise/shared/error_messages' %>
+        <div class="field mb-3 text-left">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: "Email address", id: "user_email"%>
         </div>
-      </div>
+
+        <div class="actions">
+          <%= f.submit "Sign Up with Email", class: "btn btn-primary btn-block" %>
+        </div>
+      <% end %>
+
+      <div class="bp-or-border my-3"><span>or</span></div>
+
+      <%= google_sign_in_button(image_pack_tag('media/images/icons8-google-48.png', size: '24x24', class: 'mr-2') + 'Sign Up with Gmail', proceed_to: user_google_omniauth_callback_path(src: 'registrations#new'), class: "btn btn-outline-primary btn-block d-flex justify-content-center mb-3") %>
+
     </div>
-    <div class="card md-2 shadow-sm">
-      <h1 class="my-0 font-weight-normal text-primary">Company</h1>
-
-      <div class="card-body">
-        <h5 class="card-title pricing-card-title text-muted">I'm a company interested in hiring. </h5>
-
-        <%= link_to 'Sign-Up', employer_sign_up_path, class: "btn btn-lg btn-block btn-primary" %>
-      </div>
+    <div class="text-muted">
+      For help contact us at <%= mail_to('support@bullpenre.com') %>
     </div>
   </div>
-  <footer class="pt-4 my-md-5 pt-md-5 border-top">
-    <div class="text-center">
-      <h5>Already have an account? <%= link_to "Login", new_user_session_path, class: "p-2" %></h5>
-    </div>
-  </footer>
 </div>
+
+<% if @email %>
+<script>
+  $(function() {
+    $('#user_email').val('<%= @email %>');
+  });
+</script>
+<% end %>

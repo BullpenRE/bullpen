@@ -1,0 +1,36 @@
+<!--Modal, Step 5-->
+<div class="modal" id="postJobStep5" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="postJobStep5Label">Post a Job</h1>
+        <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body pt-0">
+        <!--Progress bar-->
+        <div class="mb-4">
+          <div class="progress mb-1">
+            <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="text-center d-none d-lg-flex">
+            <div class="col"><a href="#">Summary</a></div>
+            <div class="col"><a href="#">Job Type</a></div>
+            <div class="col"><a href="#">Qualifications</a></div>
+            <div class="col"><a href="#">Details</a></div>
+            <div class="col text-secondary font-weight-bold">Questions</div>
+          </div>
+          <div class="d-flex justify-content-between d-lg-none">
+            <div class="text-secondary font-weight-bold">Questions</div>
+            <div class="text-secondary">5 of 5</div>
+          </div>
+        </div>
+        <!--Form-->
+        <%= render partial: 'employer/job_flows/forms/questions_form', locals: { job: job } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render partial: 'employer/job_flows/job_close' %>

@@ -1,0 +1,65 @@
+<style>
+  .talent-cards {
+    position: relative;
+  }
+</style>
+
+<%= render partial: 'employer/navigation', locals: { section: 'talent' } %>
+
+<!--Talent card-->
+<div class="container mb-3 talent-cards">
+
+  <%= render partial: 'shared/notice_and_alert' %>
+  <%= render partial: 'employer/talent/filter_side_bar' %>
+  <div class="d-flex justify-content-between">
+    <h1 class="">Find Talent</h1>
+    <% if @filters_list %>
+      <h6 class="flex-grow-1 text-secondary text-right mx-3">
+        <%= @filters_list.join(', ') %>
+        <%= link_to "#", id: "rejectFilters", data: {url: employer_talent_index_path} do %>
+          <i class="fa fa-times-circle fa-lg text-black-50 " aria-hidden="true"></i>
+        <% end %>
+      </h6>
+    <% end %>
+    <a href="#" id="showFilters" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
+  </div>
+  <% @freelancer_profiles.each do |freelancer_profile| %>
+    <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: freelancer_profile } %>
+
+    <div id="interview-request">
+      <%= render partial: 'employer/talent/interview_request', locals: { freelancer_profile: freelancer_profile, interview: nil } %>
+    </div>
+
+    <div class="bp-card mb-3 card<%= freelancer_profile.id %>">
+      <div class="d-flex justify-content-between flex-column flex-lg-row">
+        <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: freelancer_profile,
+                                                                 job_application: nil,
+                                                                 editable: false } %>
+        <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
+        <div class="ml-sm-auto">
+          <div class="d-block d-sm-flex">
+            <% if @current_user_interview_request_freelancer_ids.exclude?(freelancer_profile.id) %>
+              <div class="d-block p-1 d-sm-inline-block">
+                <button class="btn btn-primary d-sm-in w-100 interviewRequest<%= freelancer_profile.id %>" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
+              </div>
+            <% end %>
+            <div class="d-block p-1 d-sm-inline-block">
+              <button class="btn btn-outline-primary w-100" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
+</div>
+
+<% if @freelancer_profile_id.present? %>
+  <script>
+    const freelancer_profile = '<%= @freelancer_profile_id %>';
+    $('html,body').animate({scrollTop: $('.card' + freelancer_profile).offset().top},'slow');
+    if (freelancer_profile) {
+      $('.interviewRequest<%= @freelancer_profile_id %>')[0].click();
+    }
+  </script>
+<% end %>

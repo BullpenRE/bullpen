@@ -1,17 +1,17 @@
 <!--Add Education Modal-->
 <div class="modal fade" id="addEducationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-md cy-education" role="document">
-    <div class="modal-content cy-education">
-      <div class="modal-header cy-education">
-        <button type="button" class="cy-close mt-2 cy-education" data-dismiss="modal" aria-label="Close">
-          <span class="cy-education cy-close" aria-hidden="true">×</span>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="modalLabel">Add Education</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
         </button>
       </div>
       <%= form_for :freelancer_profile_education, html: {class: 'cy-education'}, url: wizard_path, method: :put do |f| %>
         <div class="modal-body pt-0">
-          <h3 class="modal-title mb-4" id="modalLabel">Add Education</h3>
-          <div class="form-group cy-institution">
-            <label for="institutionInput" class="bp-input-label cy-institution">Institution</label>
+          <div class="form-group">
+            <label for="institutionInput" class="bp-input-label">Institution</label>
             <%= f.text_field :institution, class: "form-control", id: "institutionInput", placeholder: "Enter the school you attended" %>
           </div>
           <div class="form-group cy-degree">

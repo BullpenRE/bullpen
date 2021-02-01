@@ -1,42 +1,49 @@
 <!--Edit License or Certification Modal-->
-<div class="modal fade" id="editLicenseCertificationModall-<%= freelancer_certification.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+<div class="modal fade" id="editLicenseCertificationModall-<%= freelancer_certification.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close">
-          <span class="cy-edit-licence" aria-hidden="true">×</span>
+        <h1 class="modal-title" id="postJobStep1Label">Edit Licence or Certification</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
         </button>
       </div>
       <%= form_for :freelancer_certification, url: wizard_path, method: :put do |f| %>
         <div class="modal-body pt-0">
-          <h3 class="modal-title mb-4" id="modalLabel">Edit Licences or Certification</h3>
           <label for="exampleFormControlMultiSelect" class="bp-input-label mt-3">
-            Choose a licence or certification to add to your profile
+            Licence or Certification
           </label>
           <div id="descriptionCertification" class="collapse multi-collapse <%= freelancer_certification.certification.custom? ? '' : 'show' %>">
             <div class="form-group mb-2">
               <%= f.select :certification_id,
-                            options_for_select(@certifications, [freelancer_certification.description, freelancer_certification.certification_id]),
-                            {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select-border", title: "Select an option..." %>
+                           options_for_select(@certifications, [freelancer_certification.description, freelancer_certification.certification_id]),
+                           {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select-border", title: "Select an option..." %>
             </div>
-            <a data-toggle="collapse" href=#descriptionCertification" data-target=".multi-collapse" aria-expanded="false" aria-controls="descriptionCertification customDescriptionCertification">
-              Create a custom entry
-            </a>
           </div>
           <div id="customDescriptionCertification" class="collapse multi-collapse <%= freelancer_certification.certification.custom? ? 'show' : '' %>">
             <div class="form-group mb-2">
               <%= f.text_field :description, class: "form-control", id: "customDescriptionCertificate-#{freelancer_certification.id}", placeholder: "Custom License Entry", value: freelancer_certification.description %>
             </div>
-            <a id="editSelectCertification-<%= freelancer_certification.id %>" data-toggle="collapse" href=#descriptionCertification" data-target=".multi-collapse" aria-expanded="false" aria-controls="descriptionCertification customDescriptionCertification">
-              Choose from our list
-            </a>
           </div>
+
+          <div class="custom-control custom-checkbox">
+            <%= f.check_box :custom,
+                            class: "custom-control-input #{freelancer_certification.certification.custom? ? 'show' : ''}",
+                            id: "editCertificationCustom-#{freelancer_certification.id}", type: "button",
+                            'data-toggle': "collapse",
+                            'data-target': ".multi-collapse",
+                            'aria-expanded': "false",
+                            'aria-controls': "descriptionCertification customDescriptionCertification",
+                            checked: "#{freelancer_certification.certification.custom? ? 'checked' : 'false'}" %>
+            <label class="custom-control-label" for="editCertificationCustom-<%=freelancer_certification.id %>">Create a custom entry</label>
+          </div>
+
           <div class="form-group">
-            <label for="earnedMonth" class="bp-input-label mt-5">When was this license or certification was earned?</label>
+            <label for="earnedMonth" class="bp-input-label mt-3">Date Earned</label>
             <div class="row mb-3">
               <div class="col">
                 <%= f.select :earned_month,
-                             options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES.each_with_index.collect { |m, i| [m, i] }, freelancer_certification&.earned&.month),
+                             options_for_select(select_months_array, freelancer_certification&.earned&.month),
                              {}, class: 'form-control selectpicker',
                              id: 'earnedMonth', required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
               </div>
@@ -50,12 +57,9 @@
             <%= f.hidden_field :id, value: freelancer_certification.id %>
           </div>
         </div>
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
-          <div>
-            <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2" %>
-            <%= f.submit 'Save', class: 'btn btn-primary' %>
-           </div>
+        <div class="modal-footer">
+          <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
+          <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
         </div>
       <% end %>
     </div>
@@ -66,5 +70,9 @@
   $('#editSelectCertification-' + <%= freelancer_certification.id %>).on('click', () => {
     $('#customDescriptionCertificate-' + <%= freelancer_certification.id %>).val('');
   })
+  <% if @freelancer_profile.freelancer_certifications.count > 1 %>
+    $('.modal-footer').addClass('justify-content-between');
+    $('.btn-outline-danger').removeClass('d-none');
+  <% end %>
 </script>
 

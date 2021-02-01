@@ -1,19 +1,28 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   if defined?(ActiveAdmin)
     devise_for :admin_users, ActiveAdmin::Devise.config
     ActiveAdmin.routes(self)
   end
 
+  default_url_options protocol: ActionMailer::Base.default_url_options[:protocol],
+                      host: ActionMailer::Base.default_url_options[:host]
+
   get '/freelancer_style', to: 'style#freelancer'
   get '/employer_style', to: 'style#employer'
+  get '/employer_talent_style', to: 'style#employer_talent'
   get '/login_style', to: 'style#login'
   get '/employer_jobs_style', to: 'style#employer_jobs'
 
   get '/join', to: 'join#index'
+  post '/join/signup', to: 'join#signup'
 
   devise_for :users, controllers: {
     passwords: 'passwords',
-    registrations: 'registrations'
+    registrations: 'registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    confirmations: 'confirmations'
   }
 
   devise_scope :user do
@@ -31,12 +40,61 @@ Rails.application.routes.draw do
   # resources :employer
 
   namespace :employer do
-    get 'dashboard', to: 'dashboard#show'
     resources :jobs
+    get 'post_job', to: 'jobs#post_job'
     resources :job_flows
+    resources :interviews
     resources :billing
     resources :refer
     resources :talent
+    resources :account, only: :index
+    post 'interview_request', to: 'talent#interview_request'
+    post 'like_job_application', to: 'jobs#like_job_application'
+    post 'send_message', to: 'jobs#send_message'
+    post 'decline_job_application', to: 'jobs#decline_job_application'
+    post 'withdraw_request', to: 'interviews#withdraw_request'
+    post 'remove_interview_request', to: 'interviews#remove_interview_request'
+  end
+
+  namespace :public do
+    get 'freelancer_profile/:slug', to: 'freelancer_profile#show', as: 'freelancer_profile'
+    get 'job/:slug', to: 'job#show', as: 'job'
+    get 'apply_for_job', to: 'job#apply_for_job'
+    get 'request_interview', to: 'freelancer_profile#request_interview'
+  end
+
+  namespace :freelancer do
+    resources :jobs
+    resources :applications
+    resources :application_flows
+    put 'application_flows/:job_app/add_work_samples',
+        to: 'application_flows#add_work_samples',
+        as: 'add_work_samples'
+    post 'application_flows/:job_app/destroy_work_sample',
+         to: 'application_flows#destroy_work_sample',
+         as: 'destroy_work_sample'
+    resources :interviews
+    resources :contracts
+    resources :profile, only: :index
+    resources :account, only: :index
+    post 'set_withdrawn', to: 'applications#set_withdrawn'
+    post 'change_software_licence', to: 'profile#change_software_licence'
+    post 'change_certifications', to: 'profile#change_certifications'
+    post 'add_certifications', to: 'profile#change_certifications'
+    post 'change_skills', to: 'profile#change_skills'
+    post 'change_educations', to: 'profile#change_educations'
+    post 'add_educations', to: 'profile#change_educations'
+    post 'decline_interview', to: 'interviews#decline_interview'
+    post 'remove_interview_request', to: 'interviews#remove_interview_request'
+    post 'accept_request', to: 'interviews#accept_request'
+    post 'send_message', to: 'interviews#send_message'
+    post 'change_freelancer_basic_info', to: 'profile#change_freelancer_basic_info'
+    post 'add_work_experience', to: 'profile#change_work_experience'
+    post 'change_work_experience', to: 'profile#change_work_experience'
+
+    namespace :profile do
+      resource :preferences, only: :update
+    end
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
@@ -55,5 +113,7 @@ Rails.application.routes.draw do
   get '/styleguide', to: 'styleguide#index'
 
   root 'join#index'
-
+  authenticate :user, ->(u) { u.bullpen_personnel? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end

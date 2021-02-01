@@ -28,5 +28,4 @@ RSpec.describe FreelancerSoftware, type: :model do
       expect(freelancer_software.software).to eq(software)
     end
   end
-
 end

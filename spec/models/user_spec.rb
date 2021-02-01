@@ -2,9 +2,13 @@ require 'rails_helper'
 
 describe User do
   let!(:user) { FactoryBot.create(:user) }
+  let!(:employer_user) { FactoryBot.create(:user, :employer) }
+  let!(:freelancer_user) { FactoryBot.create(:user, :freelancer) }
 
   it 'factory works' do
     expect(user).to be_valid
+    expect(employer_user).to be_valid
+    expect(freelancer_user).to be_valid
   end
 
   context 'Validations' do
@@ -13,16 +17,16 @@ describe User do
   end
 
   context 'Relationships' do
-    let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: user) }
+    let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
 
     describe 'freelance_profile' do
       it 'can have one' do
-        expect(user.freelancer_profile).to eq(freelancer_profile)
+        expect(freelancer_user.freelancer_profile).to eq(freelancer_profile)
       end
 
       it 'destroying a user destroys its freelance_profile' do
         expect(FreelancerProfile.exists?(freelancer_profile.id)).to be_truthy
-        user.destroy
+        freelancer_user.destroy
         expect(FreelancerProfile.exists?(freelancer_profile.id)).to be_falsey
       end
 
@@ -30,24 +34,45 @@ describe User do
     end
 
     describe 'jobs' do
-      let!(:job) { FactoryBot.create(:job, user: user) }
+      let!(:job) { FactoryBot.create(:job, user: employer_user) }
       it 'has many' do
-        expect(user.jobs).to include(job)
+        expect(employer_user.jobs).to include(job)
       end
 
       it 'dependent destroy' do
-        user.destroy
+        employer_user.destroy
         expect(Job.exists?(job.id)).to be_falsey
       end
     end
 
     describe 'freelancer_sectors and freelancer_real_estate_skills' do
-      let!(:freelancer_sector) { FactoryBot.create(:freelancer_sector, freelancer_profile: freelancer_profile) }
-      let!(:freelancer_real_estate_skill) { FactoryBot.create(:freelancer_real_estate_skill, freelancer_profile: freelancer_profile) }
+      let(:sector) { FactoryBot.create(:sector, description: 'Special Sector') }
+      let(:real_estate_skill) { FactoryBot.create(:real_estate_skill, description: 'Special Real Estate Skill') }
+      let!(:freelancer_sector) { FactoryBot.create(:freelancer_sector, freelancer_profile: freelancer_profile, sector: sector) }
+      let!(:freelancer_real_estate_skill) { FactoryBot.create(:freelancer_real_estate_skill, freelancer_profile: freelancer_profile, real_estate_skill: real_estate_skill) }
 
       it 'can have many through the freelance_profile' do
-        expect(user.freelancer_sectors).to include(freelancer_sector)
-        expect(user.freelancer_real_estate_skills).to include(freelancer_real_estate_skill)
+        expect(freelancer_user.freelancer_sectors).to include(freelancer_sector)
+        expect(freelancer_user.freelancer_real_estate_skills).to include(freelancer_real_estate_skill)
+      end
+    end
+
+    describe 'job_applications' do
+      let!(:job_application) { FactoryBot.create(:job_application, user: freelancer_user) }
+      it 'has many job_applications with dependent destroy' do
+        expect(freelancer_user.job_applications).to include(job_application)
+        freelancer_user.destroy
+        expect(JobApplication.exists?(job_application.id)).to be_falsey
+      end
+    end
+
+    describe 'messages' do
+      let!(:sent_message) { FactoryBot.create(:message, from_user: user) }
+      let!(:received_message) { FactoryBot.create(:message, to_user: user) }
+
+      it 'can have many sent_messages and received_messages' do
+        expect(user.sent_messages).to include(sent_message)
+        expect(user.received_messages).to include(received_message)
       end
     end
   end
@@ -55,8 +80,8 @@ describe User do
   context 'Scopes' do
     let!(:confirmed) { FactoryBot.create(:user, confirmed_at: 3.days.ago) }
     let!(:not_confirmed) { FactoryBot.create(:user, confirmed_at: nil) }
-    let(:freelancer_user) { FactoryBot.create(:freelancer_profile).user }
-    let(:employer_user) { FactoryBot.create(:employer_profile).user }
+    let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
+    let!(:employer_profile) { FactoryBot.create(:employer_profile, user: employer_user) }
 
     it '.confirmed' do
       expect(User.confirmed).to include(confirmed)

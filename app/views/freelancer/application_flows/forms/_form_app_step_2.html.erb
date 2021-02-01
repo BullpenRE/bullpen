@@ -1,0 +1,161 @@
+<%= form_for :job_application, url: wizard_path, method: :put, remote: true do |f| %>
+<div class="modal-body pt-0">
+  <%= f.hidden_field :job_application_id, value: job_application.id %>
+  <%= f.hidden_field 'step', value: 'application_step_2' %>
+
+  <div class="form-group">
+    <div class="d-flex justify-content-between">
+      <label for="coverLetter" class="h5">Cover Letter</label>
+    </div>
+    <%= f.rich_text_area :cover_letter, value: job_application.cover_letter, class: "form-control", id: "coverLetter", placeholder: "Enter your cover letter", rows: "10", required: true %>
+  </div>
+  <div class="form-group work_sample">
+    <label for="workSamples" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
+    <% if job_application.errors.any? %>
+      <div id="alertWarning" class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= job_application.errors.full_messages.join(', ') %>
+      </div>
+    <% end %>
+    <div id="workSamples" data-allowed="<%= JobApplication::MAX_WORK_SAMPLES_COUNT %>">
+      <% if job_application.work_samples.attached? %>
+        <% job_application.work_samples.each do |work_sample| %>
+          <div id="file-<%= work_sample.signed_id %>" class="work-sample-item">
+            <div class="file-name text-break mb-2">
+              <%= link_to '#', class: 'delete-work-sample', data: {id: work_sample.signed_id.to_s, confirm: 'Are you sure?'} do %>
+                <i class="far fa-trash-alt text-danger mr-1"></i>
+              <% end %>
+              <%= work_sample.filename.to_s %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="custom-file <%= 'd-none' unless job_application.adding_work_samples_allowed? %>">
+      <%= f.file_field :work_samples, multiple: true, name: 'work_samples', class: "d-none", id: "uploadWorkSample" %>
+      <label class="btn btn-outline-primary upload-work-sample d-block d-sm-inline" for="uploadWorkSample">
+        Attach a File
+      </label>
+    </div>
+  </div>
+  <div class="custom-control custom-checkbox mb-3">
+    <%= f.check_box :template,
+                    id: "template",
+                    :class => "custom-control-input" %>
+    <label class="custom-control-label text-secondary font-weight-bold" for="template">Use this as a template for future applications</label>
+  </div>
+</div>
+<div class="modal-footer">
+  <%= button_tag type: 'submit', value: 'back', class: "btn btn-outline-primary" do %>
+    <i class="fas fa-chevron-left mr-2"></i>Back
+  <% end %>
+  <div class="d-none d-sm-block ml-auto">
+    <% if !job_application.applied? %>
+      <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
+        Save as Draft
+      <% end %>
+    <% end %>
+    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+      Preview Application<i class="fas fa-chevron-right ml-2"></i>
+    <% end %>
+  </div>
+  <% if !job_application.applied? %>
+    <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1 d-sm-none ml-auto" do %>
+      Save
+    <% end %>
+  <% end %>
+  <%= button_tag type: 'submit', class: "btn btn-primary d-sm-none" do %>
+    Preview<i class="fas fa-chevron-right ml-2"></i>
+  <% end %>
+</div>
+<% end %>
+
+<script>
+  function tooLargeFilesExist(files) {
+    const maxFileSize = 20971520;
+    const tooLargeFiles = files.filter(function(file) {
+      return (file.size && file.size > maxFileSize)
+    });
+    return tooLargeFiles.length > 0
+  }
+
+  function getFilesArray(fileListObject) {
+    let filesArray = [];
+    for (let i = 0; i < fileListObject.length; i++) {
+      filesArray.push(fileListObject[i])
+    }
+    return filesArray
+  }
+
+  function groupAdditionRestricted(quantity)  {
+    const allowedCount = parseInt($('#workSamples').data('allowed'), 10);
+    const currentCount = $('.work-sample-item').length;
+    return (currentCount + quantity) > allowedCount
+  }
+
+  function showSwal(message) {
+    return Swal.fire({
+      title: '<h5>Oops!</h5>',
+      text: message
+    });
+  }
+
+  function sendFile(fileListObject) {
+    const job_app = '<%= job_application.id %>';
+    const formData = new FormData();
+    Array.from(fileListObject).forEach((file) => {
+      formData.append('work_sample[]', file);
+    });
+    formData.append('id', 'application_step_2');
+    $.ajax({
+      url: `/freelancer/application_flows/${job_app}/add_work_samples`,
+      method: 'PUT',
+      processData: false,
+      contentType: false,
+      dataType: 'script',
+      data: formData,
+      success: (response) => {
+        console.log(response)
+      }
+    });
+  }
+
+  $('.work_sample').on('change', '#uploadWorkSample', (e) => {
+    const fileListObject = e.target.files;
+    const filesArray = getFilesArray(fileListObject);
+
+    if (tooLargeFilesExist(filesArray)) {
+      showSwal("Uploaded files must not exceed 20MB\n")
+    } else if (groupAdditionRestricted(filesArray.length)) {
+      showSwal("The total number of files is more than allowed")
+    } else {
+      sendFile(fileListObject)
+    }
+  });
+
+  $('.work_sample').on('click', '.delete-work-sample', (e) => {
+    let clickedWorkSample = $(e.target).parents('a').data('id');
+    e.preventDefault();
+    const job_app = '<%= job_application.id %>';
+    const formData = new FormData();
+    formData.append('job_app', job_app);
+    formData.append('blob_key', clickedWorkSample);
+    formData.append('id', 'application_step_2');
+    $.ajax({
+      url: `/freelancer/application_flows/${job_app}/destroy_work_sample`,
+      method: 'POST',
+      processData: false,
+      contentType: false,
+      dataType: 'script',
+      data: formData,
+      success: () => {
+        return true
+      },
+    })
+  });
+
+  // Disable trix from accepted pasted or dragged/dropped files
+  document.addEventListener("trix-file-accept", event => {
+    event.preventDefault();
+  });
+</script>

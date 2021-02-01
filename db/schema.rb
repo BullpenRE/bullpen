@@ -2,18 +2,28 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_133942) do
+ActiveRecord::Schema.define(version: 2021_01_28_193142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -47,7 +57,14 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
     t.datetime "created_at", null: false
+    t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "admin_users", force: :cascade do |t|
@@ -68,6 +85,21 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
     t.boolean "custom", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.bigint "employer_profile_id", null: false
+    t.bigint "freelancer_profile_id", null: false
+    t.bigint "job_id"
+    t.string "title"
+    t.integer "contract_type"
+    t.integer "pay_rate"
+    t.integer "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employer_profile_id"], name: "index_contracts_on_employer_profile_id"
+    t.index ["freelancer_profile_id"], name: "index_contracts_on_freelancer_profile_id"
+    t.index ["job_id"], name: "index_contracts_on_job_id"
   end
 
   create_table "employer_profiles", force: :cascade do |t|
@@ -146,6 +178,10 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
     t.integer "curation", default: 0
     t.boolean "draft", default: true
     t.string "current_step"
+    t.string "slug"
+    t.integer "desired_hourly_rate"
+    t.boolean "new_jobs_alert", default: true
+    t.boolean "searchable", default: true
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
@@ -175,6 +211,43 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["freelancer_profile_id"], name: "index_freelancer_softwares_on_freelancer_profile_id"
     t.index ["software_id"], name: "index_freelancer_softwares_on_software_id"
+  end
+
+  create_table "interview_requests", force: :cascade do |t|
+    t.bigint "employer_profile_id", null: false
+    t.bigint "freelancer_profile_id", null: false
+    t.integer "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "hide_from_freelancer", default: false
+    t.boolean "hide_from_employer", default: false
+    t.index ["employer_profile_id"], name: "index_interview_requests_on_employer_profile_id"
+    t.index ["freelancer_profile_id"], name: "index_interview_requests_on_freelancer_profile_id"
+  end
+
+  create_table "job_application_questions", force: :cascade do |t|
+    t.bigint "job_application_id"
+    t.bigint "job_question_id"
+    t.text "answer"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_application_id"], name: "index_job_application_questions_on_job_application_id"
+    t.index ["job_question_id"], name: "index_job_application_questions_on_job_question_id"
+  end
+
+  create_table "job_applications", force: :cascade do |t|
+    t.bigint "job_id"
+    t.bigint "user_id"
+    t.boolean "template", default: false
+    t.integer "bid_amount"
+    t.boolean "available_during_work_hours"
+    t.integer "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "applied_at", precision: 6
+    t.boolean "liked", default: false
+    t.index ["job_id"], name: "index_job_applications_on_job_id"
+    t.index ["user_id"], name: "index_job_applications_on_user_id"
   end
 
   create_table "job_questions", force: :cascade do |t|
@@ -218,16 +291,28 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
     t.string "short_description"
     t.integer "position_length"
     t.integer "hours_needed"
-    t.string "time_zone"
+    t.integer "time_zone"
     t.boolean "daytime_availability_required"
     t.integer "required_experience"
     t.string "required_regional_knowledge"
-    t.text "relevant_job_details"
-    t.boolean "draft", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "initial_creation", default: true
+    t.integer "state", default: 0
+    t.integer "contract_type"
+    t.integer "pay_range_low"
+    t.integer "pay_range_high"
+    t.string "slug"
     t.index ["user_id"], name: "index_jobs_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "from_user_id", null: false
+    t.bigint "to_user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["from_user_id"], name: "index_messages_on_from_user_id"
+    t.index ["to_user_id"], name: "index_messages_on_to_user_id"
   end
 
   create_table "real_estate_skills", force: :cascade do |t|
@@ -290,6 +375,8 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
     t.string "location"
     t.integer "role"
     t.bigint "signup_promo_id"
+    t.string "uid"
+    t.string "provider"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -297,6 +384,10 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "contracts", "employer_profiles"
+  add_foreign_key "contracts", "freelancer_profiles"
+  add_foreign_key "contracts", "jobs"
   add_foreign_key "employer_profiles", "users"
   add_foreign_key "employer_sectors", "employer_profiles"
   add_foreign_key "employer_sectors", "sectors"
@@ -307,6 +398,12 @@ ActiveRecord::Schema.define(version: 2020_11_12_133942) do
   add_foreign_key "freelancer_profiles", "users"
   add_foreign_key "freelancer_softwares", "freelancer_profiles"
   add_foreign_key "freelancer_softwares", "softwares"
+  add_foreign_key "interview_requests", "employer_profiles"
+  add_foreign_key "interview_requests", "freelancer_profiles"
+  add_foreign_key "job_application_questions", "job_applications"
+  add_foreign_key "job_application_questions", "job_questions"
+  add_foreign_key "job_applications", "jobs"
+  add_foreign_key "job_applications", "users"
   add_foreign_key "job_questions", "jobs"
   add_foreign_key "job_sectors", "jobs"
   add_foreign_key "job_sectors", "sectors"

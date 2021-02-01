@@ -1,7 +1,7 @@
 <!--Form-->
 <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
   <%= f.hidden_field :job_id, value: job.id %>
-  <%= f.hidden_field 'step', value: 'summary' %>
+  <%= f.hidden_field 'step', value: 'post_job_step_1' %>
   <div class="form-group">
     <div class="d-flex justify-content-between">
       <label for="jobTitle" class="h5">Job Title</label>
@@ -17,7 +17,7 @@
     <label for="sectorMultiselect" class="h5">What sectors are relevant to this job?</label>
     <%= f.select :job_sectors,
                  options_for_select(
-                   Sector.find_each.map{ |sector| [sector.description, sector.id] if sector.disable == false },
+                   Sector.enabled.pluck(:description, :id),
                    job&.job_sectors&.map do |job_sector|
                      [job_sector.sector.description, job_sector.sector.id]
                    end.flatten),

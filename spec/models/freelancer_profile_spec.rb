@@ -1,17 +1,67 @@
 require 'rails_helper'
 
 RSpec.describe FreelancerProfile, type: :model do
-  let(:user)  { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:user, :freelancer) }
   let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: user) }
+  let(:freelancer_profile_complete) { FactoryBot.create(:freelancer_profile, :complete) }
   let(:avatar_image) { File.open(Rails.root.join('spec', 'support', 'assets', 'sample-avatar.jpg')) }
   let(:big_avatar_image) { File.open(Rails.root.join('spec', 'support', 'assets', 'big_avatar.jpg')) }
   let(:wrong_type_avatar) { File.open(Rails.root.join('spec', 'support', 'assets', 'wrong_type_avatar.numbers')) }
 
-  it 'factory works' do
+  it 'factories work' do
     expect(freelancer_profile).to be_valid
+    expect(freelancer_profile_complete).to be_valid
+    expect(freelancer_profile_complete.real_estate_skills).to_not be_empty
+    expect(freelancer_profile_complete.sectors).to_not be_empty
+    expect(freelancer_profile_complete.softwares).to_not be_empty
+    expect(freelancer_profile_complete.freelancer_profile_educations).to_not be_empty
+    expect(freelancer_profile_complete.freelancer_profile_experiences).to_not be_empty
+    expect(freelancer_profile_complete.freelancer_certifications).to_not be_empty
   end
 
-  context 'Validations'
+  context 'Validations' do
+    describe 'correct_content_type?' do
+      it 'without attached avatar' do
+        expect(freelancer_profile).to be_valid
+      end
+      it 'with valid type avatar' do
+        freelancer_profile.avatar.attach(io: avatar_image, filename: File.basename(avatar_image.path), content_type: 'image/jpg')
+        expect(freelancer_profile).to be_valid
+      end
+      it 'with invalid type avatar' do
+        freelancer_profile.avatar.attach(io: wrong_type_avatar, filename: File.basename(wrong_type_avatar.path), content_type: 'image/jpg')
+        expect(freelancer_profile).to_not be_valid
+        expect(freelancer_profile.errors.messages[:base]).to eq ['Please upload only a jpg, png or gif image.']
+      end
+    end
+
+    describe '#correct_size?' do
+      it 'without attached avatar' do
+        expect(freelancer_profile).to be_valid
+      end
+      it 'with right size avatar' do
+        freelancer_profile.avatar.attach(io: avatar_image, filename: File.basename(avatar_image.path), content_type: 'image/jpg')
+        expect(freelancer_profile).to be_valid
+      end
+      it 'with big size avatar' do
+        freelancer_profile.avatar.attach(io: big_avatar_image, filename: File.basename(big_avatar_image.path), content_type: 'image/jpg')
+        expect(freelancer_profile).to_not be_valid
+        expect(freelancer_profile.errors.messages[:base]).to eq ['Uploaded files must not exceed 2MB.']
+      end
+    end
+
+    describe 'desired_hourly_rate' do
+      it 'can be nil' do
+        freelancer_profile.desired_hourly_rate = nil
+        expect(freelancer_profile).to be_valid
+      end
+
+      it 'if not nil, then is a positive number' do
+        freelancer_profile.desired_hourly_rate = -32
+        expect(freelancer_profile).to_not be_valid
+      end
+    end
+  end
 
   context 'Relationships' do
     it 'belongs_to a user' do
@@ -75,40 +125,47 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.softwares).to include(freelancer_software.software)
       end
 
+      context 'interview requests' do
+        let(:employer_user)  { FactoryBot.create(:user) }
+        let(:employer_profile) { FactoryBot.create(:employer_profile, user: employer_user) }
+        let(:freelancer_user)  { FactoryBot.create(:user) }
+        let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
+        let!(:interview_request) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile) }
+
+        it 'can have many interview_requests' do
+          expect(freelancer_profile.interview_requests).to include(interview_request)
+        end
+
+        it 'getting destroyed destroys interview_requests' do
+          expect { freelancer_profile.destroy }.to change { InterviewRequest.count }.by(-1)
+        end
+      end
+
+    end
+
+    describe 'contracts' do
+      let!(:contract) { FactoryBot.create(:contract, freelancer_profile: freelancer_profile) }
+
+      it 'can have contracts, dependent destroy' do
+        expect(freelancer_profile.contracts).to include(contract)
+        freelancer_profile.destroy
+        expect(Contract.exists?(contract.id)).to be_falsey
+      end
+    end
+
+  end
+
+  context 'Scopes' do
+    it '.accepted' do
+      expect(freelancer_profile.curation).to eq('pending')
+      expect(freelancer_profile_complete.curation).to eq('accepted')
+
+      expect(FreelancerProfile.accepted).to_not include(freelancer_profile)
+      expect(FreelancerProfile.accepted).to include(freelancer_profile_complete)
     end
   end
 
   context 'Methods' do
-    describe '#correct_size?' do
-      it 'without attached avatar' do
-        expect(freelancer_profile).to be_valid
-      end
-      it 'with right size avatar' do
-        freelancer_profile.avatar.attach(io: avatar_image, filename: File.basename(avatar_image.path), content_type: 'image/jpg')
-        expect(freelancer_profile).to be_valid
-      end
-      it 'with big size avatar' do
-        freelancer_profile.avatar.attach(io: big_avatar_image, filename: File.basename(big_avatar_image.path), content_type: 'image/jpg')
-        expect(freelancer_profile).to_not be_valid
-        expect(freelancer_profile.errors.messages[:base]).to eq ['Uploaded files must not exceed 2MB.']
-      end
-    end
-
-    describe 'correct_content_type?' do
-      it 'without attached avatar' do
-        expect(freelancer_profile).to be_valid
-      end
-      it 'with valid type avatar' do
-        freelancer_profile.avatar.attach(io: avatar_image, filename: File.basename(avatar_image.path), content_type: 'image/jpg')
-        expect(freelancer_profile).to be_valid
-      end
-      it 'with invalid type avatar' do
-        freelancer_profile.avatar.attach(io: wrong_type_avatar, filename: File.basename(wrong_type_avatar.path), content_type: 'image/jpg')
-        expect(freelancer_profile).to_not be_valid
-        expect(freelancer_profile.errors.messages[:base]).to eq ['Please upload only a jpg, png or gif image.']
-      end
-    end
-
     describe 'curation states' do
       it '#accepted?' do
         freelancer_profile.update(curation: 'accepted')
@@ -143,6 +200,16 @@ RSpec.describe FreelancerProfile, type: :model do
       expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
       freelancer_profile.update(draft: false, curation: :declined)
       expect(freelancer_profile.reload.ready_for_submission?).to be_falsey
+    end
+
+    describe 'user fields' do
+      it 'inherits first_name, last_name, full_name, email and location from user' do
+        expect(freelancer_profile.first_name).to eq(freelancer_profile.user.first_name)
+        expect(freelancer_profile.last_name).to eq(freelancer_profile.user.last_name)
+        expect(freelancer_profile.full_name).to eq(freelancer_profile.user.full_name)
+        expect(freelancer_profile.email).to eq(freelancer_profile.user.email)
+        expect(freelancer_profile.location).to eq(freelancer_profile.user.location)
+      end
     end
   end
 end

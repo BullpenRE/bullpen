@@ -1,7 +1,7 @@
 <!--Form-->
 <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
   <%= f.hidden_field :job_id, value: @job.id %>
-  <%= f.hidden_field 'step', value: 'qualifications' %>
+  <%= f.hidden_field 'step', value: 'post_job_step_3' %>
   <div class="form-group mb-4">
     <div class="h5">What level of experience is required?</div>
     <div class="custom-control custom-radio">
@@ -21,7 +21,7 @@
     <label for="skillsMultiselect" class="h5">What skills are required for this job?</label>
     <%= f.select :job_skills,
                  options_for_select(
-                   Skill.find_each.map{ |skill| [skill.description, skill.id] if skill.disable == false },
+                   Skill.enabled.pluck(:description, :id),
                    @job&.job_skills&.map do |job_skill|
                      [job_skill.skill.description, job_skill.skill.id]
                    end.flatten),
@@ -39,7 +39,7 @@
     <label for="softwareMultiselect" class="h5">What software is required? <span class="text-dark font-weight-normal">(Optional)</span></label>
     <%= f.select :job_softwares,
                  options_for_select(
-                   Software.find_each.map{ |soft| [soft.description, soft.id] if soft.disable == false },
+                   Software.enabled.pluck(:description, :id),
                    @job&.job_softwares&.map do |soft|
                      [soft.software.description, soft.software.id]
                    end.flatten),
@@ -52,7 +52,7 @@
                      value: job.required_regional_knowledge %>
   </div>
   <div class="modal-footer justify-content-between">
-    <%= link_to employer_job_flows_path(id: :job_type, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
+    <%= link_to employer_job_flows_path(id: :post_job_step_2, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
     <%= button_tag type: 'submit', class: "btn btn-primary" do %>

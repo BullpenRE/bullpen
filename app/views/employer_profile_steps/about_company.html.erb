@@ -1,7 +1,7 @@
-<%= render '/nav_bar/nav_bar' %>
+<%= render '/nav_bar/profile_flow_nav_bar' %>
 
 <div class="container">
-
+  <%= render partial: 'shared/notice_and_alert' %>
   <div class="progress bg-white shadow-sm mx-auto" style="max-width: 500px;">
     <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
   </div>
@@ -37,3 +37,43 @@
       <% end %>
   </div>
 </div>
+
+<script>
+    $('#companyWebsiteInput').on('focus change paste keyup', function () {
+        if ($('#companyWebsiteInput').val() === '') {
+            var that = this;
+            setTimeout(function () {
+                that.selectionStart = that.selectionEnd = 10000;
+            }, 200);
+            $('#companyWebsiteInput').val('http://');
+
+            if ($('#companyWebsiteInput').on('paste', function () {
+                if (navigator.userAgent.indexOf("Firefox") > -1) {
+                    $('#companyWebsiteInput').val();
+                } else if(navigator.userAgent.indexOf("Chrome") > -1) {
+                    navigator.clipboard.readText()
+                        .then(text => {
+                            if (text.includes('http://')) {
+                                $('#companyWebsiteInput').val(text);
+                            } else {
+                                $('#companyWebsiteInput').val('http://'+text);
+                            }
+                        })
+                } else if(navigator.userAgent.indexOf("Safari") > -1) {
+                    navigator.clipboard.readText()
+                        .then(text => {
+                            if (text.includes('http://')) {
+                                $('#companyWebsiteInput').val('');
+                            } else {
+                                $('#companyWebsiteInput').val('http://');
+                            }
+                        })
+                }
+                ;
+            }));
+        }
+        ;
+
+    });
+
+</script>

@@ -1,0 +1,15 @@
+<div class="modal" id="jobAppStep1" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="jobAppStep1Label">Apply<span class="d-none d-lg-inline"> for <%= job_application.job.title %></span></h1>
+        <h5 class="text-right col text-nowrap mt-2">Step 1 of 2</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--      <form class="needs-validation" novalidate>-->
+      <%= render partial: 'freelancer/application_flows/forms/form_app_step_1', locals: { job_application: job_application, job_id: job_id, answers: answers } %>
+    </div>
+  </div>
+</div>

@@ -48,60 +48,60 @@
   }
 </style>
 
-<div class="align-items-center bg-white border-bottom shadow-sm mb-5">
-  <div class="text-left mt-2 mb-2 ml-5">
-    <%= image_pack_tag('bullpen-email-logo.png', width: 175, height: 55) %>
+<nav class="navbar navbar-expand-lg navbar-dark bg-header mb-sm-4">
+  <div class="container">
+    <div class="text-left mt-2 mb-2 ml-md-5">
+      <%= link_to image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30'), join_path %>
+    </div>
   </div>
-</div>
+</nav>
 
 <div class="row justify-content-center">
-  <div class="col-md-4 shadow-sm">
+  <div class="col-12 col-sm-8 col-md-6 shadow-sm bg-white">
     <div class="col-md-12">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { novalidate: true, id: "regForm", class: "needs-validation" }) do |f| %>
         <div class="row-cols-1 setup-content-2" id="step-1">
-          <%= render "devise/shared/error_messages", resource: resource %>
-          <h4 class="mb-5 mt-4 display-5 ml-4 text-primary text-center">Create an Account</h4>
+          <%= render 'devise/shared/error_messages' %>
+          <div class="h1 mb-5 mt-4 display-5 ml-4 text-secondary text-center">Join us as a Freelancer</div>
           <div class="check-email mb-5 text-center"></div>
           <div class="row ml-1">
-          <div class="col-md-6 mb-4">
-            <%= f.label :first_name, class: "text-primary" %>
-            <%= f.text_field :first_name, class: "form-control", id: "firstName", required: true %>
+          <div class="col-md-6 mb-4 h4">
+            <%= f.label :first_name, class: "text-secondary" %>
+            <%= f.text_field :first_name, class: "form-control bg-white border-gray-dark", id: "firstName", required: true %>
           </div>
-          <div class="col-md-6 mb-3">
-            <%= f.label :last_name, class: "text-primary" %>
-            <%= f.text_field :last_name, class: "form-control", id: "lastName", required: true %>
+          <div class="col-md-6 mb-3 h4">
+            <%= f.label :last_name, class: "text-secondary" %>
+            <%= f.text_field :last_name, class: "form-control bg-white border-gray-dark", id: "lastName", required: true %>
           </div>
         </div>
 
-        <div class="mb-5 col-md-12">
-          <%= f.label :email, class: "text-primary" %><br />
-          <%= f.email_field :email, class: "form-control", id: "email", required: true %>
+        <div class="mb-5 col-md-12 h4">
+          <%= f.label :email, class: "text-secondary" %><br />
+          <%= f.email_field :email, class: "form-control bg-white border-gray-dark", id: "email", required: true %>
         </div>
 
           <% if @show_promo_code %>
-            <div class="mb-5 col-md-12">
-              <label for="promo_code" class="text-primary">Promo Code (Optional)</label>
-              <input type="text" class="form-control" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
+            <div class="mb-5 col-md-12 h4">
+              <label for="promo_code" class="text-secondary">Promo Code (Optional)</label>
+              <input type="text" class="form-control bg-white border-gray-dark" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
             </div>
           <% end %>
 
         <hr class="mb-4">
         <button class="form-control-lg btn btn-outline-secondary col-md-12 mb-3 nextBtn-2" type="button">Sign up as a freelancer</button>
 
-          <footer class="col-md-11 border-top mt-2  pt-lg-4">
-            <div class="text-center">
-              <h5>Already have an account? <%= link_to "Login", new_user_session_path, class: "p-2" %></h5>
-            </div>
-          </footer>
+          <div class="text-center card-footer bg-white">
+            Already have an account? <%= link_to "Login", new_user_session_path, class: "p-2" %>
+          </div>
       </div>
         <%= f.hidden_field :role, value: :freelancer %>
       <div class="row-cols-1 setup-content-2" id="step-2">
-        <h4 class="mb-5 mt-4 display-5 text-primary text-center">Create an Account</h4>
-        <div class="current_email row-cols-1 text-center text-primary"></div>
+        <div class="h1 mb-5 mt-4 display-5 text-secondary text-center">Create an Account</div>
+        <div class="current_email row-cols-1 text-center text-secondary"></div>
         <div class="row-cols-1 text-center mb-3 mb-4">
           <a class="prevBtn-2 text-center text-muted" href="#">Change Email</a>
         </div>
-        <div class="row-cols-1 text-primary">Password</div>
+        <div class="row-cols-1 text-secondary">Password</div>
         <div class="input-group">
           <%=  f.password_field :password, id: "psw",  required: true  %>
           <span toggle="#psw" class="field-icon toggle-password"><i class="fas fa-fw fa-eye" aria-hidden="true"></i></span>
@@ -118,7 +118,7 @@
           </div>
         </div>
 
-        <div class="text-primary">Confirm Password</div>
+        <div class="text-secondary">Confirm Password</div>
         <div class="input-group mb-4">
           <%=  f.password_field :password_confirmation, id: "cPwdId", class: "myCpwdClass", required: true  %>
           <span toggle="#cPwdId" class="field-icon toggle-password"><i class="fas fa-fw fa-eye" aria-hidden="true"></i></span>

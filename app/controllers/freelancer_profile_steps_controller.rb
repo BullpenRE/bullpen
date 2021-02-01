@@ -3,26 +3,20 @@
 class FreelancerProfileStepsController < ApplicationController
   include Wicked::Wizard
   include WorkEducationExperience
+  include WorkCertification
+  include LoggedInRedirects
   steps :skills_page, :avatar_location, :professional_history, :work_education_experience, :summary, :final_step
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :accepted_profile_redirect
+  before_action :set_user, :set_freelancer_profile
 
   def show
-    @user = current_user
-    if @user.freelancer_profile.blank?
-      FreelancerProfile.create(user_id: @user.id)
-      @user.reload
-    end
-    @freelancer_profile = @user.freelancer_profile
-    @certifications = certifications
-    @real_estate_skills = RealEstateSkill.enabled.map{ |skill| [skill.description, skill.id] }
-    @sectors = Sector.enabled.map{ |sector| [sector.description, sector.id] }
-    @softwares = Software.enabled.map{ |software| [software.description, software.id] }
+    @user.reload unless @user.freelancer_profile.present?
+    populate_available_options_for_freelancer_data
+
     render_wizard
   end
 
   def update
-    @user = current_user
-    @freelancer_profile = @user.freelancer_profile
     @certifications = certifications
     save_current_step
     skills_page_save ||
@@ -101,6 +95,24 @@ class FreelancerProfileStepsController < ApplicationController
 
   private
 
+  def set_user
+    @user ||= current_user
+  end
+
+  def set_freelancer_profile
+    @freelancer_profile = @user.freelancer_profile || FreelancerProfile.create(user_id: @user.id)
+  end
+
+  def accepted_profile_redirect
+    return freelancer_interviews_redirect if session[:view_interview_request].present?
+
+    redirect_to freelancer_jobs_path if current_user.freelancer_profile&.accepted?
+  end
+
+  def freelancer_interviews_redirect
+    redirect_to freelancer_interviews_path(view_interview_request: session[:view_interview_request])
+  end
+
   def pending_profile?
     @freelancer_profile.draft == false && @freelancer_profile.pending?
   end
@@ -136,7 +148,23 @@ class FreelancerProfileStepsController < ApplicationController
       .permit(:professional_title, :professional_years_experience, :professional_summary)
   end
 
+  def populate_available_options_for_freelancer_data
+    certifications && real_estate_skills && sectors && softwares
+  end
+
   def certifications
-    Certification.searchable.enabled.pluck(:description, :id)
+    @certifications ||= Certification.searchable.enabled.pluck(:description, :id)
+  end
+
+  def real_estate_skills
+    @real_estate_skills ||= RealEstateSkill.enabled.pluck(:description, :id)
+  end
+
+  def sectors
+    @sectors ||= Sector.enabled.pluck(:description, :id)
+  end
+
+  def softwares
+    @softwares ||= Software.enabled.pluck(:description, :id)
   end
 end

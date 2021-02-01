@@ -28,5 +28,4 @@ RSpec.describe FreelancerRealEstateSkill, type: :model do
       expect(freelancer_real_estate_skill.real_estate_skill).to eq(real_estate_skill)
     end
   end
-
 end

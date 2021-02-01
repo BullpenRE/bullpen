@@ -15,9 +15,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
       column :user
       column :company_name
       column :role_in_company
-      column 'Employee Count', sortable: :employee_count do |profile|
-        EmployerProfile::available_employee_counts.invert[profile.employee_count]
-      end
+      column :employee_count
       column :category
 
       actions
@@ -25,8 +23,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
 
     show title: 'Employer Profile' do |employer_profile|
       attributes_table do
-        row 'Email' do
-          employer_profile.user.email
+        row 'User' do
+          link_to(employer_profile.user.email, admin_user_path(employer_profile.user_id))
         end
         row :created_at
         row :updated_at
@@ -35,15 +33,19 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
           link_to(employer_profile.company_website, "#{employer_profile.company_website[0..3] == 'http' ? '' : 'http://'}#{employer_profile.company_website}", target: '_blank').html_safe
         end
         row :role_in_company
-        row 'Employee Count' do
-          EmployerProfile::available_employee_counts.invert[employer_profile.employee_count]
-        end
+        row :employee_count
         row :category
         row :motivation_one_time
         row :motivation_ongoing_support
         row :motivation_backfill
         row :motivation_augment
         row :motivation_other
+        row "ALL Interview Requests Sent to Freelancers", :interview_requests do
+          employer_profile.interview_requests.map{ |i_r| link_to(i_r.freelancer_profile.email, admin_interview_request_path(i_r.id)) }
+        end
+        row 'Contracts' do
+          employer_profile.contracts.map { |contract| link_to("Hired #{contract.freelancer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe
+        end
       end
     end
 
@@ -52,14 +54,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
 
         if f.object.new_record?
           f.input :user,
-                  as: :select,
+                  as: :select, input_html: { class: "select2" },
                   collection: User.no_employer_data.order(:email).pluck(:email, :id),
                   label: "User (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
         end
         f.input :company_name
         f.input :company_website
         f.input :role_in_company
-        f.input :employee_count, as: :select, collection: EmployerProfile::available_employee_counts
+        f.input :employee_count
         f.input :category
         f.inputs 'Motivations' do
           f.input :motivation_one_time, label: 'One Time'

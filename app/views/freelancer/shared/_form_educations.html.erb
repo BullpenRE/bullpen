@@ -1,0 +1,70 @@
+<div class="modal-body pt-0">
+  <div class="form-group">
+    <label for="editInstitutionInput" class="bp-input-label">Institution</label>
+    <%= f.text_field :institution, class: "form-control", id: "editInstitutionInput", placeholder: "Enter the school you attended", value: freelancer_profile_education&.institution %>
+  </div>
+  <div class="form-group">
+    <label for="editDegreeSelect" class="bp-input-label">Degree</label>
+    <%= f.select :degree,
+                 options_for_select(FreelancerProfileEducation.degrees.keys, freelancer_profile_education&.degree),
+                 {}, class: 'form-control selectpicker',
+                 id: 'editDegreeSelect', 'data-style': "bp-btn-select-border",
+                 title: "Please make a selection" %>
+  </div>
+  <div class="form-group">
+    <label for="editCourseInput" class="bp-input-label">Course of Study</label>
+    <%= f.text_field :course_of_study, class: "form-control", id: "editCourseInput", placeholder: "Enter your degree program", value: freelancer_profile_education&.course_of_study %>
+  </div>
+  <div class="form-group">
+    <label for="editGraduationYear-<%=freelancer_profile_education&.id %>" class="bp-input-label">Graduation Year</label>
+    <div class="row mb-2 collapse <%= freelancer_profile_education&.currently_studying ? '' : 'show' %>" id="editGraduationDateToggle-<%= freelancer_profile_education&.id %>">
+      <div class="col">
+        <%= f.select :graduation_year,
+                     options_for_select(FreelancerProfileEducation::AVAILABLE_YEARS, freelancer_profile_education&.graduation_year),
+                     {}, class: 'form-control selectpicker',
+                     id: "editGraduationYear-#{freelancer_profile_education&.id}", 'data-style': "bp-btn-select-border", title: "Year" %>
+      </div>
+      <div class="col"></div>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <%= f.check_box :currently_studying,
+                      class: "custom-control-input #{freelancer_profile_education&.currently_studying ? 'collapsed' : ''}",
+                      id: "editCurrentlyStudying-#{freelancer_profile_education&.id}",
+                      type: "button",
+                      'data-toggle': "collapse",
+                      'data-target': "#editGraduationDateToggle-#{freelancer_profile_education&.id}",
+                      'aria-expanded': "false",
+                      'aria-controls': "editGraduationDateToggle-#{freelancer_profile_education&.id}",
+                      checked: "#{freelancer_profile_education&.currently_studying ? 'checked' : 'false'}" %>
+      <label class="custom-control-label" for="editCurrentlyStudying-<%=freelancer_profile_education&.id %>">Currently Studying</label>
+    </div>
+  </div>
+  <div class="form-group mb-0">
+    <label for="editEducationDescriptionTextarea" class="bp-input-label">Description (optional)</label>
+    <%= f.text_area :description,
+                    class: "form-control",
+                    id: "editEducationDescriptionTextarea",
+                    placeholder: "Enter a brief description",
+                    rows: 3,
+                    value: freelancer_profile_education&.description %>
+  </div>
+  <%= f.hidden_field :id, value: freelancer_profile_education&.id %>
+</div>
+
+<% if freelancer_profile_education&.id&.present? %>
+  <div class="modal-footer">
+    <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
+    <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+  </div>
+<% else %>
+  <div class="modal-footer justify-content-between">
+    <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
+    <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+<script>
+    <% if @freelancer_profile && @freelancer_profile.freelancer_profile_educations&.count > 1 %>
+    $('.modal-footer').addClass('justify-content-between');
+    $('.btn-outline-danger').removeClass('d-none');
+    <% end %>
+</script>

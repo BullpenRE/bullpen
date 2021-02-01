@@ -1,0 +1,75 @@
+<%= render partial: 'freelancer/navigation', locals: { section: 'interviews' } %>
+
+<div class="container mb-3">
+  <%= render partial: 'shared/notice_and_alert' %>
+  <h1>Interviews</h1>
+  <% @interviews.each do |interview| %>
+    <div class="bp-card mb-3 card<%= interview.id %>">
+      <div>
+        <div class="d-flex flex-column flex-lg-row">
+          <div class="text-light mb-1 ml-2 avatar-image" style="font-size: 113px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
+            <div class="ml-2 w-100">
+              <div class="mr-auto"><h2 class="mb-1"><%= interview.employer_profile.user.full_name %></h2></div>
+              <div class="bp-text-sm mb-1"><br>
+                <%= interview.employer_profile.company_name %><br>
+                <% url = interview.employer_profile.company_website&.downcase %>
+                <% unless url.blank? %>
+                  <% url_with_http = (url[0..3] == 'http' ? url : "http://#{url}") %>
+                  <%= link_to url, url_with_http, target: :_blank %><br>
+                <% end %>
+                <br>
+                <% if interview.message.body %>
+                  <p><%= interview.message.body.to_s %></p>
+                <% end %>
+                <p>Sent on <%= time_ago_in_words(interview.created_at) %> ago</p>
+              </div>
+            </div>
+            <div class="d-flex flex-column align-self-lg-baseline flex-md-row my-2 my-lg-0">
+              <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
+                <%= interview.state.capitalize %><%= ' Request' if interview.pending? %>
+              </div>
+              <% if interview.pending? %>
+                <button class="btn btn-primary my-3 my-md-1 mr-md-2 accept_request<%= interview.id %>" type="button">
+                  Accept Request
+                </button>
+                <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#declineInterviewRequest<%= interview.id %>">
+                  Decline
+                </button>
+              <% elsif interview.accepted? %>
+                <button class="btn btn-primary my-3 my-md-1 mr-md-2" type="button"  data-toggle="modal" data-target="#sendMessage<%= interview.id %>">
+                  Send Message
+                </button>
+                <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#removeInterviewRequest<%= interview.id %>">
+                  Remove
+                </button>
+              <% end %>
+              <%= render partial: 'freelancer/interviews/decline_interview_request', locals: { interview: interview } %>
+              <%= render partial: 'freelancer/interviews/remove_interview_request', locals: { interview: interview } %>
+              <%= render partial: 'freelancer/interviews/send_message', locals: { interview: interview } %>
+            </div>
+          </div>
+      </div>
+    </div>
+    <script>
+      $('.accept_request<%= interview.id %>').on('click', () => {
+        $.ajax({
+          url: '/freelancer/accept_request',
+          method: 'POST',
+          data: { id: <%= interview.id %> },
+          success: () => {
+            document.location.reload();
+          }
+        })
+      })
+    </script>
+  <% end %>
+  <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
+</div>
+
+<script>
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const open_interview = urlParams.get('view_interview_request');
+  $('html,body').animate({scrollTop: $('.card' + open_interview).offset().top},'slow');
+</script>
+

@@ -1,80 +1,18 @@
 <!--Add Work Experience Modal-->
 <div class="modal fade" id="addWorkExperienceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close">
-          <span class="cy-close" aria-hidden="true">×</span>
+        <h3 class="modal-title mb-4" id="modalLabel">Add a Job</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
         </button>
       </div>
-      <%= form_for :freelancer_profile_experience, html: {class: 'cy-work-experience'}, url: wizard_path, method: :put do |f| %>
-        <div class="modal-body pt-0">
-        <h3 class="modal-title mb-4" id="modalLabel">Add Experience</h3>
-        <div class="form-group cy-job-title">
-          <label for="jobTitleInput" class="bp-input-label cy-job-title">Job Title</label>
-          <%= f.text_field :job_title, class: "form-control", id: "jobTitleInput", placeholder: "Enter your job title", required: true %>
-        </div>
-        <div class="form-group cy-company">
-          <label for="companyInput" class="bp-input-label cy-company">Company</label>
-          <%= f.text_field :company, class: "form-control", id: "companyInput", placeholder: "Enter the company name", required: true %>
-        </div>
-        <div class="form-group cy-location">
-          <label for="locationInput" class="bp-input-label cy-location">Location</label>
-          <%= f.text_field :location, class: "form-control", id: "locationInput", placeholder: "e.g. San Francisco, CA", required: true %>
-        </div>
-        <div class="form-group cy-start-date">
-          <label for="startMonth" class="bp-input-label cy-start-date">Start Date</label>
-          <div class="row mb-3 cy-start-date">
-            <div class="col cy-start-month">
-              <%= f.select :start_month,
-                           options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES.each_with_index.collect { |m, i| [m, i] }),
-                           {}, class: 'form-control selectpicker',
-                           id: 'startMonth', required: true, 'data-style': "bp-btn-select-border", title: "Month" %>
-            </div>
-            <div class="col cy-start-year">
-              <%= f.select :start_year,
-                           options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS),
-                           {}, class: 'form-control selectpicker',
-                           id: 'startYear', required: true, 'data-style': "bp-btn-select-border", title: "Year" %>
-            </div>
-          </div>
-          <div class="custom-control custom-checkbox cy-current-job">
-            <%= f.check_box :current_job, class: "custom-control-input", id: "currentJob", type: "button", 'data-toggle': "collapse", 'data-target': "#endDateToggle", 'aria-expanded': "false", 'aria-controls': "endDateToggle" %>
-            <label class="custom-control-label" for="currentJob">Current Job</label>
-          </div>
-        </div>
-        <div class="form-group collapse show" id="endDateToggle">
-          <label for="endMonth" class="bp-input-label cy-end-date">End Date</label>
-          <div class="row cy-end-date">
-            <div class="col cy-end-date">
-              <%= f.select :end_month,
-                           options_for_select(FreelancerProfileExperience::AVAILABLE_MONTHNAMES.each_with_index.collect { |m, i| [m, i] }),
-                           {}, class: 'form-control selectpicker',
-                           id: 'endMonth', 'data-style': "bp-btn-select-border", title: "Month" %>
-            </div>
-            <div class="col cy-end-year">
-              <%= f.select :end_year,
-                           options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS),
-                           {}, class: 'form-control selectpicker',
-                           id: 'endYear', 'data-style': "bp-btn-select-border", title: "Year" %>
-            </div>
-          </div>
-        </div>
-        <div class="form-group mb-0 cy-description">
-          <label for="jobDescriptionTextarea" class="bp-input-label cy-description">Description</label>
-          <%= f.text_area :description, class: "form-control", id: "jobDescriptionTextarea", placeholder: "Enter your job description", rows: 3, required: true %>
-        </div>
-      </div>
-        <div class="modal-footer justify-content-between cy-work-experience">
-        <button type="button" class="btn btn-link px-0 text-dark cy-cancel cy-work-experience" data-dismiss="modal">Cancel</button>
-        <%= f.submit 'Save', class: 'btn btn-primary cy-save' %>
-      </div>
+
+      <%= form_for :freelancer_profile_experience, url: wizard_path, method: :put do |f| %>
+        <%= render partial: 'freelancer/shared/form_work_experience', locals: { freelancer_profile_experience: nil, f: f} %>
       <% end %>
     </div>
   </div>
 </div>
-<style>
-  .collapsing {
-    transition-duration: unset;
-  }
-</style>
+<%= render partial: 'freelancer_profile_steps/date_validation' %>

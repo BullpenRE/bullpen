@@ -1,0 +1,54 @@
+<%= render partial: 'shared/job_short_description', locals: { job: job } %>
+<div class="text-secondary font-weight-bold mb-1 mt-3"> Details </div>
+<p><%= job.relevant_details %></p>
+<hr>
+<li>This is <i class="text-secondary font-weight-bold"> <%= job.position_length %> </i> position</li>
+<li><i class="text-secondary font-weight-bold"> <%= job.hours_needed&.capitalize %> </i> hours are needed</li>
+<div class="bp-text mb-2 mt-2">
+  <% if job.daytime_availability_required? %>
+    <i class="far fa-clock text-secondary"></i> Daytime availability is required <span class="text-secondary font-weight-bold">(9AM-5PM PST)</span>
+  <% end %>
+</div>
+<hr>
+<div class="row">
+  <div class="col-12 mb-3 col-sm mb-sm-0">
+    <div class="text-secondary font-weight-bold"> Required Skills </div>
+    <% job.job_skills.each do |job_skill| %>
+      <li><%= job_skill.skill.description %></li>
+    <% end %>
+  </div>
+  <% if job.job_softwares.any? %>
+    <div class="col-12 mb-3 col-sm mb-sm-0">
+      <div class="text-secondary font-weight-bold"> Required Software </div>
+      <% job.job_softwares.each do |job_software| %>
+        <li><%= job_software.software.description %></li>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="col-12 col-sm">
+    <div class="text-secondary font-weight-bold"> Experience Level </div>
+    <li><%= job.required_experience&.capitalize %></li>
+  </div>
+</div>
+<% if job.required_regional_knowledge.present? %>
+  <div class="bp-text mb-1 mt-3">
+    <i class="fas fa-map-marker-alt text-secondary"></i>  Regional knowledge of <span class="text-secondary font-weight-bold"><%= job.required_regional_knowledge.capitalize %></span> is required
+  </div>
+<% end %>
+<% if job.job_questions.any? %>
+  <hr>
+  <div class="text-secondary font-weight-bold"> Questions for Applicants </div>
+  <% job.job_questions.each do |job_question| %>
+    <li><%= job_question.description %></li>
+  <% end %>
+<% end %>
+<%= render partial: 'shared/about_employer', locals: { job: job } %>
+<% if job.posted? %>
+  <hr>
+  <div class="mt-3">
+    <h4>Sharable link</h4>
+    <p class="text-break">
+      <%= link_to public_job_url(job.slug), public_job_url(job.slug), target: '_blank' %>
+    </p>
+  </div>
+<% end %>

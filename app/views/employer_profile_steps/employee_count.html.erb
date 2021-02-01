@@ -1,7 +1,8 @@
-<%= render '/nav_bar/nav_bar' %>
+<%= render '/nav_bar/profile_flow_nav_bar' %>
 
 <!--Progress Meter, Step 2-->
 <div class="container mb-4">
+  <%= render partial: 'shared/notice_and_alert' %>
   <div class="progress bg-white shadow-sm mx-auto" style="max-width: 500px;">
     <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
   </div>
@@ -12,20 +13,25 @@
 <div class="container">
   <div class="bp-card mb-5 mx-auto" style="max-width: 500px;">
     <%= form_for @employer_profile, url: wizard_path, method: :put do |f| %>
-    <div class="mb-4">
-      <h2>How many people work at your company?</h2>
-    </div>
-
-      <% EmployerProfile.available_employee_counts.each do |employee_count| %>
+      <div class="form-group mb-4">
+        <div class="h2 mb-4">How many people work at your company?</div>
         <div class="custom-control custom-radio mb-3">
-          <%= f.radio_button :employee_count, employee_count[1],
-                             :class => "custom-control-input",
-                             :id => "employeeCount#{employee_count[1]}",
-                             :value => "#{employee_count[1]}" %>
-          <%= f.label employee_count[0], :class => "custom-control-label",
-                                             :for => "employeeCount#{employee_count[1]}" %>
+          <%= f.radio_button :employee_count, '1-10', id: "countRadio1", class: "custom-control-input", required: true %>
+          <label class="custom-control-label" for="countRadio1">1-10</label>
         </div>
-      <% end %>
+        <div class="custom-control custom-radio mb-3">
+          <%= f.radio_button :employee_count, '11-50', id: "countRadio2", class: "custom-control-input", required: true %>
+          <label class="custom-control-label" for="countRadio2">11-50</label>
+        </div>
+        <div class="custom-control custom-radio mb-3">
+          <%= f.radio_button :employee_count, '51-100', id: "countRadio3", class: "custom-control-input", required: true %>
+          <label class="custom-control-label" for="countRadio3">51-100</label>
+        </div>
+        <div class="custom-control custom-radio mb-3">
+          <%= f.radio_button :employee_count, '101+', id: "countRadio4", class: "custom-control-input", required: true %>
+          <label class="custom-control-label" for="countRadio4">101+</label>
+        </div>
+      </div>
 
     <div class="d-flex justify-content-between">
       <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>

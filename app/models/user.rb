@@ -5,8 +5,10 @@ class User < ApplicationRecord
   scope :no_freelancer_data, -> { left_joins(:freelancer_profile).where(freelancer_profiles: { user_id: nil }) }
   scope :no_employer_data, -> { left_joins(:employer_profile).where(employer_profiles: { user_id: nil }) }
   scope :employers, -> { joins(:employer_profile) }
+  scope :freelancers, -> { joins(:freelancer_profile) }
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :confirmable,
+         :omniauthable, omniauth_providers: %i[google]
   validates :first_name, presence: true
   validates :last_name, presence: true
 
@@ -14,13 +16,15 @@ class User < ApplicationRecord
   has_many :jobs, dependent: :destroy
   has_many :freelancer_real_estate_skills, through: :freelancer_profile
   has_many :freelancer_sectors, through: :freelancer_profile
-
   has_one :employer_profile, dependent: :destroy
   has_many :employer_sectors, through: :employer_profile
-
-  enum role: { freelancer: 0, employer: 1 }
+  has_many :job_applications, dependent: :destroy
+  has_many :sent_messages, class_name: 'Message', foreign_key: :from_user_id
+  has_many :received_messages, class_name: 'Message', foreign_key: :to_user_id
 
   belongs_to :signup_promo, optional: true
+
+  enum role: { freelancer: 0, employer: 1 }
 
   def self.ransackable_scopes(_auth_object = nil)
     [:confirmed]
@@ -40,8 +44,12 @@ class User < ApplicationRecord
 
   def avatar
     return nil if employer?
-    return nil unless freelancer_profile.avatar.attached?
+    return nil unless freelancer_profile&.avatar&.attached?
 
-    freelancer_profile.avatar
+    freelancer_profile&.avatar
+  end
+
+  def bullpen_personnel?
+    email.match?('@bullpenre.com') && confirmed_at.present?
   end
 end

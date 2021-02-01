@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Pagy::Backend
+
   def after_sign_in_path_for(resource)
     return admin_dashboard_path if resource.class.name == 'AdminUser'
 
@@ -9,6 +11,10 @@ class ApplicationController < ActionController::Base
     elsif resource.employer?
       current_employer_profile_step(resource)
     end
+  end
+
+  def after_sign_out_path_for(_resource_or_scope)
+    new_user_session_path
   end
 
   private

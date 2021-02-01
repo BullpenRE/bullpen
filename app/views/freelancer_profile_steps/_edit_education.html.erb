@@ -1,15 +1,15 @@
 <!--Edit Education Modal-->
 <div class="modal fade" id="editEducationModal-<%= freelancer_profile_education.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close mt-2" data-dismiss="modal" aria-label="Close">
+        <h1 class="modal-title" id="postJobStep1Label">Edit Education</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <%= form_for :freelancer_profile_education, html: {class: 'cy-edit-education'}, url: wizard_path, method: :put do |f| %>
         <div class="modal-body pt-0">
-          <h3 class="modal-title mb-4" id="modalLabel">Edit Education</h3>
           <div class="form-group">
             <label for="editInstitutionInput" class="bp-input-label">Institution</label>
             <%= f.text_field :institution, class: "form-control", id: "editInstitutionInput", placeholder: "Enter the school you attended", value: freelancer_profile_education.institution %>
@@ -48,14 +48,17 @@
           </div>
           <%= f.hidden_field :id, value: freelancer_profile_education.id %>
         </div>
-        <div class="modal-footer justify-content-between cy-edit-education">
-          <button type="button" class="btn btn-link px-0 text-dark cy-edit-education" data-dismiss="modal">Cancel</button>
-          <div class="cy-edit-education cy-delete-save-submits">
-            <%= f.submit 'Delete', class: 'btn btn-outline-danger mr-2 cy-edit-education cy-delete' %>
-            <%= f.submit 'Save', class: 'btn btn-primary cy-edit-education cy-save' %>
-          </div>
+        <div class="modal-footer">
+          <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
+          <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
+<script>
+  <% if @freelancer_profile.freelancer_profile_educations.count > 1 %>
+    $('.modal-footer').addClass('justify-content-between');
+    $('.btn-outline-danger').removeClass('d-none');
+  <% end %>
+</script>

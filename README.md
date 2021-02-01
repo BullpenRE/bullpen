@@ -2,7 +2,7 @@
 
 The Bullpen application is built on:
  * Ruby 2.7.2
- * Rails 6.0.3.2
+ * Rails 6.1.1
  * postgresql 10.0 or higher
  * Code complexity and security monitoring by CodeClimate (pending)
  
@@ -52,6 +52,8 @@ Once your machine is set up for Rails development you can do the following to ge
 8. Install NodeJS packages: `$ yarn isntall`
 8. Instantiate the local database: `$ rails db:create`
 9. Test it out: `$ rails s` and then navigate to http://localhost:3000
+10. Open a new tab and start redis: `$ redis-server`. If you have an error such as `Address already in use` you can use command `$ redis-server --port 6360`
+11. Open a new tab and start sidekiq: `$ sidekiq`
 
 ### Running the application locally and making changes
 Every time you are ready to start work, do the following terminal commands in the bullpen directory:
@@ -63,6 +65,8 @@ Every time you are ready to start work, do the following terminal commands in th
 Then if your server isn't started yet:
 
         $ rails s
+        $ redis-server
+        $ sidekiq
 
 At this point you can point your browser to http://localhost:3000/ and start development work.
 To stop the server click CNTL-C.
@@ -72,6 +76,13 @@ To check to make sure your code changes didn't break anything critical:
         $ rspec
 
 Green dots are good, red F's are bad. Note that sometimes other people may have broken the build, so use your best judgement if the automated test errors were caused by your code or not (for example if you undo changes and re-run the test). You can also compare your local errors to that on our CI server (pending).
+
+### How to add libraries to Webpacker
+
+1. First install it using yarn, like so: `$ yarn add packagename`
+2. Require it in _app/javascript/packs/application.js_.
+
+Depending on how involved it is, it might require additional setup, for example in *config/webpack/environment.js*. Do a google search like *"add packagename to rails 6 webpacker"*
 
 ### How to attach your commits to the Linear.app story
 To push your code changes create a new branch that follows the patter `bp-X-story-description` where `X` is the Linear.app story number. When viewing the [story in Linear.app](https://linear.app/bullpen/team/BP/active) do `cmd`+`shift`+`.` to copy this branch name, then paste it when creating a new local branch.
@@ -185,5 +196,5 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
 7. Best Practice: 
 Use data-* attributes to provide context to your selectors and isolate them from CSS or JS changes [here](https://docs.cypress.io/guides/references/best-practices.html)
 
-8. How to using: https://docs.cypress.io/faq/questions/using-cypress-faq.html
+8. How to use: https://docs.cypress.io/faq/questions/using-cypress-faq.html
 

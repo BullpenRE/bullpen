@@ -28,5 +28,4 @@ RSpec.describe EmployerSector, type: :model do
       expect(employer_sector.sector).to eq(sector)
     end
   end
-
 end

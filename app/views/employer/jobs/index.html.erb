@@ -1,68 +1,32 @@
-<!--Navigation-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-header mb-4">
-  <div class="container">
-    <a class="navbar-brand" href="https://bullpenre.com/">
-      <%= image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30') %>
-    </a>
-    <div class="collapse navbar-collapse" id="navbarMenu">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a href="#" data-toggle="modal" data-target="#postJobStep1">
-            <%= link_to 'Post a job', employer_job_flows_path(start_flow: true), { remote: true, 'data-toggle': "modal", 'data-target': "#postJobStep1", class: "btn btn-primary mr-2 d-none d-lg-inline-block" } %>
-          </a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Freelancer</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Jobs</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contracts</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Refer a Friend</a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="dropdown">
-      <span class="dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-user-circle bp-profile-placeholder mr-1"></i>
-        <span class="mr-1 d-none d-sm-inline text-light">Ron Graves</span>
-        <i class="fas fa-chevron-down text-primary"></i>
-      </span>
-      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="#">Manage Account</a>
-        <a class="dropdown-item" href="#">Contact Support</a>
-        <a class="dropdown-item" href="#">For Talent/Find Jobs</a>
-        <a class="dropdown-item" href="#">Logout</a>
-      </div>
-    </div>
-    <button class="navbar-toggler ml-2 text-light" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
-  </div>
-</nav>
+<%= render partial: 'employer/navigation', locals: { section: 'jobs' } %>
 
 <!--Job card-->
 <div class="container mb-3">
+  <%= render partial: 'shared/notice_and_alert' %>
   <h1>Jobs</h1>
   <% @jobs.each do |job| %>
     <%= render partial: 'employer/jobs/show_job_post', locals: { job: job } %>
-    <div class="bp-card mb-3">
+    <div class="bp-card mb-3 card<%= job.id %>">
       <div>
         <div class="d-flex flex-column flex-lg-row">
           <div class="mr-auto"><h2 class="text-wrap text-break"><%= job&.title&.capitalize %></h2></div>
           <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
-            <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-3">
-              <% if (job&.draft == true) %>
+            <% if job.state == 'draft' %>
+              <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-3">
                 Saved as Draft
-              <% end %>
-            </div>
-            <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start mr-3">Posted</div>
+              </div>
+            <% end %>
+            <% if job.state == 'posted' %>
+              <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start mr-3">
+                Posted
+              </div>
+            <% elsif job.ready_to_post? %>
+              <%= link_to 'Post Job', employer_post_job_path(id: job.id), class: "btn btn-primary mr-2" %>
+            <% end %>
             <div class="dropdown my-3 my-md-0 align-self-md-center align-self-start">
-              <button class="btn btn-outline-primary dropdown-toggle pr-1" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options<i class="fas fa-chevron-down ml-1"></i></button>
+              <button class="btn btn-outline-primary dropdown-toggle pr-1" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%= job.state == 'draft' ? 'More' : 'Options' %><i class="fas fa-chevron-down ml-1"></i>
+              </button>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
                 <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#showJobPost<%= job.id %>">Show Job Post</button>
                 <%= link_to 'Edit Job Post', employer_job_flows_path(job_id: job.id), { remote: true, 'data-toggle': "modal", 'data-target': "#postJobStep1", class: " dropdown-item" } %>
@@ -95,29 +59,115 @@
         <div class="bp-text-sm mb-3">Created <%= time_ago_in_words(job&.created_at) %> ago </div>
         <div class="row">
           <div class="col-lg-8">
-            <p class="text-wrap text-break"><%= job&.short_description %></p>
-            <% job&.job_sectors&.map do |job_sector| %>
-              <span class="badge badge-secondary mt-1">
-               <%= job_sector&.sector&.description %>
-              </span>
-            <% end %>
-            <span class="badge badge-secondary mt-1"><%= job&.position_length&.capitalize %></span>
-            <span class="badge badge-secondary mt-1"><%= job&.hours_needed&.capitalize %></span>
+            <%= render partial: 'shared/job_short_description', locals: { job: job } %>
+            <span class="badge badge-secondary mt-1"><%= job.position_length&.capitalize %></span>
+            <span class="badge badge-secondary mt-1"><%= job.hours_needed&.capitalize %></span>
             <div class="bp-text-sm mb-2 mt-3">
-             <% if (job&.daytime_availability_required == true) %>
+             <% if (job.daytime_availability_required == true) %>
               <i class="far fa-clock text-secondary"></i> Daytime availability is required <span class="text-secondary">(9AM-5PM PST)</span>
              <% end %>
             </div>
-            <div class="bp-text-sm mb-1">
-             <% if (job&.required_regional_knowledge.present?) %>
+            <div class="bp-text-sm mb-2">
+             <% if (job.required_regional_knowledge.present?) %>
                <i class="fas fa-map-marker-alt text-secondary"></i>  Regional knowledge of <span class="text-secondary"><%= job.required_regional_knowledge %></span> is required
              <% end %>
             </div>
           </div>
         </div>
       </div>
+      <% if job.job_applications.applied.any? %>
+        <div class="d-flex flex-column flex-lg-row">
+          <div class="mr-auto">
+            <a class="link_action<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
+              Applications <span class="text-secondary">(<%= job.job_applications.applied.size %>)</span>
+            </a>
+          </div>
+          <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
+            <a class="link_action<%= job.id %> more-less<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
+              Show More<i class="fas fa-chevron-down ml-1"></i>
+            </a>
+            <a style="display: none" class="link_action<%= job.id %> more-less<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
+              Show Less<i class="fas fa-chevron-up ml-1"></i>
+            </a>
+          </div>
+        </div>
+          <div id="collapseApplications<%= job.id %>" class="collapse">
+            <hr>
+            <% job.job_applications.applied.each do |job_application| %>
+              <div class="d-flex justify-content-between flex-column flex-lg-row">
+                <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile,
+                                                                         job_application: job_application,
+                                                                         editable: false } %>
+                <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
+                <%= render partial: 'employer/jobs/send_message', locals: { job_application: job_application } %>
+                <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
+                <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
+                  <div class="d-block p-1 d-sm-inline-block mt-1">
+                    <div id="like<%= job_application.id %>">
+                      <i class="<%= job_application.liked ? 'fas' : 'far' %> fa-heart btn-link <%= job_application.liked ? 'text-danger' : '' %> like<%= job_application.id %>"></i>
+                    </div>
+                  </div>
+                  <div class="d-block p-1 d-sm-inline-block">
+                    <button class="btn btn-primary container-fluid">Make an Offer</button>
+                  </div>
+                  <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle pr-1 mt-1 container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      More <i class="fas fa-chevron-down text-primary"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                      <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#previewApplicationDropdown-<%= job_application.id %>">
+                        Show Application
+                      </button>
+                      <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#sendMessage<%= job_application.id %>">
+                        Send a Message
+                      </button>
+                      <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="#declineJobApplication<%= job_application.id %>">
+                        Decline
+                      </button>
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+              <script>
+                $('#like<%= job_application.id %>').on('click', () => {
+                  const like = $('.like<%= job_application.id %>');
+                  const icon_fa_prefix = like.attr('data-prefix');
+
+                  $.ajax({
+                    url: 'like_job_application',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: { id: '<%= job_application.id %>' },
+                    success: function() {
+                      like.toggleClass('text-danger');
+                      if (icon_fa_prefix === 'fas') {
+                        like.attr('data-prefix', 'far');
+                      } else {
+                        like.attr('data-prefix', 'fas');
+                      }
+                    }
+                  });
+                });
+              </script>
+            <% end %>
+        </div>
+        <script>
+          $('.link_action<%= job.id %>').on('click', () => {
+            $('.more-less<%= job.id %>').toggle();
+          })
+        </script>
+      <% end %>
     </div>
     <div class="d-flex d-lg-none mb-3"></div> <!--Shim for mobile views-->
   <% end %>
+  <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
 </div>
-<div id="jobStepModal"></div>
+<script>
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const open_job = urlParams.get('view_job');
+  $('#collapseApplications' + open_job).collapse('show');
+  $('.more-less' + open_job).toggle();
+  $('html,body').animate({scrollTop: $('.card' + open_job).offset().top},'slow');
+</script>
