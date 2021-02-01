@@ -3,7 +3,7 @@
   $(document).on('turbolinks:load', function (e) {
     $('.avatar').off('change').on('change', '#uploadProfilePic', (e) => {
       const file = e.target.files[0];
-      const maxFileSize = 2097152;
+      const maxFileSize = 18097152;
       if (!file) { return }
       if (file.size && file.size > maxFileSize) {
         const message = "Uploaded files must not exceed 2MB\n";
@@ -11,7 +11,7 @@
           title: '<h5>Oops!</h5>',
           text: message
         });
-      } else if (file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
+      } else if (false && file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
         const message = "Please upload only a jpg, png or gif image\n";
         Swal.fire({
           title: '<h5>Oops!</h5>',
