@@ -135,14 +135,14 @@
           <hr class="mb-4">
           <%= f.submit "Create my account", class: "form-control-lg btn btn-outline-secondary col-md-12 mb-3", id: "submitBtn" %>
           <hr class="mb-4">
-          <div class="text-center text-muted cy-agree">
+          <div class="text-center text-muted">
             By creating your account, you agree to Bullpen's
-            <span  class="cy-terms-of-service"><a href="https://bullpenre.com/terms-of-service/?_ga=2.176404525.943759142.1600229912-339552047.1597271456">
+            <a href="https://bullpenre.com/terms-of-service/">
               Terms of Service
-            </a></span>,
-            <span class="cy-privacy-agreement"><a href="https://bullpenre.com/privacy-policy/?_ga=2.79419548.943759142.1600229912-339552047.1597271456">
+            </a>,
+            <a href="https://bullpenre.com/privacy-policy/">
               Privacy Agreement
-            </a></span>, and <span class="cy-stripe-connected-accounts"><a href="https://stripe.com/connect-account/legal">Stripe's Connected Accounts Authorization</a></span>
+            </a>, and <a href="https://stripe.com/connect-account/legal">Stripe's Connected Accounts Authorization</a>
           </div>
         </div>
       <% end %>
@@ -270,11 +270,10 @@
         }, false);
 
         //------- Check 1 step and describe next and prev button ----
-        bootstrapValidate('#email', 'email:Enter valid email - it has to contain \"@\".');
-        bootstrapValidate('#lastName', 'min:2:Valid last name is required - two symbols minimum.');
-        bootstrapValidate('#firstName', 'min:2:Valid first name is required - two symbols minimum.');
-        bootstrapValidate('#phone', 'min:7:Valid phone number is required - seven symbols minimum.');
-
+        bootstrapValidate('#email', 'email:Enter a valid E-Mail Address!');
+        bootstrapValidate('#lastName', 'min:2:Valid last name is required.');
+        bootstrapValidate('#firstName', 'min:2:Valid first name is required.');
+        bootstrapValidate('#phone', 'min:7:A valid phone number is required - 7 digits minimum.');
 
         const step1 = $('#step-1'),
             step2 = $('#step-2'),
