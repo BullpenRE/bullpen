@@ -57,12 +57,21 @@ RSpec.describe Contract, type: :model do
     let!(:declined_contract) { FactoryBot.create(:contract, state: 'declined') }
     let!(:withdrawn_contract) { FactoryBot.create(:contract, state: 'withdrawn') }
     let!(:accepted_contract) { FactoryBot.create(:contract, state: 'accepted') }
+    let!(:closed_contract) { FactoryBot.create(:contract, state: 'closed') }
 
     it '.pending, .declined, .withdrawn, .accepted, .closed' do
       expect(Contract.pending).to include(pending_contract)
       expect(Contract.declined).to include(declined_contract)
       expect(Contract.withdrawn).to include(withdrawn_contract)
       expect(Contract.accepted).to include(accepted_contract)
+    end
+
+    it '.hire_group' do
+      expect(Contract.hire_group).to include(pending_contract)
+      expect(Contract.hire_group).to include(accepted_contract)
+      expect(Contract.hire_group).to include(closed_contract)
+      expect(Contract.hire_group).to_not include(declined_contract)
+      expect(Contract.hire_group).to_not include(withdrawn_contract)
     end
   end
 end

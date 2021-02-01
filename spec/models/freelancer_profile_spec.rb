@@ -163,6 +163,17 @@ RSpec.describe FreelancerProfile, type: :model do
       expect(FreelancerProfile.accepted).to_not include(freelancer_profile)
       expect(FreelancerProfile.accepted).to include(freelancer_profile_complete)
     end
+
+    describe 'with contracts' do
+      let!(:employer_profile) { FactoryBot.create(:employer_profile) }
+      let!(:job) { FactoryBot.create(:job, user: employer_profile.user) }
+      let!(:contract) { FactoryBot.create(:contract, :with_job, job: job, freelancer_profile: freelancer_profile_complete) }
+
+      it '.with_contracts' do
+        expect(FreelancerProfile.with_contracts(job)).to include(freelancer_profile_complete)
+        expect(FreelancerProfile.with_contracts(job)).to_not include(freelancer_profile)
+      end
+    end
   end
 
   context 'Methods' do
