@@ -63,6 +63,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         row "ALL Interview Requests Received From Employers", :interview_requests do
           freelancer_profile.interview_requests.map{ |i_r| link_to(i_r.employer_profile.email, admin_interview_request_path(i_r.id)) }
         end
+        row 'Contracts' do
+          freelancer_profile.contracts.map { |contract| link_to("Hired by #{contract.employer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe
+        end
       end
 
       active_admin_comments
