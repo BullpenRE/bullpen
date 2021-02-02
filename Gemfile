@@ -18,7 +18,9 @@ gem 'pg', '>= 0.18', '< 2.0'                # Use postgresql as the database for
 gem 'premailer-rails', '~> 1.11', '>= 1.11.1' # Styling HTML emails with CSS without having to do the hard work ourselves
 gem 'puma', '~> 4.1'                        # Use Puma as the app server
 gem 'rails', '~> 6.1', '>= 6.1.1'           # If you're not sure what this is for then you're in the wrong place ;)
+gem 'redis', '~> 4.2', '>= 4.2.5'           # Service used for running Action Cable on heroku
 gem 'sass-rails', '>= 6'                    # Use SCSS for stylesheets
+gem 'sidekiq', '~> 6.1', '>= 6.1.3'         # Simple, efficient background processing for Ruby.
 gem 'table_print', '~> 1.5', '>= 1.5.7'     # Allows viewing of data in console in nice ways, including table joins: http://tableprintgem.com/ (video)
 gem 'turbolinks', '~> 5'                    # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'webpacker', '~> 5.2', '>= 5.2.1'       # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -36,22 +38,22 @@ end
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'cypress-on-rails'                                # Gem for using cypress.io in Rails and ruby rack applications
-  gem 'rubocop', '~> 0.90.0', require: false            # Needed to fix CodeClimate issues
-  gem 'rspec-rails'                                     # rspec-rails is a testing framework for Rails 5+.
   gem 'letter_opener'                                   # Allows for seeing sent emails in dev environment
   gem 'letter_opener_web'                               # GUI for letter_opener
+  gem 'rspec-rails'                                     # rspec-rails is a testing framework for Rails 5+.
+  gem 'rubocop', '~> 0.90.0', require: false            # Needed to fix CodeClimate issues
 end
 
 group :development, :test, :staging do
-  gem 'faker', github: 'stympy/faker'                   # Easy way to add fake data: names, email addresses, etc.
   gem 'factory_bot_rails'                               # Fixtures but better
+  gem 'faker', github: 'stympy/faker'                   # Easy way to add fake data: names, email addresses, etc.
 end
 
 group :test do
   # Gems in this group do not require version numbers
   gem 'database_cleaner'                                # Cleans the database data between tests
-  gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
   gem 'rails-controller-testing'                        # This gem brings back assigns to your controller tests as well as assert_template to both controller and integration tests.
+  gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
 end
 
 group :development do
@@ -65,5 +67,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]    # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 
 # The gems below were recommended by the base Rails install
-# gem 'redis', '~> 4.0'                   # Use Redis adapter to run Action Cable in production
 # gem 'bcrypt', '~> 3.1.7'                # Use Active Model has_secure_password

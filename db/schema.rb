@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_23_162059) do
+ActiveRecord::Schema.define(version: 2021_01_28_193142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,21 @@ ActiveRecord::Schema.define(version: 2021_01_23_162059) do
     t.boolean "custom", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.bigint "employer_profile_id", null: false
+    t.bigint "freelancer_profile_id", null: false
+    t.bigint "job_id"
+    t.string "title"
+    t.integer "contract_type"
+    t.integer "pay_rate"
+    t.integer "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employer_profile_id"], name: "index_contracts_on_employer_profile_id"
+    t.index ["freelancer_profile_id"], name: "index_contracts_on_freelancer_profile_id"
+    t.index ["job_id"], name: "index_contracts_on_job_id"
   end
 
   create_table "employer_profiles", force: :cascade do |t|
@@ -205,6 +220,7 @@ ActiveRecord::Schema.define(version: 2021_01_23_162059) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "hide_from_freelancer", default: false
+    t.boolean "hide_from_employer", default: false
     t.index ["employer_profile_id"], name: "index_interview_requests_on_employer_profile_id"
     t.index ["freelancer_profile_id"], name: "index_interview_requests_on_freelancer_profile_id"
   end
@@ -369,6 +385,9 @@ ActiveRecord::Schema.define(version: 2021_01_23_162059) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "contracts", "employer_profiles"
+  add_foreign_key "contracts", "freelancer_profiles"
+  add_foreign_key "contracts", "jobs"
   add_foreign_key "employer_profiles", "users"
   add_foreign_key "employer_sectors", "employer_profiles"
   add_foreign_key "employer_sectors", "sectors"

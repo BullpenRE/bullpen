@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   if defined?(ActiveAdmin)
     devise_for :admin_users, ActiveAdmin::Devise.config
@@ -53,6 +55,8 @@ Rails.application.routes.draw do
     post 'send_message', to: 'jobs#send_message'
     post 'decline_job_application', to: 'jobs#decline_job_application'
     post 'withdraw_request', to: 'interviews#withdraw_request'
+    post 'make_an_offer', to: 'jobs#make_an_offer'
+    post 'remove_interview_request', to: 'interviews#remove_interview_request'
   end
 
   namespace :public do
@@ -111,5 +115,7 @@ Rails.application.routes.draw do
   get '/styleguide', to: 'styleguide#index'
 
   root 'join#index'
-
+  authenticate :user, ->(u) { u.bullpen_personnel? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end

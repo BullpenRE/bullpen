@@ -22,6 +22,24 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
     filter :role, as: :select, collection: -> { User.roles }
     filter :last_name, as: :select, input_html: { class: "select2" }
 
+    show title: 'User' do |user|
+      attributes_table do
+        row :email
+        row :first_name
+        row :last_name
+        row :phone_number
+        row :location
+        row :role
+        row :signup_promo
+        row :provider
+        row :freelancer_profile
+        row :employer_profile
+        row :sign_in_count
+        row :last_sign_in_at
+        row :confirmed_at
+      end
+    end
+
     form do |f|
       f.inputs 'User Info' do
         f.input :email

@@ -1,6 +1,8 @@
 <br>
 <%= render partial: 'email/content_block_left_slim', locals: { content: "<h2 style='color: #005495;'>You received a message from #{@message.from_user.full_name}.</h2>" } %>
-<%= render partial: 'email/content_block_left_slim', locals: { content: "<h3 style='color: #005495;'>#{@title}</h3>" } %>
+<% if @title.present? %>
+  <%= render partial: 'email/content_block_left_slim', locals: { content: "<h3 style='color: #005495;'>#{@title}</h3>" } %>
+<% end %>
 <%= render partial: 'email/content_block_left_slim', locals: { content: "<h3>Message:</h3>" } %>
 <%= render partial: 'email/content_block_left_slim', locals: { content: "#{@message.description}" } %>
 <%= render partial: 'email/content_block_left_slim', locals: { content: "<h3>Company information:</h3>" } %>

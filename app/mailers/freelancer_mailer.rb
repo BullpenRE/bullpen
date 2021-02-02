@@ -37,4 +37,11 @@ class FreelancerMailer < ApplicationMailer
     freelancer_email = interview_request.freelancer_profile.user.email
     mail(to: freelancer_email, subject: 'Interview request withdrawn')
   end
+
+  def offer_made(contract)
+    @contract = contract
+    freelancer_email = contract.freelancer_profile.user.email
+    mail(to: freelancer_email, subject: "Congratulations! #{contract.employer_profile.user.full_name}
+                                        sent you a job offer")
+  end
 end
