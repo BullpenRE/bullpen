@@ -40,6 +40,10 @@ img.max-width {
 .trix-content {
     line-height: 1.2em;
 }
+.trix-content h1 {
+    /*line-height: 1.2em;*/
+}
+
 @media screen and (max-width:480px) {
     .preheader .rightColumnContent,
     .footer .rightColumnContent {
