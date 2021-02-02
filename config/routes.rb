@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     resources :refer
     resources :talent
     resources :account, only: :index
+    resources :contracts
     post 'interview_request', to: 'talent#interview_request'
     post 'like_job_application', to: 'jobs#like_job_application'
     post 'send_message', to: 'jobs#send_message'
