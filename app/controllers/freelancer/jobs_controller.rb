@@ -31,7 +31,7 @@ class Freelancer::JobsController < ApplicationController
     flash[:notice] = if job.present?
                        "Sorry, <b>#{job.title}</b> is no longer available."
                      else
-                       "Sorry, this job is no longer available."
+                       'Sorry, this job is no longer available.'
                      end
 
     params[:page] || 1
