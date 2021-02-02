@@ -27,7 +27,7 @@
           </li>
         <% end %>
         <li class="nav-item<%= ' active' if section == 'contracts' %>">
-          <a class="nav-link" href="#">Contracts</a>
+          <%= link_to 'Contracts', employer_contracts_path, class: 'nav-link' %>
         </li>
       </ul>
     </div>
