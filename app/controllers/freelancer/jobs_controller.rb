@@ -26,7 +26,7 @@ class Freelancer::JobsController < ApplicationController
   end
 
   def delete_session
-    job = jobs_collection.find{ |job| job.slug == session[:apply_for_job] }
+    job = jobs_collection.find { |j| j.slug == session[:apply_for_job] }
     session.delete(:apply_for_job)
     flash[:notice] = if job.present?
                        "Sorry, <b>#{job.title}</b> is no longer available."
