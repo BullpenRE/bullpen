@@ -13,6 +13,7 @@ require "action_text/engine"
 require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
+require 'sidekiq'
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -23,6 +24,9 @@ module Bullpen
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
+    # Tell Rails to use Sidekiq as the “queue_adapter”
+    config.active_job.queue_adapter = :sidekiq
+    # config.action_mailer.deliver_later_queue_name = nil
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

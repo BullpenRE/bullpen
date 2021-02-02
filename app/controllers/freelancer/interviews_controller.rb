@@ -22,7 +22,7 @@ class Freelancer::InterviewsController < ApplicationController
   def decline_interview
     @interview_request = current_user.freelancer_profile.interview_requests.find_by(id: params[:id])
     @interview_request.update(state: 'declined')
-    EmployerMailer.interview_request_declined(@interview_request).deliver_now
+    EmployerMailer.interview_request_declined(@interview_request).deliver_later
   end
 
   def accept_request

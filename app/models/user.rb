@@ -16,17 +16,15 @@ class User < ApplicationRecord
   has_many :jobs, dependent: :destroy
   has_many :freelancer_real_estate_skills, through: :freelancer_profile
   has_many :freelancer_sectors, through: :freelancer_profile
-
   has_one :employer_profile, dependent: :destroy
   has_many :employer_sectors, through: :employer_profile
   has_many :job_applications, dependent: :destroy
-
   has_many :sent_messages, class_name: 'Message', foreign_key: :from_user_id
   has_many :received_messages, class_name: 'Message', foreign_key: :to_user_id
 
-  enum role: { freelancer: 0, employer: 1 }
-
   belongs_to :signup_promo, optional: true
+
+  enum role: { freelancer: 0, employer: 1 }
 
   def self.ransackable_scopes(_auth_object = nil)
     [:confirmed]
@@ -49,5 +47,9 @@ class User < ApplicationRecord
     return nil unless freelancer_profile&.avatar&.attached?
 
     freelancer_profile&.avatar
+  end
+
+  def bullpen_personnel?
+    email.match?('@bullpenre.com') && confirmed_at.present?
   end
 end

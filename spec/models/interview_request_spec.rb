@@ -35,18 +35,21 @@ RSpec.describe InterviewRequest, type: :model do
   end
 
   context 'Scopes' do
-    let(:freelancer_user_Dima)  { FactoryBot.create(:user, :freelancer) }
-    let(:freelancer_profile_Dima) { FactoryBot.create(:freelancer_profile, user: freelancer_user_Dima) }
-    let(:freelancer_user_Nata)  { FactoryBot.create(:user, :freelancer) }
-    let(:freelancer_profile_Nata) { FactoryBot.create(:freelancer_profile, user: freelancer_user_Nata) }
-    let(:freelancer_user_Erik)  { FactoryBot.create(:user, :freelancer) }
-    let(:freelancer_profile_Erik) { FactoryBot.create(:freelancer_profile, user: freelancer_user_Erik) }
+    let(:freelancer_user_dima)  { FactoryBot.create(:user, :freelancer) }
+    let(:freelancer_profile_dima) { FactoryBot.create(:freelancer_profile, user: freelancer_user_dima) }
+    let(:freelancer_user_nata)  { FactoryBot.create(:user, :freelancer) }
+    let(:freelancer_profile_nata) { FactoryBot.create(:freelancer_profile, user: freelancer_user_nata) }
+    let(:freelancer_user_erik)  { FactoryBot.create(:user, :freelancer) }
+    let(:freelancer_profile_erik) { FactoryBot.create(:freelancer_profile, user: freelancer_user_erik) }
     let(:freelancer_user_ben)  { FactoryBot.create(:user, :freelancer) }
     let(:freelancer_profile_ben) { FactoryBot.create(:freelancer_profile, user: freelancer_user_ben) }
-    let!(:interview_request_pending) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_Nata, state: 'pending') }
-    let!(:interview_request_accepted) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_Dima, state: 'accepted') }
-    let!(:interview_request_declined) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_Erik, state: 'declined') }
-    let!(:removed_interview_request) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_ben, hide_from_freelancer: true) }
+    let(:freelancer_user_ron)  { FactoryBot.create(:user, :freelancer) }
+    let(:freelancer_profile_ron) { FactoryBot.create(:freelancer_profile, user: freelancer_user_ron) }
+    let!(:interview_request_pending) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_nata, state: 'pending') }
+    let!(:interview_request_accepted) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_dima, state: 'accepted') }
+    let!(:interview_request_declined) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_erik, state: 'declined') }
+    let!(:removed_interview_request_from_freelancer) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_ben, hide_from_freelancer: true) }
+    let!(:removed_interview_request_from_employer) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_ron, hide_from_employer: true) }
 
     it '.not_rejected' do
       expect(InterviewRequest.not_rejected).to include(interview_request_pending)
@@ -55,10 +58,19 @@ RSpec.describe InterviewRequest, type: :model do
     end
 
     it '.freelancer_visible' do
-      expect(InterviewRequest.freelancer_visible).to_not include(removed_interview_request)
+      expect(InterviewRequest.freelancer_visible).to_not include(removed_interview_request_from_freelancer)
       expect(InterviewRequest.freelancer_visible).to include(interview_request_pending)
       expect(InterviewRequest.freelancer_visible).to include(interview_request_accepted)
       expect(InterviewRequest.freelancer_visible).to include(interview_request_declined)
+      expect(InterviewRequest.freelancer_visible).to include(removed_interview_request_from_employer)
+    end
+
+    it '.employer_visible' do
+      expect(InterviewRequest.employer_visible).to_not include(removed_interview_request_from_employer)
+      expect(InterviewRequest.employer_visible).to include(interview_request_pending)
+      expect(InterviewRequest.employer_visible).to include(interview_request_accepted)
+      expect(InterviewRequest.employer_visible).to include(interview_request_declined)
+      expect(InterviewRequest.employer_visible).to include(removed_interview_request_from_freelancer)
     end
   end
 end

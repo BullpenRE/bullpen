@@ -35,22 +35,49 @@ class Employer::JobsController < ApplicationController
   end
 
   def send_message
-    @job = current_user.jobs.find(params[:message][:job_id].to_i)
+    job_title = params[:message][:job_title]
     @message = Message.create(message_params)
-    FreelancerMailer.send_message(@message, @job.title).deliver_now
+    FreelancerMailer.send_message(@message, job_title).deliver_later
 
-    redirect_to employer_jobs_path
+    redirect_to redirect_path_after_send_message(job_title)
   end
 
   def decline_job_application
-    @job_application = JobApplication.where(job: current_user.jobs).find(params[:id])
+    @job_application = JobApplication.where(job: current_user.jobs).find_by(id: params[:id])
     return unless @job_application
 
     @job_application.update(state: 'declined')
-    FreelancerMailer.job_application_declined(@job_application).deliver_now
+    FreelancerMailer.job_application_declined(@job_application).deliver_later
+  end
+
+  def make_an_offer
+    @job = current_user.jobs.find_by(id: params[:make_an_offer][:job_id])
+    @contract = current_user.employer_profile.contracts.create(make_an_offer_params.merge(state: 'pending'))
+    close_job_if_offer_is_made
+
+    flash[:notice] = "Your <strong>#{@contract.title}</strong> offer has been sent to
+                      <strong>#{@contract.freelancer_profile.full_name}</strong>.
+                      We'll send a notification when it's accepted."
+    FreelancerMailer.offer_made(@contract).deliver_later
+    redirect_to employer_jobs_path
   end
 
   private
+
+  def make_an_offer_params
+    params.require(:make_an_offer)
+          .permit(:job_id, :job_description, :title, :freelancer_profile_id, :contract_type, :pay_rate)
+  end
+
+  def close_job_if_offer_is_made
+    @job.update(state: 'closed') if params[:make_an_offer][:state] == '1'
+  end
+
+  def redirect_path_after_send_message(job_title)
+    return employer_jobs_path if job_title.present?
+
+    employer_interviews_path
+  end
 
   def message_params
     {

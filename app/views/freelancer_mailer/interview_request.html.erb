@@ -5,7 +5,7 @@
 <%= render partial: 'email/content_block_left_slim', locals: { content: "#{@interview_request.employer_profile.company_name}" } %>
 <%= render partial: 'email/content_block_left_slim', locals: { content: "<a href=#{@interview_request.employer_profile.company_website}>#{@interview_request.employer_profile.company_website}</a>" } %>
 <br>
-<%= render partial: 'email/content_block_left_slim', locals: { content: "<b>Message:</b><br><blockquote>#{@interview_request.message.body.to_s}</blockquote>" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<b>Message:</b><br>#{@interview_request.message.body.to_s}" } %>
 <%= render partial: 'email/content_block_left_slim', locals: { content: "Accept or decline this interview request on your Bullpen dashboard." } %>
 <br>
 <%= render partial: 'email/button', locals: { button_txt: 'View Interview Request', url: freelancer_interviews_url(view_interview_request: @interview_request.id) } %>
