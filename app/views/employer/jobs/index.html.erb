@@ -101,6 +101,7 @@
                 <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
                 <%= render partial: 'employer/jobs/send_message', locals: { job_application: job_application } %>
                 <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
+                <%= render partial: 'employer/jobs/make_an_offer', locals: { job_application: job_application } %>
                 <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
                   <div class="d-block p-1 d-sm-inline-block mt-1">
                     <div id="like<%= job_application.id %>">
@@ -108,7 +109,7 @@
                     </div>
                   </div>
                   <div class="d-block p-1 d-sm-inline-block">
-                    <button class="btn btn-primary container-fluid">Make an Offer</button>
+                    <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#makeAnOffer<%= job_application.id %>">Make an Offer</button>
                   </div>
                   <div class="dropdown">
                     <button class="btn btn-outline-primary dropdown-toggle pr-1 mt-1 container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

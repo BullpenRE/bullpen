@@ -42,4 +42,11 @@ class FreelancerMailer < ApplicationMailer
     @posted_job = posted_job
     mail(to: freelancer_emails, subject: 'A new work opportunity has been added to Bullpen\'s job board')
   end
+
+  def offer_made(contract)
+    @contract = contract
+    freelancer_email = contract.freelancer_profile.user.email
+    mail(to: freelancer_email, subject: "Congratulations! #{contract.employer_profile.user.full_name}
+                                        sent you a job offer")
+  end
 end
