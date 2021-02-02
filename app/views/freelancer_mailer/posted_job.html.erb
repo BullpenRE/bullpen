@@ -25,4 +25,4 @@
 <br>
 <%= render partial: 'email/button', locals: { button_txt: 'APPLY NOW', url: public_apply_for_job_url(apply_for_job: @posted_job.slug) } %>
 <br>
-<%= render partial: 'email/content_block', locals: { content: "<a href=freelancer_account_index style='color: #24A878;'>Unsubscribe</a> from job notification" } %>
+<%= render partial: 'email/content_block', locals: { content: "<a href=#{public_turn_off_new_job_alerts_url(turn_off: 'new_job_alerts')} style='color: #24A878;' target='_blank'>Unsubscribe</a> from job notification" } %>
