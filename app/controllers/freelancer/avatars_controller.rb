@@ -25,7 +25,6 @@ module Freelancer
       render json: { status: :ok }
     end
 
-
     private
 
     def handle_rescue
