@@ -7,14 +7,10 @@ class NewJobAnnouncementsService
 
   def process
     @jobs.each do |job|
-      FreelancerMailer.posted_job(job, freelancers_emails).deliver_later if freelancers_emails.present?
-      job.update(job_announced: true)
+      FreelancerProfile.ready_for_announcement.each do |freelancers_profile|
+        FreelancerMailer.posted_job(job, freelancers_profile.email).deliver_later
+        job.update(job_announced: true)
+      end
     end
-  end
-
-  private
-
-  def freelancers_emails
-    @freelancers_emails ||= FreelancerProfile.ready_for_announcement.map(&:email)
   end
 end

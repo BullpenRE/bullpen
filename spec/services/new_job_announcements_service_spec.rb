@@ -10,7 +10,7 @@ RSpec.describe NewJobAnnouncementsService do
   it 'should send mails to freelancers with new_jobs_alert set to true' do
     expect { service.process }.
       to have_enqueued_job(ActionMailer::MailDeliveryJob).
-        with('FreelancerMailer', 'posted_job', 'deliver_now', { args: [job, [freelancer_profile_complete.email, freelancer_profile_1.email]] })
+        with('FreelancerMailer', 'posted_job', 'deliver_now', { args: [job, freelancer_profile_complete.email] })
     job.reload
     expect(job.job_announced).to eq true
   end
@@ -19,6 +19,6 @@ RSpec.describe NewJobAnnouncementsService do
     freelancer_profile_complete.update(new_jobs_alert: false)
     expect { service.process }.
       to have_enqueued_job(ActionMailer::MailDeliveryJob).
-        with('FreelancerMailer', 'posted_job', 'deliver_now', { args: [job, [freelancer_profile_1.email]] })
+        with('FreelancerMailer', 'posted_job', 'deliver_now', { args: [job, freelancer_profile_1.email] })
   end
 end

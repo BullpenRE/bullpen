@@ -26,7 +26,7 @@ class Freelancer::JobsController < ApplicationController
   end
 
   def delete_session
-    job = Job.find_by(slug: session[:apply_for_job])
+    job = jobs_collection.find{ |job| job.slug == session[:apply_for_job] }
     session.delete(:apply_for_job)
     flash[:notice] = if job.present?
                        "Sorry, <b>#{job.title}</b> is no longer available."
@@ -38,6 +38,6 @@ class Freelancer::JobsController < ApplicationController
   end
 
   def jobs_collection
-    Job.where(state: 'posted').order(created_at: :desc).not_applied_or_withdrawn(current_user)
+    @jobs_collection ||= Job.where(state: 'posted').order(created_at: :desc).not_applied_or_withdrawn(current_user)
   end
 end
