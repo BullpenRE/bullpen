@@ -6,12 +6,12 @@ module Freelancer
     before_action :non_freelancer_redirect
 
     def update
-      return unless params[:avatar].present?
+      return unless valid_input_file?
 
       @user = current_user
       @freelancer_profile = @user.freelancer_profile
       @freelancer_profile.avatar.purge_later if @freelancer_profile.avatar.attached?
-      process_and_save_new_image!(@freelancer_profile) if params[:avatar].present?
+      process_and_save_new_image!(@freelancer_profile)
 
       render json: { status: :ok }
     rescue StandardError

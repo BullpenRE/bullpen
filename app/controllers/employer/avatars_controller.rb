@@ -6,7 +6,7 @@ module Employer
     before_action :non_employer_redirect
 
     def update
-      return unless params[:avatar].present?
+      return unless valid_input_file?
 
       @user = current_user
       @employer_profile = @user.employer_profile

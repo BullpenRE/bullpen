@@ -17,12 +17,11 @@
       </div>
 
       <div class="container">
-        <% if freelancer_profile.errors.any? %>
-            <div id="alertWarning" class="alert alert-warning alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <%= freelancer_profile.errors.full_messages.join(', ') %>
-            </div>
-        <% end %>
+        <div class="alert_from_js d-none">
+          <div class="alert alert-warning">
+            <span></span>
+          </div>
+        </div>
         <%= form_for :freelancer_profile, url: freelancer_change_freelancer_basic_info_path do |f| %>
           <%= f.hidden_field :redirect_reference, value: redirect_reference %>
           <div class="row-md mb-4 avatar">

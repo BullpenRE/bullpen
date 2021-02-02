@@ -2,7 +2,7 @@
   $(document).on('turbolinks:load', function (e) {
     $('.avatar').off('change').on('change', '#uploadProfilePic', (e) => {
       const file = e.target.files[0];
-      const maxFileSize = 18097152;
+      const maxFileSize = 2097152;
       if (!file) { return }
       if (file.size && file.size > maxFileSize) {
         const message = "Uploaded files must not exceed 2MB\n";
@@ -10,7 +10,7 @@
           title: '<h5>Oops!</h5>',
           text: message
         });
-      } else if (false && file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
+      } else if (file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
         const message = "Please upload only a jpg, png or gif image\n";
         Swal.fire({
           title: '<h5>Oops!</h5>',
@@ -26,8 +26,16 @@
           processData: false,
           dataType: 'json',
           data: formData,
-          success: function () {
+          success: function (data) {
             $('.avatar').load(' .avatar');
+            const $container = $('.alert_from_js');
+            if (data['message']) {
+              $container.removeClass('d-none');
+              $container.find('span').html(`${data['message']}`)
+            } else {
+              $container.find('span').html('');
+              $container.addClass('d-none');
+            }
           },
           error: () => {
             const message = 'This file can not be attached';
