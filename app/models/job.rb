@@ -15,12 +15,13 @@ class Job < ApplicationRecord
   has_many :contracts, dependent: :nullify
   has_rich_text :relevant_details
 
-  validates :user_id, presence: true
   scope :not_applied_or_withdrawn, lambda { |user|
     where.not(id: user.job_applications.pluck(:job_id))
          .or(where(id: user.job_applications.withdrawn.pluck(:job_id)))
   }
+  scope :ready_for_announcement, -> { where(state: 'posted', job_announced: false) }
   validate :pay_ranges_make_sense
+  validates :user_id, presence: true
 
   enum position_length: { 'long-term': 0, 'temporary': 1 }
   enum hours_needed: { 'part-time': 0, 'on-call': 1, 'project-based': 2 }

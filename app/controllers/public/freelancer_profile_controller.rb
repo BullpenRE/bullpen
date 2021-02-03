@@ -13,6 +13,12 @@ class Public::FreelancerProfileController < ApplicationController
     redirect_to employer_talent_index_path
   end
 
+  def turn_off_new_job_alerts
+    session[:turn_off] = params[:turn_off]
+
+    redirect_to freelancer_account_index_url
+  end
+
   private
 
   def certifications
