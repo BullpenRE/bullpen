@@ -1,0 +1,72 @@
+<div class="modal fade" id="editEmployerCompanyModal-<%= employer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="">
+        <div class="bp-card mb-4 mx-auto">
+          <%= form_for employer_profile, url: employer_profile_path, method: :put do |f| %>
+            <div class="form-group mb-4">
+              <label for="companyNameInput" class="bp-input-label">Company Name</label>
+              <%= f.text_field :company_name, class: 'form-control', id: 'companyNameInput', placeholder: 'Company Example', required: true %>
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="companyWebsiteInput" class="bp-input-label">Website</label>
+              <%= f.text_field :company_website, class: 'form-control', id: 'companyWebsiteInput', placeholder: 'www.example.com', required: true %>
+            </div>
+
+            <%= f.fields_for :user, current_user do |u| %>
+                <div class="form-group mb-4">
+                  <label for="userLocationInput" class="bp-input-label">Location</label>
+                  <%= u.text_field :location, class: 'form-control', id: 'userLocationInput', placeholder: 'Orlando FL', required: true %>
+                </div>
+            <% end %>
+
+            <div class="bp-input-label mb-2">Employees</div>
+            <div class="mb-3">
+              <% EmployerProfile.employee_counts.each do |employee_count| %>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :employee_count,
+                                     employee_count[0],
+                                     class: 'form-check-input',
+                                     id: "empCount_#{employee_count[1]}" %>
+                  <%= f.label employee_count[0],
+                              class: 'form-check-label',
+                              for: "empCount_#{employee_count[1]}" %>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="bp-input-label mb-2">Function</div>
+            <div class="mb-5">
+              <% EmployerProfile.categories.each do |category| %>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :category,
+                                     category[0],
+                                     class: 'form-check-input',
+                                     id: "workType#{category[1]}" %>
+                  <%= f.label category[0],
+                              class: 'form-check-label',
+                              for: "workType#{category[1]}" %>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <%= f.submit 'Save Changes', class: 'btn btn-primary ml-auto' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

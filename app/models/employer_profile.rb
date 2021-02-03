@@ -8,6 +8,11 @@ class EmployerProfile < ApplicationRecord
   has_many :contracts, dependent: :destroy
   has_one_attached :avatar
 
+  accepts_nested_attributes_for :user,
+                                allow_destroy: true,
+                                update_only: true,
+                                reject_if: :all_blank
+
   scope :users, -> { joins(:user) }
 
   enum employee_count: { '1-10': 0, '11-50': 1, '51-100': 2, '101+': 3 }

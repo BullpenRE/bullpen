@@ -33,9 +33,9 @@ Rails.application.routes.draw do
 
   get '/promo/:promo_code', to: 'signup_promos#show'
 
-  resources :avatar, only: %i[update destroy]
   resources :freelancer_profile_steps
   resources :employer_profile_steps
+  resources :users, only: :update
 
   # resources :employer
 
@@ -48,6 +48,8 @@ Rails.application.routes.draw do
     resources :refer
     resources :talent
     resources :account, only: :index
+    resource :avatar, only: %i[update destroy]
+    resource :profile, only: :update
     resources :contracts
     post 'interview_request', to: 'talent#interview_request'
     post 'like_job_application', to: 'jobs#like_job_application'
@@ -80,6 +82,7 @@ Rails.application.routes.draw do
     resources :contracts
     resources :profile, only: :index
     resources :account, only: :index
+    resource :avatar, only: %i[update destroy]
     post 'set_withdrawn', to: 'applications#set_withdrawn'
     post 'change_software_licence', to: 'profile#change_software_licence'
     post 'change_certifications', to: 'profile#change_certifications'
