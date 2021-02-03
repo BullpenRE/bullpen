@@ -152,6 +152,7 @@ GEM
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.6.0)
+    geocoder (1.6.4)
     git-smart (0.1.10)
       colorize
     globalid (0.4.2)
@@ -456,6 +457,7 @@ DEPENDENCIES
   devise (~> 4.7, >= 4.7.3)
   factory_bot_rails
   faker!
+  geocoder (>= 1.6.4)
   git-smart
   google_sign_in (~> 1.2)
   image_processing (~> 1.2)
