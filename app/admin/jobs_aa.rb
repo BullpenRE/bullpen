@@ -20,7 +20,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
                   :draft,
                   :contract_type,
                   :pay_range_low,
-                  :pay_range_high
+                  :pay_range_high,
+                  :job_announced
 
     index do
       column :user
@@ -44,6 +45,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         row :time_zone
         row :daytime_availability_required
         row :required_experience
+        row :job_announced
         row 'Relevant Details' do
           job.relevant_details.body.to_s
         end
@@ -94,6 +96,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :contract_type
         f.input :pay_range_low
         f.input :pay_range_high
+        f.input :job_announced
         f.input :skills, as: :check_boxes, collection: Skill.order(:description).pluck(:description, :id)
         f.input :sectors, as: :check_boxes, collection: Sector.order(:description).pluck(:description, :id)
         f.input :softwares, as: :check_boxes, collection: Software.order(:description).pluck(:description, :id)
