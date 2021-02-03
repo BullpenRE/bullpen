@@ -11,6 +11,7 @@ FactoryBot.define do
     required_regional_knowledge { Faker::Company.bs }
     relevant_details { Faker::Company.bs }
     state { Job.states.values.sample }
+    job_announced { false }
     contract_type { 0 }
     pay_range_low { 100 }
     pay_range_high { 150 }
