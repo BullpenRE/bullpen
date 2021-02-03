@@ -22,7 +22,7 @@
               <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showOfferDetails">
                 Show Offer Details
               </button>
-              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modifyOffer">
+              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
                 Modify Offer
               </button>
               <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#withdrawOffer">
@@ -36,6 +36,7 @@
       <div class="row">
         <div class="col-lg-8">
           <%= render partial: 'shared/slim_job_short_description', locals: { job: contract.job } %>
+          <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job_application: nil } %>
         </div>
       </div>
       <hr style="margin-top:0;">
