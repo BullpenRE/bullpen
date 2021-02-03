@@ -303,6 +303,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_010547) do
     t.integer "pay_range_low"
     t.integer "pay_range_high"
     t.string "slug"
+    t.boolean "job_announced", default: false
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 

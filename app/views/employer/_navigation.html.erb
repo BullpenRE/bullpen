@@ -26,9 +26,11 @@
             <%= link_to 'Interviews', employer_interviews_path, class: 'nav-link' %>
           </li>
         <% end %>
-        <li class="nav-item<%= ' active' if section == 'contracts' %>">
-          <a class="nav-link" href="#">Contracts</a>
-        </li>
+        <% if current_user.employer_profile.contracts.any? %>
+          <li class="nav-item<%= ' active' if section == 'contracts' %>">
+            <%= link_to 'Contracts', employer_contracts_path, class: 'nav-link' %>
+          </li>
+        <% end %>
       </ul>
     </div>
     <button class="navbar-toggler mr-auto text-light" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">

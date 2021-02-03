@@ -4,6 +4,7 @@ RSpec.describe FreelancerProfile, type: :model do
   let(:user) { FactoryBot.create(:user, :freelancer) }
   let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: user) }
   let(:freelancer_profile_complete) { FactoryBot.create(:freelancer_profile, :complete) }
+  let(:freelancer_profile_complete_1) { FactoryBot.create(:freelancer_profile, :complete, new_jobs_alert: false) }
   let(:avatar_image) { File.open(Rails.root.join('spec', 'support', 'assets', 'sample-avatar.jpg')) }
   let(:big_avatar_image) { File.open(Rails.root.join('spec', 'support', 'assets', 'big_avatar.jpg')) }
   let(:wrong_type_avatar) { File.open(Rails.root.join('spec', 'support', 'assets', 'wrong_type_avatar.numbers')) }
@@ -20,36 +21,6 @@ RSpec.describe FreelancerProfile, type: :model do
   end
 
   context 'Validations' do
-    describe 'correct_content_type?' do
-      it 'without attached avatar' do
-        expect(freelancer_profile).to be_valid
-      end
-      it 'with valid type avatar' do
-        freelancer_profile.avatar.attach(io: avatar_image, filename: File.basename(avatar_image.path), content_type: 'image/jpg')
-        expect(freelancer_profile).to be_valid
-      end
-      it 'with invalid type avatar' do
-        freelancer_profile.avatar.attach(io: wrong_type_avatar, filename: File.basename(wrong_type_avatar.path), content_type: 'image/jpg')
-        expect(freelancer_profile).to_not be_valid
-        expect(freelancer_profile.errors.messages[:base]).to eq ['Please upload only a jpg, png or gif image.']
-      end
-    end
-
-    describe '#correct_size?' do
-      it 'without attached avatar' do
-        expect(freelancer_profile).to be_valid
-      end
-      it 'with right size avatar' do
-        freelancer_profile.avatar.attach(io: avatar_image, filename: File.basename(avatar_image.path), content_type: 'image/jpg')
-        expect(freelancer_profile).to be_valid
-      end
-      it 'with big size avatar' do
-        freelancer_profile.avatar.attach(io: big_avatar_image, filename: File.basename(big_avatar_image.path), content_type: 'image/jpg')
-        expect(freelancer_profile).to_not be_valid
-        expect(freelancer_profile.errors.messages[:base]).to eq ['Uploaded files must not exceed 2MB.']
-      end
-    end
-
     describe 'desired_hourly_rate' do
       it 'can be nil' do
         freelancer_profile.desired_hourly_rate = nil
@@ -171,6 +142,16 @@ RSpec.describe FreelancerProfile, type: :model do
 
       expect(FreelancerProfile.accepted).to_not include(freelancer_profile)
       expect(FreelancerProfile.accepted).to include(freelancer_profile_complete)
+    end
+
+    it '.ready_for_announcement' do
+      expect(freelancer_profile.curation).to eq('pending')
+      expect(freelancer_profile_complete.curation).to eq('accepted')
+      expect(freelancer_profile_complete_1.curation).to eq('accepted')
+
+      expect(FreelancerProfile.ready_for_announcement).to_not include(freelancer_profile)
+      expect(FreelancerProfile.ready_for_announcement).to include(freelancer_profile_complete)
+      expect(FreelancerProfile.ready_for_announcement).to_not include(freelancer_profile_complete_1)
     end
   end
 

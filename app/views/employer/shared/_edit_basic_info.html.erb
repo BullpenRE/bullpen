@@ -1,0 +1,103 @@
+<!--Edit Employer Profile Modal-->
+<%= render 'shared/avatar_buttons_style' %>
+
+<div class="modal fade" id="editEmployerProfileModal-<%= employer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="container">
+        <div class="alert_from_js d-none">
+          <div class="alert alert-warning">
+            <span></span>
+          </div>
+        </div>
+        <%= form_for :user, url: user_path(current_user), method: :put do |f| %>
+          <div class="row-md mb-4 avatar">
+            <% if employer_profile.avatar.attached? %>
+              <div class="row">
+                <div class="col-md-3 text-center avatar-width-custom">
+                  <div class="text-light avatar-image">
+                    <%= image_tag employer_profile.avatar.variant(resize: "80x80!").processed, class: 'rounded-circle' %>
+                  </div>
+                </div>
+                <div class="col-md-5 align-self-center" id='avatarButtons'>
+                  <div class="custom-file">
+                    <%= f.file_field :employer_profile_avatar,
+                                     multiple: false,
+                                     name: 'avatar',
+                                     class: 'd-none',
+                                     id: 'uploadProfilePic' %>
+                    <label class="btn btn-outline-primary upload-avatar" for="uploadProfilePic">
+                      Upload photo
+                    </label>
+                    <button type="button" class="delete-avatar d-none" id="deleteProfilePic"></button>
+                    <label class="btn btn-outline-primary" for="deleteProfilePic">
+                      Remove photo
+                    </label>
+                  </div>
+                </div>
+              </div>
+            <% else %>
+              <div class="row">
+                <div class="col-md-2 avatar-width-custom">
+                  <div class="text-light text-center" style="font-size: 80px;line-height: 0; margin-bottom: 20px;">
+                    <i class="fas fa-user-circle"></i>
+                  </div>
+                </div>
+                <div class="col-md-5 col-lg-2" id="uploadButton">
+                  <div class="custom-file">
+                    <%= f.file_field :employer_profile_avatar,
+                                     multiple: false,
+                                     name: 'avatar',
+                                     class: 'd-none',
+                                     id: 'uploadProfilePic' %>
+                    <label class="btn btn-outline-primary upload-avatar" for="uploadProfilePic">
+                      Upload photo
+                    </label>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="row">
+            <div class="col-md">
+              <div class="form-group mb-4 wrapper">
+                <label for="professionalTitleInput" class="bp-input-label">First Name</label>
+                <%= f.text_field :first_name,
+                                 class: 'form-control',
+                                 id: 'firstName',
+                                 value: current_user.first_name,
+                                 required: true %>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-group mb-4 wrapper">
+                <label for="professionalTitleInput" class="bp-input-label">Last Name</label>
+                <%= f.text_field :last_name,
+                                 class: 'form-control',
+                                 id: 'lastName',
+                                 value: current_user.last_name,
+                                 required: true %>
+              </div>
+            </div>
+          </div>
+          <p>To change your email address please contact us at
+            <%= mail_to('support@bullpenre.com', 'support@bullpenre.com',
+                        subject: "Request to change email address #{current_user.email}") %>
+          </p>
+          <div class="modal-footer justify-content-end">
+            <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render '/shared/update_avatar', url: employer_avatar_path %>
