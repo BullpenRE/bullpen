@@ -60,6 +60,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         row :searchable
         row :curation
         row :desired_hourly_rate
+        row 'Average Rating' do
+          "#{freelancer_profile.average_rating} from #{freelancer_profile.reviews.size} review#{'s' if freelancer_profile.reviews.size > 1}" unless freelancer_profile.average_rating.nil?
+        end
         row "ALL Interview Requests Received From Employers", :interview_requests do
           freelancer_profile.interview_requests.map{ |i_r| link_to(i_r.employer_profile.email, admin_interview_request_path(i_r.id)) }
         end
