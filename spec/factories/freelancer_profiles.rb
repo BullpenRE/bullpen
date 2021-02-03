@@ -6,6 +6,7 @@ FactoryBot.define do
     professional_summary { Faker::Hipster.paragraph }
     curation { 'pending' }
     draft { false }
+    new_jobs_alert { true }
     desired_hourly_rate { [100, 125, 150, 250].sample }
 
     trait :complete do
