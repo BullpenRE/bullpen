@@ -15,6 +15,7 @@ class FreelancerProfile < ApplicationRecord
   has_many :freelancer_certifications, dependent: :destroy
   has_many :interview_requests, dependent: :destroy
   has_many :contracts, dependent: :destroy
+  has_many :reviews, dependent: :destroy
   has_one_attached :avatar
 
   scope :users, -> { joins(:user) }
@@ -58,5 +59,11 @@ class FreelancerProfile < ApplicationRecord
 
   def interview_request(employer_profile)
     interview_requests.find_by(employer_profile: employer_profile)
+  end
+
+  def average_rating
+    return nil unless reviews.any?
+
+    @average_rating ||= (reviews.sum(:rating) / reviews.size.to_f).round(1)
   end
 end

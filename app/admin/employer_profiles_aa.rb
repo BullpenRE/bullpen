@@ -30,7 +30,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
         row :updated_at
         row :company_name
         row 'Company Website' do
-          link_to(employer_profile.company_website, "#{employer_profile.company_website[0..3] == 'http' ? '' : 'http://'}#{employer_profile.company_website}", target: '_blank').html_safe
+          if employer_profile.company_website
+            link_to(employer_profile.company_website, "#{employer_profile.company_website[0..3] == 'http' ? '' : 'http://'}#{employer_profile.company_website}", target: '_blank').html_safe
+          end
         end
         row :role_in_company
         row :employee_count
@@ -45,6 +47,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
         end
         row 'Contracts' do
           employer_profile.contracts.map { |contract| link_to("Hired #{contract.freelancer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe
+        end
+        row 'Reviews' do
+          "Has written #{employer_profile.reviews.size} review#{'s' if employer_profile.reviews.size != 1} for an average rating of #{employer_profile.reviews.sum(:rating)/employer_profile.reviews.size.to_f.round(1)}" if employer_profile.reviews.any?
         end
       end
     end
