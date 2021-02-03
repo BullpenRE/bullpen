@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_28_193142) do
+ActiveRecord::Schema.define(version: 2021_02_03_010547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -322,6 +322,17 @@ ActiveRecord::Schema.define(version: 2021_01_28_193142) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "employer_profile_id", null: false
+    t.bigint "freelancer_profile_id", null: false
+    t.integer "rating"
+    t.text "comments"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employer_profile_id"], name: "index_reviews_on_employer_profile_id"
+    t.index ["freelancer_profile_id"], name: "index_reviews_on_freelancer_profile_id"
+  end
+
   create_table "sectors", force: :cascade do |t|
     t.string "description", null: false
     t.boolean "disable", default: false
@@ -412,5 +423,7 @@ ActiveRecord::Schema.define(version: 2021_01_28_193142) do
   add_foreign_key "job_softwares", "jobs"
   add_foreign_key "job_softwares", "softwares"
   add_foreign_key "jobs", "users"
+  add_foreign_key "reviews", "employer_profiles"
+  add_foreign_key "reviews", "freelancer_profiles"
   add_foreign_key "users", "signup_promos"
 end

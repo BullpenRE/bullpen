@@ -153,6 +153,15 @@ RSpec.describe FreelancerProfile, type: :model do
       end
     end
 
+    describe 'reviews' do
+      let!(:review) { FactoryBot.create(:review, freelancer_profile: freelancer_profile) }
+
+      it 'can have reviews, dependent destroy' do
+        expect(freelancer_profile.reviews).to include(review)
+        freelancer_profile.destroy
+        expect(Review.exists?(review.id)).to be_falsey
+      end
+    end
   end
 
   context 'Scopes' do
@@ -209,6 +218,25 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.full_name).to eq(freelancer_profile.user.full_name)
         expect(freelancer_profile.email).to eq(freelancer_profile.user.email)
         expect(freelancer_profile.location).to eq(freelancer_profile.user.location)
+      end
+    end
+
+    describe '#average_rating' do
+      it 'with no ratings it returns nil' do
+        expect(freelancer_profile.average_rating).to be_nil
+      end
+
+      it 'with one rating it returns it' do
+        review = FactoryBot.create(:review, freelancer_profile: freelancer_profile)
+        expect(freelancer_profile.average_rating).to eq(review.rating)
+      end
+
+      it 'with many ratings it returns the average rounded to the nearest 10th' do
+        FactoryBot.create(:review, freelancer_profile: freelancer_profile, rating: 5)
+        FactoryBot.create(:review, freelancer_profile: freelancer_profile, rating: 5)
+        FactoryBot.create(:review, freelancer_profile: freelancer_profile, rating: 4)
+
+        expect(freelancer_profile.average_rating).to eq(4.7)
       end
     end
   end
