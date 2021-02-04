@@ -1,15 +1,15 @@
 # Preview all emails at http://localhost:3000/rails/mailers/freelancer_mailer
 class FreelancerMailerPreview < ActionMailer::Preview
   def freelancer_approved
-    FreelancerMailer.freelancer_approved(User.first)
+    FreelancerMailer.freelancer_approved(User.last)
   end
 
   def freelancer_rejected
-    FreelancerMailer.freelancer_rejected(User.first)
+    FreelancerMailer.freelancer_rejected(User.last)
   end
 
   def interview_request
-    FreelancerMailer.interview_request(InterviewRequest.first)
+    FreelancerMailer.interview_request(InterviewRequest.last)
   end
 
   def send_message
@@ -21,14 +21,18 @@ class FreelancerMailerPreview < ActionMailer::Preview
   end
 
   def job_application_declined
-    FreelancerMailer.job_application_declined(JobApplication.first)
+    FreelancerMailer.job_application_declined(JobApplication.last)
   end
 
   def interview_request_was_withdrawn
-    FreelancerMailer.interview_request_was_withdrawn(InterviewRequest.first)
+    FreelancerMailer.interview_request_was_withdrawn(InterviewRequest.last)
   end
 
   def offer_made
     FreelancerMailer.offer_made(Contract.last)
+  end
+
+  def posted_job
+    FreelancerMailer.posted_job(Job.last, FreelancerProfile.last.email)
   end
 end
