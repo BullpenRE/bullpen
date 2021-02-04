@@ -96,8 +96,19 @@
           <div class="text-break">
             <%= link_to public_freelancer_profile_url(freelancer_profile.slug), public_freelancer_profile_url(freelancer_profile.slug), target: '_blank' %>
           </div>
+          <% unless current_user.employer_profile.interview_requests.not_rejected.find_by(freelancer_profile_id: freelancer_profile.id).present? %>
+            <div class="modal-footer justify-content-end">
+              <button class="btn btn-primary request<%= freelancer_profile.id %>" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  $('.request<%= freelancer_profile.id %>').on('click', () => {
+    $('#showProfile<%= freelancer_profile.id %>').modal('hide');
+  });
+</script>
