@@ -1,0 +1,7 @@
+<% if Job::CONTRACT_TYPE_DESCRIPTIONS.key(contract.contract_type).present? %>
+  <p class="text-wrap text-break text-secondary font-weight-bold">
+    <%= contract.hourly? ? '' : "#{Job::CONTRACT_TYPE_DESCRIPTIONS.key(contract.contract_type)}," %>
+    $<%= contract.pay_rate&.to_s(:delimited) %>
+    <%= contract.hourly? ? ' per hour' : ' per month' %>
+  </p>
+<% end %>

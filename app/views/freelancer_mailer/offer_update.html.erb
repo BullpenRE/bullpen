@@ -1,6 +1,6 @@
 <br>
-<%= render partial: 'email/content_block_left', locals: { content: "#{@contract.employer_profile.user.full_name} offered you a job." } %>
-<%= render partial: 'email/content_block_left_slim', locals: { content: "<a href=#{freelancer_contracts_url} target='_blank'>Go to your Contracts</a> to accept the offer or send them a message." } %>
+<%= render partial: 'email/content_block_left', locals: { content: "#{@contract.employer_profile.user.full_name} modified their job offer." } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<a href=#{freelancer_contracts_url} target='_blank'> Click here</a> to accept the offer or send them a message." } %>
 <%= render partial: 'email/content_block_left', locals: { content: "<h4>Job Title <p>#{@contract.title}</p></h4>" } %>
 <%= render partial: 'email/content_block_left', locals: { content: "<h4>Job Description <p>#{@contract.job_description.body.to_s}</p></h4>" } %>
 <%= render partial: 'email/content_block_left', locals: { content: "<h4>Offered Rate</h4> <p>#{@contract.pay_rate}</p></h4>" } %>

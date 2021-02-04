@@ -35,7 +35,7 @@
       <div class="bp-text-sm mb-2">Created <%= time_ago_in_words(contract&.created_at) %> ago </div>
       <div class="row">
         <div class="col-lg-8">
-          <%= render partial: 'shared/slim_job_short_description', locals: { job: contract.job } %>
+          <%= render partial: 'shared/contract_short_description', locals: { contract: contract } %>
           <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job_application: nil } %>
         </div>
       </div>
@@ -82,7 +82,7 @@
               <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showContractDetails">
                 Show Contract Details
               </button>
-              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#editContract">
+              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
                 Edit Contract
               </button>
               <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#closeContract">
@@ -95,7 +95,8 @@
       <div class="bp-text-sm mb-2">Created <%= time_ago_in_words(contract&.created_at) %> ago </div>
       <div class="row">
         <div class="col-lg-8">
-          <%= render partial: 'shared/slim_job_short_description', locals: { job: contract.job } %>
+          <%= render partial: 'shared/contract_short_description', locals: { contract: contract } %>
+          <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job_application: nil } %>
         </div>
       </div>
 
