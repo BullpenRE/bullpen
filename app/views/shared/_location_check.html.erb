@@ -1,0 +1,31 @@
+<script>
+  $(document).on('turbolinks:load', function (e) {
+    function showAlert() {
+      return   Swal.fire({
+        title: '<h5>Oops!</h5>',
+        text: 'Check please entered location'
+      });
+    }
+
+    $('.container').off('click').on('click', '#submitWithLocationCheck', (e) => {
+      e.preventDefault();
+      const locationValue = $('#freelancerLocationInput').val();
+      $.ajax({
+        url: `https://nominatim.openstreetmap.org/search?q=${locationValue}&format=json&addressdetails=1&accept-language=en`,
+        method: 'GET',
+        success: function (data) {
+          if (data.length < 1 || data === undefined) {
+            showAlert()
+          } else {
+            const longitude = data[0]['lon'];
+            const latitude = data[0]['lat'];
+            console.log(`[${longitude}, ${latitude}]`)
+          }
+        },
+        error: () => {
+          showAlert()
+        }
+      });
+    })
+  })
+</script>

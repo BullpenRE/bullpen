@@ -17,8 +17,8 @@
   </div>
 
   <div class="form-group">
-    <label for="locationInput" class="bp-input-label">Location</label>
-    <%= f.text_field :location, class: "form-control", id: "locationInput", placeholder: "e.g. San Francisco, CA", required: true, value: freelancer_profile_experience&.location %>
+    <label for="freelancerLocationInput" class="bp-input-label">Location</label>
+    <%= f.text_field :location, class: "form-control", id: "freelancerLocationInput", placeholder: "e.g. San Francisco, CA", required: true, value: freelancer_profile_experience&.location %>
   </div>
 
   <div class="form-group">
@@ -98,7 +98,7 @@
 <% else %>
   <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-outline-danger mr-2" data-dismiss="modal">Cancel</button>
-    <%= f.submit 'Save', class: 'btn btn-primary' %>
+    <%= f.submit 'Save', id: 'submitWithLocationCheck', class: 'btn btn-primary' %>
   </div>
 <% end %>
 <script>
