@@ -39,12 +39,12 @@
                   <% contract_type = contract.present? ? contract.contract_type : job_application.job.contract_type %>
                   <%= f.select :contract_type,
                                options_for_select(Job::CONTRACT_TYPE_DESCRIPTIONS, contract_type),
-                               {}, class: "form-control contract_type#{contract.id}", required: true, style: "width: 100%" %>
+                               {}, class: "form-control contract_type#{contract&.id}", required: true, style: "width: 100%" %>
                 </div>
                 <div class="col-sm-4">
                   <% hourly = contract.present? ? contract.hourly? : job_application.job.hourly? %>
-                  <label class="h5 mt-1 contract_rate<%= contract.id %>"><%= hourly ? 'Hourly Rate' : 'Monthly Rate' %></label>
-                    <%= f.text_field :pay_rate, class: "form-control pay_rate#{contract.id}", required: true, value: contract.present? ? contract.pay_rate : job_application.job.pay_range_low %>
+                  <label class="h5 mt-1 contract_rate<%= contract&.id %>"><%= hourly ? 'Hourly Rate' : 'Monthly Rate' %></label>
+                    <%= f.text_field :pay_rate, class: "form-control pay_rate#{contract&.id}", required: true, value: contract.present? ? contract.pay_rate : job_application.job.pay_range_low %>
                 </div>
                 <div class="col-sm-4"></div>
               </div>
@@ -98,11 +98,11 @@
      event.preventDefault();
   });
 
-  $('.contract_type<%= contract.id %>').change(() => {
-    if ($('.contract_type<%= contract.id %>').val() == 'hourly' || !$('.contract_type<%= contract.id %>').val()) {
-      $('.contract_rate<%= contract.id %>').text('Hourly Rate');
+  $('.contract_type<%= contract&.id %>').change(() => {
+    if ($('.contract_type<%= contract&.id %>').val() == 'hourly' || !$('.contract_type<%= contract&.id %>').val()) {
+      $('.contract_rate<%= contract&.id %>').text('Hourly Rate');
     } else {
-      $('.contract_rate<%= contract.id %>').text('Monthly Rate');
+      $('.contract_rate<%= contract&.id %>').text('Monthly Rate');
     }
   });
 </script>
