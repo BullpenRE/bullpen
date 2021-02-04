@@ -1,56 +1,12 @@
 <!--Edit Freelancer Profile Modal-->
+<%= render 'shared/avatar_buttons_style' %>
 <style>
-  @media screen and (min-width: 360px) {
-    #avatarButtons {
-      margin-top: 20px;
-      text-align: center !important;
-    }
-
-    .upload-avatar {
-      margin-right: 2px;
-    }
-
-    #uploadButton {
-      margin-bottom: 20px;
-      text-align: center !important;
-    }
-  }
-
-  @media screen and (min-width: 768px) {
-    .avatar-width-custom {
-      padding-right: 0;
-    }
-
-    #avatarButtons {
-      margin-top: 0;
-      flex: 0 0 65.5%;
-      max-width: 65.5%;
-      padding-left: 0;
-      text-align: left !important;
-    }
-
-    #uploadButton {
-      padding-left: 0;
-      align-self: center !important;
-    }
-  }
-
-  @media screen and (min-width: 992px) {
-    .avatar-width-custom {
-      flex: 0 0 14.5%;
-      max-width: 14.5%;
-    }
-
-    #avatarButtons {
-      padding-left: 5px;
-    }
-  }
-
   .highlight {
     border: 2px solid red;
     border-radius: 5px;
   }
 </style>
+
 <div class="modal fade" id="editProfileModal-<%= freelancer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -61,12 +17,11 @@
       </div>
 
       <div class="container">
-        <% if freelancer_profile.errors.any? %>
-            <div id="alertWarning" class="alert alert-warning alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <%= freelancer_profile.errors.full_messages.join(', ') %>
-            </div>
-        <% end %>
+        <div class="alert_from_js d-none">
+          <div class="alert alert-warning">
+            <span></span>
+          </div>
+        </div>
         <%= form_for :freelancer_profile, url: freelancer_change_freelancer_basic_info_path do |f| %>
           <%= f.hidden_field :redirect_reference, value: redirect_reference %>
           <div class="row-md mb-4 avatar">
@@ -218,7 +173,7 @@
     </div>
   </div>
 </div>
-<%= render 'freelancer/shared/update_avatar' %>
+<%= render '/shared/update_avatar', url: freelancer_avatar_path %>
 
 <script>
   $(document).on('turbolinks:load', function (e) {
