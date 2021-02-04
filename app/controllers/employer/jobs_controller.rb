@@ -100,7 +100,7 @@ class Employer::JobsController < ApplicationController
   end
 
   def update_make_an_offer_params
-     params.require(:make_an_offer)
+    params.require(:make_an_offer)
           .permit(:job_description, :title, :pay_rate, :contract_type)
   end
 
