@@ -19,7 +19,7 @@
               Options <i class="fas fa-chevron-down text-primary"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showOfferDetails">
+              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showOfferDetails<%= contract.id %>">
                 Show Offer Details
               </button>
               <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modifyOffer">
@@ -36,6 +36,7 @@
       <div class="row">
         <div class="col-lg-8">
           <%= render partial: 'shared/slim_job_short_description', locals: { job: contract.job } %>
+          <%= render partial: 'employer/contracts/show_offer_details', locals: { contract: contract } %>
         </div>
       </div>
       <hr style="margin-top:0;">
