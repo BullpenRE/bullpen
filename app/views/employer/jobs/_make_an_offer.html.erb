@@ -1,9 +1,9 @@
-<div class="modal" id="makeAnOffer<%= job_application.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+<div class="modal" id="makeAnOffer<%= contract.present? ? contract.id : job_application.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <!--  Header with '×'-->
       <div class="modal-header">
-        <h1 class="modal-title" id="showSendMessageLabel">Make an Offer <i class="far fa-question-circle text-primary"></i> </h1>
+        <h1 class="modal-title" id="showSendMessageLabel"><%= contract.present? ? 'Edit Contract' : 'Make an Offer' %> <i class="far fa-question-circle text-primary"></i> </h1>
         <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -13,58 +13,78 @@
         <div class="row mb-3">
           <div class="col-sm-6">
             <h5 class="mt-1">From</h5>
-            <%= job_application.job.user.employer_profile.full_name %>, <%= job_application.job.user.employer_profile.company_name %>
+            <%= contract.present? ? contract.employer_profile.full_name : job_application.job.user.employer_profile.full_name %>, <%= contract.present? ? contract.employer_profile.company_name : job_application.job.user.employer_profile.company_name %>
           </div>
           <div class="col-sm-6">
             <h5 class="mt-1">To</h5>
-            <%= job_application.user.full_name %>
+            <%= contract.present? ? contract.freelancer_profile.full_name : job_application.user.full_name %>
           </div>
         </div>
         <%= form_for :make_an_offer, url:  employer_make_an_offer_path do |f| %>
-          <%= f.hidden_field :freelancer_profile_id, value: job_application.user.freelancer_profile.id %>
-          <%= f.hidden_field :job_id, value: job_application.job_id %>
+          <%= f.hidden_field :freelancer_profile_id, value: contract.present? ? contract.freelancer_profile_id : job_application.user.freelancer_profile.id %>
+          <%= f.hidden_field :job_id, value: contract.present? ? contract.job_id : job_application.job_id %>
+          <%= f.hidden_field :contract_id, value: contract&.id %>
           <div class="form-group">
             <label for="JobTitleInput" class="h5">Job Title</label>
             <div class="w-100">
-              <%= f.text_field :title, class: "form-control mb-3", id: "JobTitleInput", placeholder: "Enter your job title", value: job_application.job.title %>
+              <%= f.text_field :title, class: "form-control mb-3", id: "JobTitleInput", placeholder: "Enter your job title", value: contract.present? ? contract.title : job_application.job.title %>
             </div>
             <label for="JobDescriptionInput" class="h5">Job Description</label>
             <div class="w-100">
-              <%= f.rich_text_area :job_description, class: "form-control mb-3", id: "JobDescriptionInput", placeholder: "Enter Job Description", value: job_application.job.short_description %>
+              <%= f.rich_text_area :job_description, class: "form-control mb-3", id: "JobDescriptionInput", placeholder: "Enter Job Description", value: contract.present? ? contract.job_description : job_application.job.short_description %>
             </div>
-            <div class="row mb-3">
-              <div class="col-sm-4">
-                <label class="h5 mt-1">Fee Structure</label>
-                <%= f.select :contract_type,
-                             options_for_select(Job::CONTRACT_TYPE_DESCRIPTIONS, job_application.job.contract_type),
-                             {}, class: 'form-control', required: true, style: "width: 100%" %>
+              <div class="row mb-3">
+                <div class="col-sm-4">
+                  <label class="h5 mt-1">Fee Structure</label>
+                  <% contract_type = contract.present? ? contract.contract_type : job_application.job.contract_type %>
+                  <%= f.select :contract_type,
+                               options_for_select(Job::CONTRACT_TYPE_DESCRIPTIONS, contract_type),
+                               {}, class: "form-control contract_type#{contract&.id}", required: true, style: "width: 100%" %>
+                </div>
+                <div class="col-sm-4">
+                  <% hourly = contract.present? ? contract.hourly? : job_application.job.hourly? %>
+                  <label class="h5 mt-1 contract_rate<%= contract&.id %>"><%= hourly ? 'Hourly Rate' : 'Monthly Rate' %></label>
+                    <%= f.text_field :pay_rate, class: "form-control pay_rate#{contract&.id}", required: true, value: contract.present? ? contract.pay_rate : job_application.job.pay_range_low %>
+                </div>
+                <div class="col-sm-4"></div>
               </div>
-              <div class="col-sm-4">
-                <label class="h5 mt-1 contract_rate"><%= job_application.job.hourly? ? 'Hourly Rate' : 'Monthly Rate' %></label>
-                  <%= f.text_field :pay_rate, class: "form-control", required: true, value: job_application.job.pay_range_low %>
+            <% if job_application.present? %>
+              <p class="mb-4 mt-0">Your payment method will be charged weekly based on the number of hours worked.</p>
+              <h5 >Payment Method</h5>
+              <div class="mb-4">
+                <button class="btn btn-primary" type="button">Add a Credit Card</button>
               </div>
-              <div class="col-sm-4"></div>
-            </div>
-            <p class="mb-4 mt-0">Your payment method will be charged weekly based on the number of hours worked.</p>
-            <h5 >Payment Method</h5>
-            <div class="mb-4">
-              <button class="btn btn-primary" type="button">Add a Credit Card</button>
-            </div>
-            <div class="form-check custom-checkbox mt-1">
-              <%= f.check_box :state, class: "custom-control-input", id: "stateClosed#{job_application.id}" %>
-              <label class="custom-control-label text-secondary font-weight-bold mb-4" for="stateClosed<%= job_application.id %>">Close the job post (pending applicants will be notified)</label>
-            </div>
-            <div class="text-muted">
-              By sending this offer, you agree to
-              <a href="https://bullpenre.com/terms-of-service">
-                Bullpen's Terms of Service,
-              </a>
-              <a href="https://bullpenre.com/privacy-policy">
-                Privacy Agreement,
-              </a> and <a href="https://stripe.com/connect-account/legal">Stripe's Connected Accounts Authorization</a>
-            </div>
+              <div class="form-check custom-checkbox mt-1">
+                <%= f.check_box :state, class: "custom-control-input", id: "stateClosed#{job_application.id}" %>
+                <label class="custom-control-label text-secondary font-weight-bold mb-4" for="stateClosed<%= job_application.id %>">Close the job post (pending applicants will be notified)</label>
+              </div>
+              <div class="text-muted">
+                By sending this offer, you agree to
+                <a href="https://bullpenre.com/terms-of-service">
+                  Bullpen's Terms of Service,
+                </a>
+                <a href="https://bullpenre.com/privacy-policy">
+                  Privacy Agreement,
+                </a> and <a href="https://stripe.com/connect-account/legal">Stripe's Connected Accounts Authorization</a>
+              </div>
+            <%  elsif contract.present? %>
+              <p class="mb-4 mt-1 d-none changeNotice<%= contract.id %>"></p>
+              <% if contract.state != 'pending' %>
+                <script>
+                  $('.pay_rate<%= contract.id %>').on('input', () => {
+                    $('.changeNotice<%= contract.id %>').removeClass('d-none');
+                    $('.changeNotice<%= contract.id %>').text('Changes to the rate will go into effect at the next billing cycle');
+                  });
+                </script>
+              <% end %>
+              <select class="custom-select mb-3">
+                <option value="1">Visa ending in 4424</option>
+                <option value="2">Visa ending in 4366</option>
+                <option value="3">MasterCard ending in 4424</option>
+              </select>
+            <% end %>
             <div class="d-flex justify-content-end">
-              <%= f.submit 'Send Offer', class: 'btn btn-primary mt-3 send-invitation' %>
+              <%= f.submit contract.present? ? 'Save Changes' : 'Send Offer', class: 'btn btn-primary mt-3 send-invitation' %>
             </div>
           </div>
         <% end %>
@@ -78,11 +98,11 @@
      event.preventDefault();
   });
 
-  $('#make_an_offer_contract_type').change(() => {
-    if ($("#make_an_offer_contract_type").val() == 'hourly' || !$("#make_an_offer_contract_type").val()) {
-      $('.contract_rate').text('Hourly Rate');
+  $('.contract_type<%= contract&.id %>').change(() => {
+    if ($('.contract_type<%= contract&.id %>').val() == 'hourly' || !$('.contract_type<%= contract&.id %>').val()) {
+      $('.contract_rate<%= contract&.id %>').text('Hourly Rate');
     } else {
-      $('.contract_rate').text('Monthly Rate');
+      $('.contract_rate<%= contract&.id %>').text('Monthly Rate');
     }
   });
 </script>
