@@ -10,8 +10,8 @@ class Employer::ContractsController < ApplicationController
   end
 
   def withdraw_offer
-    @contracts = current_user.employer_profile.contracts.find_by(id: params[:id])
-    @contracts.update(state: 'withdrawn')
-    FreelancerMailer.offer_was_withdrawn(@contracts).deliver_later
+    @contract = current_user.employer_profile.contracts.find_by(id: params[:id])
+    @contract.update(state: 'withdrawn')
+    FreelancerMailer.offer_was_withdrawn(@contract).deliver_now
   end
 end
