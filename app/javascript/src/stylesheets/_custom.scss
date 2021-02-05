@@ -70,5 +70,28 @@
       padding: 0 0.5rem; 
   }
 }
+.bp-starrating {
+  input {
+    display: none;
+    &:checked ~ label {
+      color: #ffc107; /* Color when checked */
+    }
+    &:hover ~ label {
+      color: darken(#ffc107, 5%); /* Color when star hover */
+    }
+  }
+  label {
+    color: #E9ECEF; /* Color when not checked */
+    transition: all .2s ease;
+    &:before {
+      content: "\f005";
+      margin: 2px;
+      font-size: 2em;
+      font-family: "Font Awesome 5 Free";
+      display: inline-block;
+      cursor: pointer;
+    }
+  }
+}
 
 input.error { border: 1px solid #FB3640; }
