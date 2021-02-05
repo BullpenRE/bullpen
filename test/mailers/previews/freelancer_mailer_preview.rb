@@ -32,6 +32,10 @@ class FreelancerMailerPreview < ActionMailer::Preview
     FreelancerMailer.offer_made(Contract.last)
   end
 
+  def offer_update
+    FreelancerMailer.offer_update(Contract.last)
+  end
+
   def posted_job
     FreelancerMailer.posted_job(Job.last, FreelancerProfile.last.email)
   end
