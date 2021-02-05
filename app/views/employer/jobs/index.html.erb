@@ -205,6 +205,7 @@
                                                                            editable: false } %>
                   <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
                   <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user_id, job_title: contract.title, id: contract.id } %>
+                  <%= render partial: 'employer/contracts/withdraw_offer', locals: { contract: contract } %>
                   <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
                     <div class="d-block p-1 d-sm-inline-block">
                       <div class="bp-text-sm text-secondary text-nowrap font-weight-bold align-self-center align-self-start ml-1 mr-2 mt-1">
@@ -226,7 +227,7 @@
                           <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
                            Show Profile
                           </button>
-                          <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#withdrawOffer">
+                          <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#withdrawOffer<%= contract.id %>">
                             Withdraw Offer
                           </button>
                         </div>

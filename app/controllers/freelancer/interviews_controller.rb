@@ -40,7 +40,7 @@ class Freelancer::InterviewsController < ApplicationController
   def send_message
     @message = Message.create(message_params)
     flash[:notice] = "Your message has been sent to <b>#{@message.to_user.full_name}</b> with you on copy."
-    EmployerMailer.send_message(@message).deliver_now
+    EmployerMailer.send_message(@message).deliver_later
 
     redirect_to freelancer_interviews_path
   end
