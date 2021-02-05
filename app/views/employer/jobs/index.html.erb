@@ -116,7 +116,7 @@
                   <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
                   <%= render partial: 'employer/jobs/send_message', locals: { to_user: job_application.user_id, job_title: job_application.job.title, id: job_application.id } %>
                   <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
-                  <%= render partial: 'employer/jobs/make_an_offer', locals: { job_application: job_application } %>
+                  <%= render partial: 'employer/jobs/make_an_offer', locals: { job_application: job_application, contract: nil } %>
                   <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
                     <div class="d-block p-1 d-sm-inline-block mt-1">
                       <div id="like<%= job_application.id %>">
