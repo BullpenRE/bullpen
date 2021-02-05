@@ -55,4 +55,10 @@ class FreelancerMailer < ApplicationMailer
     freelancer_email = contract.freelancer_profile.user.email
     mail(to: freelancer_email, subject: "#{contract.employer_profile.user.full_name} modified their job offer")
   end
+
+  def review_was_create(review)
+    @review = review
+    freelancer_email = review.freelancer_profile.user.email
+    mail(to: freelancer_email, subject: "#{review.employer_profile.user.full_name} left you a review")
+  end
 end

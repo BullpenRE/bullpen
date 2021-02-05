@@ -105,6 +105,7 @@
         <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: contract.freelancer_profile,
                                                                        editable: false } %>
         <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
+        <%= render partial: 'employer/reviews/review', locals: { freelancer_profile: contract.freelancer_profile, employer_profile: contract.employer_profile, } %>
         <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
           <div class="d-block p-1 d-sm-inline-block">
             <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#">Offer Another Job</button>
@@ -120,7 +121,7 @@
               <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
                 Show Profile
               </button>
-              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#">
+              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#review<%= contract.freelancer_profile.id %>">
                 Write a Review
               </button>
             </div>
