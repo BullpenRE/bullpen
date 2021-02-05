@@ -159,7 +159,7 @@ RSpec.describe FreelancerProfile, type: :model do
       let!(:job) { FactoryBot.create(:job, user: employer_profile.user) }
       let!(:contract) { FactoryBot.create(:contract, :with_job, job: job, freelancer_profile: freelancer_profile_complete) }
 
-      it '.with_contracts_for' do
+      it '.with_contracts_for(job)' do
         expect(FreelancerProfile.with_contracts_for(job)).to include(freelancer_profile_complete)
         expect(FreelancerProfile.with_contracts_for(job)).to_not include(freelancer_profile)
       end

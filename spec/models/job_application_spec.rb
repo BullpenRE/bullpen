@@ -105,7 +105,7 @@ RSpec.describe JobApplication, type: :model do
       let(:freelancer_profile_dima) { FactoryBot.create(:freelancer_profile, :complete, user: dima) }
       let!(:contract) { FactoryBot.create(:contract, :with_job, job: job_1, freelancer_profile: freelancer_profile_dima) }
 
-      it '.without_contracts' do
+      it '.without_contracts_for(job)' do
         expect(JobApplication.without_contracts_for(job_1)).to_not include(dima_job_application)
         expect(JobApplication.without_contracts_for(job_1)).to include(nata_job_application)
         expect(JobApplication.without_contracts_for(job_1)).to include(erik_job_application)
