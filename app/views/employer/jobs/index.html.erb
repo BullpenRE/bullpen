@@ -79,30 +79,34 @@
         <div class="d-flex flex-row justify-content-between">
           <div class="column">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item" role="presentation">
-                <a class="font-weight-bold nav-link" id="application-tab" data-toggle="tab" href="#application" role="tab" aria-controls="application" aria-selected="true">
-                  Applications <span class="text-secondary">(<%= job.job_applications.applied.without_contracts(job).size %>)</span>
-                </a>
-              </li>
-              <li class="nav-item" role="presentation">
-                <a class="font-weight-bold nav-link" id="hire-tab" data-toggle="tab" href="#hire" role="tab" aria-controls="hire" aria-selected="false">
-                  Hire <span class="text-secondary">(<%= job.contracts.hire_group.size %>)</span>
-                </a>
-              </li>
+              <% if job.job_applications.applied.without_contracts(job).any? %>
+                <li class="nav-item" role="presentation">
+                  <a class="font-weight-bold nav-link" id="application-tab<%= job.id %>" data-toggle="tab" href="#application" role="tab" aria-controls="application" aria-selected="true">
+                    Applications <span class="text-secondary">(<%= job.job_applications.applied.without_contracts(job).size %>)</span>
+                  </a>
+                </li>
+              <% end %>
+              <% if job.contracts.hire_group.any? %>
+                <li class="nav-item" role="presentation">
+                  <a class="font-weight-bold nav-link" id="hire-tab<%= job.id %>" data-toggle="tab" href="#hire" role="tab" aria-controls="hire" aria-selected="false">
+                    Hire <span class="text-secondary">(<%= job.contracts.hire_group.size %>)</span>
+                  </a>
+                </li>
+              <% end %>
             </ul>
           </div>
           <div class="column d-flex justify-content-end align-items-end">
-            <a class="font-weight-bold mb-2 link_action<%= job.id %> more-less<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
+            <a class="font-weight-bold mb-2 more-link_action<%= job.id %> more-less<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
               Show More<i class="fas fa-chevron-down ml-1"></i>
             </a>
-            <a style="display: none" class="font-weight-bold mb-2 link_action<%= job.id %> more-less<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
+            <a style="display: none" class="font-weight-bold mb-2 less-link_action<%= job.id %> more-less<%= job.id %>" data-toggle="collapse" data-target="#collapseApplications<%= job.id %>" aria-expanded="true" aria-controls="collapseApplications<%= job.id %>">
               Show Less<i class="fas fa-chevron-up ml-1"></i>
             </a>
           </div>
         </div>
         <div id="collapseApplications<%= job.id %>" class="collapse">
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="application" role="tabpanel" aria-labelledby="application-tab">
+            <div class="tab-pane fade show active" id="application<%= job.id %>" role="tabpanel" aria-labelledby="application-tab">
               <% job.job_applications.applied.without_contracts(job).each do |job_application| %>
                 <hr style="margin-top:0;">
                 <div class="d-flex justify-content-between flex-column flex-lg-row">
@@ -110,7 +114,7 @@
                                                                              job_application: job_application,
                                                                              editable: false } %>
                   <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
-                  <%= render partial: 'employer/jobs/send_message', locals: { job_application: job_application } %>
+                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: job_application.user_id, job_title: job_application.job.title, id: job_application.id } %>
                   <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
                   <%= render partial: 'employer/jobs/make_an_offer', locals: { job_application: job_application } %>
                   <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
@@ -165,12 +169,34 @@
             </div>
 
             <script>
-              $('.link_action<%= job.id %>').on('click', () => {
+              $('.more-less<%= job.id %>').on('click', () => {
                 $('.more-less<%= job.id %>').toggle();
-              })
+              });
+              $('#application-tab<%= job.id %>').on('click', () => {
+                $('.more-link_action<%= job.id %>').css('display','none');
+                $('.less-link_action<%= job.id %>').show();
+                $('#collapseApplications<%= job.id %>').collapse('show');
+                $('#application<%= job.id %>').addClass('active');
+                $('#hire<%= job.id %>').removeClass('active');
+                $('#application-tab<%= job.id %>').css('border-bottom','5px solid #005495');
+                $('#hire-tab<%= job.id %>').css('border-bottom','none');
+              });
+              $('#hire-tab<%= job.id %>').on('click', () => {
+                $('.more-link_action<%= job.id %>').css('display','none');
+                $('.less-link_action<%= job.id %>').show();
+                $('#collapseApplications<%= job.id %>').collapse('show');
+                $('#hire<%= job.id %>').addClass('active');
+                $('#application<%= job.id %>').removeClass('active');
+                $('#hire-tab<%= job.id %>').css('border-bottom','5px solid #005495');
+                $('#application-tab<%= job.id %>').css('border-bottom','none');
+              });
+              $('.less-link_action<%= job.id %>').on('click', () => {
+                $('#hire-tab<%= job.id %>').css('border-bottom','none');
+                $('#application-tab<%= job.id %>').css('border-bottom','none');
+              });
             </script>
 
-            <div class="tab-pane fade show" id="hire" role="tabpanel" aria-labelledby="hire-tab">
+            <div class="tab-pane fade show" id="hire<%= job.id %>" role="tabpanel" aria-labelledby="hire-tab">
               <% job.contracts.hire_group.each do |contract| %>
                 <hr style="margin-top:0;">
                 <div class="d-flex justify-content-between flex-column flex-lg-row">
@@ -178,6 +204,7 @@
                                                                            job_application: nil,
                                                                            editable: false } %>
                   <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
+                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user_id, job_title: contract.title, id: contract.id } %>
                   <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
                     <div class="d-block p-1 d-sm-inline-block">
                       <div class="bp-text-sm text-secondary text-nowrap font-weight-bold align-self-center align-self-start ml-1 mr-2 mt-1">
@@ -185,7 +212,7 @@
                       </div>
                     </div>
                     <div class="d-block p-1 d-sm-inline-block">
-                      <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#sendMessage">Send Message</button>
+                      <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#sendMessage<%= contract.id %>">Send Message</button>
                     </div>
                     <% if contract.pending?%>
                       <div class="dropdown">
