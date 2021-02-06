@@ -1,8 +1,8 @@
 <%= render partial: 'freelancer/navigation', locals: { section: 'jobs' } %>
+<%= render partial: 'shared/notice_and_alert' %>
 
 <!--Job card-->
 <div class="container mb-3">
-  <%= render partial: 'shared/notice_and_alert' %>
   <h1>Jobs</h1>
   <% @jobs.each do |job| %>
     <%= render partial: 'freelancer/jobs/show_job', locals: { job: job } %>
