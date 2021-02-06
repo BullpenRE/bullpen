@@ -1,2 +1,2 @@
 <br>
-<%= render partial: 'email/content_block', locals: { content: "Sorry, #{@contract.employer_profile.full_name} from #{@contract.employer_profile.company_name} withdrew their #{@contract.title} offer." } %>
+<%= render partial: 'email/content_block', locals: { content: "Sorry, <b>#{@contract.employer_profile.full_name}</b> from <b>#{@contract.employer_profile.company_name}</b> withdrew their <b>#{@contract.title}</b> offer." } %>
