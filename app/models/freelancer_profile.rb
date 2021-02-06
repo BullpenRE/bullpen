@@ -19,7 +19,7 @@ class FreelancerProfile < ApplicationRecord
   has_one_attached :avatar
 
   scope :users, -> { joins(:user) }
-  scope :with_contracts, lambda { |job|
+  scope :with_contracts_for, lambda { |job|
     where(id: job.contracts.pluck(:freelancer_profile_id))
   }
 
