@@ -114,7 +114,7 @@
                                                                              job_application: job_application,
                                                                              editable: false } %>
                   <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
-                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: job_application.user_id, job_title: job_application.job.title, id: job_application.id } %>
+                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: job_application.user_id, job_title: job_application.job.title, id: job_application.id, redirect_reference: '' } %>
                   <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
                   <%= render partial: 'employer/jobs/make_an_offer', locals: { job_application: job_application, contract: nil } %>
                   <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
@@ -204,7 +204,7 @@
                                                                            job_application: nil,
                                                                            editable: false } %>
                   <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
-                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user_id, job_title: contract.title, id: contract.id } %>
+                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user_id, job_title: contract.title, id: contract.id, redirect_reference: '' } %>
                   <%= render partial: 'employer/contracts/withdraw_offer', locals: { contract: contract } %>
                   <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
                     <div class="d-block p-1 d-sm-inline-block">

@@ -109,6 +109,7 @@ class Employer::JobsController < ApplicationController
   end
 
   def redirect_path_after_send_message(job_title)
+    return employer_contracts_path if params.dig(:message, :redirect_reference) == 'contract'
     return employer_jobs_path if job_title.present?
 
     employer_interviews_path
