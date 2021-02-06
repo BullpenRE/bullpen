@@ -58,6 +58,7 @@ Rails.application.routes.draw do
     post 'withdraw_request', to: 'interviews#withdraw_request'
     post 'make_an_offer', to: 'jobs#make_an_offer'
     post 'remove_interview_request', to: 'interviews#remove_interview_request'
+    post 'withdraw_offer', to: 'contracts#withdraw_offer'
   end
 
   namespace :public do

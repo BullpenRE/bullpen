@@ -494,4 +494,72 @@
 &lt;/div&gt;
 </pre>
     </div>
+    
+    <h4 class="text-dark mt-4">Ratings display</h4>
+    <div class="d-flex align-items-center">
+        <i class="fas fa-star text-warning"></i>
+        <i class="fas fa-star text-warning"></i>
+        <i class="fas fa-star text-warning"></i>
+        <span class="fa-layers fa-fw">
+            <i class="fas fa-star text-light"></i>
+            <i class="fas fa-star-half text-warning"></i>
+        </span>
+        <i class="fas fa-star text-light"></i>
+        <b class="text-secondary ml-2">3.3 out of 5</b>
+    </div>
+    <button class="btn btn-outline-primary mt-2" type="button" data-toggle="collapse" data-target="#ratingsDisplayExample" aria-expanded="false" aria-controls="ratingsDisplayExample">Code</button>
+    
+    <div class="collapse mt-2 mb-0" id="ratingsDisplayExample">
+        <pre class="collapse mt-2 mb-0" id="ratingsDisplayExample">
+&lt;div class="d-flex align-items-center"&gt;
+    &lt;i class="fas fa-star text-warning"&gt;&lt;/i&gt;
+    &lt;i class="fas fa-star text-warning"&gt;&lt;/i&gt;
+    &lt;i class="fas fa-star text-warning"&gt;&lt;/i&gt;
+    &lt;span class="fa-layers fa-fw"&gt;
+        &lt;i class="fas fa-star text-light"&gt;&lt;/i&gt;
+        &lt;i class="fas fa-star-half text-warning"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;i class="fas fa-star text-light"&gt;&lt;/i&gt;
+    &lt;b class="text-secondary ml-2"&gt;3.3 out of 5&lt;/b&gt;
+&lt;/div&gt;
+        </pre>
+    </div>
+
+    <h4 class="text-dark mt-4">Ratings entry</h4>
+    <h5>Overall Rating</h5>
+    <%= form_with url: '#', method: :get do |form| %>  
+        <div class="bp-starrating d-flex justify-content-end flex-row-reverse">
+            <%= form.radio_button :rating, '5', id: 'star5' %>
+            <%= form.label '', for: 'star5', title: '5' %>
+            <%= form.radio_button :rating, '4', id: 'star4' %>
+            <%= form.label '', for: 'star4', title: '4' %>
+            <%= form.radio_button :rating, '3', id: 'star3' %>
+            <%= form.label '', for: 'star3', title: '3' %>
+            <%= form.radio_button :rating, '2', id: 'star2', checked: true %>
+            <%= form.label '', for: 'star2', title: '2' %>
+            <%= form.radio_button :rating, '1', id: 'star1' %>
+            <%= form.label '', for: 'star1', title: '1' %>
+        </div>    
+    <% end %>
+    <button class="btn btn-outline-primary mt-2" type="button" data-toggle="collapse" data-target="#ratingsEntryExample" aria-expanded="false" aria-controls="ratingsEntryExample">Code</button>
+    
+    <div class="collapse mt-2 mb-0" id="ratingsEntryExample">
+        <pre class="collapse mt-2 mb-0" id="ratingsEntryExample">
+&lt;h5&gt;Overall Rating&lt;/h5&gt;
+&lt;%= form_with url: '#', method: :get do |form| %&gt;
+    &lt;div class="bp-starrating d-flex justify-content-end flex-row-reverse"&gt;
+        &lt;%= form.radio_button :rating, '5', id: 'star5' %&gt;
+        &lt;%= form.label '', for: 'star5', title: '5' %&gt;
+        &lt;%= form.radio_button :rating, '4', id: 'star4' %&gt;
+        &lt;%= form.label '', for: 'star4', title: '4' %&gt;
+        &lt;%= form.radio_button :rating, '3', id: 'star3' %&gt;
+        &lt;%= form.label '', for: 'star3', title: '3' %&gt;
+        &lt;%= form.radio_button :rating, '2', id: 'star2', checked: true %&gt;
+        &lt;%= form.label '', for: 'star2', title: '2' %&gt;
+        &lt;%= form.radio_button :rating, '1', id: 'star1' %&gt;
+        &lt;%= form.label '', for: 'star1', title: '1' %&gt;
+    &lt;/div&gt;
+&lt;% end %&gt;
+        </pre>
+    </div>
 </div>
