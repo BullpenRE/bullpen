@@ -43,7 +43,7 @@
             <div class="text-break">
               <%= link_to public_freelancer_profile_url(freelancer_profile.slug), public_freelancer_profile_url(freelancer_profile.slug), target: '_blank' %>
             </div>
-            <% unless freelancer_profile.can_request_interview?(current_user.employer_profile.id) %>
+            <% if freelancer_profile.can_request_interview?(current_user.employer_profile.id) %>
               <div class="modal-footer justify-content-end">
                 <button class="btn btn-primary request<%= freelancer_profile.id %>" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
               </div>

@@ -71,6 +71,6 @@ class FreelancerProfile < ApplicationRecord
   end
 
   def can_request_interview?(employer_profile_id)
-    interview_requests.not_rejected.find_by(employer_profile_id: employer_profile_id).present?
+    @can_request_interview ||= interview_requests.not_rejected.find_by(employer_profile_id: employer_profile_id).blank?
   end
 end

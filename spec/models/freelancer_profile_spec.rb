@@ -231,5 +231,25 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.average_rating).to eq(4.7)
       end
     end
+
+    describe 'can_request_interview?' do
+      let(:employer_user)  { FactoryBot.create(:user) }
+      let(:employer_profile) { FactoryBot.create(:employer_profile, user: employer_user) }
+      let(:employer_user_1)  { FactoryBot.create(:user) }
+      let(:employer_profile_1) { FactoryBot.create(:employer_profile, user: employer_user_1) }
+      let(:employer_user_2)  { FactoryBot.create(:user) }
+      let(:employer_profile_2) { FactoryBot.create(:employer_profile, user: employer_user_2) }
+      let(:freelancer_user)  { FactoryBot.create(:user) }
+      let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
+      let!(:interview_request) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile, state: 'pending') }
+      let!(:interview_request_1) { FactoryBot.create(:interview_request, employer_profile: employer_profile_2, freelancer_profile: freelancer_profile, state: 'withdrawn') }
+
+      it '#can_request_interview?(employer_profile_id)' do
+        expect(freelancer_profile.can_request_interview?(employer_profile.id)).to eq false
+        expect(freelancer_profile.can_request_interview?(employer_profile_1.id)).to eq true
+        expect(freelancer_profile.can_request_interview?(employer_profile_2.id)).to eq true
+      end
+
+    end
   end
 end
