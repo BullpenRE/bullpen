@@ -68,4 +68,10 @@ class FreelancerMailer < ApplicationMailer
     mail(to: freelancer_email, subject: "#{contract.employer_profile.user.full_name}
                                          withdrew their #{contract.title} offer")
   end
+
+  def review_was_update(review)
+    @review = review
+    freelancer_email = review.freelancer_profile.user.email
+    mail(to: freelancer_email, subject: "#{review.employer_profile.user.full_name} updated their review")
+  end
 end

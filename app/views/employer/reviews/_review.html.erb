@@ -13,6 +13,7 @@
         <%= form_for :review, url: employer_save_review_path do |f| %>
           <%= f.hidden_field :freelancer_profile_id, value: freelancer_profile.id %>
           <%= f.hidden_field :employer_profile_id, value: employer_profile.id %>
+          <%= f.hidden_field :redirect_reference, value: redirect_reference %>
           <div class="form-group mb-3">
             <label for="overallRating" class="h5">
               Overall Rating

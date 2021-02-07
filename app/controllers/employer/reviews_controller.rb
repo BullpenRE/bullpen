@@ -8,10 +8,16 @@ class Employer::ReviewsController < ApplicationController
   def save_review
     review.present? ? update_review : create_review
 
-    redirect_to employer_contracts_path
+    redirect_to redirect_path_after_save_review
   end
 
   private
+
+  def redirect_path_after_save_review
+    return employer_contracts_path if params.dig(:review, :redirect_reference) == 'contracts'
+
+    employer_jobs_path
+  end
 
   def review
     @review ||= current_user.employer_profile.reviews
@@ -22,14 +28,14 @@ class Employer::ReviewsController < ApplicationController
     @review = current_user.employer_profile.reviews.create(review_params)
     flash[:notice] = "Your review has been added for <b>#{@review.freelancer_profile.full_name}</b>.
                       Thank you for your feedback!"
-    FreelancerMailer.review_was_create(@review).deliver_now
+    FreelancerMailer.review_was_create(@review).deliver_later
   end
 
   def update_review
     review.update(review_params)
     flash[:notice] = "Your review has been updated for <b>#{review.freelancer_profile.full_name}</b>.
                       Thank you for your feedback!"
-    # FreelancerMailer.review_was_update(@review).deliver_now
+    FreelancerMailer.review_was_update(@review).deliver_later
   end
 
   def review_params
