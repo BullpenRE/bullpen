@@ -14,4 +14,8 @@ class Review < ApplicationRecord
 
     errors.add(:to_user_id, "can't review yourself")
   end
+
+  def equal_rating?(review_rating)
+    rating == review_rating
+  end
 end

@@ -66,6 +66,7 @@
 <div class="container mb-3">
   <h1>Contracts <i class="far fa-question-circle text-primary"></i></h1>
   <% @contracts.active.each do |contract| %>
+    <%= render partial: 'employer/reviews/review', locals: { freelancer_profile: contract.freelancer_profile, employer_profile: contract.employer_profile, review: contract.freelancer_profile.review_from(contract.employer_profile) } %>
     <div class="bp-card mb-3 card<%= contract.id %>">
       <div class="d-flex flex-column flex-lg-row">
         <div class="mr-auto"><h2 class="text-wrap text-break"><%= contract&.title&.capitalize %></h2></div>
@@ -106,7 +107,6 @@
         <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: contract.freelancer_profile,
                                                                        editable: false } %>
         <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
-        <%= render partial: 'employer/reviews/review', locals: { freelancer_profile: contract.freelancer_profile, employer_profile: contract.employer_profile, } %>
         <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
           <div class="d-block p-1 d-sm-inline-block">
             <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#">Offer Another Job</button>
@@ -123,7 +123,7 @@
                 Show Profile
               </button>
               <button class="dropdown-item" type="button" data-toggle="modal" data-target="#review<%= contract.freelancer_profile.id %>">
-                Write a Review
+                <%= contract.freelancer_profile.review_from(contract.employer_profile).present? ? 'Edit Review' : 'Write a Review' %>
               </button>
             </div>
           </div>

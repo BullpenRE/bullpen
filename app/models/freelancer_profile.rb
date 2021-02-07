@@ -36,6 +36,10 @@ class FreelancerProfile < ApplicationRecord
     draft? && pending?
   end
 
+  def review_from(employer_profile)
+    @review_from_employer ||= reviews.find_by(employer_profile: employer_profile)
+  end
+
   def first_name
     @first_name ||= user.first_name
   end
