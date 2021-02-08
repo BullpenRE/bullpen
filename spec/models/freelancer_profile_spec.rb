@@ -231,5 +231,19 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.average_rating).to eq(4.7)
       end
     end
+
+    describe '#review_from(employer_profile)' do
+      let!(:review) { FactoryBot.create(:review) }
+      let!(:review_1) { FactoryBot.create(:review) }
+      let!(:review_2) { FactoryBot.create(:review) }
+      let!(:employer_profile) { review.employer_profile }
+      let!(:freelancer_profile) { review.freelancer_profile }
+
+      it 'returns review from employer' do
+        expect(freelancer_profile.review_from(employer_profile)).to eq review
+        expect(freelancer_profile.review_from(employer_profile)).to_not eq review_1
+        expect(freelancer_profile.review_from(employer_profile)).to_not eq review_2
+      end
+    end
   end
 end
