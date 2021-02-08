@@ -20,9 +20,9 @@ FactoryBot.define do
         real_estate_skill_ids = RealEstateSkill.pluck(:id).shuffle
         sector_ids = Sector.pluck(:id).shuffle
         software_ids = Software.pluck(:id).shuffle
-        3.times {|index| create(:freelancer_real_estate_skill, freelancer_profile: freelancer_profile, real_estate_skill_id: real_estate_skill_ids[index] || create(:real_estate_skill).id) }
-        3.times {|index| create(:freelancer_sector, freelancer_profile: freelancer_profile, sector_id: sector_ids[index] || create(:sector).id) }
-        3.times {|index| create(:freelancer_software, freelancer_profile: freelancer_profile, software_id: software_ids[index] || create(:software).id) }
+        3.times {|index| create(:freelancer_real_estate_skill, freelancer_profile: freelancer_profile, real_estate_skill_id: real_estate_skill_ids[index] || create(:real_estate_skill, description: "Real Estate Skill #{index}").id) }
+        3.times {|index| create(:freelancer_sector, freelancer_profile: freelancer_profile, sector_id: sector_ids[index] || create(:sector, description: "Sector #{index}").id) }
+        3.times {|index| create(:freelancer_software, freelancer_profile: freelancer_profile, software_id: software_ids[index] || create(:software, description: "Software #{index}").id) }
       end
     end
   end

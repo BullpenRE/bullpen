@@ -1,4 +1,3 @@
-
 <script>
   $(document).on('turbolinks:load', function (e) {
     $('.avatar').off('change').on('change', '#uploadProfilePic', (e) => {
@@ -21,14 +20,22 @@
         const formData = new FormData();
         formData.append('avatar', file);
         $.ajax({
-          url: '/avatar/update',
+          url: '<%= url %>',
           method: 'PUT',
           contentType: false,
           processData: false,
           dataType: 'json',
           data: formData,
-          success: function () {
+          success: function (data) {
             $('.avatar').load(' .avatar');
+            const $container = $('.alert_from_js');
+            if (data['message']) {
+              $container.removeClass('d-none');
+              $container.find('span').html(`${data['message']}`)
+            } else {
+              $container.find('span').html('');
+              $container.addClass('d-none');
+            }
           },
           error: () => {
             const message = 'This file can not be attached';
@@ -43,7 +50,7 @@
 
     $('.avatar').off('click').on('click', '.delete-avatar', () => {
       $.ajax({
-        url: '/avatar/destroy',
+        url: '<%= url %>',
         method: 'DELETE',
         success: () => {
           $('.avatar').load(' .avatar');

@@ -1,4 +1,4 @@
-<div class="modal" id="sendMessage<%= job_application.present? ? job_application.id : interview.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+<div class="modal" id="sendMessage<%= id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <!--  Header with '×'-->
@@ -11,8 +11,9 @@
       <!--Send Message Card-->
       <div class="modal-body py-0">
         <%= form_for :message, url:  employer_send_message_path do |f| %>
-          <%= f.hidden_field :to_user, value: job_application.present? ? job_application.user_id : interview.freelancer_profile.user_id %>
-          <%= f.hidden_field :job_title, value: job_application.present? ? job_application.job.title : '' %>
+          <%= f.hidden_field :to_user, value: to_user %>
+          <%= f.hidden_field :job_title, value: job_title %>
+          <%= f.hidden_field :redirect_reference, value: redirect_reference %>
           <div class="form-group mb-3">
             <label for="addPersonalMessageTextArea" class="h5">
               Message

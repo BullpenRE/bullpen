@@ -323,6 +323,17 @@ ActiveRecord::Schema.define(version: 2021_02_03_162357) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "employer_profile_id", null: false
+    t.bigint "freelancer_profile_id", null: false
+    t.integer "rating"
+    t.text "comments"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employer_profile_id"], name: "index_reviews_on_employer_profile_id"
+    t.index ["freelancer_profile_id"], name: "index_reviews_on_freelancer_profile_id"
+  end
+
   create_table "sectors", force: :cascade do |t|
     t.string "description", null: false
     t.boolean "disable", default: false
@@ -416,5 +427,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_162357) do
   add_foreign_key "job_softwares", "jobs"
   add_foreign_key "job_softwares", "softwares"
   add_foreign_key "jobs", "users"
+  add_foreign_key "reviews", "employer_profiles"
+  add_foreign_key "reviews", "freelancer_profiles"
   add_foreign_key "users", "signup_promos"
 end

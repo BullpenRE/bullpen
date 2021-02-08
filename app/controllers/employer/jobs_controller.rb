@@ -51,22 +51,57 @@ class Employer::JobsController < ApplicationController
   end
 
   def make_an_offer
-    @job = current_user.jobs.find_by(id: params[:make_an_offer][:job_id])
-    @contract = current_user.employer_profile.contracts.create(make_an_offer_params.merge(state: 'pending'))
-    close_job_if_offer_is_made
+    if contract_id.present?
+      update_contract
+      update_make_an_offer_flash_notice
+      FreelancerMailer.offer_update(@contract).deliver_later
 
-    flash[:notice] = "Your <strong>#{@contract.title}</strong> offer has been sent to
-                      <strong>#{@contract.freelancer_profile.full_name}</strong>.
-                      We'll send a notification when it's accepted."
-    FreelancerMailer.offer_made(@contract).deliver_later
-    redirect_to employer_jobs_path
+      redirect_to employer_contracts_path
+    else
+      create_contract
+      create_make_an_offer_flash_notice
+      FreelancerMailer.offer_made(@contract).deliver_later
+
+      redirect_to employer_jobs_path
+    end
   end
 
   private
 
+  def contract_id
+    params[:make_an_offer][:contract_id]
+  end
+
+  def create_contract
+    @job = current_user.jobs.find_by(id: params[:make_an_offer][:job_id])
+    @contract = current_user.employer_profile.contracts.create(make_an_offer_params.merge(state: 'pending'))
+    close_job_if_offer_is_made
+  end
+
+  def update_contract
+    @contract = current_user.employer_profile.contracts.find_by(id: params[:make_an_offer][:contract_id])
+    @contract.update(update_make_an_offer_params)
+  end
+
+  def update_make_an_offer_flash_notice
+    flash[:notice] = "#{@contract.state.capitalize} contract <b>#{@contract.title}</b>
+                     for <b>#{@contract.freelancer_profile.full_name}</b> has been updated."
+  end
+
+  def create_make_an_offer_flash_notice
+    flash[:notice] = "Your <strong>#{@contract.title}</strong> offer has been sent to
+                      <strong>#{@contract.freelancer_profile.full_name}</strong>.
+                      We'll send a notification when it's accepted."
+  end
+
   def make_an_offer_params
     params.require(:make_an_offer)
           .permit(:job_id, :job_description, :title, :freelancer_profile_id, :contract_type, :pay_rate)
+  end
+
+  def update_make_an_offer_params
+    params.require(:make_an_offer)
+          .permit(:job_description, :title, :pay_rate, :contract_type)
   end
 
   def close_job_if_offer_is_made
@@ -74,6 +109,7 @@ class Employer::JobsController < ApplicationController
   end
 
   def redirect_path_after_send_message(job_title)
+    return employer_contracts_path if params.dig(:message, :redirect_reference) == 'contract'
     return employer_jobs_path if job_title.present?
 
     employer_interviews_path

@@ -66,6 +66,14 @@ RSpec.describe Contract, type: :model do
       expect(Contract.accepted).to include(accepted_contract)
     end
 
+    it '.hire_group' do
+      expect(Contract.hire_group).to include(pending_contract)
+      expect(Contract.hire_group).to include(accepted_contract)
+      expect(Contract.hire_group).to include(closed_contract)
+      expect(Contract.hire_group).to_not include(declined_contract)
+      expect(Contract.hire_group).to_not include(withdrawn_contract)
+    end
+
     it '.offers' do
       expect(Contract.offers).to include(pending_contract)
       expect(Contract.offers).to_not include(declined_contract)
