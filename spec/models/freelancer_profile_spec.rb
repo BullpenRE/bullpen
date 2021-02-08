@@ -153,6 +153,17 @@ RSpec.describe FreelancerProfile, type: :model do
       expect(FreelancerProfile.ready_for_announcement).to include(freelancer_profile_complete)
       expect(FreelancerProfile.ready_for_announcement).to_not include(freelancer_profile_complete_1)
     end
+
+    describe 'with contracts' do
+      let!(:employer_profile) { FactoryBot.create(:employer_profile) }
+      let!(:job) { FactoryBot.create(:job, user: employer_profile.user) }
+      let!(:contract) { FactoryBot.create(:contract, :with_job, job: job, freelancer_profile: freelancer_profile_complete) }
+
+      it '.with_contracts_for(job)' do
+        expect(FreelancerProfile.with_contracts_for(job)).to include(freelancer_profile_complete)
+        expect(FreelancerProfile.with_contracts_for(job)).to_not include(freelancer_profile)
+      end
+    end
   end
 
   context 'Methods' do
@@ -219,6 +230,26 @@ RSpec.describe FreelancerProfile, type: :model do
 
         expect(freelancer_profile.average_rating).to eq(4.7)
       end
+    end
+
+    describe 'can_request_interview?' do
+      let(:employer_user)  { FactoryBot.create(:user) }
+      let(:employer_profile) { FactoryBot.create(:employer_profile, user: employer_user) }
+      let(:employer_user_1)  { FactoryBot.create(:user) }
+      let(:employer_profile_1) { FactoryBot.create(:employer_profile, user: employer_user_1) }
+      let(:employer_user_2)  { FactoryBot.create(:user) }
+      let(:employer_profile_2) { FactoryBot.create(:employer_profile, user: employer_user_2) }
+      let(:freelancer_user)  { FactoryBot.create(:user) }
+      let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
+      let!(:interview_request) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile, state: 'pending') }
+      let!(:interview_request_2) { FactoryBot.create(:interview_request, employer_profile: employer_profile_2, freelancer_profile: freelancer_profile, state: 'withdrawn') }
+
+      it '#can_request_interview?(employer_profile_id)' do
+        expect(freelancer_profile.can_request_interview?(employer_profile.id)).to be_falsey
+        expect(freelancer_profile.can_request_interview?(employer_profile_1.id)).to be_truthy
+        expect(freelancer_profile.can_request_interview?(employer_profile_2.id)).to be_truthy
+      end
+
     end
   end
 end

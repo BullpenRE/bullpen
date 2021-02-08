@@ -5,11 +5,11 @@
 </style>
 
 <%= render partial: 'employer/navigation', locals: { section: 'talent' } %>
+<%= render partial: 'shared/notice_and_alert' %>
 
 <!--Talent card-->
 <div class="container mb-3 talent-cards">
 
-  <%= render partial: 'shared/notice_and_alert' %>
   <%= render partial: 'employer/talent/filter_side_bar' %>
   <div class="d-flex justify-content-between">
     <h1 class="">Find Talent</h1>
@@ -38,7 +38,7 @@
         <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
         <div class="ml-sm-auto">
           <div class="d-block d-sm-flex">
-            <% if @current_user_interview_request_freelancer_ids.exclude?(freelancer_profile.id) %>
+            <% if freelancer_profile.can_request_interview?(current_user.employer_profile.id) %>
               <div class="d-block p-1 d-sm-inline-block">
                 <button class="btn btn-primary d-sm-in w-100 interviewRequest<%= freelancer_profile.id %>" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
               </div>

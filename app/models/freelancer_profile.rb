@@ -19,6 +19,9 @@ class FreelancerProfile < ApplicationRecord
   has_one_attached :avatar
 
   scope :users, -> { joins(:user) }
+  scope :with_contracts_for, lambda { |job|
+    where(id: job.contracts.pluck(:freelancer_profile_id))
+  }
 
   enum professional_years_experience: { '0-2': 0, '2-5': 1, '5-10': 2, '>10': 3 }
   enum curation: { pending: 0, declined: 1, accepted: 2 }
@@ -65,5 +68,9 @@ class FreelancerProfile < ApplicationRecord
     return nil unless reviews.any?
 
     @average_rating ||= (reviews.sum(:rating) / reviews.size.to_f).round(1)
+  end
+
+  def can_request_interview?(employer_profile_id)
+    @can_request_interview ||= interview_requests.not_rejected.find_by(employer_profile_id: employer_profile_id).blank?
   end
 end

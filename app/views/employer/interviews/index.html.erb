@@ -1,7 +1,7 @@
 <%= render partial: 'employer/navigation', locals: { section: 'interviews' } %>
+<%= render partial: 'shared/notice_and_alert' %>
 
 <div class="container mb-3 talent-cards">
-  <%= render partial: 'shared/notice_and_alert' %>
   <% @interviews.each do |interview| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: interview.freelancer_profile } %>
     <div id="interview-request">
@@ -43,7 +43,7 @@
                   </div>
                 </div>
               <% end %>
-              <%= render partial: 'employer/jobs/send_message', locals: { interview: interview, job_application: nil } %>
+              <%= render partial: 'employer/jobs/send_message', locals: { to_user: interview.freelancer_profile.user_id, job_title: nil, id: interview.id, redirect_reference: '' } %>
               <%= render partial: 'employer/interviews/remove_interview_request', locals: { interview: interview } %>
             </div>
           </div>

@@ -49,4 +49,17 @@ class FreelancerMailer < ApplicationMailer
     mail(to: freelancer_email, subject: "Congratulations! #{contract.employer_profile.user.full_name}
                                         sent you a job offer")
   end
+
+  def offer_update(contract)
+    @contract = contract
+    freelancer_email = contract.freelancer_profile.user.email
+    mail(to: freelancer_email, subject: "#{contract.employer_profile.user.full_name} modified their job offer")
+  end
+
+  def offer_was_withdrawn(contract)
+    @contract = contract
+    freelancer_email = contract.freelancer_profile.user.email
+    mail(to: freelancer_email, subject: "#{contract.employer_profile.user.full_name}
+                                         withdrew their #{contract.title} offer")
+  end
 end
