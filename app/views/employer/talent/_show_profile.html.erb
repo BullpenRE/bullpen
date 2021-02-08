@@ -1,3 +1,9 @@
+<% # Usage %>
+<% # /employer/talent %>
+<% # /employer/jobs %>
+<% # /employer/contracts %>
+<% # /employer/interviews %>
+
 <div class="modal" id="showProfile<%= freelancer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -10,94 +16,55 @@
       <div class="modal-body pt-0">
         <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: freelancer_profile,
                                                                  job_application: nil,
-                                                                 editable: freelancer_profile.editable?(current_user) } %>
+                                                                 editable: false } %>
         <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
         <!-- Inner navbar-->
         <div>
-          <nav class="nav">
-            <a class="nav-link active border border-secondary border-left-0 border-top-0 border-right-0" style=" border-bottom-width: 6px !important;" href="#">
-              Profile
-            </a>
-            <a class="nav-link" href="#">Reviews(8)</a>
-          </nav>
-          <hr class="mt-0">
+          <ul class="nav nav-tabs" id="FreelancerTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="font-weight-bold nav-link active" id="profile-tab<%= freelancer_profile.id %>" data-toggle="tab" href="#profile<%= freelancer_profile.id %>" role="tab" aria-controls="profile<%= freelancer_profile.id %>" aria-selected="true">
+                Profile
+              </a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="font-weight-bold nav-link" id="review-tab<%= freelancer_profile.id %>" data-toggle="tab" href="#review<%= freelancer_profile.id %>" role="tab" aria-controls="review<%= freelancer_profile.id %>" aria-selected="false">
+                Reviews <span class="text-secondary">(8)</span>
+              </a>
+            </li>
+          </ul>
         </div>
-        <!-- Skills-->
-        <div>
-          <% if freelancer_profile.real_estate_skills.any? %>
-            <div class="mt-3">
-              <h4>Skills</h4>
-              <div>
-                <%= freelancer_profile.real_estate_skills.order(description: :asc).pluck(:description).join(', ') %>
-              </div>
-            </div>
-          <% end %>
-          <!--  Software-->
-          <% if freelancer_profile.softwares.any? %>
-            <div class="mt-3">
-              <h4>Software Licenses</h4>
-              <div>
-                <%= freelancer_profile.softwares.order(description: :asc).pluck(:description).join(', ') %>
-              </div>
-            </div>
-          <% end %>
-          <!-- Work Experience-->
-          <% if freelancer_profile.freelancer_profile_experiences.any? %>
+        <!-- Tabs Content-->
+        <div class="tab-content" id="FreelancerTabsContent">
+          <div class="tab-pane fade show active" id="profile<%= freelancer_profile.id %>" role="tabpanel" aria-labelledby="profile-tab">
+            <%= render partial: 'shared/freelancer_skills_education', locals: { freelancer_profile: freelancer_profile, job_application: nil } %>
+            <!-- Sharable Link-->
             <hr>
-            <div class="mt-3">
-              <h4>Experience</h4>
-              <% freelancer_profile.freelancer_profile_experiences.order(current_job: :desc, end_date: :desc).each do |work_experience| %>
-                <div class="d-flex">
-                  <div class="mb-2 mr-2 text-wrap text-break"><b><%= work_experience.company %></b><br><%= work_experience.job_title %></div>
-                  <div class="ml-auto"><i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date&.strftime('%b %Y') %></i></div>
-                </div>
-                <ul class="mr-lg-3 mr-1 pl-3">
-                  <% work_experience.description_paragraphs.each do |paragraph| %>
-                    <li style="word-wrap: break-word; overflow-wrap: break-word;"><%= paragraph %></li>
-                  <% end %>
-                </ul>
-              <% end %>
+            <h4 class="mt-3">Sharable Link</h4>
+            <div class="text-break">
+              <%= link_to public_freelancer_profile_url(freelancer_profile.slug), public_freelancer_profile_url(freelancer_profile.slug), target: '_blank' %>
             </div>
-          <% end %>
-          <!-- Education-->
-          <% if freelancer_profile.freelancer_profile_educations.any? || freelancer_profile.freelancer_certifications.any? %>
-            <hr>
-          <% end %>
-          <div class="mt-3">
-            <% if freelancer_profile.freelancer_profile_educations.any? %>
-              <h4>Education</h4>
-              <% freelancer_profile.freelancer_profile_educations.order(currently_studying: :desc, graduation_year: :desc).each do |education| %>
-                <div class="d-flex">
-                  <div class="mb-2 mr-2 text-wrap text-break"><b><%= education.institution %></b><br><%= education.degree %> <%= education.course_of_study %></div>
-                  <div class="ml-auto"><i><%= education.currently_studying ? 'Present' : education.graduation_year %></i></div>
-                </div>
-                <% if education.description.present? %>
-                  <ul class="mr-lg-3 mr-1 pl-3">
-                    <li class="text-wrap text-break"><%= education.description %></li>
-                  </ul>
-                <% end %>
-              <% end %>
-            <% end %>
-            <!-- Certification-->
-            <% if freelancer_profile.freelancer_certifications.any? %>
-              <h4 class="mt-3">Licenses &amp; Certifications</h4>
-
-              <% freelancer_profile.freelancer_certifications.order(earned: :desc).each do |freelancer_certification| %>
-                <div class="d-flex mb-2">
-                  <div class="mr-2"><b><%= freelancer_certification.description %></b></div>
-                  <div class="ml-auto"><i><%= freelancer_certification.earned.strftime("%b %Y") %></i></div>
-                </div>
-              <% end %>
+            <% if freelancer_profile.can_request_interview?(current_user.employer_profile.id) %>
+              <div class="modal-footer justify-content-end">
+                <button class="btn btn-primary request<%= freelancer_profile.id %>" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
+              </div>
             <% end %>
           </div>
-          <!-- Sharable Link-->
-          <hr>
-          <h4 class="mt-3">Sharable Link</h4>
-          <div class="text-break">
-            <%= link_to public_freelancer_profile_url(freelancer_profile.slug), public_freelancer_profile_url(freelancer_profile.slug), target: '_blank' %>
+          <div class="tab-pane fade show" id="review<%= freelancer_profile.id %>" role="tabpanel" aria-labelledby="review-tab">
+            Reviews.......
           </div>
+          <% unless current_user.employer_profile.interview_requests.not_rejected.find_by(freelancer_profile_id: freelancer_profile.id).present? %>
+            <div class="modal-footer justify-content-end">
+              <button class="btn btn-primary request<%= freelancer_profile.id %>" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  $('.request<%= freelancer_profile.id %>').on('click', () => {
+    $('#showProfile<%= freelancer_profile.id %>').modal('hide');
+  });
+</script>
