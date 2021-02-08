@@ -219,12 +219,17 @@
   </div>
 </div>
 <%= render 'freelancer/shared/update_avatar' %>
+<%= render 'shared/location_check', controller_name: 'freelancer_profile' %>
 
 <script>
   $(document).on('turbolinks:load', function (e) {
     $('.select2').select2({
       placeholder: 'Select all that apply',
       allowClear: true
+    });
+
+    $('.custom-validate').each(function() {
+      if (!$.trim($(this).val()).length) $(this).parents('.wrapper').addClass( "highlight" );
     });
 
     const $textarea = $('textarea');

@@ -101,6 +101,8 @@
     <%= f.submit 'Save', id: 'submitWithLocationCheck', class: 'btn btn-primary' %>
   </div>
 <% end %>
+
+<%= render 'shared/location_check', controller_name: 'work_experience' %>
 <script>
     <% if @freelancer_profile && @freelancer_profile.freelancer_profile_experiences&.count > 1 %>
     $('.modal-footer').addClass('justify-content-between');

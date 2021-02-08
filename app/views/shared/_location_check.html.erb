@@ -1,29 +1,40 @@
 <script>
   $(document).on('turbolinks:load', function (e) {
     function showAlert() {
-      return   Swal.fire({
+      return Swal.fire({
         title: '<h5>Oops!</h5>',
         text: 'Check please entered location'
       });
     }
 
+    function setHiddenFields(longitude, latitude, controller_name) {
+      return `
+      <input value=${longitude} type="hidden" name="${controller_name}[longitude]" id="${controller_name}_longitude">
+      <input value=${latitude} type="hidden" name="${controller_name}[latitude]" id="${controller_name}_latitude">
+      `
+    }
+
     $('.container').off('click').on('click', '#submitWithLocationCheck', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       const locationValue = $('#freelancerLocationInput').val();
+      if (!locationValue) return showAlert(e);
+      const $form = $(e.target).parents('form');
       $.ajax({
         url: `https://nominatim.openstreetmap.org/search?q=${locationValue}&format=json&addressdetails=1&accept-language=en`,
         method: 'GET',
         success: function (data) {
           if (data.length < 1 || data === undefined) {
-            showAlert()
+            showAlert(e)
           } else {
             const longitude = data[0]['lon'];
             const latitude = data[0]['lat'];
-            console.log(`[${longitude}, ${latitude}]`)
+            $form.prepend(setHiddenFields(longitude, latitude, '<%= controller_name %>'));
+            if (!$('.highlight').length) $form.submit()
           }
         },
         error: () => {
-          showAlert()
+          showAlert(e)
         }
       });
     })
