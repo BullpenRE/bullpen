@@ -1,7 +1,7 @@
 <%= render partial: 'freelancer/navigation', locals: { section: 'profile' } %>
+<%= render partial: 'shared/notice_and_alert' %>
 
 <div class="container mb-3">
-  <%= render partial: 'shared/notice_and_alert' %>
   <div class="container bp-card">
     <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: @freelancer_profile,
                                                              job_application: nil,
