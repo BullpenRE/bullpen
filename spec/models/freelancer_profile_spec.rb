@@ -242,12 +242,12 @@ RSpec.describe FreelancerProfile, type: :model do
       let(:freelancer_user)  { FactoryBot.create(:user) }
       let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
       let!(:interview_request) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile, state: 'pending') }
-      let!(:interview_request_1) { FactoryBot.create(:interview_request, employer_profile: employer_profile_2, freelancer_profile: freelancer_profile, state: 'withdrawn') }
+      let!(:interview_request_2) { FactoryBot.create(:interview_request, employer_profile: employer_profile_2, freelancer_profile: freelancer_profile, state: 'withdrawn') }
 
       it '#can_request_interview?(employer_profile_id)' do
-        expect(freelancer_profile.can_request_interview?(employer_profile.id)).to eq false
-        expect(freelancer_profile.can_request_interview?(employer_profile_1.id)).to eq true
-        expect(freelancer_profile.can_request_interview?(employer_profile_2.id)).to eq true
+        expect(freelancer_profile.can_request_interview?(employer_profile.id)).to be_falsey
+        expect(freelancer_profile.can_request_interview?(employer_profile_1.id)).to be_truthy
+        expect(freelancer_profile.can_request_interview?(employer_profile_2.id)).to be_truthy
       end
 
     end
