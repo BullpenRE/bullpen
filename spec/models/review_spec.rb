@@ -52,4 +52,13 @@ RSpec.describe Review, type: :model do
       expect(Review.commented).to_not include(review_1)
     end
   end
+
+  context 'Methods' do
+    it 'equal_rating?(review_rating)' do
+      review.rating = 3
+      expect(review.equal_rating?(3)).to be_truthy
+      expect(review.equal_rating?(2)).to be_falsey
+      expect(review.equal_rating?(nil)).to be_falsey
+    end
+  end
 end
