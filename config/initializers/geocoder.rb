@@ -37,10 +37,10 @@ Geocoder::Lookup::Test.add_stub(
 Geocoder::Lookup::Test.set_default_stub(
   [
     {
-      'coordinates' => [40.7143528, -74.0059731],
-      'address' => 'New York, NY, USA',
-      'state' => 'New York',
-      'state_code' => 'NY',
+      'coordinates' => [45.5157563, -122.6790002],
+      'address' => 'Portlandia, OR, USA',
+      'state' => 'Portlandia',
+      'state_code' => 'OR',
       'country' => 'United States',
       'country_code' => 'US'
     }
