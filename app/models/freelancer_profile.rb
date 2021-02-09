@@ -74,4 +74,8 @@ class FreelancerProfile < ApplicationRecord
 
     @average_rating ||= (reviews.sum(:rating) / reviews.size.to_f).round(1)
   end
+
+  def can_request_interview?(employer_profile_id)
+    @can_request_interview ||= interview_requests.not_rejected.find_by(employer_profile_id: employer_profile_id).blank?
+  end
 end
