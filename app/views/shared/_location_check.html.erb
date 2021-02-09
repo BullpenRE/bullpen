@@ -1,9 +1,10 @@
 <script>
   $(document).on('turbolinks:load', function (e) {
-    function showAlert() {
+    function showAlert(locationValue) {
       return Swal.fire({
-        title: '<h5>Oops!</h5>',
-        text: 'Check please entered location'
+        title: '<h5>Location Not Found</h5>',
+        text: `The entered location of '${locationValue}' was not successfully identified. Please check the spelling and enter in a 'City, State' format. The state can be a 2 letter abbreviation.`,
+        button: 'Try Again'
       });
     }
 
@@ -18,14 +19,14 @@
       e.preventDefault();
       e.stopPropagation();
       const locationValue = $('#freelancerLocationInput').val();
-      if (!locationValue) return showAlert(e);
+      if (!locationValue) return showAlert(locationValue);
       const $form = $(e.target).parents('form');
       $.ajax({
         url: `https://nominatim.openstreetmap.org/search?q=${locationValue}&format=json&addressdetails=1&accept-language=en`,
         method: 'GET',
         success: function (data) {
           if (data.length < 1 || data === undefined) {
-            showAlert(e)
+            showAlert(locationValue)
           } else {
             const longitude = data[0]['lon'];
             const latitude = data[0]['lat'];
@@ -34,7 +35,7 @@
           }
         },
         error: () => {
-          showAlert(e)
+          showAlert(locationValue)
         }
       });
     })
