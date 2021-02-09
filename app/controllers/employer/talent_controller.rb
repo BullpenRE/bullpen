@@ -17,10 +17,6 @@ class Employer::TalentController < ApplicationController
     if freelancer_profiles_collection.empty?
       flash[:notice] = 'No talent found that matches all of your search criteria.'
     end
-    @current_user_interview_request_freelancer_ids = current_user.employer_profile
-                                                                 .interview_requests
-                                                                 .not_rejected
-                                                                 .pluck(:freelancer_profile_id)
   end
 
   def interview_request
