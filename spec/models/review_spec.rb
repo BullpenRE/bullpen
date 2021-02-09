@@ -39,4 +39,17 @@ RSpec.describe Review, type: :model do
       expect(review.freelancer_profile).to eq(freelancer_profile)
     end
   end
+
+  context 'Scopes' do
+    let!(:review_1) { FactoryBot.create(:review, comments: nil) }
+    let!(:review_2) { FactoryBot.create(:review, comments: '') }
+    let!(:review_3) { FactoryBot.create(:review) }
+
+    it '#commented' do
+      expect(Review.commented).to include(review)
+      expect(Review.commented).to include(review_3)
+      expect(Review.commented).to_not include(review_2)
+      expect(Review.commented).to_not include(review_1)
+    end
+  end
 end
