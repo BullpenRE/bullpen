@@ -42,6 +42,12 @@ class User < ApplicationRecord
     role == 'freelancer'
   end
 
+  def posted_jobs
+    return nil unless employer?
+
+    jobs.posted
+  end
+
   def avatar
     return nil if employer?
     return nil unless freelancer_profile&.avatar&.attached?
