@@ -14,4 +14,3 @@ class Freelancer::ContractsController < ApplicationController
     EmployerMailer.offer_was_declined(contract).deliver_now
   end
 end
-
