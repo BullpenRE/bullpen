@@ -5,7 +5,7 @@
 <div class="container mb-3">
   <h1>Offers <i class="far fa-question-circle text-primary"></i></h1>
   <% @contracts.offers.each do |contract| %>
-    <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job_application: nil } %>
+    <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job: nil, freelancer_profile: contract.freelancer_profile } %>
     <%= render partial: 'employer/contracts/withdraw_offer', locals: { contract: contract } %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
     <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user_id, job_title: contract.title, id: contract.id, redirect_reference: 'contract' } %>
@@ -68,7 +68,7 @@
 <div class="container mb-3">
   <h1>Contracts <i class="far fa-question-circle text-primary"></i></h1>
   <% @contracts.active.each do |contract| %>
-    <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job_application: nil } %>
+    <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job: nil, freelancer_profile: contract.freelancer_profile } %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
     <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user_id, job_title: contract.title, id: contract.id, redirect_reference: 'contract' } %>
     <div class="bp-card mb-3 card<%= contract.id %>">
