@@ -73,7 +73,7 @@ class Freelancer::InterviewsController < ApplicationController
     }
   end
 
-    def redirect_path_after_send_message
+  def redirect_path_after_send_message
     return freelancer_contracts_path if params.dig(:message, :redirect_reference) == 'contracts'
 
     freelancer_interviews_path
