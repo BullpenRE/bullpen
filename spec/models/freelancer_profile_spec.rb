@@ -232,6 +232,27 @@ RSpec.describe FreelancerProfile, type: :model do
       end
     end
 
+    describe '#review_from(employer_profile)' do
+      let!(:review) { FactoryBot.create(:review) }
+      let!(:freelancer_profile) { review.freelancer_profile }
+      let!(:review_1) { FactoryBot.create(:review, freelancer_profile: freelancer_profile) }
+      let!(:review_2) { FactoryBot.create(:review) }
+      let!(:employer_profile) { review.employer_profile }
+      let!(:employer_profile_1) { review_1.employer_profile }
+
+      it 'returns review from employer' do
+        expect(freelancer_profile.review_from(employer_profile)).to eq review
+        expect(freelancer_profile.review_from(employer_profile)).to_not eq review_1
+        expect(freelancer_profile.review_from(employer_profile)).to_not eq review_2
+      end
+
+      it 'returns review from employer_1' do
+        expect(freelancer_profile.review_from(employer_profile_1)).to eq review_1
+        expect(freelancer_profile.review_from(employer_profile_1)).to_not eq review
+        expect(freelancer_profile.review_from(employer_profile_1)).to_not eq review_2
+      end
+    end
+
     describe 'can_request_interview?' do
       let(:employer_user)  { FactoryBot.create(:user) }
       let(:employer_profile) { FactoryBot.create(:employer_profile, user: employer_user) }
@@ -249,7 +270,6 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.can_request_interview?(employer_profile_1.id)).to be_truthy
         expect(freelancer_profile.can_request_interview?(employer_profile_2.id)).to be_truthy
       end
-
     end
   end
 end
