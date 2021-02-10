@@ -116,7 +116,7 @@
                   <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
                   <%= render partial: 'employer/jobs/send_message', locals: { to_user: job_application.user_id, job_title: job_application.job.title, id: job_application.id, redirect_reference: '' } %>
                   <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
-                  <%= render partial: 'employer/jobs/make_an_offer', locals: { job_application: job_application, contract: nil } %>
+                  <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: nil, job: job_application.job, freelancer_profile: job_application.user.freelancer_profile } %>
                   <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
                     <div class="d-block p-1 d-sm-inline-block mt-1">
                       <div id="like<%= job_application.id %>">
@@ -200,6 +200,9 @@
               <% job.contracts.hire_group.each do |contract| %>
                 <hr style="margin-top:0;">
                 <div class="d-flex justify-content-between flex-column flex-lg-row">
+                  <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract,
+                                                                               job: nil,
+                                                                               freelancer_profile: contract.freelancer_profile } %>
                   <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: contract.freelancer_profile,
                                                                            job_application: nil,
                                                                            editable: false } %>
@@ -222,7 +225,7 @@
                           More <i class="fas fa-chevron-down text-primary"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modifyOffer">
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
                             Modify Offer
                           </button>
                           <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
