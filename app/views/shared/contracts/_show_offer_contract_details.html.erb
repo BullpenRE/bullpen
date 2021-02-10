@@ -1,4 +1,4 @@
-<div class="modal" id="showOfferDetails<%= contract.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+<div class="modal" id="showOfferContractDetails<%= contract.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <!--  Header with '×'-->
@@ -23,7 +23,7 @@
         <label class="text-secondary font-weight-bold">Job Title</label>
         <p><%= contract.title %></p>
         <label class="text-secondary font-weight-bold mt-2">Job Description</label>
-        <%= contract.job_description.body.to_s %>
+        <div class="mb-2"><%= contract.job_description.body.to_s %></div>
         <div class="row">
           <div class="col-md-6 mb-sm-3">
             <label class="text-secondary font-weight-bold">Offered Rate</label>
@@ -34,7 +34,7 @@
               <%= "$#{contract.pay_rate/contract.contract_type.split('_').last.to_i} per hour for additional hours" %>
             <% end %>
           </div>
-          <% if current_user.freelancer_profile.present? %>
+          <% if current_user.freelancer? %>
             <div class="col-md-6">
               <label class="text-secondary font-weight-bold">Net Rate<a class="text-dark font-weight-normal"> (After Bullpen commission)</a></label>
               <% if contract.contract_type == 'hourly' %>
@@ -43,8 +43,8 @@
                 <div><%= "#{number_to_currency(0.7*contract.pay_rate.round)} monthly retainer fee for up to #{contract.contract_type.split('_').last} hours" %></div>
                 <%= "#{number_to_currency(0.7*contract.pay_rate/contract.contract_type.split('_').last.to_i)} per hour for additional hours" %>
               <% end %>
-            <% end %>
             </div>
+          <% end %>
         </div>
       </div>
     </div>
