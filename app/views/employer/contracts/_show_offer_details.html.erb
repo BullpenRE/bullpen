@@ -24,13 +24,28 @@
         <p><%= contract.title %></p>
         <label class="text-secondary font-weight-bold mt-2">Job Description</label>
         <%= contract.job_description.body.to_s %>
-        <label class="text-secondary font-weight-bold">Offered Rate</label>
-        <% if contract.contract_type == 'hourly' %>
-          <div><%= "$#{contract.pay_rate.to_s(:delimited)} per hour" %></div>
-        <% else %>
-          <div><%= "$#{contract.pay_rate.to_s(:delimited)} monthly retainer fee for up to #{contract.contract_type.split('_').last} hours" %></div>
-          <%= "$#{contract.pay_rate/contract.contract_type.split('_').last.to_i} per hour for additional hours" %>
-        <% end %>
+        <div class="row">
+          <div class="col-md-6 mb-sm-3">
+            <label class="text-secondary font-weight-bold">Offered Rate</label>
+            <% if contract.contract_type == 'hourly' %>
+              <div><%= "$#{contract.pay_rate.to_s(:delimited)} per hour" %></div>
+            <% else %>
+              <div><%= "$#{contract.pay_rate.to_s(:delimited)} monthly retainer fee for up to #{contract.contract_type.split('_').last} hours" %></div>
+              <%= "$#{contract.pay_rate/contract.contract_type.split('_').last.to_i} per hour for additional hours" %>
+            <% end %>
+          </div>
+          <% if current_user.freelancer_profile.present? %>
+            <div class="col-md-6">
+              <label class="text-secondary font-weight-bold">Net Rate<a class="text-dark font-weight-normal"> (After Bullpen commission)</a></label>
+              <% if contract.contract_type == 'hourly' %>
+                <div><%= "#{number_to_currency(0.7*contract.pay_rate.round)} per hour" %></div>
+              <% else %>
+                <div><%= "#{number_to_currency(0.7*contract.pay_rate.round)} monthly retainer fee for up to #{contract.contract_type.split('_').last} hours" %></div>
+                <%= "#{number_to_currency(0.7*contract.pay_rate/contract.contract_type.split('_').last.to_i)} per hour for additional hours" %>
+              <% end %>
+            <% end %>
+            </div>
+        </div>
       </div>
     </div>
   </div>

@@ -2,6 +2,10 @@
   <p class="text-wrap text-break text-secondary font-weight-bold">
     <%= contract.hourly? ? '' : "#{Job::CONTRACT_TYPE_DESCRIPTIONS.key(contract.contract_type)}," %>
     $<%= contract.pay_rate&.to_s(:delimited) %>
-    <%= contract.hourly? ? ' per hour' : ' per month' %>
+    <% if contract.hourly? %>
+      per hour <a class="text-dark font-weight-normal"><%= current_user.freelancer_profile.present? ? "(#{number_to_currency(0.7*contract.pay_rate.round)} net)": '' %></a>
+    <% else %>
+       per month <a class="text-dark font-weight-normal"><%= current_user.freelancer_profile.present? ? "(#{number_to_currency(0.7*contract.pay_rate.round)} net)": '' %></a>
+    <% end%>
   </p>
 <% end %>
