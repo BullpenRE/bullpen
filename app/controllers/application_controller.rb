@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
 
-  after_action :store_location
+  before_action :store_location
 
   def after_sign_in_path_for(resource)
     return admin_dashboard_path if resource.class.name == 'AdminUser'
