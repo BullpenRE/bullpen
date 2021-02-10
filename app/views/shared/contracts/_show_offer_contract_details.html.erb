@@ -28,10 +28,10 @@
           <div class="col-md-6 mb-sm-3">
             <label class="text-secondary font-weight-bold">Offered Rate</label>
             <% if contract.contract_type == 'hourly' %>
-              <div><%= "$#{contract.pay_rate.to_s(:delimited)} per hour" %></div>
+              <div><%= "#{number_to_currency(contract.pay_rate)} per hour" %></div>
             <% else %>
-              <div><%= "$#{contract.pay_rate.to_s(:delimited)} monthly retainer fee for up to #{contract.contract_type.split('_').last} hours" %></div>
-              <%= "$#{contract.pay_rate/contract.contract_type.split('_').last.to_i} per hour for additional hours" %>
+              <div><%= "#{number_to_currency(contract.pay_rate)} monthly retainer fee for up to #{contract.contract_type.split('_').last} hours" %></div>
+              <%= "#{number_to_currency(contract.pay_rate/contract.contract_type.split('_').last.to_i)} per hour for additional hours" %>
             <% end %>
           </div>
           <% if current_user.freelancer? %>
