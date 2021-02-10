@@ -252,7 +252,7 @@
                             <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
                               Show Profile
                             </button>
-                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#review<%= contract.freelancer_profile.id %>">
+                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#reviewModal<%= contract.freelancer_profile.id %>">
                               <%= contract.freelancer_profile.review_from(contract.employer_profile).present? ? 'Edit Review' : 'Write a Review' %>
                             </button>
                           </div>
