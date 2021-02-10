@@ -48,7 +48,7 @@ module LoggedInRedirects
   end
 
   def current_step
-    current_user.role == 'employer' ?  current_user.employer_profile.current_step : current_freelancer_step
+    current_user.role == 'employer' ? current_user.employer_profile.current_step : current_freelancer_step
   end
 
   def current_freelancer_step
