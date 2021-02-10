@@ -40,6 +40,10 @@ class FreelancerMailerPreview < ActionMailer::Preview
     FreelancerMailer.posted_job(Job.last, FreelancerProfile.last.email)
   end
 
+  def review_was_create
+    FreelancerMailer.review_was_create(Review.last)
+  end
+
   def offer_was_withdrawn
     FreelancerMailer.offer_was_withdrawn(Contract.last)
   end

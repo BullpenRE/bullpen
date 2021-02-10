@@ -1,0 +1,4 @@
+<br>
+<%= render partial: 'email/content_block_left', locals: { content: "#{@review.employer_profile.full_name} updated their review." } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "<h3>Comments:</h3>" } %>
+<%= render partial: 'email/content_block_left_slim', locals: { content: "#{@review.comments}" } %>

@@ -1,0 +1,49 @@
+<div class="modal" id="reviewModal<%= freelancer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <!--  Header with '×'-->
+      <div class="modal-header">
+        <h1 class="modal-title" id="showReviewLabel"><%= review.present? ? 'Edit Review' : 'Write a Review' %> </h1>
+        <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Review Card-->
+      <div class="modal-body py-0">
+        <%= form_for :review, url: employer_save_review_path do |f| %>
+          <%= f.hidden_field :freelancer_profile_id, value: freelancer_profile.id %>
+          <%= f.hidden_field :employer_profile_id, value: employer_profile.id %>
+          <%= f.hidden_field :redirect_reference, value: redirect_reference %>
+          <div class="form-group mb-3">
+            <label for="overallRating" class="h5">
+              Overall Rating
+            </label>
+            <div class="container">
+              <div class="bp-starrating d-flex justify-content-end flex-row-reverse">
+                <%= f.radio_button :rating, '5', id: "star5#{freelancer_profile.id}", required: true, checked: review&.equal_rating?(5) %>
+                <%= f.label '', for: "star5#{freelancer_profile.id}", title: '5' %>
+                <%= f.radio_button :rating, '4', id: "star4#{freelancer_profile.id}", required: true, checked: review&.equal_rating?(4) %>
+                <%= f.label '', for: "star4#{freelancer_profile.id}", title: '4' %>
+                <%= f.radio_button :rating, '3', id: "star3#{freelancer_profile.id}", required: true, checked: review&.equal_rating?(3) %>
+                <%= f.label '', for: "star3#{freelancer_profile.id}", title: '3' %>
+                <%= f.radio_button :rating, '2', id: "star2#{freelancer_profile.id}", required: true, checked: review&.equal_rating?(2) %>
+                <%= f.label '', for: "star2#{freelancer_profile.id}", title: '2' %>
+                <%= f.radio_button :rating, '1', id: "star1#{freelancer_profile.id}", required: true, checked: review&.equal_rating?(1) %>
+                <%= f.label '', for: "star1#{freelancer_profile.id}", title: '1' %>
+              </div>
+            </div>
+            <label for="addCommentsTextArea" class="h5">
+              Comments
+            </label>
+            <div class="w-100">
+              <%= f.text_area :comments, class: "form-control mb-3", id: "addCommentsTextArea", value: review&.comments, placeholder: "Enter your review", rows: "4", maxlength: "5000" %>
+            </div>
+            <div class="d-flex justify-content-end">
+              <%= f.submit 'Submit Review', class: 'btn btn-primary mt-3 send-invitation' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
