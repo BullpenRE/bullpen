@@ -1,4 +1,4 @@
-<div class="modal" id="makeAnOffer<%= contract.present? ? contract.id : job_application.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+<div class="modal" id="makeAnOffer<%= contract.present? ? contract.id : job.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <!--  Header with '×'-->
@@ -13,50 +13,50 @@
         <div class="row mb-3">
           <div class="col-sm-6">
             <h5 class="mt-1">From</h5>
-            <%= contract.present? ? contract.employer_profile.full_name : job_application.job.user.employer_profile.full_name %>, <%= contract.present? ? contract.employer_profile.company_name : job_application.job.user.employer_profile.company_name %>
+            <%= contract.present? ? contract.employer_profile.full_name : job.user.employer_profile.full_name %>, <%= contract.present? ? contract.employer_profile.company_name : job.user.employer_profile.company_name %>
           </div>
           <div class="col-sm-6">
             <h5 class="mt-1">To</h5>
-            <%= contract.present? ? contract.freelancer_profile.full_name : job_application.user.full_name %>
+            <%= contract.present? ? contract.freelancer_profile.full_name : freelancer_profile.full_name %>
           </div>
         </div>
         <%= form_for :make_an_offer, url:  employer_make_an_offer_path do |f| %>
-          <%= f.hidden_field :freelancer_profile_id, value: contract.present? ? contract.freelancer_profile_id : job_application.user.freelancer_profile.id %>
-          <%= f.hidden_field :job_id, value: contract.present? ? contract.job_id : job_application.job_id %>
+          <%= f.hidden_field :freelancer_profile_id, value: contract.present? ? contract.freelancer_profile_id : freelancer_profile.id %>
+          <%= f.hidden_field :job_id, value: contract.present? ? contract.job_id : job.id %>
           <%= f.hidden_field :contract_id, value: contract&.id %>
           <div class="form-group">
             <label for="JobTitleInput" class="h5">Job Title</label>
             <div class="w-100">
-              <%= f.text_field :title, class: "form-control mb-3", id: "JobTitleInput", placeholder: "Enter your job title", value: contract.present? ? contract.title : job_application.job.title %>
+              <%= f.text_field :title, class: "form-control mb-3", id: "JobTitleInput", placeholder: "Enter your job title", value: contract.present? ? contract.title : job.title %>
             </div>
             <label for="JobDescriptionInput" class="h5">Job Description</label>
             <div class="w-100">
-              <%= f.rich_text_area :job_description, class: "form-control mb-3", id: "JobDescriptionInput", placeholder: "Enter Job Description", value: contract.present? ? contract.job_description : job_application.job.short_description %>
+              <%= f.rich_text_area :job_description, class: "form-control mb-3", id: "JobDescriptionInput", placeholder: "Enter Job Description", value: contract.present? ? contract.job_description : job.short_description %>
             </div>
               <div class="row mb-3">
                 <div class="col-sm-4">
                   <label class="h5 mt-1">Fee Structure</label>
-                  <% contract_type = contract.present? ? contract.contract_type : job_application.job.contract_type %>
+                  <% contract_type = contract.present? ? contract.contract_type : job.contract_type %>
                   <%= f.select :contract_type,
                                options_for_select(Job::CONTRACT_TYPE_DESCRIPTIONS, contract_type),
                                {}, class: "form-control contract_type#{contract&.id}", required: true, style: "width: 100%" %>
                 </div>
                 <div class="col-sm-4">
-                  <% hourly = contract.present? ? contract.hourly? : job_application.job.hourly? %>
+                  <% hourly = contract.present? ? contract.hourly? : job.hourly? %>
                   <label class="h5 mt-1 contract_rate<%= contract&.id %>"><%= hourly ? 'Hourly Rate' : 'Monthly Rate' %></label>
-                    <%= f.text_field :pay_rate, class: "form-control pay_rate#{contract&.id}", required: true, value: contract.present? ? contract.pay_rate : job_application.job.pay_range_low %>
+                    <%= f.text_field :pay_rate, class: "form-control pay_rate#{contract&.id}", required: true, value: contract.present? ? contract.pay_rate : job.pay_range_low %>
                 </div>
                 <div class="col-sm-4"></div>
               </div>
-            <% if job_application.present? %>
+            <% if job.present? %>
               <p class="mb-4 mt-0">Your payment method will be charged weekly based on the number of hours worked.</p>
               <h5 >Payment Method</h5>
               <div class="mb-4">
                 <button class="btn btn-primary" type="button">Add a Credit Card</button>
               </div>
               <div class="form-check custom-checkbox mt-1">
-                <%= f.check_box :state, class: "custom-control-input", id: "stateClosed#{job_application.id}" %>
-                <label class="custom-control-label text-secondary font-weight-bold mb-4" for="stateClosed<%= job_application.id %>">Close the job post (pending applicants will be notified)</label>
+                <%= f.check_box :state, class: "custom-control-input", id: "stateClosed#{job.id}" %>
+                <label class="custom-control-label text-secondary font-weight-bold mb-4" for="stateClosed<%= job.id %>">Close the job post (pending applicants will be notified)</label>
               </div>
               <div class="text-muted">
                 By sending this offer, you agree to
