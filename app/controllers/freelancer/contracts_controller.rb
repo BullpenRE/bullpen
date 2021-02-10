@@ -11,6 +11,6 @@ class Freelancer::ContractsController < ApplicationController
   def decline_offer
     contract = current_user.freelancer_profile.contracts.find_by(id: params[:id])
     contract.update(state: 'declined')
-    EmployerMailer.offer_was_declined(contract).deliver_now
+    EmployerMailer.offer_was_declined(contract).deliver_later
   end
 end
