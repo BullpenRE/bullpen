@@ -4,6 +4,7 @@ RSpec.describe FreelancerProfile, type: :model do
   let(:user) { FactoryBot.create(:user, :freelancer) }
   let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: user) }
   let(:freelancer_profile_complete) { FactoryBot.create(:freelancer_profile, :complete) }
+  let(:freelancer_profile_complete_1) { FactoryBot.create(:freelancer_profile, :complete, new_jobs_alert: false) }
   let(:avatar_image) { File.open(Rails.root.join('spec', 'support', 'assets', 'sample-avatar.jpg')) }
   let(:big_avatar_image) { File.open(Rails.root.join('spec', 'support', 'assets', 'big_avatar.jpg')) }
   let(:wrong_type_avatar) { File.open(Rails.root.join('spec', 'support', 'assets', 'wrong_type_avatar.numbers')) }
@@ -20,36 +21,6 @@ RSpec.describe FreelancerProfile, type: :model do
   end
 
   context 'Validations' do
-    describe 'correct_content_type?' do
-      it 'without attached avatar' do
-        expect(freelancer_profile).to be_valid
-      end
-      it 'with valid type avatar' do
-        freelancer_profile.avatar.attach(io: avatar_image, filename: File.basename(avatar_image.path), content_type: 'image/jpg')
-        expect(freelancer_profile).to be_valid
-      end
-      it 'with invalid type avatar' do
-        freelancer_profile.avatar.attach(io: wrong_type_avatar, filename: File.basename(wrong_type_avatar.path), content_type: 'image/jpg')
-        expect(freelancer_profile).to_not be_valid
-        expect(freelancer_profile.errors.messages[:base]).to eq ['Please upload only a jpg, png or gif image.']
-      end
-    end
-
-    describe '#correct_size?' do
-      it 'without attached avatar' do
-        expect(freelancer_profile).to be_valid
-      end
-      it 'with right size avatar' do
-        freelancer_profile.avatar.attach(io: avatar_image, filename: File.basename(avatar_image.path), content_type: 'image/jpg')
-        expect(freelancer_profile).to be_valid
-      end
-      it 'with big size avatar' do
-        freelancer_profile.avatar.attach(io: big_avatar_image, filename: File.basename(big_avatar_image.path), content_type: 'image/jpg')
-        expect(freelancer_profile).to_not be_valid
-        expect(freelancer_profile.errors.messages[:base]).to eq ['Uploaded files must not exceed 2MB.']
-      end
-    end
-
     describe 'desired_hourly_rate' do
       it 'can be nil' do
         freelancer_profile.desired_hourly_rate = nil
@@ -153,6 +124,15 @@ RSpec.describe FreelancerProfile, type: :model do
       end
     end
 
+    describe 'reviews' do
+      let!(:review) { FactoryBot.create(:review, freelancer_profile: freelancer_profile) }
+
+      it 'can have reviews, dependent destroy' do
+        expect(freelancer_profile.reviews).to include(review)
+        freelancer_profile.destroy
+        expect(Review.exists?(review.id)).to be_falsey
+      end
+    end
   end
 
   context 'Scopes' do
@@ -162,6 +142,27 @@ RSpec.describe FreelancerProfile, type: :model do
 
       expect(FreelancerProfile.accepted).to_not include(freelancer_profile)
       expect(FreelancerProfile.accepted).to include(freelancer_profile_complete)
+    end
+
+    it '.ready_for_announcement' do
+      expect(freelancer_profile.curation).to eq('pending')
+      expect(freelancer_profile_complete.curation).to eq('accepted')
+      expect(freelancer_profile_complete_1.curation).to eq('accepted')
+
+      expect(FreelancerProfile.ready_for_announcement).to_not include(freelancer_profile)
+      expect(FreelancerProfile.ready_for_announcement).to include(freelancer_profile_complete)
+      expect(FreelancerProfile.ready_for_announcement).to_not include(freelancer_profile_complete_1)
+    end
+
+    describe 'with contracts' do
+      let!(:employer_profile) { FactoryBot.create(:employer_profile) }
+      let!(:job) { FactoryBot.create(:job, user: employer_profile.user) }
+      let!(:contract) { FactoryBot.create(:contract, :with_job, job: job, freelancer_profile: freelancer_profile_complete) }
+
+      it '.with_contracts_for(job)' do
+        expect(FreelancerProfile.with_contracts_for(job)).to include(freelancer_profile_complete)
+        expect(FreelancerProfile.with_contracts_for(job)).to_not include(freelancer_profile)
+      end
     end
   end
 
@@ -210,6 +211,45 @@ RSpec.describe FreelancerProfile, type: :model do
         expect(freelancer_profile.email).to eq(freelancer_profile.user.email)
         expect(freelancer_profile.location).to eq(freelancer_profile.user.location)
       end
+    end
+
+    describe '#average_rating' do
+      it 'with no ratings it returns nil' do
+        expect(freelancer_profile.average_rating).to be_nil
+      end
+
+      it 'with one rating it returns it' do
+        review = FactoryBot.create(:review, freelancer_profile: freelancer_profile)
+        expect(freelancer_profile.average_rating).to eq(review.rating)
+      end
+
+      it 'with many ratings it returns the average rounded to the nearest 10th' do
+        FactoryBot.create(:review, freelancer_profile: freelancer_profile, rating: 5)
+        FactoryBot.create(:review, freelancer_profile: freelancer_profile, rating: 5)
+        FactoryBot.create(:review, freelancer_profile: freelancer_profile, rating: 4)
+
+        expect(freelancer_profile.average_rating).to eq(4.7)
+      end
+    end
+
+    describe 'can_request_interview?' do
+      let(:employer_user)  { FactoryBot.create(:user) }
+      let(:employer_profile) { FactoryBot.create(:employer_profile, user: employer_user) }
+      let(:employer_user_1)  { FactoryBot.create(:user) }
+      let(:employer_profile_1) { FactoryBot.create(:employer_profile, user: employer_user_1) }
+      let(:employer_user_2)  { FactoryBot.create(:user) }
+      let(:employer_profile_2) { FactoryBot.create(:employer_profile, user: employer_user_2) }
+      let(:freelancer_user)  { FactoryBot.create(:user) }
+      let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
+      let!(:interview_request) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile, state: 'pending') }
+      let!(:interview_request_2) { FactoryBot.create(:interview_request, employer_profile: employer_profile_2, freelancer_profile: freelancer_profile, state: 'withdrawn') }
+
+      it '#can_request_interview?(employer_profile_id)' do
+        expect(freelancer_profile.can_request_interview?(employer_profile.id)).to be_falsey
+        expect(freelancer_profile.can_request_interview?(employer_profile_1.id)).to be_truthy
+        expect(freelancer_profile.can_request_interview?(employer_profile_2.id)).to be_truthy
+      end
+
     end
   end
 end

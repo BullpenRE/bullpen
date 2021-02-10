@@ -38,10 +38,28 @@ class FreelancerMailer < ApplicationMailer
     mail(to: freelancer_email, subject: 'Interview request withdrawn')
   end
 
+  def posted_job(posted_job, freelancer_email)
+    @posted_job = posted_job
+    mail(to: freelancer_email, subject: 'A new work opportunity has been added to Bullpen\'s job board')
+  end
+
   def offer_made(contract)
     @contract = contract
     freelancer_email = contract.freelancer_profile.user.email
     mail(to: freelancer_email, subject: "Congratulations! #{contract.employer_profile.user.full_name}
                                         sent you a job offer")
+  end
+
+  def offer_update(contract)
+    @contract = contract
+    freelancer_email = contract.freelancer_profile.user.email
+    mail(to: freelancer_email, subject: "#{contract.employer_profile.user.full_name} modified their job offer")
+  end
+
+  def offer_was_withdrawn(contract)
+    @contract = contract
+    freelancer_email = contract.freelancer_profile.user.email
+    mail(to: freelancer_email, subject: "#{contract.employer_profile.user.full_name}
+                                         withdrew their #{contract.title} offer")
   end
 end

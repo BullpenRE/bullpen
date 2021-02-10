@@ -1,30 +1,6 @@
 <div class="mr-auto">
-  <div class="d-flex flex-sm-row flex-column">
-    <% if freelancer_profile.avatar.attached? %>
-      <div class="text-light mr-2 avatar-image text-center" style="line-height: 0; margin-bottom: 20px;">
-        <%= image_tag freelancer_profile.avatar, class: 'rounded-circle', width: '80px', height: '80px' %>
-      </div>
-    <% else %>
-      <div class="text-light mr-2 avatar-image" style="font-size: 80px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
-    <% end %>
-    <div class="container pr-0">
-      <div class="d-flex flex-row flex-inline">
-        <div class="d-flex-col">
-          <h2><%= freelancer_profile.full_name %></h2>
-        </div>
-        <% if editable %>
-          <div class="d-flex-col ml-auto">
-            <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editProfileModal-<%= freelancer_profile.id %>"></button>
-          </div>
-          <%= render 'freelancer/shared/edit_basic_info', freelancer_profile: freelancer_profile, redirect_reference: '' %>
-        <% end %>
-      </div>
-      <div class="bp-text-sm mb-3 text-wrap text-break">
-        <%= freelancer_profile.professional_title %><br>
-        <%= freelancer_profile.location %>
-      </div>
-    </div>
-  </div>
+  <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: freelancer_profile,
+                                                                 editable: editable } %>
   <div>
     <p class="text-wrap text-break"><%= freelancer_profile.professional_summary %></p>
     <% if job_application.present? || freelancer_profile.desired_hourly_rate.present? %>
@@ -35,4 +11,3 @@
     <% end %>
   </div>
 </div>
-

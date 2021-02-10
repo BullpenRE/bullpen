@@ -6,7 +6,13 @@ class EmployerProfile < ApplicationRecord
   has_many :sectors, through: :employer_sectors
   has_many :interview_requests, dependent: :destroy
   has_many :contracts, dependent: :destroy
+  has_many :reviews, dependent: :destroy
   has_one_attached :avatar
+
+  accepts_nested_attributes_for :user,
+                                allow_destroy: true,
+                                update_only: true,
+                                reject_if: :all_blank
 
   scope :users, -> { joins(:user) }
 

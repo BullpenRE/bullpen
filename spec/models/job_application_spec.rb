@@ -92,5 +92,24 @@ RSpec.describe JobApplication, type: :model do
       expect(JobApplication.draft_or_applied).to include(applied_job_application)
       expect(JobApplication.draft_or_applied).to_not include(declined_job_application)
     end
+
+    describe 'without contracts' do
+      let(:dima)  { FactoryBot.create(:user, :freelancer) }
+      let(:nata)  { FactoryBot.create(:user, :freelancer) }
+      let(:erik)  { FactoryBot.create(:user, :freelancer) }
+      let!(:employer_profile) { FactoryBot.create(:employer_profile) }
+      let!(:dima_job_application) { FactoryBot.create(:job_application, user: dima, job: job) }
+      let!(:nata_job_application) { FactoryBot.create(:job_application, user: nata, job: job) }
+      let!(:erik_job_application) { FactoryBot.create(:job_application, user: erik, job: job) }
+      let!(:job_1) { FactoryBot.create(:job, user: employer_profile.user) }
+      let(:freelancer_profile_dima) { FactoryBot.create(:freelancer_profile, :complete, user: dima) }
+      let!(:contract) { FactoryBot.create(:contract, :with_job, job: job_1, freelancer_profile: freelancer_profile_dima) }
+
+      it '.without_contracts_for(job)' do
+        expect(JobApplication.without_contracts_for(job_1)).to_not include(dima_job_application)
+        expect(JobApplication.without_contracts_for(job_1)).to include(nata_job_application)
+        expect(JobApplication.without_contracts_for(job_1)).to include(erik_job_application)
+      end
+    end
   end
 end
