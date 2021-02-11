@@ -21,4 +21,15 @@ class Freelancer::ContractsController < ApplicationController
     contract.update(state: 'accepted')
     EmployerMailer.offer_was_accepted(contract).deliver_later
   end
+
+  def close_contract
+    contract = current_user.freelancer_profile.contracts.find_by(id: params[:id])
+    contract.update(state: 'closed')
+    EmployerMailer.contract_was_closed(contract).deliver_now
+  end
+
+  def delete_contract
+    contract = current_user.freelancer_profile.contracts.find_by(id: params[:id])
+    contract.update(hide_from_freelancer: true)
+  end
 end
