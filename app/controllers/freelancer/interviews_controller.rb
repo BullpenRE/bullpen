@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Freelancer::InterviewsController < ApplicationController
-  include LoggedInRedirects
   before_action :save_view_param_in_session,
                 only: [:index], if: -> { params[:view_interview_request].present? && !user_signed_in? }
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :incomplete_freelancer_profile_redirect

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Freelancer::ProfileController < ApplicationController
-  include LoggedInRedirects
   include WorkEducationExperience
   include WorkCertification
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :freelancer_profile
