@@ -25,7 +25,7 @@ class Freelancer::ContractsController < ApplicationController
   def close_contract
     contract = current_user.freelancer_profile.contracts.find_by(id: params[:id])
     contract.update(state: 'closed')
-    EmployerMailer.contract_was_closed(contract).deliver_now
+    EmployerMailer.contract_was_closed(contract).deliver_later
   end
 
   def delete_contract
