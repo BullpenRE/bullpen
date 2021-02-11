@@ -14,4 +14,8 @@ class Employer::ContractsController < ApplicationController
     contract.update(state: 'withdrawn')
     FreelancerMailer.offer_was_withdrawn(contract).deliver_later
   end
+
+  def make_an_offer_without_job
+
+  end
 end

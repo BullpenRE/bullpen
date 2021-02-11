@@ -110,9 +110,10 @@
       <div class="d-flex justify-content-between flex-column flex-lg-row">
         <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: contract.freelancer_profile,
                                                                        editable: false } %>
+        <%= render partial: 'shared/make_an_offer_without_job', locals: { freelancer_profile: contract.freelancer_profile } %>
         <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
           <div class="d-block p-md-1 mb-1 mb-md-0 d-sm-inline-block">
-            <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#">Offer Another Job</button>
+            <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#makeAnOfferWithoutJob<%= contract.freelancer_profile.id %>">Offer Another Job</button>
           </div>
           <div class="dropdown">
             <button class="btn btn-outline-primary dropdown-toggle pr-1 mt-1 container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
