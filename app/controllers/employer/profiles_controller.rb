@@ -30,7 +30,7 @@ module Employer
                     :company_website,
                     :employee_count,
                     :category,
-                    user_attributes: %i[location id])
+                    user_attributes: %i[location longitude latitude id])
     end
   end
 end

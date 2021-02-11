@@ -9,16 +9,23 @@
     }
 
     function setHiddenFields(longitude, latitude, controller_name) {
-      return `
-      <input value=${longitude} type="hidden" name="${controller_name}[longitude]" id="${controller_name}_longitude">
-      <input value=${latitude} type="hidden" name="${controller_name}[latitude]" id="${controller_name}_latitude">
-      `
+      if (controller_name === 'employer_profile') {
+        return `
+          <input value=${longitude} type="hidden" name="${controller_name}[user_attributes][longitude]" id="${controller_name}_longitude">
+          <input value=${latitude} type="hidden" name="${controller_name}[user_attributes][latitude]" id="${controller_name}_latitude">
+        `
+      } else {
+        return `
+          <input value=${longitude} type="hidden" name="${controller_name}[longitude]" id="${controller_name}_longitude">
+          <input value=${latitude} type="hidden" name="${controller_name}[latitude]" id="${controller_name}_latitude">
+        `
+      }
     }
 
     $('.container').off('click').on('click', '#submitWithLocationCheck', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const locationValue = $('#freelancerLocationInput').val();
+      const locationValue = $('#freelancerLocationInput').val() || $('#userLocationInput').val();
       if (!locationValue) return showAlert(locationValue);
       const $form = $(e.target).parents('form');
       $.ajax({
