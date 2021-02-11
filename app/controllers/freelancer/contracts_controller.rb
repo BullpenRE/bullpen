@@ -5,7 +5,7 @@ class Freelancer::ContractsController < ApplicationController
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :incomplete_freelancer_profile_redirect
 
   def index
-    @contracts = current_user.freelancer_profile.contracts.hire_group.order(created_at: :desc)
+    @contracts = current_user.freelancer_profile.contracts.hire_group.freelancer_visible.order(created_at: :desc)
   end
 
   def decline_offer
