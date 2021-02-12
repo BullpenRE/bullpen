@@ -58,7 +58,7 @@ RSpec.describe Contract, type: :model do
     let!(:withdrawn_contract) { FactoryBot.create(:contract, state: 'withdrawn') }
     let!(:accepted_contract) { FactoryBot.create(:contract, state: 'accepted') }
     let!(:closed_contract) { FactoryBot.create(:contract, state: 'closed') }
-    let!(:removed_contract_from_freelancer) { FactoryBot.create(:contract, employer_profile: employer_profile, freelancer_profile: freelancer_profile, hide_from_freelancer: true) }
+    let!(:removed_contract_from_freelancer) { FactoryBot.create(:contract, hide_from_freelancer: true) }
 
     it '.pending, .declined, .withdrawn, .accepted, .closed' do
       expect(Contract.pending).to include(pending_contract)
