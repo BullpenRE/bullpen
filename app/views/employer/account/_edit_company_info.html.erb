@@ -58,7 +58,7 @@
             </div>
 
             <div class="d-flex justify-content-between">
-              <%= f.submit 'Save Changes', class: 'btn btn-primary ml-auto' %>
+              <%= f.submit 'Save Changes', id: 'submitWithLocationCheck', class: 'btn btn-primary ml-auto' %>
             </div>
           <% end %>
         </div>
@@ -66,7 +66,7 @@
     </div>
   </div>
 </div>
-
+<%= render 'shared/location_check', controller_name: 'employer_profile' %>
 
 
 
