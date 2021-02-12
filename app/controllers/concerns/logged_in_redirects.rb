@@ -49,8 +49,8 @@ module LoggedInRedirects
   end
 
   def path_for_freelancer(user)
-    return session[:previous_url] if session[:previous_url] && current_user.freelancer_profile&.accepted?
     return freelancer_interviews_redirect if session[:view_interview_request].present?
+    return session[:previous_url] if session[:previous_url] && current_user.freelancer_profile&.accepted?
 
     current_user.freelancer_profile&.accepted? ? freelancer_jobs_path : current_freelancer_profile_step(user)
   end
@@ -60,8 +60,8 @@ module LoggedInRedirects
   end
 
   def path_for_employer(user)
-    return session[:previous_url] if session[:previous_url] && current_user.employer_profile&.completed?
     return employer_jobs_path(view_job: session[:view_job]) if session[:view_job].present?
+    return session[:previous_url] if session[:previous_url] && current_user.employer_profile&.completed?
 
     current_user.employer_profile&.completed? ? employer_talent_index_path : current_employer_profile_step(user)
   end
