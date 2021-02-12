@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class RegistrationsController < Devise::RegistrationsController
-  include LoggedInRedirects
   before_action :configure_sign_up_params, only: [:create]
   before_action :check_signed_in
 
