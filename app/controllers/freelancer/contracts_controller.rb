@@ -9,7 +9,6 @@ class Freelancer::ContractsController < ApplicationController
   end
 
   def decline_offer
-    contract = current_user.freelancer_profile.contracts.find_by(id: params[:id])
     contract.update(state: 'declined')
     EmployerMailer.offer_was_declined(contract).deliver_later
 
@@ -17,7 +16,6 @@ class Freelancer::ContractsController < ApplicationController
   end
 
   def accept_offer
-    contract = current_user.freelancer_profile.contracts.find_by(id: params[:id])
     flash[:notice] = "You have accepted the <b>#{contract.title}</b>. Select <b>Add Hours</b> "\
                      'to log any completed work.'
     contract.update(state: 'accepted')
@@ -25,13 +23,17 @@ class Freelancer::ContractsController < ApplicationController
   end
 
   def close_contract
-    contract = current_user.freelancer_profile.contracts.find_by(id: params[:id])
     contract.update(state: 'closed')
     EmployerMailer.contract_was_closed(contract).deliver_later
   end
 
   def delete_contract
-    contract = current_user.freelancer_profile.contracts.find_by(id: params[:id])
     contract.update(hide_from_freelancer: true)
+  end
+
+  private
+
+  def contract
+    @contract ||= current_user.freelancer_profile.contracts.find_by(id: params[:id])
   end
 end
