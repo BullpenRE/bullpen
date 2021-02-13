@@ -99,6 +99,8 @@ Rails.application.routes.draw do
     post 'change_freelancer_basic_info', to: 'profile#change_freelancer_basic_info'
     post 'add_work_experience', to: 'profile#change_work_experience'
     post 'change_work_experience', to: 'profile#change_work_experience'
+    post 'decline_offer', to: 'contracts#decline_offer'
+    post 'accept_offer', to: 'contracts#accept_offer'
 
     namespace :profile do
       resource :preferences, only: :update
