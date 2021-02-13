@@ -12,11 +12,13 @@ class Freelancer::ContractsController < ApplicationController
     contract = current_user.freelancer_profile.contracts.find_by(id: params[:id])
     contract.update(state: 'declined')
     EmployerMailer.offer_was_declined(contract).deliver_later
+
+    redirect_to freelancer_jobs_path if current_user.freelancer_profile.contracts.hire_group.blank?
   end
 
   def accept_offer
     contract = current_user.freelancer_profile.contracts.find_by(id: params[:id])
-    flash[:notice] = "You have accepted the <b>#{contract.title}</b>. Select <b>Add Hours</b>"\
+    flash[:notice] = "You have accepted the <b>#{contract.title}</b>. Select <b>Add Hours</b> "\
                      'to log any completed work.'
     contract.update(state: 'accepted')
     EmployerMailer.offer_was_accepted(contract).deliver_later
