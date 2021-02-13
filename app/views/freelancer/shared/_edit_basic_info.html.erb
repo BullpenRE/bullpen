@@ -166,7 +166,7 @@
           </div>
 
           <div class="modal-footer justify-content-end">
-            <%= f.submit 'Save Changes', class: 'btn btn-primary save-changes-submit' %>
+            <%= f.submit 'Save Changes', id: 'submitWithLocationCheck', class: 'btn btn-primary save-changes-submit' %>
           </div>
         <% end %>
       </div>
@@ -174,12 +174,17 @@
   </div>
 </div>
 <%= render '/shared/update_avatar', url: freelancer_avatar_path %>
+<%= render 'shared/location_check', controller_name: 'freelancer_profile' %>
 
 <script>
   $(document).on('turbolinks:load', function (e) {
     $('.select2').select2({
       placeholder: 'Select all that apply',
       allowClear: true
+    });
+
+    $('.custom-validate').each(function() {
+      if (!$.trim($(this).val()).length) $(this).parents('.wrapper').addClass( "highlight" );
     });
 
     const $textarea = $('textarea');
