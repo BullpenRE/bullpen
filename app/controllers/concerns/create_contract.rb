@@ -2,7 +2,7 @@
 
 module CreateContract
   def close_job_if_offer_is_made
-    job.update(state: 'closed') if params[:make_an_offer][:state] == '1'
+    job.update(state: 'closed') if close_job_checked?
   end
 
   def create_make_an_offer_flash_notice
@@ -33,5 +33,11 @@ module CreateContract
 
   def job
     @job ||= current_user.jobs.find_by(id: params[:id])
+  end
+
+  private
+
+  def close_job_checked?
+    params[:make_an_offer][:state] == '1'
   end
 end
