@@ -7,6 +7,7 @@ gem 'active_storage_validations'            # Validation set for activestorage
 gem 'amazing_print', '~> 1.2', '>= 1.2.1'   # Replacement for awesome_print which is depreciated
 gem 'bootsnap', '>= 1.4.2', require: false  # Reduces boot times through caching; required in config/boot.rb
 gem 'devise', '~> 4.7', '>= 4.7.3'          # Flexible authentication solution for Rails with Warden
+gem 'geocoder', '>=1.6.4'                   # Forward and reverse geocoding, IP address geocoding
 gem 'google_sign_in', '~> 1.2'              # Sign in (or up) with Google for Rails applications: https://github.com/basecamp/google_sign_in
 gem 'image_processing', '~> 1.2'            # Provides higher-level image processing helpers that are commonly needed when handling image uploads
 gem 'jbuilder', '~> 2.7'                    # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

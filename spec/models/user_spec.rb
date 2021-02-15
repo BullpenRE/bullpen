@@ -105,4 +105,21 @@ describe User do
       expect(User.employers).to_not include(freelancer_user)
     end
   end
+
+  context 'geocode' do
+    it 'writes latitude and longitude fields during user creation using location as argument' do
+      expect(freelancer_user.location).to eq('New York, NY') # geocoder argument
+      expect(freelancer_user.latitude).to eq(40.7127281) # data from stub to prevent API call
+      expect(freelancer_user.longitude).to eq(-74.0060152)
+    end
+
+    it 'updates latitude and longitude fields if location was changed' do
+      freelancer_user.update(location: 'San Francisco, CA')
+      freelancer_user.reload
+
+      expect(freelancer_user.location).to eq('San Francisco, CA')
+      expect(freelancer_user.latitude).not_to eq(40.7127281)
+      expect(freelancer_user.longitude).not_to eq(-74.0060152)
+    end
+  end
 end

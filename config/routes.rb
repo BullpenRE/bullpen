@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     post 'make_an_offer', to: 'jobs#make_an_offer'
     post 'remove_interview_request', to: 'interviews#remove_interview_request'
     post 'withdraw_offer', to: 'contracts#withdraw_offer'
+    post 'save_review', to: 'reviews#save_review'
   end
 
   namespace :public do
@@ -98,6 +99,8 @@ Rails.application.routes.draw do
     post 'change_freelancer_basic_info', to: 'profile#change_freelancer_basic_info'
     post 'add_work_experience', to: 'profile#change_work_experience'
     post 'change_work_experience', to: 'profile#change_work_experience'
+    post 'decline_offer', to: 'contracts#decline_offer'
+    post 'accept_offer', to: 'contracts#accept_offer'
 
     namespace :profile do
       resource :preferences, only: :update

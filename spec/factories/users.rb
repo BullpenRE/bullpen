@@ -4,6 +4,7 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     email { Faker::Internet.unique.email }
     password { Faker::Internet.password(min_length: 8, max_length: 60) }
+    location { 'New York, NY' }
     confirmed_at { Time.current }
 
     trait :unconfirmed do

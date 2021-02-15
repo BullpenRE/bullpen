@@ -126,7 +126,7 @@ RSpec.describe Job, type: :model do
     let!(:job2) { FactoryBot.create(:job, job_announced: true) }
     let!(:jim_job_application) { FactoryBot.create(:job_application, state: 'draft', job: job, user: jim) }
     let!(:jim_job_application_withdrawn) { FactoryBot.create(:job_application, state: 'withdrawn', job: job1, user: jim) }
-    let!(:jane_attractive_job_application) { FactoryBot.create(:job_application, job: attractive_job, user: jane) }
+    let!(:jane_attractive_job_application) { FactoryBot.create(:job_application, state: 'draft', job: attractive_job, user: jane) }
 
     it '.not_applied_or_withdrawn' do
       expect(Job.not_applied_or_withdrawn(jim)).to include(attractive_job)

@@ -45,7 +45,7 @@
               <% end %>
               <%= render partial: 'freelancer/interviews/decline_interview_request', locals: { interview: interview } %>
               <%= render partial: 'freelancer/interviews/remove_interview_request', locals: { interview: interview } %>
-              <%= render partial: 'freelancer/interviews/send_message', locals: { interview: interview } %>
+              <%= render partial: 'freelancer/interviews/send_message', locals: { id: interview.id, employer_profile: interview.employer_profile, redirect_reference: 'interviews' } %>
             </div>
           </div>
       </div>

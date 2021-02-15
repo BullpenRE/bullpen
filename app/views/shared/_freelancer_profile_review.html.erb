@@ -1,0 +1,33 @@
+<div class="d-flex align-items-center mt-3 mb-3">
+  <% freelancer_profile.average_rating.to_i.times do %>
+    <i class="fas fa-star text-warning"></i>
+  <% end %>
+  <% if freelancer_profile.average_rating % freelancer_profile.average_rating.to_i > 0 %>
+    <span class="fa-layers fa-fw">
+      <i class="fas fa-star text-light"></i>
+      <i class="fas fa-star-half text-warning"></i>
+    </span>
+    <% (Review::RATING_OPTIONS.max - freelancer_profile.average_rating.to_i - 1).times do %>
+      <i class="fas fa-star text-light"></i>
+    <% end %>
+  <% else %>
+    <% (Review::RATING_OPTIONS.max - freelancer_profile.average_rating.to_i).times do %>
+      <i class="fas fa-star text-light"></i>
+    <% end %>
+  <% end %>
+  <b class="text-secondary ml-2"><%= freelancer_profile.average_rating %> out of <%= Review::RATING_OPTIONS.max %></b>
+</div>
+<% freelancer_profile.reviews.commented.each do |review| %>
+  <div class="d-flex justify-content-between flex-row">
+    <div class="font-weight-bold text-secondary column">
+      <%= review.employer_profile.full_name %>
+    </div>
+    <i class="bp-text-sm column mb-2"><%= review.updated_at.strftime("%b%e, %Y") %></i>
+  </div>
+  <div class="bp-text-sm mb-3 text-wrap text-break">
+    <%= review.employer_profile.company_name %><br>
+    <%= review.employer_profile.user.location %>
+  </div>
+  <p><%= review.comments %></p>
+  <hr>
+<% end %>

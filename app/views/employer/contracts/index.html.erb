@@ -9,6 +9,7 @@
     <%= render partial: 'employer/contracts/withdraw_offer', locals: { contract: contract } %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
     <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user_id, job_title: contract.title, id: contract.id, redirect_reference: 'contract' } %>
+    <%= render partial: 'shared/contracts/show_offer_contract_details', locals: { contract: contract } %>
     <div class="bp-card mb-3 card<%= contract.id %>">
       <div class="d-flex flex-column flex-lg-row">
         <div class="mr-auto mb-0"><h2 class="text-wrap text-break"><%= contract&.title&.capitalize %></h2></div>
@@ -23,7 +24,7 @@
               Options <i class="fas fa-chevron-down text-primary"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showOfferDetails<%= contract.id %>">
+              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showOfferContractDetails<%= contract.id %>">
                 Show Offer Details
               </button>
               <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
@@ -68,9 +69,11 @@
 <div class="container mb-3">
   <h1>Contracts <i class="far fa-question-circle text-primary"></i></h1>
   <% @contracts.active.each do |contract| %>
+    <%= render partial: 'employer/reviews/review', locals: { freelancer_profile: contract.freelancer_profile, employer_profile: contract.employer_profile, review: contract.freelancer_profile.review_from(contract.employer_profile), redirect_reference: 'contracts' } %>
     <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job: nil, freelancer_profile: contract.freelancer_profile } %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
     <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user_id, job_title: contract.title, id: contract.id, redirect_reference: 'contract' } %>
+    <%= render partial: 'shared/contracts/show_offer_contract_details', locals: { contract: contract } %>
     <div class="bp-card mb-3 card<%= contract.id %>">
       <div class="d-flex flex-column flex-lg-row">
         <div class="mr-auto"><h2 class="text-wrap text-break"><%= contract&.title&.capitalize %></h2></div>
@@ -85,7 +88,7 @@
               Options <i class="fas fa-chevron-down text-primary"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showContractDetails">
+              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showOfferContractDetails<%= contract.id %>">
                 Show Contract Details
               </button>
               <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
@@ -124,8 +127,8 @@
               <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
                 Show Profile
               </button>
-              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#">
-                Write a Review
+              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#reviewModal<%= contract.freelancer_profile.id %>">
+                <%= contract.freelancer_profile.review_from(contract.employer_profile).present? ? 'Edit Review' : 'Write a Review' %>
               </button>
             </div>
           </div>
