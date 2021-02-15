@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Employer::JobsController < ApplicationController
-  include LoggedInRedirects
   before_action :save_view_job_in_session, only: [:index], if: -> { params[:view_job].present? && !user_signed_in? }
   before_action :authenticate_user!, :initial_check, :non_employer_redirect,
                 :incomplete_employer_profile_redirect

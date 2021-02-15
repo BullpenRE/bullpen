@@ -51,14 +51,16 @@
       </div>
     </div>
     <script>
-      $('.accept_request<%= interview.id %>').on('click', () => {
-        $.ajax({
-          url: '/freelancer/accept_request',
-          method: 'POST',
-          data: { id: <%= interview.id %> },
-          success: () => {
-            document.location.reload();
-          }
+      $(document).on('turbolinks:load', function () {
+        $('.accept_request<%= interview.id %>').on('click', () => {
+          $.ajax({
+            url: '/freelancer/accept_request',
+            method: 'POST',
+            data: {id: <%= interview.id %>},
+            success: () => {
+              document.location.reload();
+            }
+          })
         })
       })
     </script>
@@ -67,9 +69,12 @@
 </div>
 
 <script>
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const open_interview = urlParams.get('view_interview_request');
-  $('html,body').animate({scrollTop: $('.card' + open_interview).offset().top},'slow');
+  $(document).on('turbolinks:load', function () {
+    const queryString = window.location.search;
+    if (!queryString) return;
+    const urlParams = new URLSearchParams(queryString);
+    const open_interview = urlParams.get('view_interview_request');
+    $('html,body').animate({scrollTop: $('.card' + open_interview).offset().top}, 'slow');
+  })
 </script>
 
