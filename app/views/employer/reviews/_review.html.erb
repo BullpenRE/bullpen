@@ -3,7 +3,7 @@
     <div class="modal-content">
       <!--  Header with '×'-->
       <div class="modal-header">
-        <h1 class="modal-title" id="showReviewLabel"><%= review.present? ? 'Edit Review' : 'Write a Review' %> </h1>
+        <h1 class="modal-title" id="showReviewLabel"><%= review.present? ? 'Edit Review' : 'Write a Review' %> for <%= review.freelancer_profile.full_name %></h1>
         <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Employer::InterviewsController < ApplicationController
-  include LoggedInRedirects
   before_action :authenticate_user!, :initial_check, :non_employer_redirect,
                 :incomplete_employer_profile_redirect
   ITEMS_PER_PAGE = 5

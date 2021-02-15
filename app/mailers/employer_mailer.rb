@@ -26,4 +26,24 @@ class EmployerMailer < ApplicationMailer
     mail(to: @message.to_user.email, cc: @message.from_user.email,
          subject: "#{@message.from_user.full_name} sent you a message.")
   end
+
+  def offer_was_declined(contract)
+    @contract = contract
+    employer_email = contract.employer_profile.email
+    mail(to: employer_email, subject: "Your offer was declined by #{contract.freelancer_profile.full_name}")
+  end
+
+  def offer_was_accepted(contract)
+    @contract = contract
+    employer_email = contract.employer_profile.email
+    freelancer_profile = contract.freelancer_profile.email
+    mail(to: employer_email, cc: freelancer_profile,
+         subject: "Congratulations! Your offer was accepted by #{contract.freelancer_profile.full_name}")
+  end
+
+  def contract_was_closed(contract)
+    @contract = contract
+    employer_email = contract.employer_profile.email
+    mail(to: employer_email, subject: "#{contract.freelancer_profile.full_name} closed the #{contract.title} contract.")
+  end
 end

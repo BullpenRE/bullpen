@@ -33,23 +33,25 @@
               <%= link_to 'Edit Job Post', employer_job_flows_path(job_id: job.id), { remote: true, 'data-toggle': "modal", 'data-target': "#postJobStep1", class: " dropdown-item" } %>
               <button class="dropdown-item text-danger delete-job-<%= job.id %>" type="button">Delete Job</button>
               <script>
-                $('.delete-job-'+<%= job.id %>).click(() => {
-                  Swal.fire({
-                    text: "Are you sure?\n",
-                    confirmButtonText: `Yes`,
-                    showCancelButton: true
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      $.ajax({
-                        url: '/employer/jobs/<%= job.id %>',
-                        method: 'DELETE',
-                        success: () => {
-                          document.location.reload();
-                        }
-                      })
-                    }
+                $(document).on('turbolinks:load', function () {
+                  $('.delete-job-' +<%= job.id %>).click(() => {
+                    Swal.fire({
+                      text: "Are you sure?\n",
+                      confirmButtonText: `Yes`,
+                      showCancelButton: true
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        $.ajax({
+                          url: '/employer/jobs/<%= job.id %>',
+                          method: 'DELETE',
+                          success: () => {
+                            document.location.reload();
+                          }
+                        })
+                      }
+                    });
                   });
-                });
+                })
               </script>
             </div>
           </div>
@@ -145,7 +147,8 @@
                   </div>
                 </div>
                 <script>
-                  $('#like<%= job_application.id %>').on('click', () => {
+                  $(document).on('turbolinks:load', function () {
+                    $('#like<%= job_application.id %>').on('click', () => {
                       const like = $('.like<%= job_application.id %>');
                       const icon_fa_prefix = like.attr('data-prefix');
 
@@ -153,8 +156,8 @@
                         url: 'like_job_application',
                         method: 'POST',
                         dataType: 'json',
-                        data: { id: '<%= job_application.id %>' },
-                        success: function() {
+                        data: {id: '<%= job_application.id %>'},
+                        success: function () {
                           like.toggleClass('text-danger');
                           if (icon_fa_prefix === 'fas') {
                             like.attr('data-prefix', 'far');
@@ -164,36 +167,39 @@
                         }
                       });
                     });
+                  })
                 </script>
               <% end %>
             </div>
 
             <script>
-              $('.more-less<%= job.id %>').on('click', () => {
-                $('.more-less<%= job.id %>').toggle();
-              });
-              $('#application-tab<%= job.id %>').on('click', () => {
-                $('.more-link_action<%= job.id %>').css('display','none');
-                $('.less-link_action<%= job.id %>').show();
-                $('#collapseApplications<%= job.id %>').collapse('show');
-                $('#application<%= job.id %>').addClass('active');
-                $('#hire<%= job.id %>').removeClass('active');
-                $('#application-tab<%= job.id %>').css('border-bottom','5px solid #005495');
-                $('#hire-tab<%= job.id %>').css('border-bottom','none');
-              });
-              $('#hire-tab<%= job.id %>').on('click', () => {
-                $('.more-link_action<%= job.id %>').css('display','none');
-                $('.less-link_action<%= job.id %>').show();
-                $('#collapseApplications<%= job.id %>').collapse('show');
-                $('#hire<%= job.id %>').addClass('active');
-                $('#application<%= job.id %>').removeClass('active');
-                $('#hire-tab<%= job.id %>').css('border-bottom','5px solid #005495');
-                $('#application-tab<%= job.id %>').css('border-bottom','none');
-              });
-              $('.less-link_action<%= job.id %>').on('click', () => {
-                $('#hire-tab<%= job.id %>').css('border-bottom','none');
-                $('#application-tab<%= job.id %>').css('border-bottom','none');
-              });
+              $(document).on('turbolinks:load', function () {
+                $('.more-less<%= job.id %>').on('click', () => {
+                  $('.more-less<%= job.id %>').toggle();
+                });
+                $('#application-tab<%= job.id %>').on('click', () => {
+                  $('.more-link_action<%= job.id %>').css('display', 'none');
+                  $('.less-link_action<%= job.id %>').show();
+                  $('#collapseApplications<%= job.id %>').collapse('show');
+                  $('#application<%= job.id %>').addClass('active');
+                  $('#hire<%= job.id %>').removeClass('active');
+                  $('#application-tab<%= job.id %>').css('border-bottom', '5px solid #005495');
+                  $('#hire-tab<%= job.id %>').css('border-bottom', 'none');
+                });
+                $('#hire-tab<%= job.id %>').on('click', () => {
+                  $('.more-link_action<%= job.id %>').css('display', 'none');
+                  $('.less-link_action<%= job.id %>').show();
+                  $('#collapseApplications<%= job.id %>').collapse('show');
+                  $('#hire<%= job.id %>').addClass('active');
+                  $('#application<%= job.id %>').removeClass('active');
+                  $('#hire-tab<%= job.id %>').css('border-bottom', '5px solid #005495');
+                  $('#application-tab<%= job.id %>').css('border-bottom', 'none');
+                });
+                $('.less-link_action<%= job.id %>').on('click', () => {
+                  $('#hire-tab<%= job.id %>').css('border-bottom', 'none');
+                  $('#application-tab<%= job.id %>').css('border-bottom', 'none');
+                });
+              })
             </script>
 
             <div class="tab-pane fade show" id="hire<%= job.id %>" role="tabpanel" aria-labelledby="hire-tab">
@@ -210,6 +216,8 @@
                   <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user_id, job_title: contract.title, id: contract.id, redirect_reference: '' } %>
                   <%= render partial: 'employer/contracts/withdraw_offer', locals: { contract: contract } %>
                   <%= render partial: 'employer/reviews/review', locals: { freelancer_profile: contract.freelancer_profile, employer_profile: contract.employer_profile, review: contract.freelancer_profile.review_from(contract.employer_profile), redirect_reference: 'jobs' } %>
+                  <%= render partial: 'shared/make_an_offer_without_job', locals: { freelancer_profile: contract.freelancer_profile,
+                                                                                    redirect_reference: 'jobs'} %>
                   <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
                     <div class="d-block p-1 d-sm-inline-block">
                       <div class="bp-text-sm text-secondary text-nowrap font-weight-bold align-self-center align-self-start ml-1 mr-2 mt-1">
@@ -243,7 +251,7 @@
                             More <i class="fas fa-chevron-down text-primary"></i>
                           </button>
                           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#offerAnotherJob">
+                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOfferWithoutJob<%= contract.freelancer_profile.id %>">
                               Offer Another Job
                             </button>
                             <button class="dropdown-item" type="button" data-toggle="modal" data-target="#goToContract">
@@ -271,12 +279,15 @@
   <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
 </div>
 <script>
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const open_job = urlParams.get('view_job');
-  $('#collapseApplications' + open_job).collapse('show');
-  $('.more-less' + open_job).toggle();
-  $('html,body').animate({scrollTop: $('.card' + open_job).offset().top},'slow');
+  $(document).on('turbolinks:load', function () {
+    const queryString = window.location.search;
+    if (!queryString) return;
+    const urlParams = new URLSearchParams(queryString);
+    const open_job = urlParams.get('view_job');
+    $('#collapseApplications' + open_job).collapse('show');
+    $('.more-less' + open_job).toggle();
+    $('html,body').animate({scrollTop: $('.card' + open_job).offset().top}, 'slow');
+  })
 </script>
 <style>
   .nav-tabs {

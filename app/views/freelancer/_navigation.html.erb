@@ -19,9 +19,11 @@
             <%= link_to 'Interviews', freelancer_interviews_path, class: 'nav-link' %>
           </li>
         <% end %>
-        <li class="nav-item<%= ' active' if section == 'contracts' %>">
-          <%= link_to 'Contracts', freelancer_contracts_path, class: 'nav-link' %>
-        </li>
+        <% if current_user.freelancer_profile.contracts.hire_group.any? %>
+          <li class="nav-item<%= ' active' if section == 'contracts' %>">
+            <%= link_to 'Contracts', freelancer_contracts_path, class: 'nav-link' %>
+          </li>
+        <% end %>
         <li class="nav-item<%= ' active' if section == 'profile' %>">
           <%= link_to 'Your Profile', freelancer_profile_index_path, class: 'nav-link' %>
         </li>
