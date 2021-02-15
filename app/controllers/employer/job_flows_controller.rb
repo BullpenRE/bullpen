@@ -2,7 +2,6 @@
 
 class Employer::JobFlowsController < ApplicationController
   include Wicked::Wizard
-  include LoggedInRedirects
   include ApplicationHelper
   steps :post_job_step_1, :post_job_step_2, :post_job_step_3, :post_job_step_4, :post_job_step_5, :preview_job
   before_action :authenticate_user!, :initial_check

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_03_010547) do
+ActiveRecord::Schema.define(version: 2021_02_11_104521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_010547) do
     t.integer "state"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "hide_from_freelancer", default: false
     t.index ["employer_profile_id"], name: "index_contracts_on_employer_profile_id"
     t.index ["freelancer_profile_id"], name: "index_contracts_on_freelancer_profile_id"
     t.index ["job_id"], name: "index_contracts_on_job_id"
@@ -389,8 +390,11 @@ ActiveRecord::Schema.define(version: 2021_02_03_010547) do
     t.bigint "signup_promo_id"
     t.string "uid"
     t.string "provider"
+    t.float "latitude"
+    t.float "longitude"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["latitude", "longitude"], name: "index_users_on_latitude_and_longitude"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["signup_promo_id"], name: "index_users_on_signup_promo_id"
   end

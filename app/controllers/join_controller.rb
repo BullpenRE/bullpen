@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class JoinController < ApplicationController
-  include LoggedInRedirects
   before_action :check_signed_in
   before_action :check_blank_email, :check_existing_email, :check_valid_email, only: [:signup]
 

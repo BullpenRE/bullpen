@@ -45,20 +45,22 @@
               <% end %>
               <%= render partial: 'freelancer/interviews/decline_interview_request', locals: { interview: interview } %>
               <%= render partial: 'freelancer/interviews/remove_interview_request', locals: { interview: interview } %>
-              <%= render partial: 'freelancer/interviews/send_message', locals: { interview: interview } %>
+              <%= render partial: 'freelancer/interviews/send_message', locals: { id: interview.id, employer_profile: interview.employer_profile, redirect_reference: 'interviews' } %>
             </div>
           </div>
       </div>
     </div>
     <script>
-      $('.accept_request<%= interview.id %>').on('click', () => {
-        $.ajax({
-          url: '/freelancer/accept_request',
-          method: 'POST',
-          data: { id: <%= interview.id %> },
-          success: () => {
-            document.location.reload();
-          }
+      $(document).on('turbolinks:load', function () {
+        $('.accept_request<%= interview.id %>').on('click', () => {
+          $.ajax({
+            url: '/freelancer/accept_request',
+            method: 'POST',
+            data: {id: <%= interview.id %>},
+            success: () => {
+              document.location.reload();
+            }
+          })
         })
       })
     </script>
@@ -67,9 +69,12 @@
 </div>
 
 <script>
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const open_interview = urlParams.get('view_interview_request');
-  $('html,body').animate({scrollTop: $('.card' + open_interview).offset().top},'slow');
+  $(document).on('turbolinks:load', function () {
+    const queryString = window.location.search;
+    if (!queryString) return;
+    const urlParams = new URLSearchParams(queryString);
+    const open_interview = urlParams.get('view_interview_request');
+    $('html,body').animate({scrollTop: $('.card' + open_interview).offset().top}, 'slow');
+  })
 </script>
 

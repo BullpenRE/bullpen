@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Freelancer::InterviewsController < ApplicationController
-  include LoggedInRedirects
   before_action :save_view_param_in_session,
                 only: [:index], if: -> { params[:view_interview_request].present? && !user_signed_in? }
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :incomplete_freelancer_profile_redirect
@@ -42,7 +41,7 @@ class Freelancer::InterviewsController < ApplicationController
     flash[:notice] = "Your message has been sent to <b>#{@message.to_user.full_name}</b> with you on copy."
     EmployerMailer.send_message(@message).deliver_later
 
-    redirect_to freelancer_interviews_path
+    redirect_to redirect_path_after_send_message
   end
 
   private
@@ -71,5 +70,11 @@ class Freelancer::InterviewsController < ApplicationController
       from_user: current_user,
       description: params[:message][:description]
     }
+  end
+
+  def redirect_path_after_send_message
+    return freelancer_contracts_path if params.dig(:message, :redirect_reference) == 'contracts'
+
+    freelancer_interviews_path
   end
 end

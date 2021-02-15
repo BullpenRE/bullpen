@@ -2,8 +2,6 @@
 
 module Employer
   class ProfilesController < ApplicationController
-    include LoggedInRedirects
-
     before_action :authenticate_user!, :initial_check, :non_employer_redirect, :employer_profile
 
     def update
@@ -30,7 +28,7 @@ module Employer
                     :company_website,
                     :employee_count,
                     :category,
-                    user_attributes: %i[location id])
+                    user_attributes: %i[location longitude latitude id])
     end
   end
 end

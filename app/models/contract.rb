@@ -11,6 +11,7 @@ class Contract < ApplicationRecord
   scope :hire_group, -> { where(state: %w[pending accepted closed]) }
   scope :offers, -> { where(state: 'pending') }
   scope :active, -> { where(state: %w[accepted closed]) }
+  scope :freelancer_visible, -> { where.not(hide_from_freelancer: true) }
 
   validate :between_different_parties
 
