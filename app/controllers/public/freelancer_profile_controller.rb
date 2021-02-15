@@ -19,6 +19,12 @@ class Public::FreelancerProfileController < ApplicationController
     redirect_to freelancer_account_index_url
   end
 
+  def write_a_review
+    session[:review_by_contract] = params[:review_by_contract]
+
+    redirect_to employer_contracts_path
+  end
+
   private
 
   def certifications

@@ -7,6 +7,7 @@ FactoryBot.define do
     pay_rate { 150 }
     state { Contract.states.values.sample }
     job_description { Faker::Company.bs }
+    hide_from_freelancer { false }
 
     trait :with_job do
       job

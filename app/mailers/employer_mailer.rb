@@ -40,4 +40,10 @@ class EmployerMailer < ApplicationMailer
     mail(to: employer_email, cc: freelancer_profile,
          subject: "Congratulations! Your offer was accepted by #{contract.freelancer_profile.full_name}")
   end
+
+  def contract_was_closed(contract)
+    @contract = contract
+    employer_email = contract.employer_profile.email
+    mail(to: employer_email, subject: "#{contract.freelancer_profile.full_name} closed the #{contract.title} contract.")
+  end
 end

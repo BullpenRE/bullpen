@@ -6,6 +6,10 @@ class Employer::ContractsController < ApplicationController
 
   def index
     @contracts = current_user.employer_profile.contracts.order(created_at: :desc)
+    return unless session[:review_by_contract].present?
+
+    @contract = @contracts.find { |c| c.id == session[:review_by_contract].to_i }
+    session.delete(:review_by_contract)
   end
 
   def withdraw_offer
