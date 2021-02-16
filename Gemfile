@@ -20,7 +20,9 @@ gem 'premailer-rails', '~> 1.11', '>= 1.11.1' # Styling HTML emails with CSS wit
 gem 'puma', '~> 4.1'                        # Use Puma as the app server
 gem 'rails', '~> 6.1', '>= 6.1.1'           # If you're not sure what this is for then you're in the wrong place ;)
 gem 'redis', '~> 4.2', '>= 4.2.5'           # Service used for running Action Cable on heroku
+
 gem 'sass-rails', '>= 6'                    # Use SCSS for stylesheets
+gem 'stripe', '~> 5.29.1'
 gem 'sidekiq', '~> 6.1', '>= 6.1.3'         # Simple, efficient background processing for Ruby.
 gem 'table_print', '~> 1.5', '>= 1.5.7'     # Allows viewing of data in console in nice ways, including table joins: http://tableprintgem.com/ (video)
 gem 'turbolinks', '~> 5'                    # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -55,6 +57,7 @@ group :test do
   gem 'database_cleaner'                                # Cleans the database data between tests
   gem 'rails-controller-testing'                        # This gem brings back assigns to your controller tests as well as assert_template to both controller and integration tests.
   gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
+  gem 'stripe-ruby-mock', '~> 3.0.1'
 end
 
 group :development do
