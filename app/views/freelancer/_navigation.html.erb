@@ -1,9 +1,7 @@
 <!--Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-header mb-4">
   <div class="container">
-    <a class="navbar-brand" href="https://bullpenre.com/">
-      <%= image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30') %>
-    </a>
+    <%= link_to image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30'), root_path, class: 'navbar-brand hello' %>
     <div class="collapse navbar-collapse" id="navbarMenu">
       <ul class="navbar-nav">
         <li class="nav-item<%= ' active' if section == 'jobs' %>">
