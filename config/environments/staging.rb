@@ -18,6 +18,10 @@ Rails.application.configure do
     authentication: ENV['SMTP_AUTHENTICATION'].to_sym
   }
 
+  # Allow mailer previews to occur on the staging server:
+  # https://stackoverflow.com/questions/27453578/rails-4-email-preview-in-production
+  config.action_mailer.show_previews = true
+
   config.action_mailer.asset_host = "https://#{host}"
   config.action_mailer.default_url_options = { host: host }
   config.action_mailer.default_url_options = { protocol: 'https', host: ENV['DOMAIN_URL'] }
