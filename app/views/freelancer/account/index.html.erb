@@ -60,8 +60,12 @@
 
   <div class="bp-card mb-3">
     <h2>Bank Information<i class="far fa-question-circle ml-2 text-primary" aria-hidden="true"></i></h2> <!--Remove the "text-primary" class when the icon becomes a link-->
-    <div class="mb-2">Please add a bank account to receive payouts.</div>
-    <%= link_to 'Add a Bank Account', '#', class: 'btn btn-outline-primary' %>
+    <% if @freelancer_profile.stripe_id_account %>
+        <div class="mb-2">Connected with Stripe.</div>
+    <% else %>
+        <div class="mb-2">Please add a bank account to receive payouts.</div>
+        <%= link_to 'Add a Bank Account', stripe_button_link, class: 'btn btn-outline-primary' %>
+    <% end %>
   </div>
 
   <div class="bp-card mb-5">

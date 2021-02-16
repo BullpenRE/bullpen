@@ -9,6 +9,7 @@ gem 'bootsnap', '>= 1.4.2', require: false  # Reduces boot times through caching
 gem 'devise', '~> 4.7', '>= 4.7.3'          # Flexible authentication solution for Rails with Warden
 gem 'geocoder', '>=1.6.4'                   # Forward and reverse geocoding, IP address geocoding
 gem 'google_sign_in', '~> 1.2'              # Sign in (or up) with Google for Rails applications: https://github.com/basecamp/google_sign_in
+gem 'httparty'
 gem 'image_processing', '~> 1.2'            # Provides higher-level image processing helpers that are commonly needed when handling image uploads
 gem 'jbuilder', '~> 2.7'                    # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'mini_magick', '~> 4.10', '>= 4.10.1'   # Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
@@ -20,7 +21,6 @@ gem 'premailer-rails', '~> 1.11', '>= 1.11.1' # Styling HTML emails with CSS wit
 gem 'puma', '~> 4.1'                        # Use Puma as the app server
 gem 'rails', '~> 6.1', '>= 6.1.1'           # If you're not sure what this is for then you're in the wrong place ;)
 gem 'redis', '~> 4.2', '>= 4.2.5'           # Service used for running Action Cable on heroku
-
 gem 'sass-rails', '>= 6'                    # Use SCSS for stylesheets
 gem 'stripe', '~> 5.29.1'
 gem 'sidekiq', '~> 6.1', '>= 6.1.3'         # Simple, efficient background processing for Ruby.
