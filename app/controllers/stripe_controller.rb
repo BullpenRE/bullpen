@@ -23,6 +23,13 @@ class StripeController < ApplicationController
     end
   end
 
+  def dashboard
+    account = Stripe::Account.retrieve(freelancer_profile.stripe_id_account)
+    login_links = account.login_links.create
+
+    redirect_to login_links.url
+  end
+
   private
 
   def freelancer_profile

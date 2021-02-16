@@ -62,6 +62,7 @@
     <h2>Bank Information<i class="far fa-question-circle ml-2 text-primary" aria-hidden="true"></i></h2> <!--Remove the "text-primary" class when the icon becomes a link-->
     <% if @freelancer_profile.stripe_id_account %>
         <div class="mb-2">Connected with Stripe.</div>
+        <%= link_to 'Go to Stripe Dashboard', stripe_dashboard_path(@freelancer_profile.stripe_id_account) %>
     <% else %>
         <div class="mb-2">Please add a bank account to receive payouts.</div>
         <%= link_to 'Add a Bank Account', stripe_button_link, class: 'btn btn-outline-primary' %>
