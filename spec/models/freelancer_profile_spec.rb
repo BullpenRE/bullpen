@@ -18,6 +18,7 @@ RSpec.describe FreelancerProfile, type: :model do
     expect(freelancer_profile_complete.freelancer_profile_educations).to_not be_empty
     expect(freelancer_profile_complete.freelancer_profile_experiences).to_not be_empty
     expect(freelancer_profile_complete.freelancer_certifications).to_not be_empty
+    expect(freelancer_profile.payout_percentage).to eq(70)
   end
 
   context 'Validations' do
@@ -29,6 +30,21 @@ RSpec.describe FreelancerProfile, type: :model do
 
       it 'if not nil, then is a positive number' do
         freelancer_profile.desired_hourly_rate = -32
+        expect(freelancer_profile).to_not be_valid
+      end
+    end
+
+    describe 'payout_percentage' do
+      it 'must be between 0-100 and cannot be nil or blank' do
+        freelancer_profile.payout_percentage = -1
+        expect(freelancer_profile).to_not be_valid
+        freelancer_profile.payout_percentage = 0
+        expect(freelancer_profile).to be_valid
+        freelancer_profile.payout_percentage = 100
+        expect(freelancer_profile).to be_valid
+        freelancer_profile.payout_percentage = 101
+        expect(freelancer_profile).to_not be_valid
+        freelancer_profile.payout_percentage = nil
         expect(freelancer_profile).to_not be_valid
       end
     end

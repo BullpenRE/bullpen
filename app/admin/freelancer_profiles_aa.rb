@@ -2,7 +2,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
   ActiveAdmin.register FreelancerProfile do
     menu label: 'Freelancers'
 
-    includes :user, :freelancer_sectors, :freelancer_real_estate_skills, :freelancer_profile_educations, :freelancer_profile_experiences, :freelancer_softwares
+    includes :user, :freelancer_sectors, :freelancer_real_estate_skills, :freelancer_profile_educations,
+             :freelancer_profile_experiences, :freelancer_softwares
 
     filter :user_email, as: :string, label: 'User Email'
     filter :draft
@@ -16,12 +17,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
                   :draft,
                   :new_jobs_alert,
                   :searchable,
-                  :desired_hourly_rate
+                  :desired_hourly_rate,
+                  :payout_percentage
 
     index do
       column :user
       column 'Title', :professional_title
       column 'Years Experience', :professional_years_experience
+      column :payout_percentage
       column :draft
       column :curation
       actions
@@ -37,6 +40,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         row :professional_title
         row :professional_years_experience
         row :professional_summary
+        row :payout_percentage
         row 'Sectors' do
           freelancer_profile.sectors.pluck(:description)
         end
@@ -103,6 +107,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         f.input :professional_title
         f.input :professional_years_experience
         f.input :professional_summary
+        f.input :payout_percentage
         f.input :sectors, as: :check_boxes, collection: Sector.order(:description).pluck(:description, :id)
         f.input :real_estate_skills, as: :check_boxes, collection: RealEstateSkill.order(:description).pluck(:description, :id)
         f.input :softwares, as: :check_boxes, collection: Software.order(:description).pluck(:description, :id)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_11_104521) do
+ActiveRecord::Schema.define(version: 2021_02_15_232954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,6 +183,7 @@ ActiveRecord::Schema.define(version: 2021_02_11_104521) do
     t.integer "desired_hourly_rate"
     t.boolean "new_jobs_alert", default: true
     t.boolean "searchable", default: true
+    t.integer "payout_percentage", default: 70
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
