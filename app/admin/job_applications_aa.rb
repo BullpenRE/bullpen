@@ -2,12 +2,12 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
   ActiveAdmin.register JobApplication do
     menu label: 'Job Applications'
 
-    permit_params :job_id, :user_id, :cover_letter, :template, :bid_amount, :available_during_work_hours,
-                  :state, :work_sample, :applied_at, work_samples: []
+    permit_params :job_id, :freelancer_profile_id, :cover_letter, :template, :bid_amount, :available_during_work_hours,
+                  :state, :work_sample, :liked, :applied_at, work_samples: []
     includes :job, :user
 
     filter :job_short_description, as: :string, label: 'Job description'
-    filter :user_email, as: :string, label: 'Freelancer email'
+    filter :freelancer_profile_user_email, as: :string, label: 'Freelancer email'
     filter :job_user_email, as: :string, label: 'Employer email'
     filter :state, as: :select, collection: JobApplication.states
 
@@ -16,8 +16,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       column 'Job Title' do |job_application|
         "#{job_application.job.title} by #{job_application.job.user.email}"
       end
-      column 'User' do |job_application|
-        link_to(job_application.user.email, admin_user_path(job_application.user_id))
+      column 'Freelancer' do |job_application|
+        link_to(job_application.freelancer_profile.email, admin_user_path(job_application.freelancer_profile.user_id))
       end
       column :state
       column :template
@@ -34,11 +34,11 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         row 'Job' do
           link_to(application.job.title, admin_job_path(application.job_id))
         end
-        row 'Employer email' do
-          link_to(application.job.user.email, admin_user_path(application.job.user_id))
+        row 'Employer' do
+          link_to(application.job.employer_profile.email, admin_user_path(application.job.employer_profile.user_id))
         end
-        row 'Freelancer email' do
-          link_to(application.user.email, admin_user_path(application.job.user_id))
+        row 'Freelancer' do
+          link_to(application.freelancer_profile.email, admin_user_path(application.freelancer_profile.user_id))
         end
         row 'Cover Letter' do
           application.cover_letter.body.to_s
@@ -93,11 +93,11 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     form html: { multipart: true } do |f|
       f.inputs 'Job Application' do
         f.input :job,
-                as: :select,
-                collection: Job.find_each.map { |j| ["#{j.title} - #{j.user.email}", j.id] }
-        f.input :user,
+                as: :select, input_html: { class: 'select2' },
+                collection: Job.find_each.map { |j| ["#{j.title} - #{j.employer_profile.email} (#{j.contract_type || 'contract type missing'})", j.id] }
+        f.input :freelancer_profile,
                 as: :select, input_html: { class: "select2" },
-                collection: User.freelancer.order(:email).pluck(:email, :id)
+                collection: FreelancerProfile.all.map{ |profile| [profile.email, profile.id] }
         f.input :liked
         f.input :cover_letter, as: :text
         f.input :template
@@ -113,6 +113,24 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     end
 
     controller do
+      def create
+        error_message = nil
+        job_application = JobApplication.new(permitted_params[:job_application])
+        job_application.user_id = FreelancerProfile.find_by(id: permitted_params[:job_application][:freelancer_profile_id]).user_id
+        job_application.applied_at = Time.current if permitted_params[:job_application][:applied_at].blank?
+
+        ApplicationRecord.transaction do
+          job_application.save!
+        rescue StandardError => e
+          error_message = e.message
+        end
+
+        message = { alert: error_message } if error_message
+        message ||= { notice: 'Successfully created!' }
+
+        redirect_to admin_job_application_path(job_application.id), flash: message
+      end
+
       def update
         super do |success, failure|
           success.html { render action: :view }
