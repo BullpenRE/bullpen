@@ -17,8 +17,8 @@ class Job < ApplicationRecord
   has_rich_text :relevant_details
 
   scope :not_applied_or_withdrawn, lambda { |user|
-    where.not(id: user.job_applications.pluck(:job_id))
-         .or(where(id: user.job_applications.withdrawn.pluck(:job_id)))
+    where.not(id: user.freelancer_profile.job_applications.pluck(:job_id))
+         .or(where(id: user.freelancer_profile.job_applications.withdrawn.pluck(:job_id)))
   }
   scope :ready_for_announcement, -> { where(state: 'posted', job_announced: false) }
   validate :pay_ranges_make_sense

@@ -35,6 +35,6 @@ class JobApplication < ApplicationRecord
   private
 
   def update_other_user_job_application_templates
-    user.job_applications.where.not(id: id).update_all(template: false) if template?
+    user.freelancer_profile.job_applications.where.not(id: id).update_all(template: false) if template?
   end
 end
