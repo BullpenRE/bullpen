@@ -4,6 +4,7 @@ class Job < ApplicationRecord
   include Slugable
 
   belongs_to :user
+  belongs_to :employer_profile
   has_many :job_skills, dependent: :destroy
   has_many :skills, through: :job_skills
   has_many :job_softwares, dependent: :destroy

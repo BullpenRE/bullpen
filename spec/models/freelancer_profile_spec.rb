@@ -8,6 +8,7 @@ RSpec.describe FreelancerProfile, type: :model do
   let(:avatar_image) { File.open(Rails.root.join('spec', 'support', 'assets', 'sample-avatar.jpg')) }
   let(:big_avatar_image) { File.open(Rails.root.join('spec', 'support', 'assets', 'big_avatar.jpg')) }
   let(:wrong_type_avatar) { File.open(Rails.root.join('spec', 'support', 'assets', 'wrong_type_avatar.numbers')) }
+  let(:job_application) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile) }
 
   it 'factories work' do
     expect(freelancer_profile).to be_valid
@@ -128,6 +129,11 @@ RSpec.describe FreelancerProfile, type: :model do
         end
       end
 
+      it 'has many job_applications dependent destroy' do
+        expect(freelancer_profile.job_applications).to include(job_application)
+        freelancer_profile.destroy
+        expect(JobApplication.exists?(job_application.id)).to be_falsey
+      end
     end
 
     describe 'contracts' do

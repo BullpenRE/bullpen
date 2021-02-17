@@ -5,6 +5,7 @@ class JobApplication < ApplicationRecord
   MAX_WORK_SAMPLES_COUNT = 10
 
   belongs_to :user
+  belongs_to :freelancer_profile
   belongs_to :job
   has_many :job_application_questions, dependent: :destroy
   has_many :job_questions, through: :job_application_questions

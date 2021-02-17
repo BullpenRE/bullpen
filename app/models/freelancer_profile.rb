@@ -16,6 +16,7 @@ class FreelancerProfile < ApplicationRecord
   has_many :interview_requests, dependent: :destroy
   has_many :contracts, dependent: :destroy
   has_many :reviews, dependent: :destroy
+  has_many :job_applications, dependent: :destroy
   has_one_attached :avatar
 
   scope :users, -> { joins(:user) }

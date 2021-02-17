@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe JobApplication, type: :model do
   let(:job) { FactoryBot.create(:job) }
-  let!(:job_application) { FactoryBot.create(:job_application, job: job, template: true) }
-  let!(:user) { job_application.user }
+  let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile) }
+  let!(:job_application) { FactoryBot.create(:job_application, job: job, template: true, freelancer_profile: freelancer_profile) }
   let(:job_application_with_attachments) { FactoryBot.create(:job_application, :with_attachments) }
 
   it 'factory works' do
@@ -11,6 +11,7 @@ RSpec.describe JobApplication, type: :model do
     expect(job_application_with_attachments).to be_valid
     expect(job_application_with_attachments.work_samples.attached?).to be_truthy
     expect(job_application_with_attachments.cover_letter).to_not be_blank
+    expect(job_application.user_id).to eq(freelancer_profile.user_id)
   end
 
   context 'Validations' do
@@ -34,11 +35,11 @@ RSpec.describe JobApplication, type: :model do
     describe 'whenever a template is set to true' do
       it 'on create, it is set to false for all other job_applications for the same user' do
         expect(job_application.template).to be_truthy
-        FactoryBot.create(:job_application, user: user, template: true)
+        FactoryBot.create(:job_application, user_id: freelancer_profile.user_id, template: true)
         expect(job_application.reload.template).to be_falsey
       end
       it 'on update, it is set to false for all other job_applications' do
-        new_application_same_user = FactoryBot.create(:job_application, user: user, template: false)
+        new_application_same_user = FactoryBot.create(:job_application, freelancer_profile: freelancer_profile, template: false)
         expect(job_application.template).to be_truthy
         new_application_same_user.update(template: true)
         expect(job_application.reload.template).to be_falsey
@@ -60,7 +61,11 @@ RSpec.describe JobApplication, type: :model do
     end
 
     it 'belongs to a user' do
-      expect(job_application.user).to eq(user)
+      expect(job_application.user).to eq(freelancer_profile.user)
+    end
+
+    it 'belongs to a freelancer_profile' do
+      expect(job_application.freelancer_profile).to eq(freelancer_profile)
     end
 
     it 'has many job_application_questions with dependent: :destroy' do

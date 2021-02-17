@@ -1,12 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Job, type: :model do
-  let!(:job) { FactoryBot.create(:job) }
+  let(:employer_profile) { FactoryBot.create(:employer_profile) }
+  let!(:job) { FactoryBot.create(:job, employer_profile: employer_profile) }
   let(:retainer_job) { FactoryBot.create(:job, :retainer) }
 
   it 'factory works' do
     expect(job).to be_valid
     expect(retainer_job).to be_valid
+    expect(job.user_id).to eq(employer_profile.user_id)
   end
 
   context 'Validations' do
@@ -48,6 +50,10 @@ RSpec.describe Job, type: :model do
   end
 
   context 'Relationships' do
+    it 'belongs to an employer' do
+      expect(job.employer_profile).to eq(employer_profile)
+    end
+
     describe 'job_skills' do
       let!(:job_skill) { FactoryBot.create(:job_skill, job: job) }
       let!(:skill) { job_skill.skill }
