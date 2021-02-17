@@ -19,4 +19,8 @@ class EmployerMailerPreview < ActionMailer::Preview
   def offer_was_accepted
     EmployerMailer.offer_was_accepted(Contract.last)
   end
+
+  def contract_was_closed
+    EmployerMailer.contract_was_closed(Contract.last)
+  end
 end

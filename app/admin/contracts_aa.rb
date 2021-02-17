@@ -3,7 +3,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
     menu label: 'Contracts'
     includes :employer_profile, :freelancer_profile, :job
 
-    permit_params :freelancer_profile_id, :employer_profile_id, :job_id, :title, :job_description, :contract_type, :pay_rate, :state
+    permit_params :freelancer_profile_id, :employer_profile_id, :job_id, :title, :job_description, :contract_type,
+                  :pay_rate, :state, :hide_from_freelancer
     actions :all
 
     index do
@@ -39,6 +40,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
         row :state
         row :created_at
         row :updated_at
+        row :hide_from_freelancer
 
       end
       active_admin_comments
@@ -64,6 +66,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
         f.input :contract_type
         f.input :pay_rate
         f.input :state
+        f.input :hide_from_freelancer
         f.actions
       end
     end

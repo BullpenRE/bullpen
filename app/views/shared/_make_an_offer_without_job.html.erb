@@ -1,0 +1,129 @@
+<div class="modal" id="makeAnOfferWithoutJob<%= freelancer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <!--  Header with '×'-->
+      <div class="modal-header">
+        <h1 class="modal-title" id="showSendMessageLabel">Make an Offer <i class="far fa-question-circle text-primary"></i> </h1>
+        <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Make an Offer Card-->
+      <div class="modal-body py-0">
+        <div class="row mb-3">
+          <div class="col-sm-6">
+            <h5 class="mt-1">From</h5>
+            <%= current_user.employer_profile.full_name %>, <%= current_user.employer_profile.company_name %>
+          </div>
+          <div class="col-sm-6">
+            <h5 class="mt-1">To</h5>
+            <%= freelancer_profile.full_name  %>
+          </div>
+        </div>
+        <%= form_for :make_an_offer, url:  employer_make_an_offer_without_job_path do |f| %>
+          <%= f.hidden_field :freelancer_profile_id, value: freelancer_profile.id %>
+          <%= f.hidden_field :job_id, class: "job_id#{freelancer_profile&.slug}"  %>
+          <%= f.hidden_field :redirect_reference, value: redirect_reference %>
+          <div class="form-group">
+            <label for="JobTitleInput" class="h5">Job Post <a class="text-dark font-weight-light">(Optional)</a></label>
+              <%= f.select :job_id,
+                           options_for_select(current_user.posted_jobs.pluck(:title,:id).insert(0, '')),
+                           {}, class: "form-control job#{freelancer_profile&.id}", style: "width: 100%" %>
+            <label for="JobTitleInput" class="h5 mt-3">Job Title</label>
+            <div class="w-100">
+              <%= f.text_field :title, class: "form-control mb-3", id: "JobTitleInput#{freelancer_profile&.id}", placeholder: "Enter the job title" %>
+            </div>
+            <label for="JobDescriptionInput" class="h5">Job Description</label>
+            <div class="w-100">
+              <%= f.rich_text_area :job_description, class: "form-control mb-3", id: "JobDescriptionInput#{freelancer_profile&.id}", placeholder: "Enter Job Description" %>
+            </div>
+              <div class="row mb-3">
+                <div class="col-sm-4">
+                  <label class="h5 mt-1">Fee Structure</label>
+                  <%= f.select :contract_type,
+                               options_for_select(Job::CONTRACT_TYPE_DESCRIPTIONS),
+                               {}, class: "form-control contract_type#{freelancer_profile&.slug}", required: true, style: "width: 100%" %>
+                </div>
+                <div class="col-sm-4">
+                  <label class="h5 mt-1 contract_rate<%= freelancer_profile&.slug %>"> Hourly Rate </label>
+                  <%= f.text_field :pay_rate, class: "form-control pay_rate#{freelancer_profile&.slug}", required: true %>
+                </div>
+                <div class="col-sm-4"></div>
+              </div>
+              <p class="mb-4 mt-0">Your payment method will be charged weekly based on the number of hours worked.</p>
+              <h5 >Payment Method</h5>
+              <div class="mb-4">
+                <button class="btn btn-primary" type="button">Add a Credit Card</button>
+              </div>
+              <div class="form-check custom-checkbox mt-1 d-none job-closed<%= freelancer_profile&.slug %>">
+                <%= f.check_box :state, class: "custom-control-input", id: "stateClosed" %>
+                <label class="custom-control-label text-secondary font-weight-bold mb-4" for="stateClosed">Close the job post (pending applicants will be notified)</label>
+              </div>
+              <div class="text-muted">
+                By sending this offer, you agree to
+                <a href="https://bullpenre.com/terms-of-service">
+                  Bullpen's Terms of Service,
+                </a>
+                <a href="https://bullpenre.com/privacy-policy">
+                  Privacy Agreement,
+                </a> and <a href="https://stripe.com/connect-account/legal">Stripe's Connected Accounts Authorization</a>
+              </div>
+            <div class="d-flex justify-content-end">
+              <%= f.submit 'Send Offer', class: 'btn btn-primary mt-3 send-invitation' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("trix-file-accept", event => {
+     event.preventDefault();
+  });
+  $(document).on('turbolinks:load', function () {
+    const set_contract_type = () => {
+      if ($('.contract_type<%= freelancer_profile&.slug %>').val() == 'hourly' || !$('.contract_type<%= freelancer_profile&.slug %>').val()) {
+        $('.contract_rate<%= freelancer_profile&.slug %>').text('Hourly Rate');
+      } else {
+        $('.contract_rate<%= freelancer_profile&.slug %>').text('Monthly Rate');
+      }
+    };
+
+    $('.contract_type<%= freelancer_profile&.slug %>').change(() => {
+      set_contract_type();
+    });
+
+    $('.job<%= freelancer_profile&.id %>').change(() => {
+      if ($('.job<%= freelancer_profile&.id %>').val()) {
+        $.ajax({
+          url: '/employer/find_job',
+          data: {id: $('.job<%= freelancer_profile&.id %>').val()},
+          method: 'POST',
+          success: (data) => {
+            $('#JobTitleInput<%= freelancer_profile&.id %>').val(data['job_title']);
+            $('#JobDescriptionInput<%= freelancer_profile&.id %>').val(data['job_description']);
+            $('.contract_type<%= freelancer_profile&.slug %>').val(data['contract_type']);
+            $('.pay_rate<%= freelancer_profile&.slug %>').val(data['pay_rate']);
+            $('.job-closed<%= freelancer_profile&.slug %>').removeClass('d-none');
+            $('.job_id<%= freelancer_profile&.slug %>').val(data['job_id']);
+            set_contract_type();
+          }
+        });
+      } else {
+        $('#JobTitleInput<%= freelancer_profile&.id %>').val('');
+        $('#JobDescriptionInput<%= freelancer_profile&.id %>').val('');
+        $('.contract_type<%= freelancer_profile&.slug %>').val('');
+        $('.pay_rate<%= freelancer_profile&.slug %>').val('');
+        $('.job-closed<%= freelancer_profile&.slug %>').addClass('d-none');
+      }
+    });
+  });
+</script>
+<style>
+  #JobDescriptionInput {
+    min-height: 8rem;
+    height: auto;
+  }
+</style>

@@ -2,7 +2,6 @@
 
 module Freelancer
   class AvatarsController < BaseAvatarsController
-    include LoggedInRedirects
     before_action :non_freelancer_redirect
 
     def update

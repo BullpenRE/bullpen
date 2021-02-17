@@ -3,7 +3,7 @@
     <div class="modal-content">
       <!--  Header with '×'-->
       <div class="modal-header">
-        <h1 class="modal-title" id="showOfferDetailsLabel">Offer Details <i class="far fa-question-circle text-primary"></i> </h1>
+        <h1 class="modal-title" id="showOfferDetailsLabel"><%= contract.pending? ? 'Offer Details' : 'Contract Details' %> <i class="far fa-question-circle text-primary"></i> </h1>
         <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -26,7 +26,7 @@
         <div class="mb-2"><%= contract.job_description.body.to_s %></div>
         <div class="row">
           <div class="col-md-6 mb-sm-3">
-            <label class="text-secondary font-weight-bold">Offered Rate</label>
+            <label class="text-secondary font-weight-bold"><%= contract.pending? ? 'Offered Rate' : 'Contract Rate' %></label>
             <% if contract.contract_type == 'hourly' %>
               <div><%= "#{number_to_currency(contract.pay_rate)} per hour" %></div>
             <% else %>

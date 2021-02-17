@@ -2,7 +2,7 @@
 
 class EmployerProfileStepsController < ApplicationController
   include Wicked::Wizard
-  include LoggedInRedirects
+
   before_action :step_variables, only: [:show]
 
   steps :about_company, :employee_count, :type_of_work, :sectors, :last_question

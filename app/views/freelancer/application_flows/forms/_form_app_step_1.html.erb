@@ -7,7 +7,7 @@
     <% if job_application.job.hourly? %>
       <%= "<b>$#{job_application.job.pay_range_low} - $#{job_application.job.pay_range_high}</b>".html_safe + " per hour." %>
     <% else %>
-      <%=  "a retainer fee of <b>$#{job_application.job.pay_range_low}</b>".html_safe + " for up to " + "#{job_application.job.contract_type.split('_').last}".html_safe + " hours per month."%>
+      <%=  "a retainer fee of <b>$#{job_application.job.pay_range_low}</b>".html_safe + " for up to " + "#{job_application.job.contract_type&.split('_')&.last}".html_safe + " hours per month."%>
     <% end %>
   </div>
   <div class="form-group mb-1">
@@ -67,7 +67,7 @@
       net_earnings = parseInt(bid_amount, 10);
     }
 
-    let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type.split('_').last %>';
+    let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type&.split('_')&.last %>';
     if (hour_per_month === '1') {
       $('.net-earnings').html(`Your net earnings will be <b>$${Math.round(net_earnings*0.7)}</b> per hour.`);
     }

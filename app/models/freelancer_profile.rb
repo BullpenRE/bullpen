@@ -28,6 +28,7 @@ class FreelancerProfile < ApplicationRecord
 
   validates :slug, uniqueness: true
   validates :desired_hourly_rate, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :payout_percentage, allow_nil: false, inclusion: { in: 0..100, message: 'must be between 0-100' }
 
   scope :searchable, -> { where(searchable: true) }
   scope :ready_for_announcement, -> { where(curation: 'accepted', new_jobs_alert: true) }

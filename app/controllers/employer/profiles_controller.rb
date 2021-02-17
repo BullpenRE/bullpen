@@ -2,8 +2,6 @@
 
 module Employer
   class ProfilesController < ApplicationController
-    include LoggedInRedirects
-
     before_action :authenticate_user!, :initial_check, :non_employer_redirect, :employer_profile
 
     def update

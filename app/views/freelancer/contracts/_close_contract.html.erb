@@ -1,19 +1,19 @@
-<div class="modal" id="declineOffer<%= contract.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+<div class="modal" id="closeContract<%= contract.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content mt-3">
       <div class="modal-header">
-        <h1 class="modal-title" id="declineOfferLabel">Decline Offer</h1>
+        <h1 class="modal-title" id="closeContractLabel">Close Contract</h1>
         <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <div class="modal-body pt-0">
-        <p>Are you sure you want to decline the <strong><%= contract.title %></strong> offer? We’ll send a notification to <%= contract.employer_profile.full_name %>. </p>
+        <p>Are you sure you want to close the <strong><%= contract.title %></strong> contract? We’ll send a notification to <strong><%= contract.employer_profile.full_name %></strong>.</p>
       </div>
       <div class="modal-footer justify-content-between pt-0">
         <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
         <div>
-          <button class="btn btn-primary decline-offer-<%= contract.id %>" type="button">Decline Offer</button>
+          <button class="btn btn-primary close-contract-<%= contract.id %>" type="button">Close Contract</button>
         </div>
       </div>
     </div>
@@ -21,9 +21,9 @@
 </div>
 
 <script>
-  $('.decline-offer-'+<%= contract.id %>).click(() => {
+  $('.close-contract-'+<%= contract.id %>).click(() => {
     $.ajax({
-      url: '/freelancer/decline_offer',
+      url: '/freelancer/close_contract',
       data: { id: '<%= contract.id %>' },
       method: 'POST',
       success: () => {

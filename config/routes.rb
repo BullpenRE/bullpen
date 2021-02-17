@@ -60,6 +60,8 @@ Rails.application.routes.draw do
     post 'remove_interview_request', to: 'interviews#remove_interview_request'
     post 'withdraw_offer', to: 'contracts#withdraw_offer'
     post 'save_review', to: 'reviews#save_review'
+    post 'make_an_offer_without_job', to: 'contracts#make_an_offer_without_job'
+    post 'find_job', to: 'contracts#find_job'
   end
 
   namespace :public do
@@ -68,6 +70,7 @@ Rails.application.routes.draw do
     get 'apply_for_job', to: 'job#apply_for_job'
     get 'request_interview', to: 'freelancer_profile#request_interview'
     get 'turn_off_new_job_alerts', to: 'freelancer_profile#turn_off_new_job_alerts'
+    get 'write_a_review', to: 'freelancer_profile#write_a_review'
   end
 
   namespace :freelancer do
@@ -101,6 +104,8 @@ Rails.application.routes.draw do
     post 'change_work_experience', to: 'profile#change_work_experience'
     post 'decline_offer', to: 'contracts#decline_offer'
     post 'accept_offer', to: 'contracts#accept_offer'
+    post 'close_contract', to: 'contracts#close_contract'
+    post 'delete_contract', to: 'contracts#delete_contract'
 
     namespace :profile do
       resource :preferences, only: :update

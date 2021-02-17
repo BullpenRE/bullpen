@@ -2,7 +2,6 @@
 
 module Employer
   class AvatarsController < BaseAvatarsController
-    include LoggedInRedirects
     before_action :non_employer_redirect
 
     def update

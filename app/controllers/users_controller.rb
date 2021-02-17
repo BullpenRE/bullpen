@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  include LoggedInRedirects
-
   before_action :authenticate_user!, :initial_check
 
   def update

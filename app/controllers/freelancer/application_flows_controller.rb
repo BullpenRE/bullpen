@@ -2,7 +2,6 @@
 
 class Freelancer::ApplicationFlowsController < ApplicationController
   include Wicked::Wizard
-  include LoggedInRedirects
   include ApplicationHelper
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :incomplete_freelancer_profile_redirect
   steps :application_step_1, :application_step_2, :preview_application
