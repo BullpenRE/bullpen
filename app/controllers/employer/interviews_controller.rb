@@ -7,6 +7,8 @@ class Employer::InterviewsController < ApplicationController
 
   def index
     @pagy, @interviews = pagy(interview_requests_collection, items: ITEMS_PER_PAGE, overflow: :last_page)
+
+    redirect_to employer_talent_index_path if @interviews.blank?
   end
 
   def withdraw_request
