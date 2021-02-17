@@ -11,4 +11,11 @@ class InterviewRequest < ApplicationRecord
   enum state: { 'pending': 0, 'accepted': 1, 'withdrawn': 2, 'declined': 3 }
 
   validates :employer_profile_id, uniqueness: { scope: :freelancer_profile_id }
+
+  def default_message_for_interview(interview)
+    "Hi #{interview.freelancer_profile.user.first_name},<br>
+    I found your profile on Bullpen and think you’d be a great fit for a project
+    I’m working on. Are you open to connecting on a call?<br>
+    - #{interview.employer_profile.user.first_name}"
+  end
 end
