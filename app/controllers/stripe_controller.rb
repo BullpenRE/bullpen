@@ -26,8 +26,15 @@ class StripeController < ApplicationController
   def dashboard
     account = Stripe::Account.retrieve(freelancer_profile.stripe_id_account)
     login_links = account.login_links.create
+    url = login_links.url
 
-    redirect_to login_links.url
+    respond_to do |format|
+      format.json do
+        render json: {
+          url: url
+        }, status: :created
+      end
+    end
   end
 
   private

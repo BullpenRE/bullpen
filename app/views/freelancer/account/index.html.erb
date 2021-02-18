@@ -62,7 +62,7 @@
     <h2>Bank Information<i class="far fa-question-circle ml-2 text-primary" aria-hidden="true"></i></h2> <!--Remove the "text-primary" class when the icon becomes a link-->
     <% if @freelancer_profile.stripe_id_account %>
         <div class="mb-2">Connected with Stripe.</div>
-        <%= link_to 'Go to Stripe Dashboard', stripe_dashboard_path(@freelancer_profile.stripe_id_account) %>
+        <%= link_to 'Go to Stripe Dashboard', '#', class: 'btn btn-outline-primary go-stripe-dashboard' %>
     <% else %>
         <div class="mb-2">Please add a bank account to receive payouts.</div>
         <%= link_to 'Add a Bank Account', stripe_button_link, class: 'btn btn-outline-primary' %>
@@ -136,6 +136,11 @@
       });
     }
 
+    function openInNewTab(url) {
+      const win = window.open(url, '_blank');
+      win.focus();
+    }
+
     $(document).on('change', '#new_jobs_alert', function() {
       if ($(this).prop("checked")) {
         sendAjax('new_jobs_alert', true);
@@ -150,6 +155,23 @@
       } else {
         sendAjax('searchable', false);
       }
+    });
+
+    $(document).on('click', '.go-stripe-dashboard', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      $.ajax({
+        url: '<%= stripe_dashboard_path %>',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          if (data['url']) openInNewTab(data['url'])
+        },
+        error: function(data) {
+          console.log(data)
+        }
+      });
     })
   })
 </script>
