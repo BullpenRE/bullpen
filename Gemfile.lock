@@ -135,7 +135,6 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
     erubi (1.10.0)
-    escape (0.0.4)
     factory_bot (6.1.0)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.1.0)
@@ -186,8 +185,6 @@ GEM
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
-    json (2.5.1)
-    json (2.5.1-java)
     jwt (2.2.2)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
@@ -225,10 +222,7 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.5.0)
     minitest (5.14.3)
-    mixpanel (4.1.1)
-      escape
-      json
-      rack
+    mixpanel-ruby (2.2.2)
     msgpack (1.3.3)
     msgpack (1.3.3-java)
     msgpack (1.3.3-x64-mingw32)
@@ -473,7 +467,7 @@ DEPENDENCIES
   letter_opener_web
   listen
   mini_magick (~> 4.10, >= 4.10.1)
-  mixpanel (~> 4.1, >= 4.1.1)
+  mixpanel-ruby (~> 2.2, >= 2.2.2)
   omniauth (~> 1.9, >= 1.9.1)
   omniauth-google-oauth2 (~> 0.8.1)
   pagy (~> 3.5)

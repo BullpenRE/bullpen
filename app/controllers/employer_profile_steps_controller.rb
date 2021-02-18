@@ -140,7 +140,9 @@ class EmployerProfileStepsController < ApplicationController
   end
 
   def mixpanel_employer_flow_tracker
-    MixpanelWorker.perform_async(current_user.id, 'Employer Steps', { 'user': current_user.email,
+    tracker = Mixpanel::Tracker.new(ENV['MIXPANEL_TOKEN'])
+    #MixpanelWorker.perform_async
+    tracker.track(current_user.id, 'Employer Steps', { 'user': current_user.email,
                                                                       'role': current_user.employer_profile.role_in_company,
                                                                       'step': step })
   end
