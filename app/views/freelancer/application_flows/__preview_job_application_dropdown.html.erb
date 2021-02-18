@@ -15,7 +15,7 @@
         <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <a class="nav-link active font-weight-bold" id="application-tab<%= job_application.id %><%= job_application.job.id %>" data-toggle="tab" href="#application<%= job_application.id %><%= job_application.job.id %>" role="tab" aria-controls="application<%= job_application.id %><%= job_application.job.id %>" aria-selected="true">Application</a>
+            <a class="nav-link active font-weight-bold" id="application-tab<%= "#{job_application.id}-#{job_application.job_id}" %>" data-toggle="tab" href="#application<%= "#{job_application.id}-#{job_application.job_id}" %>" role="tab" aria-controls="application<%= "#{job_application.id}-#{job_application.job_id}" %>" aria-selected="true">Application</a>
           </li>
           <% if current_user.freelancer? %>
             <li class="nav-item" role="presentation">
@@ -42,7 +42,7 @@
           <% end %>
         </ul>
         <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="application<%= job_application.id %><%= job_application.job.id %>" role="tabpanel" aria-labelledby="application-tab">
+          <div class="tab-pane fade show active" id="application<%= "#{job_application.id}-#{job_application.job_id}" %>" role="tabpanel" aria-labelledby="application-tab">
             <%= render partial: 'shared/freelancer_application', locals: { job_application: job_application } %>
           </div>
           <% if current_user.freelancer? %>
