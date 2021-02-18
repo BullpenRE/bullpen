@@ -19,8 +19,10 @@
           <label for="addPersonalMessageTextArea" class="h5">
             <%= interview.present? ? 'Edit your message here.' : 'Add a personal message.' %>
           </label>
-        <div class="w-100">
-          <%= f.rich_text_area :message, class: "form-control mb-3", value: interview&.message&.body&.to_s, id: "addPersonalMessageTextArea", placeholder: "Enter your message", rows: "8", maxlength: "5000" %>
+        <div class="w-100" id="without_toolbar">
+          <%= f.rich_text_area :message, class: "form-control mb-3",
+                               value: interview&.message&.body&.to_s || current_user.employer_profile.default_message_for_interview(freelancer_profile),
+                               id: "addPersonalMessageTextArea", rows: "8", maxlength: "5000" %>
         </div>
         <div class="d-flex justify-content-end">
           <% button_name = interview.present? ? 'Modify Invitation' : 'Send Invitation' %>
@@ -37,3 +39,8 @@
     event.preventDefault();
   });
 </script>
+<style>
+  #without_toolbar trix-toolbar .trix-button {
+    display: none;
+  }
+</style>
