@@ -210,10 +210,8 @@
               <% job.contracts.hire_group.each do |contract| %>
                 <hr style="margin-top:0;">
                 <div class="d-flex justify-content-between flex-column flex-lg-row">
-                  <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job: nil, freelancer_profile: contract.freelancer_profile, modal_id: contract.id} %>
-                  <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: contract.freelancer_profile,
-                                                                           job_application: nil,
-                                                                           editable: false } %>
+                  <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job: nil, freelancer_profile: contract.freelancer_profile, modal_id: contract.id } %>
+                  <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: contract.freelancer_profile, job_application: nil, editable: false } %>
                   <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
                   <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user_id, job_title: contract.title, id: contract.id, redirect_reference: '' } %>
                   <%= render partial: 'employer/contracts/withdraw_offer', locals: { contract: contract } %>

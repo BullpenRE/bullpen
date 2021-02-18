@@ -14,7 +14,7 @@ RSpec.describe JobApplication, type: :model do
   end
 
   context 'Validations' do
-    it 'the combination of job_id and freelancer_profile_id is unique' do
+    it 'the combination of job_id and employer_profile_id is unique' do
       duplicate = FactoryBot.create(:job_application)
       duplicate.job_id = job_application.job_id
       expect(duplicate).to be_valid

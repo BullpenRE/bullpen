@@ -44,7 +44,6 @@ class User < ApplicationRecord
   end
 
   def posted_jobs
-    # TODO: Need to move to freelancer_profile
     return nil unless employer? && employer_profile
 
     employer_profile.jobs.posted
