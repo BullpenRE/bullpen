@@ -5,11 +5,21 @@
     <link rel="stylesheet" href="mail/styles.css">
   </head>
 
-  <body>
-    <%= image_pack_tag('bullpen-email-logo.png', class: 'logo') %>
+  <body bgcolor="#E9ECEF">
+  <table role="presentation" bgcolor="#E9ECEF" border="0" cellpadding="0" cellspacing="0" width="100%" valign="top" style="table-layout:fixed; min-width:320px; width:100%;">
+    <tbody> 
+      <tr> 
+        <td bgcolor="#E9ECEF" valign="top">
+          <div class="content-panel">
+            <%= image_pack_tag('bullpen-email-logo.png', class: 'logo') %>
 
-    <%= yield %>
-
-    <%= render partial: 'email/content_block', locals: { content: 'Need help? Contact support@bullpenre.com to speak with one of our team members.' } %>
+            <%= yield %>
+  
+          </div>
+          <p class="text-footer" style="margin:40px 0">Need help? Contact <a href="mailto:support@bullpenre.com">support@bullpenre.com</a> to speak with one of our team members.</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   </body>
 </html>
