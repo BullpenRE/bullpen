@@ -37,6 +37,6 @@ class Freelancer::JobsController < ApplicationController
   end
 
   def jobs_collection
-    @jobs_collection ||= Job.where(state: 'posted').order(created_at: :desc).not_applied_or_withdrawn(current_user)
+    @jobs_collection ||= Job.where(state: 'posted').order(created_at: :desc).not_applied_or_withdrawn(current_user.freelancer_profile)
   end
 end

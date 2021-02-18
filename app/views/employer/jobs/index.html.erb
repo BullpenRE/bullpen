@@ -74,6 +74,10 @@
                <i class="fas fa-map-marker-alt text-secondary"></i>  Regional knowledge of <span class="text-secondary"><%= job.required_regional_knowledge %></span> is required
              <% end %>
             </div>
+            <div class="bp-text-sm mb-2">
+              Job ID: <%= job.id %><br>
+              job.job_applications.applied.without_contract.size: <%= job.job_applications.applied.without_contract.size %>
+            </div>
           </div>
         </div>
       </div>
@@ -81,17 +85,17 @@
         <div class="d-flex flex-row justify-content-between">
           <div class="column">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <% if job.job_applications.applied.without_contracts_for(job).any? %>
+              <% if job.job_applications.applied.without_contract.any? %>
                 <li class="nav-item" role="presentation">
                   <a class="font-weight-bold nav-link" id="application-tab<%= job.id %>" data-toggle="tab" href="#application" role="tab" aria-controls="application" aria-selected="true">
-                    Applications <span class="text-secondary">(<%= job.job_applications.applied.without_contracts_for(job).size %>)</span>
+                    Applications <span class="text-secondary">(<%= job.job_applications.applied.without_contract.size %>)</span>
                   </a>
                 </li>
               <% end %>
               <% if job.contracts.hire_group.any? %>
                 <li class="nav-item" role="presentation">
                   <a class="font-weight-bold nav-link" id="hire-tab<%= job.id %>" data-toggle="tab" href="#hire" role="tab" aria-controls="hire" aria-selected="false">
-                    Hire <span class="text-secondary">(<%= job.contracts.hire_group.size %>)</span>
+                    Hired <span class="text-secondary">(<%= job.contracts.hire_group.size %>)</span>
                   </a>
                 </li>
               <% end %>
@@ -109,16 +113,16 @@
         <div id="collapseApplications<%= job.id %>" class="collapse">
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="application<%= job.id %>" role="tabpanel" aria-labelledby="application-tab">
-              <% job.job_applications.applied.without_contracts_for(job).each do |job_application| %>
+              <% job.job_applications.applied.without_contract.each do |job_application| %>
                 <hr style="margin-top:0;">
                 <div class="d-flex justify-content-between flex-column flex-lg-row">
-                  <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile,
+                  <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.freelancer_profile,
                                                                              job_application: job_application,
                                                                              editable: false } %>
                   <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
-                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: job_application.user_id, job_title: job_application.job.title, id: job_application.id, redirect_reference: '' } %>
+                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: job_application.freelancer_profile.user_id, job_title: job_application.job.title, id: job_application.id, redirect_reference: '' } %>
                   <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
-                  <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: nil, job: job_application.job, freelancer_profile: job_application.user.freelancer_profile } %>
+                  <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: nil, job: job_application.job, freelancer_profile: job_application.freelancer_profile, modal_id: job_application.id } %>
                   <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
                     <div class="d-block p-1 d-sm-inline-block mt-1">
                       <div id="like<%= job_application.id %>">
@@ -206,9 +210,7 @@
               <% job.contracts.hire_group.each do |contract| %>
                 <hr style="margin-top:0;">
                 <div class="d-flex justify-content-between flex-column flex-lg-row">
-                  <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract,
-                                                                               job: nil,
-                                                                               freelancer_profile: contract.freelancer_profile } %>
+                  <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job: nil, freelancer_profile: contract.freelancer_profile, modal_id: contract.id} %>
                   <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: contract.freelancer_profile,
                                                                            job_application: nil,
                                                                            editable: false } %>

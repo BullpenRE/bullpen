@@ -106,7 +106,6 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       def create
         error_message = nil
         job = Job.new(permitted_params[:job])
-        job.user_id = EmployerProfile.find_by(id: permitted_params[:job][:employer_profile_id]).user_id
 
         ApplicationRecord.transaction do
           job.save!

@@ -13,12 +13,10 @@ class User < ApplicationRecord
   validates :last_name, presence: true
 
   has_one :freelancer_profile, dependent: :destroy
-  has_many :jobs, dependent: :destroy
   has_many :freelancer_real_estate_skills, through: :freelancer_profile
   has_many :freelancer_sectors, through: :freelancer_profile
   has_one :employer_profile, dependent: :destroy
   has_many :employer_sectors, through: :employer_profile
-  has_many :job_applications, dependent: :destroy
   has_many :sent_messages, class_name: 'Message', foreign_key: :from_user_id
   has_many :received_messages, class_name: 'Message', foreign_key: :to_user_id
 
@@ -46,9 +44,10 @@ class User < ApplicationRecord
   end
 
   def posted_jobs
-    return nil unless employer?
+    # TODO: Need to move to freelancer_profile
+    return nil unless employer? && employer_profile
 
-    jobs.posted
+    employer_profile.jobs.posted
   end
 
   def avatar

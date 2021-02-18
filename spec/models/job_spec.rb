@@ -8,11 +8,10 @@ RSpec.describe Job, type: :model do
   it 'factory works' do
     expect(job).to be_valid
     expect(retainer_job).to be_valid
-    expect(job.user_id).to eq(employer_profile.user_id)
   end
 
   context 'Validations' do
-    it { is_expected.to validate_presence_of(:user_id) }
+    it { is_expected.to validate_presence_of(:employer_profile_id) }
 
     describe 'pay_ranges' do
       it 'can be nil' do
@@ -124,15 +123,15 @@ RSpec.describe Job, type: :model do
   end
 
   context 'Scopes' do
-    let!(:jim) { FactoryBot.create(:user) }
-    let!(:jane) { FactoryBot.create(:user) }
+    let!(:jim) { FactoryBot.create(:freelancer_profile) }
+    let!(:jane) { FactoryBot.create(:freelancer_profile) }
     let!(:attractive_job) { FactoryBot.create(:job, state: 'posted') }
     let!(:bad_looking_job) { FactoryBot.create(:job, state: 'posted') }
     let!(:job1) { FactoryBot.create(:job) }
     let!(:job2) { FactoryBot.create(:job, job_announced: true) }
-    let!(:jim_job_application) { FactoryBot.create(:job_application, state: 'draft', job: job, user: jim) }
-    let!(:jim_job_application_withdrawn) { FactoryBot.create(:job_application, state: 'withdrawn', job: job1, user: jim) }
-    let!(:jane_attractive_job_application) { FactoryBot.create(:job_application, state: 'draft', job: attractive_job, user: jane) }
+    let!(:jim_job_application) { FactoryBot.create(:job_application, state: 'draft', job: job, freelancer_profile: jim) }
+    let!(:jim_job_application_withdrawn) { FactoryBot.create(:job_application, state: 'withdrawn', job: job1, freelancer_profile: jim) }
+    let!(:jane_attractive_job_application) { FactoryBot.create(:job_application, state: 'draft', job: attractive_job, freelancer_profile: jane) }
 
     it '.not_applied_or_withdrawn' do
       expect(Job.not_applied_or_withdrawn(jim)).to include(attractive_job)

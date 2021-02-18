@@ -14,7 +14,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
 
     index do
       column 'Job Title' do |job_application|
-        "#{job_application.job.title} by #{job_application.job.user.email}"
+        "#{job_application.job.title} by #{job_application.job.employer_profile.email}"
       end
       column 'Freelancer' do |job_application|
         link_to(job_application.freelancer_profile.email, admin_user_path(job_application.freelancer_profile.user_id))
@@ -116,7 +116,6 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       def create
         error_message = nil
         job_application = JobApplication.new(permitted_params[:job_application])
-        job_application.user_id = FreelancerProfile.find_by(id: permitted_params[:job_application][:freelancer_profile_id]).user_id
         job_application.applied_at = Time.current if permitted_params[:job_application][:applied_at].blank?
 
         ApplicationRecord.transaction do
