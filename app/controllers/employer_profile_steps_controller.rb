@@ -33,6 +33,7 @@ class EmployerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :about_company
 
     @employer_profile.update(company_params)
+    mixpanel_employer_flow_tracker
     render_wizard @user
 
     true
@@ -42,6 +43,7 @@ class EmployerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :employee_count
 
     @employer_profile.update(employee_count_params)
+    mixpanel_employer_flow_tracker
     render_wizard @user
 
     true
@@ -51,6 +53,7 @@ class EmployerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :type_of_work
 
     @employer_profile.update(category: params.require(:employer_profile).values.dig(0))
+    mixpanel_employer_flow_tracker
     render_wizard @user
 
     true
@@ -63,6 +66,7 @@ class EmployerProfileStepsController < ApplicationController
     sectors_params&.each do |sector|
       EmployerSector.create(employer_profile_id: @employer_profile.id, sector_id: sector)
     end
+    mixpanel_employer_flow_tracker
     render_wizard @user
 
     true
@@ -74,12 +78,14 @@ class EmployerProfileStepsController < ApplicationController
     @employer_profile.update(last_question_params)
     @employer_profile.completed = true
     @employer_profile.save
+    mixpanel_employer_flow_tracker
     render_wizard @user
 
     true
   end
 
   def finish_wizard_path
+    mixpanel_employer_flow_tracker
     employer_jobs_path
   end
 
@@ -131,5 +137,11 @@ class EmployerProfileStepsController < ApplicationController
   def save_current_step
     @employer_profile.current_step = wizard_value(next_step)
     @employer_profile.save
+  end
+
+  def mixpanel_employer_flow_tracker
+    MixpanelWorker.perform_async(current_user.id, 'Employer Steps', { 'user': current_user.email,
+                                                                      'role': current_user.employer_profile.role_in_company,
+                                                                      'step': step })
   end
 end

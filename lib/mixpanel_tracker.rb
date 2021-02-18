@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class MixpanelTracker
+  include Singleton
+
   def initialize
     @tracker = Mixpanel::Tracker.new(ENV['MIXPANEL_TOKEN'])
   end
