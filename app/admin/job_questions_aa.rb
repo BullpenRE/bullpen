@@ -8,14 +8,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     filter :job_id,
            as: :select,
            label: 'Job',
-           collection: Job.find_each.map {|job| ["#{job.title} - #{job.user.email}", job.id] }
+           collection: Job.find_each.map {|job| ["#{job.title} - #{job.employer_profile.email}", job.id] }
     filter :description, label: 'Question Text'
 
 
     index do
       column :job
       column 'User' do |question|
-        link_to(question.job.user.email, admin_user_path(question.job.user_id))
+        link_to(question.job.employer_profile.email, admin_user_path(question.job.employer_profile.user_id))
       end
       column 'Question', sortable: :description do |question|
         question.description
@@ -29,7 +29,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
           link_to(question.job.title, admin_job_path(question.job_id))
         end
         row 'User' do
-          link_to(job_question.job.user.email, admin_user_path(job_question.job.user_id))
+          link_to(job_question.job.employer_profile.email, admin_user_path(job_question.job.employer_profile.user_id))
         end
         row :description, label: 'Question'
         row :created_at

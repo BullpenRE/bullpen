@@ -112,13 +112,13 @@
               <% job.job_applications.applied.without_contracts_for(job).each do |job_application| %>
                 <hr style="margin-top:0;">
                 <div class="d-flex justify-content-between flex-column flex-lg-row">
-                  <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile,
+                  <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.freelancer_profile,
                                                                              job_application: job_application,
                                                                              editable: false } %>
                   <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
-                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: job_application.user_id, job_title: job_application.job.title, id: job_application.id, redirect_reference: '' } %>
+                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: job_application.freelancer_profile.user_id, job_title: job_application.job.title, id: job_application.id, redirect_reference: '' } %>
                   <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
-                  <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: nil, job: job_application.job, freelancer_profile: job_application.user.freelancer_profile } %>
+                  <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: nil, job: job_application.job, freelancer_profile: job_application.freelancer_profile } %>
                   <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
                     <div class="d-block p-1 d-sm-inline-block mt-1">
                       <div id="like<%= job_application.id %>">

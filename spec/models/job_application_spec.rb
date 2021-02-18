@@ -11,15 +11,15 @@ RSpec.describe JobApplication, type: :model do
     expect(job_application_with_attachments).to be_valid
     expect(job_application_with_attachments.work_samples.attached?).to be_truthy
     expect(job_application_with_attachments.cover_letter).to_not be_blank
-    expect(job_application.user_id).to eq(freelancer_profile.user_id)
+    expect(job_application.freelancer_profile).to eq(freelancer_profile)
   end
 
   context 'Validations' do
-    it 'the combination of job_id and user_id is unique' do
+    it 'the combination of job_id and employer_profile_id is unique' do
       duplicate = FactoryBot.create(:job_application)
       duplicate.job_id = job_application.job_id
       expect(duplicate).to be_valid
-      duplicate.user_id = job_application.user_id
+      duplicate.freelancer_profile_id = job_application.freelancer_profile_id
       expect(duplicate).to_not be_valid
     end
 
@@ -33,9 +33,9 @@ RSpec.describe JobApplication, type: :model do
     end
 
     describe 'whenever a template is set to true' do
-      it 'on create, it is set to false for all other job_applications for the same user' do
+      it 'on create, it is set to false for all other job_applications for the same freelancer' do
         expect(job_application.template).to be_truthy
-        FactoryBot.create(:job_application, user_id: freelancer_profile.user_id, template: true)
+        FactoryBot.create(:job_application, freelancer_profile: freelancer_profile, template: true)
         expect(job_application.reload.template).to be_falsey
       end
       it 'on update, it is set to false for all other job_applications' do

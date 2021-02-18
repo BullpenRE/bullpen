@@ -14,7 +14,7 @@ class JobApplication < ApplicationRecord
 
   attr_accessor :job_application_id, :step
 
-  validates :job_id, uniqueness: { scope: :user_id }
+  validates :job_id, uniqueness: { scope: :freelancer_profile_id }
   validates :work_samples,
             limit: { max: MAX_WORK_SAMPLES_COUNT, message: "quantity must be #{MAX_WORK_SAMPLES_COUNT} or less" }
   validates :work_samples, size: { less_than: MAX_FILE_SIZE, message: 'must be less than 20MB in size' }
@@ -35,6 +35,6 @@ class JobApplication < ApplicationRecord
   private
 
   def update_other_user_job_application_templates
-    user.freelancer_profile.job_applications.where.not(id: id).update_all(template: false) if template?
+    freelancer_profile.job_applications.where.not(id: id).update_all(template: false) if template?
   end
 end
