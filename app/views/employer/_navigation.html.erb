@@ -15,9 +15,11 @@
         <li class="nav-item<%= ' active' if section == 'talent' %>">
           <%= link_to 'Find Talent',  employer_talent_index_path, class: 'nav-link' %>
         </li>
-        <li class="nav-item<%= ' active' if section == 'jobs' %>">
-          <%= link_to 'Your Jobs', employer_jobs_path, class: 'nav-link' %>
-        </li>
+        <% if current_user.employer_profile.user.jobs.any? %>
+          <li class="nav-item<%= ' active' if section == 'jobs' %>">
+            <%= link_to 'Your Jobs', employer_jobs_path, class: 'nav-link' %>
+          </li>
+        <% end %>
         <% if current_user.employer_profile.interview_requests.not_rejected.employer_visible.any? %>
           <li class="nav-item<%= ' active' if section == 'interviews' %>">
             <%= link_to 'Interviews', employer_interviews_path, class: 'nav-link' %>
