@@ -18,6 +18,8 @@ class Employer::JobsController < ApplicationController
     end
 
     delete_session_variable
+
+    redirect_to root_path if @jobs.blank?
   end
 
   def destroy
