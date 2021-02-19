@@ -20,8 +20,9 @@ class JobApplication < ApplicationRecord
   validates :work_samples, size: { less_than: MAX_FILE_SIZE, message: 'must be less than 20MB in size' }
   validates :bid_amount, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   scope :draft_or_applied, -> { where(state: %w[draft applied]) }
-  scope :without_contracts_for, lambda { |job|
-    where.not(user_id: FreelancerProfile.with_contracts_for(job).pluck(:user_id))
+  scope :without_contracts, lambda {
+    joins('LEFT OUTER JOIN contracts ON contracts.job_id = job_applications.job_id '\
+          'AND contracts.freelancer_profile_id = job_applications.freelancer_profile_id').where('contracts.id IS NULL')
   }
   enum state: { 'draft': 0, 'applied': 1, 'withdrawn': 2, 'declined': 3 }
 
