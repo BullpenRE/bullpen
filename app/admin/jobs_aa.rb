@@ -2,7 +2,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
   ActiveAdmin.register Job do
     menu label: 'Jobs'
 
-    includes :user, :job_sectors, :job_skills, :job_softwares, :job_questions
+    includes :employer_profile, :job_sectors, :job_skills, :job_softwares, :job_questions
 
     filter :employer_profile_user_email, as: :string, label: 'Employer Email'
     filter :state, as: :select, collection: Job.states
