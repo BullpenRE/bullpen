@@ -38,6 +38,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
       respond_js_format(:preview_application)
     end
 
+    mixpanel_freelancer_application_flow_tracker
     true
   end
 
@@ -59,6 +60,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
     respond_js_format(:application_step_2)
 
+    mixpanel_freelancer_application_flow_tracker
     true
   end
 
@@ -73,6 +75,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
       job_application.update(state: 'applied', applied_at: Time.current)
       apply_flash_notice!
     end
+    mixpanel_freelancer_application_flow_tracker
     redirect_to freelancer_applications_path
   end
 
@@ -184,5 +187,11 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     return false if find_blob_by_key.blank?
 
     find_blob_by_key.attachments[0].present?
+  end
+
+  def mixpanel_freelancer_application_flow_tracker
+    MixpanelWorker.perform_async(current_user.id, 'Apply a Job', { 'user': current_user.email,
+                                                                   'job': @job_application,
+                                                                   'step': step })
   end
 end
