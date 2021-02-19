@@ -25,7 +25,7 @@
             <%= link_to 'Interviews', employer_interviews_path, class: 'nav-link' %>
           </li>
         <% end %>
-        <% if current_user.employer_profile.contracts.any? %>
+        <% if current_user.employer_profile.contracts.hire_group.any? %>
           <li class="nav-item<%= ' active' if section == 'contracts' %>">
             <%= link_to 'Contracts', employer_contracts_path, class: 'nav-link' %>
           </li>
