@@ -78,11 +78,14 @@ RSpec.describe JobApplication, type: :model do
   end
 
   context 'Scopes' do
-    let(:freelancer_profile_dima)  { FactoryBot.create(:freelancer_profile) }
-    let(:freelancer_profile_nata)  { FactoryBot.create(:freelancer_profile) }
-    let(:freelancer_profile_erik)  { FactoryBot.create(:freelancer_profile) }
-    let(:employer_profile) { FactoryBot.create(:employer_profile) }
-    let(:job) { FactoryBot.create(:job, employer_profile: employer_profile) }
+    let(:freelancer_profile_dima) { FactoryBot.create(:freelancer_profile) }
+    let(:freelancer_profile_nata) { FactoryBot.create(:freelancer_profile) }
+    let(:freelancer_profile_erik) { FactoryBot.create(:freelancer_profile) }
+    let!(:dima_user) { freelancer_profile_dima.user }
+    let!(:nata_user) { freelancer_profile_nata.user }
+    let!(:erik_user) { freelancer_profile_erik.user }
+    let!(:employer_profile) { FactoryBot.create(:employer_profile) }
+    let!(:job) { FactoryBot.create(:job, employer_profile: employer_profile) }
     let!(:declined_job_application) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile_dima, job: job, state: 'declined') }
     let!(:draft_job_application) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile_nata, job: job, state: 'draft') }
     let!(:applied_job_application) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile_erik, job: job, state: 'applied') }
@@ -93,18 +96,20 @@ RSpec.describe JobApplication, type: :model do
       expect(JobApplication.draft_or_applied).to_not include(declined_job_application)
     end
 
-    describe '.without_contract' do
-      let(:dima_freelancer_profile)  { FactoryBot.create(:freelancer_profile, :complete) }
-      let(:nata_freelancer_profile)  { FactoryBot.create(:freelancer_profile) }
-      let(:erik_freelancer_profile)  { FactoryBot.create(:freelancer_profile) }
-      let!(:dima_job_application) { FactoryBot.create(:job_application, freelancer_profile: dima_freelancer_profile, job: job) }
-      let!(:nata_job_application) { FactoryBot.create(:job_application, freelancer_profile: nata_freelancer_profile, job: job) }
-      let!(:erik_job_application) { FactoryBot.create(:job_application, freelancer_profile: erik_freelancer_profile, job: job) }
-      let!(:dima_job_contract) { FactoryBot.create(:contract, job: job, freelancer_profile: dima_freelancer_profile) }
+    describe '.without_contracts' do
+      let!(:job_for_dima) { FactoryBot.create(:job, employer_profile: employer_profile) }
+      let!(:dima_job_application) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile_dima, job: job_for_dima) }
+      let!(:nata_job_application) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile_nata, job: job_for_dima) }
+      let!(:erik_job_application) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile_erik, job: job_for_dima) }
+      let!(:contract) { FactoryBot.create(:contract, job: job_for_dima, freelancer_profile: freelancer_profile_dima, employer_profile: employer_profile) }
 
-      it 'filters out job_applications where a contract matches up to' do
-        expect(job.job_applications.without_contract).to include(nata_job_application, erik_job_application)
-        expect(job.job_applications.without_contract).to_not include(dima_job_application)
+      it 'shows job_applications that do not have a contract' do
+        expect(job_for_dima.job_applications.without_contracts).to include(nata_job_application)
+        expect(job_for_dima.job_applications.without_contracts).to include(erik_job_application)
+      end
+
+      it 'hides job_applications that has a corresponding contract with the sane job and freelancer_profile' do
+        expect(job_for_dima.job_applications.without_contracts).to_not include(dima_job_application)
       end
     end
   end

@@ -5,10 +5,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     permit_params :job_id, :description
     includes :job
 
-    filter :job_id,
-           as: :select,
-           label: 'Job',
-           collection: Job.find_each.map {|job| ["#{job.title} - #{job.employer_profile.email}", job.id] }
+    # filter :job_id,
+    #        as: :select,
+    #        label: 'Job',
+    #        collection: Job.find_each.map { |job| ["#{job.title} - #{job.employer_profile.email}", job.id] }
     filter :description, label: 'Question Text'
 
 

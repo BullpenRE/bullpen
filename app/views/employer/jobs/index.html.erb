@@ -85,10 +85,10 @@
         <div class="d-flex flex-row justify-content-between">
           <div class="column">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <% if job.job_applications.applied.without_contract.any? %>
+              <% if job.job_applications.applied.without_contracts.any? %>
                 <li class="nav-item" role="presentation">
                   <a class="font-weight-bold nav-link" id="application-tab<%= job.id %>" data-toggle="tab" href="#application" role="tab" aria-controls="application" aria-selected="true">
-                    Applications <span class="text-secondary">(<%= job.job_applications.applied.without_contract.size %>)</span>
+                    Applications <span class="text-secondary">(<%= job.job_applications.applied.without_contracts.size %>)</span>
                   </a>
                 </li>
               <% end %>
@@ -113,7 +113,7 @@
         <div id="collapseApplications<%= job.id %>" class="collapse">
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="application<%= job.id %>" role="tabpanel" aria-labelledby="application-tab">
-              <% job.job_applications.applied.without_contract.each do |job_application| %>
+              <% job.job_applications.applied.without_contracts.each do |job_application| %>
                 <hr style="margin-top:0;">
                 <div class="d-flex justify-content-between flex-column flex-lg-row">
                   <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.freelancer_profile,
