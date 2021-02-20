@@ -125,7 +125,10 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   end
 
   def application_template
-    @application_template ||= @user.job_applications.where.not(id: job_application.id).find_by(template: true)
+    @application_template ||= @user.freelancer_profile
+                                   .job_applications
+                                   .where.not(id: job_application.id)
+                                   .find_by(template: true)
   end
 
   def can_attach_work_sample?
@@ -136,11 +139,13 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     return if application_template.blank?
 
     job_application.update(cover_letter: application_template.cover_letter) if job_application.cover_letter.blank?
-    job_application.work_sample.attach(application_template.work_sample.blob) if none_attached_and_template_exists?
+    if none_attached_and_template_exists?
+      job_application.work_samples.attach(application_template.work_samples.map(&:blob))
+    end
   end
 
   def none_attached_and_template_exists?
-    !job_application.work_sample.attached? && application_template.work_sample.attached?
+    !job_application.work_samples.attached? && application_template.work_samples.attached?
   end
 
   def step_2_params
@@ -162,11 +167,17 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   end
 
   def new_job_application
-    @job_application ||= current_user.job_applications.build(job_id: (params[:job_id] || params[:job_application][:job_id]))
+    @job_application ||= current_user.freelancer_profile
+                                     .job_applications
+                                     .build(
+                                       user_id: current_user.id,
+                                       job_id: (params[:job_id] || params[:job_application][:job_id])
+                                     )
   end
 
   def job_application
-    @job_application ||= current_user.job_applications
+    @job_application ||= current_user.freelancer_profile
+                                     .job_applications
                                      .find_by(id: (params[:job_app] || params[:job_application][:job_application_id]))
   end
 

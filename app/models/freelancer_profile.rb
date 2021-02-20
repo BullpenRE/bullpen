@@ -16,12 +16,10 @@ class FreelancerProfile < ApplicationRecord
   has_many :interview_requests, dependent: :destroy
   has_many :contracts, dependent: :destroy
   has_many :reviews, dependent: :destroy
+  has_many :job_applications, dependent: :destroy
   has_one_attached :avatar
 
   scope :users, -> { joins(:user) }
-  scope :with_contracts_for, lambda { |job|
-    where(id: job.contracts.pluck(:freelancer_profile_id))
-  }
 
   enum professional_years_experience: { '0-2': 0, '2-5': 1, '5-10': 2, '>10': 3 }
   enum curation: { pending: 0, declined: 1, accepted: 2 }

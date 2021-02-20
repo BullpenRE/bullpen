@@ -43,7 +43,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
         row :motivation_augment
         row :motivation_other
         row "ALL Interview Requests Sent to Freelancers", :interview_requests do
-          employer_profile.interview_requests.map{ |i_r| link_to(i_r.freelancer_profile.email, admin_interview_request_path(i_r.id)) }
+          employer_profile.interview_requests.map{ |i_r| link_to(i_r.freelancer_profile.email, admin_interview_request_path(i_r.id)) }.join('<br>').html_safe
+        end
+        row 'Jobs' do
+          employer_profile.jobs.map { |job| link_to(job.title, admin_job_path(job.id)) }.join('<br>').html_safe
         end
         row 'Contracts' do
           employer_profile.contracts.map { |contract| link_to("Hired #{contract.freelancer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe

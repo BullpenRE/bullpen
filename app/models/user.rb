@@ -46,9 +46,9 @@ class User < ApplicationRecord
   end
 
   def posted_jobs
-    return nil unless employer?
+    return nil unless employer? && employer_profile
 
-    jobs.posted
+    employer_profile.jobs.posted
   end
 
   def avatar

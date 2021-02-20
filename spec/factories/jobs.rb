@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :job do
-    association :user, :employer
+    employer_profile
     title { Faker::Job.title }
     short_description { Faker::Company.catch_phrase }
     position_length { Job::position_lengths.values.sample }
@@ -20,6 +20,10 @@ FactoryBot.define do
       contract_type { 3 }
       pay_range_low { 7000 }
       pay_range_high { nil }
+    end
+
+    after(:build) do |job, evaluator|
+      job.user_id = evaluator.employer_profile.user_id
     end
   end
 end
