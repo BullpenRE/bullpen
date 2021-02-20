@@ -9,7 +9,8 @@ namespace :db do
       Rake::Task['db:drop'].invoke
       Rake::Task['db:create'].invoke
       `pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d bullpen_development #{dump_file}`
-      puts "\n'#{dump_file}' restored to wyzyr_development\n"
+      ActiveStorage::Attachment.destroy_all
+      puts "\n'#{dump_file}' restored to bullpen_development\n"
     else
       puts 'No database dump file found to import'
     end
