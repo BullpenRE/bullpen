@@ -4,7 +4,11 @@
   <% freelancer_profile.freelancer_profile_experiences.order(current_job: :desc, end_date: :desc).each do |work_experience| %>
       <div class="d-flex">
         <div class="mb-2 mr-2 text-wrap text-break"><b><%= work_experience.company %></b><br><%= work_experience.job_title %></div>
-        <div class="ml-auto mr-1"><i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date&.strftime('%b %Y') %></i></div>
+        <div class="ml-auto mr-1">
+          <% if work_experience.start_date.present? %>
+            <i><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date&.strftime('%b %Y') %></i>
+          <% end %>
+        </div>
         <% if editable %>
           <button class="fas fa-edit text-primary ml-1" type="button"  data-toggle="modal" data-target="#editWorkExperienceModal-<%= work_experience.id %>"></button>
         <% end %>

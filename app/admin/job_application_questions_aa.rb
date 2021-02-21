@@ -11,7 +11,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
           link_to(job_application_question.job_question.job.title, admin_job_path(job_application_question.job_question.job_id))
         end
         row 'Application for' do
-          link_to(job_application_question.job_application.user.email, admin_job_application_path(job_application_question.job_application_id))
+          link_to(job_application_question.job_application.freelancer_profile.email, admin_job_application_path(job_application_question.job_application_id))
         end
         row 'Question' do
           link_to(job_application_question.job_question.description, admin_job_question_path(job_application_question.job_question_id))

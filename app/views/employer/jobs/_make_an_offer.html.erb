@@ -1,4 +1,4 @@
-<div class="modal" id="makeAnOffer<%= contract.present? ? contract.id : job.id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+<div class="modal" id="makeAnOffer<%= modal_id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <!--  Header with '×'-->
@@ -13,7 +13,7 @@
         <div class="row mb-3">
           <div class="col-sm-6">
             <h5 class="mt-1">From</h5>
-            <%= contract.present? ? contract.employer_profile.full_name : job.user.employer_profile.full_name %>, <%= contract.present? ? contract.employer_profile.company_name : job.user.employer_profile.company_name %>
+            <%= contract.present? ? contract.employer_profile.full_name : job.employer_profile.full_name %>, <%= contract.present? ? contract.employer_profile.company_name : job.employer_profile.company_name %>
           </div>
           <div class="col-sm-6">
             <h5 class="mt-1">To</h5>
