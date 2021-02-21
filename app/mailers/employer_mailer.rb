@@ -6,13 +6,13 @@ class EmployerMailer < ApplicationMailer
   def new_job_application(user, job_application)
     @user = user
     @job_application = job_application
-    mail(to: job_application.job.user.email, subject: "New applicant for #{job_application.job.title}")
+    mail(to: job_application.job.employer_profile.email, subject: "New applicant for #{job_application.job.title}")
   end
 
   def job_application_was_withdrawn(job_application)
     @job_application = job_application
     @url = public_job_url(job_application.job.slug)
-    mail(to: @job_application.job.user.email, subject: "#{@job_application.user.full_name} withdrew their application")
+    mail(to: @job_application.job.employer_profile.email, subject: "#{@job_application.freelancer_profile.full_name} withdrew their application")
   end
 
   def interview_request_declined(interview_request)

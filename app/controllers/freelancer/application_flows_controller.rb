@@ -123,7 +123,10 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   end
 
   def application_template
-    @application_template ||= @user.job_applications.where.not(id: job_application.id).find_by(template: true)
+    @application_template ||= @user.freelancer_profile
+                                   .job_applications
+                                   .where.not(id: job_application.id)
+                                   .find_by(template: true)
   end
 
   def can_attach_work_sample?
@@ -162,11 +165,17 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   end
 
   def new_job_application
-    @job_application ||= current_user.job_applications.build(job_id: (params[:job_id] || params[:job_application][:job_id]))
+    @job_application ||= current_user.freelancer_profile
+                                     .job_applications
+                                     .build(
+                                       user_id: current_user.id,
+                                       job_id: (params[:job_id] || params[:job_application][:job_id])
+                                     )
   end
 
   def job_application
-    @job_application ||= current_user.job_applications
+    @job_application ||= current_user.freelancer_profile
+                                     .job_applications
                                      .find_by(id: (params[:job_app] || params[:job_application][:job_application_id]))
   end
 
