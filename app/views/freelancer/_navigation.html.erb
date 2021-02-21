@@ -7,7 +7,7 @@
         <li class="nav-item<%= ' active' if section == 'jobs' %>">
           <%= link_to 'Find a job', freelancer_jobs_path, class: "nav-link" %>
         </li>
-        <% if current_user.job_applications.any? %>
+        <% if current_user.freelancer_profile.job_applications.any? %>
           <li class="nav-item<%= ' active' if section == 'applications' %>">
             <%= link_to 'Applications', freelancer_applications_path, class: 'nav-link' %>
           </li>

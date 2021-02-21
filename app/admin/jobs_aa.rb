@@ -4,10 +4,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
 
     includes :user, :job_sectors, :job_skills, :job_softwares, :job_questions
 
-    filter :user_email, as: :string, label: 'User Email'
+    filter :employer_profile_user_email, as: :string, label: 'Employer Email'
     filter :state, as: :select, collection: Job.states
 
-    permit_params :user_id,
+    permit_params :employer_profile_id,
                   :title,
                   :short_description,
                   :position_length,
@@ -24,7 +24,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
                   :job_announced
 
     index do
-      column :user
+      column :employer_profile
       column :title
       column :short_description
       column :state
@@ -33,9 +33,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
 
     show title: 'Job' do |job|
       attributes_table do
-        row 'Email' do
-          job.user.email
-        end
+        row :employer_profile
         row :created_at
         row :updated_at
         row :title
@@ -66,7 +64,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
           job.job_questions.map { |job_question| link_to(job_question.description, admin_job_question_path(job_question.id)) }.push(link_to('Add', new_admin_job_question_path(:job_question => { :job_id => job.id }))).join('<br>').html_safe
         end
         row 'Job Applications' do
-          job.job_applications.map { |job_application| link_to("#{job_application.user.email}: #{job_application.created_at.strftime("%m-%d-%Y")}", admin_job_application_path(job_application.id)) }.push(link_to('Add', new_admin_job_application_path(:job_application=> { :job_id => job.id }))).join('<br>').html_safe
+          job.job_applications.map { |job_application| link_to("#{job_application.freelancer_profile.email}: #{job_application.created_at.strftime("%m-%d-%Y")}", admin_job_application_path(job_application.id)) }.push(link_to('Add', new_admin_job_application_path(:job_application=> { :job_id => job.id }))).join('<br>').html_safe
         end
         row 'Contracts' do
           job.contracts.map { |contract| link_to("#{contract.employer_profile.email} hiring #{contract.freelancer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.push(link_to('Add', new_admin_contract_path(:contract=> { :job_id => job.id }))).join('<br>').html_safe
@@ -77,13 +75,13 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     end
 
     form do |f|
-      f.inputs "#{f.object&.user&.email || 'New'} Job" do
+      f.inputs "#{f.object&.employer_profile&.email || 'New'} Job" do
 
         if f.object.new_record?
-          f.input :user,
+          f.input :employer_profile,
                   as: :select, input_html: { class: "select2" },
-                  collection: User.employers.order(:email).pluck(:email, :id),
-                  label: "User (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
+                  collection: EmployerProfile.all.map{ |profile| [profile.email, profile.id] },
+                  label: 'Employer'
         end
         f.input :title
         f.input :short_description
@@ -108,6 +106,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       def create
         error_message = nil
         job = Job.new(permitted_params[:job])
+        job.user_id = EmployerProfile.find_by(id: permitted_params[:job][:employer_profile_id]).user_id
 
         ApplicationRecord.transaction do
           job.save!

@@ -4,6 +4,7 @@ RSpec.describe EmployerProfile, type: :model do
   let(:user) { FactoryBot.create(:user, :employer) }
   let!(:employer_profile) { FactoryBot.create(:employer_profile, user: user) }
   let(:employer_profile_complete) { FactoryBot.create(:employer_profile, :complete) }
+  let(:job) { FactoryBot.create(:job, employer_profile: employer_profile) }
 
   it 'factory works' do
     expect(employer_profile).to be_valid
@@ -71,6 +72,12 @@ RSpec.describe EmployerProfile, type: :model do
         employer_profile.destroy
         expect(Review.exists?(review.id)).to be_falsey
       end
+    end
+
+    it 'has many jobs dependent destroy' do
+      expect(employer_profile.jobs).to include(job)
+      employer_profile.destroy
+      expect(Job.exists?(job.id)).to be_falsey
     end
   end
 

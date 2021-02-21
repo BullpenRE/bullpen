@@ -8,37 +8,61 @@
       </div>
       <div class="modal-body pt-0">
         <div class="d-flex justify-content-between flex-column flex-lg-row mb-3">
-          <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.user.freelancer_profile,
+          <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: job_application.freelancer_profile,
                                                                    job_application: job_application,
                                                                    editable: false } %>
         </div>
         <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <a class="nav-link active font-weight-bold" id="application-tab" data-toggle="tab" href="#application" role="tab" aria-controls="application" aria-selected="true">Application</a>
+            <a class="nav-link active font-weight-bold" id="application-tab<%= "#{job_application.id}-#{job_application.job_id}" %>" data-toggle="tab" href="#application<%= "#{job_application.id}-#{job_application.job_id}" %>" role="tab" aria-controls="application<%= "#{job_application.id}-#{job_application.job_id}" %>" aria-selected="true">Application</a>
           </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link font-weight-bold" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-          </li>
-          <% if job_application.user.freelancer_profile.reviews.present? %>
+          <% if current_user.freelancer? %>
             <li class="nav-item" role="presentation">
-              <a class="font-weight-bold nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">
-                <%= "Review".pluralize(job_application.user.freelancer_profile.reviews.size) %> <span class="text-secondary">(<%= job_application.user.freelancer_profile.reviews.size %>)</span>
-              </a>
+              <a class="nav-link font-weight-bold" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
             </li>
+            <% if job_application.freelancer_profile.reviews.present? %>
+              <li class="nav-item" role="presentation">
+                <a class="font-weight-bold nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">
+                  <%= "Review".pluralize(job_application.freelancer_profile.reviews.size) %> <span class="text-secondary">(<%= job_application.freelancer_profile.reviews.size %>)</span>
+                </a>
+              </li>
+            <% end %>
+          <% elsif current_user.employer? %>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link font-weight-bold" id="profile-tab<%= job_application.id %>" data-toggle="tab" href="#profile<%= job_application.id %>" role="tab" aria-controls="profile<%= job_application.id %>" aria-selected="false">Profile</a>
+            </li>
+            <% if job_application.freelancer_profile.reviews.present? %>
+              <li class="nav-item" role="presentation">
+                <a class="font-weight-bold nav-link" id="review-tab<%= job_application.id %>" data-toggle="tab" href="#review<%= job_application.id %>" role="tab" aria-controls="review<%= job_application.id %>" aria-selected="false">
+                  <%= "Review".pluralize(job_application.freelancer_profile.reviews.size) %> <span class="text-secondary">(<%= job_application.freelancer_profile.reviews.size %>)</span>
+                </a>
+              </li>
+            <% end %>
           <% end %>
         </ul>
         <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="application" role="tabpanel" aria-labelledby="application-tab">
+          <div class="tab-pane fade show active" id="application<%= "#{job_application.id}-#{job_application.job_id}" %>" role="tabpanel" aria-labelledby="application-tab">
             <%= render partial: 'shared/freelancer_application', locals: { job_application: job_application } %>
           </div>
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <%= render 'shared/freelancer_profile_tab', freelancer_profile: job_application.user.freelancer_profile %>
-          </div>
-          <% if job_application.user.freelancer_profile.reviews.present? %>
-            <div class="tab-pane fade show" id="review" role="tabpanel" aria-labelledby="review-tab">
-              <%= render partial: 'shared/freelancer_profile_review', locals: { freelancer_profile: job_application.user.freelancer_profile } %>
+          <% if current_user.freelancer? %>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <%= render 'shared/freelancer_profile_tab', freelancer_profile: job_application.freelancer_profile %>
             </div>
+            <% if job_application.freelancer_profile.reviews.present? %>
+              <div class="tab-pane fade show" id="review" role="tabpanel" aria-labelledby="review-tab">
+                <%= render partial: 'shared/freelancer_profile_review', locals: { freelancer_profile: job_application.freelancer_profile } %>
+              </div>
+            <% end %>
+          <% elsif current_user.employer? %>
+            <div class="tab-pane fade" id="profile<%= job_application.id %>" role="tabpanel" aria-labelledby="profile-tab">
+              <%= render 'shared/freelancer_profile_tab', freelancer_profile: job_application.freelancer_profile %>
+            </div>
+            <% if job_application.freelancer_profile.reviews.present? %>
+              <div class="tab-pane fade show" id="review<%= job_application.id %>" role="tabpanel" aria-labelledby="review-tab">
+                <%= render partial: 'shared/freelancer_profile_review', locals: { freelancer_profile: job_application.freelancer_profile } %>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>

@@ -33,18 +33,6 @@ describe User do
       it { should belong_to(:signup_promo).optional }
     end
 
-    describe 'jobs' do
-      let!(:job) { FactoryBot.create(:job, user: employer_user) }
-      it 'has many' do
-        expect(employer_user.jobs).to include(job)
-      end
-
-      it 'dependent destroy' do
-        employer_user.destroy
-        expect(Job.exists?(job.id)).to be_falsey
-      end
-    end
-
     describe 'freelancer_sectors and freelancer_real_estate_skills' do
       let(:sector) { FactoryBot.create(:sector, description: 'Special Sector') }
       let(:real_estate_skill) { FactoryBot.create(:real_estate_skill, description: 'Special Real Estate Skill') }
@@ -58,9 +46,9 @@ describe User do
     end
 
     describe 'job_applications' do
-      let!(:job_application) { FactoryBot.create(:job_application, user: freelancer_user) }
+      let!(:job_application) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile) }
       it 'has many job_applications with dependent destroy' do
-        expect(freelancer_user.job_applications).to include(job_application)
+        expect(freelancer_profile.job_applications).to include(job_application)
         freelancer_user.destroy
         expect(JobApplication.exists?(job_application.id)).to be_falsey
       end
