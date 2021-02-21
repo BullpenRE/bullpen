@@ -20,7 +20,8 @@
       </ul>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-          <%= render partial: 'shared/freelancer_skills_education', locals: { freelancer_profile: @freelancer_profile } %>
+          <%= render partial: 'shared/freelancer_skills_education', locals: { freelancer_profile: @freelancer_profile,
+                                                                              editable: @freelancer_profile.editable?(current_user) } %>
         </div>
         <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">...</div>
         <div class="tab-pane fade" id="coverLetter" role="tabpanel" aria-labelledby="coverLetter-tab">
@@ -31,7 +32,8 @@
       </div>
     <% else %>
       <hr>
-      <%= render partial: 'shared/freelancer_skills_education', locals: { freelancer_profile: @freelancer_profile } %>
+      <%= render partial: 'shared/freelancer_skills_education', locals: { freelancer_profile: @freelancer_profile,
+                                                                          editable: @freelancer_profile.editable?(current_user) } %>
     <% end %>
   </div>
 </div>
