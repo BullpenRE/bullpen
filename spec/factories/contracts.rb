@@ -12,7 +12,7 @@ FactoryBot.define do
     trait :with_job do
       job
       after(:create) do |contract, _evaluator|
-        contract.update(employer_profile_id: contract.job.user.employer_profile.id)
+        contract.update(employer_profile_id: contract.job.employer_profile.id)
         contract.update(title: contract.job.title)
         contract.update(job_description: contract.job.short_description)
         contract.update(contract_type: contract.job.contract_type)

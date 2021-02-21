@@ -5,7 +5,9 @@ class Freelancer::ApplicationsController < ApplicationController
   ITEMS_PER_PAGE = 10
 
   def index
-    @pagy, @job_applications = pagy(current_user.job_applications.draft_or_applied.order(created_at: :desc),
+    @pagy, @job_applications = pagy(current_user.freelancer_profile
+                                                .job_applications
+                                                .draft_or_applied.order(created_at: :desc),
                                     items: ITEMS_PER_PAGE, overflow: :last_page)
   end
 
@@ -21,6 +23,6 @@ class Freelancer::ApplicationsController < ApplicationController
   private
 
   def job_application
-    @job_application ||= current_user.job_applications.find_by(id: params[:id])
+    @job_application ||= current_user.freelancer_profile.job_applications.find_by(id: params[:id])
   end
 end

@@ -46,7 +46,7 @@ class Employer::JobsController < ApplicationController
   end
 
   def decline_job_application
-    @job_application = JobApplication.where(job: current_user.jobs).find_by(id: params[:id])
+    @job_application = JobApplication.where(job: current_user.employer_profile.jobs).find_by(id: params[:id])
     return unless @job_application
 
     @job_application.update(state: 'declined')
@@ -76,7 +76,7 @@ class Employer::JobsController < ApplicationController
   end
 
   def create_contract
-    @job = current_user.jobs.find_by(id: params[:make_an_offer][:job_id])
+    @job = current_user.employer_profile.jobs.find_by(id: params[:make_an_offer][:job_id])
     @contract = current_user.employer_profile.contracts.create(make_an_offer_params.merge(state: 'pending'))
     close_job_if_offer_is_made
   end
@@ -102,7 +102,7 @@ class Employer::JobsController < ApplicationController
   end
 
   def jobs_collection
-    @jobs_collection ||= current_user.jobs.order(created_at: :desc)
+    @jobs_collection ||= current_user.employer_profile.jobs.order(created_at: :desc)
   end
 
   def save_view_job_in_session
