@@ -46,7 +46,7 @@
             setTimeout(function () {
                 that.selectionStart = that.selectionEnd = 10000;
             }, 200);
-            $('#companyWebsiteInput').val('http://');
+            $('#companyWebsiteInput').val('https://');
 
             if ($('#companyWebsiteInput').on('paste', function () {
                 if (navigator.userAgent.indexOf("Firefox") > -1) {
@@ -54,19 +54,19 @@
                 } else if(navigator.userAgent.indexOf("Chrome") > -1) {
                     navigator.clipboard.readText()
                         .then(text => {
-                            if (text.includes('http://')) {
+                            if (text.includes('https://')) {
                                 $('#companyWebsiteInput').val(text);
                             } else {
-                                $('#companyWebsiteInput').val('http://'+text);
+                                $('#companyWebsiteInput').val('https://'+text);
                             }
                         })
                 } else if(navigator.userAgent.indexOf("Safari") > -1) {
                     navigator.clipboard.readText()
                         .then(text => {
-                            if (text.includes('http://')) {
+                            if (text.includes('https://')) {
                                 $('#companyWebsiteInput').val('');
                             } else {
-                                $('#companyWebsiteInput').val('http://');
+                                $('#companyWebsiteInput').val('https://');
                             }
                         })
                 }

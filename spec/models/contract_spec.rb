@@ -4,7 +4,7 @@ RSpec.describe Contract, type: :model do
   let(:employer_profile) { FactoryBot.create(:employer_profile) }
   let(:freelancer_profile) { FactoryBot.create(:freelancer_profile) }
   let!(:contract) { FactoryBot.create(:contract, employer_profile: employer_profile, freelancer_profile: freelancer_profile) }
-  let(:job) { FactoryBot.create(:job, user: employer_profile.user) }
+  let(:job) { FactoryBot.create(:job, employer_profile: employer_profile) }
   let(:contract_with_job) { FactoryBot.create(:contract, :with_job, job: job) }
 
   it 'factories work' do
