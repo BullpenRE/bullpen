@@ -7,7 +7,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
 
     filter :user_email, as: :string, label: 'User Email'
     filter :draft
-    filter :curation, as: :select, collection: FreelancerProfile::curations.keys
+    filter :curation, as: :select, collection: ->{ FreelancerProfile::curations.keys }
 
     permit_params :user_id,
                   :professional_summary,
