@@ -5,7 +5,7 @@ class RegistrationsController < Devise::RegistrationsController
   before_action :check_signed_in
 
   def new
-    redirect_to root_path unless session[:email].present?
+    return redirect_to root_path unless session[:email].present?
     @email = session[:email]
     show_promo_code
 
