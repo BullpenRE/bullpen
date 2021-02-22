@@ -59,7 +59,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
                 label: 'Freelancer'
         f.input :job_id,
                 as: :select, input_html: { class: 'select2' },
-                collection: Job.find_each.map{ |job| ["#{job.title} by #{job.user.email}", job.id] },
+                collection: Job.find_each.map{ |job| ["#{job.title} by #{job.employer_profile.email}", job.id] },
                 label: "Job (#{link_to('Create new', new_admin_job_path, target: '_blank')})".html_safe
         f.input :title
         f.input :job_description, as: :text

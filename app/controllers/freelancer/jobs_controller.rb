@@ -7,7 +7,7 @@ class Freelancer::JobsController < ApplicationController
   def index
     return redirect_to freelancer_account_index_url if session[:turn_off].present?
 
-    @job_applications = current_user.job_applications
+    @job_applications = current_user.freelancer_profile.job_applications
     @pagy, @jobs = pagy(jobs_collection, page: page, items: ITEMS_PER_PAGE, overflow: :last_page)
   end
 
@@ -37,6 +37,6 @@ class Freelancer::JobsController < ApplicationController
   end
 
   def jobs_collection
-    @jobs_collection ||= Job.where(state: 'posted').order(created_at: :desc).not_applied_or_withdrawn(current_user)
+    @jobs_collection ||= Job.where(state: 'posted').order(created_at: :desc).not_applied_or_withdrawn(current_user.freelancer_profile)
   end
 end

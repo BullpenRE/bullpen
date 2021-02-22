@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :job do
-    association :user, :employer
+    employer_profile
     title { Faker::Job.title }
     short_description { Faker::Company.catch_phrase }
     position_length { Job::position_lengths.values.sample }

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :job_application do
     job
-    association :user, :freelancer
+    freelancer_profile
     template { false }
     available_during_work_hours { [true, false].sample }
     liked { false }
