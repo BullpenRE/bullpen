@@ -21,9 +21,5 @@ FactoryBot.define do
       pay_range_low { 7000 }
       pay_range_high { nil }
     end
-
-    after(:build) do |job, evaluator|
-      job.user_id = evaluator.employer_profile.user_id
-    end
   end
 end
