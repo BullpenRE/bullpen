@@ -50,13 +50,18 @@ class User < ApplicationRecord
   end
 
   def avatar
-    return nil if employer?
-    return nil unless freelancer_profile&.avatar&.attached?
+    return nil unless profile&.avatar&.attached?
 
-    freelancer_profile&.avatar
+    profile&.avatar
   end
 
   def bullpen_personnel?
     email.match?('@bullpenre.com') && confirmed_at.present?
+  end
+
+  private
+
+  def profile
+    @profile ||= employer? ? employer_profile : freelancer_profile
   end
 end
