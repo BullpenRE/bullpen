@@ -3,7 +3,9 @@ require 'rails_helper'
 describe User do
   let!(:user) { FactoryBot.create(:user) }
   let!(:employer_user) { FactoryBot.create(:user, :employer) }
+  let!(:employer_profile) { FactoryBot.create(:employer_profile, user: employer_user) }
   let!(:freelancer_user) { FactoryBot.create(:user, :freelancer) }
+  let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
 
   it 'factory works' do
     expect(user).to be_valid
@@ -17,8 +19,6 @@ describe User do
   end
 
   context 'Relationships' do
-    let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
-
     describe 'freelance_profile' do
       it 'can have one' do
         expect(freelancer_user.freelancer_profile).to eq(freelancer_profile)
@@ -68,8 +68,6 @@ describe User do
   context 'Scopes' do
     let!(:confirmed) { FactoryBot.create(:user, confirmed_at: 3.days.ago) }
     let!(:not_confirmed) { FactoryBot.create(:user, confirmed_at: nil) }
-    let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
-    let!(:employer_profile) { FactoryBot.create(:employer_profile, user: employer_user) }
 
     it '.confirmed' do
       expect(User.confirmed).to include(confirmed)

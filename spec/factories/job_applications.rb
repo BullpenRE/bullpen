@@ -17,9 +17,5 @@ FactoryBot.define do
       end
       cover_letter { Rack::Test::UploadedFile.new('spec/support/assets/sample_cover_letter.html', 'text/html') }
     end
-
-    after(:build) do |job_application, evaluator|
-      job_application.user_id = evaluator.freelancer_profile.user_id unless evaluator.user_id
-    end
   end
 end

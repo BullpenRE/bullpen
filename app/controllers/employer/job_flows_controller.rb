@@ -171,7 +171,7 @@ class Employer::JobFlowsController < ApplicationController
   end
 
   def new_job
-    @job ||= current_user.employer_profile.jobs.build(user_id: current_user.id)
+    @job ||= current_user.employer_profile.jobs.build
   end
 
   def job
