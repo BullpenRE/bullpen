@@ -11,7 +11,6 @@ RSpec.describe JobApplication, type: :model do
     expect(job_application_with_attachments).to be_valid
     expect(job_application_with_attachments.work_samples.attached?).to be_truthy
     expect(job_application_with_attachments.cover_letter).to_not be_blank
-    expect(job_application.freelancer_profile).to eq(freelancer_profile)
   end
 
   context 'Validations' do
@@ -58,10 +57,6 @@ RSpec.describe JobApplication, type: :model do
 
     it 'belongs to a job' do
       expect(job_application.job).to eq(job)
-    end
-
-    it 'belongs to a user' do
-      expect(job_application.user).to eq(freelancer_profile.user)
     end
 
     it 'belongs to a freelancer_profile' do

@@ -169,10 +169,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def new_job_application
     @job_application ||= current_user.freelancer_profile
                                      .job_applications
-                                     .build(
-                                       user_id: current_user.id,
-                                       job_id: (params[:job_id] || params[:job_application][:job_id])
-                                     )
+                                     .build(job_id: (params[:job_id] || params[:job_application][:job_id]))
   end
 
   def job_application
