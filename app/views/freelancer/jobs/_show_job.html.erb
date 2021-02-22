@@ -10,7 +10,7 @@
       <div class="modal-body pt-0">
         <%= render partial: 'shared/show_job_post_content', locals: { job: job } %>
       </div>
-      <% if job.job_applications.find_by(user: current_user.id).blank? %>
+      <% if job.job_applications.find_by(freelancer_profile: current_user.freelancer_profile.id).blank? %>
         <div class="modal-footer justify-content-right">
           <%= link_to 'Apply', freelancer_application_flows_path(start_flow: true, job_id: job.id),
                       { remote: true, 'data-toggle': "modal",

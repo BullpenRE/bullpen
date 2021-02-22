@@ -1,10 +1,7 @@
 <!--Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-header mb-4">
   <div class="container">
-    <a class="navbar-brand" href="https://bullpenre.com/">
-      <%= image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30') %>
-    </a>
-
+    <%= link_to image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30'), root_path, class: 'navbar-brand hello' %>
     <div class="collapse navbar-collapse" id="navbarMenu">
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -18,15 +15,17 @@
         <li class="nav-item<%= ' active' if section == 'talent' %>">
           <%= link_to 'Find Talent',  employer_talent_index_path, class: 'nav-link' %>
         </li>
-        <li class="nav-item<%= ' active' if section == 'jobs' %>">
-          <%= link_to 'Your Jobs', employer_jobs_path, class: 'nav-link' %>
-        </li>
+        <% if current_user.employer_profile.jobs.any? %>
+          <li class="nav-item<%= ' active' if section == 'jobs' %>">
+            <%= link_to 'Your Jobs', employer_jobs_path, class: 'nav-link' %>
+          </li>
+        <% end %>
         <% if current_user.employer_profile.interview_requests.not_rejected.employer_visible.any? %>
           <li class="nav-item<%= ' active' if section == 'interviews' %>">
             <%= link_to 'Interviews', employer_interviews_path, class: 'nav-link' %>
           </li>
         <% end %>
-        <% if current_user.employer_profile.contracts.any? %>
+        <% if current_user.employer_profile.contracts.hire_group.any? %>
           <li class="nav-item<%= ' active' if section == 'contracts' %>">
             <%= link_to 'Contracts', employer_contracts_path, class: 'nav-link' %>
           </li>

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :job_application do
     job
-    association :user, :freelancer
+    freelancer_profile
     template { false }
     available_during_work_hours { [true, false].sample }
     liked { false }
@@ -16,6 +16,10 @@ FactoryBot.define do
                                             content_type: 'application/pdf')
       end
       cover_letter { Rack::Test::UploadedFile.new('spec/support/assets/sample_cover_letter.html', 'text/html') }
+    end
+
+    after(:build) do |job_application, evaluator|
+      job_application.user_id = evaluator.freelancer_profile.user_id unless evaluator.user_id
     end
   end
 end

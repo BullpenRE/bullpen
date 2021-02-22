@@ -7,6 +7,7 @@ class EmployerProfile < ApplicationRecord
   has_many :interview_requests, dependent: :destroy
   has_many :contracts, dependent: :destroy
   has_many :reviews, dependent: :destroy
+  has_many :jobs, dependent: :destroy
   has_one_attached :avatar
 
   accepts_nested_attributes_for :user,
@@ -32,5 +33,12 @@ class EmployerProfile < ApplicationRecord
 
   def full_name
     @full_name ||= user.full_name
+  end
+
+  def default_message_for_interview(freelancer_profile)
+    "Hi #{freelancer_profile.user.first_name},<br>
+    I found your profile on Bullpen and think you’d be a great fit for a project
+    I’m working on. Are you open to connecting on a call?<br>
+    - #{user.first_name}"
   end
 end

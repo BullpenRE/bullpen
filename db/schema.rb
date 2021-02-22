@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_164324) do
+ActiveRecord::Schema.define(version: 2021_02_17_023414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_164324) do
     t.boolean "new_jobs_alert", default: true
     t.boolean "searchable", default: true
     t.string "stripe_id_account"
+    t.integer "payout_percentage", default: 70
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
@@ -248,6 +249,8 @@ ActiveRecord::Schema.define(version: 2021_02_16_164324) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "applied_at", precision: 6
     t.boolean "liked", default: false
+    t.bigint "freelancer_profile_id"
+    t.index ["freelancer_profile_id"], name: "index_job_applications_on_freelancer_profile_id"
     t.index ["job_id"], name: "index_job_applications_on_job_id"
     t.index ["user_id"], name: "index_job_applications_on_user_id"
   end
@@ -306,6 +309,8 @@ ActiveRecord::Schema.define(version: 2021_02_16_164324) do
     t.integer "pay_range_high"
     t.string "slug"
     t.boolean "job_announced", default: false
+    t.bigint "employer_profile_id"
+    t.index ["employer_profile_id"], name: "index_jobs_on_employer_profile_id"
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
@@ -419,6 +424,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_164324) do
   add_foreign_key "interview_requests", "freelancer_profiles"
   add_foreign_key "job_application_questions", "job_applications"
   add_foreign_key "job_application_questions", "job_questions"
+  add_foreign_key "job_applications", "freelancer_profiles"
   add_foreign_key "job_applications", "jobs"
   add_foreign_key "job_applications", "users"
   add_foreign_key "job_questions", "jobs"
@@ -428,6 +434,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_164324) do
   add_foreign_key "job_skills", "skills"
   add_foreign_key "job_softwares", "jobs"
   add_foreign_key "job_softwares", "softwares"
+  add_foreign_key "jobs", "employer_profiles"
   add_foreign_key "jobs", "users"
   add_foreign_key "reviews", "employer_profiles"
   add_foreign_key "reviews", "freelancer_profiles"

@@ -1,15 +1,13 @@
 <!--Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-header mb-4">
   <div class="container">
-    <a class="navbar-brand" href="https://bullpenre.com/">
-      <%= image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30') %>
-    </a>
+    <%= link_to image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30'), root_path, class: 'navbar-brand hello' %>
     <div class="collapse navbar-collapse" id="navbarMenu">
       <ul class="navbar-nav">
         <li class="nav-item<%= ' active' if section == 'jobs' %>">
           <%= link_to 'Find a job', freelancer_jobs_path, class: "nav-link" %>
         </li>
-        <% if current_user.job_applications.any? %>
+        <% if current_user.freelancer_profile.job_applications.any? %>
           <li class="nav-item<%= ' active' if section == 'applications' %>">
             <%= link_to 'Applications', freelancer_applications_path, class: 'nav-link' %>
           </li>
