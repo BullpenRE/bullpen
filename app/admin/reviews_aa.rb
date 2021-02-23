@@ -19,7 +19,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('re
 
     filter :employer_profile_user_email, as: :string, label: 'Employer Email'
     filter :freelancer_profile_user_email, as: :string, label: 'Freelancer Email'
-    filter :rating, as: :select, collection: Review::RATING_OPTIONS
+    filter :rating, as: :select, collection: -> { Review::RATING_OPTIONS }
 
     show title: 'Review' do |contract|
       attributes_table do

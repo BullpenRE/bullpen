@@ -13,12 +13,10 @@ class User < ApplicationRecord
   validates :last_name, presence: true
 
   has_one :freelancer_profile, dependent: :destroy
-  has_many :jobs, dependent: :destroy
   has_many :freelancer_real_estate_skills, through: :freelancer_profile
   has_many :freelancer_sectors, through: :freelancer_profile
   has_one :employer_profile, dependent: :destroy
   has_many :employer_sectors, through: :employer_profile
-  has_many :job_applications, dependent: :destroy
   has_many :sent_messages, class_name: 'Message', foreign_key: :from_user_id
   has_many :received_messages, class_name: 'Message', foreign_key: :to_user_id
 
@@ -52,13 +50,18 @@ class User < ApplicationRecord
   end
 
   def avatar
-    return nil if employer?
-    return nil unless freelancer_profile&.avatar&.attached?
+    return nil unless profile&.avatar&.attached?
 
-    freelancer_profile&.avatar
+    profile&.avatar
   end
 
   def bullpen_personnel?
     email.match?('@bullpenre.com') && confirmed_at.present?
+  end
+
+  private
+
+  def profile
+    @profile ||= employer? ? employer_profile : freelancer_profile
   end
 end

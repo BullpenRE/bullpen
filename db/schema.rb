@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_17_023414) do
+ActiveRecord::Schema.define(version: 2021_02_17_231109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -240,7 +240,6 @@ ActiveRecord::Schema.define(version: 2021_02_17_023414) do
 
   create_table "job_applications", force: :cascade do |t|
     t.bigint "job_id"
-    t.bigint "user_id"
     t.boolean "template", default: false
     t.integer "bid_amount"
     t.boolean "available_during_work_hours"
@@ -252,7 +251,6 @@ ActiveRecord::Schema.define(version: 2021_02_17_023414) do
     t.bigint "freelancer_profile_id"
     t.index ["freelancer_profile_id"], name: "index_job_applications_on_freelancer_profile_id"
     t.index ["job_id"], name: "index_job_applications_on_job_id"
-    t.index ["user_id"], name: "index_job_applications_on_user_id"
   end
 
   create_table "job_questions", force: :cascade do |t|
@@ -291,7 +289,6 @@ ActiveRecord::Schema.define(version: 2021_02_17_023414) do
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.string "title"
     t.string "short_description"
     t.integer "position_length"
@@ -311,7 +308,6 @@ ActiveRecord::Schema.define(version: 2021_02_17_023414) do
     t.boolean "job_announced", default: false
     t.bigint "employer_profile_id"
     t.index ["employer_profile_id"], name: "index_jobs_on_employer_profile_id"
-    t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -426,7 +422,6 @@ ActiveRecord::Schema.define(version: 2021_02_17_023414) do
   add_foreign_key "job_application_questions", "job_questions"
   add_foreign_key "job_applications", "freelancer_profiles"
   add_foreign_key "job_applications", "jobs"
-  add_foreign_key "job_applications", "users"
   add_foreign_key "job_questions", "jobs"
   add_foreign_key "job_sectors", "jobs"
   add_foreign_key "job_sectors", "sectors"
@@ -435,7 +430,6 @@ ActiveRecord::Schema.define(version: 2021_02_17_023414) do
   add_foreign_key "job_softwares", "jobs"
   add_foreign_key "job_softwares", "softwares"
   add_foreign_key "jobs", "employer_profiles"
-  add_foreign_key "jobs", "users"
   add_foreign_key "reviews", "employer_profiles"
   add_foreign_key "reviews", "freelancer_profiles"
   add_foreign_key "users", "signup_promos"

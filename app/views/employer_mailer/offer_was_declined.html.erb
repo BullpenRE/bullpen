@@ -1,2 +1,2 @@
-<br>
-<%= render partial: 'email/content_block', locals: { content: "Sorry, #{@contract.freelancer_profile.full_name} declined your <b>#{@contract.title}</b> offer." } %>
+<p style="text-align:center;">Sorry, <%= @contract.freelancer_profile.full_name %> declined your <b><%= @contract.title %></b> offer. Go to <a href=<%= employer_talent_index_url %> target='_blank'>Find Talent</a> to look for other possible candidates.</p>
+<%= render partial: 'email/button', locals: { button_txt: 'Find Talent', url: employer_talent_index_url } %>
