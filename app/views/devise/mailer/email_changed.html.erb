@@ -1,7 +1,7 @@
 <br>
-<%= render partial: 'email/content_block', locals: { content: "Hello #{@email}!" } %>
+<p>Hello #{@email}!</p>
 <% if @resource.try(:unconfirmed_email?) %>
-  <%= render partial: 'email/content_block', locals: { content: "We're contacting you to notify you that your email is being changed to #{@resource.unconfirmed_email}." } %>
+  <p>We're contacting you to notify you that your email is being changed to #{@resource.unconfirmed_email}.</p>
 <% else %>
-  <%= render partial: 'email/content_block', locals: { content: "We're contacting you to notify you that your email has been changed to #{@resource.email}." } %>
+  <p>We're contacting you to notify you that your email has been changed to #{@resource.email}.</p>
 <% end %>
