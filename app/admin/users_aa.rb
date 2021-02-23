@@ -20,7 +20,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
 
     filter :email
     filter :role, as: :select, collection: -> { User.roles }
-    filter :last_name, as: :select, input_html: { class: "select2" }
+    filter :last_name, as: :select, input_html: { class: 'select2' }
 
     show title: 'User' do |user|
       attributes_table do
