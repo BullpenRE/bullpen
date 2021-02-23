@@ -3,7 +3,7 @@
   <div class="d-flex">
     <div class="mb-2 mr-2 text-wrap text-break"><b><%= education.institution %></b><br><%= education.degree %> <%= education.course_of_study %></div>
     <div class="ml-auto mr-1"><i><%= education.currently_studying ? 'Present' : education.graduation_year %></i></div>
-    <% if @freelancer_profile&.editable?(current_user) %>
+    <% if editable %>
       <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editEducationModal-<%= education.id %>"></button>
     <% end %>
   </div>
@@ -16,7 +16,7 @@
 <% end %>
 <div class="mt-3">
   <%= render 'freelancer/shared/add_educations', freelancer_profile: freelancer_profile %>
-  <% if @freelancer_profile&.editable?(current_user) %>
+  <% if editable %>
     <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#addEducationModal">
       Add an Education
     </button>
