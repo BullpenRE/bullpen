@@ -4,6 +4,13 @@ class StripeController < ApplicationController
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :freelancer_profile
 
   def connect
+    response = HTTParty.post('https://connect.stripe.com/oauth/token',
+                             query: {
+                               client_secret: ENV['STRIPE_SECRET_KEY'],
+                               code: params[:code],
+                               grant_type: 'authorization_code'
+                             })
+
     if response.parsed_response.key?('error')
       redirect_to freelancer_account_index_path,
                   notice: response.parsed_response['error_description']
@@ -33,14 +40,5 @@ class StripeController < ApplicationController
 
   def freelancer_profile
     @freelancer_profile ||= current_user.freelancer_profile
-  end
-
-  def response
-    @response ||= HTTParty.post('https://connect.stripe.com/oauth/token',
-                                query: {
-                                  client_secret: ENV['STRIPE_SECRET_KEY'],
-                                  code: params[:code],
-                                  grant_type: 'authorization_code'
-                                })
   end
 end
