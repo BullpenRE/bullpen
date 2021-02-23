@@ -1,4 +1,2 @@
-<br>
-<%= render partial: 'email/content_block', locals: { content: "<h2>Sorry, #{@interview_request.freelancer_profile.full_name} declined your request for an interview.</h2>" } %>
-<%= render partial: 'email/button', locals: { button_txt: 'Go to Find Talent', url: employer_talent_index_url } %>
-<%= render partial: 'email/content_block', locals: { content: "to look for other possible candidates." } %>
+<p style="text-align:center;">Sorry, <b><%= @interview_request.freelancer_profile.full_name %></b> declined your request for an interview. Go to <a href=<%= employer_talent_index_url %> target='_blank'>Find Talent</a> to look for other possible candidates.</p>
+<%= render partial: 'email/button', locals: { button_txt: 'Find Talent', url: employer_talent_index_url } %>
