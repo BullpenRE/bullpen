@@ -38,7 +38,9 @@
           <!-- Tabs Content-->
         <div class="tab-content" id="FreelancerTabsContent">
           <div class="tab-pane fade show active" id="profile<%= freelancer_profile.id %>" role="tabpanel" aria-labelledby="profile-tab">
-            <%= render partial: 'shared/freelancer_skills_education', locals: { freelancer_profile: freelancer_profile, job_application: nil } %>
+            <%= render partial: 'shared/freelancer_skills_education', locals: { freelancer_profile: freelancer_profile,
+                                                                                job_application: nil,
+                                                                                editable: freelancer_profile.editable?(current_user) } %>
             <!-- Sharable Link-->
             <hr>
             <h4 class="mt-3">Sharable Link</h4>

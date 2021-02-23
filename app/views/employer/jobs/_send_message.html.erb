@@ -3,7 +3,7 @@
     <div class="modal-content">
       <!--  Header with '×'-->
       <div class="modal-header">
-        <h1 class="modal-title" id="showSendMessageLabel">Send Message </h1>
+        <h1 class="modal-title" id="showSendMessageLabel">Send Message to <%= to_user.full_name %></h1>
         <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -11,7 +11,7 @@
       <!--Send Message Card-->
       <div class="modal-body py-0">
         <%= form_for :message, url:  employer_send_message_path do |f| %>
-          <%= f.hidden_field :to_user, value: to_user %>
+          <%= f.hidden_field :to_user, value: to_user.id %>
           <%= f.hidden_field :job_title, value: job_title %>
           <%= f.hidden_field :redirect_reference, value: redirect_reference %>
           <div class="form-group mb-3">
