@@ -472,7 +472,7 @@ DEPENDENCIES
   geocoder (>= 1.6.4)
   git-smart
   google_sign_in (~> 1.2)
-  httparty
+  httparty (~> 0.18.1)
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
   letter_opener

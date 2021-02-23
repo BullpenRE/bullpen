@@ -9,7 +9,7 @@ gem 'bootsnap', '>= 1.4.2', require: false  # Reduces boot times through caching
 gem 'devise', '~> 4.7', '>= 4.7.3'          # Flexible authentication solution for Rails with Warden
 gem 'geocoder', '>=1.6.4'                   # Forward and reverse geocoding, IP address geocoding
 gem 'google_sign_in', '~> 1.2'              # Sign in (or up) with Google for Rails applications: https://github.com/basecamp/google_sign_in
-gem 'httparty'
+gem 'httparty', '~> 0.18.1'                 # Library to build easily classes that can use Web-based APIs and related services
 gem 'image_processing', '~> 1.2'            # Provides higher-level image processing helpers that are commonly needed when handling image uploads
 gem 'jbuilder', '~> 2.7'                    # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'mini_magick', '~> 4.10', '>= 4.10.1'   # Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
@@ -22,7 +22,7 @@ gem 'puma', '~> 4.1'                        # Use Puma as the app server
 gem 'rails', '~> 6.1', '>= 6.1.1'           # If you're not sure what this is for then you're in the wrong place ;)
 gem 'redis', '~> 4.2', '>= 4.2.5'           # Service used for running Action Cable on heroku
 gem 'sass-rails', '>= 6'                    # Use SCSS for stylesheets
-gem 'stripe', '~> 5.29.1'
+gem 'stripe', '~> 5.29.1'                   # Stripe library provides convenient access to the Stripe API
 gem 'sidekiq', '~> 6.1', '>= 6.1.3'         # Simple, efficient background processing for Ruby.
 gem 'table_print', '~> 1.5', '>= 1.5.7'     # Allows viewing of data in console in nice ways, including table joins: http://tableprintgem.com/ (video)
 gem 'turbolinks', '~> 5'                    # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -30,12 +30,12 @@ gem 'webpacker', '~> 5.2', '>= 5.2.1'       # Transpile app-like JavaScript. Rea
 gem 'wicked', '~> 1.3', '>= 1.3.2'          # Wicked is a Rails engine for producing easy wizard controllers
 
 group :development, :staging, :admin do
-  gem 'activeadmin', '~> 2.8', '>= 2.8.1'     # Administration DSL out of a box: https://activeadmin.info/
+  gem 'activeadmin', '~> 2.8', '>= 2.8.1'   # Administration DSL out of a box: https://activeadmin.info/
   gem 'activeadmin_addons'
 end
 
 group :production, :staging, :admin do
-  gem 'aws-sdk-s3', '~> 1.83', '>= 1.83.1', require: false  # Amazon Simple Storage Service is a web service that provides highly scalable cloud storage
+  gem 'aws-sdk-s3', '~> 1.83', '>= 1.83.1', require: false # Amazon Simple Storage Service is a web service that provides highly scalable cloud storage
 end
 
 group :development, :test do
