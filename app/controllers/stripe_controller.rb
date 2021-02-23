@@ -3,7 +3,7 @@
 class StripeController < ApplicationController
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :freelancer_profile
 
-  def connect
+  def connect # rubocop:disable Metrics/MethodLength
     response = HTTParty.post('https://connect.stripe.com/oauth/token',
                              query: {
                                client_secret: ENV['STRIPE_SECRET_KEY'],
