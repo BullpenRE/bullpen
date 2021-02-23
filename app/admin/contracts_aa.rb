@@ -23,8 +23,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
 
     filter :employer_profile_user_email, as: :string, label: 'Employer Email'
     filter :freelancer_profile_user_email, as: :string, label: 'Freelancer Email'
-    filter :contract_type, as: :select, collection: Contract.contract_types
-    filter :state, as: :select, collection: Contract.states
+    filter :contract_type, as: :select, collection: -> { Contract.contract_types }
+    filter :state, as: :select, collection: -> { Contract.states }
 
     show title: 'Contract' do |contract|
       attributes_table do

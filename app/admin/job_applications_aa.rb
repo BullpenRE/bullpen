@@ -9,7 +9,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     filter :job_short_description, as: :string, label: 'Job description'
     filter :freelancer_profile_user_email, as: :string, label: 'Freelancer email'
     filter :job_employer_profile_user_email, as: :string, label: 'Employer email'
-    filter :state, as: :select, collection: JobApplication.states
+    filter :state, as: :select, collection: -> { JobApplication.states }
 
 
     index do

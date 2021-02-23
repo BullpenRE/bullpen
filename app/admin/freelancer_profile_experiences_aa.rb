@@ -7,7 +7,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
     filter :freelancer_profile,
            as: :select,
            label: 'User Email',
-           collection: FreelancerProfile.find_each.map {|fp| [fp.user.email, fp.id] }
+           collection: -> { FreelancerProfile.find_each.map { |fp| [fp.user.email, fp.id] } }
 
 
     index do
@@ -25,7 +25,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
       f.inputs "Education for #{}" do
         f.input :freelancer_profile,
                 as: :select,
-                collection: FreelancerProfile.find_each.map{|fp| [fp.user.email, fp.id] }
+                collection: FreelancerProfile.find_each.map{ |fp| [fp.user.email, fp.id] }
         f.input :job_title
         f.input :company
         f.input :location
