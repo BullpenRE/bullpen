@@ -6,6 +6,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def new
     return redirect_to root_path unless session[:email].present?
+
     @email = session[:email]
     show_promo_code
 
