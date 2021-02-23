@@ -116,7 +116,7 @@
                                                                              job_application: job_application,
                                                                              editable: false } %>
                   <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: false } %>
-                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: job_application.freelancer_profile.user_id, job_title: job_application.job.title, id: job_application.id, redirect_reference: '' } %>
+                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: job_application.freelancer_profile.user, job_title: job_application.job.title, id: job_application.id, redirect_reference: '' } %>
                   <%= render partial: 'employer/jobs/decline_job_application', locals: { job_application: job_application } %>
                   <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: nil, job: job_application.job, freelancer_profile: job_application.freelancer_profile, modal_id: job_application.id } %>
                   <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
@@ -209,7 +209,7 @@
                   <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job: nil, freelancer_profile: contract.freelancer_profile, modal_id: contract.id } %>
                   <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: contract.freelancer_profile, job_application: nil, editable: false } %>
                   <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
-                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user_id, job_title: contract.title, id: contract.id, redirect_reference: '' } %>
+                  <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user, job_title: contract.title, id: contract.id, redirect_reference: '' } %>
                   <%= render partial: 'employer/contracts/withdraw_offer', locals: { contract: contract } %>
                   <%= render partial: 'employer/reviews/review', locals: { freelancer_profile: contract.freelancer_profile, employer_profile: contract.employer_profile, review: contract.freelancer_profile.review_from(contract.employer_profile), redirect_reference: 'jobs' } %>
                   <%= render partial: 'shared/make_an_offer_without_job', locals: { freelancer_profile: contract.freelancer_profile,

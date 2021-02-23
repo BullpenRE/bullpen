@@ -1,8 +1,20 @@
 
-<%= render partial: 'email/content_block', locals: { content: '<h2>Welcome to our awesome site!</h2>' } %>
-<%= render partial: 'email/content_block', locals: { content: '<p>Hi everyone! You can find this template in <i>app/views/test_mailer/formatting.html.erb</i>.</p>' } %>
-<br>
-  <%= render partial: 'email/button', locals: { button_txt: 'Call to Action!!', url: @url } %>
-<br>
-<%= render partial: 'email/content_block', locals: { content: '<p>Thanks for joining and have a great day!</p>' } %>
+<h1>Header 1</h1>
+<h2>Header 2</h2>
+<h3>Header 3</h3>
+<h4>Header 4</h4>
+<h5>Header 5</h5>
+<p><b>Lorem ipsum dolor sit amet,</b> consectetur adipiscing elit. Donec id lacus eget velit scelerisque dignissim ut et mi. Donec vel risus ullamcorper, maximus enim at, tempus neque. In nec justo maximus, ornare ligula nec, facilisis metus. Praesent semper aliquet lectus, ut consectetur nisl malesuada sed. Sed in erat non ipsum ultricies rutrum nec in lorem. In libero lectus, cursus quis neque quis, interdum consectetur libero.</p>
+<ul>
+  <li>UL list item 1</li>
+  <li>UL list item 2</li>
+  <li>UL list item 3</li>
+</ul>
+<ol>
+  <li>OL list item 1</li>
+  <li>OL list item 2</li>
+  <li>OL list item 3</li>
+</ol>
+<%= render partial: 'email/button', locals: { button_txt: 'Call to Action!!', url: @url } %>
+<p class="text-footer">app/views/test_mailer/formatting.html.erb</p>
 

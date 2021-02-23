@@ -45,7 +45,7 @@
                   </div>
                 </div>
               <% end %>
-              <%= render partial: 'employer/jobs/send_message', locals: { to_user: interview.freelancer_profile.user_id, job_title: nil, id: interview.id, redirect_reference: '' } %>
+              <%= render partial: 'employer/jobs/send_message', locals: { to_user: interview.freelancer_profile.user, job_title: nil, id: interview.id, redirect_reference: '' } %>
               <%= render partial: 'employer/interviews/remove_interview_request', locals: { interview: interview } %>
             </div>
           </div>
