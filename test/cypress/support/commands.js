@@ -26,6 +26,7 @@
 
 import 'cypress-file-upload';
 import axios from 'axios'
+import 'cypress-xpath'
 
 Cypress.Commands.add('cleanDatabase', (opts = { seed: true }) => {
     return axios({
