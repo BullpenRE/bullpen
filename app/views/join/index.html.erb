@@ -11,7 +11,7 @@
         </div>
 
         <div class="actions">
-          <%= f.submit "Sign Up with Email", class: "btn btn-primary btn-block" %>
+          <%= f.submit "Sign Up with Email", class: "btn btn-primary btn-block", id: "clickSignUpWithEmail" %>
         </div>
       <% end %>
 
@@ -31,5 +31,12 @@
   $(function() {
     $('#user_email').val('<%= @email %>');
   });
+
+  mixpanelTrack("Page Loaded");
+
+  $('#clickSignUpWithEmail').click( function(){
+      debugger;
+      mixpanel.track("Sign Up Clicked");})
+
 </script>
 <% end %>
