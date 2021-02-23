@@ -8,6 +8,8 @@ class Employer::ContractsController < ApplicationController
 
   def index
     @contracts = current_user.employer_profile.contracts.order(created_at: :desc)
+
+    redirect_to root_path if @contracts.hire_group.blank?
     return unless session[:review_by_contract].present?
 
     @contract = @contracts.find { |c| c.id == session[:review_by_contract].to_i }

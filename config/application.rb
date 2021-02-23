@@ -23,6 +23,9 @@ Bundler.require(*Rails.groups)
 
 module Bullpen
   class Application < Rails::Application
+    # Custom directories with classes and modules you want to be autoloadable.
+    config.autoload_paths << Rails.root.join('lib', 'migrations')
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
     # Tell Rails to use Sidekiq as the “queue_adapter”

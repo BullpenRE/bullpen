@@ -68,7 +68,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
           "#{freelancer_profile.average_rating} from #{freelancer_profile.reviews.size} review#{'s' if freelancer_profile.reviews.size > 1}" unless freelancer_profile.average_rating.nil?
         end
         row "ALL Interview Requests Received From Employers", :interview_requests do
-          freelancer_profile.interview_requests.map{ |i_r| link_to(i_r.employer_profile.email, admin_interview_request_path(i_r.id)) }
+          freelancer_profile.interview_requests.map{ |i_r| link_to(i_r.employer_profile.email, admin_interview_request_path(i_r.id)) }.join('<br>').html_safe
+        end
+        row 'Job Applications', :job_applications do
+          freelancer_profile.job_applications.map{ |j_a| link_to(j_a.job.title, admin_job_application_path(j_a.id)) }.join('<br>').html_safe
         end
         row 'Contracts' do
           freelancer_profile.contracts.map { |contract| link_to("Hired by #{contract.employer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe

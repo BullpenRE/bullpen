@@ -15,15 +15,17 @@
         <li class="nav-item<%= ' active' if section == 'talent' %>">
           <%= link_to 'Find Talent',  employer_talent_index_path, class: 'nav-link' %>
         </li>
-        <li class="nav-item<%= ' active' if section == 'jobs' %>">
-          <%= link_to 'Your Jobs', employer_jobs_path, class: 'nav-link' %>
-        </li>
+        <% if current_user.employer_profile.jobs.any? %>
+          <li class="nav-item<%= ' active' if section == 'jobs' %>">
+            <%= link_to 'Your Jobs', employer_jobs_path, class: 'nav-link' %>
+          </li>
+        <% end %>
         <% if current_user.employer_profile.interview_requests.not_rejected.employer_visible.any? %>
           <li class="nav-item<%= ' active' if section == 'interviews' %>">
             <%= link_to 'Interviews', employer_interviews_path, class: 'nav-link' %>
           </li>
         <% end %>
-        <% if current_user.employer_profile.contracts.any? %>
+        <% if current_user.employer_profile.contracts.hire_group.any? %>
           <li class="nav-item<%= ' active' if section == 'contracts' %>">
             <%= link_to 'Contracts', employer_contracts_path, class: 'nav-link' %>
           </li>
@@ -37,7 +39,7 @@
     <div class="dropdown">
       <span class="dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <% if current_user.avatar %>
-          <%= image_tag current_user.avatar.variant(resize: "47x47!").processed, class: 'rounded-circle', style: 'padding-right: 5px' %>
+          <%= image_tag current_user.avatar.variant(resize: "40x40!").processed, class: 'rounded-circle', style: 'padding-right: 5px' %>
         <% else %>
           <i class="fas fa-user-circle bp-profile-placeholder mr-1"></i>
         <% end %>
@@ -53,4 +55,3 @@
 </nav>
 
 <div id="jobStepModal"></div>
-

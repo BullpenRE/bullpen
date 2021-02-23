@@ -171,11 +171,11 @@ class Employer::JobFlowsController < ApplicationController
   end
 
   def new_job
-    @job ||= current_user.jobs.build
+    @job ||= current_user.employer_profile.jobs.build
   end
 
   def job
-    @job ||= current_user.jobs.find_by(id: (params[:job_id] || params[:job][:job_id]))
+    @job ||= current_user.employer_profile.jobs.find_by(id: (params[:job_id] || params[:job][:job_id]))
   end
 
   def mixpanel_post_job_flow_tracker

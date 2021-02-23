@@ -32,7 +32,7 @@ module CreateContract
   end
 
   def job
-    @job ||= current_user.jobs.find_by(id: params[:id])
+    @job ||= current_user.employer_profile.jobs.find_by(id: params[:id])
   end
 
   private
