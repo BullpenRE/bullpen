@@ -37,7 +37,7 @@
       <%= form_for :search, url: employer_talent_index_path, method: :get, html: {class: 'talent-filters'} do |f| %>
         <div class="form-group mt-4 mb-3">
           <div>
-            <%= f.label :sector_ids, 'Sectors', class: 'bp-input-label' %>
+            <%= f.label :sector_ids, 'Sectors', class: 'h5' %>
           </div>
           <%= f.select :sector_ids, @sectors_options_for_select,
                        {selected: params.dig(:search, :sector_ids)},
@@ -48,7 +48,7 @@
 
         <div class="form-group mb-3">
           <div>
-            <%= f.label :real_estate_skill_ids, 'Skills', class: 'bp-input-label' %>
+            <%= f.label :real_estate_skill_ids, 'Skills', class: 'h5' %>
           </div>
           <%= f.select :real_estate_skill_ids, @skill_options_for_select,
                        {selected: params.dig(:search, :real_estate_skill_ids)},
@@ -59,7 +59,7 @@
 
         <div class="form-group mb-5">
           <div>
-            <%= f.label :software_ids, 'Software', class: 'bp-input-label' %>
+            <%= f.label :software_ids, 'Software', class: 'h5' %>
           </div>
           <%= f.select :software_ids, @software_options_for_select,
                        {selected: params.dig(:search, :software_ids)},
