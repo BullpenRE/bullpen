@@ -54,11 +54,11 @@ class Employer::JobsController < ApplicationController
   end
 
   def make_an_offer
-    if contract_id.present? && contract&.closed?
+    if contract_being_reopened?
       contract.update(update_make_an_offer_params.merge(state: 'pending'))
       create_make_an_offer_flash_notice
       FreelancerMailer.reopen_contract(@contract).deliver_later
-    elsif contract_id.present?
+    elsif contract_being_updated?
       contract.update(update_make_an_offer_params)
       update_make_an_offer_flash_notice
       FreelancerMailer.offer_update(@contract).deliver_later
@@ -120,5 +120,13 @@ class Employer::JobsController < ApplicationController
     return employer_contracts_path if contract_id.present?
 
     employer_jobs_path
+  end
+
+  def contract_being_reopened?
+    contract_id.present? && contract&.closed?
+  end
+
+  def contract_being_updated?
+    contract_id.present?
   end
 end
