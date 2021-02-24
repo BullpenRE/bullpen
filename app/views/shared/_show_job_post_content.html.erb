@@ -6,7 +6,7 @@
 <li><i class="text-secondary font-weight-bold"> <%= job.hours_needed&.capitalize %> </i> hours are needed</li>
 <div class="bp-text mb-2 mt-2">
   <% if job.daytime_availability_required? %>
-    <i class="far fa-clock text-secondary"></i> Daytime availability is required <span class="text-secondary font-weight-bold">(9AM-5PM PST)</span>
+    <i class="far fa-clock text-secondary"></i> Daytime availability is required <span class="text-secondary font-weight-bold">(9AM-5PM <%= job.time_zone %>)</span>
   <% end %>
 </div>
 <hr>
