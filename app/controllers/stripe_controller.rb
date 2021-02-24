@@ -36,9 +36,9 @@ class StripeController < ApplicationController
   end
 
   def stripe_response_error
-    if stripe_response.parsed_response.key?('error')
-      redirect_to freelancer_account_index_path, notice: stripe_response.parsed_response['error_description']
-    end
+    return unless stripe_response.parsed_response.key?('error')
+
+    redirect_to freelancer_account_index_path, notice: stripe_response.parsed_response['error_description']
   end
 
   def freelancer_profile
