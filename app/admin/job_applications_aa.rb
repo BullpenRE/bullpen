@@ -4,17 +4,17 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
 
     permit_params :job_id, :freelancer_profile_id, :cover_letter, :template, :bid_amount, :available_during_work_hours,
                   :state, :work_sample, :liked, :applied_at, work_samples: []
-    includes :job, :user
+    includes :job, :freelancer_profile
 
     filter :job_short_description, as: :string, label: 'Job description'
     filter :freelancer_profile_user_email, as: :string, label: 'Freelancer email'
-    filter :job_user_email, as: :string, label: 'Employer email'
-    filter :state, as: :select, collection: JobApplication.states
+    filter :job_employer_profile_user_email, as: :string, label: 'Employer email'
+    filter :state, as: :select, collection: -> { JobApplication.states }
 
 
     index do
       column 'Job Title' do |job_application|
-        "#{job_application.job.title} by #{job_application.job.employer_profile.email}"
+        "#{link_to(job_application.job.title, admin_job_path(job_application.job_id))} by #{job_application.job.employer_profile.email}".html_safe
       end
       column 'Freelancer' do |job_application|
         link_to(job_application.freelancer_profile.email, admin_user_path(job_application.freelancer_profile.user_id))
@@ -116,7 +116,6 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
       def create
         error_message = nil
         job_application = JobApplication.new(permitted_params[:job_application])
-        job_application.user_id = FreelancerProfile.find_by(id: permitted_params[:job_application][:freelancer_profile_id]).user_id
         job_application.applied_at = Time.current if permitted_params[:job_application][:applied_at].blank?
 
         ApplicationRecord.transaction do

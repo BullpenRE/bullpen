@@ -29,7 +29,6 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
     job_application.update(step_2_params)
     if params[:button] == 'draft'
-      job_application.update(state: 'draft')
       draft_flash_notice!
       redirect_to freelancer_applications_path
     elsif params[:button] == 'back'
@@ -56,7 +55,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
       )
     end
     pre_populate_cover_letter_work_sample
-
+    job_application.update(state: 'draft') if job_application.state.blank?
     respond_js_format(:application_step_2)
 
     true
@@ -66,7 +65,6 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     return false unless params[:job_application][:step] == 'preview_application'
 
     if params[:button] == 'draft'
-      job_application.update(state: 'draft')
       draft_flash_notice!
     else
       EmployerMailer.new_job_application(current_user, job_application).deliver_later if mailing_condition
@@ -169,10 +167,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   def new_job_application
     @job_application ||= current_user.freelancer_profile
                                      .job_applications
-                                     .build(
-                                       user_id: current_user.id,
-                                       job_id: (params[:job_id] || params[:job_application][:job_id])
-                                     )
+                                     .build(job_id: (params[:job_id] || params[:job_application][:job_id]))
   end
 
   def job_application

@@ -4,7 +4,6 @@ class JobApplication < ApplicationRecord
   MAX_FILE_SIZE = 20_971_520
   MAX_WORK_SAMPLES_COUNT = 10
 
-  belongs_to :user
   belongs_to :freelancer_profile
   belongs_to :job
   has_many :job_application_questions, dependent: :destroy

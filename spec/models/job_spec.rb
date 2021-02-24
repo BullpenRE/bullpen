@@ -8,7 +8,6 @@ RSpec.describe Job, type: :model do
   it 'factory works' do
     expect(job).to be_valid
     expect(retainer_job).to be_valid
-    expect(job.user_id).to eq(employer_profile.user_id)
   end
 
   context 'Validations' do
