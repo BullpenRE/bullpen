@@ -5,7 +5,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
     includes :employer_profile, :job_sectors, :job_skills, :job_softwares, :job_questions
 
     filter :employer_profile_user_email, as: :string, label: 'Employer Email'
-    filter :state, as: :select, collection: Job.states
+    filter :state, as: :select, collection: -> { Job.states }
 
     permit_params :employer_profile_id,
                   :title,
@@ -86,6 +86,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
         f.input :title
         f.input :short_description
         f.input :position_length
+        f.input :hours_needed
         f.input :time_zone, as: :select, collection: Job.time_zones.keys
         f.input :state
         f.input :daytime_availability_required
