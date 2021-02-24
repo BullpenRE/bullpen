@@ -86,6 +86,9 @@ class Employer::JobFlowsController < ApplicationController
     if params[:button] == 'draft'
       job.update(state: 'draft')
       redirect_to employer_jobs_path
+    elsif params[:button] == 'posted'
+      job.update(state: 'posted')
+      redirect_to employer_jobs_path
     else
       respond_js_format(:preview_job)
     end
