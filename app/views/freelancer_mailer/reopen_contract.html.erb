@@ -1,0 +1,10 @@
+<p><b><%= @contract.employer_profile.user.full_name %></b> has reopened your contract. <a href="<%= freelancer_contracts_url %>" target='_blank'>Click here</a> to accept the offer or send them a message.</p>
+<h5>Job Title</h5>
+<p><%= @contract.title %></p>
+<h5>Job Description</h5>
+<%= @contract.job_description.body.to_s %>
+<h5>Offered Rate</h5> 
+<p><%= number_to_currency(@contract.pay_rate) %></p>
+<h5>Net Rate <div style='display: inline-block; font-weight: normal;'>(After Bullpen commission)</div></h5>
+<p><%= number_to_currency(0.7*@contract.pay_rate) %></p>
+<%= render partial: 'email/button', locals: { button_txt: 'View Offer', url: freelancer_contracts_url } %>

@@ -54,26 +54,21 @@ class Employer::JobsController < ApplicationController
   end
 
   def make_an_offer
-    if contract_id.present? && !contract.closed?
+    if contract&.closed?
+      contract.update(update_make_an_offer_params.merge(state: 'pending'))
+      create_make_an_offer_flash_notice
+      FreelancerMailer.reopen_contract(@contract).deliver_later
+    elsif contract_id.present? && !contract.closed?
       contract.update(update_make_an_offer_params)
       update_make_an_offer_flash_notice
       FreelancerMailer.offer_update(@contract).deliver_later
-
-      redirect_to employer_contracts_path
-    elsif contract.closed?
-      contract.update(state: 'pending')
-      flash[:notice] = "Your <strong>#{@contract.title}</strong> offer has been sent to
-                      <strong>#{@contract.freelancer_profile.full_name}</strong>.
-                      We'll send a notification when it's accepted."
-      FreelancerMailer.reopen_contract(@contract).deliver_later
-      redirect_to employer_contracts_path
     else
       create_contract
       create_make_an_offer_flash_notice
       FreelancerMailer.offer_made(@contract).deliver_later
-
-      redirect_to employer_jobs_path
     end
+
+    redirect_to redirect_path_after_offer
   end
 
   private
@@ -119,5 +114,11 @@ class Employer::JobsController < ApplicationController
 
   def delete_session_variable
     session.delete(:view_job)
+  end
+
+  def redirect_path_after_offer
+    return employer_contracts_path if contract.present?
+
+    employer_jobs_path
   end
 end
