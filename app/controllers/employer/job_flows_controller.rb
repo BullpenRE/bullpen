@@ -87,7 +87,6 @@ class Employer::JobFlowsController < ApplicationController
       job.update(state: 'draft')
       redirect_to employer_jobs_path
     elsif params[:button] == 'posted'
-      job.update(state: 'posted')
       redirect_to employer_jobs_path
     else
       respond_js_format(:preview_job)
@@ -98,8 +97,11 @@ class Employer::JobFlowsController < ApplicationController
 
   def preview_job_save
     return false unless params[:job][:step] == 'preview_job'
-
-    params[:button] != 'draft' ? job.update(state: 'posted') : job.update(state: 'draft')
+    if params[:button] == 'draft'
+      job.update(state: 'draft')
+    elsif params[:button] != 'done'
+      job.update(state: 'posted')
+    end
 
     redirect_to employer_jobs_path
 

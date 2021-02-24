@@ -19,7 +19,7 @@
             <%= f.hidden_field :job_id, value: @job.id %>
             <%= f.hidden_field 'step', value: 'preview_job' %>
             <% unless job.draft? %>
-              <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+              <%= button_tag type: 'submit', value: 'done', class: "btn btn-primary" do %>
                 Done
               <% end %>
             <% else %>
