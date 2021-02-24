@@ -5,9 +5,9 @@
   <%= f.hidden_field 'step', value: 'application_step_1' %>
   <div class="mb-3">The offered rate is
     <% if job_application.job.hourly? %>
-      <%= "<b>$#{job_application.job.pay_range_low} - $#{job_application.job.pay_range_high}</b>".html_safe + " per hour." %>
+      <%= "<b>#{number_to_currency(job_application.job.pay_range_low)} - #{number_to_currency(job_application.job.pay_range_high)}</b>".html_safe + " per hour." %>
     <% else %>
-      <%=  "a retainer fee of <b>$#{job_application.job.pay_range_low}</b>".html_safe + " for up to " + "#{job_application.job.contract_type&.split('_')&.last}".html_safe + " hours per month."%>
+      <%=  "a retainer fee of <b>#{number_to_currency(job_application.job.pay_range_low)}</b>".html_safe + " for up to " + "#{job_application.job.contract_type&.split('_')&.last}".html_safe + " hours per month."%>
     <% end %>
   </div>
   <div class="form-group mb-1">
@@ -69,10 +69,10 @@
 
     let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type&.split('_')&.last %>';
     if (hour_per_month === '1') {
-      $('.net-earnings').html(`Your net earnings will be <b>$${Math.round(net_earnings*0.7)}</b> per hour.`);
+      $('.net-earnings').html(`Your net earnings will be <b>${(net_earnings*0.7).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per hour.`);
     }
     else {
-      $('.net-earnings').html(`Your net earnings will be <b>$${Math.round(net_earnings*0.7)}</b> per month for up to ${hour_per_month} hours, plus up to <b>$${Math.round(net_earnings/parseInt(hour_per_month, 10)*0.7)}</b> per additional hour.`);
+      $('.net-earnings').html(`Your net earnings will be <b>${(net_earnings*0.7).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per month for up to ${hour_per_month} hours, plus up to <b>${(net_earnings/parseInt(hour_per_month, 10)*0.7).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per additional hour.`);
     }
   });
 </script>
