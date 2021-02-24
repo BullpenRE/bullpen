@@ -74,4 +74,11 @@ class FreelancerMailer < ApplicationMailer
     freelancer_email = review.freelancer_profile.user.email
     mail(to: freelancer_email, subject: "#{review.employer_profile.user.full_name} updated their review")
   end
+
+  def reopen_contract(contract)
+    @contract = contract
+    freelancer_email = contract.freelancer_profile.user.email
+    mail(to: freelancer_email, subject: "Congratulations! #{contract.employer_profile.user.full_name}
+                                         has reopened your contract")
+  end
 end

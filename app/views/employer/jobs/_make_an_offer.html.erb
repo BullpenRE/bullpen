@@ -3,7 +3,11 @@
     <div class="modal-content">
       <!--  Header with '×'-->
       <div class="modal-header">
-        <h1 class="modal-title" id="showSendMessageLabel"><%= contract.present? ? 'Edit Contract' : 'Make an Offer' %> <i class="far fa-question-circle text-primary"></i> </h1>
+        <% if contract.closed?  %>
+          <h1 class="modal-title" id="showSendMessageLabel">Reopen Contract <i class="far fa-question-circle text-primary"></i> </h1>
+        <% else %>
+          <h1 class="modal-title" id="showSendMessageLabel"><%= contract.present? ? 'Edit Contract' : 'Make an Offer' %> <i class="far fa-question-circle text-primary"></i> </h1>
+        <% end %>
         <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -86,7 +90,7 @@
               </select>
             <% end %>
             <div class="d-flex justify-content-end">
-              <%= f.submit contract.present? ? 'Save Changes' : 'Send Offer', class: 'btn btn-primary mt-3 send-invitation' %>
+              <%= f.submit contract.present? && !contract.closed? ? 'Save Changes' : 'Send Offer', class: 'btn btn-primary mt-3 send-invitation' %>
             </div>
           </div>
         <% end %>

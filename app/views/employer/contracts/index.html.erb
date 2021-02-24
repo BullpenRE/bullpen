@@ -95,7 +95,7 @@
                   Show Contract Details
                 </button>
                 <% if contract.closed? %>
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#">
+                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
                     Reopen Contract
                   </button>
                   <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#">

@@ -54,11 +54,18 @@ class Employer::JobsController < ApplicationController
   end
 
   def make_an_offer
-    if contract_id.present?
-      update_contract
+    if contract_id.present? && !contract.closed?
+      contract.update(update_make_an_offer_params)
       update_make_an_offer_flash_notice
       FreelancerMailer.offer_update(@contract).deliver_later
 
+      redirect_to employer_contracts_path
+    elsif contract.closed?
+      contract.update(state: 'pending')
+      flash[:notice] = "Your <strong>#{@contract.title}</strong> offer has been sent to
+                      <strong>#{@contract.freelancer_profile.full_name}</strong>.
+                      We'll send a notification when it's accepted."
+      FreelancerMailer.reopen_contract(@contract).deliver_later
       redirect_to employer_contracts_path
     else
       create_contract
@@ -81,9 +88,8 @@ class Employer::JobsController < ApplicationController
     close_job_if_offer_is_made
   end
 
-  def update_contract
-    @contract = current_user.employer_profile.contracts.find_by(id: params[:make_an_offer][:contract_id])
-    @contract.update(update_make_an_offer_params)
+  def contract
+    @contract ||= current_user.employer_profile.contracts.find_by(id: params[:make_an_offer][:contract_id])
   end
 
   def redirect_path_after_send_message(job_title)
