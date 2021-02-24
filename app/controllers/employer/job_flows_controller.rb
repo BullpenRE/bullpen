@@ -182,6 +182,6 @@ class Employer::JobFlowsController < ApplicationController
     MixpanelWorker.perform_async(current_user.id, 'Job Flow Steps', { 'user': current_user.email,
                                                                       'job': @job.id,
                                                                       'job state': @job.state,
-                                                                      'step': step })
+                                                                      'step': params[:job][:step] })
   end
 end

@@ -7,6 +7,7 @@ class Employer::ReviewsController < ApplicationController
   def save_review
     review.present? ? update_review : create_review
 
+    mixpanel_review_tracker('Add Review')
     redirect_to redirect_path_after_save_review
   end
 
@@ -39,5 +40,9 @@ class Employer::ReviewsController < ApplicationController
 
   def review_params
     params.require(:review).permit(:freelancer_profile_id, :employer_profile_id, :rating, :comments)
+  end
+
+  def mixpanel_review_tracker(action = 'Add Review')
+    MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email })
   end
 end

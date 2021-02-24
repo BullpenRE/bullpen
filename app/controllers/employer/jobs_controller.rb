@@ -23,18 +23,21 @@ class Employer::JobsController < ApplicationController
   end
 
   def destroy
+    mixpanel_job_tracker('Delete Job')
     job.destroy
   end
 
   def post_job
     job.update(state: 'posted')
 
+    mixpanel_job_tracker('Post Job')
     redirect_to employer_jobs_path
   end
 
   def like_job_application
     @job_application = JobApplication.find(params[:id])
     @job_application.liked ? @job_application.update(liked: false) : @job_application.update(liked: true)
+    mixpanel_job_tracker('Liked Job Application')
   end
 
   def send_message
@@ -42,6 +45,7 @@ class Employer::JobsController < ApplicationController
     @message = Message.create(message_params)
     FreelancerMailer.send_message(@message, job_title).deliver_later
 
+    mixpanel_job_tracker('Send Message')
     redirect_to redirect_path_after_send_message(job_title)
   end
 
@@ -50,6 +54,7 @@ class Employer::JobsController < ApplicationController
     return unless @job_application
 
     @job_application.update(state: 'declined')
+    mixpanel_job_tracker('Decline Job Application')
     FreelancerMailer.job_application_declined(@job_application).deliver_later
   end
 
@@ -59,12 +64,14 @@ class Employer::JobsController < ApplicationController
       update_make_an_offer_flash_notice
       FreelancerMailer.offer_update(@contract).deliver_later
 
+      mixpanel_job_tracker('Make an Offer with existing contract')
       redirect_to employer_contracts_path
     else
       create_contract
       create_make_an_offer_flash_notice
       FreelancerMailer.offer_made(@contract).deliver_later
 
+      mixpanel_job_tracker('Make an Offer')
       redirect_to employer_jobs_path
     end
   end
@@ -79,11 +86,13 @@ class Employer::JobsController < ApplicationController
     @job = current_user.employer_profile.jobs.find_by(id: params[:make_an_offer][:job_id])
     @contract = current_user.employer_profile.contracts.create(make_an_offer_params.merge(state: 'pending'))
     close_job_if_offer_is_made
+    mixpanel_job_tracker('Create Contract')
   end
 
   def update_contract
     @contract = current_user.employer_profile.contracts.find_by(id: params[:make_an_offer][:contract_id])
     @contract.update(update_make_an_offer_params)
+    mixpanel_job_tracker('Update Contract')
   end
 
   def redirect_path_after_send_message(job_title)
@@ -113,5 +122,10 @@ class Employer::JobsController < ApplicationController
 
   def delete_session_variable
     session.delete(:view_job)
+  end
+
+  def mixpanel_job_tracker(action = 'Post Job')
+    MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email,
+                                                            'job': job.id })
   end
 end

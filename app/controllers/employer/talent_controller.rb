@@ -16,6 +16,8 @@ class Employer::TalentController < ApplicationController
     if freelancer_profiles_collection.empty?
       flash[:notice] = 'No talent found that matches all of your search criteria.'
     end
+
+    mixpanel_talent_tracker('Find Talent')
   end
 
   def interview_request
@@ -27,11 +29,13 @@ class Employer::TalentController < ApplicationController
                        'No new emails were sent but they will see the new text on their dashboard.'
       @interview_request.update(state: 'pending') if @interview_request.withdrawn? || @interview_request.declined?
 
+      mixpanel_talent_tracker('Update Interview Request')
       redirect_to employer_interviews_path
     else
       @interview_request = current_user.employer_profile.interview_requests.create(interview_request_params)
       email_interview_request
 
+      mixpanel_talent_tracker('Add Interview Request')
       redirect_to employer_talent_index_path(referer_page_params)
     end
   end
@@ -140,5 +144,9 @@ class Employer::TalentController < ApplicationController
   def referer_page_params
     params_hash = referer_query_params.transform_values(&:first)
     params_hash.select { |key, _| key.start_with?('page') }
+  end
+
+  def mixpanel_talent_tracker(action = 'Find a Talent')
+    MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email })
   end
 end

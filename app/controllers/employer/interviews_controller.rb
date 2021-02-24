@@ -8,12 +8,14 @@ class Employer::InterviewsController < ApplicationController
   def index
     @pagy, @interviews = pagy(interview_requests_collection, items: ITEMS_PER_PAGE, overflow: :last_page)
 
+    mixpanel_interview_tracker('Show all interviews')
     redirect_to employer_talent_index_path if @interviews.blank?
   end
 
   def withdraw_request
     @interview_request = current_user.employer_profile.interview_requests.find_by(id: params[:id])
     @interview_request.update(state: 'withdrawn')
+    mixpanel_interview_tracker('Withdraw Interview')
     FreelancerMailer.interview_request_was_withdrawn(@interview_request).deliver_later
   end
 
@@ -30,5 +32,9 @@ class Employer::InterviewsController < ApplicationController
                                                    .not_rejected
                                                    .employer_visible
                                                    .order(state: :asc, created_at: :desc)
+  end
+
+  def mixpanel_interview_tracker(action = 'Interviews')
+    MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email })
   end
 end

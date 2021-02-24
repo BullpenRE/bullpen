@@ -9,6 +9,6 @@ class ConfirmationsController < Devise::ConfirmationsController
   end
 
   def mixpanel_confirmation_tracker
-    MixpanelWorker.perform_async(current_user.id, 'Validating account', { 'user': current_user.email })
+    MixpanelWorker.perform_async(@user.id, 'Validating account', { 'user': @user.email, 'role': @user.role })
   end
 end
