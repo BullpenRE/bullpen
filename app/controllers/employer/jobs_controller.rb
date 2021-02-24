@@ -117,7 +117,7 @@ class Employer::JobsController < ApplicationController
   end
 
   def redirect_path_after_offer
-    return employer_contracts_path if contract.present?
+    return employer_contracts_path if contract_id.present?
 
     employer_jobs_path
   end
