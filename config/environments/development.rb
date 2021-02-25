@@ -80,4 +80,8 @@ Rails.application.configure do
 
   ENV['GOOGLE_SIGN_IN_CLIENT_ID'] = '643730797896-imke97p03uhd2486gqkdhm35ucmh7qcb.apps.googleusercontent.com'
   ENV['GOOGLE_SIGN_IN_CLIENT_SECRET'] = 'ZaS0BLghoHk3tlsw1J6sHVhH'
+
+  ENV['STRIPE_PUBLISHABLE_KEY'] = 'pk_test_wvFaryXD9bfRc4NsJApj7h96'
+  ENV['STRIPE_SECRET_KEY'] = 'sk_test_k7lMkrLmOH4PnQwggdMl6rqD'
+  ENV['STRIPE_CLIENT_ID'] = 'ca_F92ZNOQd5VYyop7dz5TP5qB7uf3ljnuk'
 end

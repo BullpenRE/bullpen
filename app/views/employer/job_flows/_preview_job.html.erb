@@ -18,11 +18,17 @@
           <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
             <%= f.hidden_field :job_id, value: @job.id %>
             <%= f.hidden_field 'step', value: 'preview_job' %>
-            <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
-              Save<span class="d-none d-sm-inline"> as Draft</span>
-            <% end %>
-            <%= button_tag type: 'submit', class: "btn btn-primary" do %>
-              Submit<span class="d-none d-sm-inline"> Job Post</span>
+            <% unless job.draft? %>
+              <%= button_tag type: 'submit', value: 'done', class: "btn btn-primary" do %>
+                Done
+              <% end %>
+            <% else %>
+              <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
+                Save<span class="d-none d-sm-inline"> as Draft</span>
+              <% end %>
+              <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+                Submit<span class="d-none d-sm-inline"> Job Post</span>
+              <% end %>
             <% end %>
           <% end %>
         </div>

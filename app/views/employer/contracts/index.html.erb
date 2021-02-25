@@ -77,6 +77,8 @@
       <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
       <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user, job_title: contract.title, id: contract.id, redirect_reference: 'contract' } %>
       <%= render partial: 'shared/contracts/show_offer_contract_details', locals: { contract: contract } %>
+      <%= render partial: 'employer/contracts/close_contract', locals: { contract: contract } %>
+      <%= render partial: 'employer/contracts/delete_contract', locals: { contract: contract } %>
       <div class="bp-card mb-3 card<%= contract.id %>">
         <div class="d-flex flex-column flex-lg-row">
           <div class="mr-auto"><h2 class="text-wrap text-break"><%= contract&.title&.capitalize %></h2></div>
@@ -98,14 +100,14 @@
                   <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
                     Reopen Contract
                   </button>
-                  <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#">
+                  <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#deleteContract<%= contract.id %>">
                     Delete Contract
                   </button>
                 <% else %>
                   <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
                     Edit Contract
                   </button>
-                  <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#">
+                  <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#closeContract<%= contract.id %>">
                     Close Contract
                   </button>
                 <% end %>
