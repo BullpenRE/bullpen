@@ -71,7 +71,7 @@
           </div>
         </div>
       </div>
-      <% if job.job_applications.applied.any? || job.contracts.hire_group.any? %>
+      <% if job.job_applications.applied.without_contracts.any? || job.contracts.hire_group.any? %>
         <div class="d-flex flex-row justify-content-between">
           <div class="column">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
