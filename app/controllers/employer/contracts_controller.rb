@@ -7,7 +7,7 @@ class Employer::ContractsController < ApplicationController
                 :incomplete_employer_profile_redirect
 
   def index
-    @contracts = current_user.employer_profile.contracts.order(created_at: :desc)
+    @contracts = current_user.employer_profile.contracts.employer_visible.order(created_at: :desc)
 
     redirect_to root_path if @contracts.hire_group.blank?
     return unless session[:review_by_contract].present?
@@ -17,7 +17,6 @@ class Employer::ContractsController < ApplicationController
   end
 
   def withdraw_offer
-    contract = current_user.employer_profile.contracts.find_by(id: params[:id])
     contract.update(state: 'withdrawn')
     FreelancerMailer.offer_was_withdrawn(contract).deliver_later
   end
@@ -50,7 +49,20 @@ class Employer::ContractsController < ApplicationController
     end
   end
 
+  def close_contract
+    contract.update(state: 'closed')
+    FreelancerMailer.contract_was_closed(contract).deliver_later
+  end
+
+  def delete_contract
+    contract.update(hide_from_employer: true)
+  end
+
   private
+
+  def contract
+    @contract ||= current_user.employer_profile.contracts.find_by(id: params[:id])
+  end
 
   def create_contract(contract_params)
     current_user.employer_profile.contracts.create(contract_params)

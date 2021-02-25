@@ -23,7 +23,7 @@
 <script>
   $('.delete-contract-'+<%= contract.id %>).click(() => {
     $.ajax({
-      url: '/freelancer/delete_contract',
+      url: '/employer/delete_contract',
       data: { id: '<%= contract.id %>' },
       method: 'POST',
       success: () => {
