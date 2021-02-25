@@ -17,6 +17,10 @@ class Contract < ApplicationRecord
 
   after_create :inherit_job_attributes, if: -> { job_id }
 
+  def payout_rate
+    @payout_rate ||= (freelancer_profile.payout_percentage / 100.0) * pay_rate
+  end
+
   private
 
   def between_different_parties
