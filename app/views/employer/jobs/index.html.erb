@@ -13,7 +13,7 @@
           <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start mr-3">
             <%= job.draft? ? 'Save as Draft' : job.state.capitalize %>
           </div>
-          <% if job.ready_to_post? %>
+          <% if job.ready_to_post? && !job.posted? %>
             <div class="d-block p-md-1 mb-1 mb-md-0 d-sm-inline-block">
               <%= link_to 'Post Job', employer_post_job_path(id: job.id), class: "btn btn-primary container-fluid" %>
             </div>
