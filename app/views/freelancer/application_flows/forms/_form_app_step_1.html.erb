@@ -68,8 +68,7 @@
     }
 
     let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type&.split('_')&.last %>';
-<!--    let payout_rate = '<%#= current_user.freelancer_profile.payout_percentage / 100.0 %>'-->
-    let payout_rate = '<%= (current_user.freelancer_profile.payout_percentage || 70) / 100.0 %>';
+    const payout_rate = <%= (current_user.freelancer_profile.payout_percentage || 70) / 100.0 %>;
     if (hour_per_month === '1') {
       $('.net-earnings').html(`Your net earnings will be <b>${Math.round(net_earnings*payout_rate).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per hour.`);
     }
