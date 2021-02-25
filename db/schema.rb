@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_17_231109) do
+ActiveRecord::Schema.define(version: 2021_02_23_144401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 2021_02_17_231109) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "hide_from_freelancer", default: false
+    t.boolean "hide_from_employer", default: false
     t.index ["employer_profile_id"], name: "index_contracts_on_employer_profile_id"
     t.index ["freelancer_profile_id"], name: "index_contracts_on_freelancer_profile_id"
     t.index ["job_id"], name: "index_contracts_on_job_id"
@@ -183,8 +184,8 @@ ActiveRecord::Schema.define(version: 2021_02_17_231109) do
     t.integer "desired_hourly_rate"
     t.boolean "new_jobs_alert", default: true
     t.boolean "searchable", default: true
-    t.string "stripe_id_account"
     t.integer "payout_percentage", default: 70
+    t.string "stripe_id_account"
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 

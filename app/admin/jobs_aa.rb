@@ -17,7 +17,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jo
                   :required_experience,
                   :required_regional_knowledge,
                   :relevant_details,
-                  :draft,
+                  :state,
                   :contract_type,
                   :pay_range_low,
                   :pay_range_high,
