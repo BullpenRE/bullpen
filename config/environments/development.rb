@@ -83,4 +83,7 @@ Rails.application.configure do
 
   ENV['MIXPANEL_TOKEN'] = '718e55b4216b4f5b266dfd83b6903ae3'
   ENV['MIXPANEL'] = 'true'
+  ENV['STRIPE_PUBLISHABLE_KEY'] = 'pk_test_wvFaryXD9bfRc4NsJApj7h96'
+  ENV['STRIPE_SECRET_KEY'] = 'sk_test_k7lMkrLmOH4PnQwggdMl6rqD'
+  ENV['STRIPE_CLIENT_ID'] = 'ca_F92ZNOQd5VYyop7dz5TP5qB7uf3ljnuk'
 end

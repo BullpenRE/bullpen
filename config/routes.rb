@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get '/employer_talent_style', to: 'style#employer_talent'
   get '/login_style', to: 'style#login'
   get '/employer_jobs_style', to: 'style#employer_jobs'
+  get 'stripe/connect', to: 'stripe#connect', as: :stripe_connect
+  get 'stripe/dashboard', to: 'stripe#dashboard', as: :stripe_dashboard
 
   get '/join', to: 'join#index'
   post '/join/signup', to: 'join#signup'
