@@ -1,17 +1,4 @@
-<style>
-  .sidenav-base {
-    height: 100vh;
-    width: 340px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    transition: 0.5s;
-    transform: translateX(-100%);
-    overflow-x: hidden;
-  }
-</style>
-
-<div id="sidenavBase" class="sidenav-base">
+<div id="sidenavBase" class="bp-sidenav-base">
   <div id="mySidenav" class="bg-white p-3" style="z-index:1;height:100vh;">
     <a href="#" id="closeFilterNav" class="close">&times;</a>
     <%= form_for :search, url: employer_talent_index_path, method: :get, html: {class: 'talent-filters'} do |f| %>
