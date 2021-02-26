@@ -60,35 +60,9 @@ trix-toolbar .trix-button-group--file-tools {
   display: none;
 }
 
-trix-toolbar .trix-button--icon-strike {
-  display: none;
-}
-
-trix-toolbar .trix-button--icon-heading-1 {
-  display: none;
-}
-
-trix-toolbar .trix-button--icon-quote {
-  display: none;
-}
-
-trix-toolbar .trix-button--icon-code {
-  display: none;
-}
-
-trix-toolbar .trix-button--icon-decrease-nesting-level {
-  display: none;
-}
-
-trix-toolbar .trix-button--icon-increase-nesting-level {
-  display: none;
-}
-
-trix-toolbar .trix-button--icon-undo {
-  display: none;
-}
-
-trix-toolbar .trix-button--icon-redo {
+trix-toolbar .trix-button--icon-strike, .trix-button--icon-heading-1, .trix-button--icon-quote, .trix-button--icon-code,
+             .trix-button--icon-decrease-nesting-level, .trix-button--icon-increase-nesting-level,
+             .trix-button--icon-undo, .trix-button--icon-redo {
   display: none;
 }
 
