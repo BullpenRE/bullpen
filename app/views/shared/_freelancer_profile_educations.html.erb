@@ -10,9 +10,9 @@
     <% end %>
   </div>
   <% if education.description.present? %>
-    <ul class="mr-lg-3 mr-1 pl-3">
-      <li class="text-wrap text-break"><%= education.description %></li>
-    </ul>
+    <div>
+      <p class="text-wrap text-break"><%= education.description %></p>
+    </div>
   <% end %>
   <%= render 'freelancer/shared/edit_educations', freelancer_profile_education: education %>
 <% end %>
