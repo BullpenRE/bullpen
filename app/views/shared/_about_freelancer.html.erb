@@ -2,9 +2,9 @@
   <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: freelancer_profile,
                                                                  editable: editable } %>
   <div>
-    <p class="text-wrap text-break"><%= freelancer_profile.professional_summary %></p>
+    <p class="text-wrap text-break mb-3"><%= freelancer_profile.professional_summary %></p>
     <% if job_application.present? || freelancer_profile.desired_hourly_rate.present? %>
-      <p class="text-secondary"><b>$<%= job_application.present? ? job_application.bid_amount : freelancer_profile.desired_hourly_rate %> per hour</b></p>
+      <p class="text-secondary mb-3"><b>$<%= job_application.present? ? job_application.bid_amount : freelancer_profile.desired_hourly_rate %> per hour</b></p>
     <% end %>
     <%  freelancer_profile.sectors.order(description: :asc)&.each do |sector| %>
       <span class="badge badge-secondary mb-1"><%= sector.description %></span>

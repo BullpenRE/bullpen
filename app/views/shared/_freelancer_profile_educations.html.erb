@@ -1,10 +1,12 @@
-<h4>Education</h4>
+<h5>Education</h5>
 <% freelancer_profile.freelancer_profile_educations.order(currently_studying: :desc, graduation_year: :desc).each do |education| %>
   <div class="d-flex">
-    <div class="mb-2 mr-2 text-wrap text-break"><b><%= education.institution %></b><br><%= education.degree %> <%= education.course_of_study %></div>
-    <div class="ml-auto mr-1"><i><%= education.currently_studying ? 'Present' : education.graduation_year %></i></div>
+    <div class="mb-2 mr-2 text-wrap text-break"><b><%= education.institution %></b><br />
+    <%= education.degree %> <%= education.course_of_study %><br />
+    <i class="bp-text-sm"><%= education.currently_studying ? 'Present' : education.graduation_year %></i>
+    </div>
     <% if editable %>
-      <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editEducationModal-<%= education.id %>"></button>
+      <button class="fas fa-edit text-primary ml-auto" type="button"  data-toggle="modal" data-target="#editEducationModal-<%= education.id %>"></button>
     <% end %>
   </div>
   <% if education.description.present? %>
@@ -18,7 +20,7 @@
   <%= render 'freelancer/shared/add_educations', freelancer_profile: freelancer_profile %>
   <% if editable %>
     <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#addEducationModal">
-      Add an Education
+      Add Education
     </button>
   <% end %>
 </div>

@@ -51,7 +51,7 @@
                      id: "regionalKnowledge", placeholder: "Enter the area (city, state, county, etc.)",
                      value: job.required_regional_knowledge %>
   </div>
-  <div class="modal-footer justify-content-between">
+  <div class="d-flex mt-5 justify-content-between">
     <%= link_to employer_job_flows_path(id: :post_job_step_2, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>

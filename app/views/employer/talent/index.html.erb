@@ -11,17 +11,20 @@
 <div class="container mb-3 talent-cards">
 
   <%= render partial: 'employer/talent/filter_side_bar' %>
-  <div class="d-flex justify-content-between">
-    <h1 class="">Find Talent</h1>
+  <div class="d-flex flex-column flex-md-row">
+    <h1 class="text-nowrap mr-auto">Find Talent</h1>
     <% if @filters_list %>
-      <h6 class="flex-grow-1 text-secondary text-right mx-3">
-        <%= @filters_list.join(', ') %>
+      <div class="d-flex mr-3 mb-2">
+        <div class="d-none d-md-inline-flex mr-3"></div> <!--Shim for mobile views-->
+        <h6 class="text-secondary mr-1 mb-0" style="margin-top:3px">
+          <%= @filters_list.join(', ') %>
+        </h6>
         <%= link_to "#", id: "rejectFilters", data: {url: employer_talent_index_path} do %>
-          <i class="fa fa-times-circle fa-lg text-black-50 " aria-hidden="true"></i>
+          <i class="fa fa-times-circle fa-lg text-black-50" aria-hidden="true"></i>
         <% end %>
-      </h6>
+      </div>
     <% end %>
-    <a href="#" id="showFilters" class="mb-2 ml-auto">Show Filters <i class="fas fa-filter"></i></a>
+    <a href="#" id="showFilters" class="mb-2 text-nowrap">Show Filters <i class="fas fa-filter"></i></a>
   </div>
   <% @freelancer_profiles.each do |freelancer_profile| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: freelancer_profile } %>
@@ -39,11 +42,12 @@
         <div class="ml-sm-auto">
           <div class="d-block d-sm-flex">
             <% if freelancer_profile.can_request_interview?(current_user.employer_profile.id) %>
-              <div class="d-block p-1 d-sm-inline-block">
-                <button class="btn btn-primary d-sm-in w-100 interviewRequest<%= freelancer_profile.id %>" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
+              <div class="d-block d-sm-inline-block">
+                <button class="btn btn-primary w-100 interviewRequest<%= freelancer_profile.id %>" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
               </div>
+              <div class="mr-2 mt-2"></div> <!--Shim for mobile views-->
             <% end %>
-            <div class="d-block p-1 d-sm-inline-block">
+            <div class="d-block d-sm-inline-block">
               <button class="btn btn-outline-primary w-100" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
             </div>
           </div>
