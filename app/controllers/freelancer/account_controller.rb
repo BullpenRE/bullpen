@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Freelancer::AccountController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :stripe_added
 
   def index
     freelancer_profile
@@ -17,5 +17,9 @@ class Freelancer::AccountController < ApplicationController
 
   def freelancer_profile
     @freelancer_profile ||= current_user.freelancer_profile
+  end
+
+  def stripe_added
+    @stripe_added ||= freelancer_profile.stripe_id_account.present?
   end
 end

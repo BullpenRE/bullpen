@@ -59,8 +59,11 @@
   </div>
 
   <div class="bp-card mb-3">
-    <h2>Bank Information<i class="far fa-question-circle ml-2 text-primary" aria-hidden="true"></i></h2> <!--Remove the "text-primary" class when the icon becomes a link-->
-    <% if @freelancer_profile.stripe_id_account.present? %>
+    <h2>
+      <%= @stripe_added ? 'Bank Information' : 'Account Information' %>
+      <i class="far fa-question-circle ml-2 text-primary" aria-hidden="true"></i>
+    </h2> <!--Remove the "text-primary" class when the icon becomes a link-->
+    <% if @stripe_added %>
         <div class="mb-2">Connected with Stripe.</div>
         <%= link_to 'Go to Stripe Dashboard', '#', class: 'btn btn-outline-primary go-stripe-dashboard' %>
     <% else %>
@@ -69,40 +72,42 @@
     <% end %>
   </div>
 
-  <div class="bp-card mb-5">
-    <h2>Account Verification</h2>
-    <table class="table table-borderless table-sm bp-account-table-padding" style="width:auto;">
-      <tbody>
-        <tr>
-          <th class="text-secondary text-right">Status</td>
-          <td class="pl-3">Some text1</td>
-        </tr>
-        <tr>
-          <th class="text-secondary text-right">Date of Birth</th>
-          <td class="pl-3">Some text1</td>
-        </tr>
-        <tr>
-          <th class="text-secondary text-right">Phone Number</th>
-          <td class="pl-3">Some text1</td>
-        </tr>
-        <tr>
-          <th class="text-secondary text-right">SSN</th>
-          <td class="pl-3">Some text1</td>
-        </tr>
-        <tr>
-          <th class="text-secondary text-right">Address</th>
-          <td class="pl-3">Some text1</td>
-        </tr>
-        <tr>
-          <th class="text-secondary text-right">Identity Document</th>
-          <td class="pl-3">Some text1</td>
-        </tr>
-      </tbody>
-    </table>
-    <span>
-      <%= link_to 'Contact us', '#' %> if your personal information has changed.
-    </span>
-  </div>
+  <% if @stripe_added %>
+    <div class="bp-card mb-5">
+      <h2>Account Verification</h2>
+      <table class="table table-borderless table-sm bp-account-table-padding" style="width:auto;">
+        <tbody>
+          <tr>
+            <th class="text-secondary text-right">Status</td>
+            <td class="pl-3">Some text1</td>
+          </tr>
+          <tr>
+            <th class="text-secondary text-right">Date of Birth</th>
+            <td class="pl-3">Some text1</td>
+          </tr>
+          <tr>
+            <th class="text-secondary text-right">Phone Number</th>
+            <td class="pl-3">Some text1</td>
+          </tr>
+          <tr>
+            <th class="text-secondary text-right">SSN</th>
+            <td class="pl-3">Some text1</td>
+          </tr>
+          <tr>
+            <th class="text-secondary text-right">Address</th>
+            <td class="pl-3">Some text1</td>
+          </tr>
+          <tr>
+            <th class="text-secondary text-right">Identity Document</th>
+            <td class="pl-3">Some text1</td>
+          </tr>
+        </tbody>
+      </table>
+      <span>
+        <%= link_to 'Contact us', '#' %> if your personal information has changed.
+      </span>
+    </div>
+  <% end %>
 </div>
 
 <script>
