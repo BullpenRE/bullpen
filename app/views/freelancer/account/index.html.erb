@@ -63,16 +63,24 @@
       Account Information
       <i class="far fa-question-circle ml-2 text-primary" aria-hidden="true"></i>
     </h2> <!--Remove the "text-primary" class when the icon becomes a link-->
-    <% if @stripe_added %>
+    <% if @stripe_id_account.present? %>
         <table class="table table-borderless table-sm bp-account-table-padding mb-2" style="width:auto;">
           <tbody>
             <tr>
               <th class="text-secondary text-right">Status</td>
-              <td class="pl-3 text-danger">Information Required Soon</td>
+              <td class="pl-3 text-danger">
+                <%= @account_data.external_accounts['data'].first['status'].capitalize %>
+              </td>
             </tr>
             <tr>
               <th class="text-secondary text-right">Payout Details</th>
-              <td class="pl-3">Some text1</td>
+              <td class="pl-3">
+                <i class="fas fa-university mr-1"></i>
+                &#9286;&#32;
+                <%= @account_data.external_accounts['data'].first['routing_number'] %>
+                &#9286;&#32;&#8226;&#8226;&#8226;&#8226;&#32;
+                <%= @account_data.external_accounts['data'].first['last4'] %>
+              </td>
             </tr>
             <tr>
               <th class="text-secondary text-right">Address</th>
