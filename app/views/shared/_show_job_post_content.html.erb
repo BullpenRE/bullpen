@@ -2,10 +2,10 @@
 <div class="text-secondary font-weight-bold mb-1 mt-3"> Details </div>
 <p><%= job.relevant_details %></p>
 <hr>
-<div class="margin_left_1em_for_ff">
+<ul class="pl-3">
   <li>This is <i class="text-secondary font-weight-bold"> <%= job.position_length %> </i> position</li>
   <li><i class="text-secondary font-weight-bold"> <%= job.hours_needed&.capitalize %> </i> hours are needed</li>
-</div>
+</ul>
 <div class="bp-text mb-2 mt-2">
   <% if job.daytime_availability_required? %>
     <i class="far fa-clock text-secondary"></i> Daytime availability is required <span class="text-secondary font-weight-bold">(9AM-5PM <%= job.time_zone %>)</span>
@@ -15,27 +15,27 @@
 <div class="row">
   <div class="col-12 mb-3 col-sm mb-sm-0">
     <div class="text-secondary font-weight-bold"> Required Skills </div>
-    <div class="margin_left_1em_for_ff">
+    <ul class="pl-3">
         <% job.job_skills.each do |job_skill| %>
         <li><%= job_skill.skill.description %></li>
       <% end %>
-    </div>
+    </ul>
   </div>
   <% if job.job_softwares.any? %>
     <div class="col-12 mb-3 col-sm mb-sm-0">
       <div class="text-secondary font-weight-bold"> Required Software </div>
-      <div class="margin_left_1em_for_ff">
+      <ul class="pl-3">
         <% job.job_softwares.each do |job_software| %>
           <li><%= job_software.software.description %></li>
         <% end %>
-      </div>
+      </ul>
     </div>
   <% end %>
   <div class="col-12 col-sm">
     <div class="text-secondary font-weight-bold"> Experience Level </div>
-    <div class="margin_left_1em_for_ff">
+    <ul class="pl-3">
       <li><%= job.required_experience&.capitalize %></li>
-    </div>
+    </ul>
   </div>
 </div>
 <% if job.required_regional_knowledge.present? %>
@@ -46,11 +46,11 @@
 <% if job.job_questions.any? %>
   <hr>
   <div class="text-secondary font-weight-bold"> Questions for Applicants </div>
-  <div class="margin_left_1em_for_ff">
+  <ul class="pl-3">
     <% job.job_questions.each do |job_question| %>
       <li><%= job_question.description %></li>
     <% end %>
-  </div>
+  </ul>
 <% end %>
 <%= render partial: 'shared/about_employer', locals: { job: job } %>
 <% if job.posted? %>

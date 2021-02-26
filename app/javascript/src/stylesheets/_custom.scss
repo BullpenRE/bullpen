@@ -107,10 +107,3 @@
   }
 }
 input.error { border: 1px solid #FB3640; }
-
-/*This will work for firefox*/
-@-moz-document url-prefix() {
-  .margin_left_1em_for_ff {
-    margin-left: 1em;
-  }
-}
