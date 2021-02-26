@@ -45,6 +45,32 @@
           showAlert(locationValue)
         }
       });
+    });
+
+    $("#submitExperienceWithLocationCheck<%= experience_count %>").on('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const locationValueExperience = $('#experienceLocationInput<%= experience_count %>').val();
+      if (!locationValueExperience) return showAlert(locationValueExperience);
+      const $form = $(e.target).parents('form');
+
+      $.ajax({
+        url: `https://nominatim.openstreetmap.org/search?q=${locationValueExperience}&format=json&addressdetails=1&accept-language=en`,
+        method: 'GET',
+        success: function (data) {
+          if (data.length < 1 || data === undefined) {
+            showAlert(locationValueExperience);
+          } else {
+            const longitude = data[0]['lon'];
+            const latitude = data[0]['lat'];
+            $form.prepend(setHiddenFields(longitude, latitude, '<%= controller_name %>'));
+            if (!$('.highlight').length) $form.submit()
+          }
+        },
+        error: () => {
+          showAlert(locationValueExperience);
+        }
+      });
     })
   })
 </script>
