@@ -47,10 +47,10 @@
       });
     });
 
-    $("#submitExperienceWithLocationCheck<%= experience_count %>").on('click', (e) => {
+    $("#submitExperienceWithLocationCheck<%= experience_modal_id %>").on('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const locationValueExperience = $('#experienceLocationInput<%= experience_count %>').val();
+      const locationValueExperience = $('#experienceLocationInput<%= experience_modal_id %>').val();
       if (!locationValueExperience) return showAlert(locationValueExperience);
       const $form = $(e.target).parents('form');
 
