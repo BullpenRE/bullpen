@@ -40,6 +40,7 @@ trix-editor {
     height: auto;
   }
 }
+
 //Style overrides
 trix-toolbar .trix-button-group {
   border: 1px solid #E9ECEF;
@@ -56,5 +57,9 @@ trix-toolbar .trix-button {
   background: #E9ECEF;
 }
 trix-toolbar .trix-button-group--file-tools {
+  display: none;
+}
+
+.without-toolbar .trix-button {
   display: none;
 }
