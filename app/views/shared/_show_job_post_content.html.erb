@@ -2,7 +2,7 @@
 <div class="text-secondary font-weight-bold mb-1 mt-3"> Details </div>
 <p><%= job.relevant_details %></p>
 <hr>
-<div class="margin_left_1em">
+<div class="margin_left_1em_for_ff">
   <li>This is <i class="text-secondary font-weight-bold"> <%= job.position_length %> </i> position</li>
   <li><i class="text-secondary font-weight-bold"> <%= job.hours_needed&.capitalize %> </i> hours are needed</li>
 </div>
@@ -15,7 +15,7 @@
 <div class="row">
   <div class="col-12 mb-3 col-sm mb-sm-0">
     <div class="text-secondary font-weight-bold"> Required Skills </div>
-    <div class="margin_left_1em">
+    <div class="margin_left_1em_for_ff">
         <% job.job_skills.each do |job_skill| %>
         <li><%= job_skill.skill.description %></li>
       <% end %>
@@ -24,7 +24,7 @@
   <% if job.job_softwares.any? %>
     <div class="col-12 mb-3 col-sm mb-sm-0">
       <div class="text-secondary font-weight-bold"> Required Software </div>
-      <div class="margin_left_1em">
+      <div class="margin_left_1em_for_ff">
         <% job.job_softwares.each do |job_software| %>
           <li><%= job_software.software.description %></li>
         <% end %>
@@ -33,7 +33,7 @@
   <% end %>
   <div class="col-12 col-sm">
     <div class="text-secondary font-weight-bold"> Experience Level </div>
-    <div class="margin_left_1em">
+    <div class="margin_left_1em_for_ff">
       <li><%= job.required_experience&.capitalize %></li>
     </div>
   </div>
@@ -46,7 +46,7 @@
 <% if job.job_questions.any? %>
   <hr>
   <div class="text-secondary font-weight-bold"> Questions for Applicants </div>
-  <div class="margin_left_1em">
+  <div class="margin_left_1em_for_ff">
     <% job.job_questions.each do |job_question| %>
       <li><%= job_question.description %></li>
     <% end %>
