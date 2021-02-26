@@ -9,6 +9,8 @@ class Freelancer::ApplicationsController < ApplicationController
                                                 .job_applications
                                                 .draft_or_applied.order(created_at: :desc),
                                     items: ITEMS_PER_PAGE, overflow: :last_page)
+
+    redirect_to freelancer_jobs_path if current_user.freelancer_profile.job_applications.draft_or_applied.blank?
   end
 
   def destroy

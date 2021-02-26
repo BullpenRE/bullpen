@@ -16,6 +16,11 @@ class Freelancer::InterviewsController < ApplicationController
     end
 
     delete_session_variable
+
+    redirect_to freelancer_jobs_path if current_user.freelancer_profile
+                                                     .interview_requests
+                                                     .not_rejected
+                                                     .freelancer_visible.blank?
   end
 
   def decline_interview
