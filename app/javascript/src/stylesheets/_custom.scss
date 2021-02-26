@@ -77,5 +77,17 @@
     }
   }
 }
-
+.bp-sidenav-base {
+  height: 100vh;
+  width: 360px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: 0.5s;
+  transform: translateX(-100%);
+  overflow-x: hidden;
+  @media only screen and (max-width: 360px) {
+    width: 100vw;
+  }
+}
 input.error { border: 1px solid #FB3640; }

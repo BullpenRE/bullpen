@@ -33,9 +33,9 @@
       <div>
         <div class="bp-text-sm mb-3">
           <% if job_application.applied_at.nil? %>
-            Posted on <%= job_application.job.created_at.strftime("%b %d %Y") %>
+            Posted on <%= job_application.job.created_at.strftime("%b %d, %Y") %>
           <% else %>
-            Applied <%= time_ago_in_words(job_application.applied_at) %> ago for job posted on <%= job_application.job.created_at.strftime("%b %d %Y") %>
+            Applied <%= time_ago_in_words(job_application.applied_at) %> ago for job posted on <%= job_application.job.created_at.strftime("%b %d, %Y") %>
           <% end %>
         </div>
         <%= render partial: 'freelancer/shared/job_card', locals: { job: job_application.job } %>

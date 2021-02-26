@@ -64,6 +64,8 @@ Rails.application.routes.draw do
     post 'save_review', to: 'reviews#save_review'
     post 'make_an_offer_without_job', to: 'contracts#make_an_offer_without_job'
     post 'find_job', to: 'contracts#find_job'
+    post 'close_contract', to: 'contracts#close_contract'
+    post 'delete_contract', to: 'contracts#delete_contract'
   end
 
   namespace :public do

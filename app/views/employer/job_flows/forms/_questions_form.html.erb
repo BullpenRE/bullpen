@@ -32,11 +32,20 @@
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
     <div>
-      <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
-        Save<span class="d-none d-sm-inline"> as Draft</span><i class="fas fa-chevron-right ml-2"></i>
-      <% end %>
-      <%= button_tag type: 'submit', class: "btn btn-primary" do %>
-        Preview<span class="d-none d-sm-inline"> Job Post</span><i class="fas fa-chevron-right ml-2"></i>
+      <% unless job.draft? %>
+        <%= button_tag type: 'submit', class: "btn btn-outline-primary" do %>
+          Preview<span class="d-none d-sm-inline"> Job Post</span><i class="fas fa-chevron-right ml-2"></i>
+        <% end %>
+        <%= button_tag type: 'submit', value: 'posted', class: "btn btn-primary" do %>
+          Save Changes
+        <% end %>
+      <% else %>
+        <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
+          Save<span class="d-none d-sm-inline"> as Draft</span><i class="fas fa-chevron-right ml-2"></i>
+        <% end %>
+        <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+          Preview<span class="d-none d-sm-inline"> Job Post</span><i class="fas fa-chevron-right ml-2"></i>
+        <% end %>
       <% end %>
     </div>
   </div>
