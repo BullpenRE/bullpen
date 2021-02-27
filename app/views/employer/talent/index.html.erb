@@ -9,46 +9,43 @@
 
 <!--Talent card-->
 <div class="container mb-3 talent-cards">
-
   <%= render partial: 'employer/talent/filter_side_bar' %>
-  <div class="d-flex flex-column flex-md-row">
+  <div class="d-flex align-items-end">
     <h1 class="text-nowrap mr-auto">Find Talent</h1>
-    <% if @filters_list %>
-      <div class="d-flex mr-3 mb-2">
-        <div class="d-none d-md-inline-flex mr-3"></div> <!--Shim for mobile views-->
-        <h6 class="text-secondary mr-1 mb-0" style="margin-top:3px">
-          <%= @filters_list.join(', ') %>
-        </h6>
-        <%= link_to "#", id: "rejectFilters", data: {url: employer_talent_index_path} do %>
-          <i class="fa fa-times-circle fa-lg text-black-50" aria-hidden="true"></i>
-        <% end %>
-      </div>
-    <% end %>
     <a href="#" id="showFilters" class="mb-2 text-nowrap">Show Filters <i class="fas fa-filter"></i></a>
   </div>
+  <% if @filters_list %>
+    <div class="d-flex mb-2">
+      <div class="mr-auto">
+        Filtered by: 
+        <b class="text-secondary">
+          <%= @filters_list.join(', ') %>
+        </b>
+      </div>
+      <%= link_to "#", id: "rejectFilters", class: "ml-4 text-black-50 text-nowrap", data: {url: employer_talent_index_path} do %>
+        Reset filters<i class="fa fa-times-circle fa-lg ml-1" aria-hidden="true"></i>
+      <% end %>
+    </div>
+    <% end %>
   <% @freelancer_profiles.each do |freelancer_profile| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: freelancer_profile } %>
-
     <div id="interview-request">
       <%= render partial: 'employer/talent/interview_request', locals: { freelancer_profile: freelancer_profile, interview: nil } %>
     </div>
-
     <div class="bp-card mb-3 card<%= freelancer_profile.id %>">
       <div class="d-flex justify-content-between flex-column flex-lg-row">
         <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: freelancer_profile,
                                                                  job_application: nil,
                                                                  editable: false } %>
-        <div class="d-flex d-lg-none mb-4"></div> <!--Shim for mobile views-->
-        <div class="ml-sm-auto">
+        <div class="ml-sm-auto mt-4 mt-lg-0">
           <div class="d-block d-sm-flex">
             <% if freelancer_profile.can_request_interview?(current_user.employer_profile.id) %>
-              <div class="d-block d-sm-inline-block">
-                <button class="btn btn-primary w-100 interviewRequest<%= freelancer_profile.id %>" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
+              <div class="d-block d-sm-inline-block mr-0 mr-sm-2 mb-2 mb-sm-0">
+                <button class="btn btn-primary container-fluid interviewRequest<%= freelancer_profile.id %>" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
               </div>
-              <div class="mr-2 mt-2"></div> <!--Shim for mobile views-->
             <% end %>
             <div class="d-block d-sm-inline-block">
-              <button class="btn btn-outline-primary w-100" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
+              <button class="btn btn-outline-primary container-fluid" type="button" data-toggle="modal" data-target="#showProfile<%= freelancer_profile.id %>">Show Profile</button>
             </div>
           </div>
         </div>
