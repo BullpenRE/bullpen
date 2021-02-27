@@ -38,10 +38,10 @@
             <div class="col-md-6">
               <label class="text-secondary font-weight-bold">Net Rate<a class="text-dark font-weight-normal"> (After Bullpen commission)</a></label>
               <% if contract.contract_type == 'hourly' %>
-                <div><%= "#{number_to_currency(0.7*contract.pay_rate.round)} per hour" %></div>
+                <div><%= "#{number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage / 100.round)} per hour" %></div>
               <% else %>
-                <div><%= "#{number_to_currency(0.7*contract.pay_rate.round)} monthly retainer fee for up to #{contract.contract_type.split('_').last} hours" %></div>
-                <%= "#{number_to_currency(0.7*contract.pay_rate/contract.contract_type.split('_').last.to_i)} per hour for additional hours" %>
+                <div><%= "#{number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage / 100.round)} monthly retainer fee for up to #{contract.contract_type.split('_').last} hours" %></div>
+                <%= "#{number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage / 100 / contract.contract_type.split('_').last.to_i)} per hour for additional hours" %>
               <% end %>
             </div>
           <% end %>

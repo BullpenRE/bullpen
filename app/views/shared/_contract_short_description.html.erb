@@ -3,9 +3,9 @@
     <%= contract.hourly? ? '' : "#{Job::CONTRACT_TYPE_DESCRIPTIONS.key(contract.contract_type)}," %>
     <%= number_to_currency(contract.pay_rate, precision: 0) %>
     <% if contract.hourly? %>
-      per hour <a class="text-dark font-weight-normal"><%= current_user.freelancer? ? "(#{number_to_currency(0.7*contract.pay_rate)} net)": '' %></a>
+      per hour <a class="text-dark font-weight-normal"><%= current_user.freelancer? ? "(#{number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage / 100)} net)": '' %></a>
     <% else %>
-       per month <a class="text-dark font-weight-normal"><%= current_user.freelancer? ? "(#{number_to_currency(0.7*contract.pay_rate)} net)": '' %></a>
+       per month <a class="text-dark font-weight-normal"><%= current_user.freelancer? ? "(#{number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage / 100)} net)": '' %></a>
     <% end%>
   </p>
 <% end %>
