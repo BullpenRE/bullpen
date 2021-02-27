@@ -6,5 +6,5 @@
 <h5>Offered Rate</h5>
 <p><%= number_to_currency(@contract.pay_rate) %></p>
 <h5>Net Rate <div style='display: inline-block; font-weight: normal;'>(After Bullpen commission)</div></h5>
-<p><%= number_to_currency(0.7*@contract.pay_rate) %></p>
+<p><%= number_to_currency(@contract.payout_rate) %></p>
 <%= render partial: 'email/button', locals: { button_txt: 'View Offer', url: freelancer_contracts_url } %>

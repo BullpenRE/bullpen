@@ -4,6 +4,12 @@
                editable: false %>
 <% end %>
 
+<% if freelancer_profile.softwares.any? %>
+    <%= render 'shared/freelancer_softwares',
+               freelancer_profile: freelancer_profile,
+               editable: false %>
+<% end %>
+
 <% if freelancer_profile.freelancer_profile_experiences.any? %>
     <%= render 'shared/freelancer_profile_experiences',
                freelancer_profile: freelancer_profile,
