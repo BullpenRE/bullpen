@@ -8,48 +8,48 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <%= form_for :freelancer_profile_education, html: {class: 'cy-education'}, url: wizard_path, method: :put do |f| %>
+      <%= form_for :freelancer_profile_education, url: wizard_path, method: :put do |f| %>
         <div class="modal-body pt-0">
           <div class="form-group">
-            <label for="institutionInput" class="bp-input-label">Institution</label>
+            <label for="institutionInput" class="h5">Institution</label>
             <%= f.text_field :institution, class: "form-control", id: "institutionInput", placeholder: "Enter the school you attended" %>
           </div>
-          <div class="form-group cy-degree">
-            <label for="degreeSelect" class="bp-input-label cy-degree">Degree</label>
+          <div class="form-group">
+            <label for="degreeSelect" class="h5">Degree</label>
             <%= f.select :degree,
                          options_for_select(FreelancerProfileEducation.degrees.keys),
                          {}, class: 'form-control selectpicker',
-                         id: 'degreeSelect', required: true, 'data-style': "bp-btn-select-border",
+                         id: 'degreeSelect', required: true, 'data-style': "bp-btn-select",
                          title: "Please make a selection" %>
           </div>
-          <div class="form-group cy-course-of-study">
-            <label for="courseInput" class="bp-input-label cy-course-of-study">Course of Study</label>
+          <div class="form-group">
+            <label for="courseInput" class="h5">Course of Study</label>
             <%= f.text_field :course_of_study, class: "form-control", id: "courseInput", placeholder: "Enter your degree program" %>
           </div>
-          <div class="form-group cy-graduation-year">
-            <label for="graduationYear" class="bp-input-label cy-graduation-year">Graduation Year</label>
+          <div class="form-group">
+            <label for="graduationYear" class="h5">Graduation Year</label>
             <div class="row mb-2 collapse show" id="graduationDateToggle">
               <div class="col">
                 <%= f.select :graduation_year,
                              options_for_select(FreelancerProfileEducation::AVAILABLE_YEARS),
                              {}, class: 'form-control selectpicker',
-                             id: 'graduationYear', 'data-style': "bp-btn-select-border", title: "Year" %>
+                             id: 'graduationYear', 'data-style': "bp-btn-select", title: "Year" %>
             </div>
             <div class="col"></div>
           </div>
-          <div class="custom-control custom-checkbox cy-current-studying">
+          <div class="custom-control custom-checkbox">
             <%= f.check_box :currently_studying, class: "custom-control-input", id: "currentlyStudying", type: "button", 'data-toggle': "collapse", 'data-target': "#graduationDateToggle", 'aria-expanded': "false", 'aria-controls': "graduationDateToggle" %>
-            <label class="custom-control-label cy-current-studying" for="currentlyStudying">Currently Studying</label>
+            <label class="custom-control-label" for="currentlyStudying">Currently Studying</label>
           </div>
         </div>
-        <div class="form-group mb-0 cy-education-description">
-          <label for="educationDescriptionTextarea" class="bp-input-label cy-education-description">Description (optional)</label>
+        <div class="form-group mb-0">
+          <label for="educationDescriptionTextarea" class="h5">Description (optional)</label>
           <%= f.text_area :description, class: "form-control", id: "educationDescriptionTextarea", placeholder: "Enter a brief description", rows: 3 %>
         </div>
       </div>
-        <div class="modal-footer justify-content-between cy-education">
-          <button type="button" class="btn btn-link px-0 text-dark cy-cancel cy-education" data-dismiss="modal">Cancel</button>
-          <%= f.submit 'Save', class: 'btn btn-primary cy-save-education' %>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
+          <%= f.submit 'Save', class: 'btn btn-primary' %>
         </div>
       <% end %>
     </div>

@@ -11,29 +11,29 @@
       <%= form_for :freelancer_profile_education, html: {class: 'cy-edit-education'}, url: wizard_path, method: :put do |f| %>
         <div class="modal-body pt-0">
           <div class="form-group">
-            <label for="editInstitutionInput" class="bp-input-label">Institution</label>
+            <label for="editInstitutionInput" class="h5">Institution</label>
             <%= f.text_field :institution, class: "form-control", id: "editInstitutionInput", placeholder: "Enter the school you attended", value: freelancer_profile_education.institution %>
           </div>
           <div class="form-group">
-            <label for="editDegreeSelect" class="bp-input-label">Degree</label>
+            <label for="editDegreeSelect" class="h5">Degree</label>
             <%= f.select :degree,
                          options_for_select(FreelancerProfileEducation.degrees.keys, freelancer_profile_education.degree),
                          {}, class: 'form-control selectpicker',
-                         id: 'editDegreeSelect', 'data-style': "bp-btn-select-border",
+                         id: 'editDegreeSelect', 'data-style': "bp-btn-select",
                          title: "Please make a selection" %>
           </div>
           <div class="form-group">
-            <label for="editCourseInput" class="bp-input-label">Course of Study</label>
+            <label for="editCourseInput" class="h5">Course of Study</label>
             <%= f.text_field :course_of_study, class: "form-control", id: "editCourseInput", placeholder: "Enter your degree program", value: freelancer_profile_education.course_of_study %>
           </div>
           <div class="form-group">
-            <label for="editGraduationYear-<%=freelancer_profile_education.id %>" class="bp-input-label">Graduation Year</label>
+            <label for="editGraduationYear-<%=freelancer_profile_education.id %>" class="h5">Graduation Year</label>
             <div class="row mb-2 collapse <%= freelancer_profile_education.currently_studying ? '' : 'show' %>" id="editGraduationDateToggle-<%= freelancer_profile_education.id %>">
               <div class="col">
                 <%= f.select :graduation_year,
                              options_for_select(FreelancerProfileEducation::AVAILABLE_YEARS, freelancer_profile_education.graduation_year),
                              {}, class: 'form-control selectpicker',
-                             id: "editGraduationYear-#{freelancer_profile_education.id}", 'data-style': "bp-btn-select-border", title: "Year" %>
+                             id: "editGraduationYear-#{freelancer_profile_education.id}", 'data-style': "bp-btn-select", title: "Year" %>
               </div>
               <div class="col"></div>
             </div>
@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="form-group mb-0">
-            <label for="editEducationDescriptionTextarea" class="bp-input-label">Description (optional)</label>
+            <label for="editEducationDescriptionTextarea" class="h5">Description (optional)</label>
             <%= f.text_area :description, class: "form-control", id: "editEducationDescriptionTextarea", placeholder: "Enter a brief description", rows: 3, value: freelancer_profile_education.description %>
           </div>
           <%= f.hidden_field :id, value: freelancer_profile_education.id %>
