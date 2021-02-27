@@ -12,23 +12,23 @@
         <div class="bp-card mb-4 mx-auto">
           <%= form_for employer_profile, url: employer_profile_path, method: :put do |f| %>
             <div class="form-group mb-4">
-              <label for="companyNameInput" class="bp-input-label">Company Name</label>
+              <label for="companyNameInput" class="h5">Company Name</label>
               <%= f.text_field :company_name, class: 'form-control', id: 'companyNameInput', placeholder: 'Company Example', required: true %>
             </div>
 
             <div class="form-group mb-4">
-              <label for="companyWebsiteInput" class="bp-input-label">Website</label>
+              <label for="companyWebsiteInput" class="h5">Website</label>
               <%= f.text_field :company_website, class: 'form-control', id: 'companyWebsiteInput', placeholder: 'www.example.com', required: true %>
             </div>
 
             <%= f.fields_for :user, current_user do |u| %>
                 <div class="form-group mb-4">
-                  <label for="userLocationInput" class="bp-input-label">Location</label>
+                  <label for="userLocationInput" class="h5">Location</label>
                   <%= u.text_field :location, class: 'form-control', id: 'userLocationInput', placeholder: 'Orlando FL', required: true %>
                 </div>
             <% end %>
 
-            <div class="bp-input-label mb-2">Employees</div>
+            <div class=h5 mb-2">Employees</div>
             <div class="mb-3">
               <% EmployerProfile.employee_counts.each do |employee_count| %>
                 <div class="form-check form-check-inline">
@@ -43,7 +43,7 @@
               <% end %>
             </div>
 
-            <div class="bp-input-label mb-2">Function</div>
+            <div class=h5 mb-2">Function</div>
             <div class="mb-5">
               <% EmployerProfile.categories.each do |category| %>
                 <div class="form-check form-check-inline">

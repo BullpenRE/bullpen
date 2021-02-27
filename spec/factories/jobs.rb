@@ -21,5 +21,18 @@ FactoryBot.define do
       pay_range_low { 7000 }
       pay_range_high { nil }
     end
+
+    trait :complete do
+      state { 'posted' }
+      after(:create) do |job, _|
+
+        skill_ids = Skill.pluck(:id).shuffle
+        sector_ids = Sector.pluck(:id).shuffle
+        software_ids = Software.pluck(:id).shuffle
+        3.times {|index| create(:job_skill, job: job, skill_id: skill_ids[index] || create(:skill, description: "Skill #{index}").id) }
+        3.times {|index| create(:job_sector, job: job, sector_id: sector_ids[index] || create(:sector, description: "Sector #{index}").id) }
+        3.times {|index| create(:job_software, job: job, software_id: software_ids[index] || create(:software, description: "Software #{index}").id) }
+      end
+    end
   end
 end
