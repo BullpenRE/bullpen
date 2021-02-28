@@ -9,7 +9,7 @@ class LetterOpener {
       .then(($iframe) => {
         const $body = $iframe.contents().find('body')[0]
 
-        cy.wrap($body).contains('Confirm Email').click()
+        cy.wrap($body).get('a').contains('Confirm Email').click()
       })
   }
 }

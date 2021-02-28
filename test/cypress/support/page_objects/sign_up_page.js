@@ -31,5 +31,14 @@ class SignUpPage {
   get createAccountButton() {
     return cy.get('#submit_button');
   }
+
+  submitEmployerSigUpForm(firstName, lastName, password, phoneNumber) {
+    this.userFirstName.type(firstName);
+    this.userLastName.type(lastName);
+    this.userPassword.type(password);
+    this.employerRadioButton.click();
+    this.userPhoneNumber.type(phoneNumber);
+    return this.createAccountButton.click().wait(2000);
+  }
 }
 export default SignUpPage;
