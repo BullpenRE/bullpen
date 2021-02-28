@@ -68,11 +68,12 @@
     }
 
     let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type&.split('_')&.last %>';
+    const payout_rate = parseInt('<%= (current_user.freelancer_profile.payout_percentage || 70) / 100.0 %>',10);
     if (hour_per_month === '1') {
-      $('.net-earnings').html(`Your net earnings will be <b>${(net_earnings*0.7).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per hour.`);
+      $('.net-earnings').html(`Your net earnings will be <b>${Math.round(net_earnings*payout_rate).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per hour.`);
     }
     else {
-      $('.net-earnings').html(`Your net earnings will be <b>${(net_earnings*0.7).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per month for up to ${hour_per_month} hours, plus up to <b>${(net_earnings/parseInt(hour_per_month, 10)*0.7).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per additional hour.`);
+      $('.net-earnings').html(`Your net earnings will be <b>${Math.round(net_earnings*payout_rate).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per month for up to ${hour_per_month} hours, plus up to <b>${Math.round(net_earnings/parseInt(hour_per_month, 10)*payout_rate).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per additional hour.`);
     }
   });
 </script>

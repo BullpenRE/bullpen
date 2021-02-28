@@ -108,7 +108,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
   def apply_flash_notice!
     flash[:notice] = '<i class="far fa-check-circle"></i> <strong> Success!</strong> '\
-                     "#{job_application.job.title.capitalize} was applied for."
+                     "You applied for #{job_application.job.title}."
   end
 
   def mailing_condition

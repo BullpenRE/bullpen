@@ -12,10 +12,15 @@ class Contract < ApplicationRecord
   scope :offers, -> { where(state: 'pending') }
   scope :active, -> { where(state: %w[accepted closed]) }
   scope :freelancer_visible, -> { where.not(hide_from_freelancer: true) }
+  scope :employer_visible, -> { where.not(hide_from_employer: true) }
 
   validate :between_different_parties
 
   after_create :inherit_job_attributes, if: -> { job_id }
+
+  def payout_rate
+    @payout_rate ||= (freelancer_profile.payout_percentage / 100.0) * pay_rate
+  end
 
   private
 

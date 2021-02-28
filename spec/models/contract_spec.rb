@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Contract, type: :model do
   let(:employer_profile) { FactoryBot.create(:employer_profile) }
   let(:freelancer_profile) { FactoryBot.create(:freelancer_profile) }
-  let!(:contract) { FactoryBot.create(:contract, employer_profile: employer_profile, freelancer_profile: freelancer_profile) }
+  let!(:contract) { FactoryBot.create(:contract, employer_profile: employer_profile, freelancer_profile: freelancer_profile, pay_rate: 100) }
   let(:job) { FactoryBot.create(:job, employer_profile: employer_profile) }
   let(:contract_with_job) { FactoryBot.create(:contract, :with_job, job: job) }
 
@@ -59,6 +59,7 @@ RSpec.describe Contract, type: :model do
     let!(:accepted_contract) { FactoryBot.create(:contract, state: 'accepted') }
     let!(:closed_contract) { FactoryBot.create(:contract, state: 'closed') }
     let!(:removed_contract_from_freelancer) { FactoryBot.create(:contract, hide_from_freelancer: true) }
+    let!(:removed_contract_from_employer) { FactoryBot.create(:contract, hide_from_employer: true) }
 
     it '.pending, .declined, .withdrawn, .accepted, .closed' do
       expect(Contract.pending).to include(pending_contract)
@@ -98,5 +99,21 @@ RSpec.describe Contract, type: :model do
       expect(Contract.freelancer_visible).to include(accepted_contract)
       expect(Contract.freelancer_visible).to include(closed_contract)
     end
+
+    it '.employer_visible' do
+      expect(Contract.employer_visible).to_not include(removed_contract_from_employer)
+      expect(Contract.employer_visible).to include(pending_contract)
+      expect(Contract.employer_visible).to include(declined_contract)
+      expect(Contract.employer_visible).to include(withdrawn_contract)
+      expect(Contract.employer_visible).to include(accepted_contract)
+      expect(Contract.employer_visible).to include(closed_contract)
+    end
   end
+
+  context 'Methods' do
+    it 'calculates payout_rate correctly' do
+      expect(contract.payout_rate).to eq(70)
+    end
+  end
+
 end

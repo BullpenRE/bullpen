@@ -14,11 +14,11 @@
         <% end %>
         <%= render 'freelancer/shared/edit_work_experience', freelancer_profile_experience: work_experience %>
       </div>
-      <ul class="mr-lg-3 mr-2 pl-3">
+      <div>
         <% work_experience.description_paragraphs.each do |paragraph| %>
-            <li style="word-wrap: break-word; overflow-wrap: break-word;"><%= paragraph %></li>
+            <p style="word-wrap: break-word; overflow-wrap: break-word;"><%= paragraph %></p>
         <% end %>
-      </ul>
+      </div>
   <% end %>
 </div>
 <% if editable %>
