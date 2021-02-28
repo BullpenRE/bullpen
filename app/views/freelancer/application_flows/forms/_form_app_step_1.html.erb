@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-  <div class="bp-text-sm mb-2 mt-3 net-earnings"></div>
+  <div class="bp-text-sm mb-2 mt-3 net-earnings"><%= @job_application_presenter.net_earnings %></div>
 
   <label class="h5">Are you available from 9AM-5PM  <%= job_application.job.time_zone %>?</label>
   <div class="custom-control custom-radio mb-1">
@@ -53,18 +53,6 @@
 <% end %>
 
 <script>
-  const set_earings = (net_earnings) => {
-    let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type&.split('_')&.last %>';
-    if (hour_per_month === '1') {
-      $('.net-earnings').html(`Your net earnings will be <b>${(net_earnings*0.7).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per hour.`);
-    }
-    else {
-      $('.net-earnings').html(`Your net earnings will be <b>${(net_earnings*0.7).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per month for up to ${hour_per_month} hours, plus up to <b>${(net_earnings/parseInt(hour_per_month, 10)*0.7).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per additional hour.`);
-    }
-  };
-  const default_net_earnings = '<%= job_application.bid_amount %>';
-  set_earings(default_net_earnings);
-
   $('#bidAmount').on('input', () => {
     const bid_amount = $('#bidAmount').val();
     const first_symbol = parseInt(bid_amount.charAt(0), 10);
@@ -79,8 +67,13 @@
       net_earnings = parseInt(bid_amount, 10);
     }
 
-    set_earings(net_earnings);
+    let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type&.split('_')&.last %>';
+    if (hour_per_month === '1') {
+      $('.net-earnings').html(`Your net earnings will be <b>${(net_earnings*0.7).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per hour.`);
+    }
+    else {
+      $('.net-earnings').html(`Your net earnings will be <b>${(net_earnings*0.7).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per month for up to ${hour_per_month} hours, plus up to <b>${(net_earnings/parseInt(hour_per_month, 10)*0.7).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per additional hour.`);
+    }
   });
-
 </script>
 
