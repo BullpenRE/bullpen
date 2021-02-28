@@ -26,10 +26,31 @@
               <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
                 Save<span class="d-none d-sm-inline"> as Draft</span>
               <% end %>
-              <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+              <%= button_tag type: 'submit', class: "btn btn-primary", id: "post-job-#{job.id}" do %>
                 Submit<span class="d-none d-sm-inline"> Job Post</span>
               <% end %>
             <% end %>
+            <script>
+              $('#post-job-<%= job.id %>').click((e) => {
+                if ('<%= current_user.confirmed_at.blank? %>' == 'true') {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  Swal.fire({
+                    width: 400,
+                    position: 'top',
+                    title: '<strong class="text-secondary text-left"> Please confirm you account </strong>',
+                    html: '<div class="text-left">You must confirm your account before this action. Please check your email for the confirmation link and click on it.\n</div>',
+                    confirmButtonText: `Resent confirmation link`,
+                    confirmButtonColor: '#24A878',
+                    showCloseButton: true,
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      window.location.href = '/users/confirmation/new';
+                    }
+                  });
+                };
+               });
+            </script>
           <% end %>
         </div>
       </div>

@@ -15,7 +15,7 @@
           </div>
           <% if job.ready_to_post? && !job.posted? %>
             <div class="d-block p-md-1 mb-1 mb-md-0 d-sm-inline-block">
-              <%= link_to 'Post Job', employer_post_job_path(id: job.id), class: "btn btn-primary container-fluid" %>
+              <%= link_to 'Post Job', employer_post_job_path(id: job.id), class: "btn btn-primary container-fluid", id: "post-job-#{job.id}" %>
             </div>
           <% end %>
           <div class="dropdown">
@@ -45,7 +45,26 @@
                       }
                     });
                   });
-                })
+                  $('#post-job-<%= job.id %>').click((e) => {
+                    if ('<%= current_user.confirmed_at.blank? %>' == 'true') {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      Swal.fire({
+                        width: 400,
+                        position: 'top',
+                        title: '<strong class="text-secondary text-left"> Please confirm you account </strong>',
+                        html: '<div class="text-left">You must confirm your account before this action. Please check your email for the confirmation link and click on it.\n</div>',
+                        confirmButtonText: `Resent confirmation link`,
+                        confirmButtonColor: '#24A878',
+                        showCloseButton: true,
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          window.location.href = '/users/confirmation/new';
+                        }
+                      });
+                    };
+                  });
+                });
               </script>
             </div>
           </div>
