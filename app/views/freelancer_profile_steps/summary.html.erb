@@ -34,8 +34,8 @@
           <div class="ml-auto">
             <%= form_for @freelancer_profile, url: wizard_path, method: :put do |f| %>
               <%= f.hidden_field :draft, value: false %>
-              <%= f.submit 'Submit Application', class: 'btn btn-primary btn-lg d-none d-sm-block' %>
-              <%= f.submit 'Submit', class: 'btn btn-primary btn-lg d-sm-none' %>
+              <%= f.submit 'Submit Application', class: 'btn btn-primary d-none d-sm-block' %>
+              <%= f.submit 'Submit', class: 'btn btn-primary d-sm-none' %>
             <% end %>
           </div>
         <% end %>
