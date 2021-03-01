@@ -68,7 +68,7 @@
           <tbody>
             <tr>
               <th class="text-secondary text-right">Status</td>
-              <td class="pl-3 <%= 'text-danger' if !@account_data.payouts_enabled? %>">
+              <td class="pl-3 <%= @account_data.payouts_enabled? ? 'text-success' :'text-danger' %>">
                 <%= @account_data.payouts_enabled? ? 'Payments Enabled' : 'Payments Disabled' %>
               </td>
             </tr>
