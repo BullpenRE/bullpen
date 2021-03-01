@@ -7,24 +7,24 @@
   </div>
 
   <div class="form-group">
-    <label for="companyInput" class="bp-input-label">Company</label>
+    <label for="companyInput" class="h5">Company</label>
     <%= f.text_field :company, class: "form-control", id: "companyInput", placeholder: "Enter the company name", required: true, value: freelancer_profile_experience&.company %>
   </div>
 
   <div class="form-group">
-    <label for="jobTitleInput" class="bp-input-label">Job Title</label>
+    <label for="jobTitleInput" class="h5">Job Title</label>
     <%= f.text_field :job_title, class: "form-control", id: "jobTitleInput", placeholder: "Enter your job title", required: true, value: freelancer_profile_experience&.job_title %>
   </div>
 
   <div class="form-group">
-    <label for="freelancerLocationInput" class="bp-input-label">Location</label>
+    <label for="freelancerLocationInput" class="h5">Location</label>
     <%= f.text_field :location, class: "form-control", id: "freelancerLocationInput", placeholder: "e.g. San Francisco, CA", required: true, value: freelancer_profile_experience&.location %>
   </div>
 
   <div class="form-group">
     <div class="row mb-3">
       <div class="col-12 col-md-6">
-        <label for="startMonth" class="bp-input-label">Start Date</label>
+        <label for="startMonth" class="h5">Start Date</label>
         <div class="row">
           <div class="col" style="padding-right: 5px;">
             <%= f.select :start_month,
@@ -33,7 +33,7 @@
                            freelancer_profile_experience&.start_date&.month),
                          {}, class: 'form-control selectpicker',
                          id: "startMonth-#{freelancer_profile_experience&.id}",
-                         required: true, 'data-style': "bp-btn-select-border",
+                         required: true, 'data-style': "bp-btn-select",
                          title: "Month" %>
           </div>
           <div class="col" style="padding-left: 5px;">
@@ -42,13 +42,13 @@
                                             freelancer_profile_experience&.start_date&.year),
                          {}, class: 'form-control selectpicker',
                          id: "startYear-#{freelancer_profile_experience&.id}",
-                         required: true, 'data-style': "bp-btn-select-border",
+                         required: true, 'data-style': "bp-btn-select",
                          title: "Year" %>
           </div>
         </div>
       </div>
       <div class="col-12 mt-3 col-md-6 mt-md-0">
-        <label for="endMonth-<%= freelancer_profile_experience&.id %>" class="bp-input-label">End Date</label>
+        <label for="endMonth-<%= freelancer_profile_experience&.id %>" class="h5">End Date</label>
         <div class="row" id="endDateToggle-<%= freelancer_profile_experience&.id %>">
           <div class="col" style="padding-right: 5px;">
             <%= f.select :end_month,
@@ -57,7 +57,7 @@
                            freelancer_profile_experience&.end_date&.month),
                          {}, class: 'form-control selectpicker',
                          id: "endMonth-#{freelancer_profile_experience&.id}",
-                         'data-style': "bp-btn-select-border", title: "Month" %>
+                         'data-style': "bp-btn-select", title: "Month" %>
           </div>
           <div class="col" style="padding-left: 5px;">
             <%= f.select :end_year,
@@ -65,7 +65,7 @@
                                             freelancer_profile_experience&.end_date&.year),
                          {}, class: 'form-control selectpicker',
                          id: "endYear-#{freelancer_profile_experience&.id}",
-                         'data-style': "bp-btn-select-border", title: "Year" %>
+                         'data-style': "bp-btn-select", title: "Year" %>
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
   </div>
 
   <div class="form-group mb-0">
-    <label for="jobDescriptionTextarea-<%= freelancer_profile_experience&.id %>" class="bp-input-label">Description</label>
+    <label for="jobDescriptionTextarea-<%= freelancer_profile_experience&.id %>" class="h5">Description</label>
     <%= f.text_area :description, class: "form-control", id: "editJobDescriptionTextarea", placeholder: "Enter your job description", rows: 3, required: true, value: freelancer_profile_experience&.description %>
   </div>
   <%= f.hidden_field :id, value: freelancer_profile_experience&.id %>

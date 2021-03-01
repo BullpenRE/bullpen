@@ -19,7 +19,7 @@
         </p>
       </div>
       <div class="form-group mb-4">
-        <label for="exampleFormControlMultiSelect" class="bp-input-label">Describe your real estate skills</label>
+        <label for="exampleFormControlMultiSelect" class="h5">Describe your real estate skills</label>
         <div class="w-100">
           <%= f.select :freelancer_real_estate_skills,
                        options_for_select(
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="form-group mb-4">
-        <label for="freelancerSectors" class="bp-input-label">
+        <label for="freelancerSectors" class="h5">
           In what sectors do you have experience?
         </label>
         <%= f.select :freelancer_sectors,
@@ -44,7 +44,7 @@
                      {}, multiple: true, class: 'select2', required: true %>
       </div>
       <div class="form-group mb-5">
-        <label for="freelancerSoftwares" class="bp-input-label">
+        <label for="freelancerSoftwares" class="h5">
           Software Licenses
         </label>
         <%= f.select :freelancer_softwares,
