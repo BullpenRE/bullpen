@@ -86,6 +86,8 @@ class Employer::JobFlowsController < ApplicationController
     if params[:button] == 'draft'
       job.update(state: 'draft')
       redirect_to employer_jobs_path
+    elsif params[:button] == 'posted'
+      redirect_to employer_jobs_path
     else
       respond_js_format(:preview_job)
     end
@@ -96,7 +98,12 @@ class Employer::JobFlowsController < ApplicationController
   def preview_job_save
     return false unless params[:job][:step] == 'preview_job'
 
-    params[:button] != 'draft' ? job.update(state: 'posted') : job.update(state: 'draft')
+    if params[:button] == 'draft'
+      job.update(state: 'draft')
+    elsif params[:button] != 'done'
+      job.update(state: 'posted')
+    end
+
     mixpanel_post_job_flow_tracker
     redirect_to employer_jobs_path
 
