@@ -31,8 +31,7 @@
               <% end %>
             <% end %>
             <% if current_user.confirmed_at.blank? %>
-              <%= render partial: 'employer/shared/prevent_post_job', locals: { job_id: job.id,
-                                                                               freelancer_profile_id: nil } %>
+              <%= render partial: 'employer/shared/prevent_post_job', locals: { job_id: job.id } %>
             <% end %>
           <% end %>
         </div>
