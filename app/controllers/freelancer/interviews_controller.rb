@@ -21,12 +21,16 @@ class Freelancer::InterviewsController < ApplicationController
   def decline_interview
     @interview_request = current_user.freelancer_profile.interview_requests.find_by(id: params[:id])
     @interview_request.update(state: 'declined')
+
+    mixpanel_freelancer_interview_tracker('Decline Interview')
     EmployerMailer.interview_request_declined(@interview_request).deliver_later
   end
 
   def accept_request
     @interview_request = current_user.freelancer_profile.interview_requests.find_by(id: params[:id])
     @interview_request.update(state: 'accepted')
+
+    mixpanel_freelancer_interview_tracker('Accept Interview')
     flash[:notice] = "You have accepted an interview with <b>#{@interview_request.employer_profile.full_name}</b>. "\
                      'Select Send Message to introduce yourself and arrange a meeting.'
   end
@@ -41,6 +45,7 @@ class Freelancer::InterviewsController < ApplicationController
     flash[:notice] = "Your message has been sent to <b>#{@message.to_user.full_name}</b> with you on copy."
     EmployerMailer.send_message(@message).deliver_later
 
+    mixpanel_freelancer_interview_tracker('Freelancer Send Message')
     redirect_to redirect_path_after_send_message
   end
 
@@ -76,5 +81,9 @@ class Freelancer::InterviewsController < ApplicationController
     return freelancer_contracts_path if params.dig(:message, :redirect_reference) == 'contracts'
 
     freelancer_interviews_path
+  end
+
+  def mixpanel_freelancer_interview_tracker(action)
+    MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email })
   end
 end
