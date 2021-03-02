@@ -23,8 +23,10 @@
 
   <div class="form-group">
     <div class="row mb-3">
-      <div class="col-12 col-md-6">
-        <label for="startMonth" class="h5">Start Date</label>
+      <div class="col-12 col-md-6 startDate<%= modal_id %>">
+        <div class="d-flex justify-content-between">
+          <label for="startMonth" class="h5">Start Date</label> <span class="error_message_start_date<%= modal_id %> text-danger"></span>
+        </div>
         <div class="row">
           <div class="col" style="padding-right: 5px;">
             <%= f.select :start_month,
@@ -32,7 +34,7 @@
                            select_months_array,
                            freelancer_profile_experience&.start_date&.month),
                          {}, class: 'form-control selectpicker',
-                         id: "startMonth-#{freelancer_profile_experience&.id}",
+                         id: "startMonth-#{modal_id}",
                          required: true, 'data-style': "bp-btn-select",
                          title: "Month" %>
           </div>
@@ -41,14 +43,16 @@
                          options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS,
                                             freelancer_profile_experience&.start_date&.year),
                          {}, class: 'form-control selectpicker',
-                         id: "startYear-#{freelancer_profile_experience&.id}",
+                         id: "startYear-#{modal_id}",
                          required: true, 'data-style': "bp-btn-select",
                          title: "Year" %>
           </div>
         </div>
       </div>
-      <div class="col-12 mt-3 col-md-6 mt-md-0">
-        <label for="endMonth-<%= freelancer_profile_experience&.id %>" class="h5">End Date</label>
+      <div class="col-12 mt-3 col-md-6 mt-md-0 endDate<%= modal_id %> <%= freelancer_profile_experience&.current_job ? 'd-none' : '' %>">
+        <div class="d-flex justify-content-between">
+          <label for="endMonth-<%= modal_id %>" class="h5">End Date</label> <span class="error_message_end_date<%= modal_id %> text-danger"></span>
+        </div>
         <div class="row" id="endDateToggle-<%= freelancer_profile_experience&.id %>">
           <div class="col" style="padding-right: 5px;">
             <%= f.select :end_month,
@@ -56,7 +60,7 @@
                            select_months_array,
                            freelancer_profile_experience&.end_date&.month),
                          {}, class: 'form-control selectpicker',
-                         id: "endMonth-#{freelancer_profile_experience&.id}",
+                         id: "endMonth-#{modal_id}",
                          'data-style': "bp-btn-select", title: "Month" %>
           </div>
           <div class="col" style="padding-left: 5px;">
@@ -64,7 +68,7 @@
                          options_for_select(FreelancerProfileExperience::AVAILABLE_YEARS,
                                             freelancer_profile_experience&.end_date&.year),
                          {}, class: 'form-control selectpicker',
-                         id: "endYear-#{freelancer_profile_experience&.id}",
+                         id: "endYear-#{modal_id}",
                          'data-style': "bp-btn-select", title: "Year" %>
           </div>
         </div>
@@ -72,13 +76,13 @@
     </div>
     <div class="custom-control custom-checkbox">
       <%= f.check_box :current_job,
-                      class: "custom-control-input my-current-job",
+                      class: "custom-control-input my-current-job-#{modal_id}",
                       id: "currentJob-#{freelancer_profile_experience&.id}",
                       type: "button",
                       'aria-expanded': "false",
                       'aria-controls': "endDateToggle-#{freelancer_profile_experience&.id}",
                       checked: "#{freelancer_profile_experience&.current_job ? 'checked' : 'false'}",
-                      data: { id: freelancer_profile_experience&.id } %>
+                      data: { id: modal_id } %>
       <label class="custom-control-label" for="currentJob-<%= freelancer_profile_experience&.id %>">This is
         my current job</label>
     </div>
@@ -93,54 +97,80 @@
 <% if freelancer_profile_experience&.id.present? %>
   <div class="modal-footer">
     <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
-    <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+    <%= f.submit 'Save Changes', class: "btn btn-primary save-experience-#{modal_id}" %>
   </div>
 <% else %>
   <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-outline-danger mr-2" data-dismiss="modal">Cancel</button>
-    <%= f.submit 'Save', id: 'submitWithLocationCheck', class: 'btn btn-primary' %>
+    <%= f.submit 'Save', id: 'submitWithLocationCheck', class: "btn btn-primary save-experience-#{modal_id}" %>
   </div>
 <% end %>
 
 <%= render 'shared/location_check', controller_name: 'work_experience' %>
 <script>
     <% if @freelancer_profile && @freelancer_profile.freelancer_profile_experiences&.count > 1 %>
-    $('.modal-footer').addClass('justify-content-between');
-    $('.btn-outline-danger').removeClass('d-none');
+      $('.modal-footer').addClass('justify-content-between');
+      $('.btn-outline-danger').removeClass('d-none');
     <% end %>
 
     $(document).on('turbolinks:load', function () {
+      $('#startYear-<%= modal_id %>').selectpicker('refresh');
+      $('#startMonth-<%= modal_id %>').selectpicker('refresh');
+      $('#endYear-<%= modal_id %>').selectpicker('refresh');
+      $('#endMonth-<%= modal_id %>').selectpicker('refresh');
 
-        function toggleEndDate(e) {
-            e.preventDefault();
+      function toggleEndDate(e) {
+        e.preventDefault();
 
-            var currentObjectId = $(e.target).data('id');
+        var currentObjectId = $(e.target).data('id');
 
-            if (currentObjectId === undefined) {
-                currentObjectId = '';
-            };
-
-            const currentObjectState = $(e.target).is(':checked');
-            const currentEndYear = $('#endYear-' + currentObjectId);
-            const currentEndMonth = $('#endMonth-' + currentObjectId);
-
-            if (currentObjectState) {
-                currentEndYear.attr('disabled', true);
-                currentEndMonth.attr('disabled', true);
-                currentEndYear.val('default');
-                currentEndMonth.val('default');
-                currentEndYear.selectpicker('refresh');
-                currentEndMonth.selectpicker('refresh');
-            } else {
-                currentEndYear.removeAttr('disabled');
-                currentEndMonth.removeAttr('disabled');
-                currentEndYear.selectpicker('refresh');
-                currentEndMonth.selectpicker('refresh');
-            }
+        if (currentObjectId === undefined) {
+          currentObjectId = '';
         };
 
-        $('.my-current-job').on('change', function (e) {
-            toggleEndDate(e)
-        });
+        const currentObjectState = $(e.target).is(':checked');
+        const currentEndYear = $('#endYear-' + currentObjectId);
+        const currentEndMonth = $('#endMonth-' + currentObjectId);
+
+        if (currentObjectState) {
+          $('.endDate<%= modal_id %>').addClass('d-none');
+          currentEndYear.val('default');
+          currentEndMonth.val('default');
+          currentEndYear.selectpicker('refresh');
+          currentEndMonth.selectpicker('refresh');
+        } else {
+          currentEndYear.selectpicker('refresh');
+          currentEndMonth.selectpicker('refresh');
+          $('.endDate<%= modal_id %>').removeClass('d-none');
+        }
+      };
+
+      $('.my-current-job-<%= modal_id %>').on('change', (e) => {
+        toggleEndDate(e)
+      });
+
+      $('.save-experience-<%= modal_id %>').on('click', (e) => {
+        if ($('#startYear-<%= modal_id %>').val() == '' || $('#startMonth-<%= modal_id %>').val() == '') {
+          $('.startDate<%= modal_id %>').addClass('error');
+          $('.error_message_start_date<%= modal_id %>').text('Please enter Start Date');
+          e.preventDefault();
+          e.stopPropagation();
+        } else {
+          if (!$('.my-current-job-<%= modal_id %>').is(':checked')) {
+            if ($('#endYear-<%= modal_id %>').val() == null || $('#endMonth-<%= modal_id %>').val() == null) {
+              $('.endDate<%= modal_id %>').addClass('error');
+              $('.error_message_end_date<%= modal_id %>').text('Please enter End Date');
+              e.preventDefault();
+              e.stopPropagation();
+            }
+          };
+        }
+      });
     })
 </script>
+
+<style>
+  select.selectpicker {
+    display: block !important;
+  }
+</style>
