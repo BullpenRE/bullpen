@@ -17,8 +17,9 @@
   </div>
 
   <div class="form-group">
-    <label for="freelancerLocationInput" class="h5">Location</label>
-    <%= f.text_field :location, class: "form-control", id: "freelancerLocationInput", placeholder: "e.g. San Francisco, CA", required: true, value: freelancer_profile_experience&.location %>
+    <% experience_modal_id = freelancer_profile_experience&.id  || current_user.freelancer_profile.freelancer_profile_experiences.size + 1 %>
+    <label for="experienceLocationInput<%= experience_modal_id %>" class="h5">Location</label>
+    <%= f.text_field :location, class: "form-control", id: "experienceLocationInput#{experience_modal_id}", placeholder: "e.g. San Francisco, CA", required: true, value: freelancer_profile_experience&.location %>
   </div>
 
   <div class="form-group">
@@ -97,16 +98,17 @@
 <% if freelancer_profile_experience&.id.present? %>
   <div class="modal-footer">
     <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
-    <%= f.submit 'Save Changes', class: "btn btn-primary save-experience-#{modal_id}" %>
+    <%= f.submit 'Save Changes', id: "submitExperienceWithLocationCheck#{experience_modal_id}", class: "btn btn-primary save-experience-#{modal_id}" %>
   </div>
 <% else %>
   <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-outline-danger mr-2" data-dismiss="modal">Cancel</button>
-    <%= f.submit 'Save', id: 'submitWithLocationCheck', class: "btn btn-primary save-experience-#{modal_id}" %>
+    <%= f.submit 'Save', id: "submitExperienceWithLocationCheck#{experience_modal_id}", class: "btn btn-primary save-experience-#{modal_id}" %>
   </div>
 <% end %>
 
-<%= render 'shared/location_check', controller_name: 'work_experience' %>
+<%= render partial: 'shared/location_check', locals: { controller_name: 'work_experience',
+                                                      experience_modal_id: experience_modal_id } %>
 <script>
     <% if @freelancer_profile && @freelancer_profile.freelancer_profile_experiences&.count > 1 %>
       $('.modal-footer').addClass('justify-content-between');
@@ -168,9 +170,3 @@
       });
     })
 </script>
-
-<style>
-  select.selectpicker {
-    display: block !important;
-  }
-</style>

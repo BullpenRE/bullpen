@@ -12,6 +12,8 @@ class FreelancerProfileExperience < ApplicationRecord
   AVAILABLE_YEARS = (1970..Time.now.year).reverse_each
   AVAILABLE_MONTHNAMES = Date::MONTHNAMES.drop(1)
 
+  geocoded_by :location
+  after_validation :geocode, if: ->(obj) { obj.location.present? && obj.location_changed? }
   before_validation :update_start_date, :update_end_date
   attr_accessor :start_month, :start_year, :end_month, :end_year
 
