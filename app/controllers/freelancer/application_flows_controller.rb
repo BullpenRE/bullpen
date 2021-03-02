@@ -31,6 +31,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
     job_application.update(step_2_params)
     if params[:button] == 'draft'
+      job_application.update(state: 'draft')
       draft_flash_notice!
       redirect_to freelancer_applications_path
     elsif params[:button] == 'back'
