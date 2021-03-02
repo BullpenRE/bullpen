@@ -28,7 +28,7 @@
                 </div>
             <% end %>
 
-            <div class=h5 mb-2">Employees</div>
+            <div class="h5 mb-2">Employees</div>
             <div class="mb-3">
               <% EmployerProfile.employee_counts.each do |employee_count| %>
                 <div class="form-check form-check-inline">
@@ -43,7 +43,7 @@
               <% end %>
             </div>
 
-            <div class=h5 mb-2">Function</div>
+            <div class="h5 mb-2">Function</div>
             <div class="mb-5">
               <% EmployerProfile.categories.each do |category| %>
                 <div class="form-check form-check-inline">
@@ -67,7 +67,7 @@
     </div>
   </div>
 </div>
-<%= render 'shared/location_check', controller_name: 'employer_profile' %>
+<%= render 'shared/location_check', controller_name: 'employer_profile', experience_modal_id: nil %>
 
 
 
