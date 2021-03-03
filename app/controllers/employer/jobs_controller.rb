@@ -5,7 +5,7 @@ class Employer::JobsController < ApplicationController
 
   before_action :save_view_job_in_session, only: [:index], if: -> { params[:view_job].present? && !user_signed_in? }
   before_action :authenticate_user!, :initial_check, :non_employer_redirect,
-                :incomplete_employer_profile_redirect
+                :incomplete_employer_profile_redirect, :confirm_employer_account_flash_notice
   ITEMS_PER_PAGE = 10
 
   def index

@@ -4,7 +4,8 @@ class Employer::TalentController < ApplicationController
   include RequestReferer
 
   before_action :authenticate_user!, :initial_check, :non_employer_redirect, :incomplete_employer_profile_redirect
-  before_action :sectors_options_for_select, :skill_options_for_select, :software_options_for_select
+  before_action :sectors_options_for_select, :skill_options_for_select, :software_options_for_select,
+                :confirm_employer_account_flash_notice
   ITEMS_PER_PAGE = 5
 
   def index
