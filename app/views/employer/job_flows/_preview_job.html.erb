@@ -26,9 +26,12 @@
               <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
                 Save<span class="d-none d-sm-inline"> as Draft</span>
               <% end %>
-              <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+              <%= button_tag type: 'submit', class: "btn btn-primary", id: "post-job-#{job.id}" do %>
                 Submit<span class="d-none d-sm-inline"> Job Post</span>
               <% end %>
+            <% end %>
+            <% if current_user.confirmed_at.blank? %>
+              <%= render partial: 'employer/shared/prevent_post_job', locals: { job_id: job.id } %>
             <% end %>
           <% end %>
         </div>
