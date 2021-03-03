@@ -2,6 +2,7 @@
 
 class Freelancer::ApplicationsController < ApplicationController
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :incomplete_freelancer_profile_redirect
+  before_action :forward_if_no_records, only: [:index]
   ITEMS_PER_PAGE = 10
 
   def index
@@ -31,5 +32,9 @@ class Freelancer::ApplicationsController < ApplicationController
 
   def mixpanel_freelancer_application_tracker(action = 'Apply a Job')
     MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email })
+  end
+  
+  def forward_if_no_records
+    redirect_to freelancer_jobs_path if current_user.freelancer_profile.job_applications.draft_or_applied.blank?
   end
 end
