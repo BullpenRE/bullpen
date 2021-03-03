@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'mixpanel_tracker'
 
 class MixpanelWorker

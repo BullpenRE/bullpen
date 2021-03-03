@@ -122,7 +122,7 @@ class Employer::JobsController < ApplicationController
     session.delete(:view_job)
   end
 
-  def mixpanel_job_tracker(action = 'Post Job')
+  def mixpanel_job_tracker(action)
     MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email,
                                                             'job': job.id })
   end

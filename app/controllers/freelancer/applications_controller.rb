@@ -30,7 +30,7 @@ class Freelancer::ApplicationsController < ApplicationController
     @job_application ||= current_user.freelancer_profile.job_applications.find_by(id: params[:id])
   end
 
-  def mixpanel_freelancer_application_tracker(action = 'Apply a Job')
+  def mixpanel_freelancer_application_tracker(action)
     MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email })
   end
   

@@ -40,7 +40,7 @@ class Freelancer::ContractsController < ApplicationController
     @contract ||= current_user.freelancer_profile.contracts.find_by(id: params[:id])
   end
 
-  def mixpanel_freelancer_contract_tracker(action = 'Accept Offer')
+  def mixpanel_freelancer_contract_tracker(action)
     MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email })
   end
 end

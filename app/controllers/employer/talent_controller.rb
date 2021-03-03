@@ -146,7 +146,7 @@ class Employer::TalentController < ApplicationController
     params_hash.select { |key, _| key.start_with?('page') }
   end
 
-  def mixpanel_talent_tracker(action = 'Find a Talent')
+  def mixpanel_talent_tracker(action)
     MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email })
   end
 end

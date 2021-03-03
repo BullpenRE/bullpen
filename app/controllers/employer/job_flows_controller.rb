@@ -186,9 +186,11 @@ class Employer::JobFlowsController < ApplicationController
   end
 
   def mixpanel_post_job_flow_tracker
+    return unless params[:job][:step]
+
     MixpanelWorker.perform_async(current_user.id, 'Job Flow Steps', { 'user': current_user.email,
-                                                                      'job': @job.id,
-                                                                      'job state': @job.state,
+                                                                      'job': job.id,
+                                                                      'job state': job.state,
                                                                       'step': params[:job][:step] })
   end
 end

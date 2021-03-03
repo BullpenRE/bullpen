@@ -42,7 +42,7 @@ class Employer::ReviewsController < ApplicationController
     params.require(:review).permit(:freelancer_profile_id, :employer_profile_id, :rating, :comments)
   end
 
-  def mixpanel_review_tracker(action = 'Add Review')
+  def mixpanel_review_tracker(action)
     MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email })
   end
 end

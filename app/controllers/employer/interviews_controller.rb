@@ -34,7 +34,7 @@ class Employer::InterviewsController < ApplicationController
                                                    .order(state: :asc, created_at: :desc)
   end
 
-  def mixpanel_interview_tracker(action = 'Interviews')
+  def mixpanel_interview_tracker(action)
     MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email })
   end
 end
