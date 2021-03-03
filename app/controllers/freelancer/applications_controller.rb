@@ -33,7 +33,7 @@ class Freelancer::ApplicationsController < ApplicationController
   def mixpanel_freelancer_application_tracker(action)
     MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email })
   end
-  
+
   def forward_if_no_records
     redirect_to freelancer_jobs_path if current_user.freelancer_profile.job_applications.draft_or_applied.blank?
   end
