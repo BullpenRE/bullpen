@@ -55,8 +55,11 @@
           <% end %>
           <% if freelancer_profile.can_request_interview?(current_user.employer_profile.id) %>
             <div class="modal-footer justify-content-end">
-              <button class="btn btn-primary request<%= freelancer_profile.id %>" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
+              <button class="btn btn-primary request<%= freelancer_profile.id %>" type="button" id="request-<%= freelancer_profile.id %>" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
             </div>
+            <% if current_user.confirmed_at.blank? %>
+              <%= render partial: 'employer/shared/prevent_interview_request', locals: { freelancer_profile_id: freelancer_profile.id } %>
+            <% end %>
           <% end %>
         </div>
       </div>
