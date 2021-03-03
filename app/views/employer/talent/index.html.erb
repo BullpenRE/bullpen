@@ -41,7 +41,7 @@
           <div class="d-block d-sm-flex">
             <% if freelancer_profile.can_request_interview?(current_user.employer_profile.id) %>
               <div class="d-block d-sm-inline-block mr-0 mr-sm-2 mb-2 mb-sm-0">
-                <button class="btn btn-primary container-fluid interviewRequest<%= freelancer_profile.id %>" type="button" data-toggle="modal" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
+                <button class="btn btn-primary d-sm-in w-100 interviewRequest<%= freelancer_profile.id %>" type="button" data-toggle="modal" id="interview-request-<%= freelancer_profile.id %>" data-target="#interviewRequest<%= freelancer_profile.id %>">Request Interview</button>
               </div>
             <% end %>
             <div class="d-block d-sm-inline-block">
@@ -51,6 +51,9 @@
         </div>
       </div>
     </div>
+    <% if current_user.confirmed_at.blank? %>
+      <%= render partial: 'employer/shared/prevent_interview_request', locals: { freelancer_profile_id: freelancer_profile.id } %>
+    <% end %>
   <% end %>
   <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
 </div>

@@ -43,7 +43,8 @@
             </div>
           </div>
           <div class="form-group mb-0">
-            <label for="editEducationDescriptionTextarea" class="h5">Description (optional)</label>
+            <label for="editEducationDescriptionTextarea" class="h5">Description</label>
+              <span class="text-dark"> (optional)</span>
             <%= f.text_area :description, class: "form-control", id: "editEducationDescriptionTextarea", placeholder: "Enter a brief description", rows: 3, value: freelancer_profile_education.description %>
           </div>
           <%= f.hidden_field :id, value: freelancer_profile_education.id %>
