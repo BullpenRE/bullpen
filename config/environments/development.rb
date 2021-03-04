@@ -84,4 +84,6 @@ Rails.application.configure do
   ENV['STRIPE_PUBLISHABLE_KEY'] = 'pk_test_wvFaryXD9bfRc4NsJApj7h96'
   ENV['STRIPE_SECRET_KEY'] = 'sk_test_k7lMkrLmOH4PnQwggdMl6rqD'
   ENV['STRIPE_CLIENT_ID'] = 'ca_F92ZNOQd5VYyop7dz5TP5qB7uf3ljnuk'
+
+  ENV['ACTIVE_CAMPAIGN_KEY'] = '5ac7b7944e392d68ce6974218b62d7cf1d444b0558540ae566bb34514f68d3f00ede1b8c'
 end
