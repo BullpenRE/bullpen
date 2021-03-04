@@ -2,6 +2,7 @@
 
 class Freelancer::AccountController < ApplicationController
   before_action :authenticate_user!, :stripe_id_account
+  before_action :stripe_lookup, only: :stripe_data_lookup
 
   def index
     freelancer_profile
@@ -11,7 +12,17 @@ class Freelancer::AccountController < ApplicationController
       flash[:notice] = 'You will no longer be sent emails when new jobs are posted'
     end
     @sectors = Sector.enabled.pluck(:description, :id)
-    @account_data = Stripe::Account.retrieve(stripe_id_account)
+  end
+
+  def stripe_data_lookup
+    respond_to do |format|
+      format.json do
+        render json: {
+          account_data: @account_data,
+          error: @stripe_error
+        }, status: :ok
+      end
+    end
   end
 
   private
@@ -22,5 +33,11 @@ class Freelancer::AccountController < ApplicationController
 
   def stripe_id_account
     @stripe_id_account ||= freelancer_profile.stripe_id_account
+  end
+
+  def stripe_lookup
+    @account_data = Stripe::Account.retrieve(stripe_id_account)
+  rescue StandardError => e
+    @stripe_error = "Stripe: #{e}"
   end
 end
