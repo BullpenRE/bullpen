@@ -327,6 +327,7 @@ ActiveRecord::Schema.define(version: 2021_03_03_162813) do
     t.bigint "employer_profile_id", null: false
     t.integer "stripe_object"
     t.string "id_stripe"
+    t.string "last_four"
     t.string "fingerprint"
     t.string "card_brand"
     t.date "card_expires"

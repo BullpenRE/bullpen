@@ -2,11 +2,9 @@
 
 class PaymentAccount < ApplicationRecord
   belongs_to :employer_profile
-
   enum stripe_object: { card: 0, bank_account: 1 }
-
+  validates :last_four, length: { is: 4 }, allow_blank: true, allow_nil: true
   after_save :set_other_defaults_false, if: :default?
-
 
   private
 

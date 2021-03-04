@@ -3,6 +3,7 @@ FactoryBot.define do
     employer_profile
     stripe_object { 'card' }
     id_stripe { "card_#{Faker::Crypto.md5[0..22]}" }
+    last_four { 4.times.map { rand(10) }.join }
     fingerprint { Faker::Crypto.md5[0..16] }
     card_brand { ['American Express', 'Diners Club', 'Discover', 'JCB', 'MasterCard', 'UnionPay', 'Visa', 'Unknown'].sample }
     card_expires { 2.years.from_now }

@@ -4,6 +4,7 @@ class CreatePaymentAccounts < ActiveRecord::Migration[6.1]
       t.references :employer_profile, null: false, foreign_key: true
       t.integer :stripe_object
       t.string :id_stripe
+      t.string :last_four
       t.string :fingerprint
       t.string :card_brand
       t.date :card_expires

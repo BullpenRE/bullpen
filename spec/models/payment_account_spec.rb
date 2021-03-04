@@ -9,6 +9,21 @@ RSpec.describe PaymentAccount, type: :model do
     expect(bank_payment_account).to be_valid
   end
 
+  describe 'Validations' do
+    context 'last_four' do
+      it 'must be 4 digits' do
+        card_payment_account.last_four = '4233453223'
+        expect(card_payment_account).to_not be_valid
+      end
+      it 'can be blank or nil' do
+        card_payment_account.last_four = ''
+        expect(card_payment_account).to be_valid
+        card_payment_account.last_four = nil
+        expect(card_payment_account).to be_valid
+      end
+    end
+  end
+
   describe 'Actions' do
     let!(:employer_profile) { FactoryBot.create(:employer_profile) }
     let!(:first_account) { FactoryBot.create(:payment_account, employer_profile: employer_profile, default: true) }
