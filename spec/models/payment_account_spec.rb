@@ -61,4 +61,25 @@ RSpec.describe PaymentAccount, type: :model do
       end
     end
   end
+
+  describe 'Methods' do
+    it '#institution' do
+      expect(card_payment_account.institution).to eq(card_payment_account.card_brand)
+      expect(bank_payment_account.institution).to eq(bank_payment_account.bank_name)
+    end
+
+    it '#status' do
+      expect(card_payment_account.status).to eq(card_payment_account.card_cvc_check)
+      expect(bank_payment_account.status).to eq(bank_payment_account.bank_status)
+    end
+
+    it '#expired?' do
+      card_payment_account.update(card_expires: 2.months.from_now)
+      expect(card_payment_account.expired?).to be_falsey
+      card_payment_account.update(card_expires: 2.months.ago)
+      expect(card_payment_account.expired?).to be_truthy
+      card_payment_account.update(card_expires: nil)
+      expect(card_payment_account.expired?).to be_falsey
+    end
+  end
 end

@@ -6,7 +6,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('pa
 
     filter :employer_profile_user_email, as: :string, label: 'Employer Email'
     filter :stripe_object, as: :select, collection: -> { PaymentAccount.stripe_objects }, label: 'Account Type'
-    filter :default
+    filter :default, label: 'Default Payment Account', as: :check_boxes, collection: [['Yes', true]]
 
     permit_params :employer_profile_id, :stripe_object, :id_stripe, :last_four, :fingerprint, :card_brand,
                   :card_expires, :card_cvc_check, :bank_name, :bank_routing_number, :bank_status, :default
@@ -18,10 +18,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('pa
         payment_account.stripe_object.capitalize
       end
       column 'Institution' do |payment_account|
-        payment_account.stripe_object == 'card' ? payment_account.card_brand : payment_account.bank_name
+        payment_account.institution
       end
       column 'Status' do |payment_account|
-        payment_account.stripe_object == 'card' ? payment_account.card_cvc_check : payment_account.bank_status
+        payment_account.status
       end
       column :default
 
@@ -42,7 +42,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('pa
         if payment_account.stripe_object == 'card'
           row :card_brand
           row 'Expires' do
-            "#{payment_account.card_expires.month} / #{payment_account.card_expires.year}" if payment_account.card_expires.present?
+            if payment_account.card_expires.present?
+              "#{payment_account.card_expires.month} / #{payment_account.card_expires.year}#{ ' <b style="color: red;">(expired)</b>' if payment_account.expired? }".html_safe
+            end
           end
           row :card_cvc_check
         end

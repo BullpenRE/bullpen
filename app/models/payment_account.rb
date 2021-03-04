@@ -6,6 +6,20 @@ class PaymentAccount < ApplicationRecord
   validates :last_four, length: { is: 4 }, allow_blank: true, allow_nil: true
   after_save :set_other_defaults_false, if: :default?
 
+  def institution
+    stripe_object == 'card' ? card_brand : bank_name
+  end
+
+  def status
+    stripe_object == 'card' ? card_cvc_check : bank_status
+  end
+
+  def expired?
+    return false if card_expires.blank?
+
+    card_expires.past?
+  end
+
   private
 
   def set_other_defaults_false
