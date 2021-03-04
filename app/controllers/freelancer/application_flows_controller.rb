@@ -29,6 +29,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
     job_application.update(step_2_params)
     if params[:button] == 'draft'
+      job_application.update(state: 'draft')
       draft_flash_notice!
       redirect_to freelancer_applications_path
     elsif params[:button] == 'back'
@@ -94,7 +95,11 @@ class Freelancer::ApplicationFlowsController < ApplicationController
 
     find_blob_by_key.attachments[0].purge_later if blob_attached?
     find_blob_by_key.purge_later unless blob_attached?
-    respond_js_format(:application_step_2)
+    respond_to do |format|
+      format.json do
+        render json: { blob_key: params[:blob_key] }.to_json
+      end
+    end
   end
 
   private
