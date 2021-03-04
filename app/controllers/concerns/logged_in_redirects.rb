@@ -38,6 +38,12 @@ module LoggedInRedirects
     false
   end
 
+  def confirm_employer_account_flash_notice
+    return if current_user.confirmed_at.present?
+
+    flash[:warning] = 'Please check your email and confirm your account'
+  end
+
   private
 
   def determine_correct_path(resource)
