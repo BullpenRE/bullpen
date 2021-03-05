@@ -38,6 +38,10 @@ class Freelancer::AccountController < ApplicationController
   def stripe_lookup
     @account_data = Stripe::Account.retrieve(stripe_id_account)
   rescue StandardError => e
-    @stripe_error = "Stripe: #{e}"
+    Rails.logger.info "!!!!! Error in account_controller.rb#stripe_lookup impacting user_id #{current_user.id}: #{e}"
+
+    @stripe_error = 'There was a problem connecting with Stripe. If this persists please contact our support at '\
+                    '<a href="mailto:support@bullpenre.com?subject=Problem connecting to '\
+                    'Stripe">support@bullpenre.com</a>'
   end
 end

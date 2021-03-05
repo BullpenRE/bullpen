@@ -38,7 +38,7 @@
 
     function setErrorMessage(message) {
       const $additionalInfo = $('#additional-info');
-      $additionalInfo.addClass('text-danger');
+      if(!message) $additionalInfo.addClass('text-danger');
       message ? $additionalInfo.html(message) : $additionalInfo.html('Error loading data')
     }
 
