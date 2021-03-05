@@ -35,7 +35,7 @@
             <% end %>
           </div>
           <% if current_user.freelancer? %>
-            <div class="col-md-6 mt-sm-4">
+            <div class="col-md-6">
               <h5>Net Rate<a class="text-dark font-weight-normal"> (After Bullpen commission)</a></h5>
               <% if contract.contract_type == 'hourly' %>
                 <div><%= "#{number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage / 100.round)} per hour" %></div>

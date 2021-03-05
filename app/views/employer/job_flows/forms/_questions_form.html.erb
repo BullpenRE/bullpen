@@ -26,8 +26,8 @@
       <div class="new-question"></div>
     <% end %>
   </div>
-  <button type="button" class="btn btn-link p-0 new-question-button shadow-none"><i class="fas fa-plus mr-2"></i>Add another question</button>
-  <div class="d-flex mt-5 justify-content-between">
+  <button type="button" class="btn btn-link p-0 mb-3 new-question-button shadow-none"><i class="fas fa-plus mr-2"></i>Add another question</button>
+  <div class="d-flex pt-3 justify-content-between">
     <%= link_to employer_job_flows_path(id: :post_job_step_4, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>

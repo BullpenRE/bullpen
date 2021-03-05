@@ -21,11 +21,11 @@
     </div>
   </div>
   
-  <div class="form-group mb-1">
+  <div class="form-group mb-3">
     <label for="jobDetailsTextarea" class="h5">Describe responsibilities, provided resources, or any other requirements. <span class="text-dark font-weight-normal">(Optional)</span></label>
     <%= f.rich_text_area :relevant_details, class: "form-control", id: "jobDetailsTextarea", placeholder: "Enter any relevant job details", rows: "8", maxlength: "5000" %>
   </div>
-  <div class="d-flex mt-5 justify-content-between">
+  <div class="d-flex pt-3 justify-content-between">
     <%= link_to employer_job_flows_path(id: :post_job_step_3, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
