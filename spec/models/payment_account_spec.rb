@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe PaymentAccount, type: :model do
-  let!(:card_payment_account) { FactoryBot.create(:payment_account) }
-  let!(:bank_payment_account) { FactoryBot.create(:payment_account, :bank) }
+  let!(:card_payment_account) { FactoryBot.create(:payment_account, card_brand: 'American Express', last_four: '1234') }
+  let!(:bank_payment_account) { FactoryBot.create(:payment_account, :bank, last_four: '4321') }
 
   it 'factories work' do
     expect(card_payment_account).to be_valid
@@ -80,6 +80,16 @@ RSpec.describe PaymentAccount, type: :model do
       expect(card_payment_account.expired?).to be_truthy
       card_payment_account.update(card_expires: nil)
       expect(card_payment_account.expired?).to be_falsey
+    end
+
+    it '#short_description' do
+      expect(card_payment_account.short_description).to eq('American Express card ending in 1234 (default)')
+      expect(bank_payment_account.short_description).to eq('Bank account ending in 4321 (default)')
+
+      visa_account = FactoryBot.create(:payment_account, card_brand: 'Visa', last_four: '3333', employer_profile: card_payment_account.employer_profile)
+
+      expect(card_payment_account.reload.short_description).to eq('American Express card ending in 1234')
+      expect(visa_account.short_description).to eq('Visa card ending in 3333 (default)')
     end
   end
 end
