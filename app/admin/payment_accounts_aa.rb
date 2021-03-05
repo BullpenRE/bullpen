@@ -56,6 +56,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('pa
         row :default
         row :created_at
         row :updated_at
+        row 'Contracts' do
+          payment_account.contracts.map{|contract| link_to(contract.title, admin_contract_path(contract.id)) }.join('<br>').html_safe
+        end
       end
       active_admin_comments
     end

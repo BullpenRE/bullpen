@@ -4,6 +4,7 @@ class Contract < ApplicationRecord
   belongs_to :freelancer_profile
   belongs_to :employer_profile
   belongs_to :job, optional: true
+  belongs_to :payment_account
   has_rich_text :job_description
 
   enum state: { 'pending': 0, 'declined': 1, 'withdrawn': 2, 'accepted': 3, 'closed': 4 }
