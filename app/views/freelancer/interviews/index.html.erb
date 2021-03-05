@@ -5,50 +5,49 @@
   <h1>Interviews</h1>
   <% @interviews.each do |interview| %>
     <div class="bp-card mb-3 card<%= interview.id %>">
-      <div>
-        <div class="d-flex flex-column flex-lg-row">
-          <div class="text-light mb-1 ml-2 avatar-image" style="font-size: 113px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
-            <div class="ml-2 w-100">
-              <div class="mr-auto"><h2 class="mb-1"><%= interview.employer_profile.user.full_name %></h2></div>
-              <div class="bp-text-sm mb-1"><br>
-                <%= interview.employer_profile.company_name %><br>
-                <% url = interview.employer_profile.company_website&.downcase %>
-                <% unless url.blank? %>
-                  <% url_with_http = (url[0..3] == 'http' ? url : "http://#{url}") %>
-                  <%= link_to url, url_with_http, target: :_blank %><br>
-                <% end %>
-                <br>
-                <% if interview.message.body %>
-                  <p><%= interview.message.body.to_s %></p>
-                <% end %>
-                <p>Sent on <%= time_ago_in_words(interview.created_at) %> ago</p>
-              </div>
+      <div class="d-flex justify-content-between flex-column flex-lg-row">
+        <div>
+          <%= render partial: 'shared/about_employer_short', locals: { employer_profile: interview.employer_profile } %>
+          <% if interview.message.body %>
+            <%= interview.message.body.to_s %>
+          <% end %>
+          <div class="bp-text-sm mt-3">Sent <%= time_ago_in_words(interview.created_at) %> ago</div>
+        </div>
+        <div class="ml-sm-auto mt-3 mt-lg-0">
+          <div class="d-block d-sm-flex">
+            <div class="bp-text-sm text-secondary text-nowrap font-weight-bold align-self-start mt-0 mb-3 mt-sm-2 mb-sm-0 ml-1 mr-3">
+              <%= interview.state.capitalize %><%= ' Request' if interview.pending? %>
             </div>
-            <div class="d-flex flex-column align-self-lg-baseline flex-md-row my-2 my-lg-0">
-              <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
-                <%= interview.state.capitalize %><%= ' Request' if interview.pending? %>
-              </div>
-              <% if interview.pending? %>
-                <button class="btn btn-primary my-3 my-md-1 mr-md-2 accept_request<%= interview.id %>" type="button">
+            <% if interview.pending? %>
+              <div class="d-block d-sm-inline-block mr-sm-2 mb-2 mb-sm-0">
+                <button class="btn btn-primary w-100 accept_request<%= interview.id %>" type="button">
                   Accept Request
                 </button>
-                <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#declineInterviewRequest<%= interview.id %>">
+              </div>
+              <div class="d-block d-sm-inline-block">
+                <button class="btn btn-outline-danger w-100" type="button"  data-toggle="modal" data-target="#declineInterviewRequest<%= interview.id %>">
                   Decline
                 </button>
-              <% elsif interview.accepted? %>
-                <button class="btn btn-primary my-3 my-md-1 mr-md-2" type="button"  data-toggle="modal" data-target="#sendMessage<%= interview.id %>">
+              </div>
+            <% elsif interview.accepted? %>
+              <div class="d-block d-sm-inline-block mr-sm-2 mb-2 mb-sm-0">
+                <button class="btn btn-primary w-100" type="button"  data-toggle="modal" data-target="#sendMessage<%= interview.id %>">
                   Send Message
                 </button>
-                <button class="btn btn-outline-danger my-md-1" type="button"  data-toggle="modal" data-target="#removeInterviewRequest<%= interview.id %>">
+              </div>
+              <div class="d-block d-sm-inline-block">
+                <button class="btn btn-outline-danger w-100" type="button"  data-toggle="modal" data-target="#removeInterviewRequest<%= interview.id %>">
                   Remove
                 </button>
-              <% end %>
-              <%= render partial: 'freelancer/interviews/decline_interview_request', locals: { interview: interview } %>
-              <%= render partial: 'freelancer/interviews/remove_interview_request', locals: { interview: interview } %>
-              <%= render partial: 'freelancer/interviews/send_message', locals: { id: interview.id, employer_profile: interview.employer_profile, redirect_reference: 'interviews' } %>
-            </div>
+              </div>
+            <% end %>
           </div>
+          
+        </div>
       </div>
+      <%= render partial: 'freelancer/interviews/decline_interview_request', locals: { interview: interview } %>
+      <%= render partial: 'freelancer/interviews/remove_interview_request', locals: { interview: interview } %>
+      <%= render partial: 'freelancer/interviews/send_message', locals: { id: interview.id, employer_profile: interview.employer_profile, redirect_reference: 'interviews' } %>
     </div>
     <script>
       $(document).on('turbolinks:load', function () {

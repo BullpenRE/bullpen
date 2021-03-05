@@ -18,11 +18,9 @@
             <div class="bp-text-sm">Created <%= time_ago_in_words(contract&.created_at) %> ago </div>
           </div>
           <div class="d-flex flex-column flex-md-row mb-3 mb-md-0">
-            
-              <div class="bp-text-sm text-secondary text-nowrap font-weight-bold ml-md-3 mb-3 mb-md-0 mr-3 mt-0 mt-md-2">
-                <%= "Offer #{contract.state}" %>
-              </div>
-            
+            <div class="bp-text-sm text-secondary text-nowrap font-weight-bold ml-md-3 mb-3 mb-md-0 mr-3 mt-0 mt-md-2">
+              <%= "Offer #{contract.state}" %>
+            </div>
             <div class="dropdown">
               <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Options <i class="fas fa-chevron-down"></i>
@@ -120,7 +118,6 @@
             </div>
           </div>
         </div>
-        
         <div class="row">
           <div class="col-lg-8">
             <%= render partial: 'shared/contract_short_description', locals: { contract: contract } %>
