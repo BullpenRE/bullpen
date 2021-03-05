@@ -10,11 +10,18 @@ RSpec.describe Contract, type: :model do
   it 'factories work' do
     expect(contract).to be_valid
     expect(contract_with_job).to be_valid
+    expect(contract.reload.payment_account).to be_present
   end
 
   context 'Validations' do
     it 'the from and to user cannot be the same person' do
       contract.employer_profile.user_id = contract.freelancer_profile.user_id
+      expect(contract).to_not be_valid
+    end
+
+    it 'the payment_account must belong to the employer' do
+      different_employer = FactoryBot.create(:employer_profile)
+      contract.employer_profile_id = different_employer.id
       expect(contract).to_not be_valid
     end
   end
@@ -26,6 +33,10 @@ RSpec.describe Contract, type: :model do
 
     it 'belongs to a freelancer_profile' do
       expect(contract.freelancer_profile).to eq(freelancer_profile)
+    end
+
+    it 'can belong to a payment_contract' do
+      expect(contract.payment_account).to be_present
     end
 
     describe 'job' do

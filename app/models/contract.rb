@@ -4,7 +4,7 @@ class Contract < ApplicationRecord
   belongs_to :freelancer_profile
   belongs_to :employer_profile
   belongs_to :job, optional: true
-  belongs_to :payment_account
+  belongs_to :payment_account, optional: true
   has_rich_text :job_description
 
   enum state: { 'pending': 0, 'declined': 1, 'withdrawn': 2, 'accepted': 3, 'closed': 4 }
@@ -16,6 +16,7 @@ class Contract < ApplicationRecord
   scope :employer_visible, -> { where.not(hide_from_employer: true) }
 
   validate :between_different_parties
+  validate :employer_owns_payment_account
 
   after_create :inherit_job_attributes, if: -> { job_id }
 
@@ -29,6 +30,13 @@ class Contract < ApplicationRecord
     return unless freelancer_profile.user_id == employer_profile.user_id
 
     errors.add(:to_user_id, "can't make a contract with yourself")
+  end
+
+  def employer_owns_payment_account
+    return unless payment_account
+    return if payment_account.employer_profile_id == employer_profile_id
+
+    errors.add(:payment_account_id, 'must belong to the employer')
   end
 
   def inherit_job_attributes
