@@ -91,3 +91,24 @@
   }
 }
 input.error { border: 1px solid #FB3640; }
+
+.multi-bg-not-found {
+  height: 100vh;
+  background:
+  no-repeat url("https://img.icons8.com/pastel-glyph/766/84A0B6/search--v2.png") center center,
+  linear-gradient(#003B69, #84A0B6);
+}
+
+.multi-bg-user {
+  height: 100vh;
+  background:
+  no-repeat url("https://img.icons8.com/windows/600/84A0B6/user-male-circle.png") center center,
+  linear-gradient(#003B69, #84A0B6);
+}
+
+.multi-bg-link {
+  height: 100vh;
+  background:
+  no-repeat url("https://img.icons8.com/ios-glyphs/700/84A0B6/link.png") center center,
+  linear-gradient(#003B69, #84A0B6);
+}
