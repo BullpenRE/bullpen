@@ -1,0 +1,27 @@
+<style>
+.text-large {
+  font-size: 1300%;
+}
+</style>
+
+<div class="multi-bg-not-found">
+  <div class="text-center pt-4">
+    <%= link_to image_pack_tag('media/images/bullpen-logo-white.png', size: '95x30'), join_path %>
+  </div>
+  <div class="d-flex align-items-center">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="p-5 text-white text-center">
+          <div class="display-4 font-weight-bold mt-3">Page not found</div>
+          <div class="text-large font-weight-bold">404</div>
+        </div>
+         <div class="bp-card w-75 text-center">
+           <h1 class="text-muted">We can't find the page you are looking for because it doesn't exist or an error occurred.</h1>
+           <h1><%= link_to 'Go to home', join_path %></h1>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
