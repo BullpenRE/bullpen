@@ -56,11 +56,11 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
       f.inputs "Contract" do
         f.input :employer_profile_id,
                 as: :select, input_html: { class: 'select2' },
-                collection: EmployerProfile.find_each.map{ |employer_profile| [employer_profile.email, employer_profile.id] },
+                collection: EmployerProfile.find_each.map {|employer_profile| [employer_profile.email, employer_profile.id]},
                 label: 'Employer'
         f.input :freelancer_profile_id,
                 as: :select, input_html: { class: 'select2' },
-                collection: FreelancerProfile.find_each.map{ |freelancer_profile| [freelancer_profile.email, freelancer_profile.id] },
+                collection: FreelancerProfile.find_each.map {|freelancer_profile| [freelancer_profile.email, freelancer_profile.id]},
                 label: 'Freelancer'
         f.input :job_id,
                 as: :select, input_html: { class: 'select2' },
@@ -74,9 +74,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
         f.input :hide_from_freelancer
         f.input :hide_from_employer
         if f.object
-          f.input :payment_account,
-                  as: :select,
-                  collection: PaymentAccount.where(employer_profile_id: f.object.employer_profile_id).map{ |account| [account.short_description, account.id] }
+          f.input :payment_account, as: :select, collection: PaymentAccount.where(employer_profile_id: f.object.employer_profile_id).map{|account| [account.short_description, account.id] }
         end
         f.actions
       end

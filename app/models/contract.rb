@@ -33,8 +33,7 @@ class Contract < ApplicationRecord
   end
 
   def employer_owns_payment_account
-    return unless payment_account
-    return if payment_account.employer_profile_id == employer_profile_id
+    return if payment_account.nil? || payment_account.employer_profile_id == employer_profile_id
 
     errors.add(:payment_account_id, 'must belong to the employer')
   end
