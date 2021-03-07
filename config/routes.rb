@@ -17,8 +17,8 @@ Rails.application.routes.draw do
   get '/employer_talent_style', to: 'style#employer_talent'
   get '/login_style', to: 'style#login'
   get '/employer_jobs_style', to: 'style#employer_jobs'
-  get 'stripe/connect', to: 'stripe#connect', as: :stripe_connect
-  get 'stripe/dashboard', to: 'stripe#dashboard', as: :stripe_dashboard
+  get '/stripe/connect', to: 'stripe#connect', as: :stripe_connect
+  get '/stripe/dashboard', to: 'stripe#dashboard', as: :stripe_dashboard
 
   get '/join', to: 'join#index'
   post '/join/signup', to: 'join#signup'
@@ -94,6 +94,8 @@ Rails.application.routes.draw do
     resources :contracts
     resources :profile, only: :index
     resources :account, only: :index
+    get '/account/stripe_data_lookup', to: 'account#stripe_data_lookup', as: :stripe_data_lookup
+
     resource :avatar, only: %i[update destroy]
     post 'set_withdrawn', to: 'applications#set_withdrawn'
     post 'change_software_licence', to: 'profile#change_software_licence'
