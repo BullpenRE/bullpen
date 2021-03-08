@@ -3,21 +3,20 @@
 
 <div class="container" style="max-width:540px"> <!--This will need to change if the spacer size changes-->
 
-  <h1 class="mb-2 mt-6">Manage Account</h1>
+  <h1 class="mb-2">Manage Account</h1>
   
   <div class="bp-card mb-3">
     <div class="d-flex"> <!--Create a row for the avatar, profile info, and edit icon-->
-      <div class="d-flex flex-sm-row flex-column"> <!--Stack avatar and profile info on small devices-->
+      <div class="d-flex flex-sm-row flex-column w-100 align-items-center"> <!--Stack avatar and profile info on small devices-->
         <% if @employer_profile.avatar.attached? %>
-          <div class="text-light avatar-image mr-3" style="line-height: 0;">
+          <div class="text-light avatar-image" style="line-height: 0;">
             <%= image_tag @employer_profile.avatar, class: 'rounded-circle', width: '80px', height: '80px' %>
           </div>
         <% else %>
-          <div class="text-light avatar-image mr-3" style="font-size: 80px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
+          <div class="text-light avatar-image" style="font-size: 80px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
         <% end %>
-        <div class="d-block d-sm-none m-1"></div> <!--Show a vertical margin shim on small devices-->
-        <div class="align-self-center"> <!--Vertically align profile info to the avatar-->
-          <h2 class="mb-2"><%= @employer_profile.full_name %></h2>
+        <div class="ml-lg-3 mt-1 mt-lg-0 text-center text-sm-left">
+          <h2 class="mb-0"><%= @employer_profile.full_name %></h2>
           <div class="bp-text-sm">
             <%= @employer_profile.user.email %>
           </div>
@@ -57,7 +56,7 @@
       <div class="d-flex-col ml-auto">
         <button class="btn btn-outline-primary" type="button"  data-toggle="modal" data-target="#">
           Options
-          <i class="fas fa-chevron-down fa-w-14 text-primary"></i>
+          <i class="fas fa-chevron-down"></i>
         </button>
       </div>
     </div>

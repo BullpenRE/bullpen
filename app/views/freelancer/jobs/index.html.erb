@@ -8,32 +8,37 @@
     <%= render partial: 'freelancer/jobs/show_job', locals: { job: job } %>
     <div class="bp-card mb-3 card<%= job.id %>">
       <div>
-        <div class="d-flex flex-column flex-lg-row">
-          <div class="mr-auto"><h2 class="text-wrap text-break"><%= job&.title&.capitalize %></h2></div>
-          <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
+        <div class="d-flex flex-column flex-md-row">
+          <div class="mr-auto">
+            <h2 class="mb-1"><%= job&.title&.capitalize %></h2>
+            <div class="bp-text-sm mb-3">
+              Posted <%= time_ago_in_words(job.created_at) %> ago
+              <% if job.job_applications.size.positive? %>
+                | <%= job.job_applications.size %> applicant<%= 's' if job.job_applications.size > 1 %>
+              <% end %>
+            </div>  
+          </div>
+          <div class="d-flex flex-column flex-md-row">
             <% current_job_application = @job_applications.find_by(job_id: job.id) %>
             <% if @job_applications.map(&:job_id).exclude?(job.id) %>
-              <div class="mr-sm-2">
+              <div class="mr-md-2 mb-md-0 mb-2">
                 <%= link_to 'Apply', freelancer_application_flows_path(start_flow: true, job_id: job.id), { remote: true, 'data-toggle': "modal", 'data-target': "#jobAppStep1", class: "btn btn-primary d-block apply#{job.id}" } %>
               </div>
             <% elsif current_job_application.withdrawn? %>
-              <div class="mr-sm-2">
+              <div class="mr-md-2 mb-md-0 mb-2">
                 <%= link_to 'Apply', freelancer_application_flows_path(job_app: current_job_application.id, id: :application_step_1), { remote: true, 'data-toggle': "modal", 'data-target': "#jobAppStep1", class: "btn btn-primary d-block apply#{job.id}" } %>
               </div>
             <% end %>
-            <button class="btn btn-outline-primary my-3 my-md-0" type="button"  data-toggle="modal" data-target="#showJobPost<%= job.id %>">
-              Show Details
-            </button>
+            <div class="mb-3 mb-md-0">
+              <button class="btn btn-outline-primary container-fluid" type="button"  data-toggle="modal" data-target="#showJobPost<%= job.id %>">
+                Show Details
+              </button>
+            </div>
           </div>
         </div>
       </div>
       <div>
-        <div class="bp-text-sm mb-3">
-          Posted <%= time_ago_in_words(job.created_at) %> ago
-          <% if job.job_applications.size.positive? %>
-            | <%= job.job_applications.size %> applicant<%= 's' if job.job_applications.size > 1 %>
-          <% end %>
-        </div>
+        
         <%= render partial: 'freelancer/shared/job_card', locals: { job: job } %>
       </div>
     </div>

@@ -14,13 +14,13 @@
       </div>
       <!--Make an Offer Card-->
       <div class="modal-body py-0">
-        <div class="row mb-3">
+        <div class="row mb-4">
           <div class="col-sm-6">
-            <h5 class="mt-1">From</h5>
+            <h5>From</h5>
             <%= contract.present? ? contract.employer_profile.full_name : job.employer_profile.full_name %>, <%= contract.present? ? contract.employer_profile.company_name : job.employer_profile.company_name %>
           </div>
-          <div class="col-sm-6">
-            <h5 class="mt-1">To</h5>
+          <div class="col-sm-6 mt-4 mt-sm-0">
+            <h5>To</h5>
             <%= contract.present? ? contract.freelancer_profile.full_name : freelancer_profile.full_name %>
           </div>
         </div>
@@ -37,32 +37,32 @@
             <div class="w-100">
               <%= f.rich_text_area :job_description, class: "form-control mb-3", id: "JobDescriptionInput", placeholder: "Enter Job Description", value: contract.present? ? contract.job_description : job.short_description %>
             </div>
-            <div class="row mb-3">
-              <div class="col-sm-4">
-                <label class="h5 mt-1">Fee Structure</label>
+            <div class="row mb-2">
+              <div class="col-lg-4">
+                <label class="h5">Fee Structure</label>
                 <% contract_type = contract.present? ? contract.contract_type : job.contract_type %>
                 <%= f.select :contract_type,
                              options_for_select(Job::CONTRACT_TYPE_DESCRIPTIONS, contract_type),
                              {}, class: "form-control contract_type#{contract&.id}", required: true, style: "width: 100%" %>
               </div>
-              <div class="col-sm-4">
+              <div class="col-lg-4 mt-3 mt-lg-0">
                 <% hourly = contract.present? ? contract.hourly? : job.hourly? %>
-                <label class="h5 mt-1 contract_rate<%= contract&.id %>"><%= hourly ? 'Hourly Rate' : 'Monthly Rate' %></label>
+                <label class="h5 contract_rate<%= contract&.id %>"><%= hourly ? 'Hourly Rate' : 'Monthly Rate' %></label>
                 <%= f.text_field :pay_rate, class: "form-control pay_rate#{contract&.id}", required: true, value: contract.present? ? contract.pay_rate : job.pay_range_low %>
               </div>
-              <div class="col-sm-4"></div>
+              
             </div>
             <% if job.present? %>
-              <p class="mb-4 mt-0">Your payment method will be charged weekly based on the number of hours worked.</p>
+              <div class="mb-4 mt-0 bp-text-sm">Your payment method will be charged weekly based on the number of hours worked.</div>
               <h5 >Payment Method</h5>
               <div class="mb-4">
                 <button class="btn btn-primary" type="button">Add a Credit Card</button>
               </div>
-              <div class="form-check custom-checkbox mt-1">
+              <div class="form-check custom-checkbox">
                 <%= f.check_box :state, class: "custom-control-input", id: "stateClosed#{job.id}" %>
                 <label class="custom-control-label text-secondary font-weight-bold mb-4" for="stateClosed<%= job.id %>">Close the job post (pending applicants will be notified)</label>
               </div>
-              <div class="text-muted">
+              <div class="text-muted bp-text-sm">
                 By sending this offer, you agree to
                 <a href="https://bullpenre.com/terms-of-service">
                   Bullpen's Terms of Service,
@@ -81,7 +81,7 @@
                   });
                 </script>
               <% end %>
-              <h5 >Payment Method</h5>
+              <h5 class="mt-4">Payment Method</h5>
               <select class="custom-select mb-3">
                 <option value="1">Visa ending in 4424</option>
                 <option value="2">Visa ending in 4366</option>
