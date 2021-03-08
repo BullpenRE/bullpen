@@ -1,34 +1,27 @@
 <div class="modal-body pt-0">
 
-  <div id="alertWarning-<%= freelancer_profile_experience&.id %>" class="d-none">
-    <div class="alert alert-warning" role="alert">
-      Ending date cannot occur before the starting date.
-    </div>
-  </div>
-
   <div class="form-group">
     <label for="companyInput" class="h5">Company</label>
-    <%= f.text_field :company, class: "form-control", id: "companyInput", placeholder: "Enter the company name", required: true, value: freelancer_profile_experience&.company %>
+    <%= f.text_field :company, class: "form-control mb-1", id: "companyInput#{modal_id}", placeholder: "Enter the company name", required: true, value: freelancer_profile_experience&.company %>
+    <div class="error_message_company<%= modal_id %> text-danger"></div>
   </div>
 
   <div class="form-group">
     <label for="jobTitleInput" class="h5">Job Title</label>
-    <%= f.text_field :job_title, class: "form-control", id: "jobTitleInput", placeholder: "Enter your job title", required: true, value: freelancer_profile_experience&.job_title %>
+    <%= f.text_field :job_title, class: "form-control mb-1", id: "jobTitleInput#{modal_id}", placeholder: "Enter your job title", required: true, value: freelancer_profile_experience&.job_title %>
+    <div class="error_message_job_title<%= modal_id %> text-danger"></div>
   </div>
 
   <div class="form-group">
-    <% experience_modal_id = freelancer_profile_experience&.id  || current_user.freelancer_profile.freelancer_profile_experiences.size + 1 %>
-    <label for="experienceLocationInput<%= experience_modal_id %>" class="h5">Location</label>
-    <%= f.text_field :location, class: "form-control", id: "experienceLocationInput#{experience_modal_id}", placeholder: "e.g. San Francisco, CA", required: true, value: freelancer_profile_experience&.location %>
+    <label for="experienceLocationInput<%= modal_id %>" class="h5">Location</label>
+    <%= f.text_field :location, class: "form-control", id: "experienceLocationInput#{modal_id}", placeholder: "e.g. San Francisco, CA", required: true, value: freelancer_profile_experience&.location %>
   </div>
 
   <div class="form-group">
     <div class="row mb-3">
       <div class="col-12 col-md-6 startDate<%= modal_id %>">
-        <div class="d-flex justify-content-between">
-          <label for="startMonth" class="h5">Start Date</label> <span class="error_message_start_date<%= modal_id %> text-danger"></span>
-        </div>
-        <div class="row">
+        <label for="startMonth" class="h5">Start Date</label>
+        <div class="row pb-1">
           <div class="col" style="padding-right: 5px;">
             <%= f.select :start_month,
                          options_for_select(
@@ -36,7 +29,7 @@
                            freelancer_profile_experience&.start_date&.month),
                          {}, class: 'form-control selectpicker',
                          id: "startMonth-#{modal_id}",
-                         required: true, 'data-style': "bp-btn-select",
+                         'data-style': "bp-btn-select",
                          title: "Month" %>
           </div>
           <div class="col" style="padding-left: 5px;">
@@ -45,16 +38,17 @@
                                             freelancer_profile_experience&.start_date&.year),
                          {}, class: 'form-control selectpicker',
                          id: "startYear-#{modal_id}",
-                         required: true, 'data-style': "bp-btn-select",
+                         'data-style': "bp-btn-select",
                          title: "Year" %>
           </div>
         </div>
+        <div class="error_message_start_date<%= modal_id %> text-danger"></div>
       </div>
       <div class="col-12 mt-3 col-md-6 mt-md-0 endDate<%= modal_id %> <%= freelancer_profile_experience&.current_job ? 'd-none' : '' %>">
         <div class="d-flex justify-content-between">
-          <label for="endMonth-<%= modal_id %>" class="h5">End Date</label> <span class="error_message_end_date<%= modal_id %> text-danger"></span>
+          <label for="endMonth-<%= modal_id %>" class="h5">End Date</label>
         </div>
-        <div class="row" id="endDateToggle-<%= freelancer_profile_experience&.id %>">
+        <div class="row pb-1" id="endDateToggle-<%= freelancer_profile_experience&.id %>">
           <div class="col" style="padding-right: 5px;">
             <%= f.select :end_month,
                          options_for_select(
@@ -73,6 +67,7 @@
                          'data-style': "bp-btn-select", title: "Year" %>
           </div>
         </div>
+        <div class="error_message_end_date<%= modal_id %> text-danger"></div>
       </div>
     </div>
     <div class="custom-control custom-checkbox">
@@ -90,25 +85,26 @@
   </div>
 
   <div class="form-group mb-0">
-    <label for="jobDescriptionTextarea-<%= freelancer_profile_experience&.id %>" class="h5">Description</label>
-    <%= f.text_area :description, class: "form-control", id: "editJobDescriptionTextarea", placeholder: "Enter your job description", rows: 3, required: true, value: freelancer_profile_experience&.description %>
+    <label for="jobDescriptionTextarea<%= modal_id %>" class="h5">Description</label>
+    <%= f.text_area :description, class: "form-control mb-1", id: "jobDescriptionTextarea#{modal_id}", placeholder: "Enter your job description", rows: 3, value: freelancer_profile_experience&.description %>
+    <div class="error_message_job_description<%= modal_id %> text-danger"></div>
   </div>
   <%= f.hidden_field :id, value: freelancer_profile_experience&.id %>
 </div>
 <% if freelancer_profile_experience&.id.present? %>
   <div class="modal-footer">
     <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
-    <%= f.submit 'Save Changes', id: "submitExperienceWithLocationCheck#{experience_modal_id}", class: "btn btn-primary save-experience-#{modal_id}" %>
+    <%= f.submit 'Save Changes', id: "submitExperienceWithLocationCheck#{modal_id}", class: "btn btn-primary save-experience-#{modal_id}" %>
   </div>
 <% else %>
   <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-outline-danger mr-2" data-dismiss="modal">Cancel</button>
-    <%= f.submit 'Save', id: "submitExperienceWithLocationCheck#{experience_modal_id}", class: "btn btn-primary save-experience-#{modal_id}" %>
+    <%= f.submit 'Save', id: "submitExperienceWithLocationCheck#{modal_id}", class: "btn btn-primary" %>
   </div>
 <% end %>
 
 <%= render partial: 'shared/location_check', locals: { controller_name: 'work_experience',
-                                                      experience_modal_id: experience_modal_id } %>
+                                                      experience_modal_id: modal_id } %>
 <script>
     <% if @freelancer_profile && @freelancer_profile.freelancer_profile_experiences&.count > 1 %>
       $('.modal-footer').addClass('justify-content-between');
@@ -149,24 +145,6 @@
 
       $('.my-current-job-<%= modal_id %>').on('change', (e) => {
         toggleEndDate(e)
-      });
-
-      $('.save-experience-<%= modal_id %>').on('click', (e) => {
-        if ($('#startYear-<%= modal_id %>').val() == '' || $('#startMonth-<%= modal_id %>').val() == '') {
-          $('.startDate<%= modal_id %>').addClass('error');
-          $('.error_message_start_date<%= modal_id %>').text('Please enter Start Date');
-          e.preventDefault();
-          e.stopPropagation();
-        } else {
-          if (!$('.my-current-job-<%= modal_id %>').is(':checked')) {
-            if ($('#endYear-<%= modal_id %>').val() == null || $('#endMonth-<%= modal_id %>').val() == null) {
-              $('.endDate<%= modal_id %>').addClass('error');
-              $('.error_message_end_date<%= modal_id %>').text('Please enter End Date');
-              e.preventDefault();
-              e.stopPropagation();
-            }
-          };
-        }
       });
     })
 </script>
