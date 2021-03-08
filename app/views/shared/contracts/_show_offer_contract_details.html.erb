@@ -12,21 +12,21 @@
       <div class="modal-body py-0 mb-3">
         <div class="row mb-4">
           <div class="col-sm-6">
-            <h5 class="mt-1">From</h5>
+            <h5>From</h5>
             <%= contract.employer_profile.full_name %>, <%= contract.employer_profile.company_name %>
           </div>
-          <div class="col-sm-6">
-            <h5 class="mt-1">To</h5>
+          <div class="col-sm-6 mt-4 mt-sm-0">
+            <h5>To</h5>
             <%= contract.freelancer_profile.full_name %>
           </div>
         </div>
-        <label class="text-secondary font-weight-bold">Job Title</label>
-        <p><%= contract.title %></p>
-        <label class="text-secondary font-weight-bold mt-2">Job Description</label>
-        <div class="mb-2"><%= contract.job_description.body.to_s %></div>
+        <h5>Job Title</h5>
+        <div class="mb-4"><%= contract.title %></div>
+        <h5>Job Description</h5>
+        <div class="mb-4"><%= contract.job_description.body.to_s %></div>
         <div class="row">
-          <div class="col-md-6 mb-sm-3">
-            <label class="text-secondary font-weight-bold"><%= contract.pending? ? 'Offered Rate' : 'Contract Rate' %></label>
+          <div class="col-md-6">
+            <h5><%= contract.pending? ? 'Offered Rate' : 'Contract Rate' %></h5>
             <% if contract.contract_type == 'hourly' %>
               <div><%= "#{number_to_currency(contract.pay_rate)} per hour" %></div>
             <% else %>
@@ -36,7 +36,7 @@
           </div>
           <% if current_user.freelancer? %>
             <div class="col-md-6">
-              <label class="text-secondary font-weight-bold">Net Rate<a class="text-dark font-weight-normal"> (After Bullpen commission)</a></label>
+              <h5>Net Rate<a class="text-dark font-weight-normal"> (After Bullpen commission)</a></h5>
               <% if contract.contract_type == 'hourly' %>
                 <div><%= "#{number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage / 100.round)} per hour" %></div>
               <% else %>

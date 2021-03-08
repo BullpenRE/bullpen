@@ -4,7 +4,7 @@
 
   <%= render partial: 'shared/notice_and_alert' %>
 
-  <h1 class="mb-2 mt-6">Manage Account</h1>
+  <h1 class="mb-2">Manage Account</h1>
 
   <div class="bp-card mb-3">
     <div class="d-flex"> <!--Create a row for the avatar, profile info, and edit icon-->
@@ -18,7 +18,7 @@
         <% end %>
         <div class="d-block d-sm-none m-1"></div> <!--Show a vertical margin shim on small devices-->
         <div class="align-self-center"> <!--Vertically align profile info to the avatar-->
-          <h2 class="mb-2"><%= @freelancer_profile.full_name %></h2>
+          <h2 class="mb-1"><%= @freelancer_profile.full_name %></h2>
           <div class="bp-text-sm">
             <%= @freelancer_profile.location %><br>
             <%= @freelancer_profile.user.email %>
@@ -60,8 +60,7 @@
 
   <div class="bp-card mb-3">
     <h2>
-      Account Information
-      <i class="far fa-question-circle ml-2 text-primary" aria-hidden="true"></i>
+      Account Information<i class="far fa-question-circle ml-2 text-primary" aria-hidden="true"></i>
     </h2> <!--Remove the "text-primary" class when the icon becomes a link-->
     <% if @stripe_id_account.present? %>
         <p id="additional-info">Loading...</p>
@@ -90,7 +89,7 @@
         <%= link_to 'Update Bank Information', '#', class: 'btn btn-outline-primary go-stripe-dashboard' %>
     <% else %>
         <div class="mb-2">Please add a bank account to receive payouts.</div>
-        <%= link_to 'Add a Bank Account', stripe_button_link, class: 'btn btn-outline-primary' %>
+        <%= link_to 'Add a Bank Account', stripe_button_link, class: 'btn btn-outline-primary', target: '_blank' %>
     <% end %>
   </div>
 </div>

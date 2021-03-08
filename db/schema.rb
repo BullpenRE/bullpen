@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 2021_02_25_175356) do
+ActiveRecord::Schema.define(version: 2021_03_03_162813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -324,6 +323,24 @@ ActiveRecord::Schema.define(version: 2021_02_25_175356) do
     t.index ["to_user_id"], name: "index_messages_on_to_user_id"
   end
 
+  create_table "payment_accounts", force: :cascade do |t|
+    t.bigint "employer_profile_id", null: false
+    t.integer "stripe_object"
+    t.string "id_stripe"
+    t.string "last_four"
+    t.string "fingerprint"
+    t.string "card_brand"
+    t.date "card_expires"
+    t.string "card_cvc_check"
+    t.string "bank_name"
+    t.string "bank_routing_number"
+    t.string "bank_status"
+    t.boolean "default", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employer_profile_id"], name: "index_payment_accounts_on_employer_profile_id"
+  end
+
   create_table "real_estate_skills", force: :cascade do |t|
     t.string "description", null: false
     t.boolean "disable", default: false
@@ -435,6 +452,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_175356) do
   add_foreign_key "job_softwares", "jobs"
   add_foreign_key "job_softwares", "softwares"
   add_foreign_key "jobs", "employer_profiles"
+  add_foreign_key "payment_accounts", "employer_profiles"
   add_foreign_key "reviews", "employer_profiles"
   add_foreign_key "reviews", "freelancer_profiles"
   add_foreign_key "users", "signup_promos"
