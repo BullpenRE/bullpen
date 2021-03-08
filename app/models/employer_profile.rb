@@ -8,6 +8,7 @@ class EmployerProfile < ApplicationRecord
   has_many :contracts, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :jobs, dependent: :destroy
+  has_many :payment_accounts, dependent: :destroy
   has_one_attached :avatar
 
   accepts_nested_attributes_for :user,
