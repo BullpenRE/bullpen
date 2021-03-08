@@ -79,6 +79,16 @@ RSpec.describe EmployerProfile, type: :model do
       employer_profile.destroy
       expect(Job.exists?(job.id)).to be_falsey
     end
+
+    describe 'payment_accounts' do
+      let!(:payment_account) { FactoryBot.create(:payment_account, employer_profile: employer_profile) }
+
+      it 'has_many dependent: destroy' do
+        expect(employer_profile.payment_accounts).to include(payment_account)
+        employer_profile.destroy
+        expect(PaymentAccount.exists?(payment_account.id)).to be_falsey
+      end
+    end
   end
 
   context 'Methods' do
