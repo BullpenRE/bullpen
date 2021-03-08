@@ -18,7 +18,7 @@
   <div class="bp-card mb-5 mx-auto" style="max-width: 700px;">
     <%= form_for @user, url: wizard_path, method: :put do |f| %>
       <div class="row">
-        <div class="col-md text-center mb-5 avatar">
+        <div class="col-md mb-5 text-center">
           <h2>Profile Picture</h2>
           <p class="mb-4">Users with a clear and recognizable photo are hired more often. <strong>(Optional)</strong></p>
           <% if @freelancer_profile.avatar.attached? %>
@@ -27,11 +27,11 @@
             </div>
             <div class="custom-file">
               <%= f.file_field :freelancer_profile_avatar, multiple: false, name: 'avatar', class: "d-none", id: "uploadProfilePic" %>
-              <label class="btn btn-outline-primary" for="uploadProfilePic">
-                Edit your photo
+              <label class="btn btn-outline-primary mb-0" for="uploadProfilePic">
+                Upload photo
               </label>
               <button type="button" class="delete-avatar d-none" id="deleteProfilePic"></button>
-              <label class="btn btn-outline-danger mr-2" for="deleteProfilePic">
+              <label class="btn btn-outline-danger mb-0 ml-2" for="deleteProfilePic">
                 Delete
               </label>
             </div>
@@ -40,7 +40,7 @@
             <div class="custom-file">
               <%= f.file_field :freelancer_profile_avatar, multiple: false, name: 'avatar', class: "d-none", id: "uploadProfilePic" %>
               <label class="btn btn-outline-primary" for="uploadProfilePic">
-                Upload your photo
+                Upload photo
               </label>
             </div>
           <% end %>
