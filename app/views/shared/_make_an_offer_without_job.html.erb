@@ -56,8 +56,8 @@
                 <button class="btn btn-primary" type="button">Add a Credit Card</button>
               </div>
               <div class="form-check custom-checkbox mt-1 d-none job-closed<%= freelancer_profile&.slug %>">
-                <%= f.check_box :state, class: "custom-control-input", id: "stateClosed" %>
-                <label class="custom-control-label text-secondary font-weight-bold mb-4" for="stateClosed">Close the job post (pending applicants will be notified)</label>
+                <%= f.check_box :state, class: "custom-control-input", id: "stateClosed#{freelancer_profile&.id}" %>
+                <label class="custom-control-label text-secondary font-weight-bold mb-4" for="stateClosed<%= freelancer_profile&.id %>">Close the job post (pending applicants will be notified)</label>
               </div>
               <div class="text-muted">
                 By sending this offer, you agree to

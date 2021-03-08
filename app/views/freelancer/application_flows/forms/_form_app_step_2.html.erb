@@ -22,7 +22,7 @@
         <% job_application.work_samples.each do |work_sample| %>
           <div id="file-<%= work_sample.signed_id %>" class="work-sample-item">
             <div class="file-name text-break mb-2">
-              <%= link_to '#', class: 'delete-work-sample', data: {id: work_sample.signed_id.to_s, confirm: 'Are you sure?'} do %>
+              <%= link_to '#', class: 'delete-work-sample', data: { id: work_sample.signed_id.to_s } do %>
                 <i class="far fa-trash-alt text-danger mr-1"></i>
               <% end %>
               <%= work_sample.filename.to_s %>
@@ -148,8 +148,9 @@
       contentType: false,
       dataType: 'script',
       data: formData,
-      success: () => {
-        return true
+      success: (data) => {
+        const j_data = JSON.parse(data);
+        $('#file-' + j_data['blob_key']).addClass('d-none');
       },
     })
   });
