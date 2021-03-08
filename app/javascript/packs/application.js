@@ -17,6 +17,7 @@ require("typeface-ubuntu")
 require("trix")
 require("@rails/actiontext")
 
+import 'images/linked-job-not-found.png';
 import 'src/stylesheets/application'
 const images = require.context('../images', true)
 
