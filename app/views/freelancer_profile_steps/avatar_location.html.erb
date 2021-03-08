@@ -26,7 +26,7 @@
               <%= image_tag @freelancer_profile.avatar, class: 'rounded-circle' %>
             </div>
             <div class="custom-file">
-              <%= f.file_field :freelancer_profile_avatar, multiple: false, name: 'avatar', class: "d-none", id: "uploadProfilePic" %>
+              <%= f.file_field :freelancer_profile_avatar, multiple: false, name: 'avatar', class: "avatar d-none", id: "uploadProfilePic" %>
               <label class="btn btn-outline-primary mb-0" for="uploadProfilePic">
                 Upload photo
               </label>
@@ -38,7 +38,7 @@
           <% else %>
             <div class="text-light mb-3" style="font-size: 170px;line-height: 0;"><i class="fas fa-user-circle"></i></div>
             <div class="custom-file">
-              <%= f.file_field :freelancer_profile_avatar, multiple: false, name: 'avatar', class: "d-none", id: "uploadProfilePic" %>
+              <%= f.file_field :freelancer_profile_avatar, multiple: false, name: 'avatar', class: "avatar d-none", id: "uploadProfilePic" %>
               <label class="btn btn-outline-primary" for="uploadProfilePic">
                 Upload photo
               </label>
