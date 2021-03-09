@@ -19,6 +19,8 @@ pickle-email-*.html
 .DS_Store
 .idea/
 .idea*
+.vscode/
+.vscode*
 *.code-workspace
 doc/
 *.swp

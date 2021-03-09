@@ -9,8 +9,8 @@
       </div>
       <%= form_for :freelancer_profile, url: freelancer_change_skills_path do |f| %>
         <div class="modal-body pt-0">
-          <div class="form-group mb-4">
-            <h4>Skills</h4>
+          <div class="form-group">
+            <h5>Skills</h5>
             <div class="w-100">
               <%= f.select :freelancer_real_estate_skills,
                            options_for_select(
@@ -30,7 +30,7 @@
               });
             });
           </script>
-          <div class="d-flex justify-content-between">
+          <div class="d-flex justify-content-between pt-3">
             <button type="button" class="btn btn-link px-0 invisible"></button>
             <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
           </div>

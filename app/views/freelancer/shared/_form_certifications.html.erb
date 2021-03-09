@@ -1,5 +1,5 @@
-<div class="modal-body pt-0">
-  <label for="exampleFormControlMultiSelect" class=h5 mt-3">
+<div class="modal-body pt-0 pb-0">
+  <label for="exampleFormControlMultiSelect" class="h5">
     Licence or Certification
   </label>
   <div id="descriptionCertification" class="collapse multi-collapse <%= freelancer_certification&.certification&.custom? ? '' : 'show' %>">
@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div class="custom-control custom-checkbox">
+  <div class="custom-control custom-checkbox mb-3">
     <%= f.check_box :custom,
                     class: "custom-control-input #{freelancer_certification&.certification&.custom? ? 'show' : ''}",
                     id: "editCertificationCustom-#{freelancer_certification&.id}", type: "button",
@@ -32,8 +32,8 @@
   </div>
 
   <div class="form-group">
-    <label for="earnedMonth" class=h5 mt-3">Date Earned</label>
-    <div class="row mb-3">
+    <label for="earnedMonth" class="h5">Date Earned</label>
+    <div class="row">
       <div class="col">
         <%= f.select :earned_month,
                      options_for_select(select_months_array, freelancer_certification&.earned&.month),

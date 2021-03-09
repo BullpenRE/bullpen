@@ -26,8 +26,8 @@
       <div class="new-question"></div>
     <% end %>
   </div>
-  <button type="button" class="btn btn-link py-0 new-question-button"><i class="fas fa-plus mr-2"></i>Add another question</button>
-  <div class="modal-footer justify-content-between">
+  <button type="button" class="btn btn-link p-0 mb-3 new-question-button shadow-none"><i class="fas fa-plus mr-2"></i>Add another question</button>
+  <div class="d-flex pt-3 justify-content-between">
     <%= link_to employer_job_flows_path(id: :post_job_step_4, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
@@ -41,7 +41,7 @@
         <% end %>
       <% else %>
         <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
-          Save<span class="d-none d-sm-inline"> as Draft</span><i class="fas fa-chevron-right ml-2"></i>
+          Save<span class="d-none d-sm-inline"> as Draft</span></i>
         <% end %>
         <%= button_tag type: 'submit', class: "btn btn-primary" do %>
           Preview<span class="d-none d-sm-inline"> Job Post</span><i class="fas fa-chevron-right ml-2"></i>
