@@ -5,7 +5,7 @@ class Public::FreelancerProfileController < ApplicationController
   def show
     certifications
     @freelancer_profile = FreelancerProfile.lookup(params[:slug])
-    redirect_to talent_not_found_path if @freelancer_profile.blank?
+    render 'errors/talent_not_found' if @freelancer_profile.blank?
   end
 
   def request_interview

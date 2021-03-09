@@ -4,7 +4,7 @@ class Public::JobController < ApplicationController
 
   def show
     @job = Job.lookup(params[:slug])
-    redirect_to job_not_found_path if @job.blank?
+    render 'errors/job_not_found' if @job.blank?
   end
 
   def apply_for_job

@@ -16,7 +16,7 @@
           <%= f.hidden_field :interview_id, value: interview&.id %>
           <%= f.hidden_field :freelancer_profile_id, value: freelancer_profile.id %>
       <div class="form-group mb-3">
-          <label for="addPersonalMessageTextArea" class="h5">
+          <label for="addPersonalMessageTextArea" class="h5 mb-0">
             <%= interview.present? ? 'Edit your message here.' : 'Add a personal message.' %>
           </label>
         <div class="w-100 without-toolbar">
