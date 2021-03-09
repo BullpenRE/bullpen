@@ -86,6 +86,7 @@ class Employer::JobFlowsController < ApplicationController
     if params[:button] == 'draft'
       job.update(state: 'draft')
       redirect_to employer_jobs_path
+      flash_when_saved_as_draft
     elsif params[:button] == 'posted'
       redirect_to employer_jobs_path
     else
@@ -100,6 +101,7 @@ class Employer::JobFlowsController < ApplicationController
 
     if params[:button] == 'draft'
       job.update(state: 'draft')
+      flash_when_saved_as_draft
     elsif params[:button] != 'done'
       job.update(state: 'posted')
     end
@@ -182,5 +184,9 @@ class Employer::JobFlowsController < ApplicationController
 
   def job
     @job ||= current_user.employer_profile.jobs.find_by(id: (params[:job_id] || params[:job][:job_id]))
+  end
+
+  def flash_when_saved_as_draft
+    flash[:notice] = "Your <b>#{job.title}</b> job post has been saved as a draft. Select <b>Post Job</b> to review and post your job."
   end
 end
