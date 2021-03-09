@@ -187,6 +187,7 @@ class Employer::JobFlowsController < ApplicationController
   end
 
   def flash_when_saved_as_draft
-    flash[:notice] = "Your <b>#{job.title}</b> job post has been saved as a draft. Select <b>Post Job</b> to review and post your job."
+    flash[:notice] = "Your <b>#{job.title}</b> job post has been saved as a draft.
+                     Select <b>Post Job</b> to review and post your job."
   end
 end
