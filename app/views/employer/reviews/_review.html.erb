@@ -15,10 +15,10 @@
           <%= f.hidden_field :employer_profile_id, value: employer_profile.id %>
           <%= f.hidden_field :redirect_reference, value: redirect_reference %>
           <div class="form-group mb-3">
-            <label for="overallRating" class="h5">
+            <label for="overallRating" class="h5 m-0">
               Overall Rating
             </label>
-            <div class="container">
+            <div class="w-100 mb-2">
               <div class="bp-starrating d-flex justify-content-end flex-row-reverse">
                 <%= f.radio_button :rating, '5', id: "star5#{freelancer_profile.id}", required: true, checked: review&.equal_rating?(5) %>
                 <%= f.label '', for: "star5#{freelancer_profile.id}", title: '5' %>

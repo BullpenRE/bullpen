@@ -22,20 +22,20 @@
       </div>
     </div>
   </div>
-  <div class="bp-text-sm mb-2 mt-3 net-earnings"> </div>
+  <div class="bp-text-sm mb-3 mt-2 net-earnings"> </div>
 
   <label class="h5">Are you available from 9AM-5PM  <%= job_application.job.time_zone %>?</label>
   <div class="custom-control custom-radio mb-1">
     <%= f.radio_button :available_during_work_hours, 'true', id: "worksHoursRadio1", class: "custom-control-input", required: true %>
     <label class="custom-control-label" for="worksHoursRadio1"><b>Yes</b></label>
   </div>
-  <div class="custom-control custom-radio mb-3">
+  <div class="custom-control custom-radio">
     <%= f.radio_button :available_during_work_hours, 'false', id: "worksHoursRadio2", class: "custom-control-input", required: true %>
     <label class="custom-control-label" for="worksHoursRadio2"><b>No</b></label>
   </div>
   <% if job_application.job.job_questions.present? %>
     <% job_application.job.job_questions.each do |question| %>
-      <div class="form-group">
+      <div class="form-group mt-3 mb-0">
         <div class="d-flex justify-content-between">
           <label for="jobQuestion" class="h5"><%= question.description %></label>
         </div>

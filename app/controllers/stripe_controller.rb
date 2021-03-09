@@ -13,7 +13,7 @@ class StripeController < ApplicationController
 
   def dashboard
     account = Stripe::Account.retrieve(freelancer_profile.stripe_id_account)
-    url = account.login_links.create.url
+    url = account.login_links.create.url + '#/account'
 
     respond_to do |format|
       format.json do

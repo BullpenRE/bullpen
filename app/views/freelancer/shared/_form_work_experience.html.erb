@@ -45,9 +45,7 @@
         <div class="error_message_start_date<%= modal_id %> text-danger"></div>
       </div>
       <div class="col-12 mt-3 col-md-6 mt-md-0 endDate<%= modal_id %> <%= freelancer_profile_experience&.current_job ? 'd-none' : '' %>">
-        <div class="d-flex justify-content-between">
-          <label for="endMonth-<%= modal_id %>" class="h5">End Date</label>
-        </div>
+        <label for="endMonth-<%= modal_id %>" class="h5">End Date</label>
         <div class="row pb-1" id="endDateToggle-<%= freelancer_profile_experience&.id %>">
           <div class="col" style="padding-right: 5px;">
             <%= f.select :end_month,
