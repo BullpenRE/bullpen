@@ -40,7 +40,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
         row :pay_rate
         row :state
         row 'Payment account' do
-          link_to contract.payment_account.short_description, admin_payment_account_path(contract.payment_account_id)
+          link_to contract.payment_account.short_description, admin_payment_account_path(contract.payment_account_id) if contract.payment_account.present?
         end
         row :created_at
         row :updated_at
@@ -73,7 +73,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
         f.input :state
         f.input :hide_from_freelancer
         f.input :hide_from_employer
-        if f.object
+        if f.object && f.object.employer_profile_id.present? && f.object.employer_profile.payment_accounts.any?
           f.input :payment_account, as: :select, collection: PaymentAccount.where(employer_profile_id: f.object.employer_profile_id).map{|account| [account.short_description, account.id] }
         end
         f.actions
