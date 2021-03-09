@@ -11,18 +11,27 @@
     <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: true } %>
     <div class="bp-card mb-3">
       <div>
-        <div class="d-flex flex-column flex-lg-row">
-          <div class="mr-auto"><h2 class="text-wrap text-break"><%= job_application.job&.title&.capitalize %></h2></div>
-          <div class="d-flex flex-column flex-md-row my-2 my-lg-0">
+        <div class="d-flex flex-column flex-md-row">
+          <div class="mr-auto">
+            <h2 class="text-wrap text-break mb-1"><%= job_application.job&.title&.capitalize %></h2>
+            <div class="bp-text-sm mb-3">
+              <% if job_application.applied_at.nil? %>
+                Posted on <%= job_application.job.created_at.strftime("%b %d, %Y") %>
+              <% else %>
+                Applied <%= time_ago_in_words(job_application.applied_at) %> ago for job posted on <%= job_application.job.created_at.strftime("%b %d, %Y") %>
+              <% end %>
+            </div>
+          </div>
+          <div class="d-flex flex-column flex-md-row ml-md-3 mb-3 mb-md-0">
             <% if job_application.state == 'applied' %>
-              <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
+              <div class="bp-text-sm text-secondary text-nowrap font-weight-bold mb-3 mb-md-0 mt-0 mt-md-2 mr-3">
                 Applied
               </div>
             <% elsif job_application.state == 'draft' %>
-              <div class="bp-text-sm text-secondary font-weight-bold align-self-md-center align-self-start text-nowrap mr-2">
+              <div class="bp-text-sm text-secondary text-nowrap font-weight-bold mb-3 mb-md-0 mt-0 mt-md-2 mr-3">
                 Saved as draft
               </div>
-              <div class="mt-1 mr-md-2">
+              <div class="mb-2 mb-md-0 mr-md-2">
                 <%= link_to 'Apply', freelancer_application_flows_path(job_app: job_application.id), { remote: true, 'data-toggle': "modal", 'data-target': "#jobAppStep1", class: "btn btn-primary d-block" } %>
               </div>
             <% end %>
@@ -31,13 +40,7 @@
         </div>
       </div>
       <div>
-        <div class="bp-text-sm mb-3">
-          <% if job_application.applied_at.nil? %>
-            Posted on <%= job_application.job.created_at.strftime("%b %d, %Y") %>
-          <% else %>
-            Applied <%= time_ago_in_words(job_application.applied_at) %> ago for job posted on <%= job_application.job.created_at.strftime("%b %d, %Y") %>
-          <% end %>
-        </div>
+        
         <%= render partial: 'freelancer/shared/job_card', locals: { job: job_application.job } %>
       </div>
     </div>

@@ -1,34 +1,31 @@
 <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
   <%= f.hidden_field :job_id, value: @job.id %>
   <%= f.hidden_field 'step', value: 'post_job_step_4' %>
-  <table class="table table-borderless table-sm">
-    <tbody>
-      <tr>
-        <td> <label class="h5">Contract Type <i class="far fa-question-circle text-primary"></i></label></td>
-        <td colspan="2"><label class="h5 rangePay"></label></td>
-      </tr>
-      <tr>
-        <td style="width: 33%">
-          <%= f.select :contract_type,
+  <div class="row">
+    <div class="col-xs-12 col-lg-4 pr-lg-1 mb-3">
+      <h5>Contract Type <i class="far fa-question-circle text-primary fa-lg"></i></h5>
+      <%= f.select :contract_type,
                        options_for_select(
                          Job::CONTRACT_TYPE_DESCRIPTIONS, job.contract_type),
                        {}, class: 'form-control', required: true, style: "width: 100%" %>
-        </td>
-        <td style="width: 33%">
-          <%= f.text_field :pay_range_low, class: "form-control", placeholder: "$ Low", required: true %>
-        </td>
-        <td style="width: 33%">
-         <%= f.text_field :pay_range_high, class: "form-control", placeholder: "$ High" %>
+    </div>
+    <div class="col-xs-12 col-lg-8 pl-lg-1 mb-3">
+      <label class="h5 rangePay"></label>
+      <div class="d-flex flex-column flex-lg-row w-100">
+        <%= f.text_field :pay_range_low, class: "form-control mb-2 mr-lg-2", placeholder: "$ Low", required: true %>
+        <div class="w-100">
+          <%= f.text_field :pay_range_high, class: "form-control", placeholder: "$ High" %>
           <span class="error_message text-danger"></span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="form-group mb-1 mt-3">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="form-group mb-3">
     <label for="jobDetailsTextarea" class="h5">Describe responsibilities, provided resources, or any other requirements. <span class="text-dark font-weight-normal">(Optional)</span></label>
     <%= f.rich_text_area :relevant_details, class: "form-control", id: "jobDetailsTextarea", placeholder: "Enter any relevant job details", rows: "8", maxlength: "5000" %>
   </div>
-  <div class="modal-footer justify-content-between">
+  <div class="d-flex pt-3 justify-content-between">
     <%= link_to employer_job_flows_path(id: :post_job_step_3, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>

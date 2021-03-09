@@ -18,7 +18,7 @@
 
     <% if flash[:alert].present? %>
         <div id="alertWarning" class="alert alert-warning alert-dismissible fade show">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <button type="button" class="close" data-dismiss="alert" style="font-size:1.5rem;">&times;</button>
           <%= flash[:alert].html_safe %>
         </div>
     <% end %>
