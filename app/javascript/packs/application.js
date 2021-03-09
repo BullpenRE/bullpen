@@ -39,3 +39,6 @@ window.Swal = Swal;
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+import 'images/icons8-search-659.png';
+import 'images/bg-user-img.png';
+import 'images/linked-job-not-found.png';
