@@ -15,9 +15,15 @@
             <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <div class="text-center d-none d-lg-flex">
-            <div class="col"><a href="#">Summary</a></div>
-            <div class="col"><a href="#">Job Type</a></div>
-            <div class="col"><a href="#">Qualifications</a></div>
+            <%= link_to employer_job_flows_path(id: :post_job_step_1, job_id: job.id), class: "col", remote: true do %>
+              Summary
+            <% end %>
+            <%= link_to employer_job_flows_path(id: :post_job_step_2, job_id: job.id), class: "col", remote: true do %>
+              Job Type
+            <% end %>
+            <%= link_to employer_job_flows_path(id: :post_job_step_3, job_id: job.id), class: "col", remote: true do %>
+              Qualifications
+            <% end %>
             <div class="col text-secondary font-weight-bold">Details</div>
             <div class="col text-muted">Questions</div>
           </div>
