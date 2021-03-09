@@ -7,7 +7,7 @@
       <%= f.select :contract_type,
                        options_for_select(
                          Job::CONTRACT_TYPE_DESCRIPTIONS, job.contract_type),
-                       {}, class: 'form-control', required: true, style: "width: 100%" %>
+                       {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select", title: "Hourly" %>
     </div>
     <div class="col-xs-12 col-lg-8 pl-lg-1 mb-3">
       <label class="h5 rangePay"></label>
@@ -51,6 +51,7 @@
       $('#job_pay_range_low').attr("placeholder", "$ Low");
       $('.rangePay').html('Hourly Pay Range <span class="font-weight-normal text-dark">(' + hourly_recommendation + ' recommended)</span>')
     } else {
+      $('.error_message').text('');
       $('#job_pay_range_high').addClass('d-none');
       $('#job_pay_range_low').attr("placeholder", "$ Monthly amount");
       if(recommendation) {
