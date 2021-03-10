@@ -42,7 +42,8 @@
   });
 
   function change_contract_type() {
-    const required_experience = '<%= @job.required_experience %>'
+    $("#job_contract_type").selectpicker('refresh');
+    const required_experience = '<%= @job.required_experience %>';
     const recommendation = retainer_fee_recommendations(required_experience)[$("#job_contract_type").val()];
     const hourly_recommendation = retainer_fee_recommendations(required_experience)['hourly'];
 
