@@ -16,13 +16,6 @@
       <p class="mb-4">Tell us about your work experience and educational background.</p>
     </div>
 
-    <% if flash[:alert].present? %>
-        <div id="alertWarning" class="alert alert-warning alert-dismissible fade show">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <%= flash[:alert].html_safe %>
-        </div>
-    <% end %>
-
     <div class="mb-4">
       <div class="h5">
         Work Experience
@@ -37,7 +30,7 @@
               <div class="row bp-text-sm">
                 <div class="col-md text-wrap text-break"><%= work_exp.company %>, <%= work_exp.location %></div>
                 <div class="col-md">
-                  <%= work_exp.start_date.strftime("%b %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%b %Y") %>
+                  <%= work_exp.start_date&.strftime("%b %Y") %>-<%= work_exp.current_job.present? ? "Present" : work_exp.end_date&.strftime("%b %Y") %>
                 </div>
               </div>
             </div>
