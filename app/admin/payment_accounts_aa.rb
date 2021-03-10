@@ -43,7 +43,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('pa
           row :card_brand
           row 'Expires' do
             if payment_account.card_expires.present?
-              "#{payment_account.card_expires.month} / #{payment_account.card_expires.year}#{ ' <b style="color: red;">(expired)</b>' if payment_account.expired? }".html_safe
+              "#{payment_account.card_expires.month} / #{payment_account.card_expires.year}#{' <b style="color: red;">(expired)</b>' if payment_account.expired?}".html_safe
             end
           end
           row :card_cvc_check
@@ -56,6 +56,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('pa
         row :default
         row :created_at
         row :updated_at
+        row 'Contracts' do
+          payment_account.contracts.map{|contract| link_to(contract.title, admin_contract_path(contract.id))}.join('<br>').html_safe
+        end
       end
       active_admin_comments
     end
@@ -65,7 +68,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('pa
         f.input :default
         f.input :employer_profile,
                 as: :select, input_html: { class: "select2" },
-                collection: EmployerProfile.all.map{ |profile| [profile.email, profile.id] }
+                collection: EmployerProfile.all.map{|profile| [profile.email, profile.id]}
         f.input :stripe_object, label: 'Account Type'
         f.input :id_stripe, label: 'Stripe ID'
         f.input :last_four
