@@ -39,9 +39,15 @@
                 $(document).on('turbolinks:load', function () {
                   $('.delete-job-' +<%= job.id %>).click(() => {
                     Swal.fire({
-                      text: "Are you sure?\n",
-                      confirmButtonText: `Yes`,
-                      showCancelButton: true
+                      width: 400,
+                      position: 'top',
+                      title: '<strong class="text-secondary text-left"> Delete Job </strong>',
+                      html: '<div class="text-left">Are you sure you want to delete the <b><%= job.title %></b> post? </div>',
+                      confirmButtonText: `Delete Job`,
+                      confirmButtonColor: '#24A878',
+                      showCancelButton: true,
+                      reverseButtons: true,
+                      showCloseButton: true
                     }).then((result) => {
                       if (result.isConfirmed) {
                         $.ajax({
