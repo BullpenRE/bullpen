@@ -4,7 +4,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
     includes :employer_profile, :freelancer_profile, :job
 
     permit_params :freelancer_profile_id, :employer_profile_id, :job_id, :title, :job_description, :contract_type,
-                  :pay_rate, :state, :hide_from_freelancer, :hide_from_employer
+                  :pay_rate, :state, :hide_from_freelancer, :hide_from_employer, :payment_account_id
     actions :all
 
     index do
@@ -16,6 +16,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
       column :contract_type
       column :pay_rate
       column :state
+      column :payment_account
       column :created_at
 
       actions defaults: true
@@ -38,6 +39,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
         row :contract_type
         row :pay_rate
         row :state
+        row 'Payment account' do
+          link_to contract.payment_account.short_description, admin_payment_account_path(contract.payment_account_id) if contract.payment_account.present?
+        end
         row :created_at
         row :updated_at
         row :hide_from_freelancer
@@ -52,11 +56,11 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
       f.inputs "Contract" do
         f.input :employer_profile_id,
                 as: :select, input_html: { class: 'select2' },
-                collection: EmployerProfile.find_each.map{ |employer_profile| [employer_profile.email, employer_profile.id] },
+                collection: EmployerProfile.find_each.map {|employer_profile| [employer_profile.email, employer_profile.id]},
                 label: 'Employer'
         f.input :freelancer_profile_id,
                 as: :select, input_html: { class: 'select2' },
-                collection: FreelancerProfile.find_each.map{ |freelancer_profile| [freelancer_profile.email, freelancer_profile.id] },
+                collection: FreelancerProfile.find_each.map {|freelancer_profile| [freelancer_profile.email, freelancer_profile.id]},
                 label: 'Freelancer'
         f.input :job_id,
                 as: :select, input_html: { class: 'select2' },
@@ -69,6 +73,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
         f.input :state
         f.input :hide_from_freelancer
         f.input :hide_from_employer
+        if f.object && f.object.employer_profile_id.present? && f.object.employer_profile.payment_accounts.any?
+          f.input :payment_account, as: :select, collection: PaymentAccount.where(employer_profile_id: f.object.employer_profile_id).map{|account| [account.short_description, account.id] }
+        end
         f.actions
       end
     end

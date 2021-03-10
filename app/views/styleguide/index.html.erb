@@ -121,7 +121,7 @@
         <div class="form-group">
             <label for="exampleFormControlSelect2" class="h5">Select Picker with Bootstrap-Select* (<a href="https://developer.snapappointments.com/bootstrap-select/examples/" target="_blank">Documentation</a>)</label>
             <div class="d-flex">
-                <select class="form-control selectpicker mr-2" id="exampleFormControlSelect2" title="Please make a selection">
+                <select class="form-control selectpicker mr-2" id="exampleFormControlSelect2" title="Please make a selection" data-style="bp-btn-select">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -135,7 +135,7 @@
 <pre class="collapse mb-3 px-3" id="selectPickerExample">
 &lt;div class="form-group"&gt;
   &lt;label for="exampleFormControlSelect2" class="h5"&gt;Select Picker&lt;/label&gt;
-  &lt;select class="form-control selectpicker" id="exampleFormControlSelect2" title="Please make a selection"&gt;
+  &lt;select class="form-control selectpicker" id="exampleFormControlSelect2" title="Please make a selection" data-style="bp-btn-select"&gt;
     &lt;option&gt;1&lt;/option&gt;
     &lt;option&gt;2&lt;/option&gt;
     &lt;option&gt;3&lt;/option&gt;
@@ -560,6 +560,34 @@
         &lt;%= form.label '', for: 'star1', title: '1' %&gt;
     &lt;/div&gt;
 &lt;% end %&gt;
+        </pre>
+    </div>
+    <h4 class="text-dark mt-4">Select with link appearance</h4>
+    <div class="btn-group">
+        <button type="button" class="btn btn-link dropdown-toggle p-0 m-0 shadow-none" style="text-decoration:none;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            PST <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-menu" >
+            <a class="dropdown-item active" href="#">PST</a>
+            <a class="dropdown-item" href="#">MST</a>
+            <a class="dropdown-item" href="#">CST</a>
+            <a class="dropdown-item" href="#">EST</a>
+        </div>
+    </div>
+    <button class="btn btn-outline-primary mt-2" type="button" data-toggle="collapse" data-target="#styledtimezonemenu" aria-expanded="false" aria-controls="ratingsEntryExample">Code</button>
+    <div class="collapse mt-2 mb-0" id="styledtimezonemenu">
+        <pre class="collapse mt-2 mb-0" id="styledtimezonemenu">
+&lt;div class="btn-group"&gt;
+    &lt;button type="button" class="btn btn-link dropdown-toggle p-0 m-0 shadow-none" style="text-decoration:none;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+        PST &lt;i class="fas fa-chevron-down"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+    &lt;div class="dropdown-menu" &gt;
+        &lt;a class="dropdown-item active" href="#"&gt;PST&lt;/a&gt;
+        &lt;a class="dropdown-item" href="#"&gt;MST&lt;/a&gt;
+        &lt;a class="dropdown-item" href="#"&gt;CST&lt;/a&gt;
+        &lt;a class="dropdown-item" href="#"&gt;EST&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
         </pre>
     </div>
 </div>

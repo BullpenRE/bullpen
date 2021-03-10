@@ -7,7 +7,7 @@ module FreelancersHelper
     base_part = "#{stripe_url}?redirect_uri=#{redirect_uri}&client_id=#{client_id}"
 
     base_part.concat(
-      [stripe_email, business_type, stripe_first_name, stripe_last_name, stripe_phone, stripe_user_country].join
+      [stripe_email, stripe_first_name, stripe_last_name, stripe_phone, stripe_user_country].join
     )
   end
 
@@ -15,10 +15,6 @@ module FreelancersHelper
 
   def stripe_email
     "&stripe_user%5Bemail%5D=#{current_user.email}"
-  end
-
-  def business_type
-    '&stripe_user%5Bbusiness_type%5D=individual'
   end
 
   def stripe_first_name

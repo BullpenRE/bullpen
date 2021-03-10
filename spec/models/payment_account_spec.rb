@@ -9,6 +9,15 @@ RSpec.describe PaymentAccount, type: :model do
     expect(bank_payment_account).to be_valid
   end
 
+  describe 'Relationships' do
+    let!(:contract) { FactoryBot.create(:contract, employer_profile: card_payment_account.employer_profile, payment_account: card_payment_account) }
+    it 'has_many contracts, dependent: :nullify' do
+      expect(card_payment_account.contracts).to include(contract)
+      card_payment_account.destroy
+      expect(contract.reload.payment_account).to be_nil
+    end
+  end
+
   describe 'Validations' do
     context 'last_four' do
       it 'must be 4 digits' do
