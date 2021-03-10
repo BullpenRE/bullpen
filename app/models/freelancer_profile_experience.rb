@@ -9,7 +9,7 @@ class FreelancerProfileExperience < ApplicationRecord
   validates :description, presence: true
   validate :end_date_is_after_start_date
 
-  AVAILABLE_YEARS = (1991..Time.now.year).reverse_each
+  AVAILABLE_YEARS = (1970..Time.now.year).reverse_each
   AVAILABLE_MONTHNAMES = Date::MONTHNAMES.drop(1)
 
   geocoded_by :location
