@@ -35,5 +35,12 @@
       <%= render partial: 'shared/freelancer_skills_education', locals: { freelancer_profile: @freelancer_profile,
                                                                           editable: @freelancer_profile.editable?(current_user) } %>
     <% end %>
+    <hr>
+    <div class="mt-3">
+      <h4>Sharable link</h4>
+      <span class="text-break">
+        <%= link_to public_freelancer_profile_url(@freelancer_profile.slug), public_freelancer_profile_url(@freelancer_profile.slug) %>
+      </span>
+    </div>
   </div>
 </div>
