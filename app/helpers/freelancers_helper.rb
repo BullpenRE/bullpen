@@ -1,7 +1,7 @@
 module FreelancersHelper
   def stripe_button_link
     stripe_url = 'https://connect.stripe.com/express/oauth/authorize'
-    redirect_uri = stripe_connect_url
+    redirect_uri = "#{protocol}://#{ENV['DOMAIN_URL']}/stripe/connect"
     client_id = ENV['STRIPE_CLIENT_ID']
 
     base_part = "#{stripe_url}?redirect_uri=#{redirect_uri}&client_id=#{client_id}"
@@ -35,5 +35,9 @@ module FreelancersHelper
 
   def stripe_user_country
     '&stripe_user%5Bcountry%5D=US'
+  end
+
+  def protocol
+    Rails.env.test? || Rails.env.development? ? 'http' : 'https'
   end
 end
