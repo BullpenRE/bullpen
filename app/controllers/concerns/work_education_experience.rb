@@ -70,7 +70,7 @@ module WorkEducationExperience
   end
 
   def current_job?
-    params[:freelancer_profile_experience][:current_job] == true
+    params[:freelancer_profile_experience][:current_job] == '1'
   end
 
   def work_profile_experience
