@@ -27,7 +27,7 @@ class Job < ApplicationRecord
   enum hours_needed: { 'part-time': 0, 'on-call': 1, 'project-based': 2 }
   enum required_experience: { 'junior': 0, 'intermediate': 1, 'senior': 2 }
   enum time_zone: { 'HST': 0, 'AKST': 1, 'PST': 2, 'MST': 3, 'CST': 4, 'EST': 5 }
-  enum state: { 'draft': 0, 'posted': 1, 'closed': 2 }
+  enum state: { 'draft': 0, 'posted': 1, 'closed': 2, 'edit': 3 }
   enum contract_type: { 'hourly': 0, 'monthly_retainer_20': 1, 'monthly_retainer_40': 2, 'monthly_retainer_80': 3 }
 
   CONTRACT_TYPE_DESCRIPTIONS = {
