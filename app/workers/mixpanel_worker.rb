@@ -7,7 +7,7 @@ class MixpanelWorker
 
   def perform(user_id, event_key, properties)
     return if event_key.blank? || properties.blank?
-    
+
     tracker = MixpanelTracker.instance
     tracker.track(user_id, event_key, properties)
   end
