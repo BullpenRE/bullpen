@@ -5,9 +5,15 @@
       const maxFileSize = 2097152;
       if (!file) { return }
       if (file.size && file.size > maxFileSize) {
-        $('.error-avatar').text('Uploaded files must not exceed 2MB')
+        $('.error-avatar').text('Uploaded files must not exceed 2MB');
+        setTimeout(() => {
+          $('.error-avatar').text('');
+        }, 3000);
       } else if (file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
         $('.error-avatar').text('Please upload only a jpg, png or gif image');
+        setTimeout(() => {
+          $('.error-avatar').text('');
+        }, 3000);
       } else {
         const formData = new FormData();
         formData.append('avatar', file);
