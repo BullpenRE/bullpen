@@ -5,17 +5,9 @@
       const maxFileSize = 2097152;
       if (!file) { return }
       if (file.size && file.size > maxFileSize) {
-        const message = "Uploaded files must not exceed 2MB\n";
-        Swal.fire({
-          title: '<h5>Oops!</h5>',
-          text: message
-        });
+        $('.error-avatar').text('Uploaded files must not exceed 2MB')
       } else if (file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
-        const message = "Please upload only a jpg, png or gif image\n";
-        Swal.fire({
-          title: '<h5>Oops!</h5>',
-          text: message
-        });
+        $('.error-avatar').text('Please upload only a jpg, png or gif image');
       } else {
         const formData = new FormData();
         formData.append('avatar', file);
