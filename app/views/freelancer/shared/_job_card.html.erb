@@ -2,15 +2,15 @@
   <div class="col-lg-8">
     <%= render partial: 'shared/job_short_description', locals: { job: job } %>
     <span class="badge badge-secondary mt-1"><%= job.position_length&.capitalize %></span>
-    <span class="badge badge-secondary mt-1"><%= job.hours_needed&.capitalize %></span>
-    <div class="bp-text-sm mb-2 mt-3">
+    <span class="badge badge-ssrc/stylesheets/_custom.scssecondary mt-1"><%= job.hours_needed&.capitalize %></span>
+    <div class="bp-text-sm mt-2">
       <% if job.daytime_availability_required? %>
-        <i class="far fa-clock text-secondary"></i> Daytime availability is required <span class="text-secondary">(9AM-5PM <%= job.time_zone %>)</span>
+        <i class="far fa-clock fa-lg fa-fw text-secondary"></i> Daytime availability is required <span class="text-secondary">(9AM-5PM <%= job.time_zone %>)</span>
       <% end %>
     </div>
-    <div class="bp-text-sm mb-1">
+    <div class="bp-text-sm mt-2">
       <% if job.required_regional_knowledge.present? %>
-        <i class="fas fa-map-marker-alt text-secondary"></i>  Regional knowledge of <span class="text-secondary"><%= job.required_regional_knowledge %></span> is required
+        <i class="fas fa-lg fa-fw fa-map-marker-alt text-secondary"></i>  Regional knowledge of <span class="text-secondary"><%= job.required_regional_knowledge %></span> is required
       <% end %>
     </div>
   </div>

@@ -139,6 +139,15 @@ batch_action_admin_freelancer_profile_experiences POST       /admin/freelancer_p
                                                   PATCH      /admin/messages/:id(.:format)                                                                     admin/messages#update
                                                   PUT        /admin/messages/:id(.:format)                                                                     admin/messages#update
                                                   DELETE     /admin/messages/:id(.:format)                                                                     admin/messages#destroy
+              batch_action_admin_payment_accounts POST       /admin/payment_accounts/batch_action(.:format)                                                    admin/payment_accounts#batch_action
+                           admin_payment_accounts GET        /admin/payment_accounts(.:format)                                                                 admin/payment_accounts#index
+                                                  POST       /admin/payment_accounts(.:format)                                                                 admin/payment_accounts#create
+                        new_admin_payment_account GET        /admin/payment_accounts/new(.:format)                                                             admin/payment_accounts#new
+                       edit_admin_payment_account GET        /admin/payment_accounts/:id/edit(.:format)                                                        admin/payment_accounts#edit
+                            admin_payment_account GET        /admin/payment_accounts/:id(.:format)                                                             admin/payment_accounts#show
+                                                  PATCH      /admin/payment_accounts/:id(.:format)                                                             admin/payment_accounts#update
+                                                  PUT        /admin/payment_accounts/:id(.:format)                                                             admin/payment_accounts#update
+                                                  DELETE     /admin/payment_accounts/:id(.:format)                                                             admin/payment_accounts#destroy
 destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_skills/:id/destroy_real_estate_skill(.:format)                                 admin/real_estate_skills#destroy_real_estate_skill
             batch_action_admin_real_estate_skills POST       /admin/real_estate_skills/batch_action(.:format)                                                  admin/real_estate_skills#batch_action
                          admin_real_estate_skills GET        /admin/real_estate_skills(.:format)                                                               admin/real_estate_skills#index
@@ -148,6 +157,15 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                           admin_real_estate_skill GET        /admin/real_estate_skills/:id(.:format)                                                           admin/real_estate_skills#show
                                                   PATCH      /admin/real_estate_skills/:id(.:format)                                                           admin/real_estate_skills#update
                                                   PUT        /admin/real_estate_skills/:id(.:format)                                                           admin/real_estate_skills#update
+                       batch_action_admin_reviews POST       /admin/reviews/batch_action(.:format)                                                             admin/reviews#batch_action
+                                    admin_reviews GET        /admin/reviews(.:format)                                                                          admin/reviews#index
+                                                  POST       /admin/reviews(.:format)                                                                          admin/reviews#create
+                                 new_admin_review GET        /admin/reviews/new(.:format)                                                                      admin/reviews#new
+                                edit_admin_review GET        /admin/reviews/:id/edit(.:format)                                                                 admin/reviews#edit
+                                     admin_review GET        /admin/reviews/:id(.:format)                                                                      admin/reviews#show
+                                                  PATCH      /admin/reviews/:id(.:format)                                                                      admin/reviews#update
+                                                  PUT        /admin/reviews/:id(.:format)                                                                      admin/reviews#update
+                                                  DELETE     /admin/reviews/:id(.:format)                                                                      admin/reviews#destroy
                       destroy_sector_admin_sector POST       /admin/sectors/:id/destroy_sector(.:format)                                                       admin/sectors#destroy_sector
                        batch_action_admin_sectors POST       /admin/sectors/batch_action(.:format)                                                             admin/sectors#batch_action
                                     admin_sectors GET        /admin/sectors(.:format)                                                                          admin/sectors#index
@@ -202,6 +220,8 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                             employer_talent_style GET        /employer_talent_style(.:format)                                                                  style#employer_talent
                                       login_style GET        /login_style(.:format)                                                                            style#login
                               employer_jobs_style GET        /employer_jobs_style(.:format)                                                                    style#employer_jobs
+                                   stripe_connect GET        /stripe/connect(.:format)                                                                         stripe#connect
+                                 stripe_dashboard GET        /stripe/dashboard(.:format)                                                                       stripe#dashboard
                                              join GET        /join(.:format)                                                                                   join#index
                                       join_signup POST       /join/signup(.:format)                                                                            join#signup
                                  new_user_session GET        /users/sign_in(.:format)                                                                          devise/sessions#new
@@ -228,9 +248,6 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                  employer_sign_up GET        /employer_sign_up(.:format)                                                                       registrations#employer_sign_up
                                freelancer_sign_up GET        /freelancer_sign_up(.:format)                                                                     registrations#freelancer_sign_up
                                                   GET        /promo/:promo_code(.:format)                                                                      signup_promos#show
-                                           avatar PATCH      /avatar/:id(.:format)                                                                             avatar#update
-                                                  PUT        /avatar/:id(.:format)                                                                             avatar#update
-                                                  DELETE     /avatar/:id(.:format)                                                                             avatar#destroy
                          freelancer_profile_steps GET        /freelancer_profile_steps(.:format)                                                               freelancer_profile_steps#index
                                                   POST       /freelancer_profile_steps(.:format)                                                               freelancer_profile_steps#create
                       new_freelancer_profile_step GET        /freelancer_profile_steps/new(.:format)                                                           freelancer_profile_steps#new
@@ -247,6 +264,8 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PATCH      /employer_profile_steps/:id(.:format)                                                             employer_profile_steps#update
                                                   PUT        /employer_profile_steps/:id(.:format)                                                             employer_profile_steps#update
                                                   DELETE     /employer_profile_steps/:id(.:format)                                                             employer_profile_steps#destroy
+                                             user PATCH      /users/:id(.:format)                                                                              users#update
+                                                  PUT        /users/:id(.:format)                                                                              users#update
                                     employer_jobs GET        /employer/jobs(.:format)                                                                          employer/jobs#index
                                                   POST       /employer/jobs(.:format)                                                                          employer/jobs#create
                                  new_employer_job GET        /employer/jobs/new(.:format)                                                                      employer/jobs#new
@@ -297,15 +316,38 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   PUT        /employer/talent/:id(.:format)                                                                    employer/talent#update
                                                   DELETE     /employer/talent/:id(.:format)                                                                    employer/talent#destroy
                            employer_account_index GET        /employer/account(.:format)                                                                       employer/account#index
+                                  employer_avatar PATCH      /employer/avatar(.:format)                                                                        employer/avatars#update
+                                                  PUT        /employer/avatar(.:format)                                                                        employer/avatars#update
+                                                  DELETE     /employer/avatar(.:format)                                                                        employer/avatars#destroy
+                                 employer_profile PATCH      /employer/profile(.:format)                                                                       employer/profiles#update
+                                                  PUT        /employer/profile(.:format)                                                                       employer/profiles#update
+                               employer_contracts GET        /employer/contracts(.:format)                                                                     employer/contracts#index
+                                                  POST       /employer/contracts(.:format)                                                                     employer/contracts#create
+                            new_employer_contract GET        /employer/contracts/new(.:format)                                                                 employer/contracts#new
+                           edit_employer_contract GET        /employer/contracts/:id/edit(.:format)                                                            employer/contracts#edit
+                                employer_contract GET        /employer/contracts/:id(.:format)                                                                 employer/contracts#show
+                                                  PATCH      /employer/contracts/:id(.:format)                                                                 employer/contracts#update
+                                                  PUT        /employer/contracts/:id(.:format)                                                                 employer/contracts#update
+                                                  DELETE     /employer/contracts/:id(.:format)                                                                 employer/contracts#destroy
                        employer_interview_request POST       /employer/interview_request(.:format)                                                             employer/talent#interview_request
                     employer_like_job_application POST       /employer/like_job_application(.:format)                                                          employer/jobs#like_job_application
                             employer_send_message POST       /employer/send_message(.:format)                                                                  employer/jobs#send_message
                  employer_decline_job_application POST       /employer/decline_job_application(.:format)                                                       employer/jobs#decline_job_application
                         employer_withdraw_request POST       /employer/withdraw_request(.:format)                                                              employer/interviews#withdraw_request
+                           employer_make_an_offer POST       /employer/make_an_offer(.:format)                                                                 employer/jobs#make_an_offer
+                employer_remove_interview_request POST       /employer/remove_interview_request(.:format)                                                      employer/interviews#remove_interview_request
+                          employer_withdraw_offer POST       /employer/withdraw_offer(.:format)                                                                employer/contracts#withdraw_offer
+                             employer_save_review POST       /employer/save_review(.:format)                                                                   employer/reviews#save_review
+               employer_make_an_offer_without_job POST       /employer/make_an_offer_without_job(.:format)                                                     employer/contracts#make_an_offer_without_job
+                                employer_find_job POST       /employer/find_job(.:format)                                                                      employer/contracts#find_job
+                          employer_close_contract POST       /employer/close_contract(.:format)                                                                employer/contracts#close_contract
+                         employer_delete_contract POST       /employer/delete_contract(.:format)                                                               employer/contracts#delete_contract
                         public_freelancer_profile GET        /public/freelancer_profile/:slug(.:format)                                                        public/freelancer_profile#show
                                        public_job GET        /public/job/:slug(.:format)                                                                       public/job#show
                              public_apply_for_job GET        /public/apply_for_job(.:format)                                                                   public/job#apply_for_job
                          public_request_interview GET        /public/request_interview(.:format)                                                               public/freelancer_profile#request_interview
+                   public_turn_off_new_job_alerts GET        /public/turn_off_new_job_alerts(.:format)                                                         public/freelancer_profile#turn_off_new_job_alerts
+                            public_write_a_review GET        /public/write_a_review(.:format)                                                                  public/freelancer_profile#write_a_review
                                   freelancer_jobs GET        /freelancer/jobs(.:format)                                                                        freelancer/jobs#index
                                                   POST       /freelancer/jobs(.:format)                                                                        freelancer/jobs#create
                                new_freelancer_job GET        /freelancer/jobs/new(.:format)                                                                    freelancer/jobs#new
@@ -350,6 +392,9 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   DELETE     /freelancer/contracts/:id(.:format)                                                               freelancer/contracts#destroy
                          freelancer_profile_index GET        /freelancer/profile(.:format)                                                                     freelancer/profile#index
                          freelancer_account_index GET        /freelancer/account(.:format)                                                                     freelancer/account#index
+                                freelancer_avatar PATCH      /freelancer/avatar(.:format)                                                                      freelancer/avatars#update
+                                                  PUT        /freelancer/avatar(.:format)                                                                      freelancer/avatars#update
+                                                  DELETE     /freelancer/avatar(.:format)                                                                      freelancer/avatars#destroy
                          freelancer_set_withdrawn POST       /freelancer/set_withdrawn(.:format)                                                               freelancer/applications#set_withdrawn
                freelancer_change_software_licence POST       /freelancer/change_software_licence(.:format)                                                     freelancer/profile#change_software_licence
                  freelancer_change_certifications POST       /freelancer/change_certifications(.:format)                                                       freelancer/profile#change_certifications
@@ -364,12 +409,17 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
           freelancer_change_freelancer_basic_info POST       /freelancer/change_freelancer_basic_info(.:format)                                                freelancer/profile#change_freelancer_basic_info
                    freelancer_add_work_experience POST       /freelancer/add_work_experience(.:format)                                                         freelancer/profile#change_work_experience
                 freelancer_change_work_experience POST       /freelancer/change_work_experience(.:format)                                                      freelancer/profile#change_work_experience
+                         freelancer_decline_offer POST       /freelancer/decline_offer(.:format)                                                               freelancer/contracts#decline_offer
+                          freelancer_accept_offer POST       /freelancer/accept_offer(.:format)                                                                freelancer/contracts#accept_offer
+                        freelancer_close_contract POST       /freelancer/close_contract(.:format)                                                              freelancer/contracts#close_contract
+                       freelancer_delete_contract POST       /freelancer/delete_contract(.:format)                                                             freelancer/contracts#delete_contract
                    freelancer_profile_preferences PATCH      /freelancer/profile/preferences(.:format)                                                         freelancer/profile/preferences#update
                                                   PUT        /freelancer/profile/preferences(.:format)                                                         freelancer/profile/preferences#update
                                 check_users_email POST       /check_users_email(.:format)                                                                      check_email#check_users_email
                                 letter_opener_web            /letter_opener                                                                                    LetterOpenerWeb::Engine
                                        styleguide GET        /styleguide(.:format)                                                                             styleguide#index
                                              root GET        /                                                                                                 join#index
+                                      sidekiq_web            /sidekiq                                                                                          Sidekiq::Web
                     rails_postmark_inbound_emails POST       /rails/action_mailbox/postmark/inbound_emails(.:format)                                           action_mailbox/ingresses/postmark/inbound_emails#create
                        rails_relay_inbound_emails POST       /rails/action_mailbox/relay/inbound_emails(.:format)                                              action_mailbox/ingresses/relay/inbound_emails#create
                     rails_sendgrid_inbound_emails POST       /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                           action_mailbox/ingresses/sendgrid/inbound_emails#create

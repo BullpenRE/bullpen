@@ -2,7 +2,7 @@
 <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
   <%= f.hidden_field :job_id, value: @job.id %>
   <%= f.hidden_field 'step', value: 'post_job_step_3' %>
-  <div class="form-group mb-4">
+  <div class="form-group mb-3">
     <div class="h5">What level of experience is required?</div>
     <div class="custom-control custom-radio">
       <%= f.radio_button :required_experience, 'junior', id: "experienceRadio1", class: "custom-control-input", required: true %>
@@ -45,13 +45,13 @@
                    end.flatten),
                  {}, multiple: true, class: 'select2', style: "width: 100%" %>
   </div>
-  <div class="form-group mb-1">
+  <div class="form-group mb-3">
     <label for="regionalKnowledge" class="h5">Specify any regional knowledge that is required. <span class="text-dark font-weight-normal">(Optional)</span></label>
     <%= f.text_field :required_regional_knowledge, class: "form-control",
                      id: "regionalKnowledge", placeholder: "Enter the area (city, state, county, etc.)",
                      value: job.required_regional_knowledge %>
   </div>
-  <div class="modal-footer justify-content-between">
+  <div class="d-flex pt-3 justify-content-between">
     <%= link_to employer_job_flows_path(id: :post_job_step_2, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>

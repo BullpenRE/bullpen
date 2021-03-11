@@ -3,7 +3,7 @@
   <%= f.hidden_field :job_application_id, value: job_application.id %>
   <%= f.hidden_field 'step', value: 'application_step_2' %>
 
-  <div class="form-group without-toolbar">
+  <div class="form-group">
     <div class="d-flex justify-content-between">
       <label for="coverLetter" class="h5">Cover Letter</label>
     </div>
@@ -13,7 +13,7 @@
     <label for="workSamples" class="h5">Work Samples<span class="text-dark font-weight-normal"> (Optional but recommended)</span></label>
     <% if job_application.errors.any? %>
       <div id="alertWarning" class="alert alert-warning alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <button type="button" class="close" data-dismiss="alert" style="font-size:1.5rem;">&times;</button>
         <%= job_application.errors.full_messages.join(', ') %>
       </div>
     <% end %>
@@ -22,7 +22,7 @@
         <% job_application.work_samples.each do |work_sample| %>
           <div id="file-<%= work_sample.signed_id %>" class="work-sample-item">
             <div class="file-name text-break mb-2">
-              <%= link_to '#', class: 'delete-work-sample', data: {id: work_sample.signed_id.to_s, confirm: 'Are you sure?'} do %>
+              <%= link_to '#', class: 'delete-work-sample', data: { id: work_sample.signed_id.to_s } do %>
                 <i class="far fa-trash-alt text-danger mr-1"></i>
               <% end %>
               <%= work_sample.filename.to_s %>
@@ -31,14 +31,14 @@
         <% end %>
       <% end %>
     </div>
-    <div class="custom-file <%= 'd-none' unless job_application.adding_work_samples_allowed? %>">
+    <div class="custom-file mt-2 <%= 'd-none' unless job_application.adding_work_samples_allowed? %>">
       <%= f.file_field :work_samples, multiple: true, name: 'work_samples', class: "d-none", id: "uploadWorkSample" %>
       <label class="btn btn-outline-primary upload-work-sample d-block d-sm-inline" for="uploadWorkSample">
         Attach a File
       </label>
     </div>
   </div>
-  <div class="custom-control custom-checkbox mb-3">
+  <div class="custom-control custom-checkbox">
     <%= f.check_box :template,
                     id: "template",
                     :class => "custom-control-input" %>
@@ -148,8 +148,9 @@
       contentType: false,
       dataType: 'script',
       data: formData,
-      success: () => {
-        return true
+      success: (data) => {
+        const j_data = JSON.parse(data);
+        $('#file-' + j_data['blob_key']).addClass('d-none');
       },
     })
   });
