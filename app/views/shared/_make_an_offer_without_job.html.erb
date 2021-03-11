@@ -28,7 +28,7 @@
             <label for="JobTitleInput" class="h5">Job Post <a class="text-dark font-weight-light">(Optional)</a></label>
               <%= f.select :job_id,
                            options_for_select(current_user.posted_jobs.pluck(:title,:id).insert(0, '')),
-                           {}, class: "form-control mb-3 job#{freelancer_profile&.id}", style: "width: 100%" %>
+                           {}, class: "form-control selectpicker mb-3", id: "job#{freelancer_profile&.id}", 'data-style': "bp-btn-select", title: "Select an option..." %>
             <label for="JobTitleInput" class="h5">Job Title</label>
             <div class="w-100">
               <%= f.text_field :title, class: "form-control mb-3", id: "JobTitleInput#{freelancer_profile&.id}", placeholder: "Enter the job title" %>
@@ -94,11 +94,11 @@
       set_contract_type();
     });
 
-    $('.job<%= freelancer_profile&.id %>').change(() => {
-      if ($('.job<%= freelancer_profile&.id %>').val()) {
+    $('#job<%= freelancer_profile&.id %>').change(() => {
+      if ($('#job<%= freelancer_profile&.id %>').val()) {
         $.ajax({
           url: '/employer/find_job',
-          data: {id: $('.job<%= freelancer_profile&.id %>').val()},
+          data: {id: $('#job<%= freelancer_profile&.id %>').val()},
           method: 'POST',
           success: (data) => {
             $('#JobTitleInput<%= freelancer_profile&.id %>').val(data['job_title']);

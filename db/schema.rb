@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_03_162813) do
+ActiveRecord::Schema.define(version: 2021_03_05_071812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,9 +99,11 @@ ActiveRecord::Schema.define(version: 2021_03_03_162813) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "hide_from_freelancer", default: false
     t.boolean "hide_from_employer", default: false
+    t.bigint "payment_account_id"
     t.index ["employer_profile_id"], name: "index_contracts_on_employer_profile_id"
     t.index ["freelancer_profile_id"], name: "index_contracts_on_freelancer_profile_id"
     t.index ["job_id"], name: "index_contracts_on_job_id"
+    t.index ["payment_account_id"], name: "index_contracts_on_payment_account_id"
   end
 
   create_table "employer_profiles", force: :cascade do |t|
@@ -428,6 +430,7 @@ ActiveRecord::Schema.define(version: 2021_03_03_162813) do
   add_foreign_key "contracts", "employer_profiles"
   add_foreign_key "contracts", "freelancer_profiles"
   add_foreign_key "contracts", "jobs"
+  add_foreign_key "contracts", "payment_accounts"
   add_foreign_key "employer_profiles", "users"
   add_foreign_key "employer_sectors", "employer_profiles"
   add_foreign_key "employer_sectors", "sectors"
