@@ -113,4 +113,7 @@ Rails.application.configure do
 
   # force all server traffic to be SSL
   config.force_ssl = true
+
+  # Route exceptions to the application router vs. default
+  config.exceptions_app = self.routes
 end

@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   default_url_options protocol: ActionMailer::Base.default_url_options[:protocol],
                       host: ActionMailer::Base.default_url_options[:host]
 
+  match '/404', to: 'errors#not_found', via: :all
+  get '/talent_not_found', to: 'errors#talent_not_found'
+  get '/job_not_found', to: 'errors#job_not_found'
   get '/freelancer_style', to: 'style#freelancer'
   get '/employer_style', to: 'style#employer'
   get '/employer_talent_style', to: 'style#employer_talent'
