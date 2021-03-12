@@ -60,5 +60,7 @@ module Bullpen
     # Stop activeadmin files from crashing on heroku.
     # See https://stackoverflow.com/questions/57277351/rails-6-zeitwerknameerror-doesnt-load-class-from-module
     config.autoloader = :classic
+
+    config.exceptions_app = self.routes
   end
 end
