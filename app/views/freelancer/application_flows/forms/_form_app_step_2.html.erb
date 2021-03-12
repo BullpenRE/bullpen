@@ -37,6 +37,7 @@
         Attach a File
       </label>
     </div>
+    <div class="error-size text-danger mt-1"></div>
   </div>
   <div class="custom-control custom-checkbox">
     <%= f.check_box :template,
@@ -88,19 +89,11 @@
   }
 
   function groupAdditionRestricted(quantity)  {
-    const allowedCount = parseInt($('#workSamples').data('allowed'), 10);
     const currentCount = $('.work-sample-item').length;
-    return (currentCount + quantity) > allowedCount
+    return (currentCount + quantity)
   }
 
-  function showSwal(message) {
-    return Swal.fire({
-      title: '<h5>Oops!</h5>',
-      text: message
-    });
-  }
-
-  function sendFile(fileListObject) {
+  function sendFile(fileListObject, allowCount, filesArray) {
     const job_app = '<%= job_application.id %>';
     const formData = new FormData();
     Array.from(fileListObject).forEach((file) => {
@@ -115,7 +108,12 @@
       dataType: 'script',
       data: formData,
       success: (response) => {
-        console.log(response)
+        if (groupAdditionRestricted(filesArray.length) > allowCount) {
+          $('.error-size').text('The maximum number of files is ' + allowCount);
+          setTimeout(() => {
+            $('.error-size').text('');
+          }, 3000);
+        }
       }
     });
   }
@@ -123,13 +121,20 @@
   $('.work_sample').on('change', '#uploadWorkSample', (e) => {
     const fileListObject = e.target.files;
     const filesArray = getFilesArray(fileListObject);
+    const allowCount = <%= JobApplication::MAX_WORK_SAMPLES_COUNT %>
 
     if (tooLargeFilesExist(filesArray)) {
-      showSwal("Uploaded files must not exceed 20MB\n")
-    } else if (groupAdditionRestricted(filesArray.length)) {
-      showSwal("The total number of files is more than allowed")
+      $('.error-size').text('Uploaded files must not exceed 20MB');
+      setTimeout(() => {
+        $('.error-size').text('');
+      }, 3000);
+    } else if (groupAdditionRestricted(filesArray.length) > allowCount) {
+      $('.error-size').text('The maximum number of files is ' + allowCount);
+      setTimeout(() => {
+        $('.error-size').text('');
+      }, 3000);
     } else {
-      sendFile(fileListObject)
+      sendFile(fileListObject, allowCount, filesArray);
     }
   });
 
