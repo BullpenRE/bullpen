@@ -121,7 +121,7 @@
   $('.work_sample').on('change', '#uploadWorkSample', (e) => {
     const fileListObject = e.target.files;
     const filesArray = getFilesArray(fileListObject);
-    const allowCount = <%= JobApplication::MAX_WORK_SAMPLES_COUNT %>
+    const allowCount = <%= JobApplication::MAX_WORK_SAMPLES_COUNT %>;
 
     if (tooLargeFilesExist(filesArray)) {
       $('.error-size').text('Uploaded files must not exceed 20MB');
