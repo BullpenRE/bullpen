@@ -8,10 +8,14 @@ default: &default
 development:
   <<: *default
   database: bullpen_development
+  username: superuser
+  password: password
 
 test:
   <<: *default
   database: bullpen_test
+  username: superuser
+  password: password
 
 staging:
   <<: *default
