@@ -6,8 +6,8 @@
       <h5>Contract Type <i class="far fa-question-circle text-primary fa-lg"></i></h5>
       <%= f.select :contract_type,
                        options_for_select(
-                         Job::CONTRACT_TYPE_DESCRIPTIONS, job.contract_type),
-                       {}, class: 'form-control', required: true, style: "width: 100%" %>
+                         Job::CONTRACT_TYPE_DESCRIPTIONS, job.contract_type || Job::CONTRACT_TYPE_DESCRIPTIONS.first),
+                       {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select", title: "Hourly" %>
     </div>
     <div class="col-xs-12 col-lg-8 pl-lg-1 mb-3">
       <label class="h5 rangePay"></label>
@@ -41,8 +41,21 @@
     change_contract_type();
   });
 
+  $('#job_pay_range_high').on('blur', () => {
+    const job_pay_range_low = $('#job_pay_range_low').val().replace(/\$|a..zA..Z|,/g, '');
+    const job_pay_range_high = $('#job_pay_range_high').val().replace(/\$|a..zA..Z|,/g, '');
+    if ($("#job_contract_type").val() == 'hourly' && job_pay_range_high && (parseInt(job_pay_range_high, 10) < parseInt(job_pay_range_low, 10))) {
+      $('.error_message').text('Enter $' + $('#job_pay_range_low').val() + ' or more');
+      $('#job_pay_range_high').addClass('error');
+    } else {
+      $('.error_message').text('');
+      $('#job_pay_range_high').removeClass('error');
+    }
+  });
+
   function change_contract_type() {
-    const required_experience = '<%= @job.required_experience %>'
+    $("#job_contract_type").selectpicker('refresh');
+    const required_experience = '<%= @job.required_experience %>';
     const recommendation = retainer_fee_recommendations(required_experience)[$("#job_contract_type").val()];
     const hourly_recommendation = retainer_fee_recommendations(required_experience)['hourly'];
 
@@ -51,6 +64,7 @@
       $('#job_pay_range_low').attr("placeholder", "$ Low");
       $('.rangePay').html('Hourly Pay Range <span class="font-weight-normal text-dark">(' + hourly_recommendation + ' recommended)</span>')
     } else {
+      $('.error_message').text('');
       $('#job_pay_range_high').addClass('d-none');
       $('#job_pay_range_low').attr("placeholder", "$ Monthly amount");
       if(recommendation) {
