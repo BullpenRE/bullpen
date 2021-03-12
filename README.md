@@ -177,4 +177,3 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
 4. Best Practice: 
 Use data-* attributes to provide context to your selectors and isolate them from CSS or JS changes [here](https://docs.cypress.io/guides/references/best-practices.html)
 5. How to using: https://docs.cypress.io/faq/questions/using-cypress-faq.html
-
