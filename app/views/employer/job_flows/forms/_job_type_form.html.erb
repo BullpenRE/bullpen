@@ -31,24 +31,19 @@
   <div class="form-group">
     <div class="custom-control custom-checkbox">
       <%= check_box_tag :daytime_availability_required, true, false, class: "custom-control-input", id: "daytimeRequiredCheck1", checked: @job.daytime_availability_required %>
-      <label class="custom-control-label" for="daytimeRequiredCheck1" style="position:relative;top:3px;">
-        <span class="text-secondary border-0">
+      <label class="custom-control-label d-sm-flex align-items-center" for="daytimeRequiredCheck1" style="position:relative;top:3px;">
+        <div class="text-secondary border-0 mr-1">
           <b>Daytime availability is required</b>
-        </span>
-        (9AM - 5PM <%= f.select :time_zone, options_for_select(@available_time_zones.keys, @time_zone), {},
-                                class: "border-0 p-0 font-weight-bold selectpicker",
-                                id: "timeZone-#{job.id}",
-                                style: "display:inherit !important" %>)
+        </div>
+        <div class="text-nowrap">
+          (9AM - 5PM <%= f.select :time_zone, options_for_select(@available_time_zones.keys, @time_zone), {},
+                                  class: "border-0 p-0 m-0 selectpicker w-50",
+                                  'data-style': "btn btn-md text-primary font-weight-bold p-0 pl-2",
+                                  selected: @available_time_zones, style: "display:inline !important",
+                                  id: "timeZone-#{job.id}" %>)
+        </div>
       </label>
     </div>
-    <div class="w-25 mt-3">
-       <%= f.select :time_zone, options_for_select(@available_time_zones.keys, @time_zone), {},
-                                class: "form-control selectpicker",
-                                'data-style': "bp-btn-select",
-                                id: "timeZone-#{job.id}",
-                                style: "display:inherit !important" %>
-    </div>
-
   </div>
   <div class="d-flex pt-3 justify-content-between">
     <%= link_to employer_job_flows_path(id: :post_job_step_1, job_id: job.id), class: "btn btn-outline-primary", remote: true do %>
@@ -74,3 +69,4 @@
 <script>
   $('#timeZone-<%= job.id %>').selectpicker('refresh');
 </script>
+
