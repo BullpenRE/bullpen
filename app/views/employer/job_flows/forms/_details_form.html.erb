@@ -6,7 +6,7 @@
       <h5>Contract Type <i class="far fa-question-circle text-primary fa-lg"></i></h5>
       <%= f.select :contract_type,
                        options_for_select(
-                         Job::CONTRACT_TYPE_DESCRIPTIONS, job.contract_type),
+                         Job::CONTRACT_TYPE_DESCRIPTIONS, job.contract_type || Job::CONTRACT_TYPE_DESCRIPTIONS.first),
                        {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select", title: "Hourly" %>
     </div>
     <div class="col-xs-12 col-lg-8 pl-lg-1 mb-3">
