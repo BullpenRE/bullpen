@@ -18,7 +18,7 @@
           <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
             <%= f.hidden_field :job_id, value: @job.id %>
             <%= f.hidden_field 'step', value: 'preview_job' %>
-            <% unless job.draft? %>
+            <% unless job.draft? || job.edit? %>
               <%= button_tag type: 'submit', value: 'done', class: "btn btn-primary" do %>
                 Done
               <% end %>

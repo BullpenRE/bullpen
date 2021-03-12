@@ -32,7 +32,7 @@
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
     <div>
-      <% unless job.draft? %>
+      <% unless job.draft? || job.edit? %>
         <%= button_tag type: 'submit', class: "btn btn-outline-primary" do %>
           Preview<span class="d-none d-sm-inline"> Job Post</span><i class="fas fa-chevron-right ml-2"></i>
         <% end %>
