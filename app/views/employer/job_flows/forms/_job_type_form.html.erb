@@ -38,7 +38,7 @@
         <div class="text-nowrap">
           (9AM - 5PM <%= f.select :time_zone, options_for_select(@available_time_zones.keys, @time_zone), {},
                                   class: "border-0 p-0 m-0 selectpicker w-50",
-                                  'data-style': "btn btn-md text-primary font-weight-bold p-0 pl-2",
+                                  'data-style': "bp-btn-select text-primary font-weight-bold p-0 pl-2 pr-3",
                                   selected: @available_time_zones, style: "display:inline !important",
                                   id: "timeZone-#{job.id}" %>)
         </div>
