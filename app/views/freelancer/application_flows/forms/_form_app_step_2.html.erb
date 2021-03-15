@@ -89,7 +89,7 @@
   }
 
   function groupAdditionRestricted(quantity)  {
-    const currentCount = $('.work-sample-item').length;
+    const currentCount = $('.work-sample-item').length - $('.work-sample-item.d-none').length;
     return (currentCount + quantity)
   }
 
