@@ -4,18 +4,21 @@
       const file = e.target.files[0];
       const maxFileSize = 2097152;
       if (!file) { return }
-      if (file.size && file.size > maxFileSize) {
-        const message = "Uploaded files must not exceed 2MB\n";
-        Swal.fire({
-          title: '<h5>Oops!</h5>',
-          text: message
-        });
-      } else if (file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
-        const message = "Please upload only a jpg, png or gif image\n";
-        Swal.fire({
-          title: '<h5>Oops!</h5>',
-          text: message
-        });
+      if (file.size && file.size > maxFileSize && correct_type(file)) {
+        $('.error-avatar').text('Please upload only a jpg, png or gif image. Uploaded files must not exceed 2MB');
+        setTimeout(() => {
+          $('.error-avatar').text('');
+        }, 3000);
+      } else if (correct_type(file)) {
+        $('.error-avatar').text('Please upload only a jpg, png or gif image');
+        setTimeout(() => {
+          $('.error-avatar').text('');
+        }, 3000);
+      } else if (file.size && file.size > maxFileSize) {
+        $('.error-avatar').text('Uploaded files must not exceed 2MB');
+        setTimeout(() => {
+          $('.error-avatar').text('');
+        }, 3000);
       } else {
         const formData = new FormData();
         formData.append('avatar', file);
@@ -57,5 +60,9 @@
         }
       })
     });
+
+    const correct_type = (file) => {
+      return file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif'
+    }
   })
 </script>

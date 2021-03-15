@@ -5,9 +5,9 @@
   <%= f.hidden_field 'step', value: 'application_step_1' %>
   <div class="mb-3">The offered rate is
     <% if job_application.job.hourly? %>
-      <%= "<b>#{number_to_currency(job_application.job.pay_range_low)} - #{number_to_currency(job_application.job.pay_range_high)}</b>".html_safe + " per hour." %>
+      <%= "<b>#{number_to_currency(job_application.job.pay_range_low, precision: 0)} - #{number_to_currency(job_application.job.pay_range_high, precision: 0)}</b>".html_safe + " per hour." %>
     <% else %>
-      <%=  "a retainer fee of <b>#{number_to_currency(job_application.job.pay_range_low)}</b>".html_safe + " for up to " + "#{number_to_currency(job_application.job.contract_type&.split('_')&.last)}".html_safe + " hours per month."%>
+      <%=  "a retainer fee of <b>#{number_to_currency(job_application.job.pay_range_low, precision: 0)}</b>".html_safe + " for up to " + "#{job_application.job.contract_type&.split('_')&.last}".html_safe + " hours per month."%>
     <% end %>
   </div>
   <div class="form-group mb-1">
@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-  <div class="bp-text-sm mb-3 mt-2 net-earnings"> </div>
+  <div class="bp-text-sm mb-2 mt-3 net-earnings"><%= @job_application_presenter.net_earnings %></div>
 
   <label class="h5">Are you available from 9AM-5PM  <%= job_application.job.time_zone %>?</label>
   <div class="custom-control custom-radio mb-1">
@@ -67,13 +67,34 @@
       net_earnings = parseInt(bid_amount, 10);
     }
 
+    const isInt = (n) => {
+      return n % 1 === 0;
+    };
+
+    const computed_net_earnings = (net_earnings, payout_rate) => {
+      if (isInt(net_earnings*payout_rate)) {
+        return (net_earnings*payout_rate).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
+      } else {
+        return (net_earnings*payout_rate).toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+      }
+    };
+
+    const payment_per_hour = (net_earnings, hour_per_month, payout_rate) => {
+      per_hour = (net_earnings/parseInt(hour_per_month, 10)*payout_rate)
+      if (isInt(per_hour)) {
+        return per_hour.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
+      } else {
+        return per_hour.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+      }
+    }
+
     let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type&.split('_')&.last %>';
-    const payout_rate = <%= (current_user.freelancer_profile.payout_percentage || 70) / 100.0 %>;
+    const payout_rate = '<%= (current_user.freelancer_profile.payout_percentage || 70) / 100.0 %>';
     if (hour_per_month === '1') {
-      $('.net-earnings').html(`Your net earnings will be <b>${Math.round(net_earnings*payout_rate).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per hour.`);
+      $('.net-earnings').html(`Your net earnings will be <b>${computed_net_earnings(net_earnings, payout_rate)}</b> per hour.`);
     }
     else {
-      $('.net-earnings').html(`Your net earnings will be <b>${Math.round(net_earnings*payout_rate).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per month for up to ${hour_per_month} hours, plus up to <b>${Math.round(net_earnings/parseInt(hour_per_month, 10)*payout_rate).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</b> per additional hour.`);
+      $('.net-earnings').html(`Your net earnings will be <b>${computed_net_earnings(net_earnings, payout_rate)}</b> per month for up to ${hour_per_month} hours, plus up to <b>${payment_per_hour(net_earnings, hour_per_month, payout_rate)}</b> per additional hour.`);
     }
   });
 </script>
