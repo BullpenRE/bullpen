@@ -1,15 +1,14 @@
 $(document).on('turbolinks:load', (e) => {
+  const sidenavBase = document.getElementById("sidenavBase");
+  const mySidenav = document.getElementById("mySidenav");
+
   const openNav = () => {
-    const sidenavBase = document.getElementById("sidenavBase");
-    const mySidenav = document.getElementById("mySidenav");
     sidenavBase.style.transform = 'translateX(0)';
     mySidenav.style.border = "1px solid #e9ecef";
     sidenavBase.classList.add("in");
   }
 
   const closeNav = () => {
-    const sidenavBase = document.getElementById("sidenavBase");
-    const mySidenav = document.getElementById("mySidenav");
     sidenavBase.style.transform = 'translateX(-100%)';
     mySidenav.style.border = "none";
     sidenavBase.classList.remove("in");
