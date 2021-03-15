@@ -9,7 +9,7 @@ class Employer::JobFlowsController < ApplicationController
   def show
     @user = current_user
     @available_time_zones = Job.time_zones
-    @time_zone = job.time_zone
+    @time_zone = job.time_zone if params[:start_flow].blank?
     params[:start_flow].present? ? new_job : job
 
     respond_js_format(wizard_value(step))
