@@ -1,42 +1,45 @@
 <div class="modal-body pt-0">
   <div class="form-group">
     <label for="editInstitutionInput" class="h5">Institution</label>
-    <%= f.text_field :institution, class: "form-control", id: "editInstitutionInput", placeholder: "Enter the school you attended", value: freelancer_profile_education&.institution %>
+    <%= f.text_field :institution, class: "form-control mb-1", id: "editInstitutionInput-#{modal_id}", placeholder: "Enter the school you attended", value: freelancer_profile_education&.institution %>
+    <div class="error_message_institution-<%= modal_id %> text-danger"></div>
   </div>
   <div class="form-group">
     <label for="editDegreeSelect" class="h5">Degree</label>
     <%= f.select :degree,
                  options_for_select(FreelancerProfileEducation.degrees.keys, freelancer_profile_education&.degree),
-                 {}, class: 'form-control selectpicker',
-                 id: 'editDegreeSelect', 'data-style': "bp-btn-select",
+                 {}, class: 'form-control selectpicker mb-1',
+                 id: "editDegreeSelect-#{modal_id}", 'data-style': "bp-btn-select",
                  title: "Please make a selection" %>
+    <div class="error_message_degree-<%= modal_id %> text-danger"></div>
   </div>
   <div class="form-group">
     <label for="editCourseInput" class="h5">Course of Study</label>
-    <%= f.text_field :course_of_study, class: "form-control", id: "editCourseInput", placeholder: "Enter your degree program", value: freelancer_profile_education&.course_of_study %>
+    <%= f.text_field :course_of_study, class: "form-control", id: "editCourseInput-#{modal_id}", placeholder: "Enter your degree program", value: freelancer_profile_education&.course_of_study %>
+    <div class="error_message_course-<%= modal_id %> text-danger"></div>
   </div>
   <div class="form-group">
     <label for="editGraduationYear-<%=freelancer_profile_education&.id %>" class="h5">Graduation Year</label>
-    <div class="row mb-2 collapse <%= freelancer_profile_education&.currently_studying ? '' : 'show' %>" id="editGraduationDateToggle-<%= freelancer_profile_education&.id %>">
+    <div class="row mb-2 collapse <%= freelancer_profile_education&.currently_studying ? '' : 'show' %>" id="editGraduationDateToggle">
       <div class="col">
         <%= f.select :graduation_year,
                      options_for_select(FreelancerProfileEducation::AVAILABLE_YEARS, freelancer_profile_education&.graduation_year),
-                     {}, class: 'form-control selectpicker',
-                     id: "editGraduationYear-#{freelancer_profile_education&.id}", 'data-style': "bp-btn-select", title: "Year" %>
+                     {}, class: 'form-control selectpicker mb-1',
+                     id: "editGraduationYear", 'data-style': "bp-btn-select", title: "Year" %>
       </div>
       <div class="col"></div>
     </div>
     <div class="custom-control custom-checkbox">
       <%= f.check_box :currently_studying,
                       class: "custom-control-input #{freelancer_profile_education&.currently_studying ? 'collapsed' : ''}",
-                      id: "editCurrentlyStudying-#{freelancer_profile_education&.id}",
+                      id: "editCurrentlyStudying",
                       type: "button",
                       'data-toggle': "collapse",
-                      'data-target': "#editGraduationDateToggle-#{freelancer_profile_education&.id}",
+                      'data-target': "#editGraduationDateToggle",
                       'aria-expanded': "false",
-                      'aria-controls': "editGraduationDateToggle-#{freelancer_profile_education&.id}",
+                      'aria-controls': "editGraduationDateToggle",
                       checked: "#{freelancer_profile_education&.currently_studying ? 'checked' : 'false'}" %>
-      <label class="custom-control-label" for="editCurrentlyStudying-<%=freelancer_profile_education&.id %>">Currently Studying</label>
+      <label class="custom-control-label" for="editCurrentlyStudying-#{modal_id}">Currently Studying</label>
     </div>
   </div>
   <div class="form-group mb-0">
@@ -44,7 +47,7 @@
     <span class="text-dark"> (optional)</span>
     <%= f.text_area :description,
                     class: "form-control",
-                    id: "editEducationDescriptionTextarea",
+                    id: "editEducationDescriptionTextarea-#{modal_id}",
                     placeholder: "Enter a brief description",
                     rows: 3,
                     value: freelancer_profile_education&.description %>
@@ -55,17 +58,45 @@
 <% if freelancer_profile_education&.id&.present? %>
   <div class="modal-footer">
     <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
-    <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+    <%= f.submit 'Save Changes', id: "submitEducationInput-#{modal_id}", class: 'btn btn-primary' %>
   </div>
 <% else %>
   <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
-    <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+    <%= f.submit 'Save Changes', id: "submitEducationInput-#{modal_id}", class: 'btn btn-primary' %>
   </div>
 <% end %>
 <script>
-    <% if @freelancer_profile && @freelancer_profile.freelancer_profile_educations&.count > 1 %>
+  <% if @freelancer_profile && @freelancer_profile.freelancer_profile_educations&.count > 1 %>
     $('.modal-footer').addClass('justify-content-between');
     $('.btn-outline-danger').removeClass('d-none');
-    <% end %>
+  <% end %>
+
+  $("#submitEducationInput-<%= modal_id %>").on('click', (e) => {
+    if ($('#editInstitutionInput-<%= modal_id %>').val() == '') {
+      $('#editInstitutionInput-<%= modal_id %>').addClass('error');
+      $('.error_message_institution-<%= modal_id %>').text('Enter the school you attended');
+      e.preventDefault();
+      e.stopPropagation();
+    } else if ($('#editDegreeSelect-<%= modal_id %>').val() == '') {
+      $('.editDegreeSelect-<%= modal_id %>').addClass('error');
+      $('.error_message_degree-<%= modal_id %>').text('Please make a selection');
+      $('#editInstitutionInput-<%= modal_id %>').removeClass('error');
+      $('.error_message_institution-<%= modal_id %>').text('');
+      e.preventDefault();
+      e.stopPropagation();
+     } else if ($('#editCourseInput-<%= modal_id %>').val() == '') {
+      $('.editCourseInput-<%= modal_id %>').addClass('error');
+      $('.error_message_course-<%= modal_id %>').text('Please make a selection');
+      $('#editInstitutionInput-<%= modal_id %>').removeClass('error');
+      $('.error_message_institution-<%= modal_id %>').text('');
+      $('#editDegreeSelect-<%= modal_id %>').removeClass('error');
+      $('.error_message_degree-<%= modal_id %>').text('');
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      $form.submit()
+    }
+  });
 </script>
+
