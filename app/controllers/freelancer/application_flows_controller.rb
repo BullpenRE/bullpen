@@ -10,6 +10,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     @user = current_user
     params[:start_flow].present? ? new_job_application : job_application
     pre_populate_answers if wizard_value(step) == :application_step_1
+    job_application_presenter
 
     respond_js_format(wizard_value(step))
   end
@@ -20,6 +21,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     params[:job_application][:job_application_id].blank? ? new_job_application : job_application
     @time_zone = job_application&.job&.time_zone
     pre_populate_answers
+    job_application_presenter
 
     application_step_1_save || application_step_2_save || preview_application_save
   end
@@ -193,5 +195,9 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     return false if find_blob_by_key.blank?
 
     find_blob_by_key.attachments[0].present?
+  end
+
+  def job_application_presenter
+    @job_application_presenter ||= JobApplicationPresenter.new(job_application)
   end
 end

@@ -90,3 +90,7 @@ h1, .h1, h2, .h2, h3, .h3 {
   border-bottom: 5px solid #005495;
   border-radius: 0;
 }
+
+select.selectpicker {
+  display: block !important;
+}
