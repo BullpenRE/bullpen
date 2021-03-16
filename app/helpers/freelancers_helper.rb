@@ -1,10 +1,10 @@
 module FreelancersHelper
   def stripe_button_link
     stripe_url = 'https://connect.stripe.com/express/oauth/authorize'
-    redirect_uri = "#{protocol}://#{ENV['DOMAIN_URL']}/stripe/connect"
+    redirect_uri = "#{protocol}://#{ENV['DOMAIN_URL']}/freelancer/account"
     client_id = ENV['STRIPE_CLIENT_ID']
 
-    base_part = "#{stripe_url}?return_url=#{redirect_uri}&refresh_url=#{redirect_uri}&redirect_uri=#{redirect_uri}&client_id=#{client_id}"
+    base_part = "#{stripe_url}?&redirect_uri=#{redirect_uri}&client_id=#{client_id}"
 
     base_part.concat(
       [stripe_email, business_type, stripe_first_name, stripe_last_name, stripe_phone, stripe_user_country].join
