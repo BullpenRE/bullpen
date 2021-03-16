@@ -16,6 +16,7 @@ require("typeface-nunito-sans")
 require("typeface-ubuntu")
 require("trix")
 require("@rails/actiontext")
+require("packs/filter_talent")
 
 import 'src/stylesheets/application'
 const images = require.context('../images', true)
