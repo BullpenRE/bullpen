@@ -39,8 +39,7 @@
           (9AM - 5PM <%= f.select :time_zone, options_for_select(@available_time_zones.keys, @time_zone), {},
                                   class: "border-0 p-0 m-0 selectpicker w-50",
                                   'data-style': "bp-btn-select text-primary font-weight-bold p-0 pl-2 pr-3",
-                                  selected: @available_time_zones, style: "display:inline !important",
-                                  id: "timeZone-#{job.id}" %>)
+                                  style: "display:inline !important" %>)
         </div>
       </label>
     </div>
@@ -57,16 +56,9 @@
 
 <% if job.time_zone.blank? %>
   <script>
-    const zone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2];
-    const zones = ['HST', 'AKST', 'PST', 'MST', 'CST', 'EST'];
-    if (zones.includes(zone)) {
-      $('#daytimeRequiredCheck1').val(zone);
-    } else {
-      $('#job_time_zone').val('PST');
-    }
+    check_time_zone();
   </script>
 <% end %>
 <script>
-  $('#timeZone-<%= job.id %>').selectpicker('refresh');
+  $('#job_time_zone').selectpicker('refresh');
 </script>
-
