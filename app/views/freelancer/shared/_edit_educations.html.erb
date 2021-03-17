@@ -9,7 +9,8 @@
         </button>
       </div>
       <%= form_for :freelancer_profile_education, url: freelancer_change_educations_path do |f| %>
-        <%= render partial: 'freelancer/shared/form_educations', locals: {freelancer_profile_education: freelancer_profile_education, f: f} %>
+        <%= render partial: 'freelancer/shared/form_educations', locals: {freelancer_profile_education: freelancer_profile_education, f: f,
+                                                                          modal_id: freelancer_profile_education.id} %>
       <% end %>
     </div>
   </div>
