@@ -53,12 +53,15 @@
 <% end %>
 
 <script>
+  formatCurrency($('#bidAmount'));
+
   $('#bidAmount').on('input', () => {
     const bid_amount = $('#bidAmount').val();
     const first_symbol = parseInt(bid_amount.charAt(0), 10);
     const length = bid_amount.length;
     const last_symbol = parseInt(bid_amount.charAt(length-1), 10);
     let net_earnings;
+    formatCurrency($('#bidAmount'));
     if (isNaN(first_symbol)) {
       net_earnings = parseInt(bid_amount.substring(1,length), 10);
     } else if (isNaN(last_symbol)) {
