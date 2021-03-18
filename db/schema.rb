@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_09_131027) do
+ActiveRecord::Schema.define(version: 2021_03_18_155321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 2021_03_09_131027) do
     t.boolean "motivation_other"
     t.string "current_step"
     t.boolean "completed", default: false
+    t.string "stripe_customer_id_account"
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
@@ -189,8 +190,8 @@ ActiveRecord::Schema.define(version: 2021_03_09_131027) do
     t.integer "desired_hourly_rate"
     t.boolean "new_jobs_alert", default: true
     t.boolean "searchable", default: true
-    t.integer "payout_percentage", default: 70
     t.string "stripe_id_account"
+    t.integer "payout_percentage", default: 70
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
