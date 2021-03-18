@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_18_155321) do
+ActiveRecord::Schema.define(version: 2021_03_18_172538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -341,6 +341,9 @@ ActiveRecord::Schema.define(version: 2021_03_18_155321) do
     t.boolean "default", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "country"
+    t.string "currency"
+    t.string "account_number"
     t.index ["employer_profile_id"], name: "index_payment_accounts_on_employer_profile_id"
   end
 
