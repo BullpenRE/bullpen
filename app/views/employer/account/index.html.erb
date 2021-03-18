@@ -62,8 +62,13 @@
         </button>
       </div>
     </div>
-    <%= link_to 'Add a Credit Card', employer_cc_link, class: 'btn btn-outline-primary', target: '_blank' %>
-    <%= link_to 'Add a Bank Account', employer_ba_link, class: 'btn btn-outline-primary', target: '_blank' %>
+    <% if @employer_profile.stripe_customer_id_account.present? %>
+        <%= link_to 'Add a Credit Card', employer_cc_link, class: 'btn btn-outline-primary' %>
+        <%= link_to 'Add a Bank Account', employer_ba_link, class: 'btn btn-outline-primary' %>
+    <% else %>
+        <div class="mb-2">Please add a Customer ID to send payouts.</div>
+        <%= link_to 'Add a Customer ID', employer_cus_link, class: 'btn btn-outline-primary' %>
+    <% end %>
   </div>
 
   <div class="bp-card mb-5">
