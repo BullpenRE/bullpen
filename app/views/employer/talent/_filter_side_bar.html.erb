@@ -43,66 +43,28 @@
 </div>
 
 <script>
-    $(document).on('turbolinks:load', function (e) {
-        function openNav() {
-            const sidenavBase = document.getElementById("sidenavBase");
-            const mySidenav = document.getElementById("mySidenav");
-            sidenavBase.style.transform = 'translateX(0)';
-            mySidenav.style.border = "1px solid #e9ecef";
-            sidenavBase.classList.add("in");
-        }
-
-        function closeNav() {
-            const sidenavBase = document.getElementById("sidenavBase");
-            const mySidenav = document.getElementById("mySidenav");
-            sidenavBase.style.transform = 'translateX(-100%)';
-            mySidenav.style.border = "none";
-            sidenavBase.classList.remove("in");
-        }
-
-        $('.select2').select2({
-            placeholder: 'Any',
-            allowClear: true
-        });
-        $('.select2-search__field').css('width', '100%');
-
-        $('#showFilters').on('click', function (e) {
-            const isOpened = document.getElementById("sidenavBase").classList.contains("in");
-            e.preventDefault();
-            if (isOpened) {
-                closeNav()
-            } else {
-                openNav()
-            }
-        });
-
-        $('#closeFilterNav').on('click', function (e) {
-            e.preventDefault();
-            closeNav()
-        });
-
-        $('#resetFilters').on('click', function(e) {
-            e.preventDefault();
-            const $select2 = $('.select2');
-            $select2.val('');
-            $select2.trigger('change');
-        });
-
-        $('#rejectFilters').on('click', function (e) {
-            e.preventDefault();
-            const url = $(this).data('url');
-            window.location.replace(url)
-        });
-
-        $('.select2').on('change', function (e) {
-            e.preventDefault();
-            const scrollHeight = Math.max(
-                document.body.scrollHeight, document.documentElement.scrollHeight,
-                document.body.offsetHeight, document.documentElement.offsetHeight,
-                document.body.clientHeight, document.documentElement.clientHeight
-            );
-            const sidenavBase = document.getElementById("sidenavBase");
-            sidenavBase.scrollTop = scrollHeight;
-        });
+  $(document).on('turbolinks:load', function (e) {
+    $('.select2').select2({
+      placeholder: 'Any',
+      allowClear: true
     });
+    $('.select2-search__field').css('width', '100%');
+
+    $('#rejectFilters').on('click', function (e) {
+      e.preventDefault();
+      const url = $(this).data('url');
+      window.location.replace(url)
+    });
+
+    $('.select2').on('change', function (e) {
+      e.preventDefault();
+      const scrollHeight = Math.max(
+        document.body.scrollHeight, document.documentElement.scrollHeight,
+        document.body.offsetHeight, document.documentElement.offsetHeight,
+        document.body.clientHeight, document.documentElement.clientHeight
+      );
+      const sidenavBase = document.getElementById("sidenavBase");
+      sidenavBase.scrollTop = scrollHeight;
+    });
+  });
 </script>
