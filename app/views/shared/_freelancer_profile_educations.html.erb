@@ -14,10 +14,10 @@
       <p class="text-wrap text-break"><%= education.description %></p>
     </div>
   <% end %>
-  <%= render 'freelancer/shared/edit_educations', freelancer_profile_education: education %>
+  <%= render 'freelancer/shared/edit_educations', freelancer_profile_education: education if @freelancer_profile %>
 <% end %>
 <div class="mt-3">
-  <%= render 'freelancer/shared/add_educations', freelancer_profile: freelancer_profile %>
+  <%= render 'freelancer/shared/add_educations', freelancer_profile: freelancer_profile if @freelancer_profile %>
   <% if editable %>
     <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#addEducationModal">
       Add Education
