@@ -93,11 +93,17 @@
 
     let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type&.split('_')&.last %>';
     const payout_rate = '<%= (current_user.freelancer_profile.payout_percentage || 70) / 100.0 %>';
-    if (hour_per_month === '1') {
-      $('.net-earnings').html(`Your net earnings will be <b>${computed_net_earnings(net_earnings, payout_rate)}</b> per hour.`);
+
+    if (isNaN(net_earnings)) {
+      $('.net-earnings').html(`<p class="text-danger">Please type your bid</p>`);
     }
-    else {
-      $('.net-earnings').html(`Your net earnings will be <b>${computed_net_earnings(net_earnings, payout_rate)}</b> per month for up to ${hour_per_month} hours, plus up to <b>${payment_per_hour(net_earnings, hour_per_month, payout_rate)}</b> per additional hour.`);
+    else{
+    	if (hour_per_month === '1') {
+        $('.net-earnings').html(`Your net earnings will be <b>${computed_net_earnings(net_earnings, payout_rate)}</b> per hour.`);
+      }
+      else {
+        $('.net-earnings').html(`Your net earnings will be <b>${computed_net_earnings(net_earnings, payout_rate)}</b> per month for up to ${hour_per_month} hours, plus up to <b>${payment_per_hour(net_earnings, hour_per_month, payout_rate)}</b> per additional hour.`);
+      }
     }
   });
 </script>
