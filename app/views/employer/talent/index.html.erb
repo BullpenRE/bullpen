@@ -37,7 +37,7 @@
         <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: freelancer_profile,
                                                                  job_application: nil,
                                                                  editable: false } %>
-        <div class="ml-sm-auto mt-4 mt-lg-0">
+        <div class="ml-sm-auto mt-3 mt-lg-0">
           <div class="d-block d-sm-flex">
             <% if freelancer_profile.can_request_interview?(current_user.employer_profile.id) %>
               <div class="d-block d-sm-inline-block mr-0 mr-sm-2 mb-2 mb-sm-0">

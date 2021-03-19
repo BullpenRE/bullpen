@@ -2,6 +2,7 @@
 <%= render partial: 'shared/notice_and_alert' %>
 
 <div class="container mb-3 talent-cards">
+  <h1>Interviews</h1>
   <% @interviews.each do |interview| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: interview.freelancer_profile } %>
     <div id="interview-request">
