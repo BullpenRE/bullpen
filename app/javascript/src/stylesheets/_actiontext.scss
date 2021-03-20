@@ -69,3 +69,11 @@ trix-toolbar .trix-button--icon-strike, .trix-button--icon-heading-1, .trix-butt
 .without-toolbar .trix-button {
   display: none;
 }
+
+trix-toolbar .trix-button-row {
+  justify-content: start;
+}
+
+trix-toolbar .trix-button-group:not(:first-child) {
+  margin-left: 0px;
+}
