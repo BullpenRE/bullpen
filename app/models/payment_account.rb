@@ -7,6 +7,13 @@ class PaymentAccount < ApplicationRecord
   validates :last_four, length: { is: 4 }, allow_blank: true, allow_nil: true
   after_save :set_other_defaults_false, if: :default?
 
+  scope :filter_and_sort, lambda { |employer_profile_id|
+    where(employer_profile_id: employer_profile_id)
+      .order(default: [true, false])
+      .order('stripe_object ASC')
+      .order('created_at DESC')
+  }
+
   def institution
     stripe_object == 'card' ? card_brand : bank_name
   end
@@ -23,6 +30,11 @@ class PaymentAccount < ApplicationRecord
 
   def short_description
     "#{brand} ending in #{last_four}#{' (default)' if default?}"
+  end
+
+  def expiration_description
+    exp_date = strftime('%m/%y')
+    "Expires #{exp_date}"
   end
 
   private
