@@ -29,45 +29,52 @@
 
   <div class="bp-card mb-3">  
     <h2 class="mb-3">Payment Options<i class="far fa-question-circle ml-2 text-primary" aria-hidden="true"></i></h2> <!--Remove the "text-primary" class when the icon becomes a link-->
-
-    <div class="d-flex flex-row flex-inline mb-3">
-      <div class="d-flex-col">
-        <div class="pr-2">Visa ending in 4424 (Default)</div>
-        <div class="small">Expires 04/22</div>
-      </div>
-      <div class="d-flex-col ml-auto">
-        <button class="btn btn-outline-primary" type="button">Remove</button>
-      </div>
-    </div>
-    <div class="d-flex flex-row flex-inline mb-3">
-      <div class="d-flex-col">
-        <div class="pr-2">American Express ending in 3098</div>
-        <div class="small text-danger">Expires 08/20</div>
-      </div>
-      <div class="d-flex-col ml-auto">
-        <button class="btn btn-outline-primary" type="button">
-          Options
-          <i class="fas fa-chevron-down"></i>
-        </button>
-      </div>
-    </div>
-    <div class="d-flex flex-row flex-inline mb-3">
-      <div class="d-flex-col">
-        <div class="pr-2">Bank account ending in 4452</div>
-      </div>
-      <div class="d-flex-col ml-auto">
-        <button class="btn btn-outline-primary" type="button">
-          Options
-          <i class="fas fa-chevron-down"></i>
-        </button>
-      </div>
-    </div>
+      <% if @payment_accounts.present? %>
+        <% @payment_accounts.each do |payment_account| %>
+          <div class="d-flex flex-row flex-inline mb-3">
+            <div class="d-flex-col">
+              <div class="pr-2">
+                <%= payment_account.short_description %>
+              </div>
+              <% if payment_account.stripe_object.card? %>
+                <div class="small <%= 'text-danger' if payment_account.expired? %>">
+                  <%= payment_account.expiration_description %>
+                </div>
+              <% end %>
+            </div>
+            <% if @payment_accounts.length != 1 %>
+              <div class="d-flex-col ml-auto">
+                <% if payment_account.default? %>
+                  <%= link_to employer_account_path(payment_account), method: :delete, class: 'btn btn-outline-primary' do %>
+                    Remove
+                  <% end %>
+                <% else %>
+                  <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownCardMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Options
+                      <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownCardMenuButton">
+                      <%= link_to employer_account_path(payment_account, default: true), method: :put, class: 'btn btn-outline-primary' do %>
+                          Set as Default
+                      <% end %>
+                      <%= link_to employer_account_path(payment_account), method: :delete, class: 'btn btn-outline-primary' do %>
+                          Remove
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
     <% if @employer_profile.stripe_customer_id_account.present? %>
-        <%= link_to 'Add a Credit Card', employer_cc_link, class: 'btn btn-outline-primary' %>
-        <%= link_to 'Add a Bank Account', employer_ba_link, class: 'btn btn-outline-primary' %>
+        <%= link_to 'Add a Credit Card', '#', class: 'btn btn-outline-primary add-cc' %>
+        <%= link_to 'Add a Bank Account', '#', class: 'btn btn-outline-primary add-ba' %>
     <% else %>
         <div class="mb-2">Please add a Customer ID to send payouts.</div>
-        <%= link_to 'Add a Customer ID', employer_cus_link, class: 'btn btn-outline-primary' %>
+        <%= link_to 'Add a Customer ID', '#', class: 'btn btn-outline-primary add-customer-id' %>
     <% end %>
   </div>
 
