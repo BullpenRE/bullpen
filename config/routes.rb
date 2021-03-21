@@ -50,7 +50,7 @@ Rails.application.routes.draw do
     resources :billing
     resources :refer
     resources :talent
-    resources :account, only: :index
+    resources :account, only: %i[index update destroy]
     resource :avatar, only: %i[update destroy]
     resource :profile, only: :update
     resources :contracts
