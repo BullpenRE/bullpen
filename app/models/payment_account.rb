@@ -5,7 +5,7 @@ class PaymentAccount < ApplicationRecord
   has_many :contracts, dependent: :nullify
   enum stripe_object: { card: 0, bank_account: 1 }
   validates :last_four, length: { is: 4 }, allow_blank: true, allow_nil: true
-  after_save :set_other_defaults_false, if: :default?
+  after_save :set_other_defaults_false, if: :is_default?
 
   scope :filter_and_sort, lambda { |employer_profile_id|
     where(employer_profile_id: employer_profile_id)
@@ -29,7 +29,7 @@ class PaymentAccount < ApplicationRecord
   end
 
   def short_description
-    "#{brand} ending in #{last_four}#{' (default)' if default?}"
+    "#{brand} ending in #{last_four}#{' (default)' if is_default?}"
   end
 
   def expiration_description
@@ -44,6 +44,6 @@ class PaymentAccount < ApplicationRecord
   end
 
   def set_other_defaults_false
-    PaymentAccount.where(employer_profile_id: employer_profile_id).where.not(id: id).update_all(default: false)
+    PaymentAccount.where(employer_profile_id: employer_profile_id).where.not(id: id).update_all(is_default: false)
   end
 end

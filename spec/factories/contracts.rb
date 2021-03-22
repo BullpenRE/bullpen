@@ -11,7 +11,7 @@ FactoryBot.define do
     hide_from_employer { false }
 
     after(:create) do |contract, _evaluator|
-      contract.update(payment_account_id: create(:payment_account, employer_profile: contract.employer_profile).id)
+      contract.update(payment_account_id: create(:payment_account, :is_default, employer_profile: contract.employer_profile).id)
     end
 
     trait :with_job do

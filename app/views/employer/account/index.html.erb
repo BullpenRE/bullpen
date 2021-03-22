@@ -44,7 +44,7 @@
             </div>
             <% if @payment_accounts.length != 1 %>
               <div class="d-flex-col ml-auto">
-                <% if payment_account.default? %>
+                <% if payment_account.is_default? %>
                   <%= link_to employer_account_path(payment_account), method: :delete, class: 'btn btn-outline-primary' do %>
                     Remove
                   <% end %>

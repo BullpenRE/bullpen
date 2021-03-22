@@ -8,6 +8,7 @@ FactoryBot.define do
     card_brand { ['American Express', 'Diners Club', 'Discover', 'JCB', 'MasterCard', 'UnionPay', 'Visa', 'Unknown'].sample }
     card_expires { 2.years.from_now }
     card_cvc_check { %w[pass fail unavailable unchecked].sample }
+    is_default { false }
 
     trait :bank do
       stripe_object { 'bank_account' }
@@ -18,6 +19,9 @@ FactoryBot.define do
       bank_name { Faker::Bank.name }
       bank_routing_number { Faker::Bank.routing_number }
       bank_status { %w[new validated verified verification_failed errored].sample }
+    end
+    trait :is_default do
+      is_default { true }
     end
   end
 end
