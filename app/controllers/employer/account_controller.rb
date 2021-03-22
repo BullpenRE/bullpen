@@ -29,7 +29,7 @@ module Employer
     end
 
     def account_update_params
-      params.require(:account).permit(:default)
+      params.require(:account).permit(:is_default)
     end
   end
 end

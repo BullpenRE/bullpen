@@ -33,7 +33,7 @@ class PaymentAccount < ApplicationRecord
   end
 
   def expiration_description
-    exp_date = strftime('%m/%y')
+    exp_date = card_expires.strftime('%m/%y')
     "Expires #{exp_date}"
   end
 
