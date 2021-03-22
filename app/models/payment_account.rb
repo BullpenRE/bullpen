@@ -9,7 +9,7 @@ class PaymentAccount < ApplicationRecord
 
   scope :filter_and_sort, lambda { |employer_profile_id|
     where(employer_profile_id: employer_profile_id)
-      .order(default: [true, false])
+      .order('is_default DESC NULLS LAST')
       .order('stripe_object ASC')
       .order('created_at DESC')
   }
