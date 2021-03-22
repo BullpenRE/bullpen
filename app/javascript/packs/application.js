@@ -16,6 +16,8 @@ require("typeface-nunito-sans")
 require("typeface-ubuntu")
 require("trix")
 require("@rails/actiontext")
+require("packs/filter_talent")
+require("packs/time_zone")
 
 import 'src/stylesheets/application'
 const images = require.context('../images', true)

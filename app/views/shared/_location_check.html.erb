@@ -1,11 +1,10 @@
 <script>
   $(document).on('turbolinks:load', function (e) {
-    function showAlert(locationValue) {
-      return Swal.fire({
-        title: '<h5>Location Not Found</h5>',
-        text: `The entered location of '${locationValue}' was not successfully identified. Please check the spelling and enter in a 'City, State' format. The state can be a 2 letter abbreviation.`,
-        confirmButtonText: 'Try Again'
-      });
+    function showAlert() {
+      $('.error-location').text('Location not found. Please check the spelling and enter in \'City, State\' format.');
+        setTimeout(() => {
+          $('.error-location').text('');
+        }, 3000);
     }
 
     function setHiddenFields(longitude, latitude, controller_name) {
