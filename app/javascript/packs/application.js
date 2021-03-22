@@ -18,6 +18,7 @@ require("trix")
 require("@rails/actiontext")
 require("packs/filter_talent")
 require("packs/time_zone")
+require("packs/format_currency")
 
 import 'src/stylesheets/application'
 const images = require.context('../images', true)

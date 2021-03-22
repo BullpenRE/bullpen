@@ -31,11 +31,11 @@
                            {}, class: "form-control selectpicker mb-3", id: "job#{freelancer_profile&.id}", 'data-style': "bp-btn-select", title: "Select an option..." %>
             <label for="JobTitleInput" class="h5">Job Title</label>
             <div class="w-100">
-              <%= f.text_field :title, class: "form-control mb-3", id: "JobTitleInput#{freelancer_profile&.id}", placeholder: "Enter the job title" %>
+              <%= f.text_field :title, class: "form-control mb-3", id: "JobTitleInput#{freelancer_profile&.id}", placeholder: "Enter the job title", required: true %>
             </div>
             <label for="JobDescriptionInput" class="h5">Job Description</label>
             <div class="w-100">
-              <%= f.rich_text_area :job_description, class: "form-control mb-3", id: "JobDescriptionInput#{freelancer_profile&.id}", placeholder: "Enter Job Description" %>
+              <%= f.rich_text_area :job_description, class: "form-control mb-3", id: "JobDescriptionInput#{freelancer_profile&.id}", placeholder: "Enter Job Description", required: true %>
             </div>
               <div class="row mb-2">
                 <div class="col-lg-4">
@@ -82,6 +82,12 @@
      event.preventDefault();
   });
   $(document).on('turbolinks:load', function () {
+    formatCurrency($('.pay_rate<%= freelancer_profile&.slug %>'));
+
+    $('.pay_rate<%= freelancer_profile&.slug %>').keyup(() => {
+      formatCurrency($('.pay_rate<%= freelancer_profile&.slug %>'));
+    });
+
     const set_contract_type = () => {
       if ($('.contract_type<%= freelancer_profile&.slug %>').val() == 'hourly' || !$('.contract_type<%= freelancer_profile&.slug %>').val()) {
         $('.contract_rate<%= freelancer_profile&.slug %>').text('Hourly Rate');

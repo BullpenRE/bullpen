@@ -53,6 +53,8 @@
 <% end %>
 
 <script>
+  formatCurrency($('#bidAmount'));
+
   $('#bidAmount').on('input', () => {
     const bid_amount = $('#bidAmount').val();
     const first_symbol = parseInt(bid_amount.charAt(0), 10);
@@ -60,12 +62,13 @@
     const last_symbol = parseInt(bid_amount.charAt(length-1), 10);
     let net_earnings;
     if (isNaN(first_symbol)) {
-      net_earnings = parseInt(bid_amount.substring(1,length), 10);
+      net_earnings = parseInt(bid_amount.replaceAll(",", "").substring(1,length), 10);
     } else if (isNaN(last_symbol)) {
       net_earnings = parseInt(bid_amount.substring(0,(length-1)), 10);
     } else {
       net_earnings = parseInt(bid_amount, 10);
     }
+    formatCurrency($('#bidAmount'));
 
     const isInt = (n) => {
       return n % 1 === 0;
@@ -90,10 +93,13 @@
 
     let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type&.split('_')&.last %>';
     const payout_rate = '<%= (current_user.freelancer_profile.payout_percentage || 70) / 100.0 %>';
-    if (hour_per_month === '1') {
-      $('.net-earnings').html(`Your net earnings will be <b>${computed_net_earnings(net_earnings, payout_rate)}</b> per hour.`);
+
+    if (isNaN(net_earnings)) {
+      $('.net-earnings').html(`<p class="text-danger">Please type your bid</p>`);
     }
-    else {
+    else if (hour_per_month === '1') {
+      $('.net-earnings').html(`Your net earnings will be <b>${computed_net_earnings(net_earnings, payout_rate)}</b> per hour.`);
+    } else {
       $('.net-earnings').html(`Your net earnings will be <b>${computed_net_earnings(net_earnings, payout_rate)}</b> per month for up to ${hour_per_month} hours, plus up to <b>${payment_per_hour(net_earnings, hour_per_month, payout_rate)}</b> per additional hour.`);
     }
   });

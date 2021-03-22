@@ -181,6 +181,12 @@
 
 <script>
   $(document).on('turbolinks:load', function (e) {
+    formatCurrency($('#perHourBid'));
+
+    $('#perHourBid').keyup(() => {
+      formatCurrency($('#perHourBid'));
+    });
+
     $('.select2').select2({
       placeholder: 'Select all that apply',
       allowClear: true
