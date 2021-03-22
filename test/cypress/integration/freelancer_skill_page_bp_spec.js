@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
 import FreelancerSkillPage from "../support/page_objects/freelancer_skill_page";
-import FreelancerSignUpPage from "../support/page_objects/freelancer_sign_up_page";
+import FreelancerSignUpPage from "../support/page_objects/";
 
 describe('FreelancerSkillPage', () => {
   beforeEach(() => {
