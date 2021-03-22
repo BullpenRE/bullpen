@@ -36,6 +36,16 @@
 <% end %>
 <script>
   change_contract_type();
+  formatCurrency($('#job_pay_range_low'));
+  formatCurrency($('#job_pay_range_high'));
+
+  $('#job_pay_range_low').keyup(() => {
+    formatCurrency($('#job_pay_range_low'));
+  });
+
+  $('#job_pay_range_high').keyup(() => {
+    formatCurrency($('#job_pay_range_high'));
+  });
 
   $('#job_contract_type').change(() => {
     change_contract_type();

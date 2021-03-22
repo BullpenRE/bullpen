@@ -110,6 +110,15 @@
       $('.contract_rate<%= contract&.id %>').text('Monthly Rate');
     }
   });
+
+  $(document).on('turbolinks:load', function (e) {
+    formatCurrency($('.pay_rate<%= contract&.id %>'));
+
+    $('.pay_rate<%= contract&.id %>').keyup(() => {
+      formatCurrency($('.pay_rate<%= contract&.id %>'));
+    })
+  });
+
 </script>
 <style>
     #JobDescriptionInput {

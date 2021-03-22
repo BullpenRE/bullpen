@@ -3,6 +3,7 @@
 class Freelancer::ProfileController < ApplicationController
   include WorkEducationExperience
   include WorkCertification
+  include ApplicationHelper
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :freelancer_profile
 
   def index
@@ -47,7 +48,7 @@ class Freelancer::ProfileController < ApplicationController
       last_name: params[:freelancer_profile][:last_name],
       location: params[:freelancer_profile][:location]
     )
-    @freelancer_profile.update(change_basic_info_params)
+    @freelancer_profile.update(change_basic_info_params.merge(desired_hourly_rate))
 
     change_freelancer_sectors
 
@@ -73,6 +74,10 @@ class Freelancer::ProfileController < ApplicationController
 
   private
 
+  def desired_hourly_rate
+    { desired_hourly_rate: clean_currency_entry(params.dig(:freelancer_profile, :desired_hourly_rate)) }
+  end
+
   def freelancer_profile
     @freelancer_profile ||= current_user.freelancer_profile
   end
@@ -95,8 +100,7 @@ class Freelancer::ProfileController < ApplicationController
     params.require(:freelancer_profile)
           .permit(:professional_title,
                   :professional_years_experience,
-                  :professional_summary,
-                  :desired_hourly_rate)
+                  :professional_summary)
   end
 
   def real_estate_skills
