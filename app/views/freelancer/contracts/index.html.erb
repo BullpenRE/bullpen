@@ -11,7 +11,7 @@
       <%= render partial: 'freelancer/contracts/decline_offer', locals: { contract: contract } %>
       <div class="bp-card mb-3 card<%= contract.id %>">
         <div class="d-flex flex-column flex-md-row">
-          <div class="mb-3 mr-auto">
+          <div class="mb-2 mr-auto">
             <h2 class="text-wrap text-break mb-1"><%= contract&.title&.capitalize %></h2>
             <div class="bp-text-sm">Created <%= time_ago_in_words(contract&.created_at) %> ago </div>
           </div>
@@ -77,7 +77,7 @@
       <%= render partial: 'freelancer/contracts/delete_contract', locals: { contract: contract } %>
       <div class="bp-card mb-3 card<%= contract.id %>">
         <div class="d-flex flex-column flex-md-row">
-          <div class="mr-auto mb-3">
+          <div class="mr-auto mb-2">
             <h2 class="text-wrap text-break mb-1"><%= contract&.title&.capitalize %></h2>
             <div class="bp-text-sm">Created <%= time_ago_in_words(contract&.created_at) %> ago </div>
           </div>
@@ -125,7 +125,7 @@
             <button class="btn btn-outline-primary container-fluid" type="button"  data-toggle="modal" data-target="#sendMessage<%= contract.id %>">Send Message</button>
           </div>
         </div>
-        <div class="column d-flex justify-content-end align-items-end">
+        <div class="column d-flex justify-content-end align-items-end mt-3 mt-md-0">
           <a class="font-weight-bold link_action<%= contract.id %> more-less<%= contract.id %>" data-toggle="collapse" data-target="#collapseBillings<%= contract.id %>" aria-expanded="true" aria-controls="collapseBillings<%= contract.id %>" style="cursor:pointer;">
             Show Billing<i class="fas fa-chevron-down ml-1"></i>
           </a>

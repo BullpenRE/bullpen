@@ -13,11 +13,11 @@
         
         <ul class="nav nav-tabs border-bottom" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <a class="nav-link active font-weight-bold" id="application-tab<%= "#{job_application.id}-#{job_application.job_id}" %>" data-toggle="tab" href="#application<%= "#{job_application.id}-#{job_application.job_id}" %>" role="tab" aria-controls="application<%= "#{job_application.id}-#{job_application.job_id}" %>" aria-selected="true">Application</a>
+            <a class="nav-link font-weight-bold active px-0 px-sm-2 active" id="application-tab<%= "#{job_application.id}-#{job_application.job_id}" %>" data-toggle="tab" href="#application<%= "#{job_application.id}-#{job_application.job_id}" %>" role="tab" aria-controls="application<%= "#{job_application.id}-#{job_application.job_id}" %>" aria-selected="true">Application</a>
           </li>
           <% if current_user.freelancer? %>
             <li class="nav-item" role="presentation">
-              <a class="nav-link font-weight-bold" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+              <a class="nav-link font-weight-bold px-0 px-sm-2" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
             </li>
             <% if job_application.freelancer_profile.reviews.present? %>
               <li class="nav-item" role="presentation">
@@ -70,7 +70,7 @@
             <%= f.hidden_field :job_application_id, value: job_application.id %>
             <%= f.hidden_field 'step', value: 'preview_application' %>
 
-            <%= link_to freelancer_application_flows_path(id: :application_step_1, job_app: job_application), class: "btn btn-outline-primary editApplication", remote: true do %>
+            <%= link_to freelancer_application_flows_path(id: :application_step_1, job_app: job_application), class: "ml-auto btn btn-outline-primary editApplication", remote: true do %>
               Edit<span class="d-none d-sm-inline"> Application</span>
             <% end %>
           </div>

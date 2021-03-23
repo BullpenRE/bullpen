@@ -3,8 +3,8 @@
 <%= job.relevant_details %>
 <hr>
 <ul class="pl-3">
-  <li>This is <i class="text-secondary font-weight-bold"> <%= job.position_length %> </i> position</li>
-  <li><i class="text-secondary font-weight-bold"> <%= job.hours_needed&.capitalize %> </i> hours are needed</li>
+  <li>This is <span class="text-secondary font-weight-bold"> <%= job.position_length %> </span>position</li>
+  <li><span class="text-secondary font-weight-bold"> <%= job.hours_needed&.capitalize %> </span>availability is required</li>
 </ul>
 <div class="bp-text mb-2 mt-2">
   <% if job.daytime_availability_required? %>
