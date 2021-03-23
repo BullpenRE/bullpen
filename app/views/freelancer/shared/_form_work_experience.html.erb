@@ -84,7 +84,7 @@
 
   <div class="form-group mb-0">
     <label for="jobDescriptionTextarea<%= modal_id %>" class="h5">Description</label>
-    <%= f.text_area :description, class: "form-control mb-1", id: "jobDescriptionTextarea#{modal_id}", placeholder: "Enter your job description", rows: 3, value: freelancer_profile_experience&.description %>
+    <%= f.text_area :description, class: "form-control mb-1", id: "jobDescriptionTextarea#{modal_id}", placeholder: "Enter your job description", rows: 3, value: freelancer_profile_experience&.description, maxlength: "2000" %>
     <div class="error_message_job_description<%= modal_id %> text-danger"></div>
   </div>
   <%= f.hidden_field :id, value: freelancer_profile_experience&.id %>

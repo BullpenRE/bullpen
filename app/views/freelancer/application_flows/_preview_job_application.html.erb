@@ -48,7 +48,7 @@
           <%= f.hidden_field 'step', value: 'preview_application' %>
 
           <%= link_to freelancer_application_flows_path(id: :application_step_1, job_app: job_application), class: "btn btn-outline-primary", remote: true do %>
-            Edit<span class="d-none d-sm-inline">  Application</span>
+            <i class="fas fa-chevron-left mr-2"></i>Back
           <% end %>
           <div>
             <% if !job_application.applied? %>
