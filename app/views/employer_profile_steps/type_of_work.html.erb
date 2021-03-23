@@ -21,7 +21,7 @@
         <div class="custom-control custom-radio mb-3">
           <%= f.radio_button :category, category[0],
                              :class => "custom-control-input",
-                             :id => "workType#{category[1]}" %>
+                             :id => "workType#{category[1]}", required: true %>
           <%= f.label category[0], :class => "custom-control-label",
                             :for => "workType#{category[1]}" %>
         </div>
