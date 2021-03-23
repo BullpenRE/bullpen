@@ -122,7 +122,8 @@ ActiveRecord::Schema.define(version: 2021_03_22_180502) do
     t.boolean "motivation_other"
     t.string "current_step"
     t.boolean "completed", default: false
-    t.string "stripe_customer_id_account"
+    t.string "stripe_id_account"
+    t.string "stripe_id_customer"
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
@@ -343,7 +344,7 @@ ActiveRecord::Schema.define(version: 2021_03_22_180502) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "country"
     t.string "currency"
-    t.string "account_number"
+    t.string "bank_account_number"
     t.index ["employer_profile_id"], name: "index_payment_accounts_on_employer_profile_id"
   end
 
