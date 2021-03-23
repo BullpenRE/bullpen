@@ -12,7 +12,7 @@ $(document).on('turbolinks:load', () => {
     let input_val = input.val();
 
     // don't validate empty input
-    if (input_val === "") {
+    if (input_val === "" || input_val === undefined) {
       return;
     }
 

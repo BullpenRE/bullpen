@@ -227,7 +227,7 @@
               })
             </script>
 
-            <div class="tab-pane fade show" id="hire<%= job.id %>" role="tabpanel" aria-labelledby="hire-tab">
+            <div class="tab-pane fade show <%= job.job_applications.applied.without_contracts.present? ? '' : 'active' %>" id="hire<%= job.id %>" role="tabpanel" aria-labelledby="hire-tab">
               <% job.contracts.hire_group.each do |contract| %>
                 <hr>
                 <div class="d-flex flex-column flex-lg-row">
@@ -313,9 +313,11 @@
     if (!queryString) return;
     const urlParams = new URLSearchParams(queryString);
     const open_job = urlParams.get('view_job');
-    $('#collapseApplications' + open_job).collapse('show');
-    $('.more-less' + open_job).toggle();
-    $('html,body').animate({scrollTop: $('.card' + open_job).offset().top}, 'slow');
+    if (open_job) {
+      $('#collapseApplications' + open_job).collapse('show');
+      $('.more-less' + open_job).toggle();
+      $('html,body').animate({scrollTop: $('.card' + open_job).offset().top}, 'slow');
+    }
   })
 </script>
 <style>
