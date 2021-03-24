@@ -71,14 +71,14 @@
           </div>
         <% end %>
       <% end %>
-    <% if @employer_profile.stripe_customer_id_account.present? %>
+    <% if @employer_profile.stripe_id_customer.present? %>
         <%= link_to 'Add a Credit Card',
                     employer_create_card_path,
                     method: :post,
                     type: 'button',
                     class: 'btn btn-outline-primary add-cc' %>
         <%= link_to 'Add a Bank Account',
-                    employer_create_account_path(employer_profile_id: @employer_profile.id),
+                    employer_create_account_path,
                     method: :post,
                     type: 'button',
                     class: 'btn btn-outline-primary add-ba' %>

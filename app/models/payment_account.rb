@@ -33,6 +33,8 @@ class PaymentAccount < ApplicationRecord
   end
 
   def expiration_description
+    return unless card_expires.present?
+
     exp_date = card_expires.strftime('%m/%y')
     "Expires #{exp_date}"
   end
