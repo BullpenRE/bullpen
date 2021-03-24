@@ -16,6 +16,7 @@ RSpec.describe Billing, type: :model do
 
   context 'Validations' do
     it 'hours must be a positive number, nil or zero' do
+      billing.minutes = 1
       billing.hours = -1
       expect(billing).to_not be_valid
       billing.hours = 0
@@ -25,6 +26,7 @@ RSpec.describe Billing, type: :model do
     end
 
     it 'minutes must be nil or between 0 - 59' do
+      billing.hours = 1
       billing.minutes = nil
       expect(billing).to be_valid
       billing.minutes = 0
@@ -32,6 +34,12 @@ RSpec.describe Billing, type: :model do
       billing.minutes = 59
       expect(billing).to be_valid
       billing.minutes = 60
+      expect(billing).to_not be_valid
+    end
+
+    it 'both minutes and hours cannot be blank' do
+      billing.hours = nil
+      billing.minutes = nil
       expect(billing).to_not be_valid
     end
   end
