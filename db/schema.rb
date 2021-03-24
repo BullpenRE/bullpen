@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_22_180502) do
+ActiveRecord::Schema.define(version: 2021_03_24_034654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,20 @@ ActiveRecord::Schema.define(version: 2021_03_22_180502) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "billings", force: :cascade do |t|
+    t.bigint "contract_id", null: false
+    t.date "work_done"
+    t.integer "hours"
+    t.integer "minutes"
+    t.string "description"
+    t.integer "state", default: 0
+    t.string "dispute_comments"
+    t.date "dispute_resolved"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contract_id"], name: "index_billings_on_contract_id"
   end
 
   create_table "certifications", force: :cascade do |t|
@@ -191,8 +205,8 @@ ActiveRecord::Schema.define(version: 2021_03_22_180502) do
     t.integer "desired_hourly_rate"
     t.boolean "new_jobs_alert", default: true
     t.boolean "searchable", default: true
-    t.string "stripe_id_account"
     t.integer "payout_percentage", default: 70
+    t.string "stripe_id_account"
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
@@ -432,6 +446,7 @@ ActiveRecord::Schema.define(version: 2021_03_22_180502) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "billings", "contracts"
   add_foreign_key "contracts", "employer_profiles"
   add_foreign_key "contracts", "freelancer_profiles"
   add_foreign_key "contracts", "jobs"

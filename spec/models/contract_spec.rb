@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Contract, type: :model do
   let(:employer_profile) { FactoryBot.create(:employer_profile) }
   let(:freelancer_profile) { FactoryBot.create(:freelancer_profile) }
-  let!(:contract) { FactoryBot.create(:contract, employer_profile: employer_profile, freelancer_profile: freelancer_profile, pay_rate: 100) }
+  let!(:contract) { FactoryBot.create(:contract, :with_payment_account, employer_profile: employer_profile, freelancer_profile: freelancer_profile, pay_rate: 100) }
   let(:job) { FactoryBot.create(:job, employer_profile: employer_profile) }
   let(:contract_with_job) { FactoryBot.create(:contract, :with_job, job: job) }
 
@@ -60,6 +60,13 @@ RSpec.describe Contract, type: :model do
           expect(new_contract_with_title.contract_type).to eq(job.contract_type)
         end
       end
+    end
+
+    it 'has many billings, dependent nullify' do
+      billing = FactoryBot.create(:billing, contract: contract)
+      expect(contract.billings).to include(billing)
+      contract.destroy
+      expect(Billing.exists?(billing.id)).to be_falsey
     end
   end
 

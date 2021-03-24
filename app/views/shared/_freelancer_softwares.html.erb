@@ -6,7 +6,7 @@
     </div>
     <% if editable %>
         <div class="d-flex-col ml-auto">
-          <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editSoftwareModal"></button>
+          <button class="btn link-btn shadow-none p-0 align-self-start ml-auto" type="button"  data-toggle="modal" data-target="#editSoftwareModal"><i class="fas fa-edit text-primary"></i></button>
         </div>
         <%= render 'freelancer/shared/edit_freelancer_softwares',
                    freelancer_softwares: freelancer_profile.softwares,

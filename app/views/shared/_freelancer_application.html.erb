@@ -13,7 +13,7 @@
 <% end %>
 <hr>
 <% if job_application.available_during_work_hours.present? %>
-  <i class="far fa-clock text-secondary fa-fw fa-lg"></i> <label class="h5 mb-0">Daytime availability <i class="text-dark font-weight-normal">(9AM-5PM  <%= job_application.job.time_zone %>)</i></label>
+  <i class="far fa-clock text-secondary fa-fw fa-lg"></i> <label class="h5 mb-0">Daytime availability <span class="text-dark font-weight-normal">(9AM-5PM <%= job_application.job.time_zone %>)</span></label>
 <% end %>
 <% if job_application.job_application_questions.any? %>
   <% job_application.job_application_questions.each do |job_application_question| %>

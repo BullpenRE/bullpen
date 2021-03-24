@@ -13,7 +13,7 @@
       <%= render partial: 'shared/contracts/show_offer_contract_details', locals: { contract: contract } %>
       <div class="bp-card mb-3 card<%= contract.id %>">
         <div class="d-flex flex-column flex-md-row">
-          <div class="mb-3 mr-auto">
+          <div class="mb-2 mr-auto">
             <h2 class="text-wrap text-break mb-1"><%= contract&.title&.capitalize %></h2>
             <div class="bp-text-sm">Created <%= time_ago_in_words(contract&.created_at) %> ago </div>
           </div>
@@ -81,7 +81,7 @@
       <%= render partial: 'employer/contracts/delete_contract', locals: { contract: contract } %>
       <div class="bp-card mb-3 card<%= contract.id %>">
         <div class="d-flex flex-column flex-md-row">
-          <div class="mr-auto mb-3">
+          <div class="mr-auto mb-2">
             <h2 class="text-wrap text-break mb-1"><%= contract&.title&.capitalize %></h2>
             <div class="bp-text-sm">Created <%= time_ago_in_words(contract&.created_at) %> ago </div>
           </div>
@@ -129,11 +129,11 @@
                                                                          editable: false } %>
           <%= render partial: 'shared/make_an_offer_without_job', locals: { freelancer_profile: contract.freelancer_profile,
                                                                             redirect_reference: 'contracts'} %>
-          <div class="d-flex flex-column flex-md-row my-3 my-md-0">
+          <div class="d-flex flex-column flex-md-row mt-3 mt-md-0">
             <div class="mb-2 mb-md-0 mr-md-2">
               <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#makeAnOfferWithoutJob<%= contract.freelancer_profile.id %>">Offer Another Job</button>
             </div>
-            <div class="dropdown">
+            <div class="dropdown ">
               <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 More <i class="fas fa-chevron-down"></i>
               </button>
@@ -151,7 +151,7 @@
             </div>
           </div>
         </div>
-        <div class="column d-flex justify-content-end align-items-end">
+        <div class="column d-flex justify-content-end align-items-end mt-3 mt-md-0">
           <a class="font-weight-bold link_action<%= contract.id %> more-less<%= contract.id %>" data-toggle="collapse" data-target="#collapseBillings<%= contract.id %>" aria-expanded="true" aria-controls="collapseBillings<%= contract.id %>" style="cursor:pointer;">
             Show Billing<i class="fas fa-chevron-down ml-1"></i>
           </a>

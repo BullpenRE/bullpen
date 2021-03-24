@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-      <button class="fas fa-edit text-primary ml-auto" type="button" data-toggle="modal" data-target="#editProfileModal-<%= @freelancer_profile.id %>"></button>
+      <button class="btn link-btn shadow-none p-0 align-self-start ml-auto" type="button" data-toggle="modal" data-target="#editProfileModal-<%= @freelancer_profile.id %>"><i class="fas fa-edit text-primary"></i></button>
     </div>
   </div>
   <%= render 'freelancer/shared/edit_basic_info', freelancer_profile: @freelancer_profile, redirect_reference: 'account_page' %>

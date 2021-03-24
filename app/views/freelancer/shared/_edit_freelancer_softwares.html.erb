@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content mt-3">
       <div class="modal-header pb-0">
-        <h1 class="modal-title" id="editSoftwareLicencesLabel">Software Licences</h1>
+        <h1 class="modal-title" id="editSoftwareLicencesLabel"><%= freelancer_profile.softwares.any? ? 'Edit Software Licences' : 'Add Software Licences' %> </h1>
         <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>

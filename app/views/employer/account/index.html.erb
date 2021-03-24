@@ -7,7 +7,7 @@
   
   <div class="bp-card mb-3">
     <div class="d-flex"> <!--Create a row for the avatar, profile info, and edit icon-->
-      <div class="d-flex flex-sm-row flex-column w-100 align-items-center"> <!--Stack avatar and profile info on small devices-->
+      <div class="d-flex flex-sm-row flex-column"> <!--Stack avatar and profile info on small devices-->
         <% if @employer_profile.avatar.attached? %>
           <div class="text-light avatar-image" style="line-height: 0;">
             <%= image_tag @employer_profile.avatar, class: 'rounded-circle', width: '80px', height: '80px' %>
@@ -15,14 +15,14 @@
         <% else %>
           <div class="text-light avatar-image" style="font-size: 80px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
         <% end %>
-        <div class="ml-sm-3 mt-1 mt-sm-0 text-center text-sm-left">
-          <h2 class="mb-0"><%= @employer_profile.full_name %></h2>
+        <div class="ml-sm-3 mt-1 align-self-sm-center mt-sm-0">
+          <h2 class="mb-1"><%= @employer_profile.full_name %></h2>
           <div class="bp-text-sm">
             <%= @employer_profile.user.email %>
           </div>
         </div>
       </div>
-      <button class="fas fa-edit text-primary ml-auto" type="button"  data-toggle="modal" data-target="#editEmployerProfileModal-<%= @employer_profile.id %>"></button>
+      <button class="btn link-btn shadow-none p-0 align-self-start ml-auto" type="button"  data-toggle="modal" data-target="#editEmployerProfileModal-<%= @employer_profile.id %>"><i class="fas fa-edit text-primary"></i></button>
     </div>
   </div>
   <%= render 'employer/shared/edit_basic_info', employer_profile: @employer_profile %>
@@ -98,7 +98,7 @@
         <div class="h2">Company Information</div>
       </div>
       <div class="d-flex-col ml-auto">
-        <button class="fas fa-edit text-primary ml-auto" type="button"  data-toggle="modal" data-target="#editEmployerCompanyModal-<%= @employer_profile.id %>"></button>
+        <button class="btn link-btn shadow-none p-0 align-self-start ml-auto" type="button"  data-toggle="modal" data-target="#editEmployerCompanyModal-<%= @employer_profile.id %>"><i class="fas fa-edit text-primary"></i></button>
       </div>
     </div>
     <%= render 'employer/account/edit_company_info', employer_profile: @employer_profile %>

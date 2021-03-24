@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe FreelancersHelper, type: :helper do
-  describe '#freelancer_ba_link' do
-    let!(:current_user) { FactoryBot.create(:user, :freelancer) }
+  describe '#stripe_button_link' do
+    let(:user) { FactoryBot.create(:user, :freelancer) }
     before do
-      allow(helper).to receive(:current_user).and_return(current_user)
+      allow(helper).to receive(:current_user).and_return(user)
     end
 
     let(:expected_output) do
@@ -16,7 +16,7 @@ describe FreelancersHelper, type: :helper do
     end
 
     it 'returns the correct url' do
-      expect(helper.freelancer_ba_link).to eq(expected_output)
+      expect(helper.stripe_button_link).to eq(expected_output)
     end
   end
 end
