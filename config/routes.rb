@@ -126,11 +126,10 @@ Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
   if Rails.env.test?
-    require 'test_routes'
-    define_test_routes
     namespace :test do
       post 'clean_database', to: 'databases#clean_database'
       post 'seed_posts', to: 'seeds#seed_posts'
+      post 'factories', to: 'factories#create'
     end
   end
 

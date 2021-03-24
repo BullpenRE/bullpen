@@ -21,9 +21,9 @@ beforeEach(() => {
   cy.cleanDatabase()
 })
 
-after(() => {
-  cy.cleanDatabase()
-})
+// after(() => {
+//   cy.cleanDatabase()
+// })
 
 // beforeEach(() => {
 //   cy.resetDatabase()
