@@ -1,6 +1,8 @@
 <%= render partial: 'shared/job_short_description', locals: { job: job } %>
-<h5 class="mt-3">Details</h5>
-<%= job.relevant_details %>
+<% if job.relevant_details.present? %>
+  <h5 class="mt-3">Details</h5>
+  <%= job.relevant_details %>
+<% end %>
 <hr>
 <ul class="pl-3">
   <li>This is <span class="text-secondary font-weight-bold"> <%= job.position_length %> </span>position</li>
