@@ -124,7 +124,6 @@ ActiveRecord::Schema.define(version: 2021_03_22_180502) do
     t.boolean "completed", default: false
     t.string "stripe_id_account"
     t.string "stripe_id_customer"
-    t.string "stripe_id_bank_account"
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 

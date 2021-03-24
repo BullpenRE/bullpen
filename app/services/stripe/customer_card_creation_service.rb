@@ -1,31 +1,31 @@
 # frozen_string_literal: true
 
-# Required parameters, see https://stripe.com/docs/api/customer_bank_accounts/create:
+# Required parameters, see https://stripe.com/docs/api/cards/create:
 # to create 'cus_...' the customer_creation_service is used
-# to create 'btok_...' the bank_token_service is used
 
 #  {
 #     'cus_JABNN2TI0vpZlS',
-#     {source: 'btok_1IXr0d2eZvKYlo2C895y5SVL'}
+#     {source: 'tok_mastercard'}
 #  }
+# response - the card object with id like: "card_1IYZVvKL..."
 
 module Stripe
-  class CustomerBankAccountService
-    def initialize(cus, btok)
+  class CustomerCardCreationService
+    def initialize(cus, tok = 'tok_mastercard')
       @cus = cus
-      @btok = btok
+      @tok = tok
       @employer_profile = EmployerProfile.find_by(stripe_id_customer: @cus)
       @error_message = ''
     end
 
     def call
-      response = Stripe::Customer.create_source(@cus, { source: @btok })
+      response = Stripe::Customer.create_source(@cus, { source: @tok })
       @error_message = response.message if response['message']
       @employer_profile.payment_accounts.create(prepare_attributes(response)) if response['id']
     rescue StandardError => e
       user_id = @employer_profile.user.id
       Rails.logger.info(
-        "Error in CustomerBankAccountService impacting user id: #{user_id}, "\
+        "Error in CustomerCardCreationService impacting user id: #{user_id}, "\
         "stripe customer id: #{@cus}, "\
         "error details: #{e}, "\
         "error_message: #{@error_message}"
@@ -36,15 +36,20 @@ module Stripe
 
     private
 
+    def convert_time(response)
+      Date.new(response['exp_year'].to_i, response['exp_month'].to_i, -1).iso8601
+    end
+
     def prepare_attributes(response)
       {
         id_stripe: response['id'],
         stripe_object: response['object'],
         last_four: response['last4'],
         fingerprint: response['fingerprint'],
-        bank_name: response['bank_name'],
-        bank_status: response['status'],
-        bank_routing_number: response['routing_number']
+        card_brand: response['brand'],
+        card_cvc_check: response['cvc_check'], # right now Stripe sends null here
+        card_expires: convert_time(response),
+        country: response['country']
       }
     end
   end
