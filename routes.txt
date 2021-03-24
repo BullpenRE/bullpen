@@ -18,6 +18,15 @@
                                                   PATCH      /admin/admin_users/:id(.:format)                                                                  admin/admin_users#update
                                                   PUT        /admin/admin_users/:id(.:format)                                                                  admin/admin_users#update
                                                   DELETE     /admin/admin_users/:id(.:format)                                                                  admin/admin_users#destroy
+                      batch_action_admin_billings POST       /admin/billings/batch_action(.:format)                                                            admin/billings#batch_action
+                                   admin_billings GET        /admin/billings(.:format)                                                                         admin/billings#index
+                                                  POST       /admin/billings(.:format)                                                                         admin/billings#create
+                                new_admin_billing GET        /admin/billings/new(.:format)                                                                     admin/billings#new
+                               edit_admin_billing GET        /admin/billings/:id/edit(.:format)                                                                admin/billings#edit
+                                    admin_billing GET        /admin/billings/:id(.:format)                                                                     admin/billings#show
+                                                  PATCH      /admin/billings/:id(.:format)                                                                     admin/billings#update
+                                                  PUT        /admin/billings/:id(.:format)                                                                     admin/billings#update
+                                                  DELETE     /admin/billings/:id(.:format)                                                                     admin/billings#destroy
         destroy_certification_admin_certification POST       /admin/certifications/:id/destroy_certification(.:format)                                         admin/certifications#destroy_certification
                 batch_action_admin_certifications POST       /admin/certifications/batch_action(.:format)                                                      admin/certifications#batch_action
                              admin_certifications GET        /admin/certifications(.:format)                                                                   admin/certifications#index
@@ -215,6 +224,9 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   POST       /admin/comments(.:format)                                                                         admin/comments#create
                                     admin_comment GET        /admin/comments/:id(.:format)                                                                     admin/comments#show
                                                   DELETE     /admin/comments/:id(.:format)                                                                     admin/comments#destroy
+                                                             /404(.:format)                                                                                    errors#not_found
+                                 talent_not_found GET        /talent_not_found(.:format)                                                                       errors#talent_not_found
+                                    job_not_found GET        /job_not_found(.:format)                                                                          errors#job_not_found
                                  freelancer_style GET        /freelancer_style(.:format)                                                                       style#freelancer
                                    employer_style GET        /employer_style(.:format)                                                                         style#employer
                             employer_talent_style GET        /employer_talent_style(.:format)                                                                  style#employer_talent
@@ -392,6 +404,7 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                                   DELETE     /freelancer/contracts/:id(.:format)                                                               freelancer/contracts#destroy
                          freelancer_profile_index GET        /freelancer/profile(.:format)                                                                     freelancer/profile#index
                          freelancer_account_index GET        /freelancer/account(.:format)                                                                     freelancer/account#index
+                    freelancer_stripe_data_lookup GET        /freelancer/account/stripe_data_lookup(.:format)                                                  freelancer/account#stripe_data_lookup
                                 freelancer_avatar PATCH      /freelancer/avatar(.:format)                                                                      freelancer/avatars#update
                                                   PUT        /freelancer/avatar(.:format)                                                                      freelancer/avatars#update
                                                   DELETE     /freelancer/avatar(.:format)                                                                      freelancer/avatars#destroy
