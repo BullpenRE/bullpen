@@ -72,11 +72,23 @@
         <% end %>
       <% end %>
     <% if @employer_profile.stripe_customer_id_account.present? %>
-        <%= link_to 'Add a Credit Card', '#', class: 'btn btn-outline-primary add-cc' %>
-        <%= link_to 'Add a Bank Account', '#', class: 'btn btn-outline-primary add-ba' %>
+        <%= link_to 'Add a Credit Card',
+                    employer_create_card_path,
+                    method: :post,
+                    type: 'button',
+                    class: 'btn btn-outline-primary add-cc' %>
+        <%= link_to 'Add a Bank Account',
+                    employer_create_account_path(employer_profile_id: @employer_profile.id),
+                    method: :post,
+                    type: 'button',
+                    class: 'btn btn-outline-primary add-ba' %>
     <% else %>
         <div class="mb-2">Please add a Customer ID to send payouts.</div>
-        <%= link_to 'Add a Customer ID', '#', class: 'btn btn-outline-primary add-customer-id' %>
+        <%= link_to 'Add a Customer ID',
+                    employer_create_customer_path,
+                    method: :post,
+                    type: 'button',
+                    class: 'btn btn-outline-primary add-customer-id' %>
     <% end %>
   </div>
 
