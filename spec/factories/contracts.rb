@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :contract do
     freelancer_profile
     employer_profile
+    payment_account
     title { Faker::Job.title }
     contract_type { 0 }
     pay_rate { 150 }
@@ -9,10 +10,6 @@ FactoryBot.define do
     job_description { Faker::Company.bs }
     hide_from_freelancer { false }
     hide_from_employer { false }
-
-    after(:create) do |contract, _evaluator|
-      contract.update(payment_account_id: create(:payment_account, employer_profile: contract.employer_profile).id)
-    end
 
     trait :with_job do
       after(:create) do |contract, _evaluator|
