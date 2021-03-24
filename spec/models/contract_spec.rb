@@ -61,6 +61,13 @@ RSpec.describe Contract, type: :model do
         end
       end
     end
+
+    it 'has many billings, dependent nullify' do
+      billing = FactoryBot.create(:billing, contract: contract)
+      expect(contract.billings).to include(billing)
+      contract.destroy
+      expect(Billing.exists?(billing.id)).to be_falsey
+    end
   end
 
   context 'Scopes' do
