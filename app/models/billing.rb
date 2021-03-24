@@ -10,14 +10,12 @@ class Billing < ApplicationRecord
   validate :must_have_some_time_entered
 
   def multiplier
-    hours.to_i + (minutes / 60.0)
+    hours.to_i + (minutes.to_i / 60.0)
   end
 
   private
 
   def must_have_some_time_entered
-    return if hours.present? || minutes.present?
-
-    errors.add(:hours, 'no time was entered for the billing entry')
+    errors.add(:hours, 'no time was entered for the billing entry') unless multiplier > 0.0
   end
 end

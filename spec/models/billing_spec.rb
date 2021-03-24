@@ -41,6 +41,9 @@ RSpec.describe Billing, type: :model do
       billing.hours = nil
       billing.minutes = nil
       expect(billing).to_not be_valid
+      billing.hours = 0
+      billing.minutes = 0
+      expect(billing).to_not be_valid
     end
   end
 
