@@ -1,0 +1,42 @@
+<div class="modal" id="addHours<%= contract_id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <!--  Header with '×'-->
+      <div class="modal-header">
+        <h1 class="modal-title" id="showSendMessageLabel">Add Billing Hours</h1>
+        <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Send Message Card-->
+      <div class="modal-body py-0">
+        <%= form_for :billing, url:  freelancer_add_hours_path do |f| %>
+          <%= f.hidden_field :contract_id, value: contract_id %>
+          <div class="form-group mb-3">
+            <div class="row mb-3">
+              <div class="col-sm-4">
+                <label class="h5"> Date </label>
+                <%= f.text_field :work_done, class: 'flatpickr', placeholder: "#{Date.current.strftime("%A, %b %d")}", value: "#{Date.current}" %>
+              </div>
+              <div class="col-sm-4">
+                <label class="h5"> Hours </label>
+                <%= f.number_field :hours, class: "form-control", min: 1, step: 1 %>
+              </div>
+              <div class="col-sm-4">
+                <label class="h5"> Minutes </label>
+                <%= f.number_field :minutes, class: "form-control", in: 0..59, step: 1 %>
+              </div>
+            </div>
+            <label class="h5 mt-2"> Enter a brief description of the task performed. </label>
+            <div class="w-100">
+              <%= f.text_field :description, class: "form-control mb-2", placeholder: "Enter the time entry description" %>
+            </div>
+            <div class="d-flex pt-3 justify-content-end mt-2">
+              <%= f.submit 'Add Hours', class: 'btn btn-primary send-invitation' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
