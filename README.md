@@ -175,7 +175,7 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
         
 3. Run test db migration if needed:
   
-        $ RAILS_ENV=test rake db:migrate
+        $ RAILS_ENV=test rails db:migrate
         or
         $ RAILS_ENV=test rake db:test:prepare
         
