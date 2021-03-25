@@ -94,6 +94,7 @@
             $('.pay_rate<%= freelancer_profile&.slug %>').val(data['pay_rate']);
             $('.job-closed<%= freelancer_profile&.slug %>').removeClass('d-none');
             $('.job_id<%= freelancer_profile&.slug %>').val(data['job_id']);
+            formatCurrency($('.pay_rate<%= freelancer_profile&.slug %>'));
           }
         });
       } else {
