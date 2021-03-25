@@ -37,7 +37,6 @@ class Freelancer::AccountController < ApplicationController
 
   def stripe_lookup
     @account_data = Stripe::Account.retrieve(stripe_id_account)
-
   rescue StandardError => e
     Rails.logger.info "!!!!! Error in account_controller.rb#stripe_lookup impacting user_id #{current_user.id}: #{e}"
     @stripe_error = STRIPE_ERROR

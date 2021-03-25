@@ -2,7 +2,6 @@
 
 # Required parameters, see https://stripe.com/docs/api/customers/create
 
-
 #  {
 #    email: user_email@test.com,
 #    name: user.full_name

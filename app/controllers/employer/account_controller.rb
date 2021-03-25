@@ -5,7 +5,7 @@ module Employer
     before_action :authenticate_user!
 
     def index
-      @payment_accounts = PaymentAccount.filter_and_sort(employer_profile.id)
+      @payment_accounts = PaymentAccount.find_by(employer_profile_id: employer_profile.id)
     end
 
     def destroy

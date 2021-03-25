@@ -26,7 +26,7 @@ module Employer
     end
 
     def create_account
-      return if true # temporary block this action till be figured out how it must be implemented
+      return # temporary block this action till be figured out how it must be implemented
 
       btoken = Stripe::BankTokenService.new(payment_account_attributes).call
       redirect_to(employer_account_index_path, alert: btok_absense_alert) if btoken.is_a?(Hash)

@@ -7,12 +7,7 @@ class PaymentAccount < ApplicationRecord
   validates :last_four, length: { is: 4 }, allow_blank: true, allow_nil: true
   after_save :set_other_defaults_false, if: :is_default?
 
-  scope :filter_and_sort, lambda { |employer_profile_id|
-    where(employer_profile_id: employer_profile_id)
-      .order('is_default DESC NULLS LAST')
-      .order('stripe_object ASC')
-      .order('created_at DESC')
-  }
+  default_scope { order('is_default DESC NULLS LAST, stripe_object ASC, created_at DESC') }
 
   def institution
     stripe_object == 'card' ? card_brand : bank_name
@@ -35,8 +30,7 @@ class PaymentAccount < ApplicationRecord
   def expiration_description
     return unless card_expires.present?
 
-    exp_date = card_expires.strftime('%m/%y')
-    "Expires #{exp_date}"
+    "Expires #{card_expires.strftime('%m/%y')}"
   end
 
   private

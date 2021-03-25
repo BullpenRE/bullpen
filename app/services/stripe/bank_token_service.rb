@@ -43,4 +43,3 @@ module Stripe
     end
   end
 end
-
