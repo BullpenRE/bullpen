@@ -17,7 +17,7 @@ FactoryBot.define do
       completed { true }
 
       after(:create) do |employer_profile, _|
-        create(:interview_request, employer_profile: employer_profile)
+        # create(:interview_request, employer_profile: employer_profile)
 
         sector_ids = Sector.pluck(:id).shuffle
         3.times { |index| create(:employer_sector, employer_profile: employer_profile, sector_id: sector_ids[index] || create(:sector).id) }

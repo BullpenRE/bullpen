@@ -20,7 +20,7 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .should('exist')
       .click()
 
-    // try to click 'Post job' tab on navbar to start create to job
+    // try to click button 'Post job' on navbar to start create to job
     cy.get('.navbar-nav > :nth-child(1) > .btn').click({force: true})
     //try to start create the job
     cy.get('input#jobTitle').type('Test job cy')
@@ -95,7 +95,7 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
      .find('button.dropdown-item')
      .eq(0)
      .should('exist').click()
-    // try to close opened module 'Job Post'
+    // try to close opened module 'Job Post' via 'x'
     cy.get('div.modal-dialog.modal-lg')
       .get('div.modal-content')
       .get('div.modal-header')
@@ -113,7 +113,7 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .find('a.dropdown-item')
       .eq(0)
       .should('exist').click()
-    // try to close opened module 'Post a Job'
+    // try to close opened module 'Post a Job' via 'x'
     cy.get('div.modal-dialog.modal-lg')
       .get('div.modal-content')
       .get('div.modal-header')
