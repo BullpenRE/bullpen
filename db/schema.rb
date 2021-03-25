@@ -79,6 +79,20 @@ ActiveRecord::Schema.define(version: 2021_03_24_103441) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "billings", force: :cascade do |t|
+    t.bigint "contract_id", null: false
+    t.date "work_done"
+    t.integer "hours"
+    t.integer "minutes"
+    t.string "description"
+    t.integer "state", default: 0
+    t.string "dispute_comments"
+    t.date "dispute_resolved"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contract_id"], name: "index_billings_on_contract_id"
+  end
+
   create_table "certifications", force: :cascade do |t|
     t.string "description"
     t.boolean "disable", default: false
@@ -427,6 +441,7 @@ ActiveRecord::Schema.define(version: 2021_03_24_103441) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "billings", "contracts"
   add_foreign_key "contracts", "employer_profiles"
   add_foreign_key "contracts", "freelancer_profiles"
   add_foreign_key "contracts", "jobs"
