@@ -4,17 +4,11 @@
   <%= f.hidden_field :job_id, value: job_id %>
   <%= f.hidden_field 'step', value: 'application_step_1' %>
   <div class="mb-3">The offered rate is
-    <% if job_application.job.hourly? %>
-      <%= "<b>#{number_to_currency(job_application.job.pay_range_low, precision: 0)} - #{number_to_currency(job_application.job.pay_range_high, precision: 0)}</b>".html_safe + " per hour." %>
-    <% else %>
-      <%=  "a retainer fee of <b>#{number_to_currency(job_application.job.pay_range_low, precision: 0)}</b>".html_safe + " for up to " + "#{job_application.job.contract_type&.split('_')&.last}".html_safe + " hours per month."%>
-    <% end %>
+    <%= "<b>#{number_to_currency(job_application.job.pay_range_low, precision: 0)} - #{number_to_currency(job_application.job.pay_range_high, precision: 0)}</b>".html_safe + " per hour." %>
   </div>
   <div class="form-group mb-1">
     <div class="d-flex justify-content-between">
-      <label for="bidAmount" class="h5">What's your bid? <span class="text-dark font-weight-normal">
-        <%= job_application.job.hourly? ? "(per hour)" : "(per month)" %>
-      </span></label>
+      <label for="bidAmount" class="h5">What's your bid? <span class="text-dark font-weight-normal">(per hour)</span></label>
     </div>
     <div class="row">
       <div class="col col-lg-4">
@@ -82,25 +76,13 @@
       }
     };
 
-    const payment_per_hour = (net_earnings, hour_per_month, payout_rate) => {
-      per_hour = (net_earnings/parseInt(hour_per_month, 10)*payout_rate)
-      if (isInt(per_hour)) {
-        return per_hour.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
-      } else {
-        return per_hour.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
-      }
-    }
-
-    let hour_per_month = '<%= job_application.job.hourly? ? '1' : job_application.job.contract_type&.split('_')&.last %>';
     const payout_rate = '<%= (current_user.freelancer_profile.payout_percentage || 70) / 100.0 %>';
 
     if (isNaN(net_earnings)) {
       $('.net-earnings').html(`<p class="text-danger">Please type your bid</p>`);
     }
-    else if (hour_per_month === '1') {
+    else {
       $('.net-earnings').html(`Your net earnings will be <b>${computed_net_earnings(net_earnings, payout_rate)}</b> per hour.`);
-    } else {
-      $('.net-earnings').html(`Your net earnings will be <b>${computed_net_earnings(net_earnings, payout_rate)}</b> per month for up to ${hour_per_month} hours, plus up to <b>${payment_per_hour(net_earnings, hour_per_month, payout_rate)}</b> per additional hour.`);
     }
   });
 </script>

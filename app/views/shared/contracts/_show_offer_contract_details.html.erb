@@ -27,22 +27,12 @@
         <div class="row">
           <div class="col-md-6">
             <h5><%= contract.pending? ? 'Offered Rate' : 'Contract Rate' %></h5>
-            <% if contract.contract_type == 'hourly' %>
-              <div><%= "#{number_to_currency(contract.pay_rate)} per hour" %></div>
-            <% else %>
-              <div><%= "#{number_to_currency(contract.pay_rate)} monthly retainer fee for up to #{contract.contract_type.split('_').last} hours" %></div>
-              <%= "#{number_to_currency(contract.pay_rate/contract.contract_type.split('_').last.to_i)} per hour for additional hours" %>
-            <% end %>
+            <div><%= "#{number_to_currency(contract.pay_rate, precision: 0)} per hour" %></div>
           </div>
           <% if current_user.freelancer? %>
             <div class="col-md-6">
               <h5>Net Rate<a class="text-dark font-weight-normal"> (After Bullpen commission)</a></h5>
-              <% if contract.contract_type == 'hourly' %>
-                <div><%= "#{number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage / 100.round)} per hour" %></div>
-              <% else %>
-                <div><%= "#{number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage / 100.round)} monthly retainer fee for up to #{contract.contract_type.split('_').last} hours" %></div>
-                <%= "#{number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage / 100 / contract.contract_type.split('_').last.to_i)} per hour for additional hours" %>
-              <% end %>
+              <div><%= "#{number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage / 100.0, strip_insignificant_zeros: true)} per hour" %></div>
             </div>
           <% end %>
         </div>

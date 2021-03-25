@@ -17,7 +17,7 @@ FactoryBot.define do
     pay_range_high { 150 }
 
     trait :retainer do
-      contract_type { 3 }
+      contract_type { 0 }
       pay_range_low { 7000 }
       pay_range_high { nil }
     end
