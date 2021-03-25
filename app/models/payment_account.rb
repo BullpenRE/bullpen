@@ -7,7 +7,7 @@ class PaymentAccount < ApplicationRecord
   validates :last_four, length: { is: 4 }, allow_blank: true, allow_nil: true
   after_save :set_other_defaults_false, if: :is_default?
 
-  default_scope { order('is_default DESC NULLS LAST, stripe_object ASC, created_at DESC') }
+  default_scope { order('is_default DESC, stripe_object ASC, created_at DESC') }
 
   def institution
     stripe_object == 'card' ? card_brand : bank_name

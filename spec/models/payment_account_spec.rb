@@ -13,7 +13,7 @@ RSpec.describe PaymentAccount, type: :model do
     let(:user) { FactoryBot.create(:user) }
     let(:employer_user) { FactoryBot.create(:user, :employer) }
     let(:employer_profile) { FactoryBot.create(:employer_profile, user: employer_user) }
-    let!(:contract) { FactoryBot.create(:contract, employer_profile: employer_profile) }
+    let!(:contract) { FactoryBot.create(:contract, :with_payment_account, employer_profile: employer_profile) }
 
     it 'has_many contracts, dependent: :nullify' do
       expect(PaymentAccount.last.contracts).to include(contract)
