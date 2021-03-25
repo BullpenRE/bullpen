@@ -49,7 +49,7 @@ RSpec.describe PaymentAccount, type: :model do
       end
 
       it 'if default is set to false, the others are not changed' do
-        FactoryBot.create(:payment_account, employer_profile: employer_profile)
+        FactoryBot.create(:payment_account, employer_profile: employer_profile, is_default: false)
         expect(first_account.is_default?).to be_truthy
       end
 
@@ -103,6 +103,24 @@ RSpec.describe PaymentAccount, type: :model do
 
       expect(card_payment_account.reload.short_description).to eq('American Express card ending in 1234')
       expect(visa_account.short_description).to eq('Visa card ending in 3333 (default)')
+    end
+  end
+  describe 'default_scope' do
+    let(:employer_profile) { FactoryBot.create(:employer_profile) }
+    let!(:bank_payment_account1) { FactoryBot.create(:payment_account, :bank, employer_profile: employer_profile) }
+    let!(:bank_payment_account2) { FactoryBot.create(:payment_account, :bank, employer_profile: employer_profile) }
+    let!(:card_payment_account1) { FactoryBot.create(:payment_account, employer_profile: employer_profile) }
+    let!(:card_payment_account2) { FactoryBot.create(:payment_account, employer_profile: employer_profile) }
+    let!(:card_payment_account3) { FactoryBot.create(:payment_account, employer_profile: employer_profile) }
+    let!(:bank_payment_account3) { FactoryBot.create(:payment_account, :bank, employer_profile: employer_profile) }
+
+    it 'order correctly' do
+      expect(employer_profile.payment_accounts.pluck(:id)).to eq([bank_payment_account3.id, # first because it is_default=true
+                                                                  card_payment_account3.id,         # newest card payment account
+                                                                  card_payment_account2.id,         # in-between card payment account
+                                                                  card_payment_account1.id,         # oldest card payment account
+                                                                  bank_payment_account2.id,         # in-between bank payment account
+                                                                  bank_payment_account1.id])        # oldest bank payment account
     end
   end
 end
