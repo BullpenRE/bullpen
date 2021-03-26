@@ -28,14 +28,7 @@ class Job < ApplicationRecord
   enum required_experience: { 'junior': 0, 'intermediate': 1, 'senior': 2 }
   enum time_zone: { 'HST': 0, 'AKST': 1, 'PST': 2, 'MST': 3, 'CST': 4, 'EST': 5 }
   enum state: { 'draft': 0, 'posted': 1, 'closed': 2, 'edit': 3 }
-  enum contract_type: { 'hourly': 0, 'monthly_retainer_20': 1, 'monthly_retainer_40': 2, 'monthly_retainer_80': 3 }
-
-  CONTRACT_TYPE_DESCRIPTIONS = {
-    'Hourly': contract_types.keys[0],
-    'Monthly Retainer - 20 hrs': contract_types.keys[1],
-    'Monthly Retainer - 40 hrs': contract_types.keys[2],
-    'Monthly Retainer - 80 hrs': contract_types.keys[3]
-  }.freeze
+  enum contract_type: { 'hourly': 0 }
 
   def ready_to_post?
     title.present? &&
@@ -53,14 +46,9 @@ class Job < ApplicationRecord
     errors.add(:pay_range_high, 'must be higher than pay range low') if high_range_lesser_than_low_range?
     errors.add(:pay_range_low, 'must be greater than 0') if pay_range_low&.negative?
     errors.add(:pay_range_high, 'must be greater than 0') if pay_range_high&.negative?
-    errors.add(:pay_range_high, 'must be blank for retainer type contracts') if pay_range_high_present_for_retainers?
   end
 
   def high_range_lesser_than_low_range?
     !pay_range_high.nil? && !pay_range_low.nil? && pay_range_high < pay_range_low
-  end
-
-  def pay_range_high_present_for_retainers?
-    contract_type != 'hourly' && !pay_range_high.nil?
   end
 end
