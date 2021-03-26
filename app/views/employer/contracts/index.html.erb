@@ -160,7 +160,61 @@
           </a>
         </div>
         <div id="collapseBillings<%= contract.id %>" class="collapse">
-          billings...
+          <!--Pending hours-->
+          <div class="d-flex w-100 mt-4"> <!--hide this div if no pending entries-->
+            <h5 class="mr-auto mb-0 align-self-center">
+              Payment Paused - <span class="text-danger">Disputed</span> <!--show if disputed, else show "Payment Due on {Mon DD}"-->
+            </h5>
+            <div class="d-flex flex-column flex-sm-row text-right">
+              <h5 class="mb-0"># hours</h5>
+              <h5 class="ml-4 mb-0">${amount}</h5>
+            </div>
+          </div>
+          <div class="d-flex mt-2 mb-2"> <!--hide this div after the dispute deadline-->
+            <div class="mr-auto">Submit disputes before {Mon DD}</div> 
+            <button class="align-self-start btn btn-link shadow-none p-0 ml-2" type="button" data-toggle="modal" data-target="#">Dispute Hours<i class="far fa-comment ml-1"></i></button>
+          </div>
+          <div name="pendingTimeEntry"> <!--repeat this div for each entry-->
+            <hr class="my-2"/>  
+            <div class="row w-100">
+              <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap">{Mon DD}</div> <!--i.e. Oct 2, Dec 1, etc.-->
+              <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap">{#} hours</div>  <!--Show minutes as a decimal, i.e. 1 hour 45 min = 1.75 hours. Round to hundreds place. Show as "hour" instead of "hours" for amounts 1 hour or less.-->
+              <div class="col-12 col-lg-8 mt-2 mt-lg-0">
+                {entryDescription}
+                <div class="bp-text-sm text-danger font-weight-bold mt-2">Disputed</div> <!--Show this div if disputed-->
+              </div>
+            </div>
+          </div>
+
+          <!--Payment History-->
+          <div class="w-100 mt-4"> <!--hide this div if no invoices-->
+            <h5 class="mr-auto mb-0 align-self-center">
+              Invoice History
+            </h5>
+            <div class="mt-2 d-none d-md-flex row bp-text-sm font-weight-bold">
+              <div class="col-3 col-lg-2">Invoice</div>
+              <div class="col-3 col-lg-2">Date</div>  
+              <div class="col-6">Status</div>
+            </div>
+          </div>
+          <div name="invoiceEntry"> <!--repeat this div for each entry, show 5 max-->
+            <hr class="my-2"/>
+            <div class="row">
+              <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap">{invoiceNum}</div>
+              <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap">{Mon DD, YYYY}</div>
+              <div class="col-12 col-md-6 mt-2 mt-md-0">
+                ${#} paid {Mon DD, YYYY}
+              </div>
+              <div class="col-12 col-lg-2 mt-2 mt-lg-0 text-lg-right">
+                <a href="#" target="_blank">View Invoice<i class="fas fa-external-link-alt ml-1"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="text-right mt-2"> <!--Show this if there are more than 5 invoices-->
+            <a class="font-weight-bold" data-toggle="collapse" data-target="#" aria-expanded="true" aria-controls="" style="cursor:pointer;">
+              Show All Invoices<i class="fas fa-chevron-down ml-1"></i>
+            </a>
+          </div>
         </div>
       </div>
       <script>
