@@ -107,20 +107,20 @@ RSpec.describe PaymentAccount, type: :model do
   end
   describe 'default_scope' do
     let(:employer_profile) { FactoryBot.create(:employer_profile) }
-    let!(:bank_payment_account1) { FactoryBot.create(:payment_account, :bank, employer_profile: employer_profile) }
-    let!(:bank_payment_account2) { FactoryBot.create(:payment_account, :bank, employer_profile: employer_profile) }
-    let!(:card_payment_account1) { FactoryBot.create(:payment_account, employer_profile: employer_profile) }
-    let!(:card_payment_account2) { FactoryBot.create(:payment_account, employer_profile: employer_profile) }
-    let!(:card_payment_account3) { FactoryBot.create(:payment_account, employer_profile: employer_profile) }
-    let!(:bank_payment_account3) { FactoryBot.create(:payment_account, :bank, employer_profile: employer_profile) }
+    let!(:oldest_bank_payment_account) { FactoryBot.create(:payment_account, :bank, employer_profile: employer_profile) }
+    let!(:in_between_bank_payment_account) { FactoryBot.create(:payment_account, :bank, employer_profile: employer_profile) }
+    let!(:oldest_card_payment_account) { FactoryBot.create(:payment_account, employer_profile: employer_profile) }
+    let!(:in_between_card_payment_account) { FactoryBot.create(:payment_account, employer_profile: employer_profile) }
+    let!(:newest_card_payment_account) { FactoryBot.create(:payment_account, employer_profile: employer_profile) }
+    let!(:bank_payment_with_default_true) { FactoryBot.create(:payment_account, :bank, employer_profile: employer_profile) }
 
     it 'order correctly' do
-      expect(employer_profile.payment_accounts.pluck(:id)).to eq([bank_payment_account3.id, # first because it is_default=true
-                                                                  card_payment_account3.id,         # newest card payment account
-                                                                  card_payment_account2.id,         # in-between card payment account
-                                                                  card_payment_account1.id,         # oldest card payment account
-                                                                  bank_payment_account2.id,         # in-between bank payment account
-                                                                  bank_payment_account1.id])        # oldest bank payment account
+      expect(employer_profile.payment_accounts.pluck(:id)).to eq([bank_payment_with_default_true.id,
+                                                                  newest_card_payment_account.id,
+                                                                  in_between_card_payment_account.id,
+                                                                  oldest_card_payment_account.id,
+                                                                  in_between_bank_payment_account.id,
+                                                                  oldest_bank_payment_account.id])
     end
   end
 end

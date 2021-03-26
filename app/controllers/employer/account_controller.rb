@@ -5,7 +5,7 @@ module Employer
     before_action :authenticate_user!
 
     def index
-      @payment_accounts = PaymentAccount.find_by(employer_profile_id: employer_profile.id)
+      @payment_accounts = employer_profile.payment_accounts
     end
 
     def destroy
@@ -21,7 +21,7 @@ module Employer
     private
 
     def payment_account
-      @payment_account ||= PaymentAccount.find_by(id: params[:id])
+      @payment_account ||= employer_profile.payment_accounts.find_by(id: params[:id])
     end
 
     def employer_profile
