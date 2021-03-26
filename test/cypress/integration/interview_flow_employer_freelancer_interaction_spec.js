@@ -79,7 +79,6 @@ describe('Interview flow: employer - freelancer interaction', () => {
       .click()
 
     // try cancel removement of accepted request
-    // cy.get('#removeInterviewRequest18 > .modal-dialog > .modal-content > .modal-footer > .btn-link')
     cy.get('[id^=removeInterviewRequest] > .modal-dialog > .modal-content > .modal-footer > .btn-link')
       .should('exist')
       .click()
