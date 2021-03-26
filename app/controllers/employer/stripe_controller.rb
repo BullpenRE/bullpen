@@ -3,6 +3,7 @@
 module Employer
   class StripeController < ApplicationController
     before_action :authenticate_user!, :initial_check, :non_employer_redirect, :employer_profile
+    before_action :no_account_routing_redirect, only: :create_account
 
     def create_customer
       response = Stripe::CustomerCreationService.new(current_user).call
@@ -26,8 +27,6 @@ module Employer
     end
 
     def create_account
-      iban_absense_redirect unless bank_attributes['account_number'] # the value must be IBAN here
-
       response = Stripe::CustomerBankAccountService.new(employer_profile.stripe_id_customer,
                                                         bank_attributes).call
       if response.is_a?(Hash)
@@ -47,10 +46,6 @@ module Employer
       redirect_to employer_account_index_path, alert: 'Stripe: Please add a Customer ID to send payouts'
     end
 
-    def invalid_iban_redirect
-      redirect_to employer_account_index_path, alert: 'The IBAN provided is invalid! Please check'
-    end
-
     def bank_attributes
       {
         'object': 'bank_account',
@@ -58,12 +53,19 @@ module Employer
         'currency': 'usd',
         'account_holder_name': current_user.full_name,
         'account_holder_type': 'company',
-        'account_number': stripe_params[:iban_account_number]
+        'account_number': stripe_params[:bank_account_number],
+        'routing_number': stripe_params[:bank_routing_number]
       }
     end
 
     def stripe_params
-      params.require(:stripe).permit(:iban_account_number)
+      params.require(:stripe).permit(:bank_account_number, :bank_routing_number)
+    end
+
+    def no_account_routing_redirect
+      return if stripe_params[:bank_account_number].present? && stripe_params[:bank_routing_number].present?
+
+      redirect_to employer_account_index_path, alert: 'Please add the ACH routing number and bank account number'
     end
   end
 end
