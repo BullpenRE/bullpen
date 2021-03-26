@@ -75,6 +75,7 @@
       <%= render partial: 'freelancer/interviews/send_message', locals: { id: contract.id, employer_profile: contract.employer_profile, redirect_reference: 'contracts' } %>
       <%= render partial: 'freelancer/contracts/close_contract', locals: { contract: contract } %>
       <%= render partial: 'freelancer/contracts/delete_contract', locals: { contract: contract } %>
+      <%= render partial: 'freelancer/contracts/add_hours', locals: { contract_id: contract.id } %>
       <div class="bp-card mb-3 card<%= contract.id %>">
         <div class="d-flex flex-column flex-md-row">
           <div class="mr-auto mb-2">
@@ -89,7 +90,7 @@
             </div>
             <% unless contract.closed? %>
               <div class="d-block d-md-inline-block mb-2 mb-md-0 mr-md-2">
-                <button class="btn btn-primary container-fluid" type="button">Add Hours</button>
+                <button class="btn btn-primary container-fluid" type="button" data-toggle="modal" data-target="#addHours<%= contract.id %>">Add Hours</button>
               </div>
             <% end %>
             <div class="dropdown">
