@@ -1,9 +1,9 @@
-<div class="modal" id="addHours<%= contract_id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+<div class="modal" id="addHours<%= modal_id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <!--  Header with '×'-->
       <div class="modal-header">
-        <h1 class="modal-title" id="showSendMessageLabel">Add Billing Hours</h1>
+        <h1 class="modal-title" id="showSendMessageLabel"><%= billing.present? ? 'Edit Billing Hours' : 'Add Billing Hours' %></h1>
         <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -12,29 +12,37 @@
       <div class="modal-body py-0">
         <%= form_for :billing, url:  freelancer_add_hours_path do |f| %>
           <%= f.hidden_field :contract_id, value: contract_id %>
+          <%= f.hidden_field :billing_id, value: billing&.id %>
           <div class="form-group mb-3">
             <div class="row mb-3">
               <div class="col-sm-4">
                 <label class="h5"> Date </label>
-                <%= f.text_field :work_done, class: 'flatpickr', placeholder: "#{Date.current.strftime("%A, %b %d")}", value: "#{Date.current}" %>
+                <%= f.text_field :work_done, class: 'flatpickr', placeholder: "#{Date.current.strftime("%A, %b %d")}", value: billing&.work_done %>
               </div>
               <div class="col-sm-4">
                 <label class="h5"> Hours </label>
-                <%= f.number_field :hours, class: "form-control", min: 1, step: 1, id: "hours#{contract_id}" %>
+                <%= f.number_field :hours, class: "form-control", min: 1, step: 1, id: "hours#{contract_id}", value: billing&.hours %>
               </div>
               <div class="col-sm-4">
                 <label class="h5"> Minutes </label>
-                <%= f.number_field :minutes, class: "form-control", in: 0..59, step: 1, id: "minutes#{contract_id}" %>
+                <%= f.number_field :minutes, class: "form-control", in: 0..59, step: 1, id: "minutes#{contract_id}", value: billing&.minutes %>
               </div>
               <div class="error text-danger mt-1 text-right col"></div>
             </div>
             <label class="h5 mt-2"> Enter a brief description of the task performed. </label>
             <div class="w-100">
-              <%= f.text_field :description, class: "form-control mb-2", placeholder: "Enter the time entry description" %>
+              <%= f.text_field :description, class: "form-control mb-2", placeholder: "Enter the time entry description", value: billing&.description %>
             </div>
-            <div class="d-flex pt-3 justify-content-end mt-2">
-              <%= f.submit 'Add Hours', class: "btn btn-primary add-hours#{contract_id}" %>
+            <% if billing.present? %>
+              <div class="d-flex pt-3 justify-content-between mt-2">
+              <%= f.submit 'Remove', class: "btn btn-outline-danger mr-2" %>
+              <%= f.submit 'Save Changes', class: "btn btn-primary add-hours#{modal_id}" %>
             </div>
+            <% else %>
+              <div class="d-flex pt-3 justify-content-end mt-2">
+              <%= f.submit 'Add Hours', class: "btn btn-primary add-hours#{modal_id}" %>
+            </div>
+            <% end %>
           </div>
         <% end %>
       </div>
@@ -43,8 +51,8 @@
 </div>
 
 <script>
-  $('.add-hours<%= contract_id %>').on('click', (e) => {
-    if ($('#hours<%= contract_id %>').val() == '' && $('#minutes<%= contract_id %>').val() == '') {
+  $('.add-hours<%= modal_id %>').on('click', (e) => {
+    if ($('#hours<%= modal_id %>').val() == '' && $('#minutes<%= modal_id %>').val() == '') {
       e.preventDefault();
       $('.error').text('No time was entered for the billing entry');
       setTimeout(() => {

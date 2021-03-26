@@ -75,7 +75,7 @@
       <%= render partial: 'freelancer/interviews/send_message', locals: { id: contract.id, employer_profile: contract.employer_profile, redirect_reference: 'contracts' } %>
       <%= render partial: 'freelancer/contracts/close_contract', locals: { contract: contract } %>
       <%= render partial: 'freelancer/contracts/delete_contract', locals: { contract: contract } %>
-      <%= render partial: 'freelancer/contracts/add_hours', locals: { contract_id: contract.id } %>
+      <%= render partial: 'freelancer/contracts/add_hours', locals: { contract_id: contract.id, billing: nil, modal_id: contract.id} %>
       <div class="bp-card mb-3 card<%= contract.id %>">
         <div class="d-flex flex-column flex-md-row">
           <div class="mr-auto mb-2">
@@ -148,24 +148,25 @@
                 </div>
               </div>
 
-              <% contract.billings.current.each do |billings| %>
+              <% contract.billings.current.each do |billing| %>
                 <div name="currentTimeEntry"> <!--repeat this div for each entry-->
                 <hr class="my-2"/>
                 <div class="d-flex">
                   <div class="row w-100">
-                    <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billings.work_done.strftime("%b %d") %></div> <!--i.e. Oct 2, Dec 1, etc.-->
-                    <% if billings.minutes.present? && billings.hours.present? %>
-                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billings.hours + billings.minutes/60.0).round(2) %> hours </div>  <!--Show minutes as a decimal, i.e. 1 hour 45 min = 1.75 hours. Round to hundreds place. Show as "hour" instead of "hours" for amounts 1 hour or less.-->
-                    <% elsif billings.minutes.present? && billings.hours.nil? %>
-                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billings.minutes/60.0).round(2) %> hour </div>
+                    <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.work_done.strftime("%b %d") %></div> <!--i.e. Oct 2, Dec 1, etc.-->
+                    <% if billing.minutes.present? && billing.hours.present? %>
+                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billing.hours + billing.minutes/60.0).round(2) %> hours </div>  <!--Show minutes as a decimal, i.e. 1 hour 45 min = 1.75 hours. Round to hundreds place. Show as "hour" instead of "hours" for amounts 1 hour or less.-->
+                    <% elsif billing.minutes.present? && billing.hours.nil? %>
+                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billing.minutes/60.0).round(2) %> hour </div>
                     <% else %>
-                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billings.hours %> <%= billings.hours.present? ? "#{"hour".pluralize(billings.hours)}" : "" %></div>
+                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.hours %> <%= billing.hours.present? ? "#{"hour".pluralize(billing.hours)}" : "" %></div>
                     <% end %>
-                    <div class="col-12 col-lg-8 mt-2 mt-lg-0"><%= billings.description.present? ? "#{billings.description}" : "" %></div>
+                    <div class="col-12 col-lg-8 mt-2 mt-lg-0"><%= billing.description.present? ? "#{billing.description}" : "" %></div>
                   </div>
-                  <button class="align-self-start btn btn-link shadow-none p-0 ml-1" type="button" data-toggle="modal" data-target="#"><i class="fas fa-edit text-primary"></i></button>
+                  <button class="align-self-start btn btn-link shadow-none p-0 ml-1" type="button" data-toggle="modal" data-target="#addHours<%= billing.id %>"><i class="fas fa-edit text-primary"></i></button>
                 </div>
               </div>
+              <%= render partial: 'freelancer/contracts/add_hours', locals: { contract_id: billing.contract.id, billing: billing, modal_id: billing.id } %>
               <% end %>
             <% end %>
 
@@ -180,25 +181,25 @@
                   <h5 class="ml-4 mb-0"><%= number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage*(contract.billings.paused.sum('hours') + (contract.billings.paused.sum('minutes')/60.0).round(2)) / 100.0, strip_insignificant_zeros: true) %></h5>
                 </div>
               </div>
-              <% contract.billings.paused.each do |billings| %>
+              <% contract.billings.paused.each do |billing| %>
                 <div name="pendingTimeEntry"> <!--repeat this div for each entry-->
                   <hr class="my-2"/>
                   <div class="d-flex">
                     <div class="row w-100">
-                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billings.work_done.strftime("%b %d") %></div> <!--i.e. Oct 2, Dec 1, etc.-->
-                      <% if billings.minutes.present? && billings.hours.present? %>
-                        <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billings.hours + billings.minutes/60.0).round(2) %> hours </div>  <!--Show minutes as a decimal, i.e. 1 hour 45 min = 1.75 hours. Round to hundreds place. Show as "hour" instead of "hours" for amounts 1 hour or less.-->
-                      <% elsif billings.minutes.present? && billings.hours.nil? %>
-                        <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billings.minutes/60.0).round(2) %> hour </div>
+                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.work_done.strftime("%b %d") %></div> <!--i.e. Oct 2, Dec 1, etc.-->
+                      <% if billing.minutes.present? && billing.hours.present? %>
+                        <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billing.hours + billing.minutes/60.0).round(2) %> hours </div>  <!--Show minutes as a decimal, i.e. 1 hour 45 min = 1.75 hours. Round to hundreds place. Show as "hour" instead of "hours" for amounts 1 hour or less.-->
+                      <% elsif billing.minutes.present? && billing.hours.nil? %>
+                        <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billing.minutes/60.0).round(2) %> hour </div>
                       <% else %>
-                        <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billings.hours %> <%= billings.hours.present? ? "#{"hour".pluralize(billings.hours)}" : "" %></div>
+                        <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.hours %> <%= billing.hours.present? ? "#{"hour".pluralize(billing.hours)}" : "" %></div>
                       <% end %>
                       <div class="col-12 col-lg-8 mt-2 mt-lg-0">
-                        <%= billings.description.present? ? "#{billings.description}" : "" %>
-                        <% if billings.dispute_comments.present? %>
+                        <%= billing.description.present? ? "#{billing.description}" : "" %>
+                        <% if billing.dispute_comments.present? %>
                           <div class="mt-2">  <!--Show this div if disputed-->
-                            <div class="bp-text-sm text-danger mb-1 font-weight-bold">Disputed by <%= billings.contract.employer_profile.user.first_name %>:</div>
-                            <div class="font-italic"><%= billings.dispute_comments %></div>
+                            <div class="bp-text-sm text-danger mb-1 font-weight-bold">Disputed by <%= billing.contract.employer_profile.user.first_name %>:</div>
+                            <div class="font-italic"><%= billing.dispute_comments %></div>
                           </div>
                         <% end %>
                       </div>
