@@ -44,10 +44,7 @@ module Stripe
         fingerprint: response['fingerprint'],
         bank_name: response['bank_name'],
         bank_status: response['status'],
-        bank_routing_number: response['routing_number'],
-        country: response['country'],
-        currency: response['currency'],
-        bank_account_number: @bank_account_number
+        bank_routing_number: response['routing_number']
       }
     end
   end

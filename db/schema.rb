@@ -205,8 +205,8 @@ ActiveRecord::Schema.define(version: 2021_03_24_034654) do
     t.integer "desired_hourly_rate"
     t.boolean "new_jobs_alert", default: true
     t.boolean "searchable", default: true
-    t.integer "payout_percentage", default: 70
     t.string "stripe_id_account"
+    t.integer "payout_percentage", default: 70
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
@@ -356,9 +356,6 @@ ActiveRecord::Schema.define(version: 2021_03_24_034654) do
     t.boolean "is_default", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "country"
-    t.string "currency"
-    t.string "bank_account_number"
     t.index ["employer_profile_id"], name: "index_payment_accounts_on_employer_profile_id"
   end
 
