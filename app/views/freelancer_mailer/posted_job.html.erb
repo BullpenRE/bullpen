@@ -4,11 +4,7 @@
 <h5>Description</h5>
 <p><%= @posted_job.short_description %></p>
 <h5>Budget</h5>
-<p><%= @posted_job.contract_type == "hourly" ? "" : "#{Job::CONTRACT_TYPE_DESCRIPTIONS.key(@posted_job.contract_type)} for" %>
-  $<%= @posted_job.pay_range_low %>
-  <%= @posted_job.pay_range_high.present? ? " - $#{@posted_job.pay_range_high}" : "" %>
-  <%= @posted_job.contract_type == "hourly" ? "per hour." : "" %>
-</p>
+<p><%= "#{number_to_currency(@posted_job.pay_range_low, precision: 0)}"%><%= @posted_job.pay_range_high.present? ? " - #{number_to_currency(@posted_job.pay_range_high, precision: 0)}" : "" %> per hour.</p>
 <h5>Details</h5>
 <ul>
   <li>This is a <%= @posted_job.position_length %>, <%= @posted_job.hours_needed %> position for candidates with <%= @posted_job.required_experience %> experience.</li>
