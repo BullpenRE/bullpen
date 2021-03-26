@@ -57,9 +57,6 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
 
     cy.get('.modal-body > form > .d-flex > .btn-primary').click()
 
-    cy.get('#job_contract_type.form-control.selectpicker', { includeShadowDom: true})
-      .select('Hourly', {force: true})
-
     cy.get('#job_pay_range_low').type('100')
 
     cy.get('#job_pay_range_high').type('150')
