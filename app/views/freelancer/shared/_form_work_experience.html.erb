@@ -95,8 +95,7 @@
     <%= f.submit 'Save Changes', id: "submitExperienceWithLocationCheck#{modal_id}", class: "btn btn-primary save-experience-#{modal_id}" %>
   </div>
 <% else %>
-  <div class="modal-footer justify-content-between">
-    <button type="button" class="btn btn-outline-danger mr-2" data-dismiss="modal">Cancel</button>
+  <div class="d-flex justify-content-end m-3">
     <%= f.submit 'Save', id: "submitExperienceWithLocationCheck#{modal_id}", class: "btn btn-primary" %>
   </div>
 <% end %>
