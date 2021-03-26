@@ -11,15 +11,15 @@
 
 module Stripe
   class CustomerBankAccountService
-    def initialize(cus, btok)
+    def initialize(cus, bank_attributes)
       @cus = cus
-      @btok = btok
+      @bank_attributes = bank_attributes
       @employer_profile = EmployerProfile.find_by(stripe_id_customer: @cus)
       @error_message = ''
     end
 
     def call
-      response = Stripe::Customer.create_source(@cus, { source: @btok })
+      response = Stripe::Customer.create_source(@cus, { source: @bank_attributes })
       @error_message = response.message if response['message']
       @employer_profile.payment_accounts.create(prepare_attributes(response)) if response['id']
     rescue StandardError => e
@@ -28,7 +28,7 @@ module Stripe
         "Error in CustomerBankAccountService impacting user id: #{user_id}, "\
         "stripe customer id: #{@cus}, "\
         "error details: #{e}, "\
-        "error_message: #{@error_message}"
+        "error message: #{@error_message}"
       )
 
       { stripe_error: true }
@@ -44,7 +44,10 @@ module Stripe
         fingerprint: response['fingerprint'],
         bank_name: response['bank_name'],
         bank_status: response['status'],
-        bank_routing_number: response['routing_number']
+        bank_routing_number: response['routing_number'],
+        country: response['country'],
+        currency: response['currency'],
+        bank_account_number: @bank_account_number
       }
     end
   end

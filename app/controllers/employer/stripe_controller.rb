@@ -26,12 +26,10 @@ module Employer
     end
 
     def create_account
-      return # temporary block this action till be figured out how it must be implemented
+      iban_absense_redirect unless bank_attributes['account_number'] # the value must be IBAN here
 
-      btoken = Stripe::BankTokenService.new(payment_account_attributes).call
-      redirect_to(employer_account_index_path, alert: btok_absense_alert) if btoken.is_a?(Hash)
-
-      response = Stripe::CustomerBankAccountService.new(employer_profile.stripe_id_customer, btoken).call
+      response = Stripe::CustomerBankAccountService.new(employer_profile.stripe_id_customer,
+                                                        bank_attributes).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR
       else
@@ -49,12 +47,23 @@ module Employer
       redirect_to employer_account_index_path, alert: 'Stripe: Please add a Customer ID to send payouts'
     end
 
-    def btok_absense_alert
-      'There was a problem to get the bank token from Stripe. Try again later'
+    def invalid_iban_redirect
+      redirect_to employer_account_index_path, alert: 'The IBAN provided is invalid! Please check'
     end
 
-    def payment_account_attributes
-      {} # there is question what to put here for now
+    def bank_attributes
+      {
+        'object': 'bank_account',
+        'country': 'US',
+        'currency': 'usd',
+        'account_holder_name': current_user.full_name,
+        'account_holder_type': 'company',
+        'account_number': stripe_params[:iban_account_number]
+      }
+    end
+
+    def stripe_params
+      params.require(:stripe).permit(:iban_account_number)
     end
   end
 end
