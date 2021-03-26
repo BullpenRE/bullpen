@@ -48,8 +48,7 @@ module Stripe
         fingerprint: response['fingerprint'],
         card_brand: response['brand'],
         card_cvc_check: response['cvc_check'], # right now Stripe sends null here
-        card_expires: convert_time(response),
-        country: response['country']
+        card_expires: convert_time(response)
       }
     end
   end
