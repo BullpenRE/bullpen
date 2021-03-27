@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Timesheet < ApplicationRecord
   belongs_to :contract
   has_many :billings, dependent: :nullify
