@@ -3,12 +3,13 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('bi
     menu label: 'Billing Entries'
 
     permit_params :contract_id, :work_done, :hours, :minutes, :description, :state,
-                  :dispute_comments, :dispute_resolved
+                  :dispute_comments, :dispute_resolved, :timesheet_id
     actions :all
 
     index do
       id_column
       column :contract
+      column :timesheet
       column :hours
       column :minutes
       column :work_done
@@ -25,6 +26,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('bi
     show title: 'Contract' do |contract|
       attributes_table do
         row :contract
+        row :timesheet
         row :work_done
         row :hours
         row :minutes
@@ -46,7 +48,17 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('bi
                 as: :select, input_html: { class: 'select2' },
                 collection: Contract.find_each.map {|contract| ["#{contract.title} from #{contract.employer_profile.email}", contract.id]},
                 label: 'Contract'
-
+        if f.object.new_record?
+          f.input :timesheet_id,
+                  as: :select, input_html: { class: 'select2' },
+                  collection: Timesheet.find_each.map {|timesheet| ["#{timesheet.description} from contract #{timesheet.contract.title}", timesheet.id]},
+                  label: 'Timesheet'
+        else
+          f.input :timesheet_id,
+                  as: :select, input_html: { class: 'select2' },
+                  collection: Timesheet.where(contract_id: f.object.contract_id).map {|timesheet| ["#{timesheet.description} from contract #{timesheet.contract.title}", timesheet.id]},
+                  label: 'Timesheet'
+        end
         f.input :work_done
         f.input :hours
         f.input :minutes
