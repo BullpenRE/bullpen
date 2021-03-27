@@ -1,3 +1,5 @@
+/// <reference types="Cypress" />
+
 describe('To get /employer/talent page via factory employer_profile.rb and as employer create a job', () => {
 
   it('get /employer/talent via factory employer_profile.rb and create a job',  { retries: 2 }, function () {
@@ -118,7 +120,7 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .get('.d-sm-flex > :nth-child(3) > .btn')
       .click()
 
-    // try cancel removement of accepted request
+    // try cancel removal of accepted request
     cy.get('[id^=removeInterviewRequest] > .modal-dialog > .modal-content > .modal-footer > .btn-link')
       .should('exist')
       .get('[id^=removeInterviewRequest] > .modal-dialog > .modal-content > .modal-footer > .btn-link')
