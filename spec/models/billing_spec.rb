@@ -6,12 +6,15 @@ RSpec.describe Billing, type: :model do
   let!(:disputed_billing) { FactoryBot.create(:billing, :disputed) }
   let!(:resolved_billing) { FactoryBot.create(:billing, :resolved) }
   let!(:paid_billing) { FactoryBot.create(:billing, :paid) }
+  let!(:billing_with_timesheet) { FactoryBot.create(:billing, :with_timesheet) }
+  let(:timesheet) { billing_with_timesheet.timesheet }
 
   it 'factories work' do
     expect(billing).to be_valid
     expect(disputed_billing).to be_valid
     expect(resolved_billing).to be_valid
     expect(paid_billing).to be_valid
+    expect(billing_with_timesheet).to be_valid
   end
 
   context 'Validations' do
@@ -45,11 +48,21 @@ RSpec.describe Billing, type: :model do
       billing.minutes = 0
       expect(billing).to_not be_valid
     end
+
+    it 'parent timesheet must belong to the same contract as the billing' do
+      expect(billing_with_timesheet.contract).to eq(timesheet.contract)
+      billing_with_timesheet.contract_id = FactoryBot.create(:contract).id
+      expect(billing_with_timesheet).to_not be_valid
+    end
   end
 
   context 'Relationships' do
     it 'belongs to a contract' do
       expect(billing.contract).to eq(contract)
+    end
+
+    it 'belongs to a timesheet' do
+      expect(Timesheet.exists?(timesheet.id)).to be_truthy
     end
   end
 
