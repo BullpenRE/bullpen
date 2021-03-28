@@ -20,7 +20,7 @@
               </div>
               <div class="col-sm-4">
                 <label class="h5"> Hours </label>
-                <%= f.number_field :hours, class: "form-control", min: 1, step: 1, id: "hours#{contract_id}" %>
+                <%= f.number_field :hours, class: "form-control", min: 0, step: 1, id: "hours#{contract_id}" %>
               </div>
               <div class="col-sm-4">
                 <label class="h5"> Minutes </label>
@@ -44,7 +44,10 @@
 
 <script>
   $('.add-hours<%= contract_id %>').on('click', (e) => {
-    if ($('#hours<%= contract_id %>').val() == '' && $('#minutes<%= contract_id %>').val() == '') {
+    const hours = $('#hours<%= contract_id %>').val();
+    const minutes = $('#minutes<%= contract_id %>').val();
+    if ((hours == '' && minutes == '') || (parseInt(minutes, 10) == 0 && hours == '') ||
+      (!(parseInt(hours, 10) > 0 || parseInt(minutes, 10) > 0)) || (parseInt(hours, 10) == 0 && minutes == '')) {
       e.preventDefault();
       $('.error').text('No time was entered for the billing entry');
       setTimeout(() => {
