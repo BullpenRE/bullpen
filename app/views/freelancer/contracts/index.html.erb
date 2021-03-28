@@ -153,7 +153,7 @@
                 <hr class="my-2"/>
                 <div class="d-flex">
                   <div class="row w-100">
-                    <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.work_done.strftime("%b %d") %></div> <!--i.e. Oct 2, Dec 1, etc.-->
+                    <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.work_done&.strftime("%b %d") %></div> <!--i.e. Oct 2, Dec 1, etc.-->
                     <% if billing.minutes.present? && billing.hours.present? %>
                       <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billing.hours + billing.minutes/60.0).round(2) %> hours </div>  <!--Show minutes as a decimal, i.e. 1 hour 45 min = 1.75 hours. Round to hundreds place. Show as "hour" instead of "hours" for amounts 1 hour or less.-->
                     <% elsif billing.minutes.present? && billing.hours.nil? %>
@@ -163,10 +163,10 @@
                     <% end %>
                     <div class="col-12 col-lg-8 mt-2 mt-lg-0"><%= billing.description.present? ? "#{billing.description}" : "" %></div>
                   </div>
-                  <button class="align-self-start btn btn-link shadow-none p-0 ml-1" type="button" data-toggle="modal" data-target="#addHours<%= billing.id %>"><i class="fas fa-edit text-primary"></i></button>
+                  <button class="align-self-start btn btn-link shadow-none p-0 ml-1" type="button" data-toggle="modal" data-target="#addHours<%= contract.id %>-<%= billing.id %>"><i class="fas fa-edit text-primary"></i></button>
                 </div>
               </div>
-              <%= render partial: 'freelancer/contracts/add_hours', locals: { contract_id: billing.contract.id, billing: billing, modal_id: billing.id } %>
+              <%= render partial: 'freelancer/contracts/add_hours', locals: { contract_id: contract.id, billing: billing, modal_id: "#{contract.id}-#{billing.id}" } %>
               <% end %>
             <% end %>
 

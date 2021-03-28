@@ -5,7 +5,14 @@ class Freelancer::BillingsController < ApplicationController
 
   def add_hours
     @contract = current_user.freelancer_profile.contracts.find_by(id: params[:billing][:contract_id])
-    @contract.billings.create(billings_params)
+    find_billing
+    if @billing.present? && params[:commit] == 'Remove'
+      @billing.destroy
+    elsif @billing.present?
+      @billing.update(billings_params)
+    else
+      @contract.billings.create(billings_params)
+    end
 
     redirect_to freelancer_contracts_path
   end
@@ -14,5 +21,11 @@ class Freelancer::BillingsController < ApplicationController
 
   def billings_params
     params.require(:billing).permit(:work_done, :hours, :minutes, :description)
+  end
+
+  def find_billing
+    return unless params[:billing][:billing_id].present?
+
+    @billing ||= @contract.billings.find_by(id: params[:billing][:billing_id])
   end
 end
