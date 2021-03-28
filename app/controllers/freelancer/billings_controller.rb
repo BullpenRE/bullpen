@@ -9,6 +9,9 @@ class Freelancer::BillingsController < ApplicationController
     if @billing.present? && params[:commit] == 'Remove'
       @billing.destroy
     elsif @billing.present?
+      if @billing.disputed?
+        @billing.update(billings_params.merge(state: 'pending', dispute_resolved: Date.current))
+      end
       @billing.update(billings_params)
     else
       @contract.billings.create(billings_params)

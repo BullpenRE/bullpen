@@ -204,9 +204,10 @@
                         <% end %>
                       </div>
                     </div>
-                    <button class="align-self-start btn btn-link shadow-none p-0 ml-1" type="button" data-toggle="modal" data-target="#"><i class="fas fa-edit text-primary"></i></button>
+                    <button class="align-self-start btn btn-link shadow-none p-0 ml-1" type="button" data-toggle="modal" data-target="#addHours<%= contract.id %>-<%= billing.id %>"><i class="fas fa-edit text-primary"></i></button>
                   </div>
                 </div>
+                <%= render partial: 'freelancer/contracts/add_hours', locals: { contract_id: contract.id, billing: billing, modal_id: "#{contract.id}-#{billing.id}" } %>
               <% end %>
             <% end %>
 

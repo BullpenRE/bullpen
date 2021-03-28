@@ -4,7 +4,7 @@ class Billing < ApplicationRecord
   belongs_to :contract
   enum state: { pending: 0, disputed: 1, paid: 2 }
   scope :resolved, -> { where(state: 'pending').where.not(dispute_resolved: nil) }
-  scope :current, -> { where(state: 'pending').where(dispute_resolved: nil) }
+  scope :current, -> { where(state: 'pending') }
   scope :paused, -> { where(state: 'disputed').where(dispute_resolved: nil) }
 
   validates :hours, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
