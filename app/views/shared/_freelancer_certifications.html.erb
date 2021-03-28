@@ -5,7 +5,7 @@
     <i class="bp-text-sm"><%= freelancer_certification.earned.strftime("%b %Y") %></i>
     </div>
     <% if editable %>
-      <button class="btn link-btn shadow-none p-0 align-self-start ml-auto" type="button"  data-toggle="modal" data-target="#editLicenseCertificationModal-<%= freelancer_certification.id %>"><i class="fas fa-edit text-primary"></i></button>
+      <button class="btn btn-link shadow-none p-0 align-self-start ml-auto" type="button"  data-toggle="modal" data-target="#editLicenseCertificationModal-<%= freelancer_certification.id %>"><i class="fas fa-edit text-primary"></i></button>
     <% end %>
   </div>
   <%= render partial: 'freelancer/shared/edit_certifications', locals: { freelancer_certification: freelancer_certification, certifications: @certifications } if @freelancer_profile && @certifications %>
