@@ -26,7 +26,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
         row :created_at
         row :updated_at
         row 'Billing Entries' do
-          (timesheet.billings.order(work_done: :desc).map{|billing| link_to(billing.description, admin_billing_path(billing.id))}.join('<br>') + link_to('Add New', new_admin_billing_path, target: '_new')).html_safe
+          (timesheet.billings.order(work_done: :desc).map{|billing| link_to(billing.description, admin_billing_path(billing.id))}.join('<br>') + link_to('Add New', new_admin_billing_path(:billing=> { :contract_id => timesheet.contract_id, :timesheet_id => timesheet.id }), target: '_new')).html_safe
         end
 
       end
