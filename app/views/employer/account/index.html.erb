@@ -81,13 +81,6 @@
         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addBankAccountModal">
           Add a Bank Account
         </button>
-    <% else %>
-        <div class="mb-2">Please add a Customer ID to send payouts.</div>
-        <%= link_to 'Add a Customer ID',
-                    employer_create_customer_path,
-                    method: :post,
-                    type: 'button',
-                    class: 'btn btn-outline-primary add-customer-id' %>
     <% end %>
   </div>
 

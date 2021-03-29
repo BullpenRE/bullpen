@@ -5,16 +5,6 @@ module Employer
     before_action :authenticate_user!, :initial_check, :non_employer_redirect, :employer_profile
     before_action :no_account_routing_redirect, only: :create_account
 
-    def create_customer
-      response = Stripe::CustomerCreationService.new(current_user).call
-
-      if response.is_a?(Hash)
-        redirect_to employer_account_index_path, alert: STRIPE_ERROR
-      else
-        redirect_to employer_account_index_path, notice: 'Stripe: Customer added successfully'
-      end
-    end
-
     def create_card
       cus_id_absense_redirect unless employer_profile.stripe_id_customer.present?
       response = Stripe::CustomerCardCreationService.new(employer_profile.stripe_id_customer).call
