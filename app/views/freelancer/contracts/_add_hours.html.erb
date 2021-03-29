@@ -21,11 +21,11 @@
               </div>
               <div class="col-sm-4">
                 <label class="h5"> Hours </label>
-                <%= f.number_field :hours, class: "form-control", min: 1, step: 1, id: "hours#{contract_id}", value: billing&.hours %>
+                <%= f.number_field :hours, class: "form-control", min: 0, step: 1, id: "hours#{modal_id}", value: billing&.hours %>
               </div>
               <div class="col-sm-4">
                 <label class="h5"> Minutes </label>
-                <%= f.number_field :minutes, class: "form-control", in: 0..59, step: 1, id: "minutes#{contract_id}", value: billing&.minutes %>
+                <%= f.number_field :minutes, class: "form-control", in: 0..59, step: 1, id: "minutes#{modal_id}", value: billing&.minutes %>
               </div>
               <div class="error text-danger mt-1 text-right col"></div>
             </div>
@@ -52,7 +52,10 @@
 
 <script>
   $('.add-hours<%= modal_id %>').on('click', (e) => {
-    if ($('#hours<%= modal_id %>').val() == '' && $('#minutes<%= modal_id %>').val() == '') {
+    const hours = $('#hours<%= modal_id %>').val();
+    const minutes = $('#minutes<%= modal_id %>').val();
+    if ((hours == '' && minutes == '') || (parseInt(minutes, 10) == 0 && hours == '') ||
+      (!(parseInt(hours, 10) > 0 || parseInt(minutes, 10) > 0)) || (parseInt(hours, 10) == 0 && minutes == '')) {
       e.preventDefault();
       $('.error').text('No time was entered for the billing entry');
       setTimeout(() => {
