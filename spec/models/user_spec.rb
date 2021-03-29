@@ -108,4 +108,23 @@ describe User do
       expect(freelancer_user.longitude).not_to eq(-74.0060152)
     end
   end
+
+  context "geocoding" do
+    before :each do
+      @user = user
+      stub_request(:get, /.*yboss.yahooapis.com*/).to_return(:body => File.read(File.join("spec", "fixtures", "geocoder", "maps_data.json")))
+    end
+    it 'should geocode if coordinates missing' do
+      without_coordinates = Location.new(name: "Test",
+                                         street: "Revierstrasse 1",
+                                         zipcode: "5020",
+                                         country: "AT",
+                                         user: @user, affiliate: @user)
+
+
+
+      result = without_coordinates.geocode
+      without_coordinates.coordinates.should == [47.8029, 13.0472]
+    end
+  end
 end

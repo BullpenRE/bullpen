@@ -58,6 +58,7 @@ group :test do
   gem 'rails-controller-testing'                        # This gem brings back assigns to your controller tests as well as assert_template to both controller and integration tests.
   gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
   gem 'stripe-ruby-mock', '~> 3.0.1'
+  gem 'webmock'
 end
 
 group :development do
