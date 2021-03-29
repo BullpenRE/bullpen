@@ -6,6 +6,7 @@ class Contract < ApplicationRecord
   belongs_to :job, optional: true
   belongs_to :payment_account, optional: true
   has_many :billings, dependent: :destroy
+  has_many :timesheets, dependent: :destroy
   has_rich_text :job_description
 
   enum state: { 'pending': 0, 'declined': 1, 'withdrawn': 2, 'accepted': 3, 'closed': 4 }
