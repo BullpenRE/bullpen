@@ -11,7 +11,7 @@
 
 <%= render 'nav_bar/link_to_login' %>
 
-<div class="log-in-container">
+<div class="log-in-container p-3 p-sm-0">
   <div class="bp-card m-auto text-center" style="max-width:500px">
     <div class="h2 mb-3">Create an Account</div>
     <div>
@@ -65,7 +65,7 @@
           </div>
         </div>
         <div class="field mb-3 text-left phone_number_block">
-          <%= f.label :phone_number, 'Phone Number', class: 'h5' %> (optional)<br>
+          <%= f.label :phone_number, 'Phone Number', class: 'h5' %> (Optional)<br>
           <%= f.text_field :phone_number, class: 'form-control', id: 'user_phone_number' %>
         </div>
         <% if @show_promo_code %>

@@ -3,8 +3,10 @@
                                                                  editable: editable } %>
   <div>
     <p class="text-wrap text-break mt-3 mb-2"><%= freelancer_profile.professional_summary %></p>
-    <% if job_application.present? || freelancer_profile.desired_hourly_rate.present? %>
-      <p class="text-secondary mb-2"><b>$<%= job_application.present? ? job_application.bid_amount : freelancer_profile.desired_hourly_rate %> per hour</b></p>
+    <% if job_application.present? %>
+      <p class="text-secondary mb-2"><b><%= number_to_currency(job_application.bid_amount, precision: 0) %> per hour</b></p>
+    <% elsif freelancer_profile.desired_hourly_rate.present? %>
+      <p class="text-secondary mb-2"><b><%= number_to_currency(freelancer_profile.desired_hourly_rate, precision: 0) %> per hour</b></p>
     <% end %>
     <%  freelancer_profile.sectors.order(description: :asc)&.each do |sector| %>
       <span class="badge badge-secondary mt-1"><%= sector.description %></span>

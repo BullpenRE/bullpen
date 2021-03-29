@@ -23,9 +23,9 @@ class Employer::ContractsController < ApplicationController
 
   def make_an_offer_without_job
     @contract = if job_id.present?
-                  create_contract(make_an_offer_params.merge(state: 'pending'))
+                  create_contract(make_an_offer_params.merge(state: 'pending').merge(pay_rate))
                 else
-                  create_contract(make_an_offer_params_without_job.merge(state: 'pending'))
+                  create_contract(make_an_offer_params_without_job.merge(state: 'pending').merge(pay_rate))
                 end
 
     close_job_if_offer_is_made

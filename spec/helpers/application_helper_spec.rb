@@ -27,6 +27,7 @@ describe ApplicationHelper, type: :helper do
   describe '#clean_currency_entry' do
     it 'checks results' do
       expect(helper.clean_currency_entry('$43,334')).to eq(43334)
+      expect(helper.clean_currency_entry('$43,334,111')).to eq(43334111)
       expect(helper.clean_currency_entry('$43334')).to eq(43334)
       expect(helper.clean_currency_entry('43334')).to eq(43334)
       expect(helper.clean_currency_entry('433.34')).to eq(433)

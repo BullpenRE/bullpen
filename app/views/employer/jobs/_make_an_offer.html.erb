@@ -38,19 +38,10 @@
               <%= f.rich_text_area :job_description, class: "form-control mb-3", id: "JobDescriptionInput", placeholder: "Enter Job Description", value: contract.present? ? contract.job_description : job.short_description %>
             </div>
             <div class="row mb-2">
-              <div class="col-lg-4">
-                <label class="h5">Fee Structure</label>
-                <% contract_type = contract.present? ? contract.contract_type : job.contract_type %>
-                <%= f.select :contract_type,
-                             options_for_select(Job::CONTRACT_TYPE_DESCRIPTIONS, contract_type),
-                             {}, class: "form-control contract_type#{contract&.id}", required: true, style: "width: 100%" %>
-              </div>
               <div class="col-lg-4 mt-3 mt-lg-0">
-                <% hourly = contract.present? ? contract.hourly? : job.hourly? %>
-                <label class="h5 contract_rate<%= contract&.id %>"><%= hourly ? 'Hourly Rate' : 'Monthly Rate' %></label>
+                <label class="h5">Hourly Rate</label>
                 <%= f.text_field :pay_rate, class: "form-control pay_rate#{contract&.id}", required: true, value: contract.present? ? contract.pay_rate : job.pay_range_low %>
               </div>
-              
             </div>
             <% if job.present? %>
               <div class="mb-4 mt-0 bp-text-sm">Your payment method will be charged weekly based on the number of hours worked.</div>
@@ -103,13 +94,14 @@
     event.preventDefault();
   });
 
-  $('.contract_type<%= contract&.id %>').change(() => {
-    if ($('.contract_type<%= contract&.id %>').val() == 'hourly' || !$('.contract_type<%= contract&.id %>').val()) {
-      $('.contract_rate<%= contract&.id %>').text('Hourly Rate');
-    } else {
-      $('.contract_rate<%= contract&.id %>').text('Monthly Rate');
-    }
+  $(document).on('turbolinks:load', function (e) {
+    formatCurrency($('.pay_rate<%= contract&.id %>'));
+
+    $('.pay_rate<%= contract&.id %>').keyup(() => {
+      formatCurrency($('.pay_rate<%= contract&.id %>'));
+    })
   });
+
 </script>
 <style>
     #JobDescriptionInput {

@@ -120,6 +120,7 @@
                                  placeholder: "City, State abbreviation",
                                  required: true %>
               </div>
+              <div class="error-location text-danger mb-2"></div>
             </div>
           </div>
 
@@ -140,7 +141,7 @@
                 </label>
                 <span class="text-dark"> (optional) </span>
                 <%= f.text_field :desired_hourly_rate,
-                                 class: "form-control",
+                                 class: "form-control col-lg-4",
                                  id: "perHourBid",
                                  placeholder: "Enter your hourly rate",
                                  required: true,
@@ -180,6 +181,12 @@
 
 <script>
   $(document).on('turbolinks:load', function (e) {
+    formatCurrency($('#perHourBid'));
+
+    $('#perHourBid').keyup(() => {
+      formatCurrency($('#perHourBid'));
+    });
+
     $('.select2').select2({
       placeholder: 'Select all that apply',
       allowClear: true

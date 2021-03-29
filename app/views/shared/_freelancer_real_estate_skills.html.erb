@@ -6,7 +6,7 @@
     </div>
     <% if editable %>
         <div class="d-flex-col ml-auto">
-          <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editSkills"></button>
+          <button class="btn btn-link shadow-none p-0 align-self-start ml-auto" type="button"  data-toggle="modal" data-target="#editSkills"><i class="fas fa-edit text-primary"></i></button>
         </div>
         <%= render partial: 'freelancer/shared/edit_real_estate-skills', locals: { freelancer_profile: freelancer_profile, real_estate_skills: @real_estate_skills || RealEstateSkill.enabled.pluck(:description, :id) } %>
     <% end %>

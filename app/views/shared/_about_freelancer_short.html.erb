@@ -1,26 +1,26 @@
-<div class="d-flex flex-sm-row flex-column align-items-center">
-  <% if freelancer_profile.avatar.attached? %>
-    <div class="text-light avatar-image" style="line-height: 0;">
-      <%= image_tag freelancer_profile.avatar, class: 'rounded-circle', width: '80px', height: '80px' %>
-    </div>
-  <% else %>
-    <div class="text-light avatar-image" style="font-size: 80px; line-height: 0;"><i class="fas fa-user-circle"></i></div>
-  <% end %>
-  <div class="ml-sm-3 mt-1 mt-sm-0 w-100">
-    <div class="d-flex flex-row flex-inline">
-      <div class="d-flex-col w-100 text-center text-sm-left">
-        <h2 class="mb-1"><%= freelancer_profile.full_name %></h2>
+<div class="d-flex">
+  <div class="d-flex flex-sm-row flex-column">
+    <% if freelancer_profile.avatar.attached? %>
+      <div class="text-light avatar-image" style="line-height: 0;">
+        <%= image_tag freelancer_profile.avatar, class: 'rounded-circle', width: '80px', height: '80px' %>
       </div>
-      <% if editable %>
-        <div class="d-flex-col ml-auto">
-          <button class="fas fa-edit text-primary" type="button"  data-toggle="modal" data-target="#editProfileModal-<%= freelancer_profile.id %>"></button>
-        </div>
-        <%= render 'freelancer/shared/edit_basic_info', freelancer_profile: freelancer_profile, redirect_reference: '' %>
-      <% end %>
-    </div>
-    <div class="bp-text-sm text-wrap text-break d-flex-col text-center text-sm-left">
-      <%= freelancer_profile.professional_title %><br>
-      <%= freelancer_profile.location %>
+    <% else %>
+      <div class="text-light avatar-image" style="font-size: 80px; line-height: 0;">
+        <i class="fas fa-user-circle"></i>
+      </div>
+    <% end %>
+    <div class="ml-sm-3 mt-1 align-self-sm-center mt-sm-0">
+      <h2 class="mb-1"><%= freelancer_profile.full_name %></h2>
+      <div class="bp-text-sm">
+        <%= freelancer_profile.professional_title %><br>
+        <%= freelancer_profile.location %>
+      </div>
     </div>
   </div>
+  <% if editable %>
+    <div class="d-flex-col ml-auto">
+      <button class="btn btn-link shadow-none p-0 align-self-start ml-auto" type="button"  data-toggle="modal" data-target="#editProfileModal-<%= freelancer_profile.id %>"><i class="fas fa-edit text-primary"></i></button>
+    </div>
+    <%= render 'freelancer/shared/edit_basic_info', freelancer_profile: freelancer_profile, redirect_reference: '' %>
+  <% end %>
 </div>

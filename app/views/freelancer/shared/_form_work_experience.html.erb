@@ -16,7 +16,7 @@
     <label for="experienceLocationInput<%= modal_id %>" class="h5">Location</label>
     <%= f.text_field :location, class: "form-control", id: "experienceLocationInput#{modal_id}", placeholder: "e.g. San Francisco, CA", required: true, value: freelancer_profile_experience&.location %>
   </div>
-
+  <div class="error-location text-danger mb-2"></div>
   <div class="form-group">
     <div class="row mb-3">
       <div class="col-12 col-md-6 startDate<%= modal_id %>">
@@ -84,7 +84,7 @@
 
   <div class="form-group mb-0">
     <label for="jobDescriptionTextarea<%= modal_id %>" class="h5">Description</label>
-    <%= f.text_area :description, class: "form-control mb-1", id: "jobDescriptionTextarea#{modal_id}", placeholder: "Enter your job description", rows: 3, value: freelancer_profile_experience&.description %>
+    <%= f.text_area :description, class: "form-control mb-1", id: "jobDescriptionTextarea#{modal_id}", placeholder: "Enter your job description", rows: 3, value: freelancer_profile_experience&.description, maxlength: "2000" %>
     <div class="error_message_job_description<%= modal_id %> text-danger"></div>
   </div>
   <%= f.hidden_field :id, value: freelancer_profile_experience&.id %>

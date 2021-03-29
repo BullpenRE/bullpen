@@ -60,11 +60,11 @@ class Employer::JobsController < ApplicationController
 
   def make_an_offer
     if contract_being_reopened?
-      contract.update(update_make_an_offer_params.merge(state: 'pending'))
+      contract.update(update_make_an_offer_params.merge(state: 'pending').merge(pay_rate))
       create_make_an_offer_flash_notice
       FreelancerMailer.reopen_contract(@contract).deliver_later
     elsif contract_being_updated?
-      contract.update(update_make_an_offer_params)
+      contract.update(update_make_an_offer_params.merge(pay_rate))
       update_make_an_offer_flash_notice
       FreelancerMailer.offer_update(@contract).deliver_later
     else
@@ -84,7 +84,8 @@ class Employer::JobsController < ApplicationController
 
   def create_contract
     @job = current_user.employer_profile.jobs.find_by(id: params[:make_an_offer][:job_id])
-    @contract = current_user.employer_profile.contracts.create(make_an_offer_params.merge(state: 'pending'))
+    @contract = current_user.employer_profile.contracts.create(make_an_offer_params.merge(state: 'pending')
+                                                                                   .merge(pay_rate))
     close_job_if_offer_is_made
     mixpanel_job_tracker('Create Contract')
   end
