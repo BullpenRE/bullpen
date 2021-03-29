@@ -132,7 +132,7 @@
         
         <div id="collapseApplications<%= job.id %>" class="collapse">
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="application<%= job.id %>" role="tabpanel" aria-labelledby="application-tab">
+            <div class="tab-pane fade show <%= job.contracts.hire_group.present? ? '' : 'active' %>" id="application<%= job.id %>" role="tabpanel" aria-labelledby="application-tab">
               <% job.job_applications.applied.without_contracts.each do |job_application| %>
                 <hr>
                 <div class="d-flex justify-content-between flex-column flex-lg-row">
@@ -226,10 +226,17 @@
                   $('#hire-tab<%= job.id %>').css('border-bottom', 'none');
                   $('#application-tab<%= job.id %>').css('border-bottom', 'none');
                 });
+                $('.more-link_action<%= job.id %>').on('click', () => {
+                  if ('<%= job.contracts.hire_group.present? %>' == 'true') {
+                    $('#hire-tab<%= job.id %>').css('border-bottom', '5px solid rgb(0, 84, 149)');
+                  } else {
+                    $('#application-tab<%= job.id %>').css('border-bottom', '5px solid rgb(0, 84, 149)');
+                  }
+                });
               })
             </script>
 
-            <div class="tab-pane fade show <%= job.job_applications.applied.without_contracts.present? ? '' : 'active' %>" id="hire<%= job.id %>" role="tabpanel" aria-labelledby="hire-tab">
+            <div class="tab-pane fade show active" id="hire<%= job.id %>" role="tabpanel" aria-labelledby="hire-tab">
               <% job.contracts.hire_group.each do |contract| %>
                 <hr>
                 <div class="d-flex flex-column flex-lg-row">
