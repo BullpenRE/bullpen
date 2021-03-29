@@ -10,7 +10,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('bi
       id_column
       column :contract
       column 'Timesheet' do |billing|
-        link_to(billing.timesheet.description, admin_timesheet_path(billing.timesheet_id)) if billing.timesheet.present?
+        link_to(billing.timesheet.description || "#{billing.timesheet.starts} to #{billing.timesheet.ends}", admin_timesheet_path(billing.timesheet_id)) if billing.timesheet.present?
       end
       column :hours
       column :minutes
@@ -25,11 +25,11 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('bi
     filter :contract_freelancer_profile_user_email, as: :string, label: 'Freelancer Email'
     filter :state, as: :select, collection: -> { Billing.states }
 
-    show title: 'Contract' do |contract|
+    show title: 'Billing' do |billing|
       attributes_table do
         row :contract
         row 'Timesheet' do
-          link_to(contract.timesheet.description, admin_timesheet_path(contract.timesheet_id))
+          link_to(billing.timesheet.description || "#{billing.timesheet.starts} to #{billing.timesheet.ends}", admin_timesheet_path(billing.timesheet_id)) if billing.timesheet
         end
         row :work_done
         row :hours
@@ -47,20 +47,20 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('bi
 
 
     form do |f|
-      f.inputs "Billing Entry" do
+      f.inputs 'Billing Entry' do
         f.input :contract_id,
                 as: :select, input_html: { class: 'select2' },
-                collection: Contract.find_each.map {|contract| ["#{contract.title} from #{contract.employer_profile.email}", contract.id]},
+                collection: Contract.find_each.map { |contract| ["#{contract.title} from #{contract.employer_profile.email}", contract.id] },
                 label: 'Contract'
         if f.object.new_record?
           f.input :timesheet_id,
                   as: :select, input_html: { class: 'select2' },
-                  collection: Timesheet.find_each.map {|timesheet| ["#{timesheet.description} from contract #{timesheet.contract.title}", timesheet.id]},
+                  collection: Timesheet.find_each.map { |timesheet| ["#{timesheet.description} from contract #{timesheet.contract.title}", timesheet.id] },
                   label: 'Timesheet'
         else
           f.input :timesheet_id,
                   as: :select, input_html: { class: 'select2' },
-                  collection: Timesheet.where(contract_id: f.object.contract_id).map {|timesheet| ["#{timesheet.description} from contract #{timesheet.contract.title}", timesheet.id]},
+                  collection: Timesheet.where(contract_id: f.object.contract_id).map { |timesheet| ["#{timesheet.description} from contract #{timesheet.contract.title}", timesheet.id] },
                   label: 'Timesheet'
         end
         f.input :work_done
