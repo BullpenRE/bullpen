@@ -9,7 +9,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('bi
     index do
       id_column
       column :contract
-      column :timesheet
+      column 'Timesheet' do |billing|
+        link_to(billing.timesheet.description, admin_timesheet_path(billing.timesheet_id)) if billing.timesheet.present?
+      end
       column :hours
       column :minutes
       column :work_done
