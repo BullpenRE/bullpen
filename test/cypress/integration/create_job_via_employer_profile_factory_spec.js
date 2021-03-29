@@ -74,7 +74,6 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
 
     cy.get('.new-question-button').click()
       .get('[name="job[job_questions][description_4]"]').type('Cy Question_4')
-      // click button 'Preview Job Post'
       .get('.pt-3 > div > .btn-primary').click()
 
 // being at 'Preview Job Post' module click button 'Save as Draft'
