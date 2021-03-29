@@ -26,7 +26,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('bi
     show title: 'Contract' do |contract|
       attributes_table do
         row :contract
-        row :timesheet
+        row 'Timesheet' do
+          link_to(contract.timesheet.description, admin_timesheet_path(contract.timesheet_id))
+        end
         row :work_done
         row :hours
         row :minutes
