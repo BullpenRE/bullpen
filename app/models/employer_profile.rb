@@ -11,6 +11,8 @@ class EmployerProfile < ApplicationRecord
   has_many :payment_accounts, dependent: :destroy
   has_one_attached :avatar
 
+  after_commit :retrieve_customer_id, on: :create
+
   accepts_nested_attributes_for :user,
                                 allow_destroy: true,
                                 update_only: true,
@@ -41,5 +43,11 @@ class EmployerProfile < ApplicationRecord
     I found your profile on Bullpen and think you’d be a great fit for a project
     I’m working on. Are you open to connecting on a call?<br>
     - #{user.first_name}"
+  end
+
+  private
+
+  def retrieve_customer_id
+    Stripe::RetrieveCustomerIdWorker.perform_async(user.id)
   end
 end

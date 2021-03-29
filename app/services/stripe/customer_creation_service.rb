@@ -9,27 +9,22 @@
 
 module Stripe
   class CustomerCreationService
-    def initialize(user)
-      @user = user
-      @error_message = ''
+    def initialize(user_id)
+      @user = User.find_by(id: user_id)
     end
 
     def call
       response = Stripe::Customer.create({
                                            email: @user.email,
-                                           name: @user.full_name,
-                                           description: @user.id
+                                           name: @user.full_name
                                          })
-      @error_message = response.message if response['message']
       @user.employer_profile.update(stripe_id_customer: response['id']) if response['id']
     rescue StandardError => e
       Rails.logger.info(
         "Error in CustomerCreationService impacting user id: #{@user.id}, "\
         "error details: #{e}", \
-        "error_message: #{@error_message}"
+        "error_message: #{response.message}"
       )
-
-      { stripe_error: true }
     end
   end
 end
