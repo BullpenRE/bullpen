@@ -90,9 +90,9 @@
   <%= f.hidden_field :id, value: freelancer_profile_experience&.id %>
 </div>
 <% if freelancer_profile_experience&.id.present? %>
-  <div class="modal-footer">
-    <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
+  <div class="modal-footer flex-row-reverse">
     <%= f.submit 'Save Changes', id: "submitExperienceWithLocationCheck#{modal_id}", class: "btn btn-primary save-experience-#{modal_id}" %>
+    <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
   </div>
 <% else %>
   <div class="modal-footer justify-content-between">
