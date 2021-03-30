@@ -19,7 +19,7 @@ class Billing < ApplicationRecord
   def attach_to_relevant_timesheet
     return if timesheet.present?
 
-    update(timesheet: relevant_timesheet) if relevant_timesheet
+    update(timesheet: relevant_timesheet)
   end
 
   private
@@ -35,14 +35,16 @@ class Billing < ApplicationRecord
   end
 
   def relevant_timesheet
-    @relevant_timesheet ||= (contract.timesheets.find_by(starts: ..work_done, ends: work_done..) || create_new_timesheet!)
+    @relevant_timesheet ||=
+      contract.timesheets.find_by(starts: ..work_done, ends: work_done..) ||
+        create_new_timesheet!
   end
 
   def create_new_timesheet!
     contract.timesheets.new(
       starts: new_timesheet_starts,
       ends: new_timesheet_ends,
-      description: "#{new_timesheet_starts.strftime("%b %d")} to #{new_timesheet_ends.strftime("%b %d")}"
+      description: "#{new_timesheet_starts.strftime('%b %d')} to #{new_timesheet_ends.strftime('%b %d')}"
     )
   end
 
