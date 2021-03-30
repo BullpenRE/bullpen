@@ -177,7 +177,7 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
   
         $ RAILS_ENV=test rails db:migrate
         or
-        $ RAILS_ENV=test rake db:test:prepare
+        $ RAILS_ENV=test rails db:test:prepare
         
 4. In terminal of project or RubyMine IDE start puma server on port:5017 as second separate and parallel to localhost:3000 development process:
     
