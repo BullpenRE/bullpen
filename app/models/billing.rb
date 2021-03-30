@@ -47,10 +47,10 @@ class Billing < ApplicationRecord
   end
 
   def new_timesheet_starts
-    work_done.sunday? ? work_done : work_done.prev_occurring(:sunday)
+    work_done.monday? ? work_done : work_done.prev_occurring(:monday)
   end
 
   def new_timesheet_ends
-    work_done.saturday? ? work_done : work_done.next_occurring(:saturday)
+    work_done.sunday? ? work_done : work_done.next_occurring(:sunday)
   end
 end

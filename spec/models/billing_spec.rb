@@ -84,7 +84,7 @@ RSpec.describe Billing, type: :model do
     end
 
     describe '#find_or_create_timesheet' do
-      let(:unattached_billing) { FactoryBot.create(:billing, work_done: 10.days.ago.next_occurring(:saturday), contract: contract) }
+      let(:unattached_billing) { FactoryBot.create(:billing, work_done: 10.days.ago, contract: contract) }
       let!(:unrelated_contract_timesheet) { FactoryBot.create(:timesheet, starts: 20.days.ago, ends: 2.days.ago) }
 
       describe 'if a qualifying timesheet exists' do
@@ -99,8 +99,8 @@ RSpec.describe Billing, type: :model do
       describe 'if no qualifying timesheet exists' do
         it 'creates and attaches a timesheet that starts on sunday and ends on saturday' do
           expect(unattached_billing.timesheet).to be_present
-          expect(unattached_billing.timesheet.starts.sunday?).to be_truthy
-          expect(unattached_billing.timesheet.ends.saturday?).to be_truthy
+          expect(unattached_billing.timesheet.starts.monday?).to be_truthy
+          expect(unattached_billing.timesheet.ends.sunday?).to be_truthy
         end
       end
     end
