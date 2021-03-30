@@ -55,6 +55,7 @@ $theme-colors: (
 
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-select/dist/css/bootstrap-select';
+@import 'flatpickr/dist/flatpickr.css';
 
 // Bootstrap style overrides
 .btn.disabled {
