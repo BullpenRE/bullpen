@@ -82,5 +82,27 @@ RSpec.describe Billing, type: :model do
       billing.update(hours: nil, minutes: 45)
       expect(billing.multiplier).to eq(0.75)
     end
+
+    describe '#find_or_create_timesheet' do
+      let(:unattached_billing) { FactoryBot.create(:billing, work_done: 10.days.ago.next_occurring(:saturday), contract: contract) }
+      let!(:unrelated_contract_timesheet) { FactoryBot.create(:timesheet, starts: 20.days.ago, ends: 2.days.ago) }
+
+      describe 'if a qualifying timesheet exists' do
+        let!(:related_contract_but_old_timesheet) { FactoryBot.create(:timesheet, contract: contract, starts: 30.days.ago, ends: 20.days.ago) }
+        let!(:related_contract_current_timesheet) { FactoryBot.create(:timesheet, contract: contract, starts: 20.days.ago, ends: 2.days.ago) }
+
+        it 'attaches' do
+          expect(unattached_billing.timesheet).to eq(related_contract_current_timesheet)
+        end
+      end
+
+      describe 'if no qualifying timesheet exists' do
+        it 'creates and attaches a timesheet that starts on sunday and ends on saturday' do
+          expect(unattached_billing.timesheet).to be_present
+          expect(unattached_billing.timesheet.starts.sunday?).to be_truthy
+          expect(unattached_billing.timesheet.ends.saturday?).to be_truthy
+        end
+      end
+    end
   end
 end
