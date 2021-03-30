@@ -29,14 +29,13 @@
                   <div class="form-group">
                     <label class="h5" for="ccnumber">Credit Card Number</label>
                     <div class="input-group">
-                      <%= f.text_field :name,
+                      <%= f.text_field :number,
                                        class: 'form-control',
                                        id: 'ccnumber',
-                                       placeholder: '0000 0000 0000 0000',
-                                       autocomplete: 'email' %>
+                                       placeholder: '0000 0000 0000 0000' %>
                       <div class="input-group-append">
                         <span class="input-group-text">
-                          <i class="mdi mdi-credit-card"></i>
+                          <i class="far fa-credit-card"></i>
                         </span>
                       </div>
                     </div>
@@ -46,37 +45,19 @@
               <div class="row">
                 <div class="form-group col-sm-4">
                   <label class="h5" for="ccmonth">Month</label>
-                  <select class="form-control" id="ccmonth">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                  </select>
+                  <%= f.select :exp_month,
+                               options_for_select((1..12).to_a, 1), {},
+                               class: 'form-control selectpicker',
+                               'data-style': 'bp-btn-select',
+                               id: 'ccmonth' %>
                 </div>
                 <div class="form-group col-sm-4">
                   <label class="h5" for="ccyear">Year</label>
-                  <select class="form-control" id="ccyear">
-                    <option>2021</option>
-                    <option>2022</option>
-                    <option>2023</option>
-                    <option>2024</option>
-                    <option>2025</option>
-                    <option>2026</option>
-                    <option>2027</option>
-                    <option>2028</option>
-                    <option>2029</option>
-                    <option>2030</option>
-                    <option>2031</option>
-                    <option>2032</option>
-                  </select>
+                  <%= f.select :exp_year,
+                               options_for_select(EmployerProfile::AVAILABLE_CARD_YEARS, EmployerProfile::AVAILABLE_CARD_YEARS.first),
+                               {}, class: 'form-control selectpicker text-grey-dark',
+                               'data-style': 'bp-btn-select',
+                               id: 'ccyear' %>
                 </div>
                 <div class="col-sm-4">
                   <div class="form-group">

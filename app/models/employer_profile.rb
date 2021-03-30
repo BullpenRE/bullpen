@@ -11,6 +11,8 @@ class EmployerProfile < ApplicationRecord
   has_many :payment_accounts, dependent: :destroy
   has_one_attached :avatar
 
+  AVAILABLE_CARD_YEARS = (Time.current.year..15.years.from_now.year).freeze
+
   after_commit :retrieve_customer_id, on: :create
 
   accepts_nested_attributes_for :user,
