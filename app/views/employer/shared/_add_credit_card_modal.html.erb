@@ -29,10 +29,11 @@
                   <div class="form-group">
                     <label class="h5" for="ccnumber">Credit Card Number</label>
                     <div class="input-group">
-                      <%= f.text_field :number,
+                      <%= f.text_field :card_number,
                                        class: 'form-control',
                                        id: 'ccnumber',
-                                       placeholder: '0000 0000 0000 0000' %>
+                                       placeholder: '0000 0000 0000 0000',
+                                       required: true %>
                       <div class="input-group-append">
                         <span class="input-group-text">
                           <i class="far fa-credit-card"></i>
@@ -49,7 +50,8 @@
                                options_for_select((1..12).to_a, 1), {},
                                class: 'form-control selectpicker',
                                'data-style': 'bp-btn-select',
-                               id: 'ccmonth' %>
+                               id: 'ccmonth',
+                               required: true %>
                 </div>
                 <div class="form-group col-sm-4">
                   <label class="h5" for="ccyear">Year</label>
@@ -57,15 +59,17 @@
                                options_for_select(EmployerProfile::AVAILABLE_CARD_YEARS, EmployerProfile::AVAILABLE_CARD_YEARS.first),
                                {}, class: 'form-control selectpicker text-grey-dark',
                                'data-style': 'bp-btn-select',
-                               id: 'ccyear' %>
+                               id: 'ccyear',
+                               required: true %>
                 </div>
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label class="h5" for="cvv">CVV/CVC</label>
-                    <%= f.text_field :name,
+                    <%= f.text_field :cvc,
                                      class: 'form-control',
                                      id: 'cvv',
-                                     placeholder: '123' %>
+                                     placeholder: '123',
+                                     required: true %>
                   </div>
                 </div>
               </div>
