@@ -72,12 +72,11 @@
         <% end %>
       <% end %>
     <% if @employer_profile.stripe_id_customer.present? %>
+        <%= render 'employer/shared/add_credit_card_modal' %>
         <%= render 'employer/shared/add_bank_account_modal' %>
-        <%= link_to 'Add a Credit Card',
-                    employer_create_card_path,
-                    method: :post,
-                    type: 'button',
-                    class: 'btn btn-outline-primary' %>
+        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addCreditCardModal">
+          Add a Credit Card
+        </button>
         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addBankAccountModal">
           Add a Bank Account
         </button>

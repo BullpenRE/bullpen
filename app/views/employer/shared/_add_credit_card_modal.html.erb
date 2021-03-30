@@ -1,0 +1,99 @@
+<div class="modal" id="addCreditCardModal" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header px-4">
+          <h1 class="modal-title px-2">
+            Credit Card
+            <small>enter your card details</small>
+          </h1>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+      <%= form_for :stripe, url: employer_create_card_path, method: :post do |f| %>
+          <div class="modal-body">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label class="h5" for="name">Name</label>
+                    <%= f.text_field :name,
+                                     class: 'form-control',
+                                     id: 'name',
+                                     placeholder: 'Enter your name' %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label class="h5" for="ccnumber">Credit Card Number</label>
+                    <div class="input-group">
+                      <%= f.text_field :name,
+                                       class: 'form-control',
+                                       id: 'ccnumber',
+                                       placeholder: '0000 0000 0000 0000',
+                                       autocomplete: 'email' %>
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <i class="mdi mdi-credit-card"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-sm-4">
+                  <label class="h5" for="ccmonth">Month</label>
+                  <select class="form-control" id="ccmonth">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                  </select>
+                </div>
+                <div class="form-group col-sm-4">
+                  <label class="h5" for="ccyear">Year</label>
+                  <select class="form-control" id="ccyear">
+                    <option>2021</option>
+                    <option>2022</option>
+                    <option>2023</option>
+                    <option>2024</option>
+                    <option>2025</option>
+                    <option>2026</option>
+                    <option>2027</option>
+                    <option>2028</option>
+                    <option>2029</option>
+                    <option>2030</option>
+                    <option>2031</option>
+                    <option>2032</option>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="h5" for="cvv">CVV/CVC</label>
+                    <%= f.text_field :name,
+                                     class: 'form-control',
+                                     id: 'cvv',
+                                     placeholder: '123' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer px-4">
+            <%= f.submit 'Add a Credit Card', type: 'submit', class: 'btn btn-outline-primary mx-2' %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
