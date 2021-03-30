@@ -4,11 +4,11 @@ module Employer
   class StripeController < ApplicationController
     before_action :authenticate_user!, :initial_check, :non_employer_redirect, :employer_profile
     before_action :no_account_routing_redirect, only: :create_account
+    before_action :no_card_data_redirect, only: :create_card
 
     def create_card
-      cus_id_absense_redirect unless employer_profile.stripe_id_customer.present?
-      response = Stripe::CustomerCardCreationService.new(employer_profile.stripe_id_customer).call
-
+      response = Stripe::CustomerCardCreationService.new(employer_profile.stripe_id_customer,
+                                                         card_attributes).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR
       else
@@ -32,10 +32,6 @@ module Employer
       @employer_profile ||= current_user.employer_profile
     end
 
-    def cus_id_absense_redirect
-      redirect_to employer_account_index_path, alert: 'Stripe: Please add a Customer ID to send payouts'
-    end
-
     def bank_attributes
       {
         'object': 'bank_account',
@@ -48,14 +44,35 @@ module Employer
       }
     end
 
+    def card_attributes
+      {
+        'object': 'card',
+        'number': stripe_params[:card_number],
+        'name': stripe_params[:name],
+        'exp_year': stripe_params[:exp_year],
+        'exp_month': stripe_params[:exp_month],
+        'cvc': stripe_params[:cvc]
+      }
+    end
+
     def stripe_params
-      params.require(:stripe).permit(:bank_account_number, :bank_routing_number)
+      params.require(:stripe).permit(:bank_account_number,
+                                     :bank_routing_number,
+                                     :name,
+                                     :card_number,
+                                     :exp_month,
+                                     :exp_year,
+                                     :cvc)
     end
 
     def no_account_routing_redirect
       return if stripe_params[:bank_account_number].present? && stripe_params[:bank_routing_number].present?
 
       redirect_to employer_account_index_path, alert: 'Please add the ACH routing number and bank account number'
+    end
+
+    def no_card_data_redirect
+      redirect_to employer_account_index_path, alert: 'Stripe: card data is invalid'
     end
   end
 end
