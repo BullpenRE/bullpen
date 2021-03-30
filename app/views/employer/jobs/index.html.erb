@@ -227,11 +227,11 @@
                   $('#application-tab<%= job.id %>').css('border-bottom', 'none');
                 });
                 $('.more-link_action<%= job.id %>').on('click', () => {
-                  if ('<%= job.contracts.hire_group.present? %>' == 'true') {
+                  <% if job.contracts.hire_group.present? %>
                     $('#hire-tab<%= job.id %>').css('border-bottom', '5px solid rgb(0, 84, 149)');
-                  } else {
+                  <% else %>
                     $('#application-tab<%= job.id %>').css('border-bottom', '5px solid rgb(0, 84, 149)');
-                  }
+                  <% end %>
                 });
               })
             </script>
