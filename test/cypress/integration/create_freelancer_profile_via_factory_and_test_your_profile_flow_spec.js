@@ -56,9 +56,9 @@ describe('Create freelancer_profiles.rb via factory and test freelancer your_pro
     // try to edit data in chapter 'Skills'
     cy.get('[data-target^="#editSkills"]')
       .should('exist')
-      .wait(2000)
+      // .wait(2000)
       .get('[data-target^="#editSkills"]')
-      .click()
+      .click({force: true})
 
     // try to change skills via select menu in opened chapter 'Skills'
     cy.get('.select2-search__field', { includeShadowDom: true})
@@ -68,7 +68,7 @@ describe('Create freelancer_profiles.rb via factory and test freelancer your_pro
     // try to click button 'Save Changes'
     cy.get('.modal-body > .d-flex > .btn-primary')
       .should('exist')
-      .click()
+      .click({force: true})
 
     // try to edit data in chapter 'Software Licenses'
     cy.get('[data-target^="#editSoftwareModal"]')
@@ -138,13 +138,13 @@ describe('Create freelancer_profiles.rb via factory and test freelancer your_pro
       .should('exist')
       .wait(2000)
       .get('[data-target^="#editEducationModal"]')
-      .click()
+      .click({force: true})
 
     // try to amend institution
     cy.get('[id^="institutionInput"]')
       .first()
       .clear({force: true})
-      .type('Cy New University')
+      .type('Cy New University', {force: true})
 
     // try to amend degree
     cy.get('[name="freelancer_profile_education[degree]"]')
