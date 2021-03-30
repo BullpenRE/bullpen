@@ -115,6 +115,7 @@ Rails.application.routes.draw do
     post 'accept_offer', to: 'contracts#accept_offer'
     post 'close_contract', to: 'contracts#close_contract'
     post 'delete_contract', to: 'contracts#delete_contract'
+    post 'add_hours', to: 'billings#add_hours'
 
     namespace :profile do
       resource :preferences, only: :update
