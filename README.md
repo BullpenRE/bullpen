@@ -184,6 +184,9 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
         $ bundle exec rails server -e test -p 5017 --pid tmp/pids/server5017.pid   
         Use Ctrl-C to stop
         
+        $ redis-server
+        $ sidekiq
+        
 5. Open cypress dashboard:
 
         $ yarn cypress open --project ./test
