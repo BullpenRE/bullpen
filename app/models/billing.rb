@@ -37,7 +37,7 @@ class Billing < ApplicationRecord
   def relevant_timesheet
     @relevant_timesheet ||=
       contract.timesheets.find_by(starts: ..work_done, ends: work_done..) ||
-        create_new_timesheet!
+      create_new_timesheet!
   end
 
   def create_new_timesheet!
