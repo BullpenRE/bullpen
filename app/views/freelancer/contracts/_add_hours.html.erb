@@ -10,7 +10,7 @@
       </div>
       <!--Send Message Card-->
       <div class="modal-body py-0">
-        <%= form_for :billing, url:  freelancer_add_hours_path do |f| %>
+        <%= form_for :billing, url: freelancer_update_hours_path do |f| %>
           <%= f.hidden_field :contract_id, value: contract_id %>
           <%= f.hidden_field :billing_id, value: billing&.id %>
           <div class="form-group mb-3">
@@ -35,7 +35,7 @@
             </div>
             <% if billing.present? %>
               <div class="d-flex pt-3 justify-content-between mt-2">
-              <%= f.submit 'Remove', class: "btn btn-outline-danger mr-2" %>
+              <%= link_to 'Remove', freelancer_billing_path(billing&.id), method: :delete, class: "btn btn-outline-danger mr-2" %>
               <%= f.submit 'Save Changes', class: "btn btn-primary add-hours#{modal_id}" %>
             </div>
             <% else %>
