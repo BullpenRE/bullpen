@@ -33,4 +33,13 @@ RSpec.describe Timesheet, type: :model do
       expect(billing.reload.timesheet_id).to be_nil
     end
   end
+
+  context 'Methods' do
+    let!(:current_timesheet) { FactoryBot.create(:timesheet, starts: 1.minute.ago.beginning_of_week, ends: 1.minute.ago.end_of_week) }
+    let!(:pending_timesheet) { FactoryBot.create(:timesheet, starts: 1.week.ago.beginning_of_week, ends: 1.week.ago.end_of_week) }
+    it '#title' do
+      expect(current_timesheet.title).to eq 'Current Hours'
+      expect(pending_timesheet.title).to eq "Pending Payment on #{pending_timesheet.ends.next_occurring(:friday).strftime('%b %e')}"
+    end
+  end
 end

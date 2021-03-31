@@ -139,54 +139,23 @@
           <div id="collapseBillings<%= contract.id %>" class="collapse">
 
             <!--Current hours-->
-            <% if contract.billings.current.present? %>
-              <div class="d-flex w-100 mt-4"> <!--hide this div if no current entries-->
-                <h5 class="mr-auto mb-0 align-self-center">Current Hours</h5>
-                <div class="d-flex flex-column flex-sm-row text-right">
-                  <h5 class="mb-0"><%= (contract.billings.current.sum('hours') + contract.billings.current.sum('minutes')/60.0).round(2) %> hours</h5>
-                  <h5 class="ml-4 mb-0"><%= number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage*(contract.billings.current.sum('hours') + (contract.billings.current.sum('minutes')/60.0).round(2)) / 100.0, strip_insignificant_zeros: true) %></h5>
-                </div>
-              </div>
 
-              <% contract.billings.current.each do |billing| %>
-                <div name="currentTimeEntry"> <!--repeat this div for each entry-->
-                <hr class="my-2"/>
-                <div class="d-flex">
-                  <div class="row w-100">
-                    <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.work_done&.strftime("%b %d") %></div> <!--i.e. Oct 2, Dec 1, etc.-->
-                    <% if billing.minutes.present? && billing.hours.present? %>
-                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billing.hours + billing.minutes/60.0).round(2) %> hours </div>  <!--Show minutes as a decimal, i.e. 1 hour 45 min = 1.75 hours. Round to hundreds place. Show as "hour" instead of "hours" for amounts 1 hour or less.-->
-                    <% elsif billing.minutes.present? && billing.hours.nil? %>
-                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billing.minutes/60.0).round(2) %> hour </div>
-                    <% else %>
-                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.hours %> <%= billing.hours.present? ? "#{"hour".pluralize(billing.hours)}" : "" %></div>
-                    <% end %>
-                    <div class="col-12 col-lg-8 mt-2 mt-lg-0"><%= billing.description.present? ? "#{billing.description}" : "" %></div>
+            <% contract.timesheets.order(ends: :desc).each do |timesheet| %>
+              <% if timesheet.billings.current.present? %>
+                <div class="d-flex w-100 mt-4"> <!--hide this div if no current entries-->
+                  <h5 class="mr-auto mb-0 align-self-center"><%= timesheet.title %></h5>
+                  <div class="d-flex flex-column flex-sm-row text-right">
+                    <h5 class="mb-0"><%= (timesheet.billings.current.sum('hours') + timesheet.billings.current.sum('minutes')/60.0).round(2) %> hours</h5>
+                    <h5 class="ml-4 mb-0"><%= number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage*(timesheet.billings.current.sum('hours') + (timesheet.billings.current.sum('minutes')/60.0).round(2)) / 100.0, strip_insignificant_zeros: true) %></h5>
                   </div>
-                  <button class="align-self-start btn btn-link shadow-none p-0 ml-1" type="button" data-toggle="modal" data-target="#addHours<%= contract.id %>-<%= billing.id %>"><i class="fas fa-edit text-primary"></i></button>
                 </div>
-              </div>
-              <%= render partial: 'freelancer/contracts/add_hours', locals: { contract_id: contract.id, billing: billing, modal_id: "#{contract.id}-#{billing.id}" } %>
-              <% end %>
-            <% end %>
 
-            <% if contract.billings.paused.present? %>
-              <!--Pending hours-->
-              <div class="d-flex w-100 mt-4"> <!--hide this div if no pending entries-->
-                <h5 class="mr-auto mb-0 align-self-center">
-                  Payment Paused - <span class="text-danger">Disputed</span> <!--show if disputed, else show "Pending Payment on {Mon DD}"-->
-                </h5>
-                <div class="d-flex flex-column flex-sm-row text-right">
-                  <h5 class="mb-0"><%= contract.billings.paused.sum('hours') + (contract.billings.paused.sum('minutes')/60.0).round(2) %> hours</h5>
-                  <h5 class="ml-4 mb-0"><%= number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage*(contract.billings.paused.sum('hours') + (contract.billings.paused.sum('minutes')/60.0).round(2)) / 100.0, strip_insignificant_zeros: true) %></h5>
-                </div>
-              </div>
-              <% contract.billings.paused.each do |billing| %>
-                <div name="pendingTimeEntry"> <!--repeat this div for each entry-->
+                <% timesheet.billings.current.each do |billing| %>
+                  <div name="currentTimeEntry"> <!--repeat this div for each entry-->
                   <hr class="my-2"/>
                   <div class="d-flex">
                     <div class="row w-100">
-                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.work_done.strftime("%b %d") %></div> <!--i.e. Oct 2, Dec 1, etc.-->
+                      <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.work_done&.strftime("%b %d") %></div> <!--i.e. Oct 2, Dec 1, etc.-->
                       <% if billing.minutes.present? && billing.hours.present? %>
                         <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billing.hours + billing.minutes/60.0).round(2) %> hours </div>  <!--Show minutes as a decimal, i.e. 1 hour 45 min = 1.75 hours. Round to hundreds place. Show as "hour" instead of "hours" for amounts 1 hour or less.-->
                       <% elsif billing.minutes.present? && billing.hours.nil? %>
@@ -194,22 +163,56 @@
                       <% else %>
                         <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.hours %> <%= billing.hours.present? ? "#{"hour".pluralize(billing.hours)}" : "" %></div>
                       <% end %>
-                      <div class="col-12 col-lg-8 mt-2 mt-lg-0">
-                        <%= billing.description.present? ? "#{billing.description}" : "" %>
-                        <% if billing.dispute_comments.present? %>
-                          <div class="mt-2">  <!--Show this div if disputed-->
-                            <div class="bp-text-sm text-danger mb-1 font-weight-bold">Disputed by <%= billing.contract.employer_profile.user.first_name %>:</div>
-                            <div class="font-italic"><%= billing.dispute_comments %></div>
-                          </div>
-                        <% end %>
-                      </div>
+                      <div class="col-12 col-lg-8 mt-2 mt-lg-0"><%= billing.description.present? ? "#{billing.description}" : "" %></div>
                     </div>
                     <button class="align-self-start btn btn-link shadow-none p-0 ml-1" type="button" data-toggle="modal" data-target="#addHours<%= contract.id %>-<%= billing.id %>"><i class="fas fa-edit text-primary"></i></button>
                   </div>
                 </div>
                 <%= render partial: 'freelancer/contracts/add_hours', locals: { contract_id: contract.id, billing: billing, modal_id: "#{contract.id}-#{billing.id}" } %>
+                <% end %>
               <% end %>
-            <% end %>
+
+              <% if timesheet.billings.paused.present? %>
+                <!--Pending hours-->
+                <div class="d-flex w-100 mt-4"> <!--hide this div if no pending entries-->
+                  <h5 class="mr-auto mb-0 align-self-center">
+                    Payment Paused - <span class="text-danger">Disputed</span> <!--show if disputed, else show "Pending Payment on {Mon DD}"-->
+                  </h5>
+                  <div class="d-flex flex-column flex-sm-row text-right">
+                    <h5 class="mb-0"><%= timesheet.billings.paused.sum('hours') + (timesheet.billings.paused.sum('minutes')/60.0).round(2) %> hours</h5>
+                    <h5 class="ml-4 mb-0"><%= number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage*(timesheet.billings.paused.sum('hours') + (timesheet.billings.paused.sum('minutes')/60.0).round(2)) / 100.0, strip_insignificant_zeros: true) %></h5>
+                  </div>
+                </div>
+                <% timesheet.billings.paused.each do |billing| %>
+                  <div name="pendingTimeEntry"> <!--repeat this div for each entry-->
+                    <hr class="my-2"/>
+                    <div class="d-flex">
+                      <div class="row w-100">
+                        <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.work_done.strftime("%b %d") %></div> <!--i.e. Oct 2, Dec 1, etc.-->
+                        <% if billing.minutes.present? && billing.hours.present? %>
+                          <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billing.hours + billing.minutes/60.0).round(2) %> hours </div>  <!--Show minutes as a decimal, i.e. 1 hour 45 min = 1.75 hours. Round to hundreds place. Show as "hour" instead of "hours" for amounts 1 hour or less.-->
+                        <% elsif billing.minutes.present? && billing.hours.nil? %>
+                          <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= (billing.minutes/60.0).round(2) %> hour </div>
+                        <% else %>
+                          <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.hours %> <%= billing.hours.present? ? "#{"hour".pluralize(billing.hours)}" : "" %></div>
+                        <% end %>
+                        <div class="col-12 col-lg-8 mt-2 mt-lg-0">
+                          <%= billing.description.present? ? "#{billing.description}" : "" %>
+                          <% if billing.dispute_comments.present? %>
+                            <div class="mt-2">  <!--Show this div if disputed-->
+                              <div class="bp-text-sm text-danger mb-1 font-weight-bold">Disputed by <%= billing.contract.employer_profile.user.first_name %>:</div>
+                              <div class="font-italic"><%= billing.dispute_comments %></div>
+                            </div>
+                          <% end %>
+                        </div>
+                      </div>
+                      <button class="align-self-start btn btn-link shadow-none p-0 ml-1" type="button" data-toggle="modal" data-target="#addHours<%= contract.id %>-<%= billing.id %>"><i class="fas fa-edit text-primary"></i></button>
+                    </div>
+                  </div>
+                  <%= render partial: 'freelancer/contracts/add_hours', locals: { contract_id: contract.id, billing: billing, modal_id: "#{contract.id}-#{billing.id}" } %>
+                <% end %>
+              <% end %>
+             <% end %>
 
             <!--Payment History-->
             <div class="w-100 mt-4"> <!--hide this div if no invoices-->
