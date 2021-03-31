@@ -11,24 +11,21 @@
 
 module Stripe
   class CustomerCardCreationService
-    def initialize(cus, tok = 'tok_mastercard')
+    def initialize(cus, card_token)
       @cus = cus
-      @tok = tok
+      @card_token = card_token
       @employer_profile = EmployerProfile.find_by(stripe_id_customer: @cus)
-      @error_message = ''
     end
 
     def call
-      response = Stripe::Customer.create_source(@cus, { source: @tok })
-      @error_message = response.message if response['message']
+      response = Stripe::Customer.create_source(@cus, { source: @card_token })
       @employer_profile.payment_accounts.create(prepare_attributes(response)) if response['id']
     rescue StandardError => e
       user_id = @employer_profile.user.id
       Rails.logger.info(
         "Error in CustomerCardCreationService impacting user id: #{user_id}, "\
         "stripe customer id: #{@cus}, "\
-        "error details: #{e}, "\
-        "error_message: #{@error_message}"
+        "error details: #{e}"
       )
 
       { stripe_error: true }

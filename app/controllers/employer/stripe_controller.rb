@@ -8,7 +8,7 @@ module Employer
 
     def create_card
       response = Stripe::CustomerCardCreationService.new(employer_profile.stripe_id_customer,
-                                                         card_attributes).call
+                                                         stripe_params[:card_token]).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR
       else
@@ -44,25 +44,10 @@ module Employer
       }
     end
 
-    def card_attributes
-      {
-        'object': 'card',
-        'number': stripe_params[:card_number],
-        'name': stripe_params[:name],
-        'exp_year': stripe_params[:exp_year],
-        'exp_month': stripe_params[:exp_month],
-        'cvc': stripe_params[:cvc]
-      }
-    end
-
     def stripe_params
       params.require(:stripe).permit(:bank_account_number,
                                      :bank_routing_number,
-                                     :name,
-                                     :card_number,
-                                     :exp_month,
-                                     :exp_year,
-                                     :cvc)
+                                     :card_token)
     end
 
     def no_account_routing_redirect
@@ -71,7 +56,13 @@ module Employer
       redirect_to employer_account_index_path, alert: 'Please add the ACH routing number and bank account number'
     end
 
+    def valid_card_input?
+      stripe_params[:card_number].present? && stripe_params[:exp_month].present? && stripe_params[:exp_year].present?
+    end
+
     def no_card_data_redirect
+      return if valid_card_input?
+
       redirect_to employer_account_index_path, alert: 'Stripe: card data is invalid'
     end
   end
