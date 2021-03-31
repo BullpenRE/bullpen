@@ -211,6 +211,15 @@ destroy_real_estate_skill_admin_real_estate_skill POST       /admin/real_estate_
                                    admin_software GET        /admin/softwares/:id(.:format)                                                                    admin/softwares#show
                                                   PATCH      /admin/softwares/:id(.:format)                                                                    admin/softwares#update
                                                   PUT        /admin/softwares/:id(.:format)                                                                    admin/softwares#update
+                    batch_action_admin_timesheets POST       /admin/timesheets/batch_action(.:format)                                                          admin/timesheets#batch_action
+                                 admin_timesheets GET        /admin/timesheets(.:format)                                                                       admin/timesheets#index
+                                                  POST       /admin/timesheets(.:format)                                                                       admin/timesheets#create
+                              new_admin_timesheet GET        /admin/timesheets/new(.:format)                                                                   admin/timesheets#new
+                             edit_admin_timesheet GET        /admin/timesheets/:id/edit(.:format)                                                              admin/timesheets#edit
+                                  admin_timesheet GET        /admin/timesheets/:id(.:format)                                                                   admin/timesheets#show
+                                                  PATCH      /admin/timesheets/:id(.:format)                                                                   admin/timesheets#update
+                                                  PUT        /admin/timesheets/:id(.:format)                                                                   admin/timesheets#update
+                                                  DELETE     /admin/timesheets/:id(.:format)                                                                   admin/timesheets#destroy
                          batch_action_admin_users POST       /admin/users/batch_action(.:format)                                                               admin/users#batch_action
                                       admin_users GET        /admin/users(.:format)                                                                            admin/users#index
                                                   POST       /admin/users(.:format)                                                                            admin/users#create

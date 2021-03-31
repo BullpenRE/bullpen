@@ -19,5 +19,11 @@ FactoryBot.define do
     trait :paid do
       state { 'paid' }
     end
+
+    trait :with_timesheet do
+      after(:create) do |billing, _|
+        billing.update(timesheet_id: create(:timesheet, starts: billing.work_done.beginning_of_week, ends: billing.work_done.end_of_week, contract: billing.contract).id)
+      end
+    end
   end
 end
