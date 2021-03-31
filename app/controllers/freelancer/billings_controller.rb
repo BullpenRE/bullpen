@@ -4,15 +4,13 @@ class Freelancer::BillingsController < ApplicationController
   before_action :authenticate_user!, :initial_check, :non_freelancer_redirect, :incomplete_freelancer_profile_redirect
 
   def update_hours
-    @contract = current_user.freelancer_profile.contracts.find_by(id: params[:billing][:contract_id])
     create_billing || update_billing
 
     redirect_to freelancer_contracts_path
   end
 
   def destroy
-    billing = Billing.find_by(id: params[:id])
-    billing.destroy
+    billing&.destroy
 
     redirect_to freelancer_contracts_path
   end
@@ -34,7 +32,7 @@ class Freelancer::BillingsController < ApplicationController
   def create_billing
     return false if billing.present? || params[:commit] == 'Remove'
 
-    @contract.billings.create(billings_params)
+    contract.billings.create(billings_params)
 
     true
   end
@@ -44,8 +42,13 @@ class Freelancer::BillingsController < ApplicationController
   end
 
   def billing
-    return unless params[:billing][:billing_id].present?
+    return unless params[:id].present? || params[:billing][:billing_id].present?
 
-    @billing ||= @contract.billings.find_by(id: params[:billing][:billing_id])
+    @billing ||= contract.billings.find_by(id: params[:id] || params[:billing][:billing_id])
+  end
+
+  def contract
+    @contract ||= current_user.freelancer_profile.contracts
+                              .find_by(id: params[:contract_id] || params[:billing][:contract_id])
   end
 end
