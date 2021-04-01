@@ -90,7 +90,7 @@
   <%= f.hidden_field :id, value: freelancer_profile_experience&.id %>
 </div>
 <% if freelancer_profile_experience&.id.present? %>
-  <div class="modal-footer flex-row-reverse">
+  <div class="modal-footer">
     <%= f.submit 'Save Changes', id: "submitExperienceWithLocationCheck#{modal_id}", class: "btn btn-primary save-experience-#{modal_id}" %>
     <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
   </div>
@@ -104,8 +104,9 @@
                                                       experience_modal_id: modal_id } %>
 <script>
     <% if @freelancer_profile && @freelancer_profile.freelancer_profile_experiences&.count > 1 %>
-      $('.modal-footer').addClass('justify-content-between');
+      $('.modal-footer').addClass('justify-content-between flex-row-reverse');
       $('.btn-outline-danger').removeClass('d-none');
+
     <% end %>
 
     $(document).on('turbolinks:load', function () {
