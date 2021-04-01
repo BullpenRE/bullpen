@@ -74,16 +74,6 @@ RSpec.describe Billing, type: :model do
       expect(Billing.resolved).to include(resolved_billing)
     end
 
-    it '.current' do
-      expect(Billing.current).to include(billing)
-      expect(Billing.current).to_not include(disputed_billing)
-    end
-
-    it '.paused' do
-      expect(Billing.paused).to include(disputed_billing)
-      expect(Billing.paused).to_not include(billing)
-    end
-
     it '.not_paid' do
       expect(Billing.not_paid).to include(disputed_billing)
       expect(Billing.not_paid).to include(billing)
