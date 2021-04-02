@@ -2,7 +2,7 @@
 <% freelancer_profile.freelancer_certifications.order(earned: :desc).each do |freelancer_certification| %>
   <div class="d-flex mb-2">
     <div class="mr-2 text-wrap text-break"><b><%= freelancer_certification.description %></b><br />
-    <i class="bp-text-sm"><%= freelancer_certification.earned.strftime("%b %Y") %></i>
+    <i class="bp-text-sm"><%= freelancer_certification.earned&.strftime("%b %Y") %></i>
     </div>
     <% if editable %>
       <button class="btn btn-link shadow-none p-0 align-self-start ml-auto" type="button"  data-toggle="modal" data-target="#editLicenseCertificationModal-<%= freelancer_certification.id %>"><i class="fas fa-edit text-primary"></i></button>
