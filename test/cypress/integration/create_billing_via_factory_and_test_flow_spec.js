@@ -59,8 +59,9 @@ describe('Create billing via factory billings.rb and test billing flow', () => {
     cy.get('#billing_description')
       .type('Cy - brief description of the task1 performed')
 
-    // rty to click button 'Add Hours'
+    // try to click button 'Add Hours'
     cy.get('[id^="addHours"] > .modal-dialog > .modal-content > .modal-body > form > .form-group > .d-flex > .btn')
+      .eq(0)
       .should('exist')
       .click({force: true})
 
@@ -70,11 +71,81 @@ describe('Create billing via factory billings.rb and test billing flow', () => {
       .should('exist')
       .click({force: true})
 
-    // try to log out as freelancer
-    cy.get('[rel="nofollow"]')
+    // try to add hours ones more
+    cy.get('.d-block > .btn')
       .should('exist')
-      .wait(2000)
-      .get('[rel="nofollow"]')
+      .click()
+
+    //try to add date in opened module 'Add Billing Hours'
+    cy.get('.flatpickr.form-control.input')
+      .eq('1')
+      .should('exist')
+      .click({force: true})
+      .get('.open > .flatpickr-innerContainer > .flatpickr-rContainer > .flatpickr-days > .dayContainer > .selected')
+      .should('exist')
+      .click({force: true})
+
+    // try to add hours
+    cy.get('[name="billing[hours]"]')
+      .eq(0)
+      .should('exist')
+      .type('3', {force: true})
+
+    //try to add minutes
+    cy.get('[name="billing[minutes]"]')
+      .eq(0)
+      .should('exist')
+      .type('15', {force: true})
+
+    // try to add brief description of the task performed
+    cy.get('[name="billing[description]"]')
+      .eq(0)
+      .should('exist')
+      .type('Cy - brief description of the task2 performed', {force: true})
+
+    // try to click button 'Add Hours' in opened module 'Add Billing Hours'
+    cy.get('[id^="addHours"] > .modal-dialog > .modal-content > .modal-body > form > .form-group > .d-flex > .btn')
+      .eq(0)
+      .should('exist')
+      .click({force: true})
+
+    // try to click link 'Show Billing' - after 2nd data 'Add Hours' adding
+    cy.get('[data-target^="#collapseBillings"]')
+      .eq(0)
+      .should('exist')
+      .click({force: true})
+
+    // try to edit info about just inserted hours
+    // try to click edit button icon
+    cy.get('button.align-self-start.btn.btn-link.shadow-none.p-0.ml-1')
+      .eq(0)
+      .should('exist')
+      .click({force: true})
+
+    // try to amend description
+    cy.get('[id^="addHours"] > .modal-dialog > .modal-content > .modal-body > form > .form-group > .w-100 > #billing_description')
+      .eq(1)
+      .should('exist')
+      .clear({force: true})
+      .type('Cy - Amended text', {force: true})
+
+    // try to click button 'Save Changes'
+    cy.get('[id^="addHours"] > .modal-dialog > .modal-content > .modal-body > form > .form-group > .d-flex > .btn-primary')
+      .eq(1)
+      .should('exist')
+      .click({force: true})
+
+    // try to click link 'Show Billing' - after amendment data 'Add Hours'
+    cy.get('[data-target^="#collapseBillings"]')
+      .eq(1)
+      .should('exist')
+      .click({force: true})
+
+    // try to log out as freelancer
+    cy.get('.dropdown-menu > [rel="nofollow"]')
+      .should('exist')
+      // .wait(2000)
+      // .get('[rel="nofollow"]')
       .click({force: true})
 
     // login as just created employer
@@ -86,10 +157,6 @@ describe('Create billing via factory billings.rb and test billing flow', () => {
       .should('exist')
       .type('q1234567!Q')
     cy.get('.actions > .btn')
-      .should('exist')
-      .click()
-    // try click tab 'Your Jobs' on navbar to get /employer/jobs
-    cy.get(':nth-child(4) > .nav-link')
       .should('exist')
       .click()
 
