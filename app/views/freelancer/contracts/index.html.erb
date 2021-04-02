@@ -145,8 +145,8 @@
                 <div class="d-flex w-100 mt-4"> <!--hide this div if no current entries-->
                   <h5 class="mr-auto mb-0 align-self-center"><%= timesheet.title %></h5>
                   <div class="d-flex flex-column flex-sm-row text-right">
-                    <h5 class="mb-0"><%= (timesheet.billings.not_paid.sum('hours') + timesheet.billings.not_paid.sum('minutes')/60.0).round(2) %> hours</h5>
-                    <h5 class="ml-4 mb-0"><%= number_to_currency(contract.pay_rate*current_user.freelancer_profile.payout_percentage*(timesheet.billings.not_paid.sum('hours') + (timesheet.billings.not_paid.sum('minutes')/60.0).round(2)) / 100.0, strip_insignificant_zeros: true) %></h5>
+                    <h5 class="mb-0"><%= timesheet.total_hours %> <%= "hour".pluralize(timesheet.total_hours.ceil) %></h5>
+                    <h5 class="ml-4 mb-0"><%= number_to_currency(current_user.freelancer_profile.payout_percentage*timesheet.total_usd / 100, strip_insignificant_zeros: true) %></h5>
                   </div>
                 </div>
 
@@ -163,7 +163,15 @@
                       <% else %>
                         <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= billing.hours %> <%= billing.hours.present? ? "#{"hour".pluralize(billing.hours)}" : "" %></div>
                       <% end %>
-                      <div class="col-12 col-lg-8 mt-2 mt-lg-0"><%= billing.description.present? ? "#{billing.description}" : "" %></div>
+                      <div class="col-12 col-lg-8 mt-2 mt-lg-0">
+                        <%= billing.description.present? ? "#{billing.description}" : "" %>
+                        <% if billing.dispute_comments.present? %>
+                          <div class="mt-2">  <!--Show this div if disputed-->
+                            <div class="bp-text-sm text-danger mb-1 font-weight-bold">Disputed by <%= billing.contract.employer_profile.user.first_name %>:</div>
+                            <div class="font-italic"><%= billing.dispute_comments %></div>
+                          </div>
+                        <% end %>
+                      </div>
                     </div>
                     <button class="align-self-start btn btn-link shadow-none p-0 ml-1" type="button" data-toggle="modal" data-target="#addHours<%= contract.id %>-<%= billing.id %>"><i class="fas fa-edit text-primary"></i></button>
                   </div>

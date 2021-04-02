@@ -15,6 +15,18 @@ class Timesheet < ApplicationRecord
     "Pending Payment on #{pending_payment_date.strftime('%b %e')}"
   end
 
+  def total_hours
+    (billings.not_paid.sum('hours') + billings.not_paid.sum('minutes')/60.0).round(2)
+  end
+
+  def total_usd
+    (contract.pay_rate*(billings.not_paid.sum('hours') + (billings.not_paid.sum('minutes')/60.0)).round(2))
+  end
+
+  def dispute_deadline
+    1.day.ago(pending_payment_date).strftime('%b %e')
+  end
+
   private
 
   def ends_after_start
