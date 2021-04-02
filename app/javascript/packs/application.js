@@ -45,3 +45,5 @@ window.Swal = Swal;
 import 'images/icons8-search-659.png';
 import 'images/bg-user-img.png';
 import 'images/linked-job-not-found.png';
+
+export { default as StripeCardProcess } from '../src/js/stripe_card_process'

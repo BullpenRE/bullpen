@@ -9,6 +9,8 @@
 
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= tag :meta, name: 'stripe-public-key', content: ENV['STRIPE_PUBLISHABLE_KEY'] %>
+    <%= stripe_javascript_tag %>
     <title>Bullpen</title>
     <%= render 'employer/shared/confirm_alert' %>
   </head>
