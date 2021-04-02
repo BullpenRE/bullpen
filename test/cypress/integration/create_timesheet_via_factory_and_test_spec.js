@@ -5,7 +5,7 @@ describe('Create timesheet via factory timesheet.rb and test timesheet flow', ()
   it('create timesheet via factory timesheet.rb and test timesheet flow', function () {
     // via factory timesheet.rb create contract, employer, employer_profile, freelancer, freelancer_profile
     cy.appFactories([
-      ['create', 'billing']
+      ['create', 'timesheet']
 
     ])
     // try to login as just created freelancer
