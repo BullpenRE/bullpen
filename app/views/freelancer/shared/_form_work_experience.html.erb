@@ -103,10 +103,9 @@
 <%= render partial: 'shared/location_check', locals: { controller_name: 'work_experience',
                                                       experience_modal_id: modal_id } %>
 <script>
-    <% if @freelancer_profile && @freelancer_profile.freelancer_profile_experiences&.count > 1 %>
+    <% if freelancer_profile && freelancer_profile.freelancer_profile_experiences&.count > 1 %>
       $('.modal-footer').addClass('justify-content-between flex-row-reverse');
       $('.btn-outline-danger').removeClass('d-none');
-
     <% end %>
 
     $(document).on('turbolinks:load', function () {
