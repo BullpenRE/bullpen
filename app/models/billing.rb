@@ -5,8 +5,7 @@ class Billing < ApplicationRecord
   belongs_to :timesheet, optional: true
   enum state: { pending: 0, disputed: 1, paid: 2 }
   scope :resolved, -> { where(state: 'pending').where.not(dispute_resolved: nil) }
-  scope :current, -> { where(state: 'pending') }
-  scope :paused, -> { where(state: 'disputed').where(dispute_resolved: nil) }
+  scope :not_paid, -> { where.not(state: 'paid') }
 
   validates :hours, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
   validates :minutes, allow_nil: true, numericality: { greater_than_or_equal_to: 0, less_than: 60 }
