@@ -67,6 +67,7 @@ group :development do
   gem 'listen'                              # The Listen gem listens to file modifications and notifies you about the changes: https://github.com/guard/listen
   gem 'spring'                              # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'web-console'                         # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  gem 'rails_real_favicon'                  # Generate and install a favicon for all platforms with RealFaviconGenerator.
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]    # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

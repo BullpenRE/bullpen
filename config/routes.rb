@@ -94,6 +94,7 @@ Rails.application.routes.draw do
     resources :contracts
     resources :profile, only: :index
     resources :account, only: :index
+    resources :billings, only: :destroy
     get '/account/stripe_data_lookup', to: 'account#stripe_data_lookup', as: :stripe_data_lookup
 
     resource :avatar, only: %i[update destroy]
@@ -115,6 +116,7 @@ Rails.application.routes.draw do
     post 'accept_offer', to: 'contracts#accept_offer'
     post 'close_contract', to: 'contracts#close_contract'
     post 'delete_contract', to: 'contracts#delete_contract'
+    post 'update_hours', to: 'billings#update_hours'
 
     namespace :profile do
       resource :preferences, only: :update

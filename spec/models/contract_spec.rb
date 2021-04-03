@@ -62,11 +62,18 @@ RSpec.describe Contract, type: :model do
       end
     end
 
-    it 'has many billings, dependent nullify' do
+    it 'has many billings, dependent destroy' do
       billing = FactoryBot.create(:billing, contract: contract)
       expect(contract.billings).to include(billing)
       contract.destroy
       expect(Billing.exists?(billing.id)).to be_falsey
+    end
+
+    it 'has many timesheets, dependent destroy' do
+      timesheet = FactoryBot.create(:timesheet, contract: contract)
+      expect(contract.timesheets).to include(timesheet)
+      contract.destroy
+      expect(Timesheet.exists?(timesheet.id)).to be_falsey
     end
   end
 

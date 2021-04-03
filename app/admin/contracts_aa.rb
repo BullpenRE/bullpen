@@ -47,7 +47,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('co
         row :hide_from_freelancer
         row :hide_from_employer
         row 'Billing Entries' do
-          contract.billings.order(work_done: :desc).map { |billing| link_to("#{billing.description} ($#{(billing.multiplier * 100).round / 100.0} hours on #{billing.work_done})", admin_billing_path(billing.id)) }.join('<br>').html_safe
+          (contract.billings.order(work_done: :desc).map { |billing| link_to("#{billing.description} (#{(billing.multiplier * 100).round / 100.0} hours on #{billing.work_done})", admin_billing_path(billing.id)) }.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_billing_path(:billing=> { :contract_id => contract.id }), target: '_new')).html_safe
         end
       end
       active_admin_comments
