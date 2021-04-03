@@ -20,7 +20,8 @@
         <div class="col-md">
           <div class="form-group mb-4">
             <label for="professionalTitleInput" class="h5">Professional Title</label>
-            <%= f.text_field :professional_title, class: "form-control", id: "professionalTitleInput", placeholder: "e.g. Senior Analyst", required: true %>
+            <%= f.text_field :professional_title, class: "form-control", id: "professionalTitleInput", placeholder: "e.g. Senior Analyst" %>
+            <div class="error1 text-danger mb-1"></div>
           </div>
         </div>
         <div class="col-md">
@@ -32,19 +33,48 @@
                            html_options = { class: "form-control selectpicker", 'data-style': "bp-btn-select",
                                             selected: @freelancer_profile.professional_years_experience,
                                             style: "display:block !important",
-                                            title: "Please make a selection", required: true } %>
+                                            title: "Please make a selection" } %>
+              <div class="error2 text-danger mb-1"></div>
             </div>
           </div>
         </div>
       </div>
       <div class="form-group mb-5">
         <label for="professionalSummaryTextarea" class="h5">Professional Summary</label>
-        <%= f.text_area :professional_summary, class: "form-control", id: "professionalSummaryTextarea", placeholder: "Describe your experience in a short elevator pitch",rows: "3", maxlength: "1000", required: true %>
+        <%= f.text_area :professional_summary, class: "form-control", id: "professionalSummaryTextarea", placeholder: "Describe your experience in a short elevator pitch",rows: "3", maxlength: "1000" %>
+        <div class="error3 text-danger mb-1"></div>
       </div>
       <div class="d-flex justify-content-between">
         <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
-        <%= f.submit 'Next', class: 'btn btn-primary' %>
+        <%= f.submit 'Next', class: 'btn btn-primary submitProfessionalHistory' %>
       </div>
     <% end %>
   </div>
 </div>
+
+<script>
+  $('.submitProfessionalHistory').on('click', (e) => {
+    if ($('#professionalTitleInput').val().trim().length == 0) {
+      e.preventDefault();
+      $('.error1').text('Please enter a professional title');
+      setTimeout(() => {
+        $('.error1').text('');
+      }, 3000);
+    }
+    if ($("#freelancer_profile_professional_years_experience").prop("selectedIndex") === 0) {
+      e.preventDefault();
+      $('.error2').text('Please make a selection');
+      setTimeout(() => {
+        $('.error2').text('');
+      }, 3000);
+    }
+    if ($('#professionalSummaryTextarea').val().trim().length == 0) {
+      e.preventDefault();
+      $('.error3').text('Please enter a professional summary');
+      setTimeout(() => {
+        $('.error3').text('');
+      }, 3000);
+    }
+  })
+</script>
+
