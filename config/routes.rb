@@ -55,6 +55,7 @@ Rails.application.routes.draw do
     resources :account, only: :index
     resource :avatar, only: %i[update destroy]
     resource :profile, only: :update
+    resource :timesheets, only: :update
     resources :contracts
     post 'interview_request', to: 'talent#interview_request'
     post 'like_job_application', to: 'jobs#like_job_application'
