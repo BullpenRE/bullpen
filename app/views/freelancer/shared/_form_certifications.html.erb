@@ -3,10 +3,11 @@
     Licence or Certification
   </label>
   <div id="descriptionCertification" class="collapse multi-collapse <%= freelancer_certification&.certification&.custom? ? '' : 'show' %>">
-    <div class="form-group mb-2">
+    <div class="form-group mb-2 descriptionCertification-<%= freelancer_certification&.id %>">
       <%= f.select :certification_id,
                    options_for_select(@certifications, [freelancer_certification&.description, freelancer_certification&.certification_id]),
                    {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select", title: "Select an option..." %>
+      <div class="error_description text-danger mt-1"></div>
     </div>
   </div>
   <div id="customDescriptionCertification" class="collapse multi-collapse <%= freelancer_certification&.certification&.custom? ? 'show' : '' %>">
@@ -16,6 +17,7 @@
                        id: "customDescriptionCertificate-#{freelancer_certification&.id}",
                        placeholder: "Custom License Entry",
                        value: freelancer_certification&.description %>
+      <div class="error_custom text-danger mt-1"></div>
     </div>
   </div>
 
@@ -34,17 +36,19 @@
   <div class="form-group">
     <label for="earnedMonth" class="h5">Date Earned</label>
     <div class="row">
-      <div class="col">
+      <div class="col earnedMonth-<%= freelancer_certification&.id %>">
         <%= f.select :earned_month,
                      options_for_select(select_months_array, freelancer_certification&.earned&.month),
                      {}, class: 'form-control selectpicker',
-                     id: 'earnedMonth', required: true, 'data-style': "bp-btn-select", title: "Month" %>
+                     id: "earnedMonth-#{freelancer_certification&.id}", 'data-style': "bp-btn-select", title: "Month" %>
+        <div class="error_month text-danger mt-1"></div>
       </div>
-      <div class="col">
+      <div class="col earnedYear-<%= freelancer_certification&.id %>">
         <%= f.select :earned_year,
                      options_for_select(FreelancerCertification::AVAILABLE_YEARS, freelancer_certification&.earned&.year),
                      {}, class: 'form-control selectpicker',
-                     id: 'earnedYear', required: true, 'data-style': "bp-btn-select", title: "Year" %>
+                     id: "earnedYear-#{freelancer_certification&.id}", 'data-style': "bp-btn-select", title: "Year" %>
+        <div class="error_year text-danger mt-1"></div>
       </div>
     </div>
     <%= f.hidden_field :id, value: freelancer_certification&.id %>
@@ -53,16 +57,55 @@
 <% if freelancer_certification&.id&.present? %>
   <div class="modal-footer">
     <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
-    <%= f.submit 'Save Changes', class: 'btn btn-primary float-right' %>
+    <%= f.submit 'Save Changes', class: 'btn btn-primary float-right submitCertification' %>
   </div>
 <% else %>
   <div class="d-flex justify-content-end m-3 mt-4">
-    <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+    <%= f.submit 'Save Changes', class: 'btn btn-primary submitCertification' %>
   </div>
 <% end %>
 <script>
-    <% if @freelancer_profile && @freelancer_profile&.freelancer_certifications&.count > 1 %>
-    $('.modal-footer').addClass('justify-content-between');
-    $('.btn-outline-danger').removeClass('d-none');
-    <% end %>
+  <% if @freelancer_profile && @freelancer_profile&.freelancer_certifications&.count > 1 %>
+  $('.modal-footer').addClass('justify-content-between');
+  $('.btn-outline-danger').removeClass('d-none');
+  <% end %>
+
+  $('.submitCertification').on('click', (e) => {
+    if ($("#descriptionCertification-<%= freelancer_certification&.id %>").prop("selectedIndex") === 0) {
+      e.preventDefault();
+      $('.error_description').text('Please make a selection');
+      $(".descriptionCertification-<%= freelancer_certification&.id %>").addClass('error');
+      setTimeout(() => {
+        $('.error_description').text('');
+        $(".descriptionCertification-<%= freelancer_certification&.id %>").removeClass('error');
+      }, 3000);
+    }
+		if ($("#customDescriptionCertificate-<%= freelancer_certification&.id %>").val() == '') {
+      e.preventDefault();
+      $('.error_custom').text('Enter your custom license');
+      $("#customDescriptionCertificate-<%= freelancer_certification&.id %>").addClass('error');
+      setTimeout(() => {
+        $('.error_custom').text('');
+        $("#customDescriptionCertificate-<%= freelancer_certification&.id %>").removeClass('error');
+      }, 3000);
+    }
+		if ($("#earnedMonth-<%= freelancer_certification&.id %>").prop("selectedIndex") === 0) {
+      e.preventDefault();
+      $('.error_month').text('Please make a selection');
+      $(".earnedMonth-<%= freelancer_certification&.id %>").addClass('error');
+      setTimeout(() => {
+        $('.error_month').text('');
+        $(".earnedMonth-<%= freelancer_certification&.id %>").removeClass('error');
+      }, 3000);
+    }
+		if ($("#earnedYear-<%= freelancer_certification&.id %>").prop("selectedIndex") === 0) {
+      e.preventDefault();
+      $('.error_year').text('Please make a selection');
+      $(".earnedYear-<%= freelancer_certification&.id %>").addClass('error');
+      setTimeout(() => {
+        $('.error_year').text('');
+        $(".earnedYear-<%= freelancer_certification&.id %>").removeClass('error');
+      }, 3000);
+    }
+  })
 </script>
