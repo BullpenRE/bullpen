@@ -7,8 +7,9 @@ module Employer
     before_action :no_card_data_redirect, only: :create_card
 
     def create_card
-      response = Stripe::CustomerCardCreationService.new(employer_profile.stripe_id_customer,
-                                                         stripe_params[:card_token]).call
+      response = Stripe::Customer::CreateUpdateService.new(user_id: current_user.id,
+                                                           customer_id: employer_profile.stripe_id_customer,
+                                                           card_token: stripe_params[:card_token]).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR
       else
@@ -17,7 +18,7 @@ module Employer
     end
 
     def create_account
-      response = Stripe::CustomerBankAccountService.new(employer_profile.stripe_id_customer,
+      response = Stripe::Customer::BankAccountService.new(employer_profile.stripe_id_customer,
                                                         bank_attributes).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR

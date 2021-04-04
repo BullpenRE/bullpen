@@ -44,7 +44,7 @@ module Stripe
 
       def log_errors(error_description)
         Rails.logger.info(
-          "Error in CustomerBankAccountService impacting user id: #{@user_id}, "\
+          "Error in Customer::BankAccountService impacting user id: #{@user_id}, "\
           "stripe customer id: #{@stripe_id_customer}, "\
           "error details: #{error_description}"
         )
