@@ -20,7 +20,7 @@ class Timesheet < ApplicationRecord
   end
 
   def total_usd
-    (contract.pay_rate*unpaid_billing_total_hours).round(2)
+    (contract.pay_rate * unpaid_billing_total_hours).round(2)
   end
 
   def dispute_deadline
@@ -46,6 +46,6 @@ class Timesheet < ApplicationRecord
   end
 
   def unpaid_billing_total_hours
-    billings.not_paid.sum('hours') + billings.not_paid.sum('minutes')/60.0
+    billings.not_paid.sum('hours') + billings.not_paid.sum('minutes') / 60.0
   end
 end
