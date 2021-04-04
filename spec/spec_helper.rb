@@ -15,7 +15,7 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'webmock/rspec'
 WebMock.disable_net_connect!(allow_localhost: true)
-WebMock.stub_request(:get, "https://nominatim.openstreetmap.org/search?accept-language=en&addressdetails=1&format=json&q=New%20York,%20NY").
+WebMock.stub_request(:get, "https://nominatim.openstreetmap.org/search?accept-language=en&addressdetails=1&format=json&*").
   with(
     headers: {
       'Accept'=>'*/*',
