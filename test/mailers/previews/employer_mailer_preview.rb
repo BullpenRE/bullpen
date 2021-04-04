@@ -23,4 +23,8 @@ class EmployerMailerPreview < ActionMailer::Preview
   def contract_was_closed
     EmployerMailer.contract_was_closed(Contract.last)
   end
+
+  def hours_was_updated
+    EmployerMailer.hours_was_updated(Timesheet.find(3))
+  end
 end

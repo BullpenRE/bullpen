@@ -2,6 +2,7 @@
 
 class Timesheet < ApplicationRecord
   default_scope { order(ends: :desc) }
+  scope :not_disputed, -> {  }
   belongs_to :contract
   has_many :billings, dependent: :nullify
   validates :starts, :ends, presence: true
@@ -27,18 +28,18 @@ class Timesheet < ApplicationRecord
     1.day.ago(pending_payment_date).strftime('%b %e')
   end
 
-  private
-
-  def ends_after_start
-    errors.add(:ends, 'must be after the start date') if starts.to_s > ends.to_s
-  end
-
   def pending_payment_date
     ends.next_occurring(:friday)
   end
 
   def disputed?
     billings.where(state: 'disputed').present? && pending_payment_date > Date.current
+  end
+
+  private
+
+  def ends_after_start
+    errors.add(:ends, 'must be after the start date') if starts.to_s > ends.to_s
   end
 
   def paused?
