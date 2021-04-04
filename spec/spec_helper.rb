@@ -19,7 +19,7 @@ RSpec.configure do |config|
   config.before(:each) do
     stub_request(:get, /nominatim.openstreetmap.org/).
       with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
-      to_return(status: 200, body: "stubbed response", headers: {})
+      to_return(:body => File.read(File.join("spec", "maps_data.json")))
   end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
