@@ -6,7 +6,7 @@
     <div class="form-group mb-2 descriptionCertification-<%= freelancer_certification&.id %>">
       <%= f.select :certification_id,
                    options_for_select(@certifications, [freelancer_certification&.description, freelancer_certification&.certification_id]),
-                   {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select", title: "Select an option..." %>
+                   {}, class: 'form-control selectpicker',id: "descriptionCertification-#{freelancer_certification&.id}", 'data-style': "bp-btn-select", title: "Select an option..." %>
       <div class="error_description text-danger mt-1"></div>
     </div>
   </div>
@@ -34,7 +34,7 @@
   </div>
 
   <div class="form-group">
-    <label for="earnedMonth" class="h5">Date Earned</label>
+    <label for="earnedMonth-<%= freelancer_certification&.id %>" class="h5">Date Earned</label>
     <div class="row">
       <div class="col earnedMonth-<%= freelancer_certification&.id %>">
         <%= f.select :earned_month,
@@ -71,20 +71,15 @@
   <% end %>
 
   $('.submitCertification').on('click', (e) => {
-    if ($("#descriptionCertification-<%= freelancer_certification&.id %>").prop("selectedIndex") === 0) {
+    if ($("#descriptionCertification-<%= freelancer_certification&.id %>").prop("selectedIndex") === 0 && $("#customDescriptionCertificate-<%= freelancer_certification&.id %>").val() == '') {
       e.preventDefault();
       $('.error_description').text('Please make a selection');
       $(".descriptionCertification-<%= freelancer_certification&.id %>").addClass('error');
-      setTimeout(() => {
-        $('.error_description').text('');
-        $(".descriptionCertification-<%= freelancer_certification&.id %>").removeClass('error');
-      }, 3000);
-    }
-		if ($("#customDescriptionCertificate-<%= freelancer_certification&.id %>").val() == '') {
-      e.preventDefault();
       $('.error_custom').text('Enter your custom license');
       $("#customDescriptionCertificate-<%= freelancer_certification&.id %>").addClass('error');
       setTimeout(() => {
+        $('.error_description').text('');
+        $(".descriptionCertification-<%= freelancer_certification&.id %>").removeClass('error');
         $('.error_custom').text('');
         $("#customDescriptionCertificate-<%= freelancer_certification&.id %>").removeClass('error');
       }, 3000);
