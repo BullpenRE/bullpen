@@ -24,7 +24,6 @@ module Stripe
         @employer_profile.payment_accounts.create(prepare_attributes(response)) if response['id']
       rescue StandardError => e
         log_errors(e)
-
         { stripe_error: true }
       end
 

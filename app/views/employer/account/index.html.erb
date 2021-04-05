@@ -29,58 +29,56 @@
 
   <div class="bp-card mb-3">  
     <h2 class="mb-3">Payment Options<i class="far fa-question-circle ml-2 text-primary" aria-hidden="true"></i></h2> <!--Remove the "text-primary" class when the icon becomes a link-->
-      <% if @payment_accounts.present? %>
-        <% @payment_accounts.each do |payment_account| %>
-          <div class="d-flex flex-row flex-inline mb-3">
-            <div class="d-flex-col">
-              <div class="pr-2">
-                <%= payment_account.short_description %>
-              </div>
-              <% if payment_account.stripe_object == 'card' %>
-                <div class="small <%= 'text-danger' if payment_account.expired? %>">
-                  <%= payment_account.expiration_description %>
-                </div>
-              <% end %>
+    <% if @payment_accounts.present? %>
+      <% @payment_accounts.each do |payment_account| %>
+        <div class="d-flex flex-row flex-inline mb-3">
+          <div class="d-flex-col">
+            <div class="pr-2">
+              <%= payment_account.short_description %>
             </div>
-            <% if @payment_accounts.length != 1 %>
-              <div class="d-flex-col ml-auto">
-                <% if payment_account.is_default? %>
-                  <%= link_to employer_account_path(payment_account), method: :delete, class: 'btn btn-outline-primary' do %>
-                    Remove
-                  <% end %>
-                <% else %>
-                  <div class="dropdown">
-                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownCardMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Options
-                      <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownCardMenuButton">
-                      <% unless payment_account.expired? %>
-                        <%= link_to employer_account_path(payment_account, account: {is_default: true}), method: :put, class: 'dropdown-item' do %>
-                            Set as Default
-                        <% end %>
-                      <% end %>
-                      <%= link_to employer_account_path(payment_account), method: :delete, class: 'dropdown-item' do %>
-                          Remove
-                      <% end %>
-                    </div>
-                  </div>
-                <% end %>
+            <% if payment_account.stripe_object == 'card' %>
+              <div class="small <%= 'text-danger' if payment_account.expired? %>">
+                <%= payment_account.expiration_description %>
               </div>
             <% end %>
           </div>
-        <% end %>
+          <% if @payment_accounts.length != 1 %>
+            <div class="d-flex-col ml-auto">
+              <% if payment_account.is_default? %>
+                <%= link_to employer_account_path(payment_account), method: :delete, class: 'btn btn-outline-primary' do %>
+                  Remove
+                <% end %>
+              <% else %>
+                <div class="dropdown">
+                  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownCardMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Options
+                    <i class="fas fa-chevron-down"></i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownCardMenuButton">
+                    <% unless payment_account.expired? %>
+                      <%= link_to employer_account_path(payment_account, account: {is_default: true}), method: :put, class: 'dropdown-item' do %>
+                          Set as Default
+                      <% end %>
+                    <% end %>
+                    <%= link_to employer_account_path(payment_account), method: :delete, class: 'dropdown-item' do %>
+                        Remove
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       <% end %>
-    <% if @employer_profile.stripe_id_customer.present? %>
-        <%= render 'employer/shared/add_credit_card_modal' %>
-        <%= render 'employer/shared/add_bank_account_modal' %>
-        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addCreditCardModal">
-          Add a Credit Card
-        </button>
-        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addBankAccountModal">
-          Add a Bank Account
-        </button>
     <% end %>
+    <%= render 'employer/shared/add_credit_card_modal' %>
+    <%= render 'employer/shared/add_bank_account_modal' %>
+    <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addCreditCardModal">
+      Add a Credit Card
+    </button>
+    <button class="btn btn-outline-primary" data-toggle="modal" data-target="#addBankAccountModal">
+      Add a Bank Account
+    </button>
   </div>
 
   <div class="bp-card mb-5">
