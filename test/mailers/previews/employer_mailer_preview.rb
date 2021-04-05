@@ -25,6 +25,6 @@ class EmployerMailerPreview < ActionMailer::Preview
   end
 
   def hours_was_updated
-    EmployerMailer.hours_was_updated(Timesheet.find(3))
+    EmployerMailer.hours_was_updated(Timesheet.last)
   end
 end
