@@ -17,7 +17,7 @@ class Employer::TimesheetsController < ApplicationController
 
   def update_params(billing)
     {
-      state: params[billing.id.to_s].present? && params["disputed-#{billing.id}"].present? ? 'disputed' : 'pending',
+      state: params["disputed-#{billing.id}"].present? ? 'disputed' : 'pending',
       dispute_comments: params["disputed-#{billing.id}"].present? ? params[billing.id.to_s] : ''
     }
   end
