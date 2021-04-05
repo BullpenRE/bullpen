@@ -12,7 +12,7 @@
         <% if editable %>
           <button class="btn btn-link shadow-none p-0 align-self-start ml-auto" type="button"  data-toggle="modal" data-target="#editWorkExperienceModal-<%= work_experience.id %>"><i class="fas fa-edit text-primary"></i></button>
         <% end %>
-        <%= render 'freelancer/shared/edit_work_experience', freelancer_profile_experience: work_experience %>
+        <%= render 'freelancer/shared/edit_work_experience', { freelancer_profile_experience: work_experience, freelancer_profile: freelancer_profile } %>
       </div>
       <div>
         <% work_experience.description_paragraphs.each do |paragraph| %>
