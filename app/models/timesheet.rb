@@ -2,7 +2,9 @@
 
 class Timesheet < ApplicationRecord
   default_scope { order(ends: :desc) }
-  scope :not_disputed, -> {  }
+  scope :related_to_contracts, lambda { |contracts_ids|
+    where(contract_id: contracts_ids)
+  }
   belongs_to :contract
   has_many :billings, dependent: :nullify
   validates :starts, :ends, presence: true
