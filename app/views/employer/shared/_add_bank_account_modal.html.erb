@@ -7,21 +7,86 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <%= form_for :stripe, url: employer_create_account_path, method: :post do |f| %>
+      <%= form_for :stripe, url: employer_create_account_path, method: :post, id: 'bank-form' do |f| %>
         <div class="modal-body">
+          <div class="form-errors"></div>
           <div class="form-group">
             <label for="routing-number" class="h5">Bank Routing number</label>
-            <%= f.text_field :bank_routing_number, class: 'form-control mb-1', id: 'routing-number', placeholder: 'Enter the ABA routing number' %>
+            <%= text_field_tag 'routing_number',
+                               nil,
+                               class: 'form-control mb-1',
+                               placeholder: 'Enter the ABA routing number',
+                               required: true %>
           </div>
           <div class="form-group">
             <label for="account-number" class="h5">Bank Account number</label>
-            <%= f.text_field :bank_account_number, class: 'form-control mb-1', id: 'account-number', placeholder: 'Enter the bank account number' %>
+            <%= text_field_tag 'account_number',
+                               nil,
+                               class: 'form-control mb-1',
+                               placeholder: '000123456789',
+                               required: true %>
+          </div>
+          <div class="form-group">
+            <label for="account_holder_name" class="h5">Bank Account Holder Name</label>
+            <%= text_field_tag 'account_holder_name',
+                               nil,
+                               class: 'form-control mb-1',
+                               placeholder: 'Jenny Rosen',
+                               required: true %>
+          </div>
+          <div class="form-group">
+            <label for="account_holder_type" class="h5">Bank Account Holder Type</label>
+            <%= text_field_tag 'account_holder_type',
+                               'individual',
+                               class: 'form-control mb-1',
+                               placeholder: 'individual or company',
+                               required: true,
+                               pattern: 'individual|company' %>
           </div>
         </div>
         <div class="modal-footer">
-          <%= f.submit 'Add a Bank Account', type: 'submit', class: 'btn btn-outline-primary' %>
+          <%= f.submit 'Add a Bank Account', type: 'submit', class: 'btn btn-outline-primary submit' %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
+
+<script>
+  $(document).on('turbolinks:load', function () {
+    const publicKey = document.getElementsByName('stripe-public-key')[0].getAttribute('content');
+    const stripe = Stripe.setPublishableKey(publicKey);
+
+    const $form = $('#bank-form');
+    $form.submit(function(e) {
+      e.preventDefault();
+      $form.find('.submit').prop('disabled', true);
+      stripe.createToken('bank_account', {
+        country: 'US',
+        currency: 'usd',
+        routing_number: $('#routing-number').val(),
+        account_number: $('#account_number').val(),
+        account_holder_name: $('#account_holder_name').val(),
+        account_holder_type: $('#account_holder_type').val()
+      })
+      .then(function(result) {
+        if (result.error) {
+          // Show the errors on the form
+          $form.find('.form-errors').text(result.error.message);
+          $form.find('.submit').prop('disabled', false); // Re-enable submission
+        } else {
+          // Get the token ID:
+          const token = result.id;
+          console.log(`Got ba_ successfully: ${token}`);
+          // Insert the token into the form so it gets submitted to the server:
+          $form.append($('<input type="hidden" name="bankToken]" />').val(token));
+
+          // Submit the form:
+          $form.get(0).submit();
+        }
+      });
+
+      return false;
+    });
+  });
+</script>
