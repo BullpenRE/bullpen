@@ -12,16 +12,15 @@
 module Stripe
   module Customers
     class BankAccountService
-      def initialize(stripe_id_customer, bank_token)
-        @stripe_id_customer = stripe_id_customer
+      def initialize(user_id:, customer_id: '', bank_token: '')
+        @user = User.find_by(id: user_id)
+        @customer_id = customer_id
         @bank_token = bank_token
-        @employer_profile = EmployerProfile.find_by(stripe_id_customer: @stripe_id_customer)
-        @user_id = @employer_profile.user.id
       end
 
       def call
-        response = Stripe::Customer.create_source(@stripe_id_customer, { source: @bank_token })
-        @employer_profile.payment_accounts.create(prepare_attributes(response)) if response['id']
+        update_existing_customer if @customer_id.present? && @bank_token.present?
+        create_customer unless @customer_id.present?
       rescue StandardError => e
         log_errors(e)
         { stripe_error: true }
@@ -39,6 +38,19 @@ module Stripe
           bank_status: response['status'],
           bank_routing_number: response['routing_number']
         }
+      end
+
+      def update_existing_customer
+        obj = Stripe::Customer.create_source(@customer_id, { source: @bank_token })
+        @user.employer_profile.payment_accounts.create(prepare_attributes(obj)) if obj['id']
+      end
+
+      def create_customer
+        obj = Stripe::Customer.create({ email: @user.email, source: @bank_token })
+        @user.employer_profile.update(stripe_id_customer: obj['id']) if obj['id'].present?
+        return unless @bank_token.present? && obj['fingerprint']
+
+        @user.employer_profile.payment_accounts.create(prepare_attributes(obj))
       end
 
       def log_errors(error_description)
