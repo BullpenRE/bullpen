@@ -7,10 +7,11 @@ class Timesheet < ApplicationRecord
   validates :starts, :ends, presence: true
   validate :ends_after_start
 
-  def title
+  def title(employer)
     return 'Current Hours' if ends >= Date.current
     return "Payment Paused - <span style='color: red'>Disputed</span>".html_safe if disputed?
     return 'Payment Paused' if paused?
+    return "Payment Due on #{pending_payment_date.strftime('%b %e')}" if employer
 
     "Pending Payment on #{pending_payment_date.strftime('%b %e')}"
   end

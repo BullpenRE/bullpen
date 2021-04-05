@@ -69,8 +69,9 @@ RSpec.describe Timesheet, type: :model do
                                                                    hours: 2, minutes: 11)
     end
     it '#title' do
-      expect(current_timesheet.title).to eq 'Current Hours'
-      expect(pending_timesheet.title).to eq "Pending Payment on #{pending_timesheet.ends.next_occurring(:friday).strftime('%b %e')}"
+      expect(current_timesheet.title(false)).to eq 'Current Hours'
+      expect(pending_timesheet.title(false)).to eq "Pending Payment on #{pending_timesheet.ends.next_occurring(:friday).strftime('%b %e')}"
+      expect(pending_timesheet.title(true)).to eq "Payment Due on #{pending_timesheet.ends.next_occurring(:friday).strftime('%b %e')}"
     end
 
     it '#total_usd' do
