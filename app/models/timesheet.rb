@@ -10,24 +10,25 @@ class Timesheet < ApplicationRecord
   validates :starts, :ends, presence: true
   validate :ends_after_start
 
-  def title
-    return 'Current Hours' if ends > Date.current
+  def title(employer)
+    return 'Current Hours' if ends >= Date.current
     return "Payment Paused - <span style='color: red'>Disputed</span>".html_safe if disputed?
     return 'Payment Paused' if paused?
+    return "Payment Due on #{pending_payment_date.strftime('%b %e')}" if employer
 
     "Pending Payment on #{pending_payment_date.strftime('%b %e')}"
   end
 
-  def total_hours
-    (billings.not_paid.sum('hours') + billings.not_paid.sum('minutes')/60.0).round(2)
+  def total_hours_display
+    unpaid_billing_total_hours.round(2)
   end
 
   def total_usd
-    (contract.pay_rate*(billings.not_paid.sum('hours') + (billings.not_paid.sum('minutes')/60.0)).round(2))
+    (contract.pay_rate * unpaid_billing_total_hours).round(2)
   end
 
   def dispute_deadline
-    1.day.ago(pending_payment_date).strftime('%b %e')
+    (pending_payment_date - 1.day).strftime('%b %e')
   end
 
   def pending_payment_date
@@ -46,5 +47,9 @@ class Timesheet < ApplicationRecord
 
   def paused?
     billings.where(state: 'disputed').present? && pending_payment_date < Date.current
+  end
+
+  def unpaid_billing_total_hours
+    billings.not_paid.sum('hours') + billings.not_paid.sum('minutes') / 60.0
   end
 end
