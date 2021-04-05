@@ -10,7 +10,7 @@
 #  }
 
 module Stripe
-  module Customer
+  module Customers
     class BankAccountService
       def initialize(stripe_id_customer, bank_token)
         @stripe_id_customer = stripe_id_customer
@@ -44,7 +44,7 @@ module Stripe
 
       def log_errors(error_description)
         Rails.logger.info(
-          "Error in Customer::BankAccountService impacting user id: #{@user_id}, "\
+          "Error in Customers::BankAccountService impacting user id: #{@user_id}, "\
           "stripe customer id: #{@stripe_id_customer}, "\
           "error details: #{error_description}"
         )

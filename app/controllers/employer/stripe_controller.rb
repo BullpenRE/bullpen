@@ -3,13 +3,12 @@
 module Employer
   class StripeController < ApplicationController
     before_action :authenticate_user!, :initial_check, :non_employer_redirect, :employer_profile
-    before_action :no_account_routing_redirect, only: :create_account
-    before_action :no_card_data_redirect, only: :create_card
+    before_action :no_card_token_redirect, only: :create_card
 
     def create_card
-      response = Stripe::Customer::CreateUpdateService.new(user_id: current_user.id,
+      response = Stripe::Customers::CreateUpdateService.new(user_id: current_user.id,
                                                            customer_id: employer_profile.stripe_id_customer,
-                                                           card_token: stripe_params[:card_token]).call
+                                                           card_token: stripe_params[:stripeToken]).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR
       else
@@ -18,7 +17,7 @@ module Employer
     end
 
     def create_account
-      response = Stripe::Customer::BankAccountService.new(employer_profile.stripe_id_customer,
+      response = Stripe::Customers::BankAccountService.new(employer_profile.stripe_id_customer,
                                                         bank_attributes).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR
@@ -46,22 +45,14 @@ module Employer
     end
 
     def stripe_params
-      params.require(:stripe).permit(:bank_account_number,
-                                     :bank_routing_number,
-                                     :card_token)
-    end
-
-    def no_account_routing_redirect
-      return if stripe_params[:bank_account_number].present? && stripe_params[:bank_routing_number].present?
-
-      redirect_to employer_account_index_path, alert: 'Please add the ACH routing number and bank account number'
+      params.permit(:stripeToken, :authenticity_token)
     end
 
     def valid_card_input?
-      stripe_params[:card_number].present? && stripe_params[:exp_month].present? && stripe_params[:exp_year].present?
+      stripe_params[:stripeToken].present?
     end
 
-    def no_card_data_redirect
+    def no_card_token_redirect
       return if valid_card_input?
 
       redirect_to employer_account_index_path, alert: 'Stripe: card data is invalid'

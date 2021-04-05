@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Stripe
-  module Customer
+  module Customers
     class CreateUpdateService
       def initialize(user_id:, customer_id: '', card_token: '')
         @user = User.find_by(id: user_id)
@@ -21,7 +21,7 @@ module Stripe
 
       def log_errors(error_description)
         Rails.logger.info(
-          "Error in Customer::CreateUpdateService impacting user id: #{@user.id}, "\
+          "Error in Customers::CreateUpdateService impacting user id: #{@user.id}, "\
           "error details: #{error_description}"
         )
       end
