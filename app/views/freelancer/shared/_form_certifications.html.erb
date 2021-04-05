@@ -66,8 +66,8 @@
 <% end %>
 <script>
   <% if @freelancer_profile && @freelancer_profile&.freelancer_certifications&.count > 1 %>
-  $('.modal-footer').addClass('justify-content-between');
-  $('.btn-outline-danger').removeClass('d-none');
+    $('.modal-footer').addClass('justify-content-between');
+    $('.btn-outline-danger').removeClass('d-none');
   <% end %>
 
   $('.submitCertification').on('click', (e) => {
