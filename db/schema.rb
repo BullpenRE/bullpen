@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_30_051146) do
+ActiveRecord::Schema.define(version: 2021_05_31_000000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,17 @@ ActiveRecord::Schema.define(version: 2021_03_30_051146) do
     t.index ["timesheet_id"], name: "index_billings_on_timesheet_id"
   end
 
+  create_table "bubble_lookups", force: :cascade do |t|
+    t.string "id_bubble"
+    t.string "bubble_type"
+    t.string "target_type", null: false
+    t.bigint "target_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["id_bubble"], name: "index_bubble_lookups_on_id_bubble"
+    t.index ["target_type", "target_id"], name: "index_bubble_lookups_on_target"
+  end
+
   create_table "certifications", force: :cascade do |t|
     t.string "description"
     t.boolean "disable", default: false
@@ -116,6 +127,7 @@ ActiveRecord::Schema.define(version: 2021_03_30_051146) do
     t.boolean "hide_from_freelancer", default: false
     t.boolean "hide_from_employer", default: false
     t.bigint "payment_account_id"
+    t.string "id_bubble"
     t.index ["employer_profile_id"], name: "index_contracts_on_employer_profile_id"
     t.index ["freelancer_profile_id"], name: "index_contracts_on_freelancer_profile_id"
     t.index ["job_id"], name: "index_contracts_on_job_id"
@@ -138,6 +150,7 @@ ActiveRecord::Schema.define(version: 2021_03_30_051146) do
     t.boolean "motivation_other"
     t.string "current_step"
     t.boolean "completed", default: false
+    t.string "id_bubble"
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
@@ -444,6 +457,7 @@ ActiveRecord::Schema.define(version: 2021_03_30_051146) do
     t.string "provider"
     t.float "latitude"
     t.float "longitude"
+    t.string "id_bubble"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["latitude", "longitude"], name: "index_users_on_latitude_and_longitude"
