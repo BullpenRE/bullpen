@@ -38,6 +38,7 @@ module Stripe
 
         user.employer_profile.payment_accounts.create(prepare_attributes(obj))
       end
+      # rubocop:enable Metrics/AbcSize
     end
 
     protected
