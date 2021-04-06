@@ -57,11 +57,11 @@
 <% if freelancer_certification&.id&.present? %>
   <div class="modal-footer">
     <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
-    <%= f.submit 'Save Changes', class: 'btn btn-primary float-right submitCertification' %>
+    <%= f.submit 'Save Changes', class: "btn btn-primary float-right submitCertification#{freelancer_certification&.id}" %>
   </div>
 <% else %>
   <div class="d-flex justify-content-end m-3 mt-4">
     <%= f.submit 'Save Changes', class: 'btn btn-primary submitCertification' %>
   </div>
 <% end %>
-<%= render partial: 'certification_validations', locals: { freelancer_profile: @freelancer_profile, freelancer_certification: freelancer_certification } %>
+<%= render partial: 'freelancer/shared/certification_validations', locals: { freelancer_profile: @freelancer_profile, freelancer_certification: freelancer_certification } %>

@@ -5,6 +5,7 @@
   <% end %>
 
   $('.submitCertification<%= freelancer_certification&.id %>').on('click', (e) => {
+    debugger
     if (($("#descriptionCertification-<%= freelancer_certification&.id %>").val() == '' && !$('#editCertificationCustom-<%= freelancer_certification&.id %>').is(':checked')) || ($('#editCertificationCustom-<%= freelancer_certification&.id %>').is(':checked') && $("#customDescriptionCertificate-<%= freelancer_certification&.id %>").val() == '')) {
       e.preventDefault();
       $('.error_description').text('Please make a selection');
