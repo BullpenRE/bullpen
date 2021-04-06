@@ -2,13 +2,14 @@
 
 class Employer::JobFlowsController < ApplicationController
   include Wicked::Wizard
-  include LoggedInRedirects
-  steps :post_job_step_1, :post_job_step_2, :post_job_step_3, :post_job_step_4, :post_job_step_5
+  include ApplicationHelper
+  steps :post_job_step_1, :post_job_step_2, :post_job_step_3, :post_job_step_4, :post_job_step_5, :preview_job
   before_action :authenticate_user!, :initial_check
 
   def show
     @user = current_user
     @available_time_zones = Job.time_zones
+    @time_zone = job.time_zone if params[:start_flow].blank?
     params[:start_flow].present? ? new_job : job
 
     respond_js_format(wizard_value(step))
@@ -24,7 +25,8 @@ class Employer::JobFlowsController < ApplicationController
       job_type_save ||
       qualifications_save ||
       details_save ||
-      questions_save
+      questions_save ||
+      preview_job_save
   end
 
   def summary_step_save
@@ -67,7 +69,7 @@ class Employer::JobFlowsController < ApplicationController
   def details_save
     return false unless params[:job][:step] == 'post_job_step_4'
 
-    job.update(relevant_job_details: params[:job][:relevant_job_details])
+    job.update(details_params.merge(relevant_details: params[:job][:relevant_details]))
     respond_js_format(:post_job_step_5)
 
     true
@@ -77,11 +79,33 @@ class Employer::JobFlowsController < ApplicationController
     return false unless params[:job][:step] == 'post_job_step_5'
 
     questions_descriptions = params[:job][:job_questions].values.reject(&:empty?)
+    job.job_questions.destroy_all if job.job_questions.any?
     questions_descriptions.each do |description|
       job.job_questions.create(description: description)
     end
-    params[:button] != 'draft' ? job.update(state: 'posted') : job.update(state: 'draft')
     job.update(initial_creation: false)
+    if params[:button] == 'draft'
+      job.update(state: 'draft')
+      flash_when_saved_as_draft
+      redirect_to employer_jobs_path
+    elsif params[:button] == 'posted'
+      redirect_to employer_jobs_path
+    else
+      respond_js_format(:preview_job)
+    end
+
+    true
+  end
+
+  def preview_job_save
+    return false unless params[:job][:step] == 'preview_job'
+
+    if params[:button] == 'draft'
+      job.update(state: 'draft')
+      flash_when_saved_as_draft
+    elsif params[:button] != 'done'
+      job.update(state: 'posted')
+    end
 
     redirect_to employer_jobs_path
 
@@ -89,6 +113,14 @@ class Employer::JobFlowsController < ApplicationController
   end
 
   private
+
+  def details_params
+    {
+      contract_type: 'hourly',
+      pay_range_low: clean_currency_entry(params[:job][:pay_range_low]),
+      pay_range_high: clean_currency_entry(params[:job][:pay_range_high])
+    }
+  end
 
   def save_job_skills
     job.job_skills.destroy_all
@@ -136,10 +168,15 @@ class Employer::JobFlowsController < ApplicationController
   end
 
   def new_job
-    @job ||= current_user.jobs.build
+    @job ||= current_user.employer_profile.jobs.build
   end
 
   def job
-    @job ||= current_user.jobs.find_by(id: (params[:job_id] || params[:job][:job_id]))
+    @job ||= current_user.employer_profile.jobs.find_by(id: (params[:job_id] || params[:job][:job_id]))
+  end
+
+  def flash_when_saved_as_draft
+    flash[:notice] = "Your <b>#{job.title}</b> job post has been saved as a draft.
+                     Select <b>Post Job</b> to review and post your job."
   end
 end

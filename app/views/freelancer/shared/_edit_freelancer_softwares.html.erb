@@ -1,0 +1,45 @@
+<!--Edit Freelancer Software Modal-->
+<div class="modal fade" id="editSoftwareModal" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content mt-3">
+      <div class="modal-header pb-0">
+        <h1 class="modal-title" id="editSoftwareLicencesLabel"><%= freelancer_profile.softwares.any? ? 'Edit Software Licences' : 'Add Software Licences' %> </h1>
+        <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <%= form_for :freelancer_softwares, url: freelancer_change_software_licence_path do |f| %>
+
+          <div class="form-group mb-3">
+            <label for="freelancerSoftwares" class="h5">
+              Owned Software
+            </label>
+            <%= f.select :freelancer_softwares,
+                         options_for_select(
+                           Software.enabled.pluck(:description, :id),
+                           freelancer_profile&.freelancer_softwares&.map do |freelancer_software|
+                             [freelancer_software.software.description, freelancer_software.software.id]
+                           end.flatten),
+                         {}, multiple: true, class: 'select2' %>
+          </div>
+          <script>
+              $(function() {
+                  $('.select2').select2({
+                      placeholder: 'Select all that apply',
+                      allowClear: true
+                  });
+              });
+          </script>
+
+          <div class="d-flex justify-content-end pt-3">
+            <button type="button" class="btn btn-link px-0 invisible"></button>
+            <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

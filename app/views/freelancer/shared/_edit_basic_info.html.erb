@@ -1,0 +1,219 @@
+<!--Edit Freelancer Profile Modal-->
+<style>
+  .highlight {
+    border: 2px solid red;
+    border-radius: 5px;
+  }
+</style>
+
+<div class="modal fade" id="editProfileModal-<%= freelancer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Personal Information</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body pt-0">
+        <div class="alert_from_js d-none">
+          <div class="alert alert-warning">
+            <span></span>
+          </div>
+        </div>
+        <%= form_for :freelancer_profile, url: freelancer_change_freelancer_basic_info_path do |f| %>
+          <%= f.hidden_field :redirect_reference, value: redirect_reference %>
+          <div class="mb-3 avatar">
+            <% if freelancer_profile.avatar.attached? %>
+              <div class="d-flex flex-column flex-sm-row align-items-center">
+                <div class="mr-sm-2 mb-2 mb-sm-0">
+                  <%= image_tag freelancer_profile.avatar.variant(resize: "80x80!").processed, class: 'rounded-circle' %>
+                </div>
+                
+                <div id='avatarButtons'>
+                  <div class="custom-file">
+                    <%= f.file_field :freelancer_profile_avatar,
+                                     multiple: false,
+                                     name: 'avatar',
+                                     class: "d-none",
+                                     id: "uploadProfilePic" %>
+                    <label class="btn btn-outline-primary m-0 mb-2 mb-sm-0" for="uploadProfilePic">
+                      Upload photo
+                    </label>
+                    <button type="button" class="delete-avatar d-none" id="deleteProfilePic"></button>
+                    <label class="btn btn-outline-danger mb-0 ml-2 mb-2 mb-sm-0" for="deleteProfilePic">
+                      Delete
+                    </label>
+                  </div>
+                </div>
+              </div>
+            <% else %>
+              <div class="d-flex flex-column flex-sm-row align-items-center">
+                <div class="text-light mr-sm-2 mb-2 mb-sm-0" style="font-size: 80px;line-height: 0;">
+                  <i class="fas fa-user-circle"></i>
+                </div>
+                
+                <div id="uploadButton">
+                  <div class="custom-file">
+                    <%= f.file_field :freelancer_profile_avatar,
+                                     multiple: false,
+                                     name: 'avatar',
+                                     class: "d-none",
+                                     id: "uploadProfilePic" %>
+                    <label class="btn btn-outline-primary mt-sm-0" for="uploadProfilePic">
+                      Upload photo
+                    </label>
+                    
+                  </div>
+                </div>
+                
+              </div>
+            <% end %>
+            <div class="error-avatar text-danger mt-1"></div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg">
+              <div class="form-group mb-3 wrapper">
+                <label for="professionalTitleInput" class="h5">First Name</label>
+                <%= f.text_field :first_name, class: "form-control custom-validate", id: "firstName", required: true %>
+              </div>
+            </div>
+            <div class="col-lg">
+              <div class="form-group mb-3 wrapper">
+                <label for="professionalTitleInput" class="h5">Last Name</label>
+                <%= f.text_field :last_name, class: "form-control custom-validate", id: "lastName", required: true %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg">
+              <div class="form-group mb-3 wrapper">
+                <label for="professionalTitleInput" class="h5">Professional Title</label>
+                <%= f.text_field :professional_title, class: "form-control custom-validate", id: "professionalTitleInput", placeholder: "e.g. Senior Analyst", required: true %>
+              </div>
+            </div>
+            <div class="col-lg">
+              <div class="form-group mb-3 wrapper">
+                <label for="yearsExperienceSelect" class="h5">Years of professional experience</label>
+                <div class="w-100">
+                  <%= f.select :professional_years_experience,
+                               FreelancerProfile.professional_years_experiences.keys.map { |w| [w.humanize, w] }, {},
+                               html_options = { class: "form-control selectpicker custom-validate", 'data-style': "bp-btn-select",
+                                                selected: freelancer_profile.professional_years_experience,
+                                                style: "display:block !important",
+                                                title: "Please make a selection", required: true } %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg">
+              <div class="form-group text-left wrapper">
+                <label for="freelancerLocationInput" class="h5">Location</label>
+                <%= f.text_field :location,
+                                 class: "form-control custom-validate",
+                                 id: "freelancerLocationInput",
+                                 placeholder: "City, State abbreviation",
+                                 required: true %>
+              </div>
+              <div class="error-location text-danger mb-2"></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg">
+              <div class="form-group mb-3 wrapper">
+                <label for="professionalSummaryTextarea" class="h5">Professional Summary</label>
+                <%= f.text_area :professional_summary, class: "form-control custom-validate", id: "professionalSummaryTextarea", placeholder: "Describe your experience in a short elevator pitch", rows: "4", maxlength: "1000", required: true %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg">
+              <div class="form-group mb-3 wrapper">
+                <label for="perHourBid" class="h5">
+                  Desired Hourly Rate
+                </label>
+                <span class="text-dark"> (optional) </span>
+                <%= f.text_field :desired_hourly_rate,
+                                 class: "form-control col-lg-4",
+                                 id: "perHourBid",
+                                 placeholder: "Enter your hourly rate",
+                                 required: true,
+                                 value: freelancer_profile.desired_hourly_rate %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg">
+              <div class="form-group mb-3 wrapper">
+                <label for="freelancerSectors" class="h5">
+                  Sectors
+                </label>
+                <%= f.select :freelancer_sectors,
+                             options_for_select(
+                               @sectors,
+                               freelancer_profile&.freelancer_sectors&.map do |freelancer_sector|
+                                 [freelancer_sector.sector.description, freelancer_sector.sector.id]
+                               end.flatten),
+                             {}, multiple: true, class: 'select2 custom-validate', required: true %>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex pt-3 justify-content-end">
+            <button type="button" class="btn btn-link px-0 invisible"></button>
+            <%= f.submit 'Save Changes', id: 'submitWithLocationCheck', class: 'btn btn-primary save-changes-submit' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render '/shared/update_avatar', url: freelancer_avatar_path %>
+<%= render 'shared/location_check', controller_name: 'freelancer_profile', experience_modal_id: nil %>
+
+<script>
+  $(document).on('turbolinks:load', function (e) {
+    formatCurrency($('#perHourBid'));
+
+    $('#perHourBid').keyup(() => {
+      formatCurrency($('#perHourBid'));
+    });
+
+    $('.select2').select2({
+      placeholder: 'Select all that apply',
+      allowClear: true
+    });
+
+    $('.custom-validate').each(function() {
+      if (!$.trim($(this).val()).length) $(this).parents('.wrapper').addClass( "highlight" );
+    });
+
+    const $textarea = $('textarea');
+    if (!$.trim($textarea.val())) {
+      $textarea.parents('.wrapper').addClass("highlight");
+    }
+
+    $('.custom-validate').on('input change', function(e) {
+      const $targetElement = $(e.target);
+      if (!$.trim($targetElement.val())) {
+        $(this).parents('.wrapper').addClass("highlight");
+      } else {
+        $targetElement.parents('.wrapper').removeClass("highlight");
+      }
+    });
+
+    $('.save-changes-submit').on('click', function (e) {
+      if ($('.highlight').length) {
+        e.preventDefault();
+      }
+    })
+  })
+</script>

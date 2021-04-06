@@ -1,0 +1,82 @@
+//
+// Provides a drop-in pointer for the default Trix stylesheet that will format the toolbar and
+// the trix-editor content (whether displayed or under editing). Feel free to incorporate this
+// inclusion directly in any other asset bundle and remove this file.
+//
+@import "trix/dist/trix";
+// We need to override trix.css’s image gallery styles to accommodate the
+// <action-text-attachment> element we wrap around attachments. Otherwise,
+// images in galleries will be squished by the max-width: 33%; rule.
+.trix-content {
+  .attachment-gallery {
+    > action-text-attachment,
+    > .attachment {
+      flex: 1 0 33%;
+      padding: 0 0.5em;
+      max-width: 33%;
+    }
+
+    &.attachment-gallery--2,
+    &.attachment-gallery--4 {
+      > action-text-attachment,
+      > .attachment {
+        flex-basis: 50%;
+        max-width: 50%;
+      }
+    }
+  }
+
+  action-text-attachment {
+    .attachment {
+      padding: 0 !important;
+      max-width: 100% !important;
+    }
+  }
+}
+
+trix-editor {
+  &.form-control {
+    min-height: 16rem;
+    height: auto;
+  }
+}
+
+//Style overrides
+trix-toolbar .trix-button-group {
+  border: 1px solid #E9ECEF;
+  border-radius: 0.1875rem;
+}
+trix-toolbar .trix-button:not(:first-child) {
+  border-left: 1px solid #B4C8D8;
+}
+trix-toolbar .trix-button.trix-active {
+  background: #B4C8D8;
+}
+trix-toolbar .trix-button {
+  border-bottom: none;
+  background: #E9ECEF;
+}
+.trix-button--icon-bullet-list {
+  border-left:0 !important;
+}
+trix-toolbar .trix-button-group--file-tools {
+  display: none;
+}
+trix-toolbar .trix-button-group--history-tools {
+  display: none;
+}
+trix-toolbar .trix-button--icon-strike, .trix-button--icon-heading-1, .trix-button--icon-quote, .trix-button--icon-code,
+             .trix-button--icon-decrease-nesting-level, .trix-button--icon-increase-nesting-level {
+  display: none;
+}
+.without-toolbar .trix-button {
+  display: none;
+}
+trix-toolbar .trix-button-group:not(:first-child) {
+  margin-left: 20px;
+}
+trix-toolbar .trix-button--icon {
+@media (max-device-width: 768px) {
+    max-width: calc(1em + 3.5vw);
+  }
+}

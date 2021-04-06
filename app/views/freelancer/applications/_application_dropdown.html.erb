@@ -1,0 +1,30 @@
+<div class="dropdown">
+  <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <%= job_application.state == 'draft' ? 'More' : 'Options' %><i class="fas fa-chevron-down ml-1"></i>
+  </button>
+  <% if job_application.state == 'draft' %>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+      <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#showJobPost<%= job_application.job.id %>">
+        Show Job Details
+      </button>
+      <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="#deleteApplicationDraft<%= job_application.id %>">
+        Delete Draft
+      </button>
+    </div>
+  <% else %>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+      <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#previewApplicationDropdown-<%= job_application.id %>">
+        Show Application
+      </button>
+      <%= link_to freelancer_application_flows_path(id: :application_step_1, job_app: job_application), class: "dropdown-item", remote: true do %>
+        Edit Application
+      <% end %>
+      <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#showJobPost<%= job_application.job.id %>">
+        Show Job Details
+      </button>
+      <button class="dropdown-item text-danger" type="button"  data-toggle="modal" data-target="#withdrawApplication<%= job_application.id %>">
+        Withdraw Application
+      </button>
+    </div>
+  <% end %>
+</div>

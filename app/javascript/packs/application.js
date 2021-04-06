@@ -14,6 +14,22 @@ require("bootstrap-select")
 require("select2")
 require("typeface-nunito-sans")
 require("typeface-ubuntu")
+require("trix")
+require("@rails/actiontext")
+require("packs/filter_talent")
+require("packs/time_zone")
+require("packs/format_currency")
+
+require("flatpickr")
+import flatpickr from "flatpickr";
+document.addEventListener("turbolinks:load", () => {
+    $('[data-tooltip-display="true"]').tooltip(),
+    flatpickr("[class='flatpickr']", {
+      altInput: true,
+      altFormat: "l, M j",
+      dateFormat: "Y-m-d",
+    })
+})
 
 import 'src/stylesheets/application'
 const images = require.context('../images', true)
@@ -37,3 +53,6 @@ window.Swal = Swal;
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+import 'images/icons8-search-659.png';
+import 'images/bg-user-img.png';
+import 'images/linked-job-not-found.png';

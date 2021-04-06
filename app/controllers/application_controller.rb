@@ -1,14 +1,19 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include LoggedInRedirects
+  include Pagy::Backend
+
+  before_action :store_location
+
   def after_sign_in_path_for(resource)
     return admin_dashboard_path if resource.class.name == 'AdminUser'
 
-    if resource.freelancer?
-      current_freelancer_profile_step(resource)
-    elsif resource.employer?
-      current_employer_profile_step(resource)
-    end
+    determine_correct_path(resource)
+  end
+
+  def after_sign_out_path_for(_resource_or_scope)
+    new_user_session_path
   end
 
   private

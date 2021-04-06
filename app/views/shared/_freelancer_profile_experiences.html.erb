@@ -1,0 +1,31 @@
+<hr>
+<div class="mt-3">
+  <h5>Experience</h5>
+  <% freelancer_profile.freelancer_profile_experiences.order(current_job: :desc, end_date: :desc).each do |work_experience| %>
+      <div class="d-flex">
+        <div class="mb-2 mr-2 text-wrap text-break">
+        <b><%= work_experience.company %></b><br />
+        <%= work_experience.job_title %><br />
+        <% if work_experience.start_date.present? %>
+          <i class="bp-text-sm"><%= work_experience.start_date.strftime('%b %Y') %> - <%= work_experience.current_job? ? 'Present' : work_experience.end_date&.strftime('%b %Y') %></i>
+        <% end %></div>
+        <% if editable %>
+          <button class="btn btn-link shadow-none p-0 align-self-start ml-auto" type="button"  data-toggle="modal" data-target="#editWorkExperienceModal-<%= work_experience.id %>"><i class="fas fa-edit text-primary"></i></button>
+        <% end %>
+        <%= render 'freelancer/shared/edit_work_experience', { freelancer_profile_experience: work_experience, freelancer_profile: freelancer_profile } %>
+      </div>
+      <div>
+        <% work_experience.description_paragraphs.each do |paragraph| %>
+            <p style="word-wrap: break-word; overflow-wrap: break-word;"><%= paragraph %></p>
+        <% end %>
+      </div>
+  <% end %>
+</div>
+<% if editable %>
+  <div class="mt-3">
+    <%= render 'freelancer/shared/add_work_experience', freelancer_profile: freelancer_profile %>
+    <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#addWorkExperienceModal">
+      Add a Job
+    </button>
+  </div>
+<% end %>

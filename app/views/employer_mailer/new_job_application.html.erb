@@ -1,0 +1,5 @@
+<p><b><%= @user.full_name %></b> applied to the <b><%= @job_application.job.title %></b> job post. Go to <a href=<%= employer_jobs_url(view_job: @job_application.job.id) %> target='_blank'>Your Jobs</a> to view <%= @user.first_name %>'s application or send them a message.</p>
+<p><b>Hourly Rate:</b> $<%= @job_application.bid_amount %></p>
+<p>From <b><%= @user.first_name %>:</b></p>
+<p><%= @user.freelancer_profile.professional_summary %></p>
+<%= render partial: 'email/button', locals: { button_txt: 'View Applicants', url: employer_jobs_url(view_job: @job_application.job.id) } %>

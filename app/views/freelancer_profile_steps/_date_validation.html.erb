@@ -1,0 +1,17 @@
+<script>
+    $(document).on('turbolinks:load', function () {
+        $('.submit-work-education').on('click', (e) => {
+            const currentModalId = $(e.target).data('id');
+            const start_date = new Date($('#startYear-' + currentModalId).val(), ($('#startMonth-' + currentModalId).val() - 1));
+            const end_date = new Date($('#endYear-' + currentModalId).val(), ($('#endMonth-' + currentModalId).val() - 1));
+            const alertElement = document.getElementById('alertWarning-' + currentModalId);
+
+            if (!$('#currentJob-' + currentModalId).prop('checked') && (start_date > end_date)) {
+                alertElement.classList.remove('d-none');
+                alertElement.classList.add('d-block');
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+    })
+</script>

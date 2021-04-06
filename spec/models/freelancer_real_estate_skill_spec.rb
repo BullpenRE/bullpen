@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FreelancerRealEstateSkill, type: :model do
   let(:freelancer_profile) { FactoryBot.create(:freelancer_profile) }
-  let(:real_estate_skill) { FactoryBot.create(:real_estate_skill) }
+  let(:real_estate_skill) { FactoryBot.create(:real_estate_skill, description: 'Some cool real estate skill') }
   let!(:freelancer_real_estate_skill) { FactoryBot.create(:freelancer_real_estate_skill, freelancer_profile: freelancer_profile, real_estate_skill: real_estate_skill) }
 
   it 'factory works' do
@@ -28,5 +28,4 @@ RSpec.describe FreelancerRealEstateSkill, type: :model do
       expect(freelancer_real_estate_skill.real_estate_skill).to eq(real_estate_skill)
     end
   end
-
 end

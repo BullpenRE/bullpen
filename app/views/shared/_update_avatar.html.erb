@@ -1,0 +1,68 @@
+<script>
+  $(document).on('turbolinks:load', function (e) {
+    $('.avatar').off('change').on('change', '#uploadProfilePic', (e) => {
+      const file = e.target.files[0];
+      const maxFileSize = 2097152;
+      if (!file) { return }
+      if (file.size && file.size > maxFileSize && correct_type(file)) {
+        $('.error-avatar').text('Please upload only a jpg, png or gif image. Uploaded files must not exceed 2MB');
+        setTimeout(() => {
+          $('.error-avatar').text('');
+        }, 3000);
+      } else if (correct_type(file)) {
+        $('.error-avatar').text('Please upload only a jpg, png or gif image');
+        setTimeout(() => {
+          $('.error-avatar').text('');
+        }, 3000);
+      } else if (file.size && file.size > maxFileSize) {
+        $('.error-avatar').text('Uploaded files must not exceed 2MB');
+        setTimeout(() => {
+          $('.error-avatar').text('');
+        }, 3000);
+      } else {
+        const formData = new FormData();
+        formData.append('avatar', file);
+        $.ajax({
+          url: '<%= url %>',
+          method: 'PUT',
+          contentType: false,
+          processData: false,
+          dataType: 'json',
+          data: formData,
+          success: function (data) {
+            $('.avatar').load(' .avatar');
+            const $container = $('.alert_from_js');
+            if (data['message']) {
+              $container.removeClass('d-none');
+              $container.find('span').html(`${data['message']}`)
+            } else {
+              $container.find('span').html('');
+              $container.addClass('d-none');
+            }
+          },
+          error: () => {
+            const message = 'This file can not be attached';
+            Swal.fire({
+              title: '<h5>Oops!</h5>',
+              text: message
+            });
+          }
+        });
+      }
+    });
+
+    $('.avatar').off('click').on('click', '.delete-avatar', () => {
+      $.ajax({
+        url: '<%= url %>',
+        method: 'DELETE',
+        success: () => {
+          $('.avatar').load(' .avatar');
+        }
+      })
+    });
+
+    const correct_type = (file) => {
+      return file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif'
+    }
+  })
+</script>

@@ -2,9 +2,15 @@ require 'rails_helper'
 
 describe User do
   let!(:user) { FactoryBot.create(:user) }
+  let!(:employer_user) { FactoryBot.create(:user, :employer) }
+  let!(:employer_profile) { FactoryBot.create(:employer_profile, user: employer_user) }
+  let!(:freelancer_user) { FactoryBot.create(:user, :freelancer) }
+  let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: freelancer_user) }
 
   it 'factory works' do
     expect(user).to be_valid
+    expect(employer_user).to be_valid
+    expect(freelancer_user).to be_valid
   end
 
   context 'Validations' do
@@ -13,32 +19,18 @@ describe User do
   end
 
   context 'Relationships' do
-    let!(:freelancer_profile) { FactoryBot.create(:freelancer_profile, user: user) }
-
     describe 'freelance_profile' do
       it 'can have one' do
-        expect(user.freelancer_profile).to eq(freelancer_profile)
+        expect(freelancer_user.freelancer_profile).to eq(freelancer_profile)
       end
 
       it 'destroying a user destroys its freelance_profile' do
         expect(FreelancerProfile.exists?(freelancer_profile.id)).to be_truthy
-        user.destroy
+        freelancer_user.destroy
         expect(FreelancerProfile.exists?(freelancer_profile.id)).to be_falsey
       end
 
       it { should belong_to(:signup_promo).optional }
-    end
-
-    describe 'jobs' do
-      let!(:job) { FactoryBot.create(:job, user: user) }
-      it 'has many' do
-        expect(user.jobs).to include(job)
-      end
-
-      it 'dependent destroy' do
-        user.destroy
-        expect(Job.exists?(job.id)).to be_falsey
-      end
     end
 
     describe 'freelancer_sectors and freelancer_real_estate_skills' do
@@ -48,8 +40,27 @@ describe User do
       let!(:freelancer_real_estate_skill) { FactoryBot.create(:freelancer_real_estate_skill, freelancer_profile: freelancer_profile, real_estate_skill: real_estate_skill) }
 
       it 'can have many through the freelance_profile' do
-        expect(user.freelancer_sectors).to include(freelancer_sector)
-        expect(user.freelancer_real_estate_skills).to include(freelancer_real_estate_skill)
+        expect(freelancer_user.freelancer_sectors).to include(freelancer_sector)
+        expect(freelancer_user.freelancer_real_estate_skills).to include(freelancer_real_estate_skill)
+      end
+    end
+
+    describe 'job_applications' do
+      let!(:job_application) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile) }
+      it 'has many job_applications with dependent destroy' do
+        expect(freelancer_profile.job_applications).to include(job_application)
+        freelancer_user.destroy
+        expect(JobApplication.exists?(job_application.id)).to be_falsey
+      end
+    end
+
+    describe 'messages' do
+      let!(:sent_message) { FactoryBot.create(:message, from_user: user) }
+      let!(:received_message) { FactoryBot.create(:message, to_user: user) }
+
+      it 'can have many sent_messages and received_messages' do
+        expect(user.sent_messages).to include(sent_message)
+        expect(user.received_messages).to include(received_message)
       end
     end
   end
@@ -57,8 +68,6 @@ describe User do
   context 'Scopes' do
     let!(:confirmed) { FactoryBot.create(:user, confirmed_at: 3.days.ago) }
     let!(:not_confirmed) { FactoryBot.create(:user, confirmed_at: nil) }
-    let(:freelancer_user) { FactoryBot.create(:freelancer_profile).user }
-    let(:employer_user) { FactoryBot.create(:employer_profile).user }
 
     it '.confirmed' do
       expect(User.confirmed).to include(confirmed)
@@ -80,6 +89,23 @@ describe User do
     it '.employers' do
       expect(User.employers).to include(employer_user)
       expect(User.employers).to_not include(freelancer_user)
+    end
+  end
+
+  context 'geocode' do
+    it 'writes latitude and longitude fields during user creation using location as argument' do
+      expect(freelancer_user.location).to eq('New York, NY') # geocoder argument
+      expect(freelancer_user.latitude).to eq(40.7127281) # data from stub to prevent API call
+      expect(freelancer_user.longitude).to eq(-74.0060152)
+    end
+
+    it 'updates latitude and longitude fields if location was changed' do
+      freelancer_user.update(location: 'San Francisco, CA')
+      freelancer_user.reload
+
+      expect(freelancer_user.location).to eq('San Francisco, CA')
+      expect(freelancer_user.latitude).not_to eq(40.7127281)
+      expect(freelancer_user.longitude).not_to eq(-74.0060152)
     end
   end
 end

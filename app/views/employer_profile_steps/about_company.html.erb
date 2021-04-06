@@ -1,4 +1,5 @@
-<%= render '/nav_bar/signup_nav_bar' %>
+<%= render '/nav_bar/profile_flow_nav_bar' %>
+<div class="container pr-0 pl-0" style="max-width: 545px;"><%= render partial: 'shared/notice_and_alert' %></div>
 
 <div class="container">
 
@@ -16,17 +17,17 @@
       </div>
 
       <div class="form-group mb-4">
-        <label for="companyNameInput" class="bp-input-label">Company Name</label>
+        <label for="companyNameInput" class="h5">Company Name</label>
         <%= f.text_field :company_name, class: "form-control", id: "companyNameInput", placeholder: "Enter your company name", required: true %>
       </div>
 
       <div class="form-group mb-4">
-        <label for="companyWebsiteInput" class="bp-input-label">Website</label>
+        <label for="companyWebsiteInput" class="h5">Website</label>
         <%= f.text_field :company_website, class: "form-control", id: "companyWebsiteInput", placeholder: "Enter your company web site", required: true %>
       </div>
 
       <div class="form-group mb-5">
-        <label for="companyRoleInput" class="bp-input-label">What is your role?</label>
+        <label for="companyRoleInput" class="h5">What is your role?</label>
         <%= f.text_field :role_in_company, class: "form-control", id: "companyRoleInput", placeholder: "Enter your role", required: true %>
       </div>
         <div class="d-flex justify-content-between">
@@ -37,3 +38,43 @@
       <% end %>
   </div>
 </div>
+
+<script>
+    $('#companyWebsiteInput').on('focus change paste keyup', function () {
+        if ($('#companyWebsiteInput').val() === '') {
+            var that = this;
+            setTimeout(function () {
+                that.selectionStart = that.selectionEnd = 10000;
+            }, 200);
+            $('#companyWebsiteInput').val('https://');
+
+            if ($('#companyWebsiteInput').on('paste', function () {
+                if (navigator.userAgent.indexOf("Firefox") > -1) {
+                    $('#companyWebsiteInput').val();
+                } else if(navigator.userAgent.indexOf("Chrome") > -1) {
+                    navigator.clipboard.readText()
+                        .then(text => {
+                            if (text.includes('https://')) {
+                                $('#companyWebsiteInput').val(text);
+                            } else {
+                                $('#companyWebsiteInput').val('https://'+text);
+                            }
+                        })
+                } else if(navigator.userAgent.indexOf("Safari") > -1) {
+                    navigator.clipboard.readText()
+                        .then(text => {
+                            if (text.includes('https://')) {
+                                $('#companyWebsiteInput').val('');
+                            } else {
+                                $('#companyWebsiteInput').val('https://');
+                            }
+                        })
+                }
+                ;
+            }));
+        }
+        ;
+
+    });
+
+</script>

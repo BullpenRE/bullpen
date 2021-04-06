@@ -2,7 +2,7 @@
 
 class EmployerProfileStepsController < ApplicationController
   include Wicked::Wizard
-  include LoggedInRedirects
+
   before_action :step_variables, only: [:show]
 
   steps :about_company, :employee_count, :type_of_work, :sectors, :last_question
@@ -32,7 +32,7 @@ class EmployerProfileStepsController < ApplicationController
   def about_company_save
     return false unless wizard_value(step) == :about_company
 
-    @employer_profile.update_attributes(company_params)
+    @employer_profile.update(company_params)
     render_wizard @user
 
     true
@@ -41,7 +41,7 @@ class EmployerProfileStepsController < ApplicationController
   def employee_count_save
     return false unless wizard_value(step) == :employee_count
 
-    @employer_profile.update(employee_count: params.require(:employer_profile).values.dig(0))
+    @employer_profile.update(employee_count_params)
     render_wizard @user
 
     true
@@ -71,7 +71,7 @@ class EmployerProfileStepsController < ApplicationController
   def last_question_save
     return false unless wizard_value(step) == :last_question
 
-    @employer_profile.update_attributes(last_question_params)
+    @employer_profile.update(last_question_params)
     @employer_profile.completed = true
     @employer_profile.save
     render_wizard @user
@@ -85,7 +85,13 @@ class EmployerProfileStepsController < ApplicationController
 
   private
 
+  def employee_count_params
+    params.require(:employer_profile).permit(:employee_count)
+  end
+
   def completed_profile_redirect
+    return redirect_to employer_jobs_path(view_job: session[:view_job]) if session[:view_job].present?
+
     redirect_to employer_talent_index_path if current_user.employer_profile&.completed?
   end
 

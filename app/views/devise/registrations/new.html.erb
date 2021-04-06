@@ -1,0 +1,166 @@
+<style>
+  .invalid {
+      color: red;
+      font-weight: bolder;
+  }
+  .valid {
+      color: #4E4E4E;
+      font-weight: normal;
+  }
+</style>
+
+<%= render 'nav_bar/link_to_login' %>
+
+<div class="log-in-container p-3 p-sm-0">
+  <div class="bp-card m-auto text-center" style="max-width:500px">
+    <div class="h2 mb-3">Create an Account</div>
+    <div>
+      <%= render 'devise/shared/error_messages' %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: 'signup-form', class: 'needs-validation', method: (user_signed_in? ? :put : :post) }) do |f| %>
+        <%= f.hidden_field :email, value: @email, id: 'user_email' if @email %>
+        <div class="field mb-3 text-left">
+          <%= f.label :first_name, 'First Name', class: 'h5' %><br>
+          <%= f.text_field :first_name, class: 'form-control', id: 'user_first_name', required: true %>
+        </div>
+        <div class="field mb-3 text-left">
+          <%= f.label :last_name, 'Last Name', class: "h5" %><br>
+          <%= f.text_field :last_name, class: 'form-control', id: 'user_last_name', required: true %>
+        </div>
+        <% unless @hide_password_section %>
+          <div class="field mb-3 text-left">
+            <%= f.label :password, 'Create a Password', class: 'h5', required: true %><br>
+            <div class="row" id="password_criteria">
+              <div class="col-12 col-sm ml-3 mb-0">
+                <ul class="mb-0" style="padding-left: 0; padding-bottom: 0;">
+                  <li id="special">A special character</li>
+                  <li id="capital">A capital (uppercase) letter</li>
+                </ul>
+              </div>
+              <div class="col-12 col-sm ml-3 ml-sm-0 mt-0">
+                <ul style="padding-left: 0;">
+                  <li id="number">A number</li>
+                  <li id="length">Minimum 8 characters</li>
+                </ul>
+              </div>
+            </div>
+            <div class="input-group">
+              <%= f.password_field :password, class: 'show_password_content form-control', id: 'user_password', pattern: "(?=.*[!@#$%^&*\?\+\-])(?=.*[A-Z]).{8,}", required: true %>
+              <div class="input-group-append">
+                <span toggle="#user_password" id="password_eye_icon" class="input-group-text">
+                  <i class="fas fa-fw fa-eye"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <div class="field mb-3 text-left">
+          <%= f.label :role, 'Make a Selection', class: "h5" %>
+          <div class="custom-control custom-radio" id="hide_phone_number">
+            <%= f.radio_button :role, 'freelancer', id: 'user_role_freelancer', class: 'custom-control-input role', required: true %>
+            <%= f.label :role, 'I want to find jobs as a freelancer', for: 'user_role_freelancer', class: 'custom-control-label' %>
+          </div>
+          <div class="custom-control custom-radio" id="show_phone_number">
+            <%= f.radio_button :role, 'employer', id: 'user_role_employer', class: 'custom-control-input role', required: true %>
+            <%= f.label :role, ' I want to hire talent as an employer', for: 'user_role_employer', class: 'custom-control-label' %>
+          </div>
+        </div>
+        <div class="field mb-3 text-left phone_number_block">
+          <%= f.label :phone_number, 'Phone Number', class: 'h5' %> (Optional)<br>
+          <%= f.text_field :phone_number, class: 'form-control', id: 'user_phone_number' %>
+        </div>
+        <% if @show_promo_code %>
+          <div class="field mb-3 text-left">
+            <label for="promo_code" class="h5">Promo Code</label> (Optional)<br>
+            <input type="text" class="form-control" name="promo_code" id="promo_code" value="<%= session[:promo_code] %>">
+          </div>
+        <% end %>
+        <div class="text-left bp-text-sm mb-3">
+          By creating your account, you agree to
+          <a href="https://bullpenre.com/terms-of-service">
+            Bullpen's Terms of Service
+          </a>,
+          <a href="https://bullpenre.com/privacy-policy">
+            Privacy Agreement
+          </a>, and <a href="https://stripe.com/connect-account/legal">Stripe's Connected Accounts Authorization</a>
+        </div>
+        <div class="actions mt-3">
+          <%= f.submit 'Create Account', class: 'btn btn-primary btn-block', id: 'submit_button' %>
+        </div>
+      <% end %>
+
+    </div>
+    <div class="text-muted mt-3">
+      For help contact us at <%= mail_to('support@bullpenre.com') %>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    showOrHidePhoneNumber();
+    validateFormOnSubmit();
+    showOrHidePassword();
+  });
+
+  function showOrHidePhoneNumber() {
+    $('.phone_number_block').hide();
+
+    $('.role').on('change', function() {
+      if( $('.role:checked').val() === 'employer') {
+        $('.phone_number_block').slideDown();
+      } else {
+        $('.phone_number_block').slideUp();
+      }
+    });
+  }
+
+  function validateFormOnSubmit() {
+    let form = $("#signup-form");
+    $('#submit_button').on('click', function(event) {
+      const password_fails = passwordIsInvalid();
+      if (form[0].checkValidity() === false || password_fails) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.addClass('was-validated');
+    });
+  }
+
+  function passwordIsInvalid() {
+    if($('#user_password').length === 0) return(false);
+
+    const password = $('#user_password').val();
+
+    const specialCharacters = /[!@#$%^&*\?\+\-]/g; // Validate lowercase letters
+    const upperCaseLetters = /[A-Z]/g; // Validate capital letters
+    const numbers = /[0-9]/g; // Validate numbers
+
+    flagAttribute($('#special'), password.match(specialCharacters));
+    flagAttribute($('#capital'), password.match(upperCaseLetters));
+    flagAttribute($('#number'), password.match(numbers));
+    flagAttribute($('#length'), password.length >= 8);
+
+    return($('#password_criteria').children().find($('.invalid')).length > 0);
+  }
+
+  function showOrHidePassword() {
+    $('#password_eye_icon').on('click', function() {
+      $(this).find('svg').toggleClass('fa-eye fa-eye-slash');
+      let input = $($(this).attr('toggle'));
+      if (input.attr('type') === 'password') {
+        input.attr('type', 'text');
+      } else {
+        input.attr('type', 'password');
+      }
+    });
+  }
+
+  function flagAttribute(obj, valid) {
+    if(valid) {
+      obj.addClass('valid').removeClass('invalid');
+    } else {
+      obj.addClass('invalid').removeClass('valid');
+    }
+  }
+
+</script>

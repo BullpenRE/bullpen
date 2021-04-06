@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title" id="postJobStep3Label">Post a Job</h1>
+        <h1 class="modal-title" id="postJobStep3Label"><%= job.posted? ? 'Edit Job Post' : 'Post a Job' %></h1>
         <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -15,8 +15,12 @@
             <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <div class="text-center d-none d-lg-flex">
-            <div class="col"><a href="#">Summary</a></div>
-            <div class="col"><a href="#">Job Type</a></div>
+            <%= link_to employer_job_flows_path(id: :post_job_step_1, job_id: job.id), class: "col", remote: true do %>
+              Summary
+            <% end %>
+            <%= link_to employer_job_flows_path(id: :post_job_step_2, job_id: job.id), class: "col", remote: true do %>
+              Job Type
+            <% end %>
             <div class="col text-secondary font-weight-bold">Qualifications</div>
             <div class="col text-muted">Details</div>
             <div class="col text-muted">Questions</div>

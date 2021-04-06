@@ -9,7 +9,9 @@ namespace :db do
       Rake::Task['db:drop'].invoke
       Rake::Task['db:create'].invoke
       `pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d bullpen_development #{dump_file}`
-      puts "\n'#{dump_file}' restored to wyzyr_development\n"
+      puts "\n'#{dump_file}' restored to bullpen_development\n"
+      Rake::Task['db:reset_attachments'].invoke
+      puts 'Removed attachments from ActiveStorage'
     else
       puts 'No database dump file found to import'
     end
@@ -24,5 +26,9 @@ namespace :db do
     else
       puts 'This rake task can only be run on development'
     end
+  end
+
+  task reset_attachments: :environment do
+    ActiveStorage::Attachment.destroy_all
   end
 end

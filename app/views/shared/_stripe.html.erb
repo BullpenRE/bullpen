@@ -1,0 +1,68 @@
+<script>
+  $(document).on('turbolinks:load', function () {
+    function toggleAccountInfo() {
+      $('#additional-info').addClass('d-none');
+      $('#stripe-info').removeClass('d-none');
+    }
+
+    function setStatus(dataObj) {
+      const $paymentsStatus = $('#payments-status');
+      const payoutsEnabled = dataObj['payouts_enabled'] === true;
+      const currentClass = payoutsEnabled ? 'text-success' : 'text-danger';
+      const currentValue = payoutsEnabled ? 'Payments Enabled' : 'Payments Disabled';
+
+      $paymentsStatus.addClass(currentClass);
+      $paymentsStatus.html(currentValue)
+    }
+
+    function setAccountInfo(dataObj) {
+      const isBankAccount = dataObj['external_accounts']['data']['0']['object'] === 'bank_account';
+      const lastFour = dataObj['external_accounts']['data']['0']['last4'];
+      const routingNumber = dataObj['external_accounts']['data']['0']['routing_number'];
+      const $bankSection = $('.bank-acc-section');
+      const $cardSection = $('.card-section');
+      const $bankLastFour = $('#bank-last4');
+      const $cardLastFour = $('#card-last4');
+      const $routingNumber = $('#routing-number');
+
+      if(!isBankAccount) {
+        $bankSection.addClass('d-none');
+        $cardSection.removeClass('d-none');
+        $cardLastFour.html(lastFour)
+
+      } else {
+        $bankLastFour.html(lastFour);
+        $routingNumber.html(routingNumber)
+      }
+    }
+
+    function setErrorMessage(message) {
+      const $additionalInfo = $('#additional-info');
+      if(!message) $additionalInfo.addClass('text-danger');
+      message ? $additionalInfo.html(message) : $additionalInfo.html('Error loading data')
+    }
+
+    function getStripeData() {
+      $.ajax({
+        url: '/freelancer/account/stripe_data_lookup',
+        data: {},
+        dataType: 'json',
+        success: function(res) {
+          if(res.account_data) {
+            toggleAccountInfo();
+            setStatus(res.account_data);
+            setAccountInfo(res.account_data);
+          }
+
+          if(res.error) {
+            setErrorMessage(res.error)
+          }
+        },
+        error: function() {
+          setErrorMessage();
+        }
+      });
+    }
+    getStripeData()
+  })
+</script>

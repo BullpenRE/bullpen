@@ -1,4 +1,5 @@
-<%= render '/nav_bar/signup_nav_bar' %>
+<%= render '/nav_bar/profile_flow_nav_bar' %>
+<div class="container pr-0 pl-0" style="max-width: 545px;"><%= render partial: 'shared/notice_and_alert' %></div>
 
 <!--Progress Meter, Step 4-->
 <div class="container mb-4">
@@ -16,7 +17,7 @@
         <h2>What sectors do you work in?</h2>
       </div>
 
-      <div class="row mb-5">
+      <div class="row mb-5 checkbox-group required">
         <div class="col-md">
           <% @sector_column1.each do |sector| %>
             <div class="custom-control custom-checkbox mb-3">
@@ -24,7 +25,7 @@
                                 sector.id,
                                 @selected_sector_ids.include?(sector.id),
                                 :id => "sector#{sector.id}",
-                                :class => "custom-control-input"%>
+                                :class => "custom-control-input" %>
               <%= label_tag sector.id,
                             sector.description,
                             :class => "custom-control-label",
@@ -39,7 +40,7 @@
                                 sector.id,
                                 @selected_sector_ids.include?(sector.id),
                                 :id => "sector#{sector.id}",
-                                :class => "custom-control-input"%>
+                                :class => "custom-control-input" %>
               <%= label_tag sector.id,
                             sector.description,
                             :class => "custom-control-label",
@@ -48,11 +49,24 @@
           <% end %>
         </div>
       </div>
+      <div class="error text-danger mb-1"></div>
 
       <div class="d-flex justify-content-between">
         <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
-        <%= f.submit 'Next', class: 'btn btn-primary' %>
+        <%= f.submit 'Next', class: 'btn btn-primary submitSectors' %>
       </div>
     <% end %>
   </div>
 </div>
+
+<script>
+  $('.submitSectors').on('click', (e) => {
+    if ($('div.checkbox-group.required :checkbox:checked').length == 0) {
+      e.preventDefault();
+      $('.error').text('Select at least one sector');
+      setTimeout(() => {
+        $('.error').text('');
+      }, 3000);
+    }
+  })
+</script>

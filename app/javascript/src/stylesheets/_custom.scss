@@ -12,37 +12,104 @@
   border: 2px solid #183C58;
   border-radius: 8px;
 }
-.bp-btn-select-border {
-  border-color: #24A878;
-  color: #24A878;
-}
-.bp-btn-select-border:not(:disabled):not(.disabled):active,
-.bp-btn-select-border.active:not(:disabled):not(.disabled),
-.show > .bp-btn-select-border.dropdown-toggle {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 0 .2rem rgba(36, 168, 120, 0.25);
-  color: darken(#24A878, 10%);
-}
-.bp-btn-select-border:not(:disabled):not(.disabled):hover,
-.bp-btn-select-border.hover:not(:disabled):not(.disabled),
-.show > .bp-btn-select-border.dropdown-toggle {
-  border-color: darken(#24A878, 10%);
-  color: darken(#24A878, 10%);
+.bp-btn-select.dropdown-toggle {
+  &::after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f078";
+    color: #24A878;
+  }
 }
 .bp-card {
   background-color: white;
   padding: 1.25rem;
-}
-//To be depreciated for the H5 class
-.bp-input-label {
-  font-family: 'Ubuntu', sans-serif;
-  font-weight: 700;
-  color: #005495;
-  margin-bottom: .5rem;
+  border-radius: 0.1875rem;
 }
 .bp-profile-placeholder {
   font-size: 2rem;
   color: #E4E4E4;
 }
+.bp-account-table-padding {
+  margin-bottom: 0;
+  td, th {
+    padding:0 0 1.25rem 0;
+  }
+}
 .bp-text-sm {
   font-size: 0.875rem;
+}
+.bp-or-border {
+  position: relative;
+  z-index: 1;
+  &:before {
+      border-top: 1px solid #B4C8D8;
+      content:"";
+      margin: 0 auto; 
+      position: absolute;
+      top: 50%; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      z-index: -1;
+  }
+  span { 
+      background: #fff; 
+      padding: 0 0.5rem; 
+  }
+}
+.bp-starrating {
+  input {
+    display: none;
+    &:checked ~ label {
+      color: #ffc107; /* Color when checked */
+    }
+    &:hover ~ label {
+      color: darken(#ffc107, 5%); /* Color when star hover */
+    }
+  }
+  label {
+    color: #E9ECEF; /* Color when not checked */
+    transition: all .2s ease;
+    &:before {
+      content: "\f005";
+      margin: 2px;
+      font-size: 2em;
+      font-family: "Font Awesome 5 Free";
+      display: inline-block;
+      cursor: pointer;
+    }
+  }
+}
+.bp-sidenav-base {
+  height: 100vh;
+  width: 360px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: 0.5s;
+  transform: translateX(-100%);
+  overflow-x: hidden;
+  @media only screen and (max-width: 360px) {
+    width: 100vw;
+  }
+}
+input.error { border: 1px solid #FB3640; }
+textarea.error { border: 1px solid #FB3640; }
+
+.multi-bg-not-found {
+  height: 100vh;
+  background:
+  no-repeat url('~images/icons8-search-659.png') center center,
+  linear-gradient(#003B69, #84A0B6);
+}
+
+.multi-bg-user {
+  height: 100vh;
+  background:
+  no-repeat url('~images/bg-user-img.png') center center,
+  linear-gradient(#003B69, #84A0B6);
+}
+
+.multi-bg-link {
+  height: 100vh;
+  background:
+  no-repeat url('~images/linked-job-not-found.png') center center,
+  linear-gradient(#003B69, #84A0B6);
 }

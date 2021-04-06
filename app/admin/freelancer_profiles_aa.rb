@@ -2,23 +2,29 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
   ActiveAdmin.register FreelancerProfile do
     menu label: 'Freelancers'
 
-    includes :user, :freelancer_sectors, :freelancer_real_estate_skills, :freelancer_profile_educations, :freelancer_profile_experiences, :freelancer_softwares
+    includes :user, :freelancer_sectors, :freelancer_real_estate_skills, :freelancer_profile_educations,
+             :freelancer_profile_experiences, :freelancer_softwares
 
     filter :user_email, as: :string, label: 'User Email'
     filter :draft
-    filter :curation, as: :select, collection: FreelancerProfile::curations.keys
+    filter :curation, as: :select, collection: ->{ FreelancerProfile::curations }
 
     permit_params :user_id,
                   :professional_summary,
                   :professional_title,
                   :professional_years_experience,
                   :curation,
-                  :draft
+                  :draft,
+                  :new_jobs_alert,
+                  :searchable,
+                  :desired_hourly_rate,
+                  :payout_percentage
 
     index do
       column :user
       column 'Title', :professional_title
       column 'Years Experience', :professional_years_experience
+      column :payout_percentage
       column :draft
       column :curation
       actions
@@ -34,6 +40,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         row :professional_title
         row :professional_years_experience
         row :professional_summary
+        row :payout_percentage
         row 'Sectors' do
           freelancer_profile.sectors.pluck(:description)
         end
@@ -53,7 +60,22 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
           freelancer_profile.freelancer_certifications.order(:earned).map{|f_c| "#{f_c.earned.year}: #{f_c.description}" }.push(link_to('Add/Edit/Remove', admin_freelancer_certifications_path(q: {freelancer_profile_id_eq: params[:id]}), target: '_blank')).join('<br>').html_safe
         end
         row :draft
+        row :new_jobs_alert
+        row :searchable
         row :curation
+        row :desired_hourly_rate
+        row 'Average Rating' do
+          "#{freelancer_profile.average_rating} from #{freelancer_profile.reviews.size} review#{'s' if freelancer_profile.reviews.size > 1}" unless freelancer_profile.average_rating.nil?
+        end
+        row "ALL Interview Requests Received From Employers", :interview_requests do
+          freelancer_profile.interview_requests.map{ |i_r| link_to(i_r.employer_profile.email, admin_interview_request_path(i_r.id)) }.join('<br>').html_safe
+        end
+        row 'Job Applications', :job_applications do
+          freelancer_profile.job_applications.map{ |j_a| link_to(j_a.job.title, admin_job_application_path(j_a.id)) }.join('<br>').html_safe
+        end
+        row 'Contracts' do
+          freelancer_profile.contracts.map { |contract| link_to("Hired by #{contract.employer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe
+        end
       end
 
       active_admin_comments
@@ -81,18 +103,22 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
 
         if f.object.new_record?
           f.input :user,
-                  as: :select,
+                  as: :select, input_html: { class: "select2" },
                   collection: User.no_freelancer_data.order(:email).pluck(:email, :id),
                   label: "User (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
         end
         f.input :professional_title
         f.input :professional_years_experience
         f.input :professional_summary
+        f.input :payout_percentage
         f.input :sectors, as: :check_boxes, collection: Sector.order(:description).pluck(:description, :id)
         f.input :real_estate_skills, as: :check_boxes, collection: RealEstateSkill.order(:description).pluck(:description, :id)
         f.input :softwares, as: :check_boxes, collection: Software.order(:description).pluck(:description, :id)
         f.input :draft
+        f.input :new_jobs_alert
+        f.input :searchable
         f.input :curation
+        f.input :desired_hourly_rate
         f.actions
       end
     end
@@ -100,12 +126,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
     member_action :accept, method: :post do
       freelancer_profile = FreelancerProfile.find(params[:id])
       freelancer_profile.update(curation: 'accepted')
+      FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_later
       redirect_to admin_freelancer_profile_path(freelancer_profile.id), { notice: 'Application Accepted.' }
     end
 
     member_action :decline, method: :post do
       freelancer_profile = FreelancerProfile.find(params[:id])
       freelancer_profile.update(curation: 'declined')
+      FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_later
       redirect_to admin_freelancer_profile_path(freelancer_profile.id), { notice: 'Application Declined.' }
     end
 
@@ -131,6 +159,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
 
         freelancer_profile = FreelancerProfile.find(params[:id])
         update_many_to_many_attributes(freelancer_profile)
+
+        if send_accept_or_reject_freelancer_email?
+          accepted? ? FreelancerMailer.freelancer_approved(freelancer_profile.user).deliver_later : FreelancerMailer.freelancer_rejected(freelancer_profile.user).deliver_later
+        end
 
         ApplicationRecord.transaction do
           freelancer_profile.update!(permitted_params[:freelancer_profile])
@@ -163,6 +195,15 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         params[:freelancer_profile].delete(:real_estate_skill_ids)
         params[:freelancer_profile].delete(:software_ids)
       end
+
+      def send_accept_or_reject_freelancer_email?
+        FreelancerProfile.find(params[:id]).curation != permitted_params[:freelancer_profile][:curation]
+      end
+
+      def accepted?
+        permitted_params[:freelancer_profile][:curation] == 'accepted'
+      end
+
     end
   end
 end

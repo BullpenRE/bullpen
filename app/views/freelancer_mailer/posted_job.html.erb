@@ -1,0 +1,15 @@
+<p>A new work opportunity has been added to Bullpen's job board.</p>
+<h5>Job Title</h5>
+<p><%= @posted_job.title %></p>
+<h5>Description</h5>
+<p><%= @posted_job.short_description %></p>
+<h5>Budget</h5>
+<p><%= "#{number_to_currency(@posted_job.pay_range_low, precision: 0)}"%><%= @posted_job.pay_range_high.present? ? " - #{number_to_currency(@posted_job.pay_range_high, precision: 0)}" : "" %> per hour.</p>
+<h5>Details</h5>
+<ul>
+  <li>This is a <%= @posted_job.position_length %>, <%= @posted_job.hours_needed %> position for candidates with <%= @posted_job.required_experience %> experience.</li>
+  <li><%= @posted_job.required_regional_knowledge.present? ? "Required geographic knowledge: " : "Specific geographic knowledge is not required." %><%= @posted_job.required_regional_knowledge %>
+  <li>Daytime availability <%= @posted_job.daytime_availability_required == true ? "is required. (9AM - 5PM #{@posted_job.time_zone})" : "is not required." %></li>
+</ul>
+<%= render partial: 'email/button', locals: { button_txt: 'See More Details', url: public_apply_for_job_url(apply_for_job: @posted_job.slug) } %>
+<p class="text-footer"><a href=<%= public_turn_off_new_job_alerts_url(turn_off: 'new_job_alerts') %> target='_blank'>Click here</a> to unsubscribe from job notifications.</p>

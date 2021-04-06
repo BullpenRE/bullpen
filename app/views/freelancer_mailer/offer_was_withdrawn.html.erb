@@ -1,0 +1,2 @@
+<p style="text-align:center;">Sorry, <b><%= @contract.employer_profile.full_name %></b> withdrew their <b><%= @contract.title %></b> offer. Go to <a href="<%= employer_jobs_url %>" target="_blank">Find Jobs</a> to look for other jobs.</p>
+<%= render partial: 'email/button', locals: { button_txt: 'Find Jobs', url: employer_jobs_url } %>

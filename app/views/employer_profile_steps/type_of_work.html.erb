@@ -1,4 +1,5 @@
-<%= render '/nav_bar/signup_nav_bar' %>
+<%= render '/nav_bar/profile_flow_nav_bar' %>
+<div class="container pr-0 pl-0" style="max-width: 545px;"><%= render partial: 'shared/notice_and_alert' %></div>
 
 <!--Progress Meter, Step 3-->
 <div class="container mb-4">
@@ -20,7 +21,7 @@
         <div class="custom-control custom-radio mb-3">
           <%= f.radio_button :category, category[0],
                              :class => "custom-control-input",
-                             :id => "workType#{category[1]}" %>
+                             :id => "workType#{category[1]}", required: true %>
           <%= f.label category[0], :class => "custom-control-label",
                             :for => "workType#{category[1]}" %>
         </div>

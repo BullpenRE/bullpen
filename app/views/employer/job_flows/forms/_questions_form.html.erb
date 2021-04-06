@@ -13,24 +13,39 @@
   </ul>
   </div>
   <div class="form-group job-questions">
+    <% questions = @job.job_questions %>
     <%= f.fields_for :job_questions do |q| %>
-      <%= q.text_field :description_1, { class: "form-control mb-2", id: "applicantQuestions1", placeholder: "Enter a question (optional)", maxlength: "250" } %>
-      <%= q.text_field :description_2, { class: "form-control mb-2", id: "applicantQuestions2", placeholder: "Enter a question (optional)", maxlength: "250" } %>
-      <%= q.text_field :description_3, { class: "form-control mb-2", id: "applicantQuestions3", placeholder: "Enter a question (optional)", maxlength: "250" } %>
+      <%= q.text_field :description_1, { class: "form-control mb-2", id: "applicantQuestions1", placeholder: "Enter a question (optional)", maxlength: "250", value: questions.first&.description } %>
+      <%= q.text_field :description_2, { class: "form-control mb-2", id: "applicantQuestions2", placeholder: "Enter a question (optional)", maxlength: "250", value: questions.second&.description } %>
+      <%= q.text_field :description_3, { class: "form-control mb-2", id: "applicantQuestions3", placeholder: "Enter a question (optional)", maxlength: "250", value: questions.third&.description } %>
+      <% if questions.size > 3 %>
+        <% questions.last(questions.size - 3).each do |question| %>
+          <%= q.text_field question.id, { class: "form-control mb-2", id: "applicantQuestions3", placeholder: "Enter a question (optional)", maxlength: "250", value: question.description } %>
+        <% end %>
+      <%end %>
       <div class="new-question"></div>
     <% end %>
   </div>
-  <button type="button" class="btn btn-link py-0 new-question-button"><i class="fas fa-plus mr-2"></i>Add another question</button>
-  <div class="modal-footer justify-content-between">
+  <button type="button" class="btn btn-link p-0 mb-3 new-question-button shadow-none"><i class="fas fa-plus mr-2"></i>Add another question</button>
+  <div class="d-flex pt-3 justify-content-between">
     <%= link_to employer_job_flows_path(id: :post_job_step_4, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
       <i class="fas fa-chevron-left mr-2"></i>Back
     <% end %>
     <div>
-      <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
-        Save<span class="d-none d-sm-inline"> as Draft</span><i class="fas fa-chevron-right ml-2"></i>
-      <% end %>
-      <%= button_tag type: 'submit', class: "btn btn-primary" do %>
-        Preview<span class="d-none d-sm-inline"> Job Post</span><i class="fas fa-chevron-right ml-2"></i>
+      <% unless job.draft? || job.edit? %>
+        <%= button_tag type: 'submit', class: "btn btn-outline-primary" do %>
+          Preview<span class="d-none d-sm-inline"> Job Post</span><i class="fas fa-chevron-right ml-2"></i>
+        <% end %>
+        <%= button_tag type: 'submit', value: 'posted', class: "btn btn-primary" do %>
+          Save Changes
+        <% end %>
+      <% else %>
+        <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
+          Save<span class="d-none d-sm-inline"> as Draft</span></i>
+        <% end %>
+        <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+          Preview<span class="d-none d-sm-inline"> Job Post</span><i class="fas fa-chevron-right ml-2"></i>
+        <% end %>
       <% end %>
     </div>
   </div>

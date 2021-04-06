@@ -1,0 +1,2 @@
+<p style="text-align:center;">Sorry, <b><%= @interview_request.freelancer_profile.full_name %></b> declined your request for an interview. Go to <a href=<%= employer_talent_index_url %> target='_blank'>Find Talent</a> to look for other possible candidates.</p>
+<%= render partial: 'email/button', locals: { button_txt: 'Find Talent', url: employer_talent_index_url } %>

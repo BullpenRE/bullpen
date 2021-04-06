@@ -1,0 +1,60 @@
+<div class="modal fade" id="editEmployerCompanyModal-<%= employer_profile.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Company Information</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body pt-0">
+        <%= form_for employer_profile, url: employer_profile_path, method: :put do |f| %>
+          <div class="form-group mb-3">
+            <label for="companyNameInput" class="h5">Company Name</label>
+            <%= f.text_field :company_name, class: 'form-control', id: 'companyNameInput', placeholder: 'Company Example', required: true %>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="companyWebsiteInput" class="h5">Website</label>
+            <%= f.text_field :company_website, class: 'form-control', id: 'companyWebsiteInput', placeholder: 'www.example.com', required: true %>
+          </div>
+
+          <%= f.fields_for :user, current_user do |u| %>
+              <div class="form-group mb-3">
+                <label for="userLocationInput" class="h5">Location</label>
+                <%= u.text_field :location, class: 'form-control', id: 'userLocationInput', placeholder: 'Orlando FL', required: true %>
+              </div>
+          <% end %>
+          <div class="error-location text-danger mb-2"></div>
+          <div class="h5">Employees</div>
+          <div class="mb-3">
+            <div class="w-100">
+              <%= f.select :employee_count,
+                            EmployerProfile.employee_counts.keys.map { |w| [w.humanize, w] }, {},
+                            html_options = { class: "form-control selectpicker custom-validate", 'data-style': "bp-btn-select",
+                                             selected: employer_profile.employee_count,
+                                             style: "display:block !important" } %>
+            </div>
+          </div>
+          <div class="h5">Function</div>
+          <div class="mb-3">
+            <div class="w-100">
+              <%= f.select :category,
+                            EmployerProfile.categories.keys.map { |w| [w.humanize, w] }, {},
+                            html_options = { class: "form-control selectpicker custom-validate", 'data-style': "bp-btn-select",
+                                             selected: employer_profile.category,
+                                             style: "display:block !important" } %>
+            </div>
+          </div>
+          <div class="d-flex pt-3 justify-content-between">
+            <%= f.submit 'Save Changes', id: 'submitWithLocationCheck', class: 'btn btn-primary ml-auto' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'shared/location_check', controller_name: 'employer_profile', experience_modal_id: nil %>
+
+
+

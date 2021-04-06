@@ -1,0 +1,114 @@
+<div class="modal-body pt-0">
+  <div class="form-group">
+    <label for="InstitutionInput" class="h5">Institution</label>
+    <%= f.text_field :institution, class: "form-control mb-1", id: "institutionInput-#{modal_id}", placeholder: "Enter the school you attended", value: freelancer_profile_education&.institution %>
+    <div class="error_message_institution-<%= modal_id %> text-danger"></div>
+  </div>
+  <div class="form-group">
+    <label for="DegreeSelect" class="h5">Degree</label>
+    <%= f.select :degree,
+                 options_for_select(FreelancerProfileEducation.degrees.keys, freelancer_profile_education&.degree),
+                 {}, class: 'form-control selectpicker mb-1',
+                 id: "degreeSelect-#{modal_id}", 'data-style': "bp-btn-select",
+                 title: "Please make a selection" %>
+    <div class="error_message_degree-<%= modal_id %> text-danger"></div>
+  </div>
+  <div class="form-group">
+    <label for="courseInput" class="h5">Course of Study</label>
+    <%= f.text_field :course_of_study, class: "form-control mb-1", id: "courseInput-#{modal_id}", placeholder: "Enter your degree program", value: freelancer_profile_education&.course_of_study %>
+    <div class="error_message_course-<%= modal_id %> text-danger"></div>
+  </div>
+  <div class="form-group">
+    <label for="graduationYear-<%=freelancer_profile_education&.id %>" class="h5">Graduation Year</label>
+    <div class="row mb-2 collapse <%= freelancer_profile_education&.currently_studying ? '' : 'show' %>" id="graduationDateToggle-<%= modal_id %>">
+      <div class="col">
+        <%= f.select :graduation_year,
+                     options_for_select(FreelancerProfileEducation::AVAILABLE_YEARS, freelancer_profile_education&.graduation_year),
+                     {}, class: 'form-control selectpicker',
+                     id: "graduationYear-#{modal_id}", 'data-style': "bp-btn-select", title: "Year" %>
+      <div class="error_message_graduation-<%= modal_id %> text-danger"></div>
+      </div>
+      <div class="col"></div>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <%= f.check_box :currently_studying,
+                      class: "custom-control-input #{freelancer_profile_education&.currently_studying ? 'collapsed' : ''}",
+                      id: "currentlyStudying-#{modal_id}",
+                      type: "button",
+                      'data-toggle': "collapse",
+                      'data-target': "#graduationDateToggle-#{modal_id}",
+                      'aria-expanded': "false",
+                      'aria-controls': "graduationDateToggle-#{modal_id}",
+                      checked: "#{freelancer_profile_education&.currently_studying ? 'checked' : 'false'}" %>
+      <label class="custom-control-label" for="currentlyStudying-<%= modal_id %>">Currently Studying</label>
+    </div>
+  </div>
+  <div class="form-group mb-0">
+    <label for="educationDescriptionTextarea" class="h5">Description</label>
+    <span class="text-dark"> (optional)</span>
+    <%= f.text_area :description,
+                    class: "form-control",
+                    id: "educationDescriptionTextarea-#{modal_id}",
+                    placeholder: "Enter a brief description",
+                    rows: 3,
+                    value: freelancer_profile_education&.description %>
+  </div>
+  <%= f.hidden_field :id, value: freelancer_profile_education&.id %>
+</div>
+
+<% if freelancer_profile_education&.id&.present? %>
+  <div class="modal-footer">
+    <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
+    <%= f.submit 'Save Changes', id: "submitEducationInput-#{modal_id}", class: 'btn btn-primary' %>
+  </div>
+<% else %>
+  <div class="d-flex justify-content-end m-3">
+    <%= f.submit 'Save Changes', id: "submitEducationInput-#{modal_id}", class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<script>
+  <% if @freelancer_profile && @freelancer_profile.freelancer_profile_educations&.count > 1 %>
+    $('.modal-footer').addClass('justify-content-between');
+    $('.btn-outline-danger').removeClass('d-none');
+  <% end %>
+
+  $("#submitEducationInput-<%= modal_id %>").on('click', (e) => {
+    if ($('#institutionInput-<%= modal_id %>').val() == '') {
+      $('#institutionInput-<%= modal_id %>').addClass('error');
+      $('.error_message_institution-<%= modal_id %>').text('Enter the school you attended');
+      e.preventDefault();
+      e.stopPropagation();
+    } else if ($('#degreeSelect-<%= modal_id %>').val() == '') {
+      $('.degreeSelect-<%= modal_id %>').addClass('error');
+      $('.error_message_degree-<%= modal_id %>').text('Please make a selection');
+      $('#institutionInput-<%= modal_id %>').removeClass('error');
+      $('.error_message_institution-<%= modal_id %>').text('');
+      e.preventDefault();
+      e.stopPropagation();
+    } else if ($('#courseInput-<%= modal_id %>').val() == '') {
+      $('.courseInput-<%= modal_id %>').addClass('error');
+      $('.error_message_course-<%= modal_id %>').text('Enter your degree program');
+      $('#institutionInput-<%= modal_id %>').removeClass('error');
+      $('.error_message_institution-<%= modal_id %>').text('');
+      $('#degreeSelect-<%= modal_id %>').removeClass('error');
+      $('.error_message_degree-<%= modal_id %>').text('');
+      e.preventDefault();
+      e.stopPropagation();
+    } else if (!$('#currentlyStudying-<%= modal_id %>').is(':checked') && $('#graduationYear-<%= modal_id %>').val() == '')  {
+      $('.graduationYear-<%= modal_id %>').addClass('error');
+      $('.error_message_graduation-<%= modal_id %>').text('Please make a selection');
+      $('#institutionInput-<%= modal_id %>').removeClass('error');
+      $('.error_message_institution-<%= modal_id %>').text('');
+      $('#degreeSelect-<%= modal_id %>').removeClass('error');
+      $('.error_message_degree-<%= modal_id %>').text('');
+      $('#courseInput-<%= modal_id %>').removeClass('error');
+      $('.error_message_course-<%= modal_id %>').text('');
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      $form.submit()
+    }
+  });
+</script>
+

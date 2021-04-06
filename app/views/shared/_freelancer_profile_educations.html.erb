@@ -1,0 +1,26 @@
+<h5>Education</h5>
+<% freelancer_profile.freelancer_profile_educations.order(currently_studying: :desc, graduation_year: :desc).each do |education| %>
+  <div class="d-flex">
+    <div class="mb-2 mr-2 text-wrap text-break"><b><%= education.institution %></b><br />
+    <%= education.degree %> <%= education.course_of_study %><br />
+    <i class="bp-text-sm"><%= education.currently_studying ? 'Present' : education.graduation_year %></i>
+    </div>
+    <% if editable %>
+      <button class="btn btn-link shadow-none p-0 align-self-start ml-auto" type="button"  data-toggle="modal" data-target="#editEducationModal-<%= education.id %>"><i class="fas fa-edit text-primary"></i></button>
+    <% end %>
+  </div>
+  <% if education.description.present? %>
+    <div>
+      <p class="text-wrap text-break"><%= education.description %></p>
+    </div>
+  <% end %>
+  <%= render 'freelancer/shared/edit_educations', freelancer_profile_education: education %>
+<% end %>
+<div class="mt-3">
+  <%= render 'freelancer/shared/add_educations', freelancer_profile: freelancer_profile %>
+  <% if editable %>
+    <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#addEducationModal">
+      Add Education
+    </button>
+  <% end %>
+</div>

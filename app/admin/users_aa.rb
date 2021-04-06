@@ -4,11 +4,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
 
     index do
       column :email
-      column :first_name
-      column :last_name
+      column 'Name', sortable: :first_name do |user|
+        "#{user.first_name} #{user.last_name}"
+      end
       column :created_at
       column :last_sign_in_at
-      column :confirmed_at
+      column 'Email confirmed', sortable: :confirmed_at do |user|
+        user.confirmed_at.present?
+      end
       column :role
       column :signup_promo
 
@@ -16,7 +19,26 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
     end
 
     filter :email
-    filter :confirmed, as: :boolean
+    filter :role, as: :select, collection: -> { User.roles }
+    filter :last_name, as: :select, input_html: { class: 'select2' }
+
+    show title: 'User' do |user|
+      attributes_table do
+        row :email
+        row :first_name
+        row :last_name
+        row :phone_number
+        row :location
+        row :role
+        row :signup_promo
+        row :provider
+        row :freelancer_profile
+        row :employer_profile
+        row :sign_in_count
+        row :last_sign_in_at
+        row :confirmed_at
+      end
+    end
 
     form do |f|
       f.inputs 'User Info' do
@@ -38,6 +60,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
         params[:user].delete('password') if params[:user][:password].blank?
 
         begin
+          user.skip_reconfirmation!
           user.update!(params.permit![:user])
         rescue StandardError => e
           error_message = e.message

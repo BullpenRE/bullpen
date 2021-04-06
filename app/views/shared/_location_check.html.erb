@@ -1,0 +1,140 @@
+<script>
+  $(document).on('turbolinks:load', function (e) {
+    function showAlert() {
+      $('.error-location').text('Location not found. Please check the spelling and enter in \'City, State\' format.');
+        setTimeout(() => {
+          $('.error-location').text('');
+        }, 3000);
+    }
+
+    function setHiddenFields(longitude, latitude, controller_name) {
+      if (controller_name === 'employer_profile') {
+        return `
+          <input value=${longitude} type="hidden" name="${controller_name}[user_attributes][longitude]" id="${controller_name}_longitude">
+          <input value=${latitude} type="hidden" name="${controller_name}[user_attributes][latitude]" id="${controller_name}_latitude">
+        `
+      } else {
+        return `
+          <input value=${longitude} type="hidden" name="${controller_name}[longitude]" id="${controller_name}_longitude">
+          <input value=${latitude} type="hidden" name="${controller_name}[latitude]" id="${controller_name}_latitude">
+        `
+      }
+    }
+
+    $('.container').off('click').on('click', '#submitWithLocationCheck', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const locationValue = $('#freelancerLocationInput').val() || $('#userLocationInput').val();
+      if (!locationValue) return showAlert(locationValue);
+      const $form = $(e.target).parents('form');
+      $.ajax({
+        url: `https://nominatim.openstreetmap.org/search?q=${locationValue}&format=json&addressdetails=1&accept-language=en`,
+        method: 'GET',
+        success: function (data) {
+          if (data.length < 1 || data === undefined) {
+            showAlert(locationValue)
+          } else {
+            const longitude = data[0]['lon'];
+            const latitude = data[0]['lat'];
+            $form.prepend(setHiddenFields(longitude, latitude, '<%= controller_name %>'));
+            if (!$('.highlight').length) $form.submit()
+          }
+        },
+        error: () => {
+          showAlert(locationValue)
+        }
+      });
+    });
+
+    $("#submitExperienceWithLocationCheck<%= experience_modal_id %>").on('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const locationValueExperience = $('#experienceLocationInput<%= experience_modal_id %>').val();
+      if (!locationValueExperience) return showAlert(locationValueExperience);
+      const $form = $(e.target).parents('form');
+
+      $.ajax({
+        url: `https://nominatim.openstreetmap.org/search?q=${locationValueExperience}&format=json&addressdetails=1&accept-language=en`,
+        method: 'GET',
+        success: function (data) {
+          if (data.length < 1 || data === undefined) {
+            showAlert(locationValueExperience);
+          } else {
+            const longitude = data[0]['lon'];
+            const latitude = data[0]['lat'];
+            $form.prepend(setHiddenFields(longitude, latitude, '<%= controller_name %>'));
+            if (!$('.highlight').length) {
+              if ($('#companyInput<%= experience_modal_id %>').val() == '') {
+                $('#companyInput<%= experience_modal_id %>').addClass('error');
+                $('.error_message_company<%= experience_modal_id %>').text('Enter the company name');
+                e.preventDefault();
+                e.stopPropagation();
+              } else if ($('#jobTitleInput<%= experience_modal_id %>').val() == '') {
+                $('#jobTitleInput<%= experience_modal_id %>').addClass('error');
+                $('.error_message_job_title<%= experience_modal_id %>').text('Enter your job title');
+                clean_company_error();
+                e.preventDefault();
+                e.stopPropagation();
+              } else if ($('#jobDescriptionTextarea<%= experience_modal_id %>').val() == '') {
+                $('#jobDescriptionTextarea<%= experience_modal_id %>').addClass('error');
+                $('.error_message_job_description<%= experience_modal_id %>').text('Enter your job description');
+                clean_company_error();
+                clean_title_error();
+                e.preventDefault();
+                e.stopPropagation();
+              } else if ($('#startYear-<%= experience_modal_id %>').val() == '' || $('#startMonth-<%= experience_modal_id %>').val() == '') {
+                $('.startDate<%= experience_modal_id %>').addClass('error');
+                $('.error_message_start_date<%= experience_modal_id %>').text('Enter the start date');
+                clean_company_error();
+                clean_title_error();
+                clean_description_error();
+                e.preventDefault();
+                e.stopPropagation();
+              } else if (!$('.my-current-job-<%= experience_modal_id %>').is(':checked')) {
+                const start_date = new Date($('#startYear-<%= experience_modal_id %>').val(), ($('#startMonth-<%= experience_modal_id %>').val() - 1));
+                const end_date = new Date($('#endYear-<%= experience_modal_id %>').val(), ($('#endMonth-<%= experience_modal_id %>').val() - 1));
+
+                if ($('#endYear-<%= experience_modal_id %>').val() == '' || $('#endMonth-<%= experience_modal_id %>').val() == '' || (start_date > end_date)) {
+                  $('.endDate<%= experience_modal_id %>').addClass('error');
+                  $('.error_message_end_date<%= experience_modal_id %>').text('Select an end date later than starting date');
+                  clean_company_error();
+                  clean_title_error();
+                  clean_description_error();
+                  clean_start_date_error();
+                  e.preventDefault();
+                  e.stopPropagation();
+                } else {
+                  $form.submit()
+                }
+              } else {
+                $form.submit()
+              }
+            }
+          }
+        },
+        error: () => {
+          showAlert(locationValueExperience);
+        }
+      });
+    })
+    const clean_company_error = () => {
+      $('#companyInput<%= experience_modal_id %>').removeClass('error');
+      $('.error_message_company<%= experience_modal_id %>').text('');
+    };
+
+    const clean_title_error = () => {
+      $('#jobTitleInput<%= experience_modal_id %>').removeClass('error');
+      $('.error_message_job_title<%= experience_modal_id %>').text('');
+    }
+
+    const clean_description_error = () => {
+      $('#jobDescriptionTextarea<%= experience_modal_id %>').removeClass('error');
+      $('.error_message_job_description<%= experience_modal_id %>').text('');
+    }
+
+    const clean_start_date_error = () => {
+      $('.startDate<%= experience_modal_id %>').removeClass('error');
+      $('.error_message_start_date<%= experience_modal_id %>').text('');
+    }
+  })
+</script>

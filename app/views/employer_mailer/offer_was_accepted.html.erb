@@ -1,0 +1,4 @@
+<p><b>Congratulations!</b> <%= @contract.freelancer_profile.full_name %> accepted the <b><%= @contract.title %></b> offer.</p>
+<p>Go to your <a href=<%= employer_contracts_url %> target='_blank'>Contracts</a> to track <%= @contract.freelancer_profile.first_name %>'s hours and billing.</p>
+<p><a href='#' target='_blank'>Click here</a> for frequently asked questions about billing and payments.</p>
+<%= render partial: 'email/button', locals: { button_txt: 'View Contracts', url: employer_contracts_url } %>

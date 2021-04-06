@@ -17,16 +17,6 @@ RSpec.describe JobSector, type: :model do
       duplicate.sector_id = job_sector.sector_id
       expect(duplicate.valid?).to be_falsey
     end
-
-    it 'the foreign keys cannot be blank' do
-      expect(job_sector).to be_valid
-      job_sector.job_id = nil
-      expect(job_sector).to_not be_valid
-      job_sector.job_id = job.id
-      expect(job_sector).to be_valid
-      job_sector.sector_id = nil
-      expect(job_sector).to_not be_valid
-    end
   end
 
   context 'Relationships' do

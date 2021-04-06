@@ -1,0 +1,55 @@
+<%= render partial: 'freelancer/navigation', locals: { section: 'applications' } %>
+<%= render partial: 'shared/notice_and_alert' %>
+
+<!--Job card-->
+<div class="container mb-3">
+  <h1>Applications</h1>
+  <% @job_applications.each do |job_application| %>
+    <%= render partial: 'employer/jobs/show_job_post', locals: { job: job_application.job } %>
+    <%= render partial: 'freelancer/applications/delete_application_draft', locals: { job_application: job_application } %>
+    <%= render partial: 'freelancer/applications/withdraw_application', locals: { job_application: job_application } %>
+    <%= render partial: 'freelancer/application_flows/_preview_job_application_dropdown', locals: { job_application: job_application, editable: true } %>
+    <div class="bp-card mb-3">
+      <div class="d-flex flex-column flex-lg-row">
+        <div class="w-100">
+          <div class="d-flex flex-column flex-lg-row">
+            <div class="mr-auto mb-0 mb-lg-2">
+              <h2 class="text-wrap text-break mb-1">
+                <%= job_application.job&.title&.capitalize %>
+              </h2>
+              <div class="bp-text-sm">
+                <% if job_application.applied_at.nil? %>
+                  Posted on <%= job_application.job.created_at.strftime("%b %d, %Y") %>
+                <% else %>
+                  Applied <%= time_ago_in_words(job_application.applied_at) %> ago for job posted on <%= job_application.job.created_at.strftime("%b %d, %Y") %>
+                <% end %>
+              </div>
+            </div>
+            <div class="bp-text-sm text-secondary font-weight-bold mr-lg-3 mb-2 mb-lg-0 mt-2 text-nowrap">
+              <% if job_application.state == 'applied' %>
+                  Applied
+              <% elsif job_application.state == 'draft' %>
+                  Saved as draft
+              <% end %>
+            </div>
+          </div>
+          <div>
+            <%= render partial: 'freelancer/shared/job_card', locals: { job: job_application.job } %>
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-sm-row ml-sm-auto mt-3 mt-lg-0">
+          <% if job_application.state == 'draft' %>
+            <div class="mb-2 mb-sm-0 mr-sm-2">
+              <%= link_to 'Apply', freelancer_application_flows_path(job_app: job_application.id), { remote: true, 'data-toggle': "modal", 'data-target': "#jobAppStep1", class: "btn btn-primary d-block" } %>
+            </div>
+          <% end %>
+          <%= render partial: 'freelancer/applications/application_dropdown', locals: { job_application: job_application } %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
+</div>
+
+<div id="jobAppStepModal"></div>

@@ -1,0 +1,39 @@
+<div class="modal" id="sendMessage<%= id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <!--  Header with '×'-->
+      <div class="modal-header">
+        <h1 class="modal-title" id="showSendMessageLabel">Send Message to <%= to_user.full_name %></h1>
+        <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Send Message Card-->
+      <div class="modal-body py-0">
+        <%= form_for :message, url:  employer_send_message_path do |f| %>
+          <%= f.hidden_field :to_user, value: to_user.id %>
+          <%= f.hidden_field :job_title, value: job_title %>
+          <%= f.hidden_field :redirect_reference, value: redirect_reference %>
+          <div class="form-group mb-3">
+            <label for="addPersonalMessageTextArea" class="h5">
+              Message
+            </label>
+            <div class="w-100">
+              <%= f.rich_text_area :description, class: "form-control mb-2", id: "addPersonalMessageTextArea", placeholder: "Enter your message", rows: "8", maxlength: "5000" %>
+            </div>
+            <p class="bp-text-sm">An email will be sent with you on copy.</p>
+            <div class="d-flex justify-content-end pt-3">
+              <%= f.submit 'Send Message', class: 'btn btn-primary send-invitation' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("trix-file-accept", event => {
+    event.preventDefault();
+  });
+</script>

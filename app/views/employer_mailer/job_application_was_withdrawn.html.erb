@@ -1,0 +1,2 @@
+<p style="text-align: center;">Sorry, <b><%= @job_application.freelancer_profile.full_name %></b> withdrew their application from consideration for the <b><%= @job_application.job.title %></b> job post.</p>
+<%= render partial: 'email/button', locals: { button_txt: 'View Your Jobs', url: @url } %>

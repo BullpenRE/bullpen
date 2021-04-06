@@ -7,11 +7,14 @@ class FreelancerProfileExperience < ApplicationRecord
   validates :company, presence: true
   validates :location, presence: true
   validates :description, presence: true
+  validate :end_date_is_after_start_date
 
-  AVAILABLE_YEARS = (1991..Time.now.year).reverse_each
+  AVAILABLE_YEARS = (1970..Time.now.year).reverse_each
   AVAILABLE_MONTHNAMES = Date::MONTHNAMES.drop(1)
 
-  before_save :update_start_date, :update_end_date
+  geocoded_by :location
+  after_validation :geocode, if: ->(obj) { obj.location.present? && obj.location_changed? }
+  before_validation :update_start_date, :update_end_date
   attr_accessor :start_month, :start_year, :end_month, :end_year
 
   def update_start_date
@@ -30,5 +33,14 @@ class FreelancerProfileExperience < ApplicationRecord
 
   def description_paragraphs
     description.split("\n").reject(&:blank?)
+  end
+
+  private
+
+  def end_date_is_after_start_date
+    return if start_year.blank? || start_month.blank? || end_year.blank? || end_month.blank?
+    return unless start_date > end_date
+
+    errors.add(:end_date, 'cannot occur before the starting date.')
   end
 end

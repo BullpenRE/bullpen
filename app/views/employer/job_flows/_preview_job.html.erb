@@ -1,0 +1,41 @@
+<div class="modal" id="previewJob" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="showJobPostLabel"><%= job.title&.capitalize %></h1>
+        <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body pt-0">
+        <%= render partial: 'shared/show_job_post_content', locals: { job: job } %>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <%= link_to employer_job_flows_path(id: :post_job_step_1, job_id: @job.id), class: "btn btn-outline-primary", remote: true do %>
+          Edit Job
+        <% end %>
+        <div>
+          <%= form_for :job, url: wizard_path, method: :put, remote: true do |f| %>
+            <%= f.hidden_field :job_id, value: @job.id %>
+            <%= f.hidden_field 'step', value: 'preview_job' %>
+            <% unless job.draft? || job.edit? %>
+              <%= button_tag type: 'submit', value: 'done', class: "btn btn-primary" do %>
+                Done
+              <% end %>
+            <% else %>
+              <%= button_tag type: 'submit', value: 'draft', class: "btn btn-outline-primary mr-1" do %>
+                Save<span class="d-none d-sm-inline"> as Draft</span>
+              <% end %>
+              <%= button_tag type: 'submit', class: "btn btn-primary", id: "post-job-#{job.id}" do %>
+                Submit<span class="d-none d-sm-inline"> Job Post</span>
+              <% end %>
+            <% end %>
+            <% if current_user.confirmed_at.blank? %>
+              <%= render partial: 'employer/shared/prevent_post_job', locals: { job_id: job.id } %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

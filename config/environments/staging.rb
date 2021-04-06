@@ -10,17 +10,22 @@ Rails.application.configure do
   # Click on My Inbox, SMTP Settings, then select RoR from Integrations
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :user_name => '3c17b298c43c62',
-    :password => '540c0a40654388',
-    :address => 'smtp.mailtrap.io',
-    :domain => 'smtp.mailtrap.io',
-    :port => '2525',
-    :authentication => :cram_md5
+    user_name: ENV['SMTP_USER_NAME'],
+    password: ENV['SMTP_PASSWORD'],
+    address: ENV['SMTP_ADDRESS'],
+    domain: ENV['SMTP_DOMAIN'],
+    port: ENV['SMTP_PORT'],
+    authentication: ENV['SMTP_AUTHENTICATION'].to_sym
   }
+
+  # Allow mailer previews to occur on the staging server:
+  # https://stackoverflow.com/questions/27453578/rails-4-email-preview-in-production
+  config.action_mailer.show_previews = true
 
   config.action_mailer.asset_host = "https://#{host}"
   config.action_mailer.default_url_options = { host: host }
   config.action_mailer.default_url_options = { protocol: 'https', host: ENV['DOMAIN_URL'] }
   config.action_mailer.raise_delivery_errors = true
+  config.active_job.queue_adapter = :sidekiq
   config.action_mailer.perform_caching = true
 end
