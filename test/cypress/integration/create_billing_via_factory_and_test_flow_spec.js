@@ -173,7 +173,59 @@ describe('Create billing via factory billings.rb and test billing flow', () => {
       .should('exist')
       .click()
 
+    // try to click link 'Dispute Hours'
+    cy.get('.align-self-start')
+      .should('exist')
+      .click()
 
+    // try to close opened module via 'x'
+    cy.get('[id^="disputeHours"] > .modal-dialog > .modal-content > .modal-header > .close > span')
+      .should('exist')
+      .click()
+
+    // try to click link 'Dispute Hours' again
+    cy.get('.align-self-start')
+      .should('exist')
+      .click()
+
+    // try to check upper check-box among 'Select the time entries you would like to do dispute.'
+    cy.get('[aria-controls="collapseDisputedComments"]')
+      .eq(0)
+      .should('exist')
+      .check({force: true})
+
+    // try to add text of dispute in text-area with placeholder 'Enter detailed comments'
+    cy.get('[placeholder="Enter detailed comments"]')
+      .eq(0)
+      .should('exist')
+      .type('Cy - Dispute text for upper item of disputing list', {force: true})
+
+    // try to check upper check-box among 'Select the time entries you would like to do dispute.'
+    cy.get('[aria-controls="collapseDisputedComments"]')
+      .eq(1)
+      .should('exist')
+      .check({force: true})
+    // try to add text of dispute in text-area with placeholder 'Enter detailed comments'
+    cy.get('[placeholder="Enter detailed comments"]')
+      .eq(1)
+      .should('exist')
+      .type('Cy - Dispute text for lower item of disputing list', {force: true})
+
+    // try to click button 'submit dispute'
+    cy.get('[data-disable-with="Submit Dispute"]')
+      .should('exist')
+      .click()
+
+    // try to click link 'Show Billing' as employer again
+    cy.get('[data-target^="#collapseBillings"]')
+      .eq(0)
+      .should('exist')
+      .click()
+
+    // try to check if word 'Disputed' has red color - class 'text-danger'
+    cy.get(':nth-child(3) > .w-100 > .row > .col-2')
+      .should('exist')
+      .should( 'have.class', 'text-danger')
 
   })
 })
