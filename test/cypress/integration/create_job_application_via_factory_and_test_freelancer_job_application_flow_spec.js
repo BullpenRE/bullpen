@@ -133,7 +133,7 @@ describe('Create job_application via factory and test freelancer-employer job_ap
       .get('[rel="nofollow"]')
       .click({force: true})
 
-    // try to login as frrlancer
+    // try to login as freelancer
     cy.get('#user_email')
       .should('exist')
       .type('tetyanaFree@gmail.com')
@@ -165,11 +165,6 @@ describe('Create job_application via factory and test freelancer-employer job_ap
       .should('exist')
       .click({force: true})
 
-    // try to click link 'Shoe Billing'
-    cy.get('[data-target^="#collapseBillings"]')
-      .eq(0)
-      .should('exist')
-      .click({force: true})
 
   })
 })
