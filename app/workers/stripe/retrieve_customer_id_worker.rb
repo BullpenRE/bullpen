@@ -7,7 +7,7 @@ module Stripe
     sidekiq_options retry: false
 
     def perform(user_id)
-      Stripe::Customers::CreateUpdateService.new(user_id: user_id).call
+      Stripe::Customers::CardService.new(user_id: user_id).call
     end
   end
 end

@@ -3,13 +3,12 @@
 module Employer
   class StripeController < ApplicationController
     before_action :authenticate_user!, :initial_check, :non_employer_redirect, :employer_profile
-    before_action :no_card_token_redirect, only: :create_card
-    before_action :no_bank_token_redirect, only: :create_account
+    before_action :no_token_redirect
 
     def create_card
-      response = Stripe::Customers::CreateUpdateService.new(user_id: current_user.id,
-                                                            customer_id: employer_profile.stripe_id_customer,
-                                                            card_token: stripe_params[:stripeToken]).call
+      response = Stripe::Customers::CardService.new(user_id: current_user.id,
+                                                    customer_id: employer_profile.stripe_id_customer,
+                                                    stripe_token: stripe_params[:stripeToken]).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR
       else
@@ -20,7 +19,7 @@ module Employer
     def create_account
       response = Stripe::Customers::BankAccountService.new(user_id: current_user.id,
                                                            customer_id: employer_profile.stripe_id_customer,
-                                                           bank_token: stripe_params[:bankToken]).call
+                                                           stripe_token: stripe_params[:stripeToken]).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR
       else
@@ -38,24 +37,14 @@ module Employer
       params.permit(:stripeToken, :authenticity_token)
     end
 
-    def valid_card_input?
+    def token_present?
       stripe_params[:stripeToken].present?
     end
 
-    def valid_bank_input?
-      stripe_params[:bankToken].present?
-    end
+    def no_token_redirect
+      return if token_present?
 
-    def no_bank_token_redirect
-      return if valid_bank_input?
-
-      redirect_to employer_account_index_path, alert: 'Stripe: bank data is invalid'
-    end
-
-    def no_card_token_redirect
-      return if valid_card_input?
-
-      redirect_to employer_account_index_path, alert: 'Stripe: card data is invalid'
+      redirect_to employer_account_index_path, alert: 'Stripe: token is invalid'
     end
   end
 end
