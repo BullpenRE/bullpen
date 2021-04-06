@@ -6,7 +6,7 @@
     <div class="form-group mb-2 descriptionCertification-<%= freelancer_certification&.id %>">
       <%= f.select :certification_id,
                    options_for_select(@certifications, [freelancer_certification&.description, freelancer_certification&.certification_id]),
-                   {}, class: 'form-control selectpicker',id: "descriptionCertification-#{freelancer_certification&.id}", 'data-style': "bp-btn-select", title: "Select an option..." %>
+                   {}, class: 'form-control selectpicker', id: "descriptionCertification-#{freelancer_certification&.id}", 'data-style': "bp-btn-select", title: "Select an option..." %>
       <div class="error_description text-danger mt-1"></div>
     </div>
   </div>
@@ -64,43 +64,4 @@
     <%= f.submit 'Save Changes', class: 'btn btn-primary submitCertification' %>
   </div>
 <% end %>
-<script>
-  <% if @freelancer_profile && @freelancer_profile&.freelancer_certifications&.count > 1 %>
-    $('.modal-footer').addClass('justify-content-between');
-    $('.btn-outline-danger').removeClass('d-none');
-  <% end %>
-
-  $('.submitCertification').on('click', (e) => {
-    if ($("#descriptionCertification-<%= freelancer_certification&.id %>").prop("selectedIndex") === 0 && $("#customDescriptionCertificate-<%= freelancer_certification&.id %>").val() == '') {
-      e.preventDefault();
-      $('.error_description').text('Please make a selection');
-      $(".descriptionCertification-<%= freelancer_certification&.id %>").addClass('error');
-      $('.error_custom').text('Enter your custom license');
-      $("#customDescriptionCertificate-<%= freelancer_certification&.id %>").addClass('error');
-      setTimeout(() => {
-        $('.error_description').text('');
-        $(".descriptionCertification-<%= freelancer_certification&.id %>").removeClass('error');
-        $('.error_custom').text('');
-        $("#customDescriptionCertificate-<%= freelancer_certification&.id %>").removeClass('error');
-      }, 3000);
-    }
-		if ($("#earnedMonth-<%= freelancer_certification&.id %>").prop("selectedIndex") === 0) {
-      e.preventDefault();
-      $('.error_month').text('Please make a selection');
-      $(".earnedMonth-<%= freelancer_certification&.id %>").addClass('error');
-      setTimeout(() => {
-        $('.error_month').text('');
-        $(".earnedMonth-<%= freelancer_certification&.id %>").removeClass('error');
-      }, 3000);
-    }
-		if ($("#earnedYear-<%= freelancer_certification&.id %>").prop("selectedIndex") === 0) {
-      e.preventDefault();
-      $('.error_year').text('Please make a selection');
-      $(".earnedYear-<%= freelancer_certification&.id %>").addClass('error');
-      setTimeout(() => {
-        $('.error_year').text('');
-        $(".earnedYear-<%= freelancer_certification&.id %>").removeClass('error');
-      }, 3000);
-    }
-  })
-</script>
+<%= render partial: 'certification_validations', locals: { freelancer_profile: @freelancer_profile, freelancer_certification: freelancer_certification } %>
