@@ -36,12 +36,10 @@
           </div>
           <div class="form-group">
             <label for="account_holder_type" class="h5">Bank Account Holder Type</label>
-            <%= text_field_tag 'account_holder_type',
-                               'individual',
-                               class: 'form-control mb-1',
-                               placeholder: 'individual or company',
-                               required: true,
-                               pattern: 'individual|company' %>
+            <select id="account_holder_type" class="form-control mb-1 select2 text-muted" name="account_holder_type" style="width: 100%">
+              <option>individual</option>
+              <option>company</option>
+            </select>
           </div>
         </div>
         <div class="modal-footer">
