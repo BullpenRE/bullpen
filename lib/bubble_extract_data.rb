@@ -9,29 +9,26 @@ class BubbleExtractData
     @type = type
   end
 
-  def retrieve(cursor=0)
+  def retrieve(cursor = 0)
     call = request(cursor)
-    body = JSON.parse(call.body)
-    raw_data = body['response']['results']
+    return false unless call.success?
 
-    if call.success? && raw_data.length
-      @api_results = raw_data
-      return true
-    else
-      return false
-    end
+    body = JSON.parse(call.body)
+    @results = body['response']['results']
+
+    @results.length > 0
   end
 
   def retrieve_all
-    @api_results = []
+    @results = []
     return repeat_request(0)
   end
 
   def process
-    return false if !@api_results
+    return false unless @results
 
     hash = {}
-    @api_results.map do |entry|
+    @results.map do |entry|
       id = entry["_id"]
       hash[id] = clean_hash(entry)
     end
@@ -41,7 +38,7 @@ class BubbleExtractData
   end
 
   def find_by(field, value)
-    return false if !@data
+    return false unless @data
 
     @data.each do |k,v|
       result = v.find{|h_k,h_v| h_k == field and h_v == value}
@@ -60,13 +57,13 @@ class BubbleExtractData
     )
   end
 
-  def request(cursor=0)
+  def request(cursor = 0)
     response = client.get(@type) do |req|
       req.params['cursor'] = cursor
     end
   end
 
-    # recursively call the API until all results for desired obj are retrieved
+  # recursively call the API until all results for desired obj are retrieved
   def repeat_request(cursor)
     call = request(cursor)
     body = JSON.parse(call.body)
