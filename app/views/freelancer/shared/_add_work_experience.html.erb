@@ -11,7 +11,8 @@
 
       <%= form_for :freelancer_profile_experience, url: freelancer_change_work_experience_path do |f| %>
         <%= render partial: 'freelancer/shared/form_work_experience', locals: { freelancer_profile_experience: nil, f: f,
-                                                                                modal_id: (freelancer_profile.freelancer_profile_experiences.size + 1) } %>
+                                                                                modal_id: (freelancer_profile.freelancer_profile_experiences.size + 1),
+                                                                                freelancer_profile: freelancer_profile } %>
       <% end %>
     </div>
   </div>

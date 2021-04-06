@@ -1,0 +1,58 @@
+<div class="modal" id="disputeHours<%= modal_id %>" tabindex="-1" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content mt-3">
+      <div class="modal-header mb-2">
+        <h1 class="modal-title">Dispute Hours for <%= timesheet.starts.strftime("%b %d")%> - <%= timesheet.ends.strftime("%b %d")%></h1>
+        <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body pt-0">
+        <h4>Select the time entries you would like to do dispute.</h4>
+        <%= form_for :timesheet, url: employer_timesheets_path, method: 'PUT' do |f| %>
+          <% timesheet.billings.each do |billing| %>
+           <hr class="my-2"/>
+           <div class="row w-100">
+
+             <div class="col-sm-1 d-flex align-items-start">
+               <div class="custom-control custom-checkbox">
+                 <%= check_box_tag "disputed-#{billing.id}", true, billing&.dispute_comments.present?,
+                                   id: "customCheck#{billing.id}",
+                                   class: "custom-control-input",
+                                   'data-toggle': "collapse",
+                                   'data-target': "#collapseDisputedComments#{billing.id}",
+                                   'aria-expanded': "false",
+                                   'aria-controls': "collapseDisputedComments" %>
+                 <label class="custom-control-label" for="customCheck<%= billing.id %>"></label>
+               </div>
+             </div>
+
+             <div class="col-sm-2 text-nowrap"><%= billing.work_done&.strftime("%b %d") %></div> <!--i.e. Oct 2, Dec 1, etc.-->
+             <% if billing.minutes.present? && billing.hours.present? %>
+               <div class="col-sm-2 text-nowrap"><%= (billing.hours + billing.minutes/60.0).round(2) %> hours </div>  <!--Show minutes as a decimal, i.e. 1 hour 45 min = 1.75 hours. Round to hundreds place. Show as "hour" instead of "hours" for amounts 1 hour or less.-->
+             <% elsif billing.minutes.present? && billing.hours.nil? %>
+               <div class="col-sm-2 text-nowrap"><%= (billing.minutes/60.0).round(2) %> hour </div>
+             <% else %>
+               <div class="col-sm-2 text-nowrap"><%= billing.hours %> <%= billing.hours.present? ? "#{"hour".pluralize(billing.hours)}" : "" %></div>
+             <% end %>
+             <div class="col-sm-7">
+               <div class="text-justify"><%= billing.description.present? ? "#{billing.description}" : "" %></div>
+             </div>
+           </div>
+            <div class="collapse <%= billing&.dispute_comments.present? ? 'show' : '' %>" id="collapseDisputedComments<%= billing.id %>">
+              <%= f.hidden_field :contract_id, value: contract_id %>
+              <%= f.hidden_field :timesheet_id, value: timesheet.id %>
+              <div class="w-100 mt-1">
+                <%= text_area_tag "#{billing.id}", billing&.dispute_comments, { class: "form-control mb-2", placeholder: "Enter detailed comments", rows: 4 } %>
+              </div>
+            </div>
+          <% end %>
+          <div class="d-flex pt-3 justify-content-end mt-2">
+            <%= f.submit 'Submit Dispute', class: "btn btn-primary dispute-hours#{modal_id}" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
