@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class BubbleExtractData
-  @api_results = []
-  @data = {}
+  attr_reader :data, :results
 
   def initialize(type)
+    @data = {}
+    @results = []
     @type = type
   end
 
@@ -51,15 +52,8 @@ class BubbleExtractData
     return false
   end
 
-  def data 
-    @data
-  end
+  private
 
-  def results
-    @api_results
-  end
-
-    private
   def client
     connection = Faraday.new(
       url: ENV['BUBBLE_API_URL']
@@ -79,7 +73,7 @@ class BubbleExtractData
     raw_data = body['response']['results']
 
     if call.success? && raw_data.length != 0 # check if the call was successfull and there are results
-      @api_results = @api_results.concat(raw_data)
+      @results = @results.concat(raw_data)
       remaining = body['response']['remaining']
       return repeat_request(cursor + 100) if remaining
     elsif call.success? && raw_data.length == 0 # catch for when the call is successfull and there are no further results
