@@ -55,7 +55,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
           "Has written #{employer_profile.reviews.size} review#{'s' if employer_profile.reviews.size != 1} for an average rating of #{employer_profile.reviews.sum(:rating)/employer_profile.reviews.size.to_f.round(1)}" if employer_profile.reviews.any?
         end
         row 'Payment Accounts' do
-          employer_profile.payment_accounts.map { |account| link_to("#{account.institution} #{account.last_four}#{' (expired)' if account.expired?}#{' (Default)' if account.default?}", admin_payment_account_path(account.id)).html_safe }.join('<br>').html_safe
+          employer_profile.payment_accounts.map { |account| link_to("#{account.institution} #{account.last_four}#{' (expired)' if account.expired?}#{' (Default)' if account.is_default?}", admin_payment_account_path(account.id)).html_safe }.join('<br>').html_safe
         end
       end
     end

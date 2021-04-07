@@ -30,4 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  stripe_rails:
+    elements:
+      label_text: enter your card details
+      submit_button_text: Add a Credit Card
