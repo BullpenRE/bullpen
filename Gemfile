@@ -54,9 +54,10 @@ end
 
 group :test do
   # Gems in this group do not require version numbers
-  gem 'database_cleaner'                                # Cleans the database data between tests
-  gem 'rails-controller-testing'                        # This gem brings back assigns to your controller tests as well as assert_template to both controller and integration tests.
-  gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
+  gem 'database_cleaner'                                     # Cleans the database data between tests
+  gem 'rails-controller-testing'                             # This gem brings back assigns to your controller tests as well as assert_template to both controller and integration tests.
+  gem 'stripe-ruby-mock', '~> 3.0.1', require: 'stripe_mock' # Mock and customize stripe webhooks, test against stripe errors
+  gem 'shoulda-matchers'                                     # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
   gem 'stripe-ruby-mock', '~> 3.0.1'
   gem 'webmock', require: false
 end
