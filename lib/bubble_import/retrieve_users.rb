@@ -9,13 +9,13 @@ module BubbleImport
     attr_accessor :service, :bulk_create
 
     def initialize
-      @service = BubbleExtractData.new('User', lookup_key: 'email')
+      @service = BubbleExtractData.new('User')
       @errors = []
     end
 
     def process
       puts 'Starting retrieval and processing'
-      return false unless service.retrieve_all && service.process
+      return false unless service.retrieve_all && service.process(lookup_key: 'email')
 
       populate_existing_users_bubble_ids!
       create_new_bubble_users!
@@ -68,6 +68,7 @@ module BubbleImport
         last_name: bubble_user['Last Name'],
         id_bubble: bubble_user['_id'],
         role: bubble_user['is_freelancer?'] ? 'freelancer' : 'employer',
+        # disable: bubble_user['Is Active?'] == false,
         confirmed_at: Time.current
       }
     end
