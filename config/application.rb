@@ -16,8 +16,6 @@ require "sprockets/railtie"
 require 'sidekiq'
 # require "rails/test_unit/railtie"
 
-require "./lib/bubble_extract_data"
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -25,7 +23,7 @@ Bundler.require(*Rails.groups)
 module Bullpen
   class Application < Rails::Application
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths << Rails.root.join('lib', 'migrations')
+    config.autoload_paths << Rails.root.join('lib')
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0

@@ -8,18 +8,21 @@
 # > user = User.find_by(email: bubble_user['authentication']['email']['email'])
 # > user.update(id_bubble: bubble_user['_id'])
 #
+# > service = BubbleExtractData.new('User', lookup_key: 'email')
 # > abe_user = User.find_by(email: 'abe@something.com')
-# > abe_bubble_user_data = service.lookup(abe_user.id_bubble)
+# > abe_bubble_user_data = service.lookup['abe@something.com']
 # > abe_user.update(first_name: abe_bubble_user_data['First Name'], last_name: abe_bubble_user_data['Last Name'])
 
 class BubbleExtractData
-  attr_reader :lookup, :results, :total_calls
+  attr_reader :lookup, :results, :total_calls, :keys
 
-  def initialize(type)
+  def initialize(type, lookup_key: '_id')
     @lookup = {}
     @results = []
     @type = type
     @total_calls = 0
+    @lookup_key = lookup_key
+    @keys = []
   end
 
   def retrieve(cursor = 0)
@@ -41,12 +44,16 @@ class BubbleExtractData
     return false unless @results
 
     hash = {}
+    ids = []
     @results.each do |entry|
-      id = entry['_id']
-      hash[id] = clean_hash(entry)
+      clean_entry = clean_hash(entry)
+      id = clean_entry[@lookup_key]
+      hash[id] = clean_entry
+      ids << id
     end
 
     @lookup = hash
+    @keys = ids.uniq
     true
   end
 
@@ -80,9 +87,10 @@ class BubbleExtractData
   def repeat_request(cursor)
     @total_calls += 1
     call = request(cursor)
+    return false unless call.success?
+
     body = JSON.parse(call.body)
     raw_data = body['response']['results']
-    return false unless call.success?
     return true if raw_data.length.zero?
 
     @results = @results.concat(raw_data)
