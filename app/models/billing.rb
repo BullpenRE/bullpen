@@ -10,8 +10,11 @@ class Billing < ApplicationRecord
   validates :hours, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
   validates :minutes, allow_nil: true, numericality: { greater_than_or_equal_to: 0, less_than: 60 }
   validate :must_have_some_time_entered, :same_contract_as_timesheet
+  validate :work_done_in_current_week, on: :create , unless: lambda { skip_work_done_in_current_week_validation.present? }
+  validate :work_done_in_timesheet, on: :update, unless: lambda { skip_work_done_in_timesheet_validation.present? }
 
   after_create :attach_to_relevant_timesheet
+  attr_accessor :skip_work_done_in_current_week_validation, :skip_work_done_in_timesheet_validation
 
   def multiplier
     hours.to_i + (minutes.to_i / 60.0)
@@ -24,6 +27,18 @@ class Billing < ApplicationRecord
   end
 
   private
+
+  def work_done_in_current_week
+    if work_done < Date.current.beginning_of_week - 1.day
+      errors.add(:work_done, 'date must be greater than start of week')
+    end
+  end
+
+  def work_done_in_timesheet
+    if work_done < timesheet.starts || work_done > timesheet.ends
+      errors.add(:work_done, 'date must be in current timesheet')
+    end
+  end
 
   def must_have_some_time_entered
     errors.add(:hours, 'no time was entered for the billing entry') unless multiplier > 0.0
