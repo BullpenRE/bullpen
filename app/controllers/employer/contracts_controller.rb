@@ -12,7 +12,7 @@ class Employer::ContractsController < ApplicationController
     redirect_to root_path if @contracts.hire_group.blank?
     return unless session[:review_by_contract].present? || session[:timesheet_id].present?
 
-    check_session_variable
+    check_session_variables
   end
 
   def withdraw_offer
@@ -78,13 +78,13 @@ class Employer::ContractsController < ApplicationController
     employer_interviews_path
   end
 
-  def check_session_variable
+  def check_session_variables
     if session[:timesheet_id].present?
       timesheets = Timesheet.related_to_contracts(@contracts.ids)
       @timesheet = timesheets.find_by(id: session[:timesheet_id])
       @contract = @timesheet.contract
       session.delete(:timesheet_id)
-    else
+    elsif session[:review_by_contract].present?
       @contract = @contracts.find { |c| c.id == session[:review_by_contract].to_i }
       session.delete(:review_by_contract)
     end
