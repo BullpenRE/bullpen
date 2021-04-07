@@ -104,6 +104,12 @@ class Freelancer::ApplicationFlowsController < ApplicationController
     end
   end
 
+  def add_cover_letter
+    return if params[:cover_letter].blank?
+
+    job_application.update(cover_letter: params[:cover_letter])
+  end
+
   private
 
   def draft_flash_notice!

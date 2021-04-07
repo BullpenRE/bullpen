@@ -91,6 +91,9 @@ Rails.application.routes.draw do
     post 'application_flows/:job_app/destroy_work_sample',
          to: 'application_flows#destroy_work_sample',
          as: 'destroy_work_sample'
+    post 'application_flows/:job_app/add_cover_letter',
+         to: 'application_flows#add_cover_letter',
+         as: 'add_cover_letter'
     resources :interviews
     resources :contracts
     resources :profile, only: :index
