@@ -1,6 +1,6 @@
 <p><%= @timesheet.contract.freelancer_profile.full_name %> has updated entries for the <b><%=  @timesheet.contract.title %></b> contract.
 Your payment will be processed on <b><%= @timesheet.pending_payment_date.strftime('%b %e') %></b>. Please review and <a href=<%= public_view_contract_url(timesheet_id: @timesheet.id) %> target='_blank'>submit disputes</a> by <b><%= @timesheet.dispute_deadline %></b></p>
-<p>Total hours: <%= @timesheet.total_hours %></p>
+<p>Total hours: <%= @timesheet.total_hours_display %></p>
 <p>Amount: <%= number_to_currency(@timesheet.total_usd, strip_insignificant_zeros: true) %></p>
 <p><b>Details</b></p>
 <% @timesheet.billings.not_paid.each do |billing| %>
