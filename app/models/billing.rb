@@ -3,7 +3,8 @@
 class Billing < ApplicationRecord
   belongs_to :contract
   belongs_to :timesheet, optional: true
-  enum state: { pending: 0, disputed: 1, paid: 2 }
+  enum state: { 'pending': 0, 'disputed': 1, 'paid': 2 }
+  default_scope { order(work_done: :desc, created_at: :desc) }
   scope :resolved, -> { where(state: 'pending').where.not(dispute_resolved: nil) }
   scope :not_paid, -> { where.not(state: 'paid') }
 

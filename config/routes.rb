@@ -55,6 +55,7 @@ Rails.application.routes.draw do
     resources :account, only: :index
     resource :avatar, only: %i[update destroy]
     resource :profile, only: :update
+    resource :timesheets, only: :update
     resources :contracts
     post 'interview_request', to: 'talent#interview_request'
     post 'like_job_application', to: 'jobs#like_job_application'
@@ -78,6 +79,7 @@ Rails.application.routes.draw do
     get 'request_interview', to: 'freelancer_profile#request_interview'
     get 'turn_off_new_job_alerts', to: 'freelancer_profile#turn_off_new_job_alerts'
     get 'write_a_review', to: 'freelancer_profile#write_a_review'
+    get 'view_contract', to: 'freelancer_profile#view_contract'
   end
 
   namespace :freelancer do

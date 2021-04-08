@@ -108,7 +108,7 @@ class Freelancer::ProfileController < ApplicationController
   end
 
   def certifications
-    @certifications ||= Certification.enabled.pluck(:description, :id)
+    @certifications ||= Certification.enabled.searchable.pluck(:description, :id)
   end
 
   def sectors

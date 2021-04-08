@@ -46,4 +46,10 @@ class EmployerMailer < ApplicationMailer
     employer_email = contract.employer_profile.email
     mail(to: employer_email, subject: "#{contract.freelancer_profile.full_name} closed the #{contract.title} contract.")
   end
+
+  def hours_was_updated(timesheet)
+    @timesheet = timesheet
+    employer_email = timesheet.contract.employer_profile.email
+    mail(to: employer_email, subject: "Review updated hours for week ending #{timesheet.ends} from #{timesheet.contract.freelancer_profile.full_name}.")
+  end
 end
