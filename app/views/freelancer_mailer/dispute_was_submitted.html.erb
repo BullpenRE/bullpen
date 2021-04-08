@@ -1,19 +1,20 @@
-<p><%= @billing.timesheet.contract.employer_profile.full_name %> has submitted a dispute for the <b><%=  @billing.timesheet.contract.title %></b> contract.
+<p><%= @timesheet.contract.employer_profile.full_name %> has submitted a dispute for the <b><%=  @timesheet.contract.title %></b> contract.
 Your payment has been paused until this issue is resolved. </p>
 
-<p>Please review and <a href=<%= public_view_contract_url(timesheet_id: @billing.timesheet.id) %> target='_blank'>update your billing entries.</a>
+<p>Please review and <a href=<%= public_view_contract_url(timesheet_id: @timesheet.id) %> target='_blank'>update your billing entries.</a>
 If the issue can not be resolved, please contact our support team at <%= mail_to('support@bullpenre.com') %></p>
 
-<p><%= @billing.work_done&.strftime("%b %d") %>,
-  <% if @billing.minutes.present? && @billing.hours.present? %>
-    <%= (@billing.hours + @billing.minutes / 60.0).round(2) %> hours:
-  <% elsif @billing.minutes.present? && @billing.hours.nil? %>
-    <%= (@billing.minutes / 60.0).round(2) %> hour:
-  <% else %>
-    <%= @billing.hours %> <%= @billing.hours.present? ? "#{"hour".pluralize(@billing.hours)}" : "" %>:
-  <% end %>
- <%= @billing.description %>
-</p>
-<p><%= @billing.dispute_comments %></p>
+<% @billings.each do |billing| %>
+  <hr>
+  <p><%= billing.work_done&.strftime("%b %d") %>,
+    <% if billing.minutes.nil? %>
+      <%= billing.hours %> <%= "hour".pluralize(billing.hours) %>:
+    <% else %>
+      <%= billing.multiplier.round(2) %> <%= "hour".pluralize(billing.multiplier.round(2).ceil) %>:
+    <% end %>
+   <%= billing.description %>
+  </p>
+  <p><%= billing.dispute_comments %></p>
+<% end %>
 
-<%= render partial: 'email/button', locals: { button_txt: 'View Contract', url: public_view_contract_url(timesheet_id: @billing.timesheet.id) } %>
+<%= render partial: 'email/button', locals: { button_txt: 'View Contract', url: public_view_contract_url(timesheet_id: @timesheet.id) } %>

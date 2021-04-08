@@ -53,6 +53,6 @@ class FreelancerMailerPreview < ActionMailer::Preview
   end
 
   def dispute_was_submitted
-    FreelancerMailer.dispute_was_submitted(Billing.last)
+    FreelancerMailer.dispute_was_submitted(Timesheet.last, Timesheet.last.billings)
   end
 end
