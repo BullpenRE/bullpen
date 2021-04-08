@@ -16,5 +16,4 @@ If the issue can not be resolved, please contact our support team at <%= mail_to
 </p>
 <p><%= @billing.dispute_comments %></p>
 
-
-<%#= render partial: 'email/button', locals: { button_txt: 'View Contract', url: public_view_contract_url(timesheet_id: @billing.timesheet.id) } %>
+<%= render partial: 'email/button', locals: { button_txt: 'View Contract', url: public_view_contract_url(timesheet_id: @billing.timesheet.id) } %>
