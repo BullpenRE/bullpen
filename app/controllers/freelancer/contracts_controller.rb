@@ -5,6 +5,12 @@ class Freelancer::ContractsController < ApplicationController
 
   def index
     @contracts = current_user.freelancer_profile.contracts.hire_group.freelancer_visible.order(:state, created_at: :desc)
+    return unless session[:timesheet_id].present?
+
+    timesheets = Timesheet.related_to_contracts(@contracts.ids)
+    @timesheet = timesheets.find_by(id: session[:timesheet_id])
+    @contract = @timesheet.contract
+    session.delete(:timesheet_id)
   end
 
   def decline_offer

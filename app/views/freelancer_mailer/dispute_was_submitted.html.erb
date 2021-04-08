@@ -1,7 +1,7 @@
 <p><%= @billing.timesheet.contract.employer_profile.full_name %> has submitted a dispute for the <b><%=  @billing.timesheet.contract.title %></b> contract.
 Your payment has been paused until this issue is resolved. </p>
 
-<p>Please review and <a href= target='_blank'>update your billing entries.</a>
+<p>Please review and <a href=<%= public_view_contract_url(timesheet_id: @billing.timesheet.id) %> target='_blank'>update your billing entries.</a>
 If the issue can not be resolved, please contact our support team at <%= mail_to('support@bullpenre.com') %></p>
 
 <p><%= @billing.work_done&.strftime("%b %d") %>,
