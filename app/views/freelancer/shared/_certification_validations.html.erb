@@ -1,0 +1,41 @@
+<script>
+  <% if freelancer_profile && freelancer_profile&.freelancer_certifications&.count > 1 %>
+    $('.modal-footer').addClass('justify-content-between');
+    $('.btn-outline-danger').removeClass('d-none');
+  <% end %>
+
+  $('.submitCertification<%= freelancer_certification&.id %>').on('click', (e) => {
+    debugger
+    if (($("#descriptionCertification-<%= freelancer_certification&.id %>").val() == '' && !$('#editCertificationCustom-<%= freelancer_certification&.id %>').is(':checked')) || ($('#editCertificationCustom-<%= freelancer_certification&.id %>').is(':checked') && $("#customDescriptionCertificate-<%= freelancer_certification&.id %>").val() == '')) {
+      e.preventDefault();
+      $('.error_description').text('Please make a selection');
+      $(".descriptionCertification-<%= freelancer_certification&.id %>").addClass('error');
+      $('.error_custom').text('Enter your custom license');
+      $("#customDescriptionCertificate-<%= freelancer_certification&.id %>").addClass('error');
+      setTimeout(() => {
+        $('.error_description').text('');
+        $(".descriptionCertification-<%= freelancer_certification&.id %>").removeClass('error');
+        $('.error_custom').text('');
+        $("#customDescriptionCertificate-<%= freelancer_certification&.id %>").removeClass('error');
+      }, 3000);
+    }
+    if ($("#earnedMonth-<%= freelancer_certification&.id %>").prop("selectedIndex") === 0) {
+      e.preventDefault();
+      $('.error_month').text('Please make a selection');
+      $(".earnedMonth-<%= freelancer_certification&.id %>").addClass('error');
+      setTimeout(() => {
+        $('.error_month').text('');
+        $(".earnedMonth-<%= freelancer_certification&.id %>").removeClass('error');
+      }, 3000);
+    }
+    if ($("#earnedYear-<%= freelancer_certification&.id %>").prop("selectedIndex") === 0) {
+      e.preventDefault();
+      $('.error_year').text('Please make a selection');
+      $(".earnedYear-<%= freelancer_certification&.id %>").addClass('error');
+      setTimeout(() => {
+        $('.error_year').text('');
+        $(".earnedYear-<%= freelancer_certification&.id %>").removeClass('error');
+      }, 3000);
+    }
+  })
+</script>

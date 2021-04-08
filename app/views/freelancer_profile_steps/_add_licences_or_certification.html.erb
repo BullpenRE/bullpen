@@ -17,26 +17,28 @@
             <div class="form-group mb-2 cy-certification">
               <%= f.select :certification_id,
                            @certifications,
-                           {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select", title: "Select an option..." %>
+                           {}, class: 'form-control selectpicker', id: "descriptionCertification-", 'data-style': "bp-btn-select", title: "Select an option..." %>
             </div>
+            <div class="error_description text-danger mt-1"></div>
           </div>
 
           <div id="customDescriptionCertification" class="collapse multi-collapse">
             <div class="form-group mb-2">
-              <%= f.text_field :description, class: "form-control", id: "customDescriptionCertificate", placeholder: "Custom License Entry" %>
+              <%= f.text_field :description, class: "form-control", id: "customDescriptionCertificate-", placeholder: "Custom License Entry" %>
             </div>
+            <div class="error_custom text-danger mt-1"></div>
           </div>
 
           <div class="custom-control custom-checkbox">
             <%= f.check_box :custom,
                             class: "custom-control-input",
-                            id: "editCertificationCustom", type: "button",
+                            id: "editCertificationCustom-", type: "button",
                             'data-toggle': "collapse",
                             'data-target': ".multi-collapse",
                             'aria-expanded': "false",
                             'aria-controls': "descriptionCertification customDescriptionCertification",
                             checked: "false" %>
-            <label class="custom-control-label" for="editCertificationCustom">Create a custom entry</label>
+            <label class="custom-control-label" for="editCertificationCustom-">Create a custom entry</label>
           </div>
 
 
@@ -47,25 +49,28 @@
                 <%= f.select :earned_month,
                              options_for_select(select_months_array),
                              {}, class: 'form-control selectpicker',
-                             id: 'earnedMonth', required: true, 'data-style': "bp-btn-select", title: "Month" %>
+                             id: 'earnedMonth-', 'data-style': "bp-btn-select", title: "Month" %>
+                <div class="error_month text-danger mt-1"></div>
               </div>
               <div class="col">
                 <%= f.select :earned_year,
                              options_for_select(FreelancerCertification::AVAILABLE_YEARS),
                              {}, class: 'form-control selectpicker',
-                             id: 'earnedYear', required: true, 'data-style': "bp-btn-select", title: "Year" %>
+                             id: 'earnedYear-', 'data-style': "bp-btn-select", title: "Year" %>
+                <div class="error_year text-danger mt-1"></div>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-link px-0 text-dark" data-dismiss="modal">Cancel</button>
-          <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+          <%= f.submit 'Save Changes', class: 'btn btn-primary submitCertification' %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
+<%= render partial: 'freelancer/shared/certification_validations', locals: { freelancer_profile: nil, freelancer_certification: nil } %>
 
 <script>
   $('#selectCertification').on('click', () => {
