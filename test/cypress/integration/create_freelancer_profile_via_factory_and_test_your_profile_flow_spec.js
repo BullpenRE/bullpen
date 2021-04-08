@@ -2,7 +2,7 @@
 
 describe('Create freelancer_profiles.rb via factory and test freelancer your_profile flow', () => {
 
-  it('create job freelancer_profiles.rb via factory and test freelancer your_profile flow', function () {
+  it('create freelancer_profiles.rb via factory and test freelancer your_profile flow', function () {
     // via freelancer_profiles.rb create freelancer_profile
     cy.appFactories([
       ['create', 'freelancer_profile']
