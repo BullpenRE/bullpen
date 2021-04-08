@@ -79,6 +79,7 @@ Rails.application.routes.draw do
     get 'request_interview', to: 'freelancer_profile#request_interview'
     get 'turn_off_new_job_alerts', to: 'freelancer_profile#turn_off_new_job_alerts'
     get 'write_a_review', to: 'freelancer_profile#write_a_review'
+    get 'view_contract', to: 'freelancer_profile#view_contract'
   end
 
   namespace :freelancer do

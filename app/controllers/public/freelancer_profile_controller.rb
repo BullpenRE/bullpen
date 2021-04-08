@@ -26,6 +26,12 @@ class Public::FreelancerProfileController < ApplicationController
     redirect_to employer_contracts_path
   end
 
+  def view_contract
+    session[:timesheet_id] = params[:timesheet_id]
+
+    redirect_to employer_contracts_path
+  end
+
   private
 
   def certifications
