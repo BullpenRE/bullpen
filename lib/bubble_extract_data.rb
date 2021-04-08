@@ -1,22 +1,20 @@
 # frozen_string_literal: true
 
 # Sample Use Instructions
-# > service = BubbleExtractData.new('User')
-# > service.retrieve # (or service.retrieve_all)
-# > service.process
+# > user_service = BubbleExtractData.new('User')
+# > user_service.retrieve_all
+# > user_service.process
 # > bubble_user = service.results.sample
 # > user = User.find_by(email: bubble_user['authentication']['email']['email'])
 # > user.update(id_bubble: bubble_user['_id'])
 #
-# > service = BubbleExtractData.new('User')
-# > service.retrieve
-# > service.process(lookup_key: 'email')
-# > abe_user = User.find_by(email: 'abe@something.com')
-# > abe_bubble_user_data = service.lookup['abe@something.com']
-# > abe_user.update(first_name: abe_bubble_user_data['First Name'], last_name: abe_bubble_user_data['Last Name'])
+# > freelancer_service = BubbleExtractData.new('Freelancer')
+# > freelancer_service.retrieve_all
+# > freelancer_service.process(lookup_key: 'User')
+# >
 
 class BubbleExtractData
-  attr_reader :lookup, :results, :total_calls, :keys
+  attr_reader :lookup, :results, :total_calls, :keys, :lookup_key
 
   def initialize(type)
     return false unless type
@@ -33,11 +31,13 @@ class BubbleExtractData
 
     @total_calls += 1
     call = request(cursor)
+    puts "#{@bubble_table} not found on Bubble" if call.status == 404
     return false unless call.success?
 
     body = JSON.parse(call.body)
     @results = body['response']['results']
 
+    puts 'No results found' unless @results.length.positive?
     @results.length.positive?
   end
 
@@ -46,6 +46,8 @@ class BubbleExtractData
   end
 
   def process(lookup_key: '_id')
+    @lookup_key = lookup_key
+    @lookup = {}
     return false unless @results
 
     hash = {}
@@ -73,6 +75,10 @@ class BubbleExtractData
     end
 
     false
+  end
+
+  def sample
+    lookup[keys.sample]
   end
 
   private

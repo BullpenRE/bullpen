@@ -23,9 +23,10 @@ class User < ApplicationRecord
   belongs_to :signup_promo, optional: true
 
   enum role: { freelancer: 0, employer: 1 }
+  attr_accessor :skip_geocoding
 
   geocoded_by :location
-  after_validation :geocode, if: ->(obj) { obj.location.present? && obj.location_changed? }
+  after_validation :geocode, if: ->(obj) { obj.location.present? && obj.location_changed? && skip_geocoding != true }
 
   def self.ransackable_scopes(_auth_object = nil)
     [:confirmed]
