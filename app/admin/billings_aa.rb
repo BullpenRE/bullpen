@@ -73,5 +73,13 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('bi
         f.actions
       end
     end
+
+    before_create do |billing|
+      billing.skip_work_done_in_current_week_validation = true
+    end
+
+    before_update do |billing|
+      billing.skip_work_done_in_timesheet_validation = true
+    end
   end
 end

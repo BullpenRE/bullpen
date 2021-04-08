@@ -427,6 +427,7 @@ ActiveRecord::Schema.define(version: 2021_05_31_000000) do
     t.date "ends"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "employer_notified_of_freelancer_changes", default: true
     t.index ["contract_id"], name: "index_timesheets_on_contract_id"
   end
 
