@@ -79,6 +79,7 @@ Rails.application.routes.draw do
     get 'request_interview', to: 'freelancer_profile#request_interview'
     get 'turn_off_new_job_alerts', to: 'freelancer_profile#turn_off_new_job_alerts'
     get 'write_a_review', to: 'freelancer_profile#write_a_review'
+    get 'view_contract', to: 'freelancer_profile#view_contract'
   end
 
   namespace :freelancer do
@@ -91,6 +92,9 @@ Rails.application.routes.draw do
     post 'application_flows/:job_app/destroy_work_sample',
          to: 'application_flows#destroy_work_sample',
          as: 'destroy_work_sample'
+    post 'application_flows/:job_app/add_cover_letter',
+         to: 'application_flows#add_cover_letter',
+         as: 'add_cover_letter'
     resources :interviews
     resources :contracts
     resources :profile, only: :index

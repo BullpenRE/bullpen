@@ -25,6 +25,7 @@ class Freelancer::BillingsController < ApplicationController
     else
       billing.update(billings_params)
     end
+    billing.timesheet.update(employer_notified_of_freelancer_changes: false)
 
     true
   end
