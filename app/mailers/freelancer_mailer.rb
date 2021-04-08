@@ -87,4 +87,12 @@ class FreelancerMailer < ApplicationMailer
     freelancer_email = contract.freelancer_profile.email
     mail(to: freelancer_email, subject: "#{contract.employer_profile.full_name} closed the #{contract.title} contract.")
   end
+
+  def dispute_was_submitted(billing)
+    @billing = billing
+    freelancer_email = billing.timesheet.contract.freelancer_profile.email
+    support = 'support@bullpenre.com'
+    mail(to: freelancer_email, cc: support,
+         subject: "A dispute has been submitted by #{billing.timesheet.contract.employer_profile.full_name}.")
+  end
 end
