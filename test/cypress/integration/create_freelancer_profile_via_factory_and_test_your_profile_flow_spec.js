@@ -30,6 +30,13 @@ describe('Create freelancer_profiles.rb via factory and test freelancer your_pro
       .should('exist')
       .click()
 
+    // try to upload avatar
+    const bestFixtureFile = 'icons8_trash_can_48.png'
+
+    cy.get('input#uploadProfilePic')
+      .should('exist')
+      .attachFile(bestFixtureFile, { force: true })
+
     // try to amend last name in opened module 'Personal Information'
     cy.get('#lastName')
       .should('exist')
