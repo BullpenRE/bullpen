@@ -17,6 +17,7 @@ class EmployerProfile < ApplicationRecord
                                 reject_if: :all_blank
 
   scope :users, -> { joins(:user) }
+  scope :user_enabled, -> { joins(:user).where(user: { disable: false }) }
 
   enum employee_count: { '1-10': 0, '11-50': 1, '51-100': 2, '101+': 3 }
   enum category: {
