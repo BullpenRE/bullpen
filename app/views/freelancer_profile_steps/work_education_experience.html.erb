@@ -34,7 +34,7 @@
                 </div>
               </div>
             </div>
-            <%= render 'edit_work_experience', { freelancer_profile_experience: work_exp, freelancer_profile: freelancer_profile } %>
+            <%= render 'edit_work_experience', { freelancer_profile_experience: work_exp, freelancer_profile: @freelancer_profile } %>
             <button class="btn btn-link" type="button" data-toggle="modal" data-target="#editWorkExperienceModal-<%= work_exp.id %>"><i class="fas fa-pencil-alt" style="font-size: 24px"></i></button>
           </div>
         <% end %>

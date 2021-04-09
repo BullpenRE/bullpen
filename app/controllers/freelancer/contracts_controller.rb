@@ -7,10 +7,7 @@ class Freelancer::ContractsController < ApplicationController
     @contracts = current_user.freelancer_profile.contracts.hire_group.freelancer_visible.order(:state, created_at: :desc)
     return unless session[:timesheet_id].present?
 
-    timesheets = Timesheet.related_to_contracts(@contracts.ids)
-    @timesheet = timesheets.find_by(id: session[:timesheet_id])
-    @contract = @timesheet.contract
-    session.delete(:timesheet_id)
+    check_session_variable
   end
 
   def decline_offer
@@ -40,5 +37,14 @@ class Freelancer::ContractsController < ApplicationController
 
   def contract
     @contract ||= current_user.freelancer_profile.contracts.find_by(id: params[:id])
+  end
+
+  def check_session_variable
+    timesheets = Timesheet.related_to_contracts(@contracts.ids)
+    return session.delete(:timesheet_id) if timesheets.blank?
+
+    @timesheet = timesheets.find_by(id: session[:timesheet_id])
+    @contract = @timesheet&.contract
+    session.delete(:timesheet_id)
   end
 end

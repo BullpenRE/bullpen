@@ -81,6 +81,8 @@ class Employer::ContractsController < ApplicationController
   def check_session_variables
     if session[:timesheet_id].present?
       timesheets = Timesheet.related_to_contracts(@contracts.ids)
+      return session.delete(:timesheet_id) if timesheets.blank?
+
       @timesheet = timesheets.find_by(id: session[:timesheet_id])
       @contract = @timesheet.contract
       session.delete(:timesheet_id)
