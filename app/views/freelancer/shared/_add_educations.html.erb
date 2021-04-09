@@ -10,7 +10,7 @@
       </div>
       <%= form_for :freelancer_profile_education, url: freelancer_change_educations_path do |f| %>
         <%= render partial: 'freelancer/shared/form_educations', locals: {freelancer_profile_education: nil, f: f,
-                                                                          modal_id: (freelancer_profile.freelancer_profile_educations.size + 1)} %>
+                                                                          modal_id: (@freelancer_profile&.freelancer_profile_educations&.size.to_i + 1)} %>
       <% end %>
     </div>
   </div>

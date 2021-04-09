@@ -89,7 +89,7 @@
         <%= link_to 'Update Bank Information', '#', class: 'btn btn-outline-primary go-stripe-dashboard' %>
     <% else %>
         <div class="mb-2">Please add a bank account to receive payouts.</div>
-        <%= link_to 'Add a Bank Account', stripe_button_link, class: 'btn btn-outline-primary', target: '_blank' %>
+        <%= link_to 'Add a Bank Account', freelancer_ba_link, class: 'btn btn-outline-primary', target: '_blank' %>
     <% end %>
   </div>
 </div>
@@ -153,7 +153,7 @@
       e.stopPropagation();
 
       $.ajax({
-        url: '<%= stripe_dashboard_path %>',
+        url: '<%= freelancer_stripe_dashboard_path %>',
         method: 'GET',
         dataType: 'json',
         success: function(data) {
