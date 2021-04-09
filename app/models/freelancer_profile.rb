@@ -30,6 +30,7 @@ class FreelancerProfile < ApplicationRecord
 
   scope :searchable, -> { where(searchable: true) }
   scope :ready_for_announcement, -> { where(curation: 'accepted', new_jobs_alert: true) }
+  scope :user_enabled, -> { joins(:user).where(user: { disable: false }) }
 
   def ready_for_submission?
     draft? && pending?
@@ -42,6 +43,10 @@ class FreelancerProfile < ApplicationRecord
 
   def first_name
     @first_name ||= user.first_name
+  end
+
+  def disable
+    @disable = user.disable
   end
 
   def last_name

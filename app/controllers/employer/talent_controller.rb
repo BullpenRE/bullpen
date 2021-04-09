@@ -10,7 +10,7 @@ class Employer::TalentController < ApplicationController
 
   def index
     filters_list unless invalid_filtering_parameters?
-    @pagy, @freelancer_profiles = pagy(freelancer_profiles_collection,
+    @pagy, @freelancer_profiles = pagy(freelancer_profiles_collection.user_enabled,
                                        page: page,
                                        items: ITEMS_PER_PAGE,
                                        overflow: :last_page)
