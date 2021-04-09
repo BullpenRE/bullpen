@@ -151,6 +151,8 @@ ActiveRecord::Schema.define(version: 2021_05_31_000000) do
     t.string "current_step"
     t.boolean "completed", default: false
     t.string "id_bubble"
+    t.string "stripe_id_account"
+    t.string "stripe_id_customer"
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
@@ -367,7 +369,7 @@ ActiveRecord::Schema.define(version: 2021_05_31_000000) do
     t.string "bank_name"
     t.string "bank_routing_number"
     t.string "bank_status"
-    t.boolean "default", default: true
+    t.boolean "is_default", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["employer_profile_id"], name: "index_payment_accounts_on_employer_profile_id"

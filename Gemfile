@@ -27,6 +27,7 @@ gem 'puma', '~> 4.1'                        # Use Puma as the app server
 gem 'rails', '~> 6.1', '>= 6.1.1'           # If you're not sure what this is for then you're in the wrong place ;)
 gem 'redis', '~> 4.2', '>= 4.2.5'           # Service used for running Action Cable on heroku
 gem 'sass-rails', '>= 6'                    # Use SCSS for stylesheets
+gem 'stripe-rails', '2.3.0'                 # Stripe library provides convenient access to the Stripe API
 gem 'sidekiq', '~> 6.1', '>= 6.1.3'         # Simple, efficient background processing for Ruby.
 gem 'stripe', '~> 5.29.1'                   # Stripe library provides convenient access to the Stripe API
 gem 'table_print', '~> 1.5', '>= 1.5.7'     # Allows viewing of data in console in nice ways, including table joins: http://tableprintgem.com/ (video)
@@ -60,10 +61,10 @@ end
 
 group :test do
   # Gems in this group do not require version numbers
-  gem 'database_cleaner'                                # Cleans the database data between tests
-  gem 'rails-controller-testing'                        # This gem brings back assigns to your controller tests as well as assert_template to both controller and integration tests.
-  gem 'shoulda-matchers'                                # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
-  gem 'stripe-ruby-mock', '~> 3.0.1'
+  gem 'database_cleaner'                                     # Cleans the database data between tests
+  gem 'rails-controller-testing'                             # This gem brings back assigns to your controller tests as well as assert_template to both controller and integration tests.
+  gem 'stripe-ruby-mock', '~> 3.0.1', require: 'stripe_mock' # Mock and customize stripe webhooks, test against stripe errors
+  gem 'shoulda-matchers'                                     # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
   gem 'webmock', require: false
 end
 

@@ -5,6 +5,10 @@ class Freelancer::ContractsController < ApplicationController
 
   def index
     @contracts = current_user.freelancer_profile.contracts.hire_group.freelancer_visible.order(:state, created_at: :desc)
+    return unless session[:timesheet_id].present?
+
+    check_session_variable
+    redirect_to freelancer_jobs_path if @contract.blank?
   end
 
   def decline_offer
@@ -34,5 +38,12 @@ class Freelancer::ContractsController < ApplicationController
 
   def contract
     @contract ||= current_user.freelancer_profile.contracts.find_by(id: params[:id])
+  end
+
+  def check_session_variable
+    timesheets = Timesheet.related_to_contracts(@contracts.ids)
+    @timesheet = timesheets&.find_by(id: session[:timesheet_id])
+    @contract = @timesheet&.contract
+    session.delete(:timesheet_id)
   end
 end
