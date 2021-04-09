@@ -24,11 +24,13 @@ class BubbleExtractData
     @bubble_table = type
     @total_calls = 0
     @keys = []
+    @retrieved = false
   end
 
   def retrieve(cursor = 0)
     return false unless @bubble_table
 
+    @retrieved = true
     @total_calls += 1
     call = request(cursor)
     puts "#{@bubble_table} not found on Bubble" if call.status == 404
@@ -81,6 +83,10 @@ class BubbleExtractData
     lookup[keys.sample]
   end
 
+  def retrieved?
+    @retrieved
+  end
+
   private
 
   def client
@@ -110,7 +116,7 @@ class BubbleExtractData
     @results = @results.concat(raw_data)
     remaining = body['response']['remaining']
 
-    return repeat_request(cursor + 100) if remaining
+    repeat_request(cursor + 100) if remaining
   end
 
   # flattens nested hashes and removes keys that include "discontinued"

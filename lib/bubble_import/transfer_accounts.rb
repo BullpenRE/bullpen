@@ -18,21 +18,32 @@ module BubbleImport
     end
 
     def create_new_bubble_users!
+      @user_service.retrieve_all unless @user_service.retrieved?
       @user_service.process(lookup_key: 'email')
       return false if missing_user_account_emails.empty?
 
-      created_users_count = 0
+      created_users = {}
       missing_user_account_emails.each do |email|
         next unless @user_service.lookup[email].present?
 
-        User.create(new_user_param(@user_service.lookup[email]))
-        created_users_count += 1
+        user = User.create(new_user_param(@user_service.lookup[email]))
+        created_users[email] = user.id
       end
+      update_user_service_results_with_ids(created_users)
 
-      puts "################## Created #{created_users_count} new users ##################"
+      puts "################## Created #{created_users.size} new users ##################"
     end
 
     private
+
+    def update_user_service_results_with_ids(new_user_ids)
+      @user_service.results.each do |result|
+        user_id = new_user_ids[result['authentication']['email']['email']]
+        next unless user_id
+
+        result['user_id'] = user_id
+      end
+    end
 
     def missing_user_account_emails
       @missing_user_account_emails ||= @user_service.keys - User.pluck(:email)
