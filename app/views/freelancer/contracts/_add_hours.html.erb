@@ -1,0 +1,109 @@
+<div class="modal" id="addHours<%= modal_id %>" role="dialog" aria-labelledby="modelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <!--  Header with '×'-->
+      <div class="modal-header">
+        <h1 class="modal-title" id="showSendMessageLabel"><%= billing.present? ? 'Edit Billing Hours' : 'Add Billing Hours' %></h1>
+        <button type="button" class="close close-job" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Send Message Card-->
+      <div class="modal-body py-0">
+        <%= form_for :billing, url: freelancer_update_hours_path do |f| %>
+          <%= f.hidden_field :contract_id, value: contract_id %>
+          <%= f.hidden_field :billing_id, value: billing&.id %>
+          <div class="form-group mb-3">
+            <div class="row mb-3">
+              <div class="col-sm-4">
+                <label class="h5"> Date </label>
+                <div class="work_done">
+                  <%= f.text_field :work_done, class: 'flatpickr', placeholder: "#{Date.current.strftime("%A, %b %d")}", id: "work_done#{modal_id}", value: (billing&.work_done || Date.current) %>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <label class="h5"> Hours </label>
+                <%= f.number_field :hours, class: "form-control", min: 0, step: 1, id: "hours#{modal_id}", value: billing&.hours %>
+              </div>
+              <div class="col-sm-4">
+                <label class="h5"> Minutes </label>
+                <%= f.number_field :minutes, class: "form-control", in: 0..59, step: 1, id: "minutes#{modal_id}", value: billing&.minutes %>
+              </div>
+              <div class="d-flex justify-content-between flex-column flex-md-row">
+                <div class="error-work-done text-danger mt-1 mr-3 ml-2"></div>
+                <div class="error-time text-danger mt-1 ml-2"></div>
+              </div>
+            </div>
+            <label class="h5 mt-2"> Enter a brief description of the task performed. </label>
+            <div class="w-100">
+              <%= f.text_field :description, class: "form-control mb-2", placeholder: "Enter the time entry description", value: billing&.description %>
+            </div>
+            <% if billing.present? %>
+              <div class="d-flex pt-3 justify-content-between mt-2">
+              <%= link_to 'Remove', freelancer_billing_path(id: billing&.id, contract_id: contract_id), method: :delete, class: "btn btn-outline-danger mr-2" %>
+              <%= f.submit 'Save Changes', class: "btn btn-primary add-hours#{modal_id}" %>
+            </div>
+            <% else %>
+              <div class="d-flex pt-3 justify-content-end mt-2">
+              <%= f.submit 'Add Hours', class: "btn btn-primary add-hours#{modal_id}" %>
+            </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.add-hours<%= modal_id %>').on('click', (e) => {
+    const hours = $('#hours<%= modal_id %>').val();
+    const minutes = $('#minutes<%= modal_id %>').val();
+    const work_done = Date.parse($('#work_done<%= modal_id %>').val());
+    const week_before = Date.parse("<%= Date.current.beginning_of_week - 1.day %>");
+
+    if ((hours == '' && minutes == '') || (parseInt(minutes, 10) == 0 && hours == '') ||
+      (!(parseInt(hours, 10) > 0 || parseInt(minutes, 10) > 0)) || (parseInt(hours, 10) == 0 && minutes == '')) {
+      e.preventDefault();
+      $('.error-time').text('No time was entered for the billing entry');
+      $("#hours<%= modal_id %>").addClass('error');
+      $("#minutes<%= modal_id %>").addClass('error');
+      setTimeout(() => {
+        $('.error-time').text('');
+        $("#hours<%= modal_id %>").removeClass('error');
+        $("#minutes<%= modal_id %>").removeClass('error');
+      }, 3000);
+    }
+    <% if billing.present? %>
+      const end = Date.parse("<%= billing.timesheet.ends %>");
+      const start = Date.parse("<%= billing.timesheet.starts %>");
+
+      if (work_done < start || work_done > end) {
+        e.preventDefault();
+        $('.error-work-done').text('Date must be in current timesheet');
+        $(".work_done").addClass('is-invalid');
+        setTimeout(() => {
+          $('.error-work-done').text('');
+          $(".work_done").removeClass('is-invalid');
+        }, 3000);
+      }
+    <% else %>
+      if (work_done < week_before) {
+        e.preventDefault();
+        $('.error-work-done').text('Date must be greater than start of week');
+        $(".work_done").addClass('is-invalid');
+        setTimeout(() => {
+          $('.error-work-done').text('');
+          $(".work_done").removeClass('is-invalid');
+        }, 3000);
+      }
+    <% end %>
+  });
+</script>
+
+<style>
+  .is-invalid {
+    border:1px solid red !important;
+    border-radius: 3px;
+  }
+</style>

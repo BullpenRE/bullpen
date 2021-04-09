@@ -20,11 +20,12 @@
         <div class="col-md">
           <div class="form-group mb-4">
             <label for="professionalTitleInput" class="h5">Professional Title</label>
-            <%= f.text_field :professional_title, class: "form-control", id: "professionalTitleInput", placeholder: "e.g. Senior Analyst", required: true %>
+            <%= f.text_field :professional_title, class: "form-control", id: "professionalTitleInput", placeholder: "e.g. Senior Analyst" %>
+            <div class="error_title text-danger mb-1"></div>
           </div>
         </div>
         <div class="col-md">
-          <div class="form-group mb-4">
+          <div class="form-group mb-4 yearsExperienceSelect">
             <label for="yearsExperienceSelect" class="h5">Years of professional experience</label>
             <div class="w-100">
               <%= f.select :professional_years_experience,
@@ -32,19 +33,53 @@
                            html_options = { class: "form-control selectpicker", 'data-style': "bp-btn-select",
                                             selected: @freelancer_profile.professional_years_experience,
                                             style: "display:block !important",
-                                            title: "Please make a selection", required: true } %>
+                                            title: "Please make a selection" } %>
+              <div class="error_years text-danger mb-1"></div>
             </div>
           </div>
         </div>
       </div>
       <div class="form-group mb-5">
         <label for="professionalSummaryTextarea" class="h5">Professional Summary</label>
-        <%= f.text_area :professional_summary, class: "form-control", id: "professionalSummaryTextarea", placeholder: "Describe your experience in a short elevator pitch",rows: "3", maxlength: "1000", required: true %>
+        <%= f.text_area :professional_summary, class: "form-control", id: "professionalSummaryTextarea", placeholder: "Describe your experience in a short elevator pitch",rows: "3", maxlength: "1000" %>
+        <div class="error_summary text-danger mb-1"></div>
       </div>
       <div class="d-flex justify-content-between">
         <%= link_to 'Back', previous_wizard_path, class: "btn btn-link px-0" %>
-        <%= f.submit 'Next', class: 'btn btn-primary' %>
+        <%= f.submit 'Next', class: 'btn btn-primary submitProfessionalHistory' %>
       </div>
     <% end %>
   </div>
 </div>
+
+<script>
+  $('.submitProfessionalHistory').on('click', (e) => {
+    if ($('#professionalTitleInput').val().trim().length == 0) {
+      e.preventDefault();
+      $('.error_title').text('Please enter your title');
+      $("#professionalTitleInput").addClass('error');
+      setTimeout(() => {
+        $('.error_title').text('');
+        $("#professionalTitleInput").removeClass('error');
+      }, 3000);
+    }
+    if ($("#freelancer_profile_professional_years_experience").prop("selectedIndex") === 0) {
+      e.preventDefault();
+      $('.error_years').text('Please make a selection');
+      $(".yearsExperienceSelect").addClass('error');
+      setTimeout(() => {
+        $('.error_years').text('');
+        $(".yearsExperienceSelect").removeClass('error');
+      }, 3000);
+    }
+    if ($('#professionalSummaryTextarea').val().trim().length == 0) {
+      e.preventDefault();
+      $('.error_summary').text('Please enter your professional summary');
+      $("#professionalSummaryTextarea").addClass('error');
+      setTimeout(() => {
+        $('.error_summary').text('');
+        $("#professionalSummaryTextarea").removeClass('error');
+      }, 3000);
+    }
+  })
+</script>

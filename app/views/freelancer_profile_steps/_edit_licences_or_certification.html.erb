@@ -17,19 +17,21 @@
             <div class="form-group mb-2">
               <%= f.select :certification_id,
                            options_for_select(@certifications, [freelancer_certification.description, freelancer_certification.certification_id]),
-                           {}, class: 'form-control selectpicker', 'data-style': "bp-btn-select", title: "Select an option..." %>
+                           {}, class: 'form-control selectpicker', id: "descriptionCertification-#{freelancer_certification&.id}", 'data-style': "bp-btn-select", title: "Select an option..." %>
             </div>
+            <div class="error_description text-danger mt-1"></div>
           </div>
           <div id="customDescriptionCertification" class="collapse multi-collapse <%= freelancer_certification.certification.custom? ? 'show' : '' %>">
             <div class="form-group mb-2">
               <%= f.text_field :description, class: "form-control", id: "customDescriptionCertificate-#{freelancer_certification.id}", placeholder: "Custom License Entry", value: freelancer_certification.description %>
             </div>
+            <div class="error_custom text-danger mt-1"></div>
           </div>
 
           <div class="custom-control custom-checkbox">
             <%= f.check_box :custom,
                             class: "custom-control-input #{freelancer_certification.certification.custom? ? 'show' : ''}",
-                            id: "editCertificationCustom-#{freelancer_certification.id}", type: "button",
+                            id: "editCertificationCustom-#{freelancer_certification&.id}", type: "button",
                             'data-toggle': "collapse",
                             'data-target': ".multi-collapse",
                             'aria-expanded': "false",
@@ -45,13 +47,15 @@
                 <%= f.select :earned_month,
                              options_for_select(select_months_array, freelancer_certification&.earned&.month),
                              {}, class: 'form-control selectpicker',
-                             id: 'earnedMonth', required: true, 'data-style': "bp-btn-select", title: "Month" %>
+                             id: "earnedMonth-#{freelancer_certification&.id}", 'data-style': "bp-btn-select", title: "Month" %>
+                <div class="error_month text-danger mt-1"></div>
               </div>
               <div class="col">
                 <%= f.select :earned_year,
                              options_for_select(FreelancerCertification::AVAILABLE_YEARS, freelancer_certification&.earned&.year),
                              {}, class: 'form-control selectpicker',
-                             id: 'earnedYear', required: true, 'data-style': "bp-btn-select", title: "Year" %>
+                             id: "earnedYear-#{freelancer_certification&.id}", 'data-style': "bp-btn-select", title: "Year" %>
+                <div class="error_year text-danger mt-1"></div>
               </div>
             </div>
             <%= f.hidden_field :id, value: freelancer_certification.id %>
@@ -59,20 +63,17 @@
         </div>
         <div class="modal-footer">
           <%= f.submit 'Delete', class: "btn btn-outline-danger mr-2 d-none" %>
-          <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
+          <%= f.submit 'Save Changes', class: "btn btn-primary submitCertification#{freelancer_certification&.id}" %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
+<%= render partial: 'freelancer/shared/certification_validations', locals: { freelancer_profile: @freelancer_profile, freelancer_certification: freelancer_certification } %>
 
 <script>
   $('#editSelectCertification-' + <%= freelancer_certification.id %>).on('click', () => {
     $('#customDescriptionCertificate-' + <%= freelancer_certification.id %>).val('');
   })
-  <% if @freelancer_profile.freelancer_certifications.count > 1 %>
-    $('.modal-footer').addClass('justify-content-between');
-    $('.btn-outline-danger').removeClass('d-none');
-  <% end %>
 </script>
 

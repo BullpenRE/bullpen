@@ -20,6 +20,17 @@ require("packs/filter_talent")
 require("packs/time_zone")
 require("packs/format_currency")
 
+require("flatpickr")
+import flatpickr from "flatpickr";
+document.addEventListener("turbolinks:load", () => {
+    $('[data-tooltip-display="true"]').tooltip(),
+    flatpickr("[class='flatpickr']", {
+      altInput: true,
+      altFormat: "l, M j",
+      dateFormat: "Y-m-d",
+    })
+})
+
 import 'src/stylesheets/application'
 const images = require.context('../images', true)
 

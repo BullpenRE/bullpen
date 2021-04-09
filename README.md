@@ -162,6 +162,23 @@ Our [staging server](https://bullpen-staging.herokuapp.com) is currently set to 
 
 3. Run `$ git push bullpen-staging master` to deploy master. Before doing this you may need to switch Heroku's deploy from Github to Heroku Git [here](https://dashboard.heroku.com/apps/bullpen-staging/deploy/github).
 
+### Testing on a mobile device or Windows machine locally
+
+To test a mobile device or separate computer on your local development environment you'll need it to be
+connected to the same WiFi network as your development machine.
+
+1. Start the rails server on your development machine using this command: `$ rails s -b 0.0.0.0`
+2. On your development machine run the following in terminal to determine your computer's IP address on the 
+   shared WiFi network: `$ ifconfig`
+3. Look for a line that starts with `inet`. It should look something like:
+   
+        inet 192.168.1.27 netmask 0xffffff00 broadcast 192.168.1.255
+
+4. The first numbers separated by dots after `inet` should be your computer's IP address on your WiFi network. 
+5. Enter the IP address into your phone or windows machine browser followed by the Rails server port. It should be something like `http://192.168.1.27:3000`
+
+NOTE: Some Stripe integrations will not work properly on these test devices.
+
 ### Cypress integration tests
 
 1. Install Cypress:
