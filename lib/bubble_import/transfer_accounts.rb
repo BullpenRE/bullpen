@@ -2,57 +2,45 @@
 
 # How to use:
 # > transfer = BubbleImport::TransferAccounts.new
-# > transfer.fetch_all_users
-# > transfer.fetch_all_freelancer_profiles
+# > transfer.user_service.retrieve_all
+# > transfer.freelancer_service.retrieve_all
+# > transfer.company_service.retrieve_all
 # > transfer.create_new_bubble_users!
 
 module BubbleImport
   class TransferAccounts
-    attr_accessor :user_service, :freelancer_service
+    attr_accessor :user_service, :freelancer_service, :company_service
 
     def initialize
       @user_service = BubbleExtractData.new('User')
       @freelancer_service = BubbleExtractData.new('Freelancer')
+      @company_service = BubbleExtractData.new('Company')
     end
 
-    def fetch_all_users
-      @user_service.retrieve_all
+    def create_new_bubble_users!
+      @user_service.process(lookup_key: 'email')
+      return false if missing_user_account_emails.empty?
+
+      created_users_count = 0
+      missing_user_account_emails.each do |email|
+        next unless @user_service.lookup[email].present?
+
+        User.create(new_user_param(@user_service.lookup[email]))
+        created_users_count += 1
+      end
+
+      puts "################## Created #{created_users_count} new users ##################"
     end
 
-    def fetch_all_freelancer_profiles
-      @freelancer_service.retrieve_all
-    end
+    private
 
     def missing_user_account_emails
       @missing_user_account_emails ||= @user_service.keys - User.pluck(:email)
     end
 
-    def create_new_bubble_users!
-      @user_service.process(lookup_key: 'email')
-      @freelancer_service.process(lookup_key: 'User')
-      return false if missing_user_account_emails.empty?
-
-      bulk_create = []
-
-      missing_user_account_emails.each do |email|
-        bubble_user = @user_service.lookup[email]
-        next unless bubble_user.present?
-
-        bubble_freelancer = @freelancer_service.lookup[bubble_user['_id']]
-        next unless bubble_freelancer.present?
-
-        new_user = User.create(new_user_param(email, bubble_user, bubble_freelancer))
-        bulk_create << new_user
-      end
-
-      puts "Created #{bulk_create.length} new users"
-    end
-
-    private
-
-    def new_user_param(email, bubble_user, bubble_freelancer)
+    def new_user_param(bubble_user)
       {
-        email: email,
+        email: bubble_user['email'],
         password: Devise.friendly_token.first(6),
         first_name: bubble_user['First Name'],
         last_name: bubble_user['Last Name'],
@@ -60,11 +48,11 @@ module BubbleImport
         role: bubble_user['is_freelancer?'] ? 'freelancer' : 'employer',
         # disable: bubble_user['Is Active?'] == false,
         confirmed_at: Time.current,
-        location: bubble_freelancer['address'],
-        longitude: bubble_freelancer['lat'],
-        latitude: bubble_freelancer['lng'],
-        skip_geocoding: bubble_freelancer['lat'].present? && bubble_freelancer['lng'].present?,
-        phone_number: bubble_freelancer['Phone Number']
+        location: bubble_user['address'],
+        longitude: bubble_user['lat'],
+        latitude: bubble_user['lng'],
+        skip_geocoding: bubble_user['lat'].present? && bubble_user['lng'].present?,
+        phone_number: bubble_user['Phone Number']
       }
     end
   end
