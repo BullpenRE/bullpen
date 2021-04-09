@@ -8,6 +8,7 @@ class Freelancer::ContractsController < ApplicationController
     return unless session[:timesheet_id].present?
 
     check_session_variable
+    redirect_to freelancer_jobs_path if @contract.blank?
   end
 
   def decline_offer
@@ -41,9 +42,7 @@ class Freelancer::ContractsController < ApplicationController
 
   def check_session_variable
     timesheets = Timesheet.related_to_contracts(@contracts.ids)
-    return session.delete(:timesheet_id) if timesheets.blank?
-
-    @timesheet = timesheets.find_by(id: session[:timesheet_id])
+    @timesheet = timesheets&.find_by(id: session[:timesheet_id])
     @contract = @timesheet&.contract
     session.delete(:timesheet_id)
   end
