@@ -8,24 +8,15 @@ describe('To get /employer/talent page with job + job_questions created via fact
       ['create', 'job_question']
 
     ])
-    // login as just created employer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaEmpl@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    // try to login as just created employer
+    cy.gui_login('tetyanaEmpl@gmail.com')
+
     // try click tab 'Your Jobs' on navbar to get /employer/jobs
     cy.get(':nth-child(4) > .nav-link')
       .should('exist')
       .click()
 
     // try to test menu 'Options'
-
     // try get dropdown-item 'Show Job Post'
     cy.get('button#dropdownMenu.btn.btn-outline-primary.dropdown-toggle.container-fluid')
       .should('exist').click({force: true})
@@ -34,7 +25,9 @@ describe('To get /employer/talent page with job + job_questions created via fact
       .should('exist')
       .find('button.dropdown-item')
       .eq(0)
-      .should('exist').click()
+      .should('exist')
+      .click()
+
     // try to close opened module 'Job Post'
     cy.get('div.modal-dialog.modal-lg')
       .get('div.modal-content')
@@ -52,7 +45,9 @@ describe('To get /employer/talent page with job + job_questions created via fact
       .should('exist')
       .find('a.dropdown-item')
       .eq(0)
-      .should('exist').click()
+      .should('exist')
+      .click()
+
     // try to close opened module 'Post a Job'
     cy.get('div.modal-dialog.modal-lg')
       .get('div.modal-content')
@@ -70,10 +65,13 @@ describe('To get /employer/talent page with job + job_questions created via fact
       .should('exist')
       .find('button.dropdown-item')
       .eq(1)
-      .should('exist').click()
+      .should('exist')
+      .click()
+
     // try to cancel sweet-alert 'Delete Job'
     cy.get('.swal2-cancel')
-      .should('exist').click()
+      .should('exist')
+      .click()
 
   })
 })

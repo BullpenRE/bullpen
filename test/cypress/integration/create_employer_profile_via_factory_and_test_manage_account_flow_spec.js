@@ -9,16 +9,7 @@ describe('Create employer_profile via factory employer_profile.rb and test manag
 
     ])
     // try to login as just created employer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaEmpl@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    cy.gui_login('tetyanaEmpl@gmail.com')
 
     // try to click dropdown menu item 'Manage Account' inside user profile menu on navbar
     cy.get('#manage-account')
@@ -94,7 +85,6 @@ describe('Create employer_profile via factory employer_profile.rb and test manag
       .eq(1)
       .should('exist')
       .click()
-
 
   })
 })

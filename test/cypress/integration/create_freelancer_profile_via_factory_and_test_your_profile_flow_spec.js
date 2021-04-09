@@ -8,17 +8,8 @@ describe('Create freelancer_profiles.rb via factory and test freelancer your_pro
       ['create', 'freelancer_profile']
 
     ])
-    // login as just created freelancer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaFree@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    // try to login as just created freelancer
+    cy.gui_login('tetyanaFree@gmail.com')
 
     // try to click button 'Your Profile' on navbar
     cy.get(':nth-child(2) > .nav-link')
@@ -48,6 +39,12 @@ describe('Create freelancer_profiles.rb via factory and test freelancer your_pro
       .should('exist')
       .clear()
       .type('San Francisco, CA')
+
+    // try to amend 'Professional Summary'
+    cy.get('#professionalSummaryTextarea')
+      .should('exist')
+      .clear()
+      .type('Cy New Professional Summary')
 
     // try to amend 'Desired Hourly Rate' in opened module 'Personal Information'
     cy.get('#perHourBid')
@@ -141,7 +138,7 @@ describe('Create freelancer_profiles.rb via factory and test freelancer your_pro
 
     // try to to edit data in chapter 'Education'
     cy.get('[data-target^="#editEducationModal"]')
-      .first()
+      .eq(0)
       .should('exist')
       .wait(2000)
       .get('[data-target^="#editEducationModal"]')
@@ -149,7 +146,7 @@ describe('Create freelancer_profiles.rb via factory and test freelancer your_pro
 
     // try to amend institution
     cy.get('[id^="institutionInput"]')
-      .first()
+      .eq(0)
       .clear({force: true})
       .type('Cy New University', {force: true})
 
@@ -171,6 +168,12 @@ describe('Create freelancer_profiles.rb via factory and test freelancer your_pro
       .should('exist')
       .select('1990', {force: true})
 
+    // try to amend 'Description'
+    cy.get('[name="freelancer_profile_education[description]"]')
+      .eq(0)
+      .clear()
+      .type('Cy New education description')
+
     // try to click button 'Save Changes'
     cy.get('[id^="submitEducationInput"')
       .eq(0)
@@ -179,7 +182,7 @@ describe('Create freelancer_profiles.rb via factory and test freelancer your_pro
 
     // try to to edit data in chapter 'Licenses & Certifications'
     cy.get('[data-target^="#editLicenseCertificationModal"]')
-      .first()
+      .eq(0)
       .should('exist')
       // .wait(2000)
       // .get('[data-target^="#editLicenseCertificationModal"]')

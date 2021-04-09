@@ -8,17 +8,8 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       ['create', 'interview_request']
 
     ])
-    // login as just created employer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaEmpl@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    // try to login as just created employer
+    cy.gui_login('tetyanaEmpl@gmail.com')
 
     // try to click button 'Interview' on navbar
     cy.get(':nth-child(4) > .nav-link')
@@ -48,7 +39,8 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .should('exist')
       .find('button.dropdown-item')
       .eq(0)
-      .should('exist').click()
+      .should('exist')
+      .click()
 
     // try to clean opened text-area and type new text
     cy.get('#addPersonalMessageTextArea').clear()
@@ -67,31 +59,19 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .should('exist')
       .find('button.dropdown-item')
       .eq(1)
-      .should('exist').click()
+      .should('exist')
+      .click()
 
     // try to cancel request withdrawal
     cy.get('[id^=withdrawRequest] > .modal-dialog > .modal-content > .modal-footer > .btn-link')
       .should('exist')
       .click({force: true} )
 
-    // try log out as employer
-    cy.get('#navbarDropdown > .d-none')
-      .should('exist').click()
-      .get('div.dropdown-menu.dropdown-menu-right')
-      .find('a.dropdown-item').eq(1)
-      .click()
+    // try to log out as employer
+    cy.gui_logout()
 
-    // try login as above created freelancer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaFree@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    // try to login as above created freelancer
+    cy.gui_login('tetyanaFree@gmail.com')
 
     // try to click button 'Interview' on navbar
     cy.get(':nth-child(2) > .nav-link')
@@ -143,28 +123,16 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .click()
 
     // try to log out as freelancer
-    cy.get('#navbarDropdown > .d-none')
-      .should('exist').click()
-      .get('div.dropdown-menu.dropdown-menu-right')
-      .find('a.dropdown-item').eq(1)
-      .click()
+    cy.gui_logout()
 
     // try to login as employer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaEmpl@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    cy.gui_login('tetyanaEmpl@gmail.com')
 
     // try to click button 'Interviews' on navbar
     cy.get(':nth-child(4) > .nav-link')
       .should('exist')
       .click()
+
     // try to click button 'More'
     // try get dropdown-item 'Show Profile'
     cy.get('button#dropdownMenu.btn.btn-outline-primary.dropdown-toggle.pr-1.w-100')
@@ -193,7 +161,8 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .should('exist')
       .find('button.dropdown-item')
       .eq(1)
-      .should('exist').click()
+      .should('exist')
+      .click()
 
     // try to complete form 'Make an Offer' - job Title
     cy.get('[id^=JobTitleInput]')
@@ -230,7 +199,8 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .should('exist')
       .find('button.dropdown-item')
       .eq(0)
-      .should('exist').click()
+      .should('exist')
+      .click()
 
     // try to close opened module 'Offer Details' via '×'
     cy.get('[id^=showOfferContractDetails]')
@@ -252,7 +222,8 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .should('exist')
       .find('button.dropdown-item')
       .eq(1)
-      .should('exist').click()
+      .should('exist')
+      .click()
 
     //try to modify 'Hourly Rate'
     cy.get('#make_an_offer_pay_rate')
@@ -262,7 +233,8 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
 
     // try to click button 'Save Changes'
     cy.get('[id^=makeAnOffer] > .modal-dialog > .modal-content > .modal-body > form > .form-group > .d-flex > .btn')
-      .should('exist').click()
+      .should('exist')
+      .click()
 
     // try to click dropdown item 'Withdraw Offer'
     cy.get('button#dropdownMenu.btn.btn-outline-primary.dropdown-toggle.container-fluid')
@@ -273,12 +245,12 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .should('exist')
       .find('button.dropdown-item')
       .eq(2)
-      .should('exist').click()
+      .should('exist')
+      .click()
 
     // try to cancel offer withdrawal
     cy.get('.modal-content > .modal-footer > .btn-link')
       .should('exist').click()
-
 
   })
 })

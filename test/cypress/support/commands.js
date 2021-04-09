@@ -60,3 +60,25 @@ Cypress.Commands.add("login", (email) => {
         email: email
     })
 })
+
+Cypress.Commands.add("gui_login", (email) => {
+    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
+
+    cy.get('#user_email')
+      .should('exist')
+      .type(email)
+    cy.get('#user_password')
+      .should('exist')
+      .type('q1234567!Q')
+    cy.get('.actions > .btn')
+      .should('exist')
+      .click()
+})
+
+Cypress.Commands.add("gui_logout", () => {
+    cy.get('[rel="nofollow"]')
+      .should('exist')
+      .wait(2000)
+      .get('[rel="nofollow"]')
+      .click({force: true})
+})

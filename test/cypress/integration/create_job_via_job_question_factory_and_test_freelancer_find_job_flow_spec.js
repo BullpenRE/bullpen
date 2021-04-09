@@ -9,17 +9,8 @@ describe('Create job via factory job_questions.rb, freelancer via factory freela
       ['create', 'freelancer_profile']
 
     ])
-    // login as just created freelancer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaFree@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    // try to login as just created freelancer
+    cy.gui_login('tetyanaFree@gmail.com')
 
    // try to click button 'Show Details'
     cy.get(':nth-child(2) > .btn')
@@ -43,7 +34,7 @@ describe('Create job via factory job_questions.rb, freelancer via factory freela
 
     // try to check radio-button 'Yes' under 'Are you available from 9AM-5PM PST?'
     cy.get('input[name="job_application[available_during_work_hours]"]')
-      .first()
+      .eq(0)
       .check({force: true})
 
     // try to answer employer's question

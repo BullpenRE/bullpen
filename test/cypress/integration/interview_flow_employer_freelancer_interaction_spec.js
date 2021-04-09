@@ -9,17 +9,9 @@ describe('Interview flow: employer - freelancer interaction', () => {
       ['create', 'freelancer_profile']
 
     ])
-    // login as just created employer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaEmpl@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    // try to login as just created employer
+    cy.gui_login('tetyanaEmpl@gmail.com')
+
     // 'Find Talent' tab on //employer/talent has to be reached
 
     // try to click button 'Request Interview' on /employer/talent tab
@@ -34,24 +26,11 @@ describe('Interview flow: employer - freelancer interaction', () => {
       .should('exist')
       .click()
 
-    // try log out as employer
-    cy.get('#navbarDropdown > .d-none')
-      .should('exist').click()
-      .get('div.dropdown-menu.dropdown-menu-right')
-      .find('a.dropdown-item').eq(1)
-      .click()
+    // try to log out as employer
+    cy.gui_logout()
 
-    // try login as above created freelancer
-    // cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaFree@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    // try to login as above created freelancer
+    cy.gui_login('tetyanaFree@gmail.com')
 
     // try to click button 'Interview' on navbar
     cy.get(':nth-child(2) > .nav-link')
@@ -78,11 +57,10 @@ describe('Interview flow: employer - freelancer interaction', () => {
       .should('exist')
       .click()
 
-    // try cancel removement of accepted request
+    // try cancel removing of accepted request
     cy.get('[id^=removeInterviewRequest] > .modal-dialog > .modal-content > .modal-footer > .btn-link')
       .should('exist')
       .click()
-
 
     // try to click button 'Send Message'
     cy.get('.mr-sm-2 > .btn')
@@ -100,23 +78,10 @@ describe('Interview flow: employer - freelancer interaction', () => {
       .click()
 
     // try to log out as freelancer
-    cy.get('#navbarDropdown > .d-none')
-      .should('exist').click()
-      .get('div.dropdown-menu.dropdown-menu-right')
-      .find('a.dropdown-item').eq(1)
-      .click()
+    cy.gui_logout()
 
     // try to login as employer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaEmpl@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    cy.gui_login('tetyanaEmpl@gmail.com')
 
     // try to click button 'Interviews' on navbar
     cy.get(':nth-child(5) > .nav-link')

@@ -8,28 +8,20 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       ['create', 'employer_profile', {completed: 'true'}]
 
     ])
-    // login as just created employer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaEmpl@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    // try to login as just created employer
+    cy.gui_login('tetyanaEmpl@gmail.com')
 
     // try to click button 'Post job' on navbar to start create to job
     cy.get('.navbar-nav > :nth-child(1) > .btn').click({force: true})
+
     //try to start create the job
     cy.get('input#jobTitle').type('Test job cy')
 
     cy.get('#jobShortDescription').type('Short Job Description cy')
 
-      cy.get('.select2-search__field', { includeShadowDom: true})
-      cy.get('#sectorMultiselect.select2.select2-hidden-accessible', { includeShadowDom: true}).first()
-        .select('HTC', {force: true})
+    cy.get('.select2-search__field', { includeShadowDom: true})
+    cy.get('#sectorMultiselect.select2.select2-hidden-accessible', { includeShadowDom: true}).first()
+      .select('HTC', {force: true})
 
     cy.get('.pt-3 > .btn-primary').click()
 
@@ -65,7 +57,6 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .wait(2000)
       .get('.pt-3 > .btn-primary')
       .should('exist')
-      // .click({ force: true })
       .click()
 
     cy.get('#applicantQuestions1').type('Cy Question_1')
@@ -76,21 +67,23 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .get('[name="job[job_questions][description_4]"]').type('Cy Question_4')
       .get('.pt-3 > div > .btn-primary').click()
 
-// being at 'Preview Job Post' module click button 'Save as Draft'
+    // being at 'Preview Job Post' module click button 'Save as Draft'
     cy.get('form > .btn-outline-primary')
       .should('exist')
       .click()
 
-// try to test menu 'More'
+    // try to test menu 'More'
     // try get dropdown-item 'Show Job Post'
-   cy.get('button#dropdownMenu.btn.btn-outline-primary.dropdown-toggle.container-fluid')
+    cy.get('button#dropdownMenu.btn.btn-outline-primary.dropdown-toggle.container-fluid')
      .should('exist').click({force: true})
      .get('div.dropdown-menu.dropdown-menu-right')
      .eq(1)
      .should('exist')
      .find('button.dropdown-item')
      .eq(0)
-     .should('exist').click()
+     .should('exist')
+      .click()
+
     // try to close opened module 'Job Post' via 'x'
     cy.get('div.modal-dialog.modal-lg')
       .get('div.modal-content')
@@ -108,7 +101,9 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .should('exist')
       .find('a.dropdown-item')
       .eq(0)
-      .should('exist').click()
+      .should('exist')
+      .click()
+
     // try to close opened module 'Post a Job' via 'x'
     cy.get('div.modal-dialog.modal-lg')
       .get('div.modal-content')
@@ -126,12 +121,15 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .should('exist')
       .find('button.dropdown-item')
       .eq(1)
-      .should('exist').click()
+      .should('exist')
+      .click()
+
     // try to cancel sweet-alert 'Delete Job'
     cy.get('.swal2-cancel')
-      .should('exist').click()
+      .should('exist')
+      .click()
 
-// post job
+    // try to post job
     cy.get('[id^=post-job-]', { includeShadowDom: true})
       .should('exist')
       .wait(2000)

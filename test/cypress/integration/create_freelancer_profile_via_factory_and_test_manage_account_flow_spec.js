@@ -8,17 +8,8 @@ describe('Create freelancer_profiles.rb via factory and test freelancer manage a
       ['create', 'freelancer_profile']
 
     ])
-    // login as just created freelancer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaFree@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    //  try to login as just created freelancer
+    cy.gui_login('tetyanaFree@gmail.com')
 
     // try to click dropdown menu item 'Manage Account' inside user profile menu on navbar
     cy.get('#manage-account')

@@ -8,17 +8,8 @@ describe('Create job_application via factory and test freelancer-employer job_ap
       ['create', 'job_application']
 
     ])
-    // login as just created freelancer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaFree@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    // try to login as just created freelancer
+    cy.gui_login('tetyanaFree@gmail.com')
 
     // try to click button 'applications' on navbar
     cy.get(':nth-child(2) > .nav-link')
@@ -68,22 +59,10 @@ describe('Create job_application via factory and test freelancer-employer job_ap
       .click({force: true})
 
     // try to log out as freelancer
-    cy.get('[rel="nofollow"]')
-      .should('exist')
-      .wait(2000)
-      .get('[rel="nofollow"]')
-      .click({force: true})
+    cy.gui_logout()
 
     // try to login as employer
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaEmpl@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    cy.gui_login('tetyanaEmpl@gmail.com')
 
     // try to click button 'Your Jobs' on navbar
     cy.get(':nth-child(4) > .nav-link')
@@ -127,22 +106,10 @@ describe('Create job_application via factory and test freelancer-employer job_ap
       .click()
 
     // try to log out as employer
-    cy.get('[rel="nofollow"]')
-      .should('exist')
-      .wait(2000)
-      .get('[rel="nofollow"]')
-      .click({force: true})
+    cy.gui_logout()
 
     // try to login as freelancer
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaFree@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    cy.gui_login('tetyanaFree@gmail.com')
 
     // try to click button 'Contracts' on navbar
     cy.get(':nth-child(3) > .nav-link')
@@ -164,7 +131,6 @@ describe('Create job_application via factory and test freelancer-employer job_ap
     cy.get('.d-block > .btn')
       .should('exist')
       .click({force: true})
-
 
   })
 })

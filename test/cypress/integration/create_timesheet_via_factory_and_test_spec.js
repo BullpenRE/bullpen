@@ -9,16 +9,7 @@ describe('Create timesheet via factory timesheet.rb and test timesheet flow', ()
 
     ])
     // try to login as just created freelancer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaFree@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    cy.gui_login('tetyanaFree@gmail.com')
 
     // try to click button 'Contracts' on navbar
     cy.get(':nth-child(2) > .nav-link')
@@ -32,6 +23,7 @@ describe('Create timesheet via factory timesheet.rb and test timesheet flow', ()
     // try to click button 'Add Hours'
     cy.get('.d-block > .btn')
       .should('exist')
+      .wait(2000)
       .get('.d-block > .btn')
       .click()
 

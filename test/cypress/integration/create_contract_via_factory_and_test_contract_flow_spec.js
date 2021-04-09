@@ -8,17 +8,9 @@ describe('Create contract via factory contracts.rb and test contract flow', () =
       ['create', 'contract']
 
     ])
-    // login as just created employer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaEmpl@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    // try to login as just created employer
+    cy.gui_login('tetyanaEmpl@gmail.com');
+
     // try click tab 'Your Jobs' on navbar to get /employer/jobs
     cy.get(':nth-child(4) > .nav-link')
       .should('exist')
@@ -111,24 +103,11 @@ describe('Create contract via factory contracts.rb and test contract flow', () =
       .should('exist')
       .click({force: true})
 
-    // try log out as employer
-    cy.get('#navbarDropdown > .d-none')
-      .should('exist').click()
-      .get('div.dropdown-menu.dropdown-menu-right')
-      .find('a.dropdown-item').eq(1)
-      .click()
+    // try to log out as employer
+    cy.gui_logout()
 
     // try login as above created freelancer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaFree@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
+    cy.gui_login('tetyanaFree@gmail.com')
 
     // try to click button 'Contracts' on navbar
     cy.get(':nth-child(2) > .nav-link')

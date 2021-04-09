@@ -9,18 +9,10 @@ describe('To get /employer/talent page via factories employer_profile.rb & freel
       ['create', 'freelancer_profile']
 
     ])
-    //login as just created employer
-    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
-    cy.get('#user_email')
-      .should('exist')
-      .type('tetyanaEmpl@gmail.com')
-    cy.get('#user_password')
-      .should('exist')
-      .type('q1234567!Q')
-    cy.get('.actions > .btn')
-      .should('exist')
-      .click()
-    // 'Find Talent' tab on //employer/talent has to be reached
+    //try to login as just created employer
+    cy.gui_login('tetyanaEmpl@gmail.com')
+
+    // 'Find Talent' tab on /employer/talent has to be reached
 
     // try to click button 'Show Profile' on /employer/talent
     cy.get('.d-sm-flex > :nth-child(2) > .btn')
@@ -37,8 +29,8 @@ describe('To get /employer/talent page via factories employer_profile.rb & freel
       })
 
     // try to click button 'Request Interview' on /employer/talent tab
-    // cy.get('#interview-request-466')
-    cy.get('[id^=interview-request-]').click()
+    cy.get('[id^=interview-request-]')
+      .click()
 
     // try to clear default interview request text in text-area and add your own text to this text-area
     cy.get('#addPersonalMessageTextArea').clear()
@@ -97,10 +89,13 @@ describe('To get /employer/talent page via factories employer_profile.rb & freel
       .should('exist')
       .find('button.dropdown-item')
       .eq(0)
-      .should('exist').click()
+      .should('exist')
+      .click()
+
       // try to clear default interview request text-area and add your own text to this text-area
     cy.get('[id^=interviewRequest]> .modal-dialog > .modal-content > .modal-body > form > .form-group > .w-100 > #addPersonalMessageTextArea').clear()
       .type('Cy modified(!!!) text for interview request for TetyanaFree from TetyanaEmpl!')
+
     // try to click button 'Modify Invitation'
     cy.get('[id^=interviewRequest] > .modal-dialog > .modal-content > .modal-body > form > .form-group > .d-flex > .btn')
       .should('exist')
@@ -114,8 +109,10 @@ describe('To get /employer/talent page via factories employer_profile.rb & freel
       .should('exist')
       .find('button.dropdown-item')
       .eq(1)
-      .should('exist').click()
-    // try to cancel sweet-alert 'DWithdraw Request'
+      .should('exist')
+      .click()
+
+    // try to cancel sweet-alert 'Withdraw Request'
     cy.get('[id^=withdrawRequest] > .modal-dialog > .modal-content > .modal-footer > .btn-link')
       .should('exist').click()
 
