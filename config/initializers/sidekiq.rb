@@ -1,5 +1,4 @@
 require 'sidekiq/web'
-Sidekiq::Web.set :sessions, false
 
 # Default is to retry 25 times with exponential backoff. That's too much.
 Sidekiq.default_worker_options = { retry: 3 }
