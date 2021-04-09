@@ -220,6 +220,7 @@ ActiveRecord::Schema.define(version: 2021_05_31_000000) do
     t.boolean "searchable", default: true
     t.integer "payout_percentage", default: 70
     t.string "stripe_id_account"
+    t.string "id_bubble"
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
