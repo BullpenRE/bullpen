@@ -6,7 +6,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('pa
 
     filter :employer_profile_user_email, as: :string, label: 'Employer Email'
     filter :stripe_object, as: :select, collection: -> { PaymentAccount.stripe_objects }, label: 'Account Type'
-    filter :default, label: 'Default Payment Account', as: :check_boxes, collection: [['Yes', true]]
+    filter :is_default, label: 'Default Payment Account', as: :check_boxes, collection: [['Yes', true]]
 
     permit_params :employer_profile_id, :stripe_object, :id_stripe, :last_four, :fingerprint, :card_brand,
                   :card_expires, :card_cvc_check, :bank_name, :bank_routing_number, :bank_status, :default
@@ -23,7 +23,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('pa
       column 'Status' do |payment_account|
         payment_account.status
       end
-      column :default
+      column :is_default
 
       actions
     end
@@ -53,7 +53,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('pa
           row :bank_routing_number
           row :bank_status
         end
-        row :default
+        row :is_default
         row :created_at
         row :updated_at
         row 'Contracts' do
@@ -65,7 +65,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('pa
 
     form do |f|
       f.inputs 'Employer Payment Account' do
-        f.input :default
+        f.input :is_default
         f.input :employer_profile,
                 as: :select, input_html: { class: "select2" },
                 collection: EmployerProfile.all.map{|profile| [profile.email, profile.id]}

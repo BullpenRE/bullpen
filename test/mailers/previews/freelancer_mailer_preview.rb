@@ -51,4 +51,8 @@ class FreelancerMailerPreview < ActionMailer::Preview
   def contract_was_closed
     FreelancerMailer.contract_was_closed(Contract.last)
   end
+
+  def dispute_was_submitted
+    FreelancerMailer.dispute_was_submitted(Timesheet.last, Timesheet.last.billings)
+  end
 end
