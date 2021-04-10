@@ -6,6 +6,7 @@ class Employer::JobsController < ApplicationController
   before_action :save_view_job_in_session, only: [:index], if: -> { params[:view_job].present? && !user_signed_in? }
   before_action :authenticate_user!, :initial_check, :non_employer_redirect,
                 :incomplete_employer_profile_redirect, :confirm_employer_account_flash_notice
+  before_action :fetch_current_job
   ITEMS_PER_PAGE = 10
 
   def index
@@ -83,11 +84,14 @@ class Employer::JobsController < ApplicationController
   end
 
   def create_contract
-    @job = current_user.employer_profile.jobs.find_by(id: params[:make_an_offer][:job_id])
     @contract = current_user.employer_profile.contracts.create(make_an_offer_params.merge(state: 'pending')
                                                                                    .merge(pay_rate))
     close_job_if_offer_is_made
     mixpanel_job_tracker('Create Contract')
+  end
+
+  def fetch_current_job
+    @job = current_user.employer_profile.jobs.find_by(id: params[:make_an_offer][:job_id])
   end
 
   def contract
