@@ -165,4 +165,20 @@
   document.addEventListener("trix-file-accept", event => {
     event.preventDefault();
   });
+
+  $("#coverLetter").blur(function(){
+      const job_app = '<%= job_application.id %>';
+      const formData = new FormData();
+      formData.append('job_app', job_app);
+      formData.append('cover_letter', $("#coverLetter").val());
+      formData.append('id', 'application_step_2');
+      $.ajax({
+          url: `/freelancer/application_flows/${job_app}/add_cover_letter`,
+          method: 'POST',
+          processData: false,
+          contentType: false,
+          dataType: 'script',
+          data: formData
+      })
+  });
 </script>

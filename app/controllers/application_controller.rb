@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
 
   before_action :store_location
+  STRIPE_ERROR = 'There was a problem connecting with Stripe. If this persists please contact our support at '\
+                    '<a href="mailto:support@bullpenre.com?subject=Problem connecting to '\
+                    'Stripe">support@bullpenre.com</a>'
 
   def after_sign_in_path_for(resource)
     return admin_dashboard_path if resource.class.name == 'AdminUser'

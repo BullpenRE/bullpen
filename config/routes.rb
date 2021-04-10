@@ -17,8 +17,6 @@ Rails.application.routes.draw do
   get '/employer_talent_style', to: 'style#employer_talent'
   get '/login_style', to: 'style#login'
   get '/employer_jobs_style', to: 'style#employer_jobs'
-  get '/stripe/connect', to: 'stripe#connect', as: :stripe_connect
-  get '/stripe/dashboard', to: 'stripe#dashboard', as: :stripe_dashboard
 
   get '/join', to: 'join#index'
   post '/join/signup', to: 'join#signup'
@@ -52,7 +50,7 @@ Rails.application.routes.draw do
     resources :billing
     resources :refer
     resources :talent
-    resources :account, only: :index
+    resources :account, only: %i[index update destroy]
     resource :avatar, only: %i[update destroy]
     resource :profile, only: :update
     resource :timesheets, only: :update
@@ -70,6 +68,8 @@ Rails.application.routes.draw do
     post 'find_job', to: 'contracts#find_job'
     post 'close_contract', to: 'contracts#close_contract'
     post 'delete_contract', to: 'contracts#delete_contract'
+    post '/stripe/create_card', to: 'stripe#create_card', as: :create_card
+    post '/stripe/create_account', to: 'stripe#create_account', as: :create_account
   end
 
   namespace :public do
@@ -92,12 +92,17 @@ Rails.application.routes.draw do
     post 'application_flows/:job_app/destroy_work_sample',
          to: 'application_flows#destroy_work_sample',
          as: 'destroy_work_sample'
+    post 'application_flows/:job_app/add_cover_letter',
+         to: 'application_flows#add_cover_letter',
+         as: 'add_cover_letter'
     resources :interviews
     resources :contracts
     resources :profile, only: :index
     resources :account, only: :index
     resources :billings, only: :destroy
     get '/account/stripe_data_lookup', to: 'account#stripe_data_lookup', as: :stripe_data_lookup
+    get '/stripe/connect', to: 'stripe#connect', as: :stripe_connect
+    get '/stripe/dashboard', to: 'stripe#dashboard', as: :stripe_dashboard
 
     resource :avatar, only: %i[update destroy]
     post 'set_withdrawn', to: 'applications#set_withdrawn'

@@ -14,6 +14,8 @@ module LoggedInRedirects
   end
 
   def non_employer_redirect
+    return redirect_to freelancer_contracts_path if session[:timesheet_id].present? && current_user.freelancer?
+
     redirect_to freelancer_current_path if current_user.freelancer?
   end
 

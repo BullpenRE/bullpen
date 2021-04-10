@@ -160,7 +160,7 @@
 
             <% contract.timesheets.each do |timesheet| %>
               <% if timesheet.billings.not_paid.present? %>
-                <div class="d-flex w-100 mt-4"> <!--hide this div if no current entries-->
+                <div class="d-flex w-100 mt-4 title-<%= timesheet.id %>"> <!--hide this div if no current entries-->
                   <h5 class="mr-auto mb-0 align-self-center"><%= timesheet.title(false) %></h5>
                   <div class="d-flex flex-column flex-sm-row text-right">
                     <h5 class="mb-0"><%= timesheet.total_hours_display %> <%= "hour".pluralize(timesheet.total_hours_display.ceil) %></h5>
@@ -237,4 +237,15 @@
       </div>
     <% end %>
   </div>
+<% end %>
+<% if @contract.present? %>
+  <script>
+    const contract = '<%= @contract.id %>';
+    const timesheet = '<%= @timesheet.id %>';
+    $('html,body').animate({scrollTop: $('.card' + contract).offset().top},'slow');
+    if (contract && timesheet) {
+      $('.more-less<%= @contract.id %>')[0].click();
+      $('html,body').animate({scrollTop: $('.title-<%= @timesheet.id %>').offset().top},'slow');
+    }
+  </script>
 <% end %>
