@@ -10,7 +10,7 @@ class Freelancer::ApplicationsController < ApplicationController
                                                 .job_applications
                                                 .draft_or_applied.order(created_at: :desc),
                                     items: ITEMS_PER_PAGE, overflow: :last_page)
-    mixpanel_freelancer_application_tracker('Apply a Job')
+    mixpanel_freelancer_application_tracker('Show all freelancer application')
   end
 
   def destroy

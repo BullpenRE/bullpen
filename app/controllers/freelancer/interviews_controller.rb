@@ -43,6 +43,8 @@ class Freelancer::InterviewsController < ApplicationController
   def remove_interview_request
     @interview_request = current_user.freelancer_profile.interview_requests.find_by(id: params[:id])
     @interview_request.update(hide_from_freelancer: true)
+
+    mixpanel_freelancer_interview_tracker('Remove interview')
   end
 
   def send_message

@@ -87,6 +87,7 @@ class Employer::JobFlowsController < ApplicationController
     if params[:button] == 'draft'
       job.update(state: 'draft')
       flash_when_saved_as_draft
+      mixpanel_save_draft_job
       redirect_to employer_jobs_path
     elsif params[:button] == 'posted'
       redirect_to employer_jobs_path
@@ -183,6 +184,11 @@ class Employer::JobFlowsController < ApplicationController
                                                                       'job': job.id,
                                                                       'job state': job.state,
                                                                       'step': params[:job][:step] })
+  end
+
+  def mixpanel_save_draft_job
+    MixpanelWorker.perform_async(current_user.id, 'Create draft job', { 'user': current_user.email,
+                                                                        'job': job.id })
   end
 
   def flash_when_saved_as_draft

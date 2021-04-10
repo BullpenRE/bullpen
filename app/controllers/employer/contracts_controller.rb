@@ -19,6 +19,8 @@ class Employer::ContractsController < ApplicationController
   def withdraw_offer
     contract.update(state: 'withdrawn')
     FreelancerMailer.offer_was_withdrawn(contract).deliver_later
+
+    mixpanel_employer_contract_tracker('Withdraw offer')
   end
 
   def make_an_offer_without_job
@@ -32,6 +34,7 @@ class Employer::ContractsController < ApplicationController
     FreelancerMailer.offer_made(@contract).deliver_later
     create_make_an_offer_flash_notice
 
+    mixpanel_employer_contract_tracker('Create contract')
     redirect_to redirect_path_after_make_an_offer
   end
 
@@ -52,10 +55,14 @@ class Employer::ContractsController < ApplicationController
   def close_contract
     contract.update(state: 'closed')
     FreelancerMailer.contract_was_closed(contract).deliver_later
+
+    mixpanel_employer_contract_tracker('Close contract')
   end
 
   def delete_contract
     contract.update(hide_from_employer: true)
+
+    mixpanel_employer_contract_tracker('Delete contract')
   end
 
   private
@@ -89,5 +96,9 @@ class Employer::ContractsController < ApplicationController
       @contract = @contracts.find { |c| c.id == session[:review_by_contract].to_i }
       session.delete(:review_by_contract)
     end
+  end
+
+  def mixpanel_employer_contract_tracker(action)
+    MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email })
   end
 end

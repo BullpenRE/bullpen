@@ -207,7 +207,7 @@ class Freelancer::ApplicationFlowsController < ApplicationController
   end
 
   def mixpanel_freelancer_application_flow_tracker
-    MixpanelWorker.perform_async(current_user.id, 'Apply a Job', { 'user': current_user.email,
+    MixpanelWorker.perform_async(current_user.id, 'Submit application', { 'user': current_user.email,
                                                                    'job': job_application.job,
                                                                    'step': step })
   end
