@@ -124,6 +124,14 @@ RSpec.describe Job, type: :model do
     let!(:jim_job_application) { FactoryBot.create(:job_application, state: 'draft', job: job, freelancer_profile: jim) }
     let!(:jim_job_application_withdrawn) { FactoryBot.create(:job_application, state: 'withdrawn', job: job1, freelancer_profile: jim) }
     let!(:jane_attractive_job_application) { FactoryBot.create(:job_application, state: 'draft', job: attractive_job, freelancer_profile: jane) }
+    let!(:user_disabled) { FactoryBot.create(:user, disable: true) }
+    let!(:employer_profile_disabled) { FactoryBot.create(:employer_profile, user: user_disabled) }
+    let!(:job_with_disabled_employer) { FactoryBot.create(:job, employer_profile: employer_profile_disabled) }
+
+    it '.employer_enabled' do
+      expect(Job.employer_enabled).to include(job)
+      expect(Job.employer_enabled).not_to include(job_with_disabled_employer)
+    end
 
     it '.not_applied_or_withdrawn' do
       expect(Job.not_applied_or_withdrawn(jim)).to include(attractive_job)

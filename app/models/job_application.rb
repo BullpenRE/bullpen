@@ -23,7 +23,7 @@ class JobApplication < ApplicationRecord
     joins('LEFT OUTER JOIN contracts ON contracts.job_id = job_applications.job_id '\
           'AND contracts.freelancer_profile_id = job_applications.freelancer_profile_id').where('contracts.id IS NULL')
   }
-  scope :user_enabled, -> { where(freelancer_profile_id: FreelancerProfile.user_enabled.ids) }
+  scope :freelancer_enabled, -> { where(freelancer_profile_id: FreelancerProfile.user_enabled.ids) }
   enum state: { 'draft': 0, 'applied': 1, 'withdrawn': 2, 'declined': 3 }
 
   after_save :update_other_user_job_application_templates
