@@ -105,6 +105,7 @@ class BubbleExtractData
   def repeat_request(cursor)
     return false unless @bubble_table
 
+    @retrieved = true
     @total_calls += 1
     call = request(cursor)
     return false unless call.success?
