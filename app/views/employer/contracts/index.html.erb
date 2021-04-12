@@ -242,11 +242,11 @@
 <% if @contract.present? %>
   <script>
     const contract = '<%= @contract.id %>';
-    const timesheet = '<%= @timesheet.id %>';
+    const timesheet = '<%= @timesheet&.id %>';
     $('html,body').animate({scrollTop: $('.card' + contract).offset().top},'slow');
     if (contract && timesheet) {
       $('.more-less<%= @contract.id %>')[0].click();
-      $('html,body').animate({scrollTop: $('.title-<%= @timesheet.id %>').offset().top},'slow');
+      $('html,body').animate({scrollTop: $('.title-<%= @timesheet&.id %>').offset().top},'slow');
     } else if (contract) {
       $('.review_button<%= @contract.id %>')[0].click();
     }
