@@ -9,8 +9,6 @@ class ApplicationMailer < ActionMailer::Base
   private
 
   def prevent_delivery_to_disabled_user
-    return unless @user.disable?
-
-    mail.perform_deliveries = false
+    mail.perform_deliveries = false if @user.disable?
   end
 end
