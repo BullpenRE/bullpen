@@ -8,6 +8,7 @@
         </button>
       </div>
       <%= form_with url: employer_create_account_path, method: :post, id: 'bank-form' do |f| %>
+        <%= hidden_field_tag :redirect_reference, value: redirect_reference %>
         <div class="modal-body">
           <div class="form-errors text-danger mb-1"></div>
           <div class="form-group">

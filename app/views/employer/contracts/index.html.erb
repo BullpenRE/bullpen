@@ -6,7 +6,7 @@
   <div class="container mb-4">
     <h1>Offers <i class="far fa-question-circle text-primary"></i></h1>
     <% @contracts.offers.each do |contract| %>
-      <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job: nil, freelancer_profile: contract.freelancer_profile, modal_id: contract.id } %>
+      <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job: nil, freelancer_profile: contract.freelancer_profile, modal_id: contract.id, redirect_reference: 'contracts' } %>
       <%= render partial: 'employer/contracts/withdraw_offer', locals: { contract: contract } %>
       <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
       <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user, job_title: contract.title, id: contract.id, redirect_reference: 'contract' } %>
@@ -29,7 +29,7 @@
                 <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showOfferContractDetails<%= contract.id %>">
                   Show Offer Details
                 </button>
-                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
+                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>" id="makeAnOfferButton<%= contract.id %>">
                   Modify Offer
                 </button>
                 <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#withdrawOffer<%= contract.id %>">
@@ -73,7 +73,7 @@
     <h1>Contracts <i class="far fa-question-circle text-primary"></i></h1>
     <% @contracts.active.each do |contract| %>
       <%= render partial: 'employer/reviews/review', locals: { freelancer_profile: contract.freelancer_profile, employer_profile: contract.employer_profile, review: contract.freelancer_profile.review_from(contract.employer_profile), redirect_reference: 'contracts' } %>
-      <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job: nil, freelancer_profile: contract.freelancer_profile, modal_id: contract.id } %>
+      <%= render partial: 'employer/jobs/make_an_offer', locals: { contract: contract, job: nil, freelancer_profile: contract.freelancer_profile, modal_id: contract.id, redirect_reference: 'contracts' } %>
       <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: contract.freelancer_profile } %>
       <%= render partial: 'employer/jobs/send_message', locals: { to_user: contract.freelancer_profile.user, job_title: contract.title, id: contract.id, redirect_reference: 'contract' } %>
       <%= render partial: 'shared/contracts/show_offer_contract_details', locals: { contract: contract } %>
@@ -100,14 +100,14 @@
                   Show Contract Details
                 </button>
                 <% if contract.closed? %>
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
+                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>" id="makeAnOfferButton<%= contract.id %>">
                     Reopen Contract
                   </button>
                   <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#deleteContract<%= contract.id %>">
                     Delete Contract
                   </button>
                 <% else %>
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
+                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>" id="makeAnOfferButton<%= contract.id %>">
                     Edit Contract
                   </button>
                   <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#closeContract<%= contract.id %>">
@@ -131,7 +131,7 @@
                                                                             redirect_reference: 'contracts'} %>
           <div class="d-flex flex-column flex-md-row mt-3 mt-md-0">
             <div class="mb-2 mb-md-0 mr-md-2">
-              <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#makeAnOfferWithoutJob<%= contract.freelancer_profile.id %>">Offer Another Job</button>
+              <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#makeAnOfferWithoutJobButton<%= contract.freelancer_profile.id %>" id="makeAnOfferWithoutJob<%= contract.freelancer_profile.id %>">Offer Another Job</button>
             </div>
             <div class="dropdown ">
               <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -238,6 +238,7 @@
     <% end %>
   </div>
 <% end %>
+<div id="payment_method"></div>
 
 <% if @contract.present? %>
   <script>
@@ -251,4 +252,16 @@
       $('.review_button<%= @contract.id %>')[0].click();
     }
   </script>
+<% end %>
+<% if session[:make_an_offer_modal].present? %>
+  <script>
+    const modal_id = '<%= session[:make_an_offer_modal] %>';
+    if ($('#makeAnOfferButton' + modal_id)[0] == undefined) {
+    	$('#makeAnOfferWithoutJobButton' + modal_id)[0].click();
+		} else {
+    	$('#makeAnOfferButton' + modal_id)[0].click();
+    }
+
+  </script>
+  <% session.delete(:make_an_offer_modal) %>
 <% end %>

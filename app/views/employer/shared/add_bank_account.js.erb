@@ -1,0 +1,4 @@
+$('.modal-backdrop').hide();
+$('.modal').hide();
+$("#payment_method").html("<%= escape_javascript(render partial: 'employer/shared/add_bank_account_modal', locals: { redirect_reference: redirect_reference }) %>");
+$('#addBankAccountModal').modal('show');

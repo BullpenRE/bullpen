@@ -46,7 +46,10 @@
               <div class="bp-text-sm mb-4">Your payment method will be charged weekly based on the number of hours worked.</div>
               <h5>Payment Method</h5>
               <div class="mb-4">
-                <button class="btn btn-primary" type="button">Add a Credit Card</button>
+                <%= render partial: 'employer/shared/choose_payment_account', locals: { contract: nil, f: f,
+                                                                                        employer_profile: current_user.employer_profile,
+                                                                                        modal_id: "#{freelancer_profile&.id}",
+                                                                                        redirect_reference: redirect_reference } %>
               </div>
               <div class="form-check custom-checkbox mt-1 d-none job-closed<%= freelancer_profile&.slug %>">
                 <%= f.check_box :state, class: "custom-control-input", id: "stateClosed#{freelancer_profile&.id}" %>

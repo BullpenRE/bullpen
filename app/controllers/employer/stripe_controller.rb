@@ -11,6 +11,8 @@ module Employer
                                                     stripe_token: stripe_params[:stripeToken]).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR
+      elsif params[:redirect_reference].present?
+         redirect_to redirect_path
       else
         redirect_to employer_account_index_path, notice: 'Stripe: Card added successfully'
       end
@@ -22,6 +24,8 @@ module Employer
                                                            stripe_token: stripe_params[:stripeToken]).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR
+      elsif params[:redirect_reference].present?
+        redirect_to redirect_path
       else
         redirect_to employer_account_index_path, notice: 'Stripe: Bank account added successfully'
       end
@@ -45,6 +49,13 @@ module Employer
       return if token_present?
 
       redirect_to employer_account_index_path, alert: 'Stripe: token is invalid'
+    end
+
+    def redirect_path
+      return employer_jobs_path if params[:redirect_reference] == 'jobs'
+      return employer_contracts_path if params[:redirect_reference] == 'contracts'
+
+      employer_interviews_path
     end
   end
 end

@@ -1,0 +1,34 @@
+<% if employer_profile.payment_accounts.any? %>
+  <%= f.select :payment_account_id,
+               options_for_select(employer_profile.payment_accounts.map { |pa| [pa.short_description, pa.id] }, contract&.payment_account_id),
+               {}, class: 'form-control selectpicker mb-1',
+               'data-style': "bp-btn-select" %>
+<% else %>
+  <script>
+    $("#make-an-offer-<%= modal_id %>").on('click', (e) => {
+    	e.stopPropagation();
+    	e.preventDefault();
+    })
+  </script>
+  <div class="text-danger mb-2"> Please add payment account for.. </div>
+  <div class="d-flex flex-column flex-md-row mb-3 mb-md-0">
+    <div class="dropdown">
+      <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Add a Payment Method <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="dropdown-menu dropdown-menu-center" aria-labelledby="navbarDropdown">
+        <%= link_to 'Add a Credit Card', employer_show_payment_method_path(payment_method: 'card', redirect_reference: redirect_reference, modal_id: modal_id), { remote: true, 'data-toggle': "modal", 'data-target': "#addCreditCardModal", class: 'dropdown-item' } %>
+        <%= link_to 'Add a Bank Account', employer_show_payment_method_path(payment_method: 'account', redirect_reference: redirect_reference, modal_id: modal_id), { remote: true, 'data-toggle': "modal", 'data-target': "#addBankAccountModal", class: 'dropdown-item' } %>
+      </div>
+    </div>
+  </div>
+
+
+<!--    <button class="btn btn-outline-primary addCreditCard<%#= modal_id %>" data-toggle="modal" data-target="#addCreditCardModal<%#= modal_id %>">-->
+<!--      Add a Credit Card-->
+<!--    </button>-->
+<!--    <button class="btn btn-outline-primary addBankAccount<%#= modal_id %>" data-toggle="modal" data-target="#addBankAccountModal<%#= modal_id %>">-->
+<!--      Add a Bank Account-->
+<!--    </button>-->
+<% end %>
+
