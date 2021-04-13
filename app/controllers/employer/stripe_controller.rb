@@ -6,22 +6,18 @@ module Employer
     before_action :no_token_redirect
 
     def create_card
-      response = Stripe::Customers::CardService.new(user_id: current_user.id,
-                                                    customer_id: employer_profile.stripe_id_customer,
-                                                    stripe_token: stripe_params[:stripeToken]).call
+      response = Stripe::Customers::CardService.new(new_service_params).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR
       elsif params[:redirect_reference].present?
-         redirect_to redirect_path
+        redirect_to redirect_path
       else
         redirect_to employer_account_index_path, notice: 'Stripe: Card added successfully'
       end
     end
 
     def create_account
-      response = Stripe::Customers::BankAccountService.new(user_id: current_user.id,
-                                                           customer_id: employer_profile.stripe_id_customer,
-                                                           stripe_token: stripe_params[:stripeToken]).call
+      response = Stripe::Customers::BankAccountService.new(new_service_params).call
       if response.is_a?(Hash)
         redirect_to employer_account_index_path, alert: STRIPE_ERROR
       elsif params[:redirect_reference].present?
@@ -32,6 +28,14 @@ module Employer
     end
 
     private
+
+    def new_service_params
+      {
+        user_id: current_user.id,
+        customer_id: employer_profile.stripe_id_customer,
+        stripe_token: stripe_params[:stripeToken]
+      }
+    end
 
     def employer_profile
       @employer_profile ||= current_user.employer_profile
