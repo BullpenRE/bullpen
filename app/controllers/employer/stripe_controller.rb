@@ -7,24 +7,12 @@ module Employer
 
     def create_card
       response = Stripe::Customers::CardService.new(new_service_params).call
-      if response.is_a?(Hash)
-        redirect_to employer_account_index_path, alert: STRIPE_ERROR
-      elsif params[:redirect_reference].present?
-        redirect_to redirect_path
-      else
-        redirect_to employer_account_index_path, notice: 'Stripe: Card added successfully'
-      end
+      check_response_and_redirect(response, true)
     end
 
     def create_account
       response = Stripe::Customers::BankAccountService.new(new_service_params).call
-      if response.is_a?(Hash)
-        redirect_to employer_account_index_path, alert: STRIPE_ERROR
-      elsif params[:redirect_reference].present?
-        redirect_to redirect_path
-      else
-        redirect_to employer_account_index_path, notice: 'Stripe: Bank account added successfully'
-      end
+      check_response_and_redirect(response, false)
     end
 
     private
@@ -35,6 +23,22 @@ module Employer
         customer_id: employer_profile.stripe_id_customer,
         stripe_token: stripe_params[:stripeToken]
       }
+    end
+
+    def check_response_and_redirect(response, card)
+      return redirect_to employer_account_index_path, alert: STRIPE_ERROR if response.is_a?(Hash)
+
+      if params[:redirect_reference].present?
+        redirect_to redirect_path
+      else
+        redirect_to employer_account_index_path, notice: success_notice(card)
+      end
+    end
+
+    def success_notice(card)
+      return 'Stripe: Bank account added successfully' if card.present?
+
+      'Stripe: Bank account added successfully'
     end
 
     def employer_profile
