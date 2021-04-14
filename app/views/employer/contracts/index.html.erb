@@ -79,7 +79,7 @@
       <%= render partial: 'shared/contracts/show_offer_contract_details', locals: { contract: contract } %>
       <%= render partial: 'employer/contracts/close_contract', locals: { contract: contract } %>
       <%= render partial: 'employer/contracts/delete_contract', locals: { contract: contract } %>
-      <div class="bp-card mb-3 card<%= contract.id %>">
+      <div class="bp-card mb-3 card<%= contract.id %>" id="card<%= contract.id %>">
         <div class="d-flex flex-column flex-md-row">
           <div class="mr-auto mb-2">
             <h2 class="text-wrap text-break mb-1"><%= contract&.title&.capitalize %></h2>
@@ -242,11 +242,11 @@
 <% if @contract.present? %>
   <script>
     const contract = '<%= @contract.id %>';
-    const timesheet = '<%= @timesheet.id %>';
+    const timesheet = '<%= @timesheet&.id %>';
     $('html,body').animate({scrollTop: $('.card' + contract).offset().top},'slow');
     if (contract && timesheet) {
       $('.more-less<%= @contract.id %>')[0].click();
-      $('html,body').animate({scrollTop: $('.title-<%= @timesheet.id %>').offset().top},'slow');
+      $('html,body').animate({scrollTop: $('.title-<%= @timesheet&.id %>').offset().top},'slow');
     } else if (contract) {
       $('.review_button<%= @contract.id %>')[0].click();
     }
