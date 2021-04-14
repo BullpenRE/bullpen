@@ -37,29 +37,36 @@ RSpec.describe Timesheet, type: :model do
   context 'Scopes' do
     let!(:timesheet_1) { FactoryBot.create(:timesheet) }
     let!(:timesheet_2) { FactoryBot.create(:timesheet, contract_id: timesheet_1.contract_id) }
+    let!(:timesheet_3) { FactoryBot.create(:timesheet, :skip_validate, ends: (Date.current - 1.week).next_occurring(:sunday), starts: (Date.current - 1.week).beginning_of_week) }
+    let!(:timesheet_4) { FactoryBot.create(:timesheet, :skip_validate, ends: (Date.current - 1.month).next_occurring(:sunday), starts: (Date.current - 1.month).beginning_of_week) }
 
     it '#related_to_contracts' do
       expect(Timesheet.related_to_contracts([timesheet.contract_id, timesheet_1.contract_id])).to match_array [timesheet, timesheet_1, timesheet_2]
       expect(Timesheet.related_to_contracts([timesheet_1.contract_id])).to match_array [timesheet_1, timesheet_2]
+    end
+
+    it '#previous_week' do
+      expect(Timesheet.previous_week).to include(timesheet_3)
+      expect(Timesheet.previous_week).to_not include(timesheet_4)
     end
   end
 
   context 'Methods' do
     let!(:current_timesheet) { FactoryBot.create(:timesheet, starts: 1.minute.ago.beginning_of_week, ends: 1.minute.ago.end_of_week) }
     let!(:pending_timesheet) { FactoryBot.create(:timesheet, starts: 1.week.ago.beginning_of_week, ends: 1.week.ago.end_of_week) }
-    let!(:pending_timesheet_billing_1) do  FactoryBot.create(:billing,
+    let!(:pending_timesheet_billing_1) do  FactoryBot.create(:billing, :skip_validate,
                                                                    timesheet: pending_timesheet,
                                                                    work_done: pending_timesheet.starts,
                                                                    contract: pending_timesheet.contract,
                                                                    hours: 3, minutes: 30)
     end
-    let!(:pending_timesheet_billing_2) do  FactoryBot.create(:billing,
+    let!(:pending_timesheet_billing_2) do  FactoryBot.create(:billing, :skip_validate,
                                                                    timesheet: pending_timesheet,
                                                                    work_done: pending_timesheet.starts,
                                                                    contract: pending_timesheet.contract,
                                                                    hours: 0, minutes: 15)
     end
-    let!(:pending_timesheet_billing_3) do  FactoryBot.create(:billing,
+    let!(:pending_timesheet_billing_3) do  FactoryBot.create(:billing, :skip_validate,
                                                                    timesheet: pending_timesheet,
                                                                    work_done: pending_timesheet.starts,
                                                                    contract: pending_timesheet.contract,

@@ -27,4 +27,8 @@ class EmployerMailerPreview < ActionMailer::Preview
   def hours_was_updated
     EmployerMailer.hours_was_updated(Timesheet.last)
   end
+
+  def review_pending_payment
+    EmployerMailer.review_pending_payment(Timesheet.last)
+  end
 end

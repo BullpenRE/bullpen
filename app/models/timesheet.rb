@@ -5,6 +5,7 @@ class Timesheet < ApplicationRecord
   scope :related_to_contracts, lambda { |contracts_ids|
     where(contract_id: contracts_ids)
   }
+  scope :previous_week, -> { where('ends > ?', Date.current - 1.week) }
   belongs_to :contract
   has_many :billings, dependent: :nullify
   validates :starts, :ends, presence: true
