@@ -4,7 +4,7 @@ class Public::JobController < ApplicationController
 
   def show
     @job = Job.lookup(params[:slug])
-    render 'errors/job_not_found' if @job.blank?
+    render 'errors/job_not_found' if @job.blank? ||  @job.employer_profile.disabled
   end
 
   def apply_for_job

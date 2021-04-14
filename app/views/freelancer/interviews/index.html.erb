@@ -3,7 +3,7 @@
 
 <div class="container mb-3">
   <h1>Interviews</h1>
-  <% @interviews.employer_enabled.each do |interview| %>
+  <% @interviews.each do |interview| %>
     <div class="bp-card mb-3 card<%= interview.id %>">
       <div class="d-flex justify-content-between flex-column flex-lg-row">
         <div>

@@ -48,6 +48,10 @@ class EmployerProfile < ApplicationRecord
     - #{user.first_name}"
   end
 
+  def disabled
+    @disabled ||= user.disable
+  end
+
   private
 
   def retrieve_customer_id

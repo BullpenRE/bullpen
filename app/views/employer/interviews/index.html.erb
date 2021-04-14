@@ -3,7 +3,7 @@
 
 <div class="container mb-3 talent-cards">
   <h1>Interviews</h1>
-  <% @interviews.freelancer_enabled.each do |interview| %>
+  <% @interviews.each do |interview| %>
     <%= render partial: 'employer/talent/show_profile', locals: { freelancer_profile: interview.freelancer_profile } %>
     <div id="interview-request">
       <%= render partial: 'employer/talent/interview_request', locals: { freelancer_profile: interview.freelancer_profile, interview: interview  } %>
