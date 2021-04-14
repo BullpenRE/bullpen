@@ -19,13 +19,13 @@
           </div>
           <div class="d-flex flex-column flex-md-row mb-3 mb-md-0">
             <div class="bp-text-sm text-secondary text-nowrap font-weight-bold ml-md-3 mb-3 mb-md-0 mr-3 mt-0 mt-md-2">
-              <% if contract.freelancer_profile.user.disable? %>
+              <% if contract.freelancer_profile.disabled %>
                 <div class="text-danger">Disabled</div>
               <% else %>
                 <%= "Offer #{contract.state}" %>
               <% end %>
             </div>
-            <% unless contract.freelancer_profile.user.disable? %>
+            <% unless contract.freelancer_profile.disabled %>
               <div class="dropdown">
                 <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Options <i class="fas fa-chevron-down"></i>
@@ -54,7 +54,7 @@
         <div class="d-flex justify-content-between flex-column flex-md-row">
           <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: contract.freelancer_profile,
                                                                          editable: false } %>
-           <% unless contract.freelancer_profile.user.disable? %>
+           <% unless contract.freelancer_profile.disabled %>
             <div class="dropdown mt-3 mt-md-0">
               <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Options <i class="fas fa-chevron-down"></i>
@@ -94,7 +94,7 @@
             <div class="bp-text-sm">Created <%= time_ago_in_words(contract&.created_at) %> ago </div>
           </div>
           <div class="d-flex flex-column flex-md-row mb-3 mb-md-0">
-            <% if contract.freelancer_profile.user.disable? %>
+            <% if contract.freelancer_profile.disabled %>
               <div class="ml-md-3 mr-3 mt-md-2 mb-3 mb-md-0">
                 <div class="bp-text-sm text-secondary text-nowrap font-weight-bold text-danger"> Disabled </div>
               </div>
@@ -143,7 +143,7 @@
                                                                          editable: false } %>
           <%= render partial: 'shared/make_an_offer_without_job', locals: { freelancer_profile: contract.freelancer_profile,
                                                                             redirect_reference: 'contracts'} %>
-          <% unless contract.freelancer_profile.user.disable? %>
+          <% unless contract.freelancer_profile.disabled %>
             <div class="d-flex flex-column flex-md-row mt-3 mt-md-0">
               <div class="mb-2 mb-md-0 mr-md-2">
                 <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#makeAnOfferWithoutJob<%= contract.freelancer_profile.id %>">Offer Another Job</button>
@@ -190,7 +190,7 @@
                 <div class="d-flex mt-2 mb-2"> <!--hide this div after the dispute deadline-->
                   <div class="mr-auto">Submit disputes before <%= timesheet.dispute_deadline %></div>
                   <%= render partial: 'employer/contracts/dispute_hours', locals: { contract_id: contract.id, timesheet: timesheet, modal_id: "#{contract.id}-#{timesheet.id}" } %>
-                <% unless contract.freelancer_profile.user.disable? %>
+                <% unless contract.freelancer_profile.disabled %>
                   <button class="align-self-start btn btn-link shadow-none p-0 ml-2" type="button" data-toggle="modal" data-target="#disputeHours<%= contract.id %>-<%= timesheet.id %>">Dispute Hours<i class="far fa-comment ml-1"></i></button>
                 <% end %>
                 </div>

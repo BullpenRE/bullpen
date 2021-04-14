@@ -250,7 +250,7 @@
                     <%= render partial: 'shared/make_an_offer_without_job', locals: { freelancer_profile: contract.freelancer_profile,
                                                                                       redirect_reference: 'jobs'} %>
 
-                    <% if contract.freelancer_profile.user.disable? %>
+                    <% if contract.freelancer_profile.disabled %>
                       <div class="bp-text-sm text-secondary text-nowrap font-weight-bold mr-auto mr-sm-0 ml-auto my-2 text-danger">
                         Disabled
                       </div>
@@ -261,7 +261,7 @@
                     <% end %>
                   </div>
 
-                  <% unless contract.freelancer_profile.user.disable? %>
+                  <% unless contract.freelancer_profile.disabled %>
                     <div class="d-flex flex-column flex-sm-row ml-sm-auto mt-3 mt-lg-0">
                       <div class="mr-0 mr-sm-2 mb-2 mb-sm-0">
                         <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#sendMessage<%= contract.id %>">Send Message</button>

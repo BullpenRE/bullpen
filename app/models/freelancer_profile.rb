@@ -45,8 +45,8 @@ class FreelancerProfile < ApplicationRecord
     @first_name ||= user.first_name
   end
 
-  def disable
-    @disable = user.disable
+  def disabled
+    @disabled ||= user.disable
   end
 
   def last_name
