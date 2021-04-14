@@ -5,7 +5,7 @@ class Public::FreelancerProfileController < ApplicationController
   def show
     certifications
     @freelancer_profile = FreelancerProfile.lookup(params[:slug])
-    render 'errors/talent_not_found' if @freelancer_profile.blank? || @freelancer_profile.disable
+    render 'errors/talent_not_found' if @freelancer_profile.blank? || @freelancer_profile.disabled
   end
 
   def request_interview

@@ -21,8 +21,7 @@ class Freelancer::InterviewsController < ApplicationController
                                                     .interview_requests
                                                     .not_rejected
                                                     .freelancer_visible
-                                                    .employer_enabled
-                                                    .blank?
+                                                    .employer_enabled.blank?
   end
 
   def decline_interview
