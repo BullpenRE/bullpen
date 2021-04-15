@@ -46,6 +46,10 @@ class Timesheet < ApplicationRecord
     billings.where(state: 'disputed').present? && pending_payment_date > Date.current
   end
 
+  def employer_total_charge
+    billings.not_paid.sum(&:multiplier) * contract.pay_rate
+  end
+
   private
 
   def ends_after_start
