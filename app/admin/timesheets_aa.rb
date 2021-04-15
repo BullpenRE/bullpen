@@ -17,6 +17,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
     filter :contract_freelancer_profile_user_email, as: :string, label: 'Freelancer Email'
     filter :contract_title, as: :string, label: 'Contract Title'
 
+    scope :all, -> { Timesheet.all }
+    scope :ready_for_payment, -> { Timesheet.ready_for_payment }
+    scope :paid, -> { Timesheet.paid }
+
     show title: 'Timesheet' do |timesheet|
       attributes_table do
         row :contract
