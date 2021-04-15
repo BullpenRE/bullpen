@@ -104,7 +104,8 @@ describe('Create contract via factory contracts.rb and test contract flow', () =
       .click({force: true})
 
     // try to log out as employer
-    cy.gui_logout()
+    cy.wait(3000)
+      .gui_logout()
 
     // try login as above created freelancer
     cy.gui_login('tetyanaFree@gmail.com')
