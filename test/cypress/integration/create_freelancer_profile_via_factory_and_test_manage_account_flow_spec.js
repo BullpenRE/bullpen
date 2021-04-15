@@ -46,11 +46,6 @@ describe('Create freelancer_profiles.rb via factory and test freelancer manage a
       .clear({force: true})
       .type('ProfessionalTitleAmended')
 
-    // try to change years of professional experience in opened module 'Personal Information'
-    cy.get('[name="freelancer_profile[professional_years_experience]"]')
-      .should('exist')
-      .select('2-5')
-
     // try to amend location in opened module 'Personal Information'
     cy.get('#freelancerLocationInput')
       .should('exist')
