@@ -148,7 +148,7 @@ class FreelancerProfileStepsController < ApplicationController
 
   def history_params
     params.require(:freelancer_profile)
-      .permit(:professional_title, :professional_years_experience, :professional_summary)
+      .permit(:professional_title, :professional_summary)
   end
 
   def populate_available_options_for_freelancer_data

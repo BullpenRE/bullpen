@@ -285,9 +285,7 @@
                           <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOfferWithoutJob<%= contract.freelancer_profile.id %>">
                             Offer Another Job
                           </button>
-                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#goToContract">
-                            Go to Contract
-                          </button>
+                          <%= link_to 'Go to Contract', "#{employer_contracts_path}#card#{contract.id}", class: 'dropdown-item' %>
                           <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
                             Show Profile
                           </button>
