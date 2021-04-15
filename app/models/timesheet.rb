@@ -1,14 +1,21 @@
 # frozen_string_literal: true
 
 class Timesheet < ApplicationRecord
+  belongs_to :contract
+  has_many :billings, dependent: :nullify
+
+  validates :starts, :ends, presence: true
+  validate :ends_after_start
+
   default_scope { order(ends: :desc) }
+
   scope :related_to_contracts, lambda { |contracts_ids|
     where(contract_id: contracts_ids)
   }
-  belongs_to :contract
-  has_many :billings, dependent: :nullify
-  validates :starts, :ends, presence: true
-  validate :ends_after_start
+  scope :ready_for_payment, lambda {
+    where(Timesheet.arel_table[:stripe_id_invoice].eq(nil).and(Timesheet.arel_table[:ends]).lteq(Date.current))
+  }
+  scope :paid, -> { where.not(stripe_id_invoice: nil) }
 
   def title(employer)
     return 'Current Hours' if ends >= Date.current
