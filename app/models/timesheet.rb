@@ -47,7 +47,7 @@ class Timesheet < ApplicationRecord
   end
 
   def employer_total_charge
-    billings.not_paid.sum(&:multiplier) * contract.pay_rate
+    billings.pending.sum(&:multiplier) * contract.pay_rate
   end
 
   private
