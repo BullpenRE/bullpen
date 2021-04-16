@@ -10,7 +10,7 @@ RSpec.describe Credit, type: :model do
 
   context 'Relationships' do
     it 'belongs to a timesheet' do
-      expect(Timesheet.exists?(timesheet.id)).to be_truthy
+      expect(credit.timesheet).to eq(timesheet)
     end
   end
 
