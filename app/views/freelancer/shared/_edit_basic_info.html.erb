@@ -95,19 +95,6 @@
                 <%= f.text_field :professional_title, class: "form-control custom-validate", id: "professionalTitleInput", placeholder: "e.g. Senior Analyst", required: true %>
               </div>
             </div>
-            <div class="col-lg">
-              <div class="form-group mb-3 wrapper">
-                <label for="yearsExperienceSelect" class="h5">Years of professional experience</label>
-                <div class="w-100">
-                  <%= f.select :professional_years_experience,
-                               FreelancerProfile.professional_years_experiences.keys.map { |w| [w.humanize, w] }, {},
-                               html_options = { class: "form-control selectpicker custom-validate", 'data-style': "bp-btn-select",
-                                                selected: freelancer_profile.professional_years_experience,
-                                                style: "display:block !important",
-                                                title: "Please make a selection", required: true } %>
-                </div>
-              </div>
-            </div>
           </div>
 
           <div class="row">

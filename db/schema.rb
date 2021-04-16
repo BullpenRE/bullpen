@@ -208,7 +208,6 @@ ActiveRecord::Schema.define(version: 2021_04_15_142735) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "professional_title"
-    t.integer "professional_years_experience"
     t.text "professional_summary"
     t.integer "curation", default: 0
     t.boolean "draft", default: true
