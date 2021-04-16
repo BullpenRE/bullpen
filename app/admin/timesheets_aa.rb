@@ -28,6 +28,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
         row 'Billing Entries' do
           (timesheet.billings.order(work_done: :desc).map{|billing| link_to("#{billing.description} done on #{billing.work_done}", admin_billing_path(billing.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_billing_path(:billing=> { :contract_id => timesheet.contract_id, :timesheet_id => timesheet.id }), target: '_new')).html_safe
         end
+        row 'Credits Entries' do
+          (timesheet.credits.map{|credit| link_to("#{credit.description} amount #{credit.amount}", admin_credit_path(credit.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_credit_path(credit: { timesheet_id: timesheet.id }), target: '_new')).html_safe
+        end
 
       end
       active_admin_comments
