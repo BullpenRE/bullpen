@@ -317,6 +317,7 @@
   <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
 </div>
 <div id="payment_method"></div>
+<%= render 'employer/shared/add_bank_account_modal', { redirect_reference: 'jobs' } %>
 <script>
   $(document).on('turbolinks:load', function () {
     const queryString = window.location.search;

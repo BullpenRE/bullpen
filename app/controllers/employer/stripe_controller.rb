@@ -56,8 +56,9 @@ module Employer
     def redirect_path
       return employer_jobs_path if params[:redirect_reference] == 'jobs'
       return employer_contracts_path if params[:redirect_reference] == 'contracts'
+      return employer_interviews_path if params[:redirect_reference] == 'interviews'
 
-      employer_interviews_path
+      employer_account_index_path
     end
   end
 end

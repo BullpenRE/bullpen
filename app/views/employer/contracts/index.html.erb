@@ -239,7 +239,7 @@
   </div>
 <% end %>
 <div id="payment_method"></div>
-
+<%= render 'employer/shared/add_bank_account_modal', { redirect_reference: 'contracts' } %>
 <% if @contract.present? %>
   <script>
     const contract = '<%= @contract.id %>';
