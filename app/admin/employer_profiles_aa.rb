@@ -8,7 +8,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
 
     permit_params :user_id, :company_name, :company_website, :role_in_company, :employee_count, :category,
                   :motivation_one_time, :motivation_ongoing_support, :motivation_backfill, :motivation_augment,
-                  :motivation_other
+                  :motivation_other, :credit_balance
 
 
     index do
@@ -57,6 +57,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
         row 'Payment Accounts' do
           employer_profile.payment_accounts.map { |account| link_to("#{account.institution} #{account.last_four}#{' (expired)' if account.expired?}#{' (Default)' if account.is_default?}", admin_payment_account_path(account.id)).html_safe }.join('<br>').html_safe
         end
+        row :credit_balance
       end
     end
 
@@ -81,6 +82,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
           f.input :motivation_augment, label: 'Augment'
           f.input :motivation_other, label: 'Other'
         end
+        f.input :credit_balance
         f.actions
       end
     end

@@ -31,6 +31,13 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
         row 'Credits Entries' do
           (timesheet.credits.map{|credit| link_to("#{credit.description} amount #{credit.amount}", admin_credit_path(credit.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_credit_path(credit: { timesheet_id: timesheet.id }), target: '_new')).html_safe
         end
+        if Date.current > timesheet.ends && !timesheet.billings.where(state: 'disputed').present? && timesheet.credits.where('amount > ?', 0).present?
+          columns do
+            column do
+              button_to 'Apply Credits'
+            end
+          end
+        end
 
       end
       active_admin_comments
