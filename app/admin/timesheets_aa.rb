@@ -31,10 +31,19 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
         row 'Credits Entries' do
           (timesheet.credits.map{|credit| link_to("#{credit.description} amount #{credit.amount}", admin_credit_path(credit.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_credit_path(credit: { timesheet_id: timesheet.id }), target: '_new')).html_safe
         end
-        if Date.current > timesheet.ends && !timesheet.billings.where(state: 'disputed').present? && timesheet.credits.where('amount > ?', 0).present?
-          columns do
-            column do
-              button_to 'Apply Credits'
+        if Date.current > timesheet.ends && !timesheet.billings.where(state: 'disputed').present?
+          if timesheet.contract.employer_profile.credit_balance > 0
+            columns do
+              column do
+                button_to 'Apply Credits Employer', apply_credit_admin_timesheet_path(id:timesheet.id, applied_to: 'employer'), action: :post
+              end
+            end
+          end
+          if timesheet.contract.freelancer_profile.credit_balance > 0
+            columns do
+              column do
+                button_to 'Apply Credits Freelancer', apply_credit_admin_timesheet_path(id:timesheet.id, applied_to: 'freelancer'), action: :post
+              end
             end
           end
         end
@@ -56,6 +65,13 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
         f.input :ends
         f.actions
       end
+    end
+
+    member_action :apply_credit, method: :post do
+      timesheet = Timesheet.find(params[:id])
+      applied_to = params[:applied_to]
+      CreditService.new(timesheet, applied_to).process
+      redirect_to admin_timesheet_path(timesheet.id), { notice: 'Credit applied.' }
     end
   end
 end
