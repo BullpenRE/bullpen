@@ -20,6 +20,7 @@ class Job < ApplicationRecord
          .or(where(id: freelancer_profile.job_applications.withdrawn.pluck(:job_id)))
   }
   scope :ready_for_announcement, -> { where(state: 'posted', job_announced: false) }
+  scope :employer_enabled, -> { where(employer_profile_id: EmployerProfile.user_enabled.ids) }
   validate :pay_ranges_make_sense
   validates :employer_profile_id, presence: true
 

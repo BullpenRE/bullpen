@@ -8,7 +8,7 @@ class NewJobAnnouncementsService
   def process
     @jobs.each do |job|
       FreelancerProfile.ready_for_announcement.each do |freelancers_profile|
-        FreelancerMailer.posted_job(job, freelancers_profile.email).deliver_later
+        FreelancerMailer.posted_job(job, freelancers_profile).deliver_later
         job.update(job_announced: true)
       end
     end

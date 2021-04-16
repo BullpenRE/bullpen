@@ -158,6 +158,9 @@ RSpec.describe FreelancerProfile, type: :model do
   end
 
   context 'Scopes' do
+    let!(:user_disabled) { FactoryBot.create(:user, disable: true) }
+    let!(:freelancer_profile_disabled) { FactoryBot.create(:freelancer_profile, user: user_disabled) }
+
     it '.accepted' do
       expect(freelancer_profile.curation).to eq('pending')
       expect(freelancer_profile_complete.curation).to eq('accepted')
@@ -174,6 +177,11 @@ RSpec.describe FreelancerProfile, type: :model do
       expect(FreelancerProfile.ready_for_announcement).to_not include(freelancer_profile)
       expect(FreelancerProfile.ready_for_announcement).to include(freelancer_profile_complete)
       expect(FreelancerProfile.ready_for_announcement).to_not include(freelancer_profile_complete_1)
+    end
+
+    it '.user_enabled' do
+      expect(FreelancerProfile.user_enabled).to include(freelancer_profile)
+      expect(FreelancerProfile.user_enabled).not_to include(freelancer_profile_disabled)
     end
   end
 
