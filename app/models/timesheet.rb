@@ -7,6 +7,7 @@ class Timesheet < ApplicationRecord
   }
   belongs_to :contract
   has_many :billings, dependent: :nullify
+  has_many :credits, dependent: :destroy
   validates :starts, :ends, presence: true
   validate :ends_after_start
 
