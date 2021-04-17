@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_14_061139) do
+ActiveRecord::Schema.define(version: 2021_04_15_142735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,17 @@ ActiveRecord::Schema.define(version: 2021_04_14_061139) do
     t.index ["timesheet_id"], name: "index_billings_on_timesheet_id"
   end
 
+  create_table "bubble_lookups", force: :cascade do |t|
+    t.string "id_bubble"
+    t.string "bubble_type"
+    t.string "target_type", null: false
+    t.bigint "target_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["id_bubble"], name: "index_bubble_lookups_on_id_bubble"
+    t.index ["target_type", "target_id"], name: "index_bubble_lookups_on_target"
+  end
+
   create_table "certifications", force: :cascade do |t|
     t.string "description"
     t.boolean "disable", default: false
@@ -120,6 +131,16 @@ ActiveRecord::Schema.define(version: 2021_04_14_061139) do
     t.index ["freelancer_profile_id"], name: "index_contracts_on_freelancer_profile_id"
     t.index ["job_id"], name: "index_contracts_on_job_id"
     t.index ["payment_account_id"], name: "index_contracts_on_payment_account_id"
+  end
+
+  create_table "credits", force: :cascade do |t|
+    t.bigint "timesheet_id"
+    t.integer "applied_to", default: 0
+    t.string "description"
+    t.integer "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["timesheet_id"], name: "index_credits_on_timesheet_id"
   end
 
   create_table "employer_profiles", force: :cascade do |t|
@@ -446,6 +467,7 @@ ActiveRecord::Schema.define(version: 2021_04_14_061139) do
     t.string "provider"
     t.float "latitude"
     t.float "longitude"
+    t.boolean "disable", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["latitude", "longitude"], name: "index_users_on_latitude_and_longitude"
@@ -461,6 +483,7 @@ ActiveRecord::Schema.define(version: 2021_04_14_061139) do
   add_foreign_key "contracts", "freelancer_profiles"
   add_foreign_key "contracts", "jobs"
   add_foreign_key "contracts", "payment_accounts"
+  add_foreign_key "credits", "timesheets"
   add_foreign_key "employer_profiles", "users"
   add_foreign_key "employer_sectors", "employer_profiles"
   add_foreign_key "employer_sectors", "sectors"
