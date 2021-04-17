@@ -36,7 +36,7 @@ class Billing < ApplicationRecord
   end
 
   def work_done_in_timesheet
-    return unless work_done < timesheet.starts || work_done > timesheet.ends
+    return if work_done >= timesheet.starts && work_done <= timesheet.ends
 
     errors.add(:work_done, 'date must be in current timesheet')
   end

@@ -54,6 +54,13 @@ RSpec.describe Billing, type: :model do
       billing_with_timesheet.contract_id = FactoryBot.create(:contract).id
       expect(billing_with_timesheet).to_not be_valid
     end
+
+    it 'work_done can be done on the first or last day of the timesheet' do
+      billing_with_timesheet.work_done = timesheet.starts
+      expect(billing_with_timesheet).to be_valid
+      billing_with_timesheet.work_done = timesheet.ends
+      expect(billing_with_timesheet).to be_valid
+    end
   end
 
   context 'Relationships' do
@@ -90,12 +97,12 @@ RSpec.describe Billing, type: :model do
     end
 
     describe '#find_or_create_timesheet' do
-      let(:unattached_billing) { FactoryBot.create(:billing, work_done: 5.days.ago, contract: contract) }
+      let(:unattached_billing) { FactoryBot.create(:billing, :past_entry, work_done: 15.days.ago, contract: contract) }
       let!(:unrelated_contract_timesheet) { FactoryBot.create(:timesheet, starts: 20.days.ago, ends: 2.days.ago) }
 
       describe 'if a qualifying timesheet exists' do
-        let!(:related_contract_but_old_timesheet) { FactoryBot.create(:timesheet, contract: contract, starts: 30.days.ago, ends: 20.days.ago) }
-        let!(:related_contract_current_timesheet) { FactoryBot.create(:timesheet, contract: contract, starts: 20.days.ago, ends: 2.days.ago) }
+        let!(:related_contract_but_old_timesheet) { FactoryBot.create(:timesheet, contract: contract, starts: 50.days.ago, ends: 40.days.ago) }
+        let!(:related_contract_current_timesheet) { FactoryBot.create(:timesheet, contract: contract, starts: 30.days.ago, ends: 1.days.ago) }
 
         it 'attaches' do
           expect(unattached_billing.timesheet).to eq(related_contract_current_timesheet)

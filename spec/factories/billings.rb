@@ -25,5 +25,9 @@ FactoryBot.define do
         billing.update(timesheet_id: create(:timesheet, starts: billing.work_done.beginning_of_week, ends: billing.work_done.end_of_week, contract: billing.contract).id)
       end
     end
+
+    trait :past_entry do
+      skip_work_done_in_current_week_validation { true }
+    end
   end
 end
