@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Timesheet, type: :model do
   let!(:timesheet) { FactoryBot.create(:timesheet) }
-  let!(:billing) { FactoryBot.create(:billing, timesheet: timesheet, work_done: timesheet.starts, contract: timesheet.contract) }
+  let!(:billing) { FactoryBot.create(:billing, timesheet: timesheet, work_done: (timesheet.ends), contract: timesheet.contract) }
 
   it 'factory works' do
     expect(timesheet).to be_valid
@@ -35,49 +35,70 @@ RSpec.describe Timesheet, type: :model do
   end
 
   context 'Scopes' do
-    let!(:timesheet_1) { FactoryBot.create(:timesheet) }
+    let!(:timesheet_1) { FactoryBot.create(:timesheet, :with_stripe_invoice) }
     let!(:timesheet_2) { FactoryBot.create(:timesheet, contract_id: timesheet_1.contract_id) }
 
     it '#related_to_contracts' do
       expect(Timesheet.related_to_contracts([timesheet.contract_id, timesheet_1.contract_id])).to match_array [timesheet, timesheet_1, timesheet_2]
       expect(Timesheet.related_to_contracts([timesheet_1.contract_id])).to match_array [timesheet_1, timesheet_2]
     end
+
+    it '#paid' do
+      expect(Timesheet.paid).to match_array [timesheet_1]
+    end
+
+    context '#ready_for_payment' do
+      let!(:timesheet_3) { FactoryBot.create(:timesheet, :with_stripe_invoice, ends: Date.yesterday) }
+      let!(:timesheet_4) { FactoryBot.create(:timesheet, ends: Date.tomorrow) }
+
+      it 'return only timesheets with stripe_id_invoice=nil and ends<=Date.current' do
+        expect(Timesheet.ready_for_payment).to match_array [timesheet, timesheet_2]
+      end
+    end
   end
 
   context 'Methods' do
     let!(:current_timesheet) { FactoryBot.create(:timesheet, starts: 1.minute.ago.beginning_of_week, ends: 1.minute.ago.end_of_week) }
     let!(:pending_timesheet) { FactoryBot.create(:timesheet, starts: 1.week.ago.beginning_of_week, ends: 1.week.ago.end_of_week) }
-    let!(:pending_timesheet_billing_1) do  FactoryBot.create(:billing,
-                                                                   timesheet: pending_timesheet,
-                                                                   work_done: pending_timesheet.starts,
-                                                                   contract: pending_timesheet.contract,
-                                                                   hours: 3, minutes: 30)
+    let!(:pending_timesheet_billing_1) do
+      FactoryBot.create(:billing,
+                        timesheet: pending_timesheet,
+                        work_done: pending_timesheet.ends,
+                        contract: pending_timesheet.contract,
+                        hours: 3, minutes: 30)
     end
-    let!(:pending_timesheet_billing_2) do  FactoryBot.create(:billing,
-                                                                   timesheet: pending_timesheet,
-                                                                   work_done: pending_timesheet.starts,
-                                                                   contract: pending_timesheet.contract,
-                                                                   hours: 0, minutes: 15)
+    let!(:pending_timesheet_billing_2) do
+      FactoryBot.create(:billing,
+                        timesheet: pending_timesheet,
+                        work_done: pending_timesheet.ends,
+                        contract: pending_timesheet.contract,
+                        hours: 0, minutes: 15)
     end
-    let!(:pending_timesheet_billing_3) do  FactoryBot.create(:billing,
-                                                                   timesheet: pending_timesheet,
-                                                                   work_done: pending_timesheet.starts,
-                                                                   contract: pending_timesheet.contract,
-                                                                   state: 'paid',
-                                                                   hours: 10, minutes: 0)
+    let!(:pending_timesheet_billing_3) do
+      FactoryBot.create(:billing,
+                        timesheet: pending_timesheet,
+                        work_done: pending_timesheet.ends,
+                        contract: pending_timesheet.contract,
+                        state: 'paid',
+                        hours: 10, minutes: 0)
     end
-    let!(:current_timesheet_billing_1) do  FactoryBot.create(:billing,
-                                                                   timesheet: current_timesheet,
-                                                                   work_done: current_timesheet.starts,
-                                                                   contract: current_timesheet.contract,
-                                                                   hours: 1, minutes: 22)
+    let!(:current_timesheet_billing_1) do
+      FactoryBot.create(:billing,
+                        :disputed,
+                        timesheet: current_timesheet,
+                        work_done: current_timesheet.ends,
+                        contract: current_timesheet.contract,
+                        hours: 1, minutes: 22)
     end
-    let!(:current_timesheet_billing_2) do  FactoryBot.create(:billing,
-                                                                   timesheet: current_timesheet,
-                                                                   work_done: current_timesheet.starts,
-                                                                   contract: current_timesheet.contract,
-                                                                   hours: 2, minutes: 11)
+    let!(:current_timesheet_billing_2) do
+      FactoryBot.create(:billing,
+                        :disputed,
+                        timesheet: current_timesheet,
+                        work_done: current_timesheet.ends,
+                        contract: current_timesheet.contract,
+                        hours: 2, minutes: 11)
     end
+
     it '#title' do
       expect(current_timesheet.title(false)).to eq 'Current Hours'
       expect(pending_timesheet.title(false)).to eq "Pending Payment on #{pending_timesheet.ends.next_occurring(:friday).strftime('%b %e')}"
@@ -85,8 +106,8 @@ RSpec.describe Timesheet, type: :model do
     end
 
     it '#total_usd' do
-      expect(pending_timesheet.total_usd).to eq 3.75*pending_timesheet.contract.pay_rate
-      expect(current_timesheet.total_usd).to eq 3.55*current_timesheet.contract.pay_rate
+      expect(pending_timesheet.total_usd).to eq 3.75 * pending_timesheet.contract.pay_rate
+      expect(current_timesheet.total_usd).to eq 3.55 * current_timesheet.contract.pay_rate
     end
 
     it '#total_hours_display' do
@@ -99,6 +120,13 @@ RSpec.describe Timesheet, type: :model do
     it '#dispute_deadline' do
       expect(pending_timesheet.dispute_deadline).to eq (pending_timesheet.ends.next_occurring(:friday) - 1.day).strftime('%b %e')
       expect(current_timesheet.dispute_deadline).to eq (current_timesheet.ends.next_occurring(:friday) - 1.day).strftime('%b %e')
+    end
+
+    context '#employer_total_charge' do
+      it 'calculates charges for pending billings only' do
+        expect(pending_timesheet.employer_total_charge).to eq 3.75 * pending_timesheet.contract.pay_rate
+        expect(current_timesheet.employer_total_charge).to eq 0
+      end
     end
   end
 end
