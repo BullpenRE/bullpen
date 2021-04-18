@@ -1,6 +1,6 @@
 if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('timesheets')
   ActiveAdmin.register Timesheet do
-    permit_params :contract_id, :description, :starts, :ends
+    permit_params :contract_id, :description, :starts, :ends, :stripe_id_invoice, :invoice_number
     actions :all
 
     index do
@@ -27,10 +27,13 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
         row :description
         row :starts
         row :ends
-        # row :stripe_id_invoice do
-        #   timesheet.stripe_id_invoice&.concat(' ')
-        #   link_to 'View invoice', timesheet.pdf_invoice_link unless timesheet.pdf_invoice_link.present?
-        # end
+        row :stripe_id_invoice do
+          if timesheet.pdf_invoice_link
+            link_to timesheet.stripe_id_invoice, timesheet.pdf_invoice_link
+          else
+            timesheet.stripe_id_invoice
+          end
+        end
         row :invoice_number
         row :created_at
         row :updated_at
@@ -38,9 +41,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
           (timesheet.billings.order(work_done: :desc).map { |billing| link_to("#{billing.description} done on #{billing.work_done}", admin_billing_path(billing.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_billing_path(:billing=> { :contract_id => timesheet.contract_id, :timesheet_id => timesheet.id }), target: '_new')).html_safe
         end
         row ' ' do
-          # if timesheet.stripe_id_invoice.blank? && timesheet.contract.payment_account.present? && Date.current > timesheet.end
-          #   button_to 'Charge Employer', charge_employer_admin_timesheet_path(timesheet.id), action: :post
-          # end
+          if timesheet.stripe_id_invoice.blank? && timesheet.contract.payment_account.present? && Date.current > timesheet.end
+            button_to 'Charge Employer', charge_employer_admin_timesheet_path(timesheet.id), action: :post
+          end
         end
       end
       active_admin_comments
