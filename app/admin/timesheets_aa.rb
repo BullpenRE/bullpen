@@ -21,23 +21,26 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
     scope :ready_for_payment, -> { Timesheet.ready_for_payment }
     scope :paid, -> { Timesheet.paid }
 
-    show title: 'Timesheet' do
+    show title: 'Timesheet' do |timesheet|
       attributes_table do
         row :contract
         row :description
         row :starts
         row :ends
-        row :stripe_id_invoice
+        # row :stripe_id_invoice do
+        #   timesheet.stripe_id_invoice&.concat(' ')
+        #   link_to 'View invoice', timesheet.pdf_invoice_link unless timesheet.pdf_invoice_link.present?
+        # end
         row :invoice_number
         row :created_at
         row :updated_at
         row 'Billing Entries' do
           (timesheet.billings.order(work_done: :desc).map { |billing| link_to("#{billing.description} done on #{billing.work_done}", admin_billing_path(billing.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_billing_path(:billing=> { :contract_id => timesheet.contract_id, :timesheet_id => timesheet.id }), target: '_new')).html_safe
         end
-        row ' ' do |timesheet|
-          if timesheet.stripe_id_invoice.blank? && timesheet.contract.payment_account.present? && Date.current > timesheet.end
-            button_to 'Charge Employer', charge_employer_admin_timesheet_path(timesheet.id), action: :post
-          end
+        row ' ' do
+          # if timesheet.stripe_id_invoice.blank? && timesheet.contract.payment_account.present? && Date.current > timesheet.end
+          #   button_to 'Charge Employer', charge_employer_admin_timesheet_path(timesheet.id), action: :post
+          # end
         end
       end
       active_admin_comments
