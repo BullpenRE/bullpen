@@ -11,15 +11,16 @@ module Stripe
       end
 
       # rubocop:disable Metrics/MethodLength
-      def call(payment_account_id: nil)
+      def call
         prepare_invoice
-        invoice = create_invoice(payment_account_id)
+        invoice = create_invoice
 
         if invoice['id'].present?
           @timesheet.update(stripe_id_invoice: invoice['id'],
                             invoice_number: invoice['number'],
                             employer_charged_date: Time.current)
         end
+        true
       rescue StandardError => e
         ::Rails.logger.info(
           "Error in Stripe::Customers::InvoiceService impacting user id: #{@user.id}, "\
@@ -27,6 +28,7 @@ module Stripe
           "Contract: #{@contract.title}, "\
           "error details: #{e}"
         )
+        { error: e }
       end
       # rubocop:enable Metrics/MethodLength
 
@@ -47,11 +49,11 @@ module Stripe
         end
       end
 
-      def create_invoice(payment_account_id)
+      def create_invoice
         Stripe::Invoice.create({
                                  customer: @employer_profile.stripe_id_customer,
                                  auto_advance: true, # auto-finalize this draft after ~1 hour
-                                 default_source: payment_account_id
+                                 default_source: @contract.payment_account.id_stripe
                                })
       end
     end

@@ -27,13 +27,15 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
         row :description
         row :starts
         row :ends
+        row :stripe_id_invoice
+        row :invoice_number
         row :created_at
         row :updated_at
         row 'Billing Entries' do
           (timesheet.billings.order(work_done: :desc).map { |billing| link_to("#{billing.description} done on #{billing.work_done}", admin_billing_path(billing.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_billing_path(:billing=> { :contract_id => timesheet.contract_id, :timesheet_id => timesheet.id }), target: '_new')).html_safe
         end
         row ' ' do |timesheet|
-          if timesheet.stripe_id_invoice.blank? && timesheet.contract.employer_profile.payment_accounts.present? && Date.current > timesheet.end
+          if timesheet.stripe_id_invoice.blank? && timesheet.contract.payment_account.present? && Date.current > timesheet.end
             button_to 'Charge Employer', charge_employer_admin_timesheet_path(timesheet.id), action: :post
           end
         end
@@ -45,10 +47,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
       timesheet = Timesheet.find_by(id: params[:id])
       response = Stripe::Customer::InvoiceService.new(timesheet)
 
-      if response.present?
-        redirect_to admin_timesheets_path, notice: 'Invoice created'
+      if response.is_a?(Hash)
+        redirect_to admin_timesheet_path(timesheet.id), flash: { alert: response.error }
       else
-        redirect_to admin_timesheets_path, alert: 'Error'
+        redirect_to admin_timesheet_path(timesheet.id), flash: { notice: 'Invoice created' }
       end
     end
 
@@ -56,12 +58,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
       f.inputs 'Timesheet Entry' do
         f.input :contract_id,
                 as: :select, input_html: { class: 'select2' },
-                collection: Contract.find_each.map {|contract| ["#{contract.title} from #{contract.employer_profile.email}", contract.id]},
+                collection: Contract.find_each.map { |contract| ["#{contract.title} from #{contract.employer_profile.email}", contract.id]},
                 label: 'Contract'
 
         f.input :description
         f.input :starts
         f.input :ends
+        f.input :stripe_id_invoice
+        f.input :invoice_number
         f.actions
       end
     end
