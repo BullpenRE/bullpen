@@ -101,10 +101,10 @@
         </div>
       </div>
 
-      <% if job.job_applications.applied.without_contracts.any? || job.contracts.hire_group.any? %>
+      <% if job.job_applications.applied.freelancer_enabled.without_contracts.any? || job.contracts.hire_group.any? %>
         <div class="d-flex mt-2" style="margin-bottom: -20px;"> <!--Negative margin is used to pull up the first <hr> to the tab bars-->
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <% if job.job_applications.applied.without_contracts.any? %>
+              <% if job.job_applications.applied.freelancer_enabled.without_contracts.any? %>
                 <li class="nav-item" role="presentation">
                   <a class="font-weight-bold custom-tab nav-link" id="application-tab<%= job.id %>" data-toggle="tab" href="#application" role="tab" aria-controls="application" aria-selected="true">
                     Applications <span class="text-secondary">(<%= job.job_applications.applied.without_contracts.size %>)</span>
@@ -133,7 +133,7 @@
         <div id="collapseApplications<%= job.id %>" class="collapse">
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show <%= job.contracts.hire_group.present? ? '' : 'active' %>" id="application<%= job.id %>" role="tabpanel" aria-labelledby="application-tab">
-              <% job.job_applications.applied.without_contracts.each do |job_application| %>
+              <% job.job_applications.applied.freelancer_enabled.without_contracts.each do |job_application| %>
                 <hr>
                 <div class="d-flex justify-content-between flex-column flex-lg-row">
                   
@@ -155,10 +155,10 @@
                       <button class="btn btn-primary container-fluid" type="button" data-toggle="modal" data-target="#makeAnOffer<%= job_application.id %>">Make an Offer</button>
                     </div>
                     <div class="dropdown">
-                    <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      More <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                      <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        More <i class="fas fa-chevron-down"></i>
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <button class="dropdown-item" type="button"  data-toggle="modal" data-target="#previewApplicationDropdown-<%= job_application.id %>">
                           Show Application
                         </button>
@@ -171,8 +171,8 @@
                       </div>
                     </div>
                   </div>
-                  
                 </div>
+
                 <script>
                   $(document).on('turbolinks:load', function () {
                     $('#like<%= job_application.id %>').on('click', () => {
@@ -250,53 +250,62 @@
                     <%= render partial: 'shared/make_an_offer_without_job', locals: { freelancer_profile: contract.freelancer_profile,
                                                                                       redirect_reference: 'jobs'} %>
 
-                    <div class="bp-text-sm text-secondary text-nowrap font-weight-bold mr-auto mr-sm-0 ml-auto my-2">
+                    <% if contract.freelancer_profile.disabled %>
+                      <div class="bp-text-sm text-secondary text-nowrap font-weight-bold mr-auto mr-sm-0 ml-auto my-2 text-danger">
+                        Disabled
+                      </div>
+                    <% else %>
+                      <div class="bp-text-sm text-secondary text-nowrap font-weight-bold mr-auto mr-sm-0 ml-auto my-2">
                         <%= contract.closed? ? 'Closed' : "Offer #{contract.state}" %>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-column flex-sm-row ml-sm-auto mt-3 mt-lg-0">
-                    <div class="mr-0 mr-sm-2 mb-2 mb-sm-0">
-                      <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#sendMessage<%= contract.id %>">Send Message</button>
-                    </div>
-                    <% if contract.pending?%>
-                      <div class="dropdown">
-                        <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          More <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
-                            Modify Offer
-                          </button>
-                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
-                           Show Profile
-                          </button>
-                          <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#withdrawOffer<%= contract.id %>">
-                            Withdraw Offer
-                          </button>
-                        </div>
                       </div>
-                    <% elsif contract.accepted? %>
-                      
-                      <div class="dropdown">
-                        <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          More <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOfferWithoutJob<%= contract.freelancer_profile.id %>">
-                            Offer Another Job
-                          </button>
-                          <%= link_to 'Go to Contract', "#{employer_contracts_path}#card#{contract.id}", class: 'dropdown-item' %>
-                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
-                            Show Profile
-                          </button>
-                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#reviewModal<%= contract.freelancer_profile.id %>">
-                            <%= contract.freelancer_profile.review_from(contract.employer_profile).present? ? 'Edit Review' : 'Write a Review' %>
-                          </button>
-                        </div>
-                      </div>
-                      
                     <% end %>
                   </div>
+
+                  <% unless contract.freelancer_profile.disabled %>
+                    <div class="d-flex flex-column flex-sm-row ml-sm-auto mt-3 mt-lg-0">
+                      <div class="mr-0 mr-sm-2 mb-2 mb-sm-0">
+                        <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#sendMessage<%= contract.id %>">Send Message</button>
+                      </div>
+                      <% if contract.pending?%>
+                        <div class="dropdown">
+                          <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            More <i class="fas fa-chevron-down"></i>
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
+                              Modify Offer
+                            </button>
+                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
+                             Show Profile
+                            </button>
+                            <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#withdrawOffer<%= contract.id %>">
+                              Withdraw Offer
+                            </button>
+                          </div>
+                        </div>
+                      <% elsif contract.accepted? %>
+
+                        <div class="dropdown">
+                          <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            More <i class="fas fa-chevron-down"></i>
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOfferWithoutJob<%= contract.freelancer_profile.id %>">
+                              Offer Another Job
+                            </button>
+                            <%= link_to 'Go to Contract', "#{employer_contracts_path}#card#{contract.id}", class: 'dropdown-item' %>
+                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
+                              Show Profile
+                            </button>
+                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#reviewModal<%= contract.freelancer_profile.id %>">
+                              <%= contract.freelancer_profile.review_from(contract.employer_profile).present? ? 'Edit Review' : 'Write a Review' %>
+                            </button>
+                          </div>
+                        </div>
+
+                      <% end %>
+                    </div>
+                  <% end %>
                 </div>
               <% end %>
             </div>

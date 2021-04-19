@@ -22,6 +22,7 @@ class EmployerProfile < ApplicationRecord
                                 reject_if: :all_blank
 
   scope :users, -> { joins(:user) }
+  scope :user_enabled, -> { joins(:user).where(user: { disable: false }) }
 
   enum employee_count: { '1-10': 0, '11-50': 1, '51-100': 2, '101+': 3 }
   enum category: {
@@ -46,6 +47,10 @@ class EmployerProfile < ApplicationRecord
     I found your profile on Bullpen and think you’d be a great fit for a project
     I’m working on. Are you open to connecting on a call?<br>
     - #{user.first_name}"
+  end
+
+  def disabled
+    @disabled ||= user.disable
   end
 
   private

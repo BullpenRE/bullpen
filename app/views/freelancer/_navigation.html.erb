@@ -12,7 +12,7 @@
             <%= link_to 'Applications', freelancer_applications_path, class: 'nav-link' %>
           </li>
         <% end %>
-        <% if current_user.freelancer_profile.interview_requests.not_rejected.freelancer_visible.any? %>
+        <% if current_user.freelancer_profile.interview_requests.not_rejected.freelancer_visible.employer_enabled.any? %>
           <li class="nav-item<%= ' active' if section == 'interviews' %>">
             <%= link_to 'Interviews', freelancer_interviews_path, class: 'nav-link' %>
           </li>
