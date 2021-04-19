@@ -7,6 +7,7 @@ class Timesheet < ApplicationRecord
   # Associations
   belongs_to :contract
   has_many :billings, dependent: :nullify
+  has_many :credits, dependent: :destroy
 
   # Validations
   validates :starts, :ends, presence: true
@@ -34,7 +35,7 @@ class Timesheet < ApplicationRecord
   }
   scope :paid, -> { where.not(stripe_id_invoice: nil) }
 
-  def title(employer = nil)
+  def title(employer = true)
     return 'Current Hours' if ends >= Date.current
     return "Payment Paused - <span style='color: red'>Disputed</span>".html_safe if disputed?
     return 'Payment Paused' if paused?
