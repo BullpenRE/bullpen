@@ -31,7 +31,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
         row 'Credits Entries' do
           (timesheet.credits.map{|credit| link_to("#{credit.description} amount #{credit.amount}", admin_credit_path(credit.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_credit_path(credit: { timesheet_id: timesheet.id }), target: '_new')).html_safe
         end
-        if Date.current > timesheet.ends && !timesheet.billings.where(state: 'disputed').present?
+        if !timesheet.payment_date_in_future? && !timesheet.disputed?
           if timesheet.contract.employer_profile.credit_balance > 0
             columns do
               column do

@@ -95,17 +95,6 @@ ActiveRecord::Schema.define(version: 2021_04_16_054513) do
     t.index ["timesheet_id"], name: "index_billings_on_timesheet_id"
   end
 
-  create_table "bubble_lookups", force: :cascade do |t|
-    t.string "id_bubble"
-    t.string "bubble_type"
-    t.string "target_type", null: false
-    t.bigint "target_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["id_bubble"], name: "index_bubble_lookups_on_id_bubble"
-    t.index ["target_type", "target_id"], name: "index_bubble_lookups_on_target"
-  end
-
   create_table "certifications", force: :cascade do |t|
     t.string "description"
     t.boolean "disable", default: false

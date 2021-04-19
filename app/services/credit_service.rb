@@ -22,14 +22,19 @@ class CreditService
   end
 
   def user_profile
-    return @user_profile ||= @timesheet.contract.freelancer_profile unless @applied_to == 'employer'
+    @user_profile ||= user_profile!
+  end
 
-    @user_profile ||= @timesheet.contract.employer_profile
+  def user_profile!
+    return @timesheet.contract.freelancer_profile if @applied_to == 'freelancer'
+
+    @timesheet.contract.employer_profile
   end
 
   def amount_of_credit
     return user_profile.credit_balance if @applied_to == 'freelancer'
+    return @timesheet.total_usd if @timesheet.total_usd < user_profile.credit_balance
 
-    @timesheet.total_usd < user_profile.credit_balance ? @timesheet.total_usd : user_profile.credit_balance
+    user_profile.credit_balance
   end
 end
