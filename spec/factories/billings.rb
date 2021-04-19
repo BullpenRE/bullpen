@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :billing do
     contract
-    work_done { 2.days.ago }
+    work_done { 1.day.ago }
     hours { [1, 2, 3, 4, 5].sample }
     minutes { nil }
     description { Faker::Company.bs }

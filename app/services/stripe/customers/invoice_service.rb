@@ -38,7 +38,7 @@ module Stripe
       def add_invoice_item(billing_item)
         Stripe::InvoiceItem.create({
                                      customer: @employer_profile.stripe_id_customer,
-                                     amount: billing_item.multiplier * @contract.pay_rate * 100,
+                                     amount: (billing_item.multiplier * @contract.pay_rate * 100).to_i,
                                      currency: 'usd',
                                      description: billing_item.description
                                    })

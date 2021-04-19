@@ -41,7 +41,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
           (timesheet.billings.order(work_done: :desc).map { |billing| link_to("#{billing.description} done on #{billing.work_done}", admin_billing_path(billing.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_billing_path(:billing=> { :contract_id => timesheet.contract_id, :timesheet_id => timesheet.id }), target: '_new')).html_safe
         end
         row ' ' do
-          if timesheet.stripe_id_invoice.blank? && timesheet.contract.payment_account.present? && Date.current > timesheet.end
+          if timesheet.stripe_id_invoice.blank? && timesheet.contract.payment_account.present? && Date.current > timesheet.ends
             button_to 'Charge Employer', charge_employer_admin_timesheet_path(timesheet.id), action: :post
           end
         end
@@ -51,10 +51,10 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
 
     member_action :charge_employer, method: :post do
       timesheet = Timesheet.find_by(id: params[:id])
-      response = Stripe::Customer::InvoiceService.new(timesheet)
+      response = Stripe::Customers::InvoiceService.new(timesheet).call
 
       if response.is_a?(Hash)
-        redirect_to admin_timesheet_path(timesheet.id), flash: { alert: response.error }
+        redirect_to admin_timesheet_path(timesheet.id), flash: { alert: response[:error] }
       else
         redirect_to admin_timesheet_path(timesheet.id), flash: { notice: 'Invoice created' }
       end
