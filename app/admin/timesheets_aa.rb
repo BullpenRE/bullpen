@@ -17,9 +17,9 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
     filter :contract_freelancer_profile_user_email, as: :string, label: 'Freelancer Email'
     filter :contract_title, as: :string, label: 'Contract Title'
 
-    scope :all, -> { Timesheet.all }
-    scope :ready_for_payment, -> { Timesheet.ready_for_payment }
-    scope :paid, -> { Timesheet.paid }
+    scope :all, :all
+    scope :ready_for_payment, :ready_for_payment
+    scope :paid, :paid
 
     show title: 'Timesheet' do |timesheet|
       attributes_table do
@@ -41,7 +41,23 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
           (timesheet.billings.order(work_done: :desc).map { |billing| link_to("#{billing.description} done on #{billing.work_done}", admin_billing_path(billing.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_billing_path(:billing=> { :contract_id => timesheet.contract_id, :timesheet_id => timesheet.id }), target: '_new')).html_safe
         end
         row 'Credits Entries' do
-          (timesheet.credits.map{ |credit| link_to("#{credit.description} amount #{credit.amount}", admin_credit_path(credit.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_credit_path(credit: { timesheet_id: timesheet.id }), target: '_new')).html_safe
+          (timesheet.credits.map { |credit| link_to("#{credit.description} amount #{credit.amount}", admin_credit_path(credit.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_credit_path(credit: { timesheet_id: timesheet.id }), target: '_new')).html_safe
+        end
+        if !timesheet.payment_date_in_future? && !timesheet.disputed?
+          if timesheet.contract.employer_profile.credit_balance > 0
+            columns do
+              column do
+                button_to 'Apply Credits Employer', apply_credit_admin_timesheet_path(id:timesheet.id, applied_to: 'employer'), action: :post
+              end
+            end
+          end
+          if timesheet.contract.freelancer_profile.credit_balance > 0
+            columns do
+              column do
+                button_to 'Apply Credits Freelancer', apply_credit_admin_timesheet_path(id:timesheet.id, applied_to: 'freelancer'), action: :post
+              end
+            end
+          end
         end
 
         row ' ' do
@@ -77,6 +93,13 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
         f.input :invoice_number
         f.actions
       end
+    end
+
+    member_action :apply_credit, method: :post do
+      timesheet = Timesheet.find(params[:id])
+      applied_to = params[:applied_to]
+      CreditService.new(timesheet, applied_to).process
+      redirect_to admin_timesheet_path(timesheet.id), { notice: 'Credit applied.' }
     end
   end
 end
