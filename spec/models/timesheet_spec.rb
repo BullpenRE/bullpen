@@ -54,7 +54,9 @@ RSpec.describe Timesheet, type: :model do
       let!(:current_unpaid_timesheet) { FactoryBot.create(:timesheet, ends: Date.tomorrow) }
 
       it 'return only timesheets with stripe_id_invoice=nil and ends<=Date.current' do
-        expect(Timesheet.ready_for_payment).to match_array [timesheet, timesheet_2, passed_unpaid_timesheet]
+        expect(Timesheet.ready_for_payment).to include(passed_unpaid_timesheet)
+        expect(Timesheet.ready_for_payment).to_not include(passed_paid_timesheet, current_paid_timesheet, current_unpaid_timesheet)
+
       end
     end
   end

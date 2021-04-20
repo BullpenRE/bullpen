@@ -30,9 +30,7 @@ class Timesheet < ApplicationRecord
   scope :related_to_contracts, lambda { |contracts_ids|
     where(contract_id: contracts_ids)
   }
-  scope :ready_for_payment, lambda {
-    where(Timesheet.arel_table[:stripe_id_invoice].eq(nil).and(Timesheet.arel_table[:ends]).lteq(Date.current))
-  }
+  scope :ready_for_payment, -> { where(stripe_id_invoice: nil, ends: ..Date.current) }
   scope :paid, -> { where.not(stripe_id_invoice: nil) }
 
   def title(employer = true)
