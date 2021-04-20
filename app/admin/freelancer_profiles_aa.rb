@@ -17,7 +17,8 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
                   :new_jobs_alert,
                   :searchable,
                   :desired_hourly_rate,
-                  :payout_percentage
+                  :payout_percentage,
+                  :credit_balance
 
     index do
       column :user
@@ -73,6 +74,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         row 'Contracts' do
           freelancer_profile.contracts.map { |contract| link_to("Hired by #{contract.employer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe
         end
+        row :credit_balance
       end
 
       active_admin_comments
@@ -115,6 +117,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         f.input :searchable
         f.input :curation
         f.input :desired_hourly_rate
+        f.input :credit_balance
         f.actions
       end
     end

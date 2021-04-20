@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Timesheet, type: :model do
   let!(:timesheet) { FactoryBot.create(:timesheet) }
-  let!(:billing) { FactoryBot.create(:billing, timesheet: timesheet, work_done: (timesheet.ends), contract: timesheet.contract) }
+  let!(:billing) { FactoryBot.create(:billing, timesheet: timesheet, work_done: timesheet.ends, contract: timesheet.contract) }
 
   it 'factory works' do
     expect(timesheet).to be_valid
@@ -64,6 +64,11 @@ RSpec.describe Timesheet, type: :model do
   context 'Methods' do
     let!(:current_timesheet) { FactoryBot.create(:timesheet, starts: 1.minute.ago.beginning_of_week, ends: 1.minute.ago.end_of_week) }
     let!(:pending_timesheet) { FactoryBot.create(:timesheet, starts: 1.week.ago.beginning_of_week, ends: 1.week.ago.end_of_week) }
+    let!(:pending_timesheet_billing_1) do  FactoryBot.create(:billing, :skip_validate,
+                                                                   timesheet: pending_timesheet,
+                                                                   work_done: pending_timesheet.starts,
+                                                                   contract: pending_timesheet.contract,
+                                                                   hours: 3, minutes: 30)
     let!(:pending_timesheet_billing_1) do
       FactoryBot.create(:billing,
                         timesheet: pending_timesheet,
@@ -71,6 +76,11 @@ RSpec.describe Timesheet, type: :model do
                         contract: pending_timesheet.contract,
                         hours: 3, minutes: 30)
     end
+    let!(:pending_timesheet_billing_2) do  FactoryBot.create(:billing, :skip_validate,
+                                                                   timesheet: pending_timesheet,
+                                                                   work_done: pending_timesheet.starts,
+                                                                   contract: pending_timesheet.contract,
+                                                                   hours: 0, minutes: 15)
     let!(:pending_timesheet_billing_2) do
       FactoryBot.create(:billing,
                         timesheet: pending_timesheet,
@@ -78,6 +88,12 @@ RSpec.describe Timesheet, type: :model do
                         contract: pending_timesheet.contract,
                         hours: 0, minutes: 15)
     end
+    let!(:pending_timesheet_billing_3) do  FactoryBot.create(:billing, :skip_validate,
+                                                                   timesheet: pending_timesheet,
+                                                                   work_done: pending_timesheet.starts,
+                                                                   contract: pending_timesheet.contract,
+                                                                   state: 'paid',
+                                                                   hours: 10, minutes: 0)
     let!(:pending_timesheet_billing_3) do
       FactoryBot.create(:billing,
                         timesheet: pending_timesheet,
@@ -104,9 +120,9 @@ RSpec.describe Timesheet, type: :model do
     end
 
     it '#title' do
-      expect(current_timesheet.title(false)).to eq 'Current Hours'
+      expect(current_timesheet.title(employer: false)).to eq 'Current Hours'
       expect(pending_timesheet.title(false)).to eq "Pending Payment on #{pending_timesheet.ends.next_occurring(:friday).strftime('%b %e')}"
-      expect(pending_timesheet.title(true)).to eq "Payment Due on #{pending_timesheet.ends.next_occurring(:friday).strftime('%b %e')}"
+      expect(pending_timesheet.title(employer: true)).to eq "Payment Due on #{pending_timesheet.ends.next_occurring(:friday).strftime('%b %e')}"
     end
 
     it '#total_usd' do

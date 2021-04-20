@@ -10,6 +10,7 @@ class EmployerProfile < ApplicationRecord
   has_many :jobs, dependent: :destroy
   has_many :payment_accounts, dependent: :destroy
   has_one_attached :avatar
+  validates :credit_balance, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
   AVAILABLE_CARD_YEARS = (Time.current.year..15.years.from_now.year).freeze
 

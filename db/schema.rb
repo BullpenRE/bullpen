@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 2021_04_18_200022) do
     t.boolean "completed", default: false
     t.string "stripe_id_account"
     t.string "stripe_id_customer"
+    t.integer "credit_balance", default: 0
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
@@ -216,8 +217,9 @@ ActiveRecord::Schema.define(version: 2021_04_18_200022) do
     t.integer "desired_hourly_rate"
     t.boolean "new_jobs_alert", default: true
     t.boolean "searchable", default: true
-    t.string "stripe_id_account"
     t.integer "payout_percentage", default: 70
+    t.string "stripe_id_account"
+    t.integer "credit_balance", default: 0
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
