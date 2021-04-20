@@ -41,7 +41,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
       f.inputs 'Timesheet Entry' do
         f.input :contract_id,
                 as: :select, input_html: { class: 'select2' },
-                collection: Contract.find_each.map {|contract| ["#{contract.title} from #{contract.employer_profile.email}", contract.id]},
+                collection: Contract.find_each.map {|contract| ["#{contract.title(true)} from #{contract.employer_profile.email}", contract.id]},
                 label: 'Contract'
 
         f.input :description
