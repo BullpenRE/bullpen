@@ -48,11 +48,13 @@ RSpec.describe Timesheet, type: :model do
     end
 
     context '#ready_for_payment' do
-      let!(:timesheet_3) { FactoryBot.create(:timesheet, :with_stripe_invoice, ends: Date.yesterday) }
-      let!(:timesheet_4) { FactoryBot.create(:timesheet, ends: Date.tomorrow) }
+      let!(:passed_paid_timesheet) { FactoryBot.create(:timesheet, :with_stripe_invoice, ends: Date.yesterday) }
+      let!(:current_paid_timesheet) { FactoryBot.create(:timesheet, :with_stripe_invoice, ends: Date.tomorrow) }
+      let!(:passed_unpaid_timesheet) { FactoryBot.create(:timesheet, ends: Date.yesterday) }
+      let!(:current_unpaid_timesheet) { FactoryBot.create(:timesheet, ends: Date.tomorrow) }
 
       it 'return only timesheets with stripe_id_invoice=nil and ends<=Date.current' do
-        expect(Timesheet.ready_for_payment).to match_array [timesheet, timesheet_2]
+        expect(Timesheet.ready_for_payment).to match_array [timesheet, timesheet_2, passed_unpaid_timesheet]
       end
     end
   end
