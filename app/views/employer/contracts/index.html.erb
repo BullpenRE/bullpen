@@ -181,7 +181,7 @@
             <% contract.timesheets.each do |timesheet| %>
               <% if timesheet.billings.not_paid.present? %>
                 <div class="d-flex w-100 mt-4 title-<%= timesheet.id %>"> <!--hide this div if no pending entries-->
-                  <h5 class="mr-auto mb-0 align-self-center"><%= timesheet.title(true) %></h5>
+                  <h5 class="mr-auto mb-0 align-self-center"><%= timesheet.title(employer: true) %></h5>
                   <div class="d-flex flex-column flex-sm-row text-right">
                     <h5 class="mb-0"><%= timesheet.total_hours_display %> <%= "hour".pluralize(timesheet.total_hours_display.ceil) %></h5>
                     <h5 class="ml-4 mb-0"><%= number_to_currency(timesheet.total_usd, strip_insignificant_zeros: true) %></h5>

@@ -90,7 +90,7 @@ RSpec.describe Billing, type: :model do
     end
 
     describe '#find_or_create_timesheet' do
-      let(:unattached_billing) { FactoryBot.create(:billing, work_done: 5.days.ago, contract: contract) }
+      let(:unattached_billing) { FactoryBot.create(:billing, :skip_validate, work_done: 10.days.ago, contract: contract) }
       let!(:unrelated_contract_timesheet) { FactoryBot.create(:timesheet, starts: 20.days.ago, ends: 2.days.ago) }
 
       describe 'if a qualifying timesheet exists' do
