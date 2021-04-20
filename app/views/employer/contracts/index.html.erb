@@ -19,24 +19,30 @@
           </div>
           <div class="d-flex flex-column flex-md-row mb-3 mb-md-0">
             <div class="bp-text-sm text-secondary text-nowrap font-weight-bold ml-md-3 mb-3 mb-md-0 mr-3 mt-0 mt-md-2">
-              <%= "Offer #{contract.state}" %>
+              <% if contract.freelancer_profile.disabled %>
+                <div class="text-danger">Disabled</div>
+              <% else %>
+                <%= "Offer #{contract.state}" %>
+              <% end %>
             </div>
-            <div class="dropdown">
-              <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Options <i class="fas fa-chevron-down"></i>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showOfferContractDetails<%= contract.id %>">
-                  Show Offer Details
+            <% unless contract.freelancer_profile.disabled %>
+              <div class="dropdown">
+                <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Options <i class="fas fa-chevron-down"></i>
                 </button>
-                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>" id="makeAnOfferButton<%= contract.id %>">
-                  Modify Offer
-                </button>
-                <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#withdrawOffer<%= contract.id %>">
-                  Withdraw Offer
-                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showOfferContractDetails<%= contract.id %>">
+                    Show Offer Details
+                  </button>
+                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>" id="makeAnOfferButton<%= contract.id %>">
+                    Modify Offer
+                  </button>
+                  <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#withdrawOffer<%= contract.id %>">
+                    Withdraw Offer
+                  </button>
+                </div>
               </div>
-            </div>
+            <% end %>
           </div>
         </div>
         <div class="row">
@@ -48,19 +54,21 @@
         <div class="d-flex justify-content-between flex-column flex-md-row">
           <%= render partial: 'shared/about_freelancer_short', locals: { freelancer_profile: contract.freelancer_profile,
                                                                          editable: false } %>
-          <div class="dropdown mt-3 mt-md-0">
-            <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Options <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#sendMessage<%= contract.id %>">
-                Send a Message
+           <% unless contract.freelancer_profile.disabled %>
+            <div class="dropdown mt-3 mt-md-0">
+              <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Options <i class="fas fa-chevron-down"></i>
               </button>
-              <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
-                Show Profile
-              </button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#sendMessage<%= contract.id %>">
+                  Send a Message
+                </button>
+                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
+                  Show Profile
+                </button>
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
       </div>
     <% end %>
@@ -79,43 +87,49 @@
       <%= render partial: 'shared/contracts/show_offer_contract_details', locals: { contract: contract } %>
       <%= render partial: 'employer/contracts/close_contract', locals: { contract: contract } %>
       <%= render partial: 'employer/contracts/delete_contract', locals: { contract: contract } %>
-      <div class="bp-card mb-3 card<%= contract.id %>">
+      <div class="bp-card mb-3 card<%= contract.id %>" id="card<%= contract.id %>">
         <div class="d-flex flex-column flex-md-row">
           <div class="mr-auto mb-2">
             <h2 class="text-wrap text-break mb-1"><%= contract&.title&.capitalize %></h2>
             <div class="bp-text-sm">Created <%= time_ago_in_words(contract&.created_at) %> ago </div>
           </div>
           <div class="d-flex flex-column flex-md-row mb-3 mb-md-0">
-            <div class="ml-md-3 mr-3 mt-md-2 mb-3 mb-md-0">
-              <div class="bp-text-sm text-secondary text-nowrap font-weight-bold">
-                <%= contract.closed? ? 'Closed' : 'Active' %>
+            <% if contract.freelancer_profile.disabled %>
+              <div class="ml-md-3 mr-3 mt-md-2 mb-3 mb-md-0">
+                <div class="bp-text-sm text-secondary text-nowrap font-weight-bold text-danger"> Disabled </div>
               </div>
-            </div>
-            <div class="dropdown">
-              <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Options <i class="fas fa-chevron-down"></i>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showOfferContractDetails<%= contract.id %>">
-                  Show Contract Details
+            <% else %>
+              <div class="ml-md-3 mr-3 mt-md-2 mb-3 mb-md-0">
+                <div class="bp-text-sm text-secondary text-nowrap font-weight-bold">
+                  <%= contract.closed? ? 'Closed' : 'Active' %>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Options <i class="fas fa-chevron-down"></i>
                 </button>
-                <% if contract.closed? %>
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>" id="makeAnOfferButton<%= contract.id %>">
-                    Reopen Contract
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showOfferContractDetails<%= contract.id %>">
+                    Show Contract Details
                   </button>
-                  <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#deleteContract<%= contract.id %>">
-                    Delete Contract
-                  </button>
-                <% else %>
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>" id="makeAnOfferButton<%= contract.id %>">
-                    Edit Contract
-                  </button>
-                  <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#closeContract<%= contract.id %>">
-                    Close Contract
-                  </button>
-                <% end %>
+                  <% if contract.closed? %>
+                    <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>" id="makeAnOfferButton<%= contract.id %>">
+                      Reopen Contract
+                    </button>
+                    <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#deleteContract<%= contract.id %>">
+                      Delete Contract
+                    </button>
+                  <% else %>
+                    <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOffer<%= contract.id %>">
+                      Edit Contract
+                    </button>
+                    <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#closeContract<%= contract.id %>">
+                      Close Contract
+                    </button>
+                  <% end %>
+                </div>
               </div>
-            </div>
+            <% end %>
           </div>
         </div>
         <div class="row">
@@ -129,27 +143,29 @@
                                                                          editable: false } %>
           <%= render partial: 'shared/make_an_offer_without_job', locals: { freelancer_profile: contract.freelancer_profile,
                                                                             redirect_reference: 'contracts'} %>
-          <div class="d-flex flex-column flex-md-row mt-3 mt-md-0">
-            <div class="mb-2 mb-md-0 mr-md-2">
-              <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#makeAnOfferWithoutJob<%= contract.freelancer_profile.id %>" id="makeAnOfferWithoutJobButton<%= contract.freelancer_profile.id %>">Offer Another Job</button>
-            </div>
-            <div class="dropdown ">
-              <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                More <i class="fas fa-chevron-down"></i>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#sendMessage<%= contract.id %>">
-                  Send a Message
+          <% unless contract.freelancer_profile.disabled %>
+            <div class="d-flex flex-column flex-md-row mt-3 mt-md-0">
+              <div class="mb-2 mb-md-0 mr-md-2">
+                <button class="btn btn-primary container-fluid" type="button"  data-toggle="modal" data-target="#makeAnOfferWithoutJob<%= contract.freelancer_profile.id %>" id="makeAnOfferWithoutJobButton<%= contract.freelancer_profile.id %>">Offer Another Job</button>
+              </div>
+              <div class="dropdown ">
+                <button class="btn btn-outline-primary dropdown-toggle container-fluid" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  More <i class="fas fa-chevron-down"></i>
                 </button>
-                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
-                  Show Profile
-                </button>
-                <button class="dropdown-item review_button<%= contract.id %>" type="button" data-toggle="modal" data-target="#reviewModal<%= contract.freelancer_profile.id %>">
-                  <%= contract.freelancer_profile.review_from(contract.employer_profile).present? ? 'Edit Review' : 'Write a Review' %>
-                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#sendMessage<%= contract.id %>">
+                    Send a Message
+                  </button>
+                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= contract.freelancer_profile.id %>">
+                    Show Profile
+                  </button>
+                  <button class="dropdown-item review_button<%= contract.id %>" type="button" data-toggle="modal" data-target="#reviewModal<%= contract.freelancer_profile.id %>">
+                    <%= contract.freelancer_profile.review_from(contract.employer_profile).present? ? 'Edit Review' : 'Write a Review' %>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          <% end %>
         </div>
         <% if contract.billings.present? %>
           <div class="column d-flex justify-content-end align-items-end mt-3 mt-md-0">
@@ -174,7 +190,9 @@
                 <div class="d-flex mt-2 mb-2"> <!--hide this div after the dispute deadline-->
                   <div class="mr-auto">Submit disputes before <%= timesheet.dispute_deadline %></div>
                   <%= render partial: 'employer/contracts/dispute_hours', locals: { contract_id: contract.id, timesheet: timesheet, modal_id: "#{contract.id}-#{timesheet.id}" } %>
+                <% unless contract.freelancer_profile.disabled %>
                   <button class="align-self-start btn btn-link shadow-none p-0 ml-2" type="button" data-toggle="modal" data-target="#disputeHours<%= contract.id %>-<%= timesheet.id %>">Dispute Hours<i class="far fa-comment ml-1"></i></button>
+                <% end %>
                 </div>
                 <% timesheet.billings.not_paid.each do |billing| %>
                   <div name="pendingTimeEntry"> <!--repeat this div for each entry-->
@@ -243,11 +261,11 @@
 <% if @contract.present? %>
   <script>
     const contract = '<%= @contract.id %>';
-    const timesheet = '<%= @timesheet.id %>';
+    const timesheet = '<%= @timesheet&.id %>';
     $('html,body').animate({scrollTop: $('.card' + contract).offset().top},'slow');
     if (contract && timesheet) {
       $('.more-less<%= @contract.id %>')[0].click();
-      $('html,body').animate({scrollTop: $('.title-<%= @timesheet.id %>').offset().top},'slow');
+      $('html,body').animate({scrollTop: $('.title-<%= @timesheet&.id %>').offset().top},'slow');
     } else if (contract) {
       $('.review_button<%= @contract.id %>')[0].click();
     }

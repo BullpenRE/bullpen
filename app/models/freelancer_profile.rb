@@ -21,7 +21,6 @@ class FreelancerProfile < ApplicationRecord
 
   scope :users, -> { joins(:user) }
 
-  enum professional_years_experience: { '0-2': 0, '2-5': 1, '5-10': 2, '>10': 3 }
   enum curation: { pending: 0, declined: 1, accepted: 2 }
 
   validates :slug, uniqueness: true
@@ -30,6 +29,7 @@ class FreelancerProfile < ApplicationRecord
 
   scope :searchable, -> { where(searchable: true) }
   scope :ready_for_announcement, -> { where(curation: 'accepted', new_jobs_alert: true) }
+  scope :user_enabled, -> { joins(:user).where(user: { disable: false }) }
 
   def ready_for_submission?
     draft? && pending?
@@ -42,6 +42,10 @@ class FreelancerProfile < ApplicationRecord
 
   def first_name
     @first_name ||= user.first_name
+  end
+
+  def disabled
+    @disabled ||= user.disable
   end
 
   def last_name

@@ -29,6 +29,7 @@ class Employer::InterviewsController < ApplicationController
                                                    .interview_requests
                                                    .not_rejected
                                                    .employer_visible
+                                                   .freelancer_enabled
                                                    .order(state: :asc, created_at: :desc)
   end
 end

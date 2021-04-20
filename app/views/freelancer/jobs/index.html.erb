@@ -4,7 +4,7 @@
 <!--Job card-->
 <div class="container mb-3">
   <h1>Jobs</h1>
-  <% @jobs.each do |job| %>
+  <% @jobs.employer_enabled.each do |job| %>
     <%= render partial: 'freelancer/jobs/show_job', locals: { job: job } %>
     <div class="bp-card mb-3 card<%= job.id %>">
       <div class="d-flex flex-column flex-lg-row">

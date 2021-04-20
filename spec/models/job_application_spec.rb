@@ -89,6 +89,14 @@ RSpec.describe JobApplication, type: :model do
     let!(:declined_job_application) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile_dima, job: job, state: 'declined') }
     let!(:draft_job_application) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile_nata, job: job, state: 'draft') }
     let!(:applied_job_application) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile_erik, job: job, state: 'applied') }
+    let!(:user_disabled) { FactoryBot.create(:user, disable: true) }
+    let!(:freelancer_profile_disabled) { FactoryBot.create(:freelancer_profile, user: user_disabled) }
+    let!(:job_application_with_disabled_freelancer) { FactoryBot.create(:job_application, freelancer_profile: freelancer_profile_disabled) }
+
+    it '.freelancer_enabled' do
+      expect(JobApplication.freelancer_enabled).to include(job_application)
+      expect(JobApplication.freelancer_enabled).not_to include(job_application_with_disabled_freelancer)
+    end
 
     it '.not_rejected' do
       expect(JobApplication.draft_or_applied).to include(draft_job_application)

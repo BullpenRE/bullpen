@@ -37,7 +37,7 @@ class FreelancerMailerPreview < ActionMailer::Preview
   end
 
   def posted_job
-    FreelancerMailer.posted_job(Job.last, FreelancerProfile.last.email)
+    FreelancerMailer.posted_job(Job.last, FreelancerProfile.last)
   end
 
   def review_was_create
