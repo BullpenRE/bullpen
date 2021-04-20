@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     post 'find_job', to: 'contracts#find_job'
     post 'close_contract', to: 'contracts#close_contract'
     post 'delete_contract', to: 'contracts#delete_contract'
+    get 'show_payment_method', to: 'contracts#show_payment_method'
     post '/stripe/create_card', to: 'stripe#create_card', as: :create_card
     post '/stripe/create_account', to: 'stripe#create_account', as: :create_account
   end

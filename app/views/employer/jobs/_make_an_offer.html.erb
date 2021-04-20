@@ -45,11 +45,12 @@
             </div>
             <% if job.present? %>
               <div class="mb-4 mt-0 bp-text-sm">Your payment method will be charged weekly based on the number of hours worked.</div>
-              <h5 >Payment Method</h5>
-              <div class="mb-4">
-                <button class="btn btn-primary" type="button">Add a Credit Card</button>
-              </div>
-              <div class="form-check custom-checkbox">
+              <h5>Payment Method</h5>
+              <%= render partial: 'employer/shared/choose_payment_account', locals: { contract: nil, f: f,
+                                                                                      employer_profile: job.employer_profile,
+                                                                                      modal_id: "#{modal_id}",
+                                                                                      redirect_reference: redirect_reference } %>
+              <div class="form-check custom-checkbox mt-3">
                 <%= f.check_box :state, class: "custom-control-input", id: "stateClosed#{job.id}" %>
                 <label class="custom-control-label text-secondary font-weight-bold mb-4" for="stateClosed<%= job.id %>">Close the job post (pending applicants will be notified)</label>
               </div>
@@ -73,14 +74,13 @@
                 </script>
               <% end %>
               <h5 class="mt-4">Payment Method</h5>
-              <select class="custom-select mb-3">
-                <option value="1">Visa ending in 4424</option>
-                <option value="2">Visa ending in 4366</option>
-                <option value="3">MasterCard ending in 4424</option>
-              </select>
+              <%= render partial: 'employer/shared/choose_payment_account', locals: { contract: contract, f: f,
+                                                                                      employer_profile: contract.employer_profile,
+                                                                                      modal_id: "#{modal_id}",
+                                                                                      redirect_reference: redirect_reference } %>
             <% end %>
             <div class="d-flex justify-content-end">
-              <%= f.submit contract.present? && !contract.closed? ? 'Save Changes' : 'Send Offer', class: 'btn btn-primary mt-3 send-invitation' %>
+              <%= f.submit contract.present? && !contract.closed? ? 'Save Changes' : 'Send Offer', class: "btn btn-primary mt-3", id: "make-an-offer-#{modal_id}" %>
             </div>
           </div>
         <% end %>

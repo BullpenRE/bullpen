@@ -41,7 +41,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
           (timesheet.billings.order(work_done: :desc).map { |billing| link_to("#{billing.description} done on #{billing.work_done}", admin_billing_path(billing.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_billing_path(:billing=> { :contract_id => timesheet.contract_id, :timesheet_id => timesheet.id }), target: '_new')).html_safe
         end
         row 'Credits Entries' do
-          (timesheet.credits.map{ |credit| link_to("#{credit.description} amount #{credit.amount}", admin_credit_path(credit.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_credit_path(credit: { timesheet_id: timesheet.id }), target: '_new')).html_safe
+          (timesheet.credits.map { |credit| link_to("#{credit.description} amount #{credit.amount}", admin_credit_path(credit.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_credit_path(credit: { timesheet_id: timesheet.id }), target: '_new')).html_safe
         end
 
         row ' ' do
@@ -68,7 +68,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
       f.inputs 'Timesheet Entry' do
         f.input :contract_id,
                 as: :select, input_html: { class: 'select2' },
-                collection: Contract.find_each.map { |contract| ["#{contract.title} from #{contract.employer_profile.email}", contract.id]},
+                collection: Contract.find_each.map { |contract| ["#{contract.title(true)} from #{contract.employer_profile.email}", contract.id]},
                 label: 'Contract'
         f.input :description
         f.input :starts

@@ -58,7 +58,7 @@
 
       <div class="modal-body">
         <div class="stripe-form-container">
-          <%= stripe_elements_tag submit_path: employer_create_card_path %>
+          <%= stripe_elements_tag submit_path: employer_create_card_path(redirect_reference: redirect_reference) %>
         </div>
       </div>
     </div>
