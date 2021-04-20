@@ -58,7 +58,21 @@ class Employer::ContractsController < ApplicationController
     contract.update(hide_from_employer: true)
   end
 
+  def show_payment_method
+    session[:make_an_offer_modal] = params[:modal_id]
+    respond_to do |format|
+      format.html
+      format.js { render payment_partial, locals: { redirect_reference: params[:redirect_reference] } }
+    end
+  end
+
   private
+
+  def payment_partial
+    return 'employer/shared/add_bank_account' if params[:payment_method] == 'account'
+
+    'employer/shared/add_credit_card'
+  end
 
   def contract
     @contract ||= current_user.employer_profile.contracts.find_by(id: params[:id])
