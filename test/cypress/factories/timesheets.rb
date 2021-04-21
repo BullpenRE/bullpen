@@ -7,5 +7,9 @@ FactoryBot.define do
     after(:create) do |timesheet, _|
       timesheet.update(description: "#{timesheet.starts.strftime("%b %d")} to #{timesheet.ends.strftime("%b %d")}")
     end
+
+    trait :skip_validate do
+      to_create {|instance| instance.save(validate: false)}
+    end
   end
 end
