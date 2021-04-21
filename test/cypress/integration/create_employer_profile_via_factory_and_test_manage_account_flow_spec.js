@@ -47,57 +47,62 @@ describe('Create employer_profile via factory employer_profile.rb and test manag
       .click()
 
     // try to click button 'Add a Credit Card' in "payment Options' section
-    cy.get('[data-target="#addCreditCardModal"]')
-      .should('exist')
-      .wait(2000)
-      .get('[data-target="#addCreditCardModal"]')
-      .click()
+    // cy.get('[data-target="#addCreditCardModal"]')
+    //   .should('exist')
+    //   .wait(2000)
+    //   .get('[data-target="#addCreditCardModal"]')
+    //   .click()
 
     // try to add data to Stripe iFrame modul's input fields about card
-    cy.getWithinIframe('[name="cardnumber"]').type('4242424242424242');
-    cy.getWithinIframe('[name="exp-date"]').type('1224');
-    cy.getWithinIframe('[name="cvc"]').type('987');
-    cy.getWithinIframe('[name="postal"]').type('12345');
+    // cy.getWithinIframe('[name="cardnumber"]').type('4242424242424242');
+    // cy.getWithinIframe('[name="exp-date"]').type('1224');
+    // cy.getWithinIframe('[name="cvc"]').type('987');
+    // cy.getWithinIframe('[name="postal"]').type('12345');
 
     // try to click button 'Add a Credit Card' in Stripe iFrame module
-    cy.get('[data-disable-with="Add a Credit Card"]')
-      .should('exist')
-      .click()
+    // cy.get('[data-disable-with="Add a Credit Card"]')
+    //   .should('exist')
+    //   .click()
 
     // try to click button 'Add a Bank Account' in "payment Options' section
-    cy.get('[data-target="#addBankAccountModal"]')
-      .should('exist')
-      .wait(2000)
-      .get('[data-target="#addBankAccountModal"]')
-      .click()
+    // cy.get('[data-target="#addBankAccountModal"]')
+    //   .should('exist')
+    //   .wait(2000)
+    //   .get('[data-target="#addBankAccountModal"]')
+    //   .click()
 
     // try to add 'ABA routing number' in input_field 'Bank Routing number' of opened module
-    cy.get('[placeholder="Enter the ABA routing number"]')
-      .should('exist')
-      .clear()
-      .type('110000000')
+    // cy.get('[placeholder="Enter the ABA routing number"]')
+    //   .should('exist')
+    //   .clear()
+    //   .type('110000000')
 
     // try to add 'Bank Account number' in correspondent input-field of opened module
-    cy.get('#account_number')
-      .should('exist')
-      .clear()
-      .type('000123456789')
+    // cy.get('#account_number')
+    //   .should('exist')
+    //   .clear()
+    //   .type('000123456789')
 
     // try to add 'Bank Account Holder Name' in correspondent input-field of opened module
-    cy.get('#account_holder_name')
-      .should('exist')
-      .clear()
-      .type('TetyanaEmplAmended LastNameAmended')
+    // cy.get('#account_holder_name')
+    //   .should('exist')
+    //   .clear()
+    //   .type('TetyanaEmplAmended LastNameAmended')
 
     // try to select 'Bank Account Holder Type' in correspondent input-field of opened module
-    cy.get('#account_holder_type')
-      .should('exist')
-      .select('individual', {force: true})
+    // cy.get('#account_holder_type')
+    //   .should('exist')
+    //   .select('company', {force: true})
 
     // try to click button 'Add a Bank Account'
-    cy.get('[data-disable-with="Add a Bank Account"]')
+    // cy.get('[data-disable-with="Add a Bank Account"]')
+    //   .should('exist')
+    //   .click()
+
+    // try to set bank account as default
+    cy.get('[data-method="put"]')
       .should('exist')
-      .click()
+      .click({force: true})
 
     // try to amend data in chapter 'Company Information'
     // try to click edit button

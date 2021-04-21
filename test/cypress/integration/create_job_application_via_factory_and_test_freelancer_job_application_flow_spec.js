@@ -100,6 +100,15 @@ describe('Create job_application via factory and test freelancer-employer job_ap
       .should('exist')
       .click()
 
+    // try to change Payment Method
+    cy.get('select#make_an_offer_payment_account_id')
+      .should('exist')
+      // .select('value').eq(1)
+      .find('option')
+      .then($elm => $elm.get(1).setAttribute('selected', "selected"))
+      .parent()
+      .trigger('change')
+
     // try to click button 'Send Offer' in opened module
     cy.get('[id^="makeAnOffer"] > .modal-dialog > .modal-content > .modal-body > form > .form-group > .d-flex > .btn')
       .should('exist')

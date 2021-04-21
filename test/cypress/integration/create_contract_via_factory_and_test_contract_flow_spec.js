@@ -58,6 +58,15 @@ describe('Create contract via factory contracts.rb and test contract flow', () =
       .clear()
       .type('280')
 
+    // try to change Payment Method
+    cy.get('select#make_an_offer_payment_account_id')
+      .should('exist')
+      // .select('value').eq(1)
+      .find('option')
+      .then($elm => $elm.get(1).setAttribute('selected', "selected"))
+      .parent()
+      .trigger('change')
+
     // try to click button 'Save Changes'
     cy.get('[id^=makeAnOffer] > .modal-dialog > .modal-content > .modal-body > form > .form-group > .d-flex > .btn')
       .should('exist').click()

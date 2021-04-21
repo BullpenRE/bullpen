@@ -9,15 +9,15 @@ FactoryBot.define do
     card_expires { 2.years.from_now }
     card_cvc_check { %w[pass fail unavailable unchecked].sample }
 
-    # trait :bank do
-    #   stripe_object { 'bank_account' }
-    #   id_stripe { "ba_#{Faker::Crypto.md5[0..22]}" }
-    #   card_brand { nil }
-    #   card_expires { nil }
-    #   card_cvc_check { nil }
-    #   bank_name { Faker::Bank.name }
-    #   bank_routing_number { Faker::Bank.routing_number }
-    #   bank_status { %w[new validated verified verification_failed errored].sample }
-    # end
+    trait :bank do
+      stripe_object { 'bank_account' }
+      id_stripe { "ba_#{Faker::Crypto.md5[0..22]}" }
+      card_brand { nil }
+      card_expires { nil }
+      card_cvc_check { nil }
+      bank_name { Faker::Bank.name }
+      bank_routing_number { Faker::Bank.routing_number }
+      bank_status { %w[new validated verified verification_failed errored].sample }
+    end
   end
 end

@@ -3,11 +3,17 @@
 module Test
   class FactoriesController < ActionController::Base
     def create
-      factory = FactoryBot.create(factory_name, factory_attributes)
+      factory = FactoryBot.create(factory_name, *traits, factory_attributes)
       render json: factory
     end
 
     private
+
+    def traits
+      if params[:traits].present?
+        params[:traits].map { |_key, trait| trait.to_sym }
+      end
+    end
 
     def factory_name
       params.fetch(:name)

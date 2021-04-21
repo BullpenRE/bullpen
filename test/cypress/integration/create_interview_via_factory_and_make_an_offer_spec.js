@@ -2,7 +2,7 @@
 
 describe('To get /employer/talent page via factory employer_profile.rb and as employer create a job', () => {
 
-  it('get /employer/talent via factory employer_profile.rb and create a job',  { retries: 2 }, function () {
+  it('get /employer/talent via factory employer_profile.rb and create a job', function () {
     // create employer_profile
     cy.appFactories([
       ['create', 'interview_request']
@@ -200,7 +200,7 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .find('button.dropdown-item')
       .eq(0)
       .should('exist')
-      .click()
+      .click({force: true})
 
     // try to close opened module 'Offer Details' via '×'
     cy.get('[id^=showOfferContractDetails]')
@@ -223,13 +223,22 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .find('button.dropdown-item')
       .eq(1)
       .should('exist')
-      .click()
+      .click({force: true})
 
     //try to modify 'Hourly Rate'
     cy.get('#make_an_offer_pay_rate')
       .should('exist')
       .clear()
       .type('280')
+
+    // try to change Payment Method
+    cy.get('select#make_an_offer_payment_account_id')
+      .should('exist')
+      // .select('value').eq(1)
+      .find('option')
+      .then($elm => $elm.get(1).setAttribute('selected', "selected"))
+      .parent()
+      .trigger('change')
 
     // try to click button 'Save Changes'
     cy.get('[id^=makeAnOffer] > .modal-dialog > .modal-content > .modal-body > form > .form-group > .d-flex > .btn')
@@ -246,7 +255,7 @@ describe('To get /employer/talent page via factory employer_profile.rb and as em
       .find('button.dropdown-item')
       .eq(2)
       .should('exist')
-      .click()
+      .click({force: true})
 
     // try to cancel offer withdrawal
     cy.get('.modal-content > .modal-footer > .btn-link')
