@@ -21,7 +21,7 @@ class Timesheet < ApplicationRecord
   after_invoice_payment_succeeded do |invoice, _event|
     timesheet = Timesheet.find_by(stripe_id_invoice: invoice['id'])
 
-    timesheet&.update(employer_charged_date: Time.current)
+    timesheet&.update(employer_charged_on: Time.current)
   end
 
   # Scopes
