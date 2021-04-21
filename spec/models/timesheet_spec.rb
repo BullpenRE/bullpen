@@ -147,12 +147,5 @@ RSpec.describe Timesheet, type: :model do
       expect(pending_timesheet.dispute_deadline).to eq (pending_timesheet.ends.next_occurring(:friday) - 1.day).strftime('%b %e')
       expect(current_timesheet.dispute_deadline).to eq (current_timesheet.ends.next_occurring(:friday) - 1.day).strftime('%b %e')
     end
-
-    context '#employer_total_charge' do
-      it 'calculates charges for pending billings only' do
-        expect(pending_timesheet.employer_total_charge).to eq 3.75 * pending_timesheet.contract.pay_rate
-        expect(current_timesheet.employer_total_charge).to eq 0
-      end
-    end
   end
 end

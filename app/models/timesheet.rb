@@ -66,10 +66,6 @@ class Timesheet < ApplicationRecord
     @payment_date_in_future ||= pending_payment_date > Date.current
   end
 
-  def employer_total_charge
-    billings.pending.sum(&:multiplier) * contract.pay_rate
-  end
-
   private
 
   def ends_after_start
