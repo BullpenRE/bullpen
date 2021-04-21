@@ -9,7 +9,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('pa
     filter :is_default, label: 'Default Payment Account', as: :check_boxes, collection: [['Yes', true]]
 
     permit_params :employer_profile_id, :stripe_object, :id_stripe, :last_four, :fingerprint, :card_brand,
-                  :card_expires, :card_cvc_check, :bank_name, :bank_routing_number, :bank_status, :default
+                  :card_expires, :card_cvc_check, :bank_name, :bank_routing_number, :bank_status, :is_default
 
 
     index do
