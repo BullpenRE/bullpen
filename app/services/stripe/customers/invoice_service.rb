@@ -8,11 +8,13 @@ module Stripe
         @contract = @timesheet.contract
         @employer_profile = @contract.employer_profile
         @user = @employer_profile.user
+        @credits = @timesheet.credits
       end
 
       # rubocop:disable Metrics/MethodLength
       def call
-        prepare_invoice
+        add_billing_items
+        add_credit_items if @credits.present?
         invoice = create_invoice
 
         if invoice['id'].present?
@@ -35,7 +37,7 @@ module Stripe
 
       private
 
-      def add_invoice_item(billing_item)
+      def add_billing_item(billing_item)
         Stripe::InvoiceItem.create({
                                      customer: @employer_profile.stripe_id_customer,
                                      amount: (billing_item.multiplier * @contract.pay_rate * 100).to_i,
@@ -44,9 +46,18 @@ module Stripe
                                    })
       end
 
-      def prepare_invoice
+      def add_credit_item(credit_item)
+        Stripe::InvoiceItem.create({
+                                     customer: @employer_profile.stripe_id_customer,
+                                     amount: (credit_item.amount * -100).to_i,
+                                     currency: 'usd',
+                                     description: credit_item.description
+                                   })
+      end
+
+      def add_billing_items
         @timesheet.billings.pending.each do |pending_billing|
-          add_invoice_item(pending_billing)
+          add_billing_item(pending_billing)
         end
       end
 
@@ -56,6 +67,14 @@ module Stripe
                                  auto_advance: true, # auto-finalize this draft after ~1 hour
                                  default_source: @contract.payment_account.id_stripe
                                })
+      end
+
+      def add_credit_items
+        return if @timesheet.credits.sum(&:amount) > @timesheet.employer_total_charge
+
+        @timesheet.credits.each do |credit|
+          add_credit_item(credit)
+        end
       end
     end
   end

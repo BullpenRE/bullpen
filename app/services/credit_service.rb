@@ -17,7 +17,8 @@ class CreditService
     {
       timesheet_id: @timesheet.id,
       amount: amount_of_credit,
-      applied_to: @applied_to
+      applied_to: @applied_to,
+      description: "Credit granted at #{Date.current}"
     }
   end
 
