@@ -32,6 +32,7 @@ class Timesheet < ApplicationRecord
   }
   scope :ready_for_payment, -> { where(stripe_id_invoice: nil, ends: ..Date.current) }
   scope :paid, -> { where.not(stripe_id_invoice: nil) }
+  scope :disputed, -> { joins(:billings).where(billings: { state: 'disputed' }) }
 
   def title(employer = true)
     return 'Current Hours' if ends >= Date.current
