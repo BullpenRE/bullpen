@@ -35,19 +35,35 @@ RSpec.describe Timesheet, type: :model do
   end
 
   context 'Scopes' do
-    let!(:timesheet_1) { FactoryBot.create(:timesheet, :with_stripe_invoice) }
-    let!(:timesheet_2) { FactoryBot.create(:timesheet, contract_id: timesheet_1.contract_id) }
+    let!(:timesheet_with_no_billings) { FactoryBot.create(:timesheet) }
+    let!(:timesheet_with_stripe_invoice) { FactoryBot.create(:timesheet, :with_stripe_invoice) }
+    let!(:unprocessed_timesheet) { FactoryBot.create(:timesheet, contract_id: timesheet_with_stripe_invoice.contract_id) }
+    let!(:disputed_timesheet) { FactoryBot.create(:timesheet) }
+    let!(:disputed_billing) { FactoryBot.create(:billing, timesheet: disputed_timesheet, contract: disputed_timesheet.contract, work_done: disputed_timesheet.starts, state: 'disputed') }
+    let!(:normal_billing) { FactoryBot.create(:billing, timesheet: unprocessed_timesheet, contract: unprocessed_timesheet.contract, work_done: unprocessed_timesheet.starts, state: 'pending') }
 
-    it '#related_to_contracts' do
-      expect(Timesheet.related_to_contracts([timesheet.contract_id, timesheet_1.contract_id])).to match_array [timesheet, timesheet_1, timesheet_2]
-      expect(Timesheet.related_to_contracts([timesheet_1.contract_id])).to match_array [timesheet_1, timesheet_2]
+    before do
+      timesheet_with_no_billings.update(description: 'timesheet_with_no_billings')
+      timesheet_with_stripe_invoice.update(description: 'timesheet_with_stripe_invoice')
+      unprocessed_timesheet.update(description: 'unprocessed_timesheet')
+      disputed_timesheet.update(description: 'disputed_timesheet')
     end
 
-    it '#paid' do
-      expect(Timesheet.paid).to match_array [timesheet_1]
+    it '.related_to_contracts' do
+      expect(Timesheet.related_to_contracts([timesheet.contract_id, timesheet_with_stripe_invoice.contract_id])).to match_array [timesheet, timesheet_with_stripe_invoice, unprocessed_timesheet]
+      expect(Timesheet.related_to_contracts([timesheet_with_stripe_invoice.contract_id])).to match_array [timesheet_with_stripe_invoice, unprocessed_timesheet]
     end
 
-    context '#ready_for_payment' do
+    it '.paid' do
+      expect(Timesheet.paid).to match_array [timesheet_with_stripe_invoice]
+    end
+
+    it '.disputed' do
+      expect(Timesheet.disputed).to include(disputed_timesheet)
+      expect(Timesheet.disputed).to_not include(timesheet_with_no_billings, unprocessed_timesheet)
+    end
+
+    describe '.ready_for_payment' do
       let!(:passed_paid_timesheet) { FactoryBot.create(:timesheet, :with_stripe_invoice, ends: Date.yesterday) }
       let!(:current_paid_timesheet) { FactoryBot.create(:timesheet, :with_stripe_invoice, ends: Date.tomorrow) }
       let!(:passed_unpaid_timesheet) { FactoryBot.create(:timesheet, ends: Date.yesterday) }
@@ -56,7 +72,6 @@ RSpec.describe Timesheet, type: :model do
       it 'return only timesheets with stripe_id_invoice=nil and ends<=Date.current' do
         expect(Timesheet.ready_for_payment).to include(passed_unpaid_timesheet)
         expect(Timesheet.ready_for_payment).to_not include(passed_paid_timesheet, current_paid_timesheet, current_unpaid_timesheet)
-
       end
     end
   end
@@ -146,13 +161,6 @@ RSpec.describe Timesheet, type: :model do
     it '#dispute_deadline' do
       expect(pending_timesheet.dispute_deadline).to eq (pending_timesheet.ends.next_occurring(:friday) - 1.day).strftime('%b %e')
       expect(current_timesheet.dispute_deadline).to eq (current_timesheet.ends.next_occurring(:friday) - 1.day).strftime('%b %e')
-    end
-
-    context '#employer_total_charge' do
-      it 'calculates charges for pending billings only' do
-        expect(pending_timesheet.employer_total_charge).to eq 3.75 * pending_timesheet.contract.pay_rate
-        expect(current_timesheet.employer_total_charge).to eq 0
-      end
     end
   end
 end

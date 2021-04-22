@@ -16,10 +16,12 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
     filter :contract_employer_profile_user_email, as: :string, label: 'Employer Email'
     filter :contract_freelancer_profile_user_email, as: :string, label: 'Freelancer Email'
     filter :contract_title, as: :string, label: 'Contract Title'
-
     scope :all, :all
+    scope :disputed, :disputed
     scope :ready_for_payment, :ready_for_payment
     scope :paid, :paid
+
+
 
     show title: 'Timesheet' do |timesheet|
       attributes_table do
@@ -43,11 +45,11 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
         row 'Credits Entries' do
           (timesheet.credits.map { |credit| link_to("#{credit.description} amount #{credit.amount}", admin_credit_path(credit.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_credit_path(credit: { timesheet_id: timesheet.id }), target: '_new')).html_safe
         end
-        if !timesheet.payment_date_in_future? && !timesheet.disputed?
+        if timesheet.ends < Date.current && !timesheet.disputed?
           if timesheet.contract.employer_profile.credit_balance > 0
             columns do
               column do
-                button_to 'Apply Credits Employer', apply_credit_admin_timesheet_path(id:timesheet.id, applied_to: 'employer'), action: :post
+                button_to "Apply Credits Employer#{' (DUE)' unless timesheet.payment_date_in_future?}", apply_credit_admin_timesheet_path(id:timesheet.id, applied_to: 'employer'), action: :post
               end
             end
           end
