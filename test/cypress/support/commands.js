@@ -76,10 +76,10 @@ Cypress.Commands.add("gui_login", (email) => {
 })
 
 Cypress.Commands.add("gui_logout", () => {
-    cy.get('[rel="nofollow"]')
+    cy.get('[href="/users/sign_out"]')
       .should('exist')
       .wait(2000)
-      .get('[rel="nofollow"]')
+      .get('[href="/users/sign_out"]')
       .click({force: true})
 })
 

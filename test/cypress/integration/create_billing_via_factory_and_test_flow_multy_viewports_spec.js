@@ -140,9 +140,8 @@ describe('Create billing via factory billings.rb and test billing flow', () => {
         .click({force: true})
 
       // try to log out as freelancer
-      cy.get('.dropdown-menu > [rel="nofollow"]')
-        .should('exist')
-        .click({force: true})
+      cy.wait(2000)
+        .gui_logout()
 
       // try to login as just created employer
       cy.gui_login('tetyanaEmpl@gmail.com');
