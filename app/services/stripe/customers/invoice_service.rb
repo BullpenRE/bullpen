@@ -27,7 +27,7 @@ module Stripe
       rescue StandardError => e
         ::Rails.logger.info(
           "Error in Stripe::Customers::InvoiceService impacting user id: #{@user.id}, "\
-          "timetheet ID: #{@timesheet.id}, "\
+          "timesheet ID: #{@timesheet.id}, "\
           "Contract: #{@contract.title}, "\
           "error details: #{e}"
         )
