@@ -51,6 +51,10 @@ class Timesheet < ApplicationRecord
     (contract.pay_rate * unpaid_billing_total_hours).round(2)
   end
 
+  def employer_total_charge
+    billings.pending.sum(&:multiplier) * contract.pay_rate
+  end
+
   def dispute_deadline
     (pending_payment_date - 1.day).strftime('%b %e')
   end
