@@ -4,7 +4,7 @@
     <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= timesheet.invoice_number %></div>
     <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap"><%= timesheet.ends.strftime("%b %d, %Y") %></div>
     <div class="col-12 col-md-6 mt-2 mt-md-0">
-      <%= number_to_currency(timesheet.employer_total_charge, strip_insignificant_zeros: true) %> paid <%= timesheet.employer_charged_on.strftime("%b %d, %Y") %>
+      <%= number_to_currency(timesheet.employer_total_charge, strip_insignificant_zeros: true) %> paid <%= timesheet.employer_charged_on&.strftime("%b %d, %Y") %>
     </div>
       <div class="col-12 col-lg-2 mt-2 mt-lg-0 text-lg-right">
         <a href="<%= timesheet.pdf_invoice_link.presence || 'https://stripe.com' %>" target="_blank">View Invoice<i class="fas fa-external-link-alt ml-1"></i></a>
