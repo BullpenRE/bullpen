@@ -6,28 +6,34 @@ module Employer
     before_action :no_token_redirect
 
     def create_card
-      response = Stripe::Customers::CardService.new(user_id: current_user.id,
-                                                    customer_id: employer_profile.stripe_id_customer,
-                                                    stripe_token: stripe_params[:stripeToken]).call
-      if response.is_a?(Hash)
-        redirect_to employer_account_index_path, alert: STRIPE_ERROR
-      else
-        redirect_to employer_account_index_path, notice: 'Stripe: Card added successfully'
-      end
+      response = Stripe::Customers::CardService.new(new_service_params).call
+      check_response_and_redirect(response, 'Card')
     end
 
     def create_account
-      response = Stripe::Customers::BankAccountService.new(user_id: current_user.id,
-                                                           customer_id: employer_profile.stripe_id_customer,
-                                                           stripe_token: stripe_params[:stripeToken]).call
-      if response.is_a?(Hash)
-        redirect_to employer_account_index_path, alert: STRIPE_ERROR
-      else
-        redirect_to employer_account_index_path, notice: 'Stripe: Bank account added successfully'
-      end
+      response = Stripe::Customers::BankAccountService.new(new_service_params).call
+      check_response_and_redirect(response, 'Bank account')
     end
 
     private
+
+    def new_service_params
+      {
+        user_id: current_user.id,
+        customer_id: employer_profile.stripe_id_customer,
+        stripe_token: stripe_params[:stripeToken]
+      }
+    end
+
+    def check_response_and_redirect(response, account_type)
+      return redirect_to employer_account_index_path, alert: STRIPE_ERROR if response.is_a?(Hash)
+
+      if params[:redirect_reference].present?
+        redirect_to redirect_path
+      else
+        redirect_to employer_account_index_path, notice: "Stripe: #{account_type} added successfully"
+      end
+    end
 
     def employer_profile
       @employer_profile ||= current_user.employer_profile
@@ -45,6 +51,14 @@ module Employer
       return if token_present?
 
       redirect_to employer_account_index_path, alert: 'Stripe: token is invalid'
+    end
+
+    def redirect_path
+      return employer_jobs_path if params[:redirect_reference] == 'jobs'
+      return employer_contracts_path if params[:redirect_reference] == 'contracts'
+      return employer_interviews_path if params[:redirect_reference] == 'interviews'
+
+      employer_account_index_path
     end
   end
 end

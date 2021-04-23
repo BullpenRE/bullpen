@@ -63,4 +63,6 @@ Rails.application.configure do
     Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_URL']
   end
   ENV['STRIPE_CLIENT_ID'] = 'ca_F92ZNOQd5VYyop7dz5TP5qB7uf3ljnuk'
+  ENV['STRIPE_SECRET_KEY'] = 'sk_test_k7lMkrLmOH4PnQwggdMl6rqD'
+  ENV['NEW_JOB_ANNOUNCEMENT_SINGLE_EMAIL'] = 'false'
 end

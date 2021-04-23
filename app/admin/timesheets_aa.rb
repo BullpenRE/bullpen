@@ -28,6 +28,25 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
         row 'Billing Entries' do
           (timesheet.billings.order(work_done: :desc).map{|billing| link_to("#{billing.description} done on #{billing.work_done}", admin_billing_path(billing.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_billing_path(:billing=> { :contract_id => timesheet.contract_id, :timesheet_id => timesheet.id }), target: '_new')).html_safe
         end
+        row 'Credits Entries' do
+          (timesheet.credits.map{|credit| link_to("#{credit.description} amount #{credit.amount}", admin_credit_path(credit.id))}.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_credit_path(credit: { timesheet_id: timesheet.id }), target: '_new')).html_safe
+        end
+        if !timesheet.payment_date_in_future? && !timesheet.disputed?
+          if timesheet.contract.employer_profile.credit_balance > 0
+            columns do
+              column do
+                button_to 'Apply Credits Employer', apply_credit_admin_timesheet_path(id:timesheet.id, applied_to: 'employer'), action: :post
+              end
+            end
+          end
+          if timesheet.contract.freelancer_profile.credit_balance > 0
+            columns do
+              column do
+                button_to 'Apply Credits Freelancer', apply_credit_admin_timesheet_path(id:timesheet.id, applied_to: 'freelancer'), action: :post
+              end
+            end
+          end
+        end
 
       end
       active_admin_comments
@@ -38,7 +57,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
       f.inputs 'Timesheet Entry' do
         f.input :contract_id,
                 as: :select, input_html: { class: 'select2' },
-                collection: Contract.find_each.map {|contract| ["#{contract.title} from #{contract.employer_profile.email}", contract.id]},
+                collection: Contract.find_each.map {|contract| ["#{contract.title(true)} from #{contract.employer_profile.email}", contract.id]},
                 label: 'Contract'
 
         f.input :description
@@ -46,6 +65,13 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
         f.input :ends
         f.actions
       end
+    end
+
+    member_action :apply_credit, method: :post do
+      timesheet = Timesheet.find(params[:id])
+      applied_to = params[:applied_to]
+      CreditService.new(timesheet, applied_to).process
+      redirect_to admin_timesheet_path(timesheet.id), { notice: 'Credit applied.' }
     end
   end
 end

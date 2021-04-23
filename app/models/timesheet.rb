@@ -7,12 +7,13 @@ class Timesheet < ApplicationRecord
   }
   belongs_to :contract
   has_many :billings, dependent: :nullify
+  has_many :credits, dependent: :destroy
   validates :starts, :ends, presence: true
   validate :ends_after_start
 
-  def title(employer)
+  def title(employer = true)
     return 'Current Hours' if ends >= Date.current
-    return "Payment Paused - <span style='color: red'>Disputed</span>".html_safe if disputed?
+    return "Payment Paused - <span style='color: red'>Disputed</span>".html_safe if disputed? && payment_date_in_future?
     return 'Payment Paused' if paused?
     return "Payment Due on #{pending_payment_date.strftime('%b %e')}" if employer
 
@@ -36,7 +37,11 @@ class Timesheet < ApplicationRecord
   end
 
   def disputed?
-    billings.where(state: 'disputed').present? && pending_payment_date > Date.current
+    @disputed ||= billings.where(state: 'disputed').present?
+  end
+
+  def payment_date_in_future?
+    @payment_date_in_future ||= pending_payment_date > Date.current
   end
 
   private

@@ -20,7 +20,8 @@ class Freelancer::InterviewsController < ApplicationController
     redirect_to freelancer_jobs_path if current_user.freelancer_profile
                                                     .interview_requests
                                                     .not_rejected
-                                                    .freelancer_visible.blank?
+                                                    .freelancer_visible
+                                                    .employer_enabled.blank?
   end
 
   def decline_interview
@@ -63,6 +64,7 @@ class Freelancer::InterviewsController < ApplicationController
                                                    .interview_requests
                                                    .not_rejected
                                                    .freelancer_visible
+                                                   .employer_enabled
                                                    .order(created_at: :desc)
   end
 

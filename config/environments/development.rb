@@ -86,4 +86,5 @@ Rails.application.configure do
   ENV['STRIPE_PUBLISHABLE_KEY'] = 'pk_test_wvFaryXD9bfRc4NsJApj7h96'
   ENV['STRIPE_SECRET_KEY'] = 'sk_test_k7lMkrLmOH4PnQwggdMl6rqD'
   ENV['STRIPE_CLIENT_ID'] = 'ca_F92ZNOQd5VYyop7dz5TP5qB7uf3ljnuk'
+  ENV['NEW_JOB_ANNOUNCEMENT_SINGLE_EMAIL'] = 'false'
 end

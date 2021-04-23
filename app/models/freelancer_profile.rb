@@ -26,9 +26,11 @@ class FreelancerProfile < ApplicationRecord
   validates :slug, uniqueness: true
   validates :desired_hourly_rate, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
   validates :payout_percentage, allow_nil: false, inclusion: { in: 0..100, message: 'must be between 0-100' }
+  validates :credit_balance, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
   scope :searchable, -> { where(searchable: true) }
   scope :ready_for_announcement, -> { where(curation: 'accepted', new_jobs_alert: true) }
+  scope :user_enabled, -> { joins(:user).where(user: { disable: false }) }
 
   def ready_for_submission?
     draft? && pending?
@@ -41,6 +43,10 @@ class FreelancerProfile < ApplicationRecord
 
   def first_name
     @first_name ||= user.first_name
+  end
+
+  def disabled
+    @disabled ||= user.disable
   end
 
   def last_name

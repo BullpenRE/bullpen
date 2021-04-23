@@ -50,6 +50,21 @@ RSpec.describe InterviewRequest, type: :model do
     let!(:interview_request_declined) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_erik, state: 'declined') }
     let!(:removed_interview_request_from_freelancer) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_ben, hide_from_freelancer: true) }
     let!(:removed_interview_request_from_employer) { FactoryBot.create(:interview_request, employer_profile: employer_profile, freelancer_profile: freelancer_profile_ron, hide_from_employer: true) }
+    let!(:user_disabled) { FactoryBot.create(:user, disable: true) }
+    let!(:employer_profile_disabled) { FactoryBot.create(:employer_profile, user: user_disabled) }
+    let!(:interview_with_disabled_employer) { FactoryBot.create(:interview_request, employer_profile: employer_profile_disabled) }
+    let!(:freelancer_profile_disabled) { FactoryBot.create(:freelancer_profile, user: user_disabled) }
+    let!(:interview_with_disabled_freelancer) { FactoryBot.create(:interview_request, freelancer_profile: freelancer_profile_disabled) }
+
+    it '.employer_enabled' do
+      expect(InterviewRequest.employer_enabled).to include(interview_request_pending)
+      expect(InterviewRequest.employer_enabled).not_to include(interview_with_disabled_employer)
+    end
+
+    it '.freelancer_enabled' do
+      expect(InterviewRequest.freelancer_enabled).to include(interview_request_accepted)
+      expect(InterviewRequest.freelancer_enabled).not_to include(interview_with_disabled_freelancer)
+    end
 
     it '.not_rejected' do
       expect(InterviewRequest.not_rejected).to include(interview_request_pending)

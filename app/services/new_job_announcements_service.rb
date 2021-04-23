@@ -7,10 +7,16 @@ class NewJobAnnouncementsService
 
   def process
     @jobs.each do |job|
-      FreelancerProfile.ready_for_announcement.each do |freelancers_profile|
-        FreelancerMailer.posted_job(job, freelancers_profile.email).deliver_later
+      freelancers_ready_for_announcement.each do |freelancers_profile|
+        FreelancerMailer.posted_job(job, freelancers_profile).deliver_later
         job.update(job_announced: true)
       end
     end
+  end
+
+  def freelancers_ready_for_announcement
+    return FreelancerProfile.ready_for_announcement.limit(1) if ENV['NEW_JOB_ANNOUNCEMENT_SINGLE_EMAIL'] == 'true'
+
+    FreelancerProfile.ready_for_announcement
   end
 end

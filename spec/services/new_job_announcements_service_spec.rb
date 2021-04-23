@@ -8,17 +8,20 @@ RSpec.describe NewJobAnnouncementsService do
   let!(:service) { NewJobAnnouncementsService.new }
 
   it 'should send mails to freelancers with new_jobs_alert set to true' do
-    expect { service.process }.
-      to have_enqueued_job(ActionMailer::MailDeliveryJob).
-        with('FreelancerMailer', 'posted_job', 'deliver_now', { args: [job, freelancer_profile_complete.email] })
+    expect { service.process }.to change { ActiveJob::Base.queue_adapter.enqueued_jobs.count }.by 2
+    job.reload
+    expect(job.job_announced).to eq true
+  end
+
+  it 'should send one mail to freelancer with NEW_JOB_ANNOUNCEMENT_SINGLE_EMAIL set to true' do
+    ENV['NEW_JOB_ANNOUNCEMENT_SINGLE_EMAIL'] = 'true'
+    expect { service.process }.to change { ActiveJob::Base.queue_adapter.enqueued_jobs.count }.by 1
     job.reload
     expect(job.job_announced).to eq true
   end
 
   it 'should not send mails to freelancers with new_jobs_alert set to false' do
     freelancer_profile_complete.update(new_jobs_alert: false)
-    expect { service.process }.
-      to have_enqueued_job(ActionMailer::MailDeliveryJob).
-        with('FreelancerMailer', 'posted_job', 'deliver_now', { args: [job, freelancer_profile_1.email] })
+    expect { service.process }.to change { ActiveJob::Base.queue_adapter.enqueued_jobs.count }.by 1
   end
 end

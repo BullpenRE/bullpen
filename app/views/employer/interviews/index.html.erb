@@ -8,7 +8,7 @@
     <div id="interview-request">
       <%= render partial: 'employer/talent/interview_request', locals: { freelancer_profile: interview.freelancer_profile, interview: interview  } %>
     </div>
-    <div class="bp-card mb-3">
+    <div class="bp-card mb-3 card<%= interview.freelancer_profile.id %>">
       <div class="d-flex justify-content-between flex-column flex-lg-row">
         <%= render partial: 'shared/about_freelancer', locals: { freelancer_profile: interview.freelancer_profile,
                                                                 job_application: nil,
@@ -40,7 +40,7 @@
                 <button class="btn btn-outline-primary dropdown-toggle pr-1 w-100" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More<i class="fas fa-chevron-down ml-1"></i></button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
                   <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showProfile<%= interview.freelancer_profile.id %>">Show Profile</button>
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOfferWithoutJob<%= interview.freelancer_profile.id %>">Make an Offer</button>
+                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#makeAnOfferWithoutJob<%= interview.freelancer_profile.id %>" id="makeAnOfferWithoutJobButton<%= interview.freelancer_profile.id %>">Make an Offer</button>
                   <button class="dropdown-item text-danger" type="button" data-toggle="modal" data-target="#removeInterviewRequest<%= interview.id %>">Remove</button>
                 </div>
               </div>
@@ -54,3 +54,13 @@
   <% end %>
   <%= render partial: 'pagy/bootstrap_nav', locals: {pagy: @pagy} %>
 </div>
+<div id="payment_method"></div>
+<% if session[:make_an_offer_modal].present? %>
+  <script>
+    const modal_id = '<%= session[:make_an_offer_modal] %>';
+     $('html,body').animate({scrollTop: $('.card' + modal_id).offset().top},'slow');
+     $('#makeAnOfferWithoutJobButton' + modal_id)[0].click();
+  </script>
+  <% session.delete(:make_an_offer_modal) %>
+<% end %>
+<%= render 'employer/shared/add_bank_account_modal', { redirect_reference: 'interviews' } %>

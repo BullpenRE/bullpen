@@ -25,12 +25,12 @@ module CreateContract
 
   def update_make_an_offer_params
     params.require(:make_an_offer)
-          .permit(:job_description, :title, :contract_type)
+          .permit(:job_description, :title, :contract_type, :payment_account_id)
   end
 
   def make_an_offer_params
     params.require(:make_an_offer)
-          .permit(:job_id, :job_description, :title, :freelancer_profile_id, :contract_type)
+          .permit(:job_id, :job_description, :title, :freelancer_profile_id, :contract_type, :payment_account_id)
   end
 
   def job

@@ -59,6 +59,10 @@ class User < ApplicationRecord
     email.match?('@bullpenre.com') && confirmed_at.present?
   end
 
+  def active_for_authentication?
+    super && !disable
+  end
+
   private
 
   def profile
