@@ -1,19 +1,47 @@
 # frozen_string_literal: true
 
+# info about invoice callbacks: https://stripe.com/docs/api/events/types
 class Timesheet < ApplicationRecord
   default_scope { order(ends: :desc) }
   scope :related_to_contracts, lambda { |contracts_ids|
     where(contract_id: contracts_ids)
   }
   scope :previous_week, -> { where('ends > ?', Date.current - 1.week) }
+  include Stripe::Callbacks
+
+  # Associations
   belongs_to :contract
   has_many :billings, dependent: :nullify
+  has_many :credits, dependent: :destroy
+
+  # Validations
   validates :starts, :ends, presence: true
   validate :ends_after_start
 
-  def title(employer)
+  # Callbacks
+  after_invoice_created! do |_invoice, _event|
+    # handle case when invoice was created
+  end
+
+  after_invoice_payment_succeeded do |invoice, _event|
+    timesheet = Timesheet.find_by(stripe_id_invoice: invoice['id'])
+
+    timesheet&.update(employer_charged_on: Time.current)
+  end
+
+  # Scopes
+  default_scope { order(ends: :desc) }
+
+  scope :related_to_contracts, lambda { |contracts_ids|
+    where(contract_id: contracts_ids)
+  }
+  scope :ready_for_payment, -> { where(stripe_id_invoice: nil, ends: ..Date.current) }
+  scope :paid, -> { where.not(stripe_id_invoice: nil) }
+  scope :disputed, -> { joins(:billings).where(billings: { state: 'disputed' }) }
+
+  def title(employer = true)
     return 'Current Hours' if ends >= Date.current
-    return "Payment Paused - <span style='color: red'>Disputed</span>".html_safe if disputed?
+    return "Payment Paused - <span style='color: red'>Disputed</span>".html_safe if disputed? && payment_date_in_future?
     return 'Payment Paused' if paused?
     return "Payment Due on #{pending_payment_date.strftime('%b %e')}" if employer
 
@@ -37,7 +65,11 @@ class Timesheet < ApplicationRecord
   end
 
   def disputed?
-    billings.where(state: 'disputed').present? && pending_payment_date > Date.current
+    @disputed ||= billings.where(state: 'disputed').present?
+  end
+
+  def payment_date_in_future?
+    @payment_date_in_future ||= pending_payment_date > Date.current
   end
 
   private

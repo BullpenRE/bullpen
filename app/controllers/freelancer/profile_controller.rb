@@ -99,7 +99,6 @@ class Freelancer::ProfileController < ApplicationController
   def change_basic_info_params
     params.require(:freelancer_profile)
           .permit(:professional_title,
-                  :professional_years_experience,
                   :professional_summary)
   end
 

@@ -103,4 +103,14 @@ RSpec.describe EmployerProfile, type: :model do
       expect(employer_profile.email).to eq(user.email)
     end
   end
+
+  context 'Scopes' do
+    let!(:user_disabled) { FactoryBot.create(:user, disable: true) }
+    let!(:employer_profile_disabled) { FactoryBot.create(:employer_profile, user: user_disabled) }
+
+    it '.user_enabled' do
+      expect(EmployerProfile.user_enabled).to include(employer_profile)
+      expect(EmployerProfile.user_enabled).not_to include(employer_profile_disabled)
+    end
+  end
 end

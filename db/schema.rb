@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_03_101812) do
+ActiveRecord::Schema.define(version: 2021_04_18_200022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,6 +122,16 @@ ActiveRecord::Schema.define(version: 2021_04_03_101812) do
     t.index ["payment_account_id"], name: "index_contracts_on_payment_account_id"
   end
 
+  create_table "credits", force: :cascade do |t|
+    t.bigint "timesheet_id"
+    t.integer "applied_to", default: 0
+    t.string "description"
+    t.integer "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["timesheet_id"], name: "index_credits_on_timesheet_id"
+  end
+
   create_table "employer_profiles", force: :cascade do |t|
     t.string "company_name"
     t.string "company_website"
@@ -140,6 +150,7 @@ ActiveRecord::Schema.define(version: 2021_04_03_101812) do
     t.boolean "completed", default: false
     t.string "stripe_id_account"
     t.string "stripe_id_customer"
+    t.integer "credit_balance", default: 0
     t.index ["user_id"], name: "index_employer_profiles_on_user_id"
   end
 
@@ -198,7 +209,6 @@ ActiveRecord::Schema.define(version: 2021_04_03_101812) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "professional_title"
-    t.integer "professional_years_experience"
     t.text "professional_summary"
     t.integer "curation", default: 0
     t.boolean "draft", default: true
@@ -207,8 +217,9 @@ ActiveRecord::Schema.define(version: 2021_04_03_101812) do
     t.integer "desired_hourly_rate"
     t.boolean "new_jobs_alert", default: true
     t.boolean "searchable", default: true
-    t.string "stripe_id_account"
     t.integer "payout_percentage", default: 70
+    t.string "stripe_id_account"
+    t.integer "credit_balance", default: 0
     t.index ["user_id"], name: "index_freelancer_profiles_on_user_id"
   end
 
@@ -417,6 +428,10 @@ ActiveRecord::Schema.define(version: 2021_04_03_101812) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "employer_notified_of_freelancer_changes", default: true
+    t.string "stripe_id_invoice"
+    t.string "invoice_number"
+    t.datetime "employer_charged_on"
+    t.string "pdf_invoice_link"
     t.index ["contract_id"], name: "index_timesheets_on_contract_id"
   end
 
@@ -447,6 +462,7 @@ ActiveRecord::Schema.define(version: 2021_04_03_101812) do
     t.string "provider"
     t.float "latitude"
     t.float "longitude"
+    t.boolean "disable", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["latitude", "longitude"], name: "index_users_on_latitude_and_longitude"
@@ -462,6 +478,7 @@ ActiveRecord::Schema.define(version: 2021_04_03_101812) do
   add_foreign_key "contracts", "freelancer_profiles"
   add_foreign_key "contracts", "jobs"
   add_foreign_key "contracts", "payment_accounts"
+  add_foreign_key "credits", "timesheets"
   add_foreign_key "employer_profiles", "users"
   add_foreign_key "employer_sectors", "employer_profiles"
   add_foreign_key "employer_sectors", "sectors"

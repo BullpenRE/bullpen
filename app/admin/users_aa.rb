@@ -1,6 +1,6 @@
 if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('users')
   ActiveAdmin.register User do
-    permit_params :email, :first_name, :last_name, :confirmed_at, :confirmation_sent_at
+    permit_params :email, :first_name, :last_name, :confirmed_at, :confirmation_sent_at, :disable
 
     index do
       column :email
@@ -14,6 +14,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
       end
       column :role
       column :signup_promo
+      column :disable
 
       actions defaults: true
     end
@@ -21,6 +22,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
     filter :email
     filter :role, as: :select, collection: -> { User.roles }
     filter :last_name, as: :select, input_html: { class: 'select2' }
+    filter :disable
 
     show title: 'User' do |user|
       attributes_table do
@@ -37,6 +39,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
         row :sign_in_count
         row :last_sign_in_at
         row :confirmed_at
+        row :disable
       end
     end
 
@@ -49,6 +52,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('us
         f.input :role, as: :select
         f.input :confirmation_sent_at, label: 'Confirmation sent at (UTC)'
         f.input :confirmed_at, label: 'Confirmed (UTC)'
+        f.input :disable
         f.actions
       end
     end

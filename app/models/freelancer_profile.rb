@@ -19,17 +19,18 @@ class FreelancerProfile < ApplicationRecord
   has_many :job_applications, dependent: :destroy
   has_one_attached :avatar
 
+  default_scope { order(created_at: :desc) }
   scope :users, -> { joins(:user) }
+  scope :searchable, -> { where(searchable: true) }
+  scope :ready_for_announcement, -> { where(curation: 'accepted', new_jobs_alert: true) }
+  scope :user_enabled, -> { joins(:user).where(user: { disable: false }) }
 
-  enum professional_years_experience: { '0-2': 0, '2-5': 1, '5-10': 2, '>10': 3 }
   enum curation: { pending: 0, declined: 1, accepted: 2 }
 
   validates :slug, uniqueness: true
   validates :desired_hourly_rate, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
   validates :payout_percentage, allow_nil: false, inclusion: { in: 0..100, message: 'must be between 0-100' }
-
-  scope :searchable, -> { where(searchable: true) }
-  scope :ready_for_announcement, -> { where(curation: 'accepted', new_jobs_alert: true) }
+  validates :credit_balance, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
 
   def ready_for_submission?
     draft? && pending?
@@ -42,6 +43,10 @@ class FreelancerProfile < ApplicationRecord
 
   def first_name
     @first_name ||= user.first_name
+  end
+
+  def disabled
+    @disabled ||= user.disable
   end
 
   def last_name

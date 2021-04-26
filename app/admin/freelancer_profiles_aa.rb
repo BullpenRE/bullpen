@@ -12,18 +12,17 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
     permit_params :user_id,
                   :professional_summary,
                   :professional_title,
-                  :professional_years_experience,
                   :curation,
                   :draft,
                   :new_jobs_alert,
                   :searchable,
                   :desired_hourly_rate,
-                  :payout_percentage
+                  :payout_percentage,
+                  :credit_balance
 
     index do
       column :user
       column 'Title', :professional_title
-      column 'Years Experience', :professional_years_experience
       column :payout_percentage
       column :draft
       column :curation
@@ -38,7 +37,6 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         row :created_at
         row :updated_at
         row :professional_title
-        row :professional_years_experience
         row :professional_summary
         row :payout_percentage
         row 'Sectors' do
@@ -68,14 +66,15 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
           "#{freelancer_profile.average_rating} from #{freelancer_profile.reviews.size} review#{'s' if freelancer_profile.reviews.size > 1}" unless freelancer_profile.average_rating.nil?
         end
         row "ALL Interview Requests Received From Employers", :interview_requests do
-          freelancer_profile.interview_requests.map{ |i_r| link_to(i_r.employer_profile.email, admin_interview_request_path(i_r.id)) }.join('<br>').html_safe
+          (freelancer_profile.interview_requests.map{ |i_r| link_to(i_r.employer_profile.email, admin_interview_request_path(i_r.id)) }.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_interview_request_path(interview_request: { freelancer_profile_id: freelancer_profile.id }), target: '_new')).html_safe
         end
         row 'Job Applications', :job_applications do
-          freelancer_profile.job_applications.map{ |j_a| link_to(j_a.job.title, admin_job_application_path(j_a.id)) }.join('<br>').html_safe
+          (freelancer_profile.job_applications.map{ |j_a| link_to(j_a.job.title, admin_job_application_path(j_a.id)) }.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_job_application_path(job_application: { freelancer_profile_id: freelancer_profile.id }), target: '_new')).html_safe
         end
         row 'Contracts' do
-          freelancer_profile.contracts.map { |contract| link_to("Hired by #{contract.employer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe
+          (freelancer_profile.contracts.map { |contract| link_to("Hired by #{contract.employer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_contract_path(contract: { freelancer_profile_id: freelancer_profile.id }), target: '_new') ).html_safe
         end
+        row :credit_balance
       end
 
       active_admin_comments
@@ -108,7 +107,6 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
                   label: "User (#{link_to('Create new', new_admin_user_path, target: '_blank')})".html_safe
         end
         f.input :professional_title
-        f.input :professional_years_experience
         f.input :professional_summary
         f.input :payout_percentage
         f.input :sectors, as: :check_boxes, collection: Sector.order(:description).pluck(:description, :id)
@@ -119,6 +117,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('fr
         f.input :searchable
         f.input :curation
         f.input :desired_hourly_rate
+        f.input :credit_balance
         f.actions
       end
     end

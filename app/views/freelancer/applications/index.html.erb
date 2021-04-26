@@ -26,9 +26,11 @@
               </div>
             </div>
             <div class="bp-text-sm text-secondary font-weight-bold mr-lg-3 mb-2 mb-lg-0 mt-2 text-nowrap">
-              <% if job_application.state == 'applied' %>
+              <% if job_application.job.employer_profile.user.disable? %>
+                  <div class="text-danger">Disabled</div>
+              <% elsif job_application.applied? %>
                   Applied
-              <% elsif job_application.state == 'draft' %>
+              <% elsif job_application.draft? %>
                   Saved as draft
               <% end %>
             </div>
@@ -43,7 +45,9 @@
               <%= link_to 'Apply', freelancer_application_flows_path(job_app: job_application.id), { remote: true, 'data-toggle': "modal", 'data-target': "#jobAppStep1", class: "btn btn-primary d-block" } %>
             </div>
           <% end %>
-          <%= render partial: 'freelancer/applications/application_dropdown', locals: { job_application: job_application } %>
+          <% unless job_application.job.employer_profile.user.disable? %>
+            <%= render partial: 'freelancer/applications/application_dropdown', locals: { job_application: job_application } %>
+          <% end %>
         </div>
       </div>
     </div>
