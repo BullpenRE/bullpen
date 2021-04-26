@@ -5,7 +5,8 @@ This app was intended to replace a no-code bubble.io app for [Bullpen Real Estat
 a few weeks before the scheduled release it was decided for business reasons to not move forward with the replacement, and instead use it as a portfolio piece for the
 awesome team of engineers and designers that made it happen. It is almost fully built (about 90%) but has a few minor pieces of functionality missing.
 
-You can see this application in action on Heroku at http://bullpen-staging.herokuapp.com.
+You can see this application in action on Heroku at http://bullpen-staging.herokuapp.com. NOTE: In order to prevent potential abuse this application cannot send out any emails. In order to test the user experience 
+for a freelancer, use me@freelancer.com with password `Password1!`. To see the view of an employer you can use me@employer.com also with the password `Password1!`.
 
 ### The Team
 A big thank you to everyone below who contributed to this project!
