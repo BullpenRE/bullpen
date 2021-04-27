@@ -17,7 +17,7 @@ FactoryBot.define do
     # end
 
     # trait :paid do
-      state { 'paid' }
+    #   state { 'paid' }
     # end
     #
     # trait :with_timesheet do

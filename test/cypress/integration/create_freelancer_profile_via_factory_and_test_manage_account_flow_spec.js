@@ -73,11 +73,5 @@ describe('Create freelancer_profiles.rb via factory and test freelancer manage a
       .should('exist')
       .click()
 
-    // try to click button 'Add a Bank Account'
-    // cy.get('a.cy-add-account')
-    //   .should('exist')
-    //   .should('have.attr', 'href', 'https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:5017/freelancer/stripe/connect&client_id=ca_F92ZNOQd5VYyop7dz5TP5qB7uf9ljnuk&stripe_user%5Bemail%5D=tetyanafree@gmail.com&stripe_user%5Bfirst_name%5D=TetyanaFreeAmended&stripe_user%5Blast_name%5D=LastNameAmended&stripe_user%5Bphone_number%5D=&stripe_user%5Bcountry%5D=US')
-    //   .click()
-
   })
 })

@@ -29,21 +29,27 @@ describe('Create billing via factory billings.rb and test billing flow', () => {
 
     // try to click button 'Add Hours'
     cy.get('[data-target^="#addHours"]')
+      .eq(0)
       .should('exist')
       .click({force: true})
 
     // try to add data in opened module 'Add Billing Hours'
     // try to add date
     cy.get('.today')
+      .eq(0)
       .should('exist')
       .click({force: true})
 
     // try to add hours spent for job
     cy.get('[id^="hours"]')
+      .eq(0)
+      .should('exist')
       .type('2')
 
     // try to add minutes spent for job
     cy.get('[id^="minutes"]')
+      .eq(0)
+      .should('exist')
       .type('15')
 
     // try to add brief description of the task performed
@@ -154,6 +160,7 @@ describe('Create billing via factory billings.rb and test billing flow', () => {
 
     // try to click link 'Dispute Hours'
     cy.get('.align-self-start')
+      .eq(0)
       .should('exist')
       .click()
 
