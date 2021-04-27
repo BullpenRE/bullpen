@@ -8,8 +8,6 @@ FactoryBot.define do
     new_jobs_alert { true }
     desired_hourly_rate { [100, 125, 150, 250].sample }
 
-    # trait :complete do
-    #   curation { 'accepted' }
       after(:create) do |freelancer_profile, _|
         create(:freelancer_profile_education, freelancer_profile: freelancer_profile)
         create(:freelancer_profile_experience, freelancer_profile: freelancer_profile, start_year: 2012, end_year: 2018)
@@ -23,6 +21,5 @@ FactoryBot.define do
         3.times {|index| create(:freelancer_sector, freelancer_profile: freelancer_profile, sector_id: sector_ids[index] || create(:sector, description: "Sector #{index}").id) }
         3.times {|index| create(:freelancer_software, freelancer_profile: freelancer_profile, software_id: software_ids[index] || create(:software, description: "Software #{index}").id) }
       end
-    # end
   end
 end

@@ -2,7 +2,7 @@
 
 describe('Create contract via factory contracts.rb and test contract flow', () => {
 
-  it('create contract via factory contracts.rb and test contract flow', function () {
+  it('create contract via factory contracts.rb and test contract flow', { retries: 2 },function () {
     // via factory contract.rb create contract, employer, employer_profile, freelancer, freelancer_profile
     cy.appFactories([
       ['create', 'contract']

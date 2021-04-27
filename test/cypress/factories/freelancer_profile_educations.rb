@@ -7,10 +7,5 @@ FactoryBot.define do
     graduation_year { FreelancerProfileEducation::AVAILABLE_YEARS.to_a.sample }
     currently_studying { false }
     description { Faker::Hipster.paragraph }
-
-    # trait :current do
-    #   graduation_year { nil }
-    #   currently_studying { true }
-    # end
   end
 end
