@@ -173,11 +173,13 @@ describe('Create billing via factory billings.rb and test billing flow', () => {
 
       // try to close opened module via 'x'
       cy.get('[id^="disputeHours"] > .modal-dialog > .modal-content > .modal-header > .close > span')
+        .eq(0)
         .should('exist')
         .click()
 
       // try to click link 'Dispute Hours' again
       cy.get('.align-self-start')
+        .eq(0)
         .should('exist')
         .click()
 
@@ -206,6 +208,7 @@ describe('Create billing via factory billings.rb and test billing flow', () => {
 
       // try to click button 'submit dispute'
       cy.get('[data-disable-with="Submit Dispute"]')
+        .eq(0)
         .should('exist')
         .click()
 
