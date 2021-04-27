@@ -16,7 +16,7 @@ module Stripe
         invoice = create_invoice
 
         if invoice['id'].present?
-          @timesheet.update(stripe_id_invoice: invoice['id'],
+          @timesheet.update(stripe_id_invoice: invoice['id'].presence,
                             invoice_number: invoice['number'],
                             employer_charged_on: Time.current,
                             pdf_invoice_link: invoice['invoice_pdf'])

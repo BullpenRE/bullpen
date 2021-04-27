@@ -31,7 +31,7 @@ class Timesheet < ApplicationRecord
     where(contract_id: contracts_ids)
   }
   scope :ready_for_payment, -> { where(stripe_id_invoice: nil, ends: ..Date.current) }
-  scope :paid, -> { where.not(stripe_id_invoice: nil) }
+  scope :paid, -> { where.not(stripe_id_invoice: [nil, '']) }
   scope :disputed, -> { joins(:billings).where(billings: { state: 'disputed' }) }
 
   def title(employer = true)
@@ -49,6 +49,10 @@ class Timesheet < ApplicationRecord
 
   def total_usd
     (contract.pay_rate * unpaid_billing_total_hours).round(2)
+  end
+
+  def employer_total_charge
+    billings.pending.sum(&:multiplier) * contract.pay_rate
   end
 
   def dispute_deadline
