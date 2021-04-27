@@ -26,7 +26,7 @@
   "version": "0.1.0",
   "devDependencies": {
     "axios": "^0.20.0",
-    "cypress": "7.1.0",
+    "cypress": "7.2.0",
     "cypress-file-upload": "^4.1.1",
     "cypress-xpath": "^1.6.1",
     "webpack-dev-server": "^3.11.0"
