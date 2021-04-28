@@ -9,12 +9,13 @@ You can see this application in action on Heroku at http://bullpen-staging.herok
 for a freelancer, use me@freelancer.com with password `Password1!`. To see the view of an employer you can use me@employer.com also with the password `Password1!`.
 
 ### The Team
-A big thank you to everyone below who contributed to this project!
+A big thank you to everyone below who contribute
+d to this project!
 
  - [Roger Graves](https://www.linkedin.com/in/roginc/): Application architecture, database and models programming, devops, server-ops, and project management.
  - [Ron Graves](https://www.linkedin.com/in/ron-graves-029928108/): Product design, Boostrap configuration, [styleguide](https://bullpen-staging.herokuapp.com/styleguide) creation and CSS programming.
  - [Svetlana Borozenets](https://www.linkedin.com/in/svetlana-borozenets-8827a515a/): Lead Software Engineer, did most of the development work on visible features (controllers, views, services & javascript).
- - Jane Butsanova: QA Engineer, assisted in design, managed our manual regression test process.
+ - [Jane Butsanova](https://www.linkedin.com/in/evgenia-butsanova-804a3a210/): QA Engineer, assisted in design, managed our manual regression test process.
  - [Maryna Mikhaylovskaya](https://www.linkedin.com/in/maryna-mikhaylovskaya/): QA Engineer, helped test new features and identify missing functionality.
  - [Oleksii Sokalo](https://www.linkedin.com/in/oleksii-sokalo-97589393/): Full stack engineering and led the team on Stripe integration issues.
  - [Galina Kravchuk](https://www.linkedin.com/in/galina-kravchuk-6b79a2b5/): Full stack engineering and was in charge of Mixpanel and ActiveCampaign integration.
