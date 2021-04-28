@@ -2,7 +2,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
   ActiveAdmin.register EmployerProfile do
     menu label: 'Employers'
 
-    includes :user
+    includes :user, :employer_sectors
 
     filter :user_email, as: :string, label: 'User Email'
 
@@ -43,19 +43,20 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
         row :motivation_augment
         row :motivation_other
         row "ALL Interview Requests Sent to Freelancers", :interview_requests do
-          employer_profile.interview_requests.map{ |i_r| link_to(i_r.freelancer_profile.email, admin_interview_request_path(i_r.id)) }.join('<br>').html_safe
+          (employer_profile.interview_requests.map{ |i_r| link_to(i_r.freelancer_profile.email, admin_interview_request_path(i_r.id)) }.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_interview_request_path(interview_request: { employer_profile_id: employer_profile.id }), target: '_new')).html_safe
         end
         row 'Jobs' do
-          employer_profile.jobs.map { |job| link_to(job.title, admin_job_path(job.id)) }.join('<br>').html_safe
+          (employer_profile.jobs.map { |job| link_to(job.title, admin_job_path(job.id)) }.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_job_path(job: { employer_profile_id: employer_profile.id }), target: '_new')).html_safe
         end
         row 'Contracts' do
-          employer_profile.contracts.map { |contract| link_to("Hired #{contract.freelancer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>').html_safe
+          (employer_profile.contracts.map { |contract| link_to("Hired #{contract.freelancer_profile.email} for $#{contract.pay_rate} #{contract.contract_type}", admin_contract_path(contract.id)) }.join('<br>') + link_to('<br>Add New'.html_safe, new_admin_contract_path(contract: { employer_profile_id: employer_profile.id }), target: '_new')).html_safe
         end
         row 'Reviews' do
-          "Has written #{employer_profile.reviews.size} review#{'s' if employer_profile.reviews.size != 1} for an average rating of #{employer_profile.reviews.sum(:rating)/employer_profile.reviews.size.to_f.round(1)}" if employer_profile.reviews.any?
+          rating = employer_profile.reviews.any? ? "Has written #{employer_profile.reviews.size} review#{'s' if employer_profile.reviews.size != 1} for an average rating of #{(employer_profile.reviews.sum(:rating)/employer_profile.reviews.size.to_f).round(1)}" : ''
+          rating.html_safe + link_to('<br>Add New'.html_safe, new_admin_review_path(review: { employer_profile_id: employer_profile.id }), target: '_new')
         end
         row 'Payment Accounts' do
-          employer_profile.payment_accounts.map { |account| link_to("#{account.institution} #{account.last_four}#{' (expired)' if account.expired?}#{' (Default)' if account.is_default?}", admin_payment_account_path(account.id)).html_safe }.join('<br>').html_safe
+          employer_profile.payment_accounts.map { |account| link_to("#{account.institution} #{account.last_four}#{' (expired)' if account.expired?}#{' (Default)' if account.is_default?}", admin_payment_account_path(account.id)).html_safe }.join('<br>').html_safe + link_to('<br>Add New'.html_safe, new_admin_payment_account_path(payment_account: { employer_profile_id: employer_profile.id }), target: '_new')
         end
         row :credit_balance
       end
@@ -75,6 +76,7 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('em
         f.input :role_in_company
         f.input :employee_count
         f.input :category
+        f.input :sectors, as: :check_boxes, collection: Sector.order(:description).pluck(:description, :id)
         f.inputs 'Motivations' do
           f.input :motivation_one_time, label: 'One Time'
           f.input :motivation_ongoing_support, label: 'Ongoing Support'
