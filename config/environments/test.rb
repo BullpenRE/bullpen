@@ -68,7 +68,7 @@ Rails.application.configure do
   end
 
   # Please set these variables in your local .env file
-  # ENV['STRIPE_PUBLISHABLE_KEY'] = 'pk_test_xxxxxxx'
+  ENV['STRIPE_PUBLISHABLE_KEY'] = 'pk_test_wvFaryXD9bfRc4NsJApj7h99'
   # ENV['STRIPE_SECRET_KEY'] = 'sk_test_xxxxxxx'
   # ENV['STRIPE_CLIENT_ID'] = 'ca_xxxxxx'
 
