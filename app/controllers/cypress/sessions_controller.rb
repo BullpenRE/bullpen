@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Cypress::SessionsController < ActionController::Base
   def create
     sign_in(user)

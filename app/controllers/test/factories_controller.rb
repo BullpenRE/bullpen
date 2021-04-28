@@ -10,9 +10,8 @@ module Test
     private
 
     def traits
-      if params[:traits].present?
+      return unless params[:traits].present?
         params[:traits].map { |_key, trait| trait.to_sym }
-      end
     end
 
     def factory_name

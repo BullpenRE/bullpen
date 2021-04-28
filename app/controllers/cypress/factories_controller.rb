@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Cypress::FactoriesController < ActionController::Base
   def create
     factory = FactoryBot.create(factory_name, factory_attributes)
