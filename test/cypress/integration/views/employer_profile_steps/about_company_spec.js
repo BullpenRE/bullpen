@@ -2,7 +2,7 @@
 
 import JoinPage from "../../../support/page_objects/join_page";
 import SignUpPage from "../../../support/page_objects/sign_up_page";
-import AboutCompanyPage from "../../../support/page_objects/about_company_page";
+import AboutCompanyPage from "../../../support/page_objects/employer/about_company_page";
 
 describe('About company', () => {
 

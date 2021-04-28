@@ -2,10 +2,10 @@
 
 import JoinPage from "../../../support/page_objects/join_page";
 import SignUpPage from "../../../support/page_objects/sign_up_page";
-import AboutCompanyPage from "../../../support/page_objects/about_company_page";
-import EmployeeCountPage from "../../../support/page_objects/employee_count_page";
-import TypeOfWorkPage from "../../../support/page_objects/type_of_work_page";
-import SectorsPage from "../../../support/page_objects/sectors_page";
+import AboutCompanyPage from "../../../support/page_objects/employer/about_company_page";
+import EmployeeCountPage from "../../../support/page_objects/employer/employee_count_page";
+import TypeOfWorkPage from "../../../support/page_objects/employer/type_of_work_page";
+import SectorsPage from "../../../support/page_objects/employer/sectors_page";
 
 describe('Type of Work', () => {
 

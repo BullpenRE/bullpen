@@ -40,5 +40,14 @@ class SignUpPage {
     this.userPhoneNumber.type(phoneNumber);
     return this.createAccountButton.click().wait(2000);
   }
+
+  submitFreelancerSigUpForm(firstName, lastName, password, phoneNumber) {
+    this.userFirstName.type(firstName);
+    this.userLastName.type(lastName);
+    this.userPassword.type(password);
+    this.freelancerRadioButton.click();
+    return this.createAccountButton.click().wait(2000);
+  }
 }
+
 export default SignUpPage;

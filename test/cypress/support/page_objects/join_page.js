@@ -21,4 +21,4 @@ class JoinPage {
     return this.signUpWithEmail.click().wait(2000);
   }
 }
-export default JoinPage
+export default JoinPage;
