@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-#
+
 class Cypress::CleanupController < ActionController::Base
   def destroy
     return head(:bad_request) unless Rails.env.test?

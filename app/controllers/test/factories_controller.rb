@@ -11,7 +11,8 @@ module Test
 
     def traits
       return unless params[:traits].present?
-        params[:traits].map { |_key, trait| trait.to_sym }
+
+      params[:traits].map { |_key, trait| trait.to_sym }
     end
 
     def factory_name

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-#
+
 def define_test_routes
   Rails.logger.info 'Loading routes meant only for testing purposes'
 
