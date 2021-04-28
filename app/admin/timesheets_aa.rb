@@ -49,14 +49,14 @@ if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('ti
           if timesheet.contract.employer_profile.credit_balance > 0
             columns do
               column do
-                button_to "Apply Credits Employer#{' (DUE)' unless timesheet.payment_date_in_future?}", apply_credit_admin_timesheet_path(id:timesheet.id, applied_to: 'employer'), action: :post
+                button_to "Apply Credits Employer#{' (DUE)' unless timesheet.payment_date_in_future?}", apply_credit_admin_timesheet_path(id: timesheet.id, applied_to: 'employer'), action: :post
               end
             end
           end
           if timesheet.contract.freelancer_profile.credit_balance > 0
             columns do
               column do
-                button_to 'Apply Credits Freelancer', apply_credit_admin_timesheet_path(id:timesheet.id, applied_to: 'freelancer'), action: :post
+                button_to 'Apply Credits Freelancer', apply_credit_admin_timesheet_path(id: timesheet.id, applied_to: 'freelancer'), action: :post
               end
             end
           end
