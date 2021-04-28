@@ -1,0 +1,19 @@
+<p><%= @timesheet.contract.freelancer_profile.full_name %> has billed hours for the <b><%=  @timesheet.contract.title %></b> contract.
+Your payment will be processed on <b><%= @timesheet.pending_payment_date.strftime('%b %e') %></b>. Please review and <a href=<%= public_view_contract_url(timesheet_id: @timesheet.id) %> target='_blank'>submit disputes</a> by <b><%= @timesheet.dispute_deadline %></b></p>
+<p>Total hours: <%= @timesheet.total_hours_display %></p>
+<p>Amount: <%= number_to_currency(@timesheet.total_usd, strip_insignificant_zeros: true) %></p>
+<p><b>Details</b></p>
+<% @timesheet.billings.not_paid.each do |billing| %>
+  <hr>
+  <p><%= billing.work_done&.strftime("%b %d") %>,
+    <% if billing.minutes.nil? %>
+      <%= billing.hours %> <%= "hour".pluralize(billing.hours) %>:
+    <% else %>
+      <%= billing.multiplier.round(2) %> <%= "hour".pluralize(billing.multiplier.round(2).ceil) %>:
+    <% end %>
+    <%= billing.description %>
+  </p>
+  <p><%= billing.description %></p>
+<% end %>
+
+<%= render partial: 'email/button', locals: { button_txt: 'View Contract', url: public_view_contract_url(timesheet_id: @timesheet.id) } %>
