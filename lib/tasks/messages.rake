@@ -10,4 +10,9 @@ namespace :messages do
   task employer_review_billing_entries: :environment do
     EmployerReviewBillingEntriesService.new.process
   end
+
+  desc 'Send an email to employer within 24 hours before the end pay period deadline'
+  task employer_review_pending_payment: :environment do
+    EmployerReviewPendingPaymentService.new.process
+  end
 end

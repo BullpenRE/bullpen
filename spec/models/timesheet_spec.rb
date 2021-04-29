@@ -35,6 +35,8 @@ RSpec.describe Timesheet, type: :model do
   end
 
   context 'Scopes' do
+    let!(:timesheet_week_ago) { FactoryBot.create(:timesheet, :skip_validate, ends: (Date.current - 1.week).next_occurring(:sunday), starts: (Date.current - 1.week).beginning_of_week) }
+    let!(:timesheet_month_ago) { FactoryBot.create(:timesheet, :skip_validate, ends: (Date.current - 1.month).next_occurring(:sunday), starts: (Date.current - 1.month).beginning_of_week) }
     let!(:timesheet_with_no_billings) { FactoryBot.create(:timesheet) }
     let!(:timesheet_with_stripe_invoice) { FactoryBot.create(:timesheet, :with_stripe_invoice) }
     let!(:unprocessed_timesheet) { FactoryBot.create(:timesheet, contract_id: timesheet_with_stripe_invoice.contract_id) }
@@ -64,9 +66,9 @@ RSpec.describe Timesheet, type: :model do
     end
 
     describe '.ready_for_payment' do
-      let!(:passed_paid_timesheet) { FactoryBot.create(:timesheet, :with_stripe_invoice, ends: Date.yesterday) }
+      let!(:passed_paid_timesheet) { FactoryBot.create(:timesheet, :skip_validate, :with_stripe_invoice, ends: Date.yesterday) }
       let!(:current_paid_timesheet) { FactoryBot.create(:timesheet, :with_stripe_invoice, ends: Date.tomorrow) }
-      let!(:passed_unpaid_timesheet) { FactoryBot.create(:timesheet, ends: Date.yesterday) }
+      let!(:passed_unpaid_timesheet) { FactoryBot.create(:timesheet, :skip_validate, ends: Date.yesterday) }
       let!(:current_unpaid_timesheet) { FactoryBot.create(:timesheet, ends: Date.tomorrow) }
 
       it 'return only timesheets with stripe_id_invoice=nil and ends<=Date.current' do
@@ -74,18 +76,16 @@ RSpec.describe Timesheet, type: :model do
         expect(Timesheet.ready_for_payment).to_not include(passed_paid_timesheet, current_paid_timesheet, current_unpaid_timesheet)
       end
     end
+
+    it '#previous_week' do
+      expect(Timesheet.previous_week).to include(timesheet_week_ago)
+      expect(Timesheet.previous_week).to_not include(timesheet_month_ago)
+    end
   end
 
   context 'Methods' do
     let!(:current_timesheet) { FactoryBot.create(:timesheet, starts: 1.minute.ago.beginning_of_week, ends: 1.minute.ago.end_of_week) }
     let!(:pending_timesheet) { FactoryBot.create(:timesheet, starts: 1.week.ago.beginning_of_week, ends: 1.week.ago.end_of_week) }
-    let!(:pending_timesheet_billing_1) do
-      FactoryBot.create(:billing, :skip_validate,
-                        timesheet: pending_timesheet,
-                        work_done: pending_timesheet.starts,
-                        contract: pending_timesheet.contract,
-                        hours: 3, minutes: 30)
-    end
     let!(:pending_timesheet_billing_1) do
       FactoryBot.create(:billing,
                         timesheet: pending_timesheet,
@@ -161,6 +161,13 @@ RSpec.describe Timesheet, type: :model do
     it '#dispute_deadline' do
       expect(pending_timesheet.dispute_deadline).to eq (pending_timesheet.ends.next_occurring(:friday) - 1.day).strftime('%b %e')
       expect(current_timesheet.dispute_deadline).to eq (current_timesheet.ends.next_occurring(:friday) - 1.day).strftime('%b %e')
+    end
+
+    context '#employer_total_charge' do
+      it 'calculates charges for pending billings only' do
+        expect(pending_timesheet.employer_total_charge).to eq 3.75 * pending_timesheet.contract.pay_rate
+        expect(current_timesheet.employer_total_charge).to eq 0
+      end
     end
   end
 end

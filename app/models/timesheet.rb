@@ -2,6 +2,11 @@
 
 # info about invoice callbacks: https://stripe.com/docs/api/events/types
 class Timesheet < ApplicationRecord
+  default_scope { order(ends: :desc) }
+  scope :related_to_contracts, lambda { |contracts_ids|
+    where(contract_id: contracts_ids)
+  }
+  scope :previous_week, -> { where('ends > ?', Date.current - 1.week) }
   include Stripe::Callbacks
 
   # Associations
@@ -69,6 +74,10 @@ class Timesheet < ApplicationRecord
 
   def payment_date_in_future?
     @payment_date_in_future ||= pending_payment_date > Date.current
+  end
+
+  def employer_total_charge
+    billings.pending.sum(&:multiplier) * contract.pay_rate
   end
 
   private

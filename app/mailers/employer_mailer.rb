@@ -56,4 +56,11 @@ class EmployerMailer < ApplicationMailer
     mail(to: @user.email, subject: "Review updated hours for week ending #{timesheet.ends}
                                     from #{timesheet.contract.freelancer_profile.full_name}.")
   end
+
+  def review_pending_payment(timesheet)
+    @timesheet = timesheet
+    employer_email = timesheet.contract.employer_profile.email
+    mail(to: employer_email, cc: 'support@bullpenre.com',
+         subject: "Review hours for week ending #{timesheet.ends} from #{timesheet.contract.freelancer_profile.full_name}.")
+  end
 end

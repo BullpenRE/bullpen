@@ -81,10 +81,10 @@ Rails.application.configure do
   # Please set these variables in your local .env file
   # ENV['GOOGLE_SIGN_IN_CLIENT_ID'] = 'xxxxx.apps.googleusercontent.com'
   # ENV['GOOGLE_SIGN_IN_CLIENT_SECRET'] = 'xxxxx'
-  # ENV['STRIPE_PUBLISHABLE_KEY'] = 'pk_test_xxxxxxx'
-  # ENV['STRIPE_SECRET_KEY'] = 'sk_test_xxxxxxx'
-  # ENV['STRIPE_CLIENT_ID'] = 'ca_xxxxxx'
-  # ENV['STRIPE_SIGNING_SECRET'] = 'xxxxxx'
+  ENV['STRIPE_PUBLISHABLE_KEY'] = 'pk_test_xxxxxxx'
+  ENV['STRIPE_SECRET_KEY'] = 'sk_test_xxxxxxx'
+  ENV['STRIPE_CLIENT_ID'] = 'ca_xxxxxx'
+  ENV['STRIPE_SIGNING_SECRET'] = 'xxxxxx'
 
   ENV['NEW_JOB_ANNOUNCEMENT_SINGLE_EMAIL'] = 'false'
 end
