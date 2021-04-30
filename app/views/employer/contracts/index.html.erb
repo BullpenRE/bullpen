@@ -217,40 +217,48 @@
             <% end %>
 
             <!--Payment History-->
-            <div class="w-100 mt-4"> <!--hide this div if no invoices-->
-              <h5 class="mr-auto mb-0 align-self-center">
-                Invoice History
-              </h5>
-              <div class="mt-2 d-none d-md-flex row bp-text-sm font-weight-bold">
-                <div class="col-3 col-lg-2">Invoice</div>
-                <div class="col-3 col-lg-2">Date</div>
-                <div class="col-6">Status</div>
-              </div>
-            </div>
-            <div name="invoiceEntry"> <!--repeat this div for each entry, show 5 max-->
-              <hr class="my-2"/>
-              <div class="row">
-                <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap">{invoiceNum}</div>
-                <div class="col-4 col-sm-3 col-md-3 col-lg-2 text-nowrap">{Mon DD, YYYY}</div>
-                <div class="col-12 col-md-6 mt-2 mt-md-0">
-                  ${#} paid {Mon DD, YYYY}
-                </div>
-                <div class="col-12 col-lg-2 mt-2 mt-lg-0 text-lg-right">
-                  <a href="#" target="_blank">View Invoice<i class="fas fa-external-link-alt ml-1"></i></a>
+            <% if contract.timesheets.paid.any? %>
+              <div class="w-100 mt-4"> <!--hide this div if no invoices-->
+                <h5 class="mr-auto mb-0 align-self-center">
+                  Invoice History
+                </h5>
+                <div class="mt-2 d-none d-md-flex row bp-text-sm font-weight-bold">
+                  <div class="col-3 col-lg-2">Invoice</div>
+                  <div class="col-3 col-lg-2">Date</div>
+                  <div class="col-6">Description</div>
                 </div>
               </div>
-            </div>
-            <div class="text-right mt-2"> <!--Show this if there are more than 5 invoices-->
-              <a class="font-weight-bold" data-toggle="collapse" data-target="#" aria-expanded="true" aria-controls="" style="cursor:pointer;">
-                Show All Invoices<i class="fas fa-chevron-down ml-1"></i>
-              </a>
-            </div>
+
+              <% contract.timesheets.paid[0..4].each do |timesheet| %>
+                 <%= render partial: 'shared/contracts/invoice_history', locals: { timesheet: timesheet } %>
+              <% end %>
+
+              <div class="collapse" id="collapseInvoices<%= contract.id %>">
+                <% contract.timesheets.paid[5..]&.each do |timesheet| %>
+                  <%= render partial: 'shared/contracts/invoice_history', locals: { timesheet: timesheet } %>
+                <% end %>
+              </div>
+
+              <% if contract.timesheets.paid.count > 4 %>
+                <div class="text-right mt-2"> <!--Show this if there are more than 5 invoices-->
+                  <a class="font-weight-bold link_action_invoice<%= contract.id %> more-less-invoice<%= contract.id %>" data-toggle="collapse" data-target="#collapseInvoices<%= contract.id %>" aria-expanded="true" aria-controls="collapseInvoices<%= contract.id %>" style="cursor:pointer;">
+                    Show All Invoices<i class="fas fa-chevron-down ml-1"></i>
+                  </a>
+                  <a style="display: none; cursor: pointer;" class="font-weight-bold link_action_invoice<%= contract.id %> more-less-invoice<%= contract.id %>" data-toggle="collapse" data-target="#collapseInvoices<%= contract.id %>" aria-expanded="true" aria-controls="collapseInvoices<%= contract.id %>">
+                    Show Less Invoices<i class="fas fa-chevron-up ml-1"></i>
+                  </a>
+                </div>
+              <% end %>
+            <% end %>
           </div>
         <% end %>
       </div>
       <script>
         $('.link_action<%= contract.id %>').on('click', () => {
           $('.more-less<%= contract.id %>').toggle();
+        })
+        $('.link_action_invoice<%= contract.id %>').on('click', () => {
+          $('.more-less-invoice<%= contract.id %>').toggle();
         })
       </script>
     <% end %>

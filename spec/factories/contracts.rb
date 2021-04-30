@@ -4,7 +4,7 @@ FactoryBot.define do
     employer_profile
     title { Faker::Job.title }
     contract_type { 0 }
-    pay_rate { 150 }
+    pay_rate { 1 }
     state { Contract.states.values.sample }
     job_description { Faker::Company.bs }
     hide_from_freelancer { false }

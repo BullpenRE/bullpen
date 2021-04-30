@@ -23,8 +23,8 @@ gem 'puma', '~> 4.1'                        # Use Puma as the app server
 gem 'rails', '~> 6.1', '>= 6.1.1'           # If you're not sure what this is for then you're in the wrong place ;)
 gem 'redis', '~> 4.2', '>= 4.2.5'           # Service used for running Action Cable on heroku
 gem 'sass-rails', '>= 6'                    # Use SCSS for stylesheets
-gem 'stripe-rails', '2.3.0'                 # Stripe library provides convenient access to the Stripe API
 gem 'sidekiq', '~> 6.1', '>= 6.1.3'         # Simple, efficient background processing for Ruby.
+gem 'stripe-rails', '2.3.0'                 # Stripe library provides convenient access to the Stripe API
 gem 'table_print', '~> 1.5', '>= 1.5.7'     # Allows viewing of data in console in nice ways, including table joins: http://tableprintgem.com/ (video)
 gem 'turbolinks', '~> 5'                    # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'webpacker', '~> 5.2', '>= 5.2.1'       # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -57,8 +57,8 @@ group :test do
   # Gems in this group do not require version numbers
   gem 'database_cleaner'                                     # Cleans the database data between tests
   gem 'rails-controller-testing'                             # This gem brings back assigns to your controller tests as well as assert_template to both controller and integration tests.
-  gem 'stripe-ruby-mock', '~> 3.0.1', require: 'stripe_mock' # Mock and customize stripe webhooks, test against stripe errors
   gem 'shoulda-matchers'                                     # Collection of testing matchers extracted from Shoulda http://thoughtbot.com/community
+  gem 'stripe-ruby-mock', '~> 3.0.1', require: 'stripe_mock' # Mock and customize stripe webhooks, test against stripe errors
   gem 'webmock', require: false
 end
 
@@ -66,9 +66,9 @@ group :development do
   # Gems in this group do not require version numbers
   gem 'git-smart'                           # Makes using git in terminal better: https://github.com/geelen/git-smart
   gem 'listen'                              # The Listen gem listens to file modifications and notifies you about the changes: https://github.com/guard/listen
+  gem 'rails_real_favicon'                  # Generate and install a favicon for all platforms with RealFaviconGenerator.
   gem 'spring'                              # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'web-console'                         # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'rails_real_favicon'                  # Generate and install a favicon for all platforms with RealFaviconGenerator.
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]    # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -78,9 +78,13 @@ Rails.application.configure do
 
   ENV['DOMAIN_URL'] = host
 
-  ENV['GOOGLE_SIGN_IN_CLIENT_ID'] = '643730797896-imke97p03uhd2486gqkdhm35ucmh7qcb.apps.googleusercontent.com'
-  ENV['GOOGLE_SIGN_IN_CLIENT_SECRET'] = 'ZaS0BLghoHk3tlsw1J6sHVhH'
-
+  # Please set these variables in your local .env file
+  # ENV['GOOGLE_SIGN_IN_CLIENT_ID'] = 'xxxxx.apps.googleusercontent.com'
+  # ENV['GOOGLE_SIGN_IN_CLIENT_SECRET'] = 'xxxxx'
+  ENV['STRIPE_PUBLISHABLE_KEY'] = 'pk_test_xxxxxxx'
+  ENV['STRIPE_SECRET_KEY'] = 'sk_test_xxxxxxx'
+  ENV['STRIPE_CLIENT_ID'] = 'ca_xxxxxx'
+  ENV['STRIPE_SIGNING_SECRET'] = 'xxxxxx'
   ENV['MIXPANEL_TOKEN'] = '718e55b4216b4f5b266dfd83b6903ae3'
   ENV['MIXPANEL'] = 'true'
   ENV['STRIPE_PUBLISHABLE_KEY'] = 'pk_test_wvFaryXD9bfRc4NsJApj7h96'
