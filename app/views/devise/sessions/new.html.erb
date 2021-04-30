@@ -98,4 +98,6 @@
     const obj = new URL(location.href);
     return(obj.searchParams.get('email'));
   }
+
+    mixpanelTrack('Show Sign Page');
 </script>

@@ -40,7 +40,7 @@ class Employer::JobFlowsController < ApplicationController
     end
 
     respond_js_format(:post_job_step_2)
-
+    mixpanel_post_job_flow_tracker
     true
   end
 
@@ -50,7 +50,7 @@ class Employer::JobFlowsController < ApplicationController
     job.update(job_type_params.merge({ 'daytime_availability_required': params['daytime_availability_required'] }))
 
     respond_js_format(:post_job_step_3)
-
+    mixpanel_post_job_flow_tracker
     true
   end
 
@@ -62,7 +62,7 @@ class Employer::JobFlowsController < ApplicationController
     save_job_softwares
 
     respond_js_format(:post_job_step_4)
-
+    mixpanel_post_job_flow_tracker
     true
   end
 
@@ -71,7 +71,7 @@ class Employer::JobFlowsController < ApplicationController
 
     job.update(details_params.merge(relevant_details: params[:job][:relevant_details]))
     respond_js_format(:post_job_step_5)
-
+    mixpanel_post_job_flow_tracker
     true
   end
 
@@ -87,13 +87,14 @@ class Employer::JobFlowsController < ApplicationController
     if params[:button] == 'draft'
       job.update(state: 'draft')
       flash_when_saved_as_draft
+      mixpanel_save_draft_job
       redirect_to employer_jobs_path
     elsif params[:button] == 'posted'
       redirect_to employer_jobs_path
     else
       respond_js_format(:preview_job)
     end
-
+    mixpanel_post_job_flow_tracker
     true
   end
 
@@ -107,6 +108,7 @@ class Employer::JobFlowsController < ApplicationController
       job.update(state: 'posted')
     end
 
+    mixpanel_post_job_flow_tracker
     redirect_to employer_jobs_path
 
     true
@@ -173,6 +175,20 @@ class Employer::JobFlowsController < ApplicationController
 
   def job
     @job ||= current_user.employer_profile.jobs.find_by(id: (params[:job_id] || params[:job][:job_id]))
+  end
+
+  def mixpanel_post_job_flow_tracker
+    return unless params[:job][:step]
+
+    MixpanelWorker.perform_async(current_user.id, 'Job Flow Steps', { 'user': current_user.email,
+                                                                      'job': job.id,
+                                                                      'job state': job.state,
+                                                                      'step': params[:job][:step] })
+  end
+
+  def mixpanel_save_draft_job
+    MixpanelWorker.perform_async(current_user.id, 'Create draft job', { 'user': current_user.email,
+                                                                        'job': job.id })
   end
 
   def flash_when_saved_as_draft

@@ -30,6 +30,7 @@ class FreelancerProfileStepsController < ApplicationController
 
     @freelancer_profile.draft = params[:freelancer_profile][:draft]
     @freelancer_profile.save
+    mixpanel_freelancer_flow_tracker
     render_wizard @user
 
     true
@@ -47,6 +48,7 @@ class FreelancerProfileStepsController < ApplicationController
 
     @user.location = params[:user][:location]
     @user.save
+    mixpanel_freelancer_flow_tracker
     render_wizard @user
 
     true
@@ -58,7 +60,7 @@ class FreelancerProfileStepsController < ApplicationController
     freelancer_profile_education_save
     work_experience_save
     certification_save
-
+    mixpanel_freelancer_flow_tracker
     render wizard_path(:work_education_experience)
 
     true
@@ -68,6 +70,7 @@ class FreelancerProfileStepsController < ApplicationController
     return false unless wizard_value(step) == :professional_history
 
     @freelancer_profile.update(history_params)
+    mixpanel_freelancer_flow_tracker
     render_wizard @user
 
     true
@@ -87,6 +90,7 @@ class FreelancerProfileStepsController < ApplicationController
     softwares_params&.each do |software|
       FreelancerSoftware.create(freelancer_profile_id: @freelancer_profile.id, software_id: software)
     end
+    mixpanel_freelancer_flow_tracker
     render_wizard @user
 
     true
@@ -165,5 +169,10 @@ class FreelancerProfileStepsController < ApplicationController
 
   def softwares
     @softwares ||= Software.enabled.pluck(:description, :id)
+  end
+
+  def mixpanel_freelancer_flow_tracker
+    MixpanelWorker.perform_async(current_user.id, 'Freelancer Steps', { 'user': current_user.email,
+                                                                        'step': step })
   end
 end

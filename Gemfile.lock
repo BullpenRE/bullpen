@@ -237,6 +237,7 @@ GEM
     minitest (5.14.4)
     msgpack (1.4.2)
     msgpack (1.4.2-java)
+    mixpanel-ruby (2.2.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
@@ -496,6 +497,7 @@ DEPENDENCIES
   letter_opener_web
   listen
   mini_magick (~> 4.10, >= 4.10.1)
+  mixpanel-ruby (~> 2.2, >= 2.2.2)
   omniauth (~> 1.9, >= 1.9.1)
   omniauth-google-oauth2 (~> 0.8.1)
   pagy (~> 3.5)
