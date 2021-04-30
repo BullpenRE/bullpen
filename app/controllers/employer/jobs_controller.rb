@@ -45,7 +45,6 @@ class Employer::JobsController < ApplicationController
     @message = Message.create(message_params)
     FreelancerMailer.send_message(@message, job_title).deliver_later
 
-    mixpanel_job_tracker('Send Message')
     redirect_to redirect_path_after_send_message(job_title)
   end
 

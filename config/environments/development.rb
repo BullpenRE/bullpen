@@ -85,7 +85,7 @@ Rails.application.configure do
   ENV['STRIPE_SECRET_KEY'] = 'sk_test_xxxxxxx'
   ENV['STRIPE_CLIENT_ID'] = 'ca_xxxxxx'
   ENV['STRIPE_SIGNING_SECRET'] = 'xxxxxx'
-  ENV['MIXPANEL_TOKEN'] = '718e55b4216b4f5b266dfd83b6903ae3'
+  ENV['MIXPANEL_TOKEN'] = 'xxxxxx'
   ENV['MIXPANEL'] = 'true'
   ENV['STRIPE_PUBLISHABLE_KEY'] = 'pk_test_wvFaryXD9bfRc4NsJApj7h96'
   ENV['STRIPE_SECRET_KEY'] = 'sk_test_k7lMkrLmOH4PnQwggdMl6rqD'

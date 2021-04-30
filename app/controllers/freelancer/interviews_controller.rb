@@ -53,7 +53,6 @@ class Freelancer::InterviewsController < ApplicationController
     flash[:notice] = "Your message has been sent to <b>#{@message.to_user.full_name}</b> with you on copy."
     EmployerMailer.send_message(@message).deliver_later
 
-    mixpanel_freelancer_interview_tracker('Freelancer Send Message')
     redirect_to redirect_path_after_send_message
   end
 
