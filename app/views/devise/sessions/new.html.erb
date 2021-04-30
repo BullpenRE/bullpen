@@ -35,9 +35,9 @@
           <%= f.submit "Log In", class: "btn btn-primary btn-block" %>
         </div>
       <% end %>
-      
+
       <div class="bp-or-border my-3"><span>or</span></div>
-      
+
       <%= google_sign_in_button(image_pack_tag('media/images/icons8-google-48.png', size: '24x24', class: 'mr-2') + 'Log In with Gmail', proceed_to: user_google_omniauth_callback_path(src: 'sessions#new'), class: "btn btn-outline-primary btn-block d-flex justify-content-center mb-3") %>
 
     </div>

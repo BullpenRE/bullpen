@@ -6,7 +6,8 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.cache_classes = false
+  # config.cache_classes = false
+  config.cache_classes = !ENV['CYPRESS_DEV']  ## can be used within TDD in development with Cypress usage
   config.action_view.cache_template_loading = true
 
   # Do not eager load code on boot. This avoids loading your whole application
@@ -49,7 +50,8 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   if Rails.env.test?
-    Rails.application.config.hosts << "/test/*"
+    # Rails.application.config.hosts << "/test/*"
+    Rails.application.config.hosts.clear
   end
 
   # Adding this because tests bomb out if I don't have it
@@ -58,6 +60,8 @@ Rails.application.configure do
   ENV['TEST_PORT'] = (3001 + current_node.to_i).to_s
   ENV['DOMAIN_URL'] = "#{ENV['TEST_DOMAIN']}:#{ENV['TEST_PORT']}"
   config.action_mailer.default_url_options = { host: ENV['DOMAIN_URL'] }
+
+  # config.factory_bot.definition_file_paths = ['**/factories/**.rb']
 
   config.after_initialize do
     Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_URL']

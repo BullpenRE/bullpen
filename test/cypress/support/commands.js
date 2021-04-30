@@ -24,12 +24,14 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+import 'cypress-file-upload';
 import axios from 'axios'
+import 'cypress-xpath'
 
 Cypress.Commands.add('cleanDatabase', (opts = { seed: true }) => {
     return axios({
         method: 'POST',
-        url: 'http://localhost:3000/test/clean_database',
+        url: 'http://localhost:5017/test/clean_database',
         data: { should_seed: opts.seed }
     })
 })
@@ -37,7 +39,78 @@ Cypress.Commands.add('cleanDatabase', (opts = { seed: true }) => {
 Cypress.Commands.add('seedPosts', (count) => {
     return axios({
         method: 'POST',
-        url: 'http://localhost:3000/test/seed_posts',
+        url: 'http://localhost:5017/test/seed_posts',
         data: { count }
     })
 })
+
+Cypress.Commands.add("resetDatabase", () => {
+    cy.request('DELETE', '/cypress/cleanup').as('cleanup')
+})
+
+Cypress.Commands.add("factory", (name, attributes) => {
+    cy.request('POST', '/cypress/factories', {
+        name: name,
+        attributes: attributes || {}
+    }).as('test data')
+})
+
+Cypress.Commands.add("login", (email) => {
+    cy.request('POST', '/cypress/sessions', {
+        email: email
+    })
+})
+
+Cypress.Commands.add("gui_login", (email) => {
+    cy.visit('http://localhost:5017/users/sign_in', {failOnStatusCode: false})
+
+    cy.get('#user_email')
+      .should('exist')
+      .type(email)
+    cy.get('#user_password')
+      .should('exist')
+      .type('q1234567!Q')
+    cy.get('.actions > .btn')
+      .should('exist')
+      .click()
+})
+
+Cypress.Commands.add("gui_logout", () => {
+    cy.get('[href="/users/sign_out"]')
+      .should('exist')
+      .wait(2000)
+      .get('[href="/users/sign_out"]')
+      .click({force: true})
+})
+
+Cypress.Commands.add(
+  'iframeLoaded',
+  {prevSubject: 'element'},
+  ($iframe) => {
+      const contentWindow = $iframe.prop('contentWindow');
+      return new Promise(resolve => {
+          if (
+            contentWindow &&
+            contentWindow.document.readyState === 'complete'
+          ) {
+              resolve(contentWindow)
+          } else {
+              $iframe.on('load', () => {
+                  resolve(contentWindow)
+              })
+          }
+      })
+  });
+
+
+Cypress.Commands.add(
+  'getInDocument',
+  {prevSubject: 'document'},
+  (document, selector) => Cypress.$(selector, document)
+);
+
+Cypress.Commands.add(
+  'getWithinIframe',
+  (targetElement) => cy.get('iframe').iframeLoaded().its('document').getInDocument(targetElement)
+);
+

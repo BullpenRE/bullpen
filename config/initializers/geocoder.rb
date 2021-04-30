@@ -1,7 +1,7 @@
 Geocoder.configure(
-  cache: Redis.new              # cache object (must respond to #[], #[]=, and #del)
+  cache: Redis.new,              # cache object (must respond to #[], #[]=, and #del)
   # Geocoding options
-  # timeout: 3,                 # geocoding service timeout (secs)
+  timeout: 5                 # geocoding service timeout (secs)
   # lookup: :nominatim,         # name of geocoding service (symbol)
   # ip_lookup: :ipinfo_io,      # name of IP address geocoding service (symbol)
   # language: :en,              # ISO-639 language code

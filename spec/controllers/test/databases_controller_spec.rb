@@ -8,7 +8,7 @@ describe Test::DatabasesController do
       post :clean_database, params: { 'database': { 'should_seed': true } }
 
       # Seed db/seeds/test for default seeds
-      expect(User.count).to eq 2
+      expect(User.count).to eq 0
     end
 
     it 'truncates and seeds the database' do
