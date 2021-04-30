@@ -9,6 +9,7 @@ class Freelancer::JobsController < ApplicationController
 
     @job_applications = current_user.freelancer_profile.job_applications
     @pagy, @jobs = pagy(jobs_collection, page: page, items: ITEMS_PER_PAGE, overflow: :last_page)
+    mixpanel_freelancer_job_tracker
   end
 
   private
@@ -38,5 +39,9 @@ class Freelancer::JobsController < ApplicationController
 
   def jobs_collection
     @jobs_collection ||= Job.where(state: 'posted').order(created_at: :desc).not_applied_or_withdrawn(current_user.freelancer_profile)
+  end
+
+  def mixpanel_freelancer_job_tracker
+    MixpanelWorker.perform_async(current_user.id, 'Find a Job', { 'user': current_user.email })
   end
 end

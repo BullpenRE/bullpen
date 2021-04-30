@@ -13,6 +13,7 @@ gem 'httparty', '~> 0.18.1'                 # Library to build easily classes th
 gem 'image_processing', '~> 1.2'            # Provides higher-level image processing helpers that are commonly needed when handling image uploads
 gem 'jbuilder', '~> 2.7'                    # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'mini_magick', '~> 4.10', '>= 4.10.1'   # Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
+gem 'mixpanel-ruby', '~> 2.2', '>= 2.2.2'   # Library for tracking events and sending Mixpanel profile updates to Mixpanel
 gem 'omniauth', '~> 1.9', '>= 1.9.1'        # Omniauth logins
 gem 'omniauth-google-oauth2', '~> 0.8.1'    # Omniauth for google
 gem 'pagy', '~> 3.5'                        # Agnostic pagination in plain ruby

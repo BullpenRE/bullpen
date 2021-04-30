@@ -4,6 +4,7 @@ module CreateContract
   include ApplicationHelper
   def close_job_if_offer_is_made
     job.update(state: 'closed') if close_job_checked?
+    mixpanel_job_tracker('Close job') if close_job_checked?
   end
 
   def create_make_an_offer_flash_notice
@@ -44,5 +45,10 @@ module CreateContract
 
   def close_job_checked?
     params[:make_an_offer][:state] == '1'
+  end
+
+  def mixpanel_job_tracker(action)
+    MixpanelWorker.perform_async(current_user.id, action, { 'user': current_user.email,
+                                                            'job': job.id })
   end
 end
