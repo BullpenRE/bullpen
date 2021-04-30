@@ -31,3 +31,39 @@ The Bullpen application is built on:
  
 ### Code Quality 
 [![Maintainability](https://api.codeclimate.com/v1/badges/2b1724876c36b5bb29c3/maintainability)](https://codeclimate.com/repos/5f5ff58f6f8e8901a000376a/maintainability) 
+
+### Test Coverage
+
+After getting the code base running locally you can run `$ rspec` to run all unit tests. 
+Follow steps 1-5 below to run the Cypress integration tests. 
+[Here is what it looks like in action](https://www.loom.com/share/ee8a3eaa721345d0926f17d7e8ea7dae).
+
+1. Install Cypress:
+
+   `$ yarn add cypress --dev` 
+
+2. Create test db:
+
+   `$ RAILS_ENV=test bin/rake db:create db:schema:load`
+
+   `$ RAILS_ENV=test rails db:seed` - if needed
+
+3. Run test db migration if needed:
+
+   `$ RAILS_ENV=test rails db:migrate`
+
+   or
+
+   `$ RAILS_ENV=test rails db:test:prepare`
+
+4. Open 3 separate tabs in terminal and run each of the folloing. User Ctrl-C to stop them:
+
+   `$ bundle exec rails server -e test -p 5017 --pid tmp/pids/server5017.pid`
+
+   `$ redis-server`
+
+   `$ sidekiq -C './config/sidekiq.yml'`
+
+5. Open one more tab, then run the cypress dashboard:
+   
+   `$ yarn cypress open --project ./test` 
