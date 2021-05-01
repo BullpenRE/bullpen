@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin)
+if SharedMethods.aa_and_table_exists?('users')
   ActiveAdmin.register_page "Dashboard" do
     menu priority: 1, label: proc { I18n.t("active_admin.dashboard") }
 

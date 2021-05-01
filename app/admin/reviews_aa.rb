@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('reviews')
+if SharedMethods.aa_and_table_exists?('reviews')
   ActiveAdmin.register Review do
     menu label: 'Reviews'
     includes :employer_profile, :freelancer_profile

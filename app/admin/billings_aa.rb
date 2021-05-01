@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('billings')
+if SharedMethods.aa_and_table_exists?('billings')
   ActiveAdmin.register Billing do
     menu label: 'Billing Entries'
 

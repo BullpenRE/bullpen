@@ -12,5 +12,15 @@ class SharedMethods
       file = Dir["./*.dump"].max_by { |f| File.mtime(f) }
       file.present? ? file[2..-1] : nil
     end
+
+    def aa_and_table_exists?(table)
+      return false unless defined?(ActiveAdmin)
+
+      ActiveRecord::Base.connection
+    rescue ActiveRecord::NoDatabaseError
+      false
+    else
+      ApplicationRecord.connection.data_source_exists?(table)
+    end
   end
 end

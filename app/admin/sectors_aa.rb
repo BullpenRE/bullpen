@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('sectors')
+if SharedMethods.aa_and_table_exists?('sectors')
   ActiveAdmin.register Sector do
     permit_params :description, :disable
     actions :all, except: [:destroy]

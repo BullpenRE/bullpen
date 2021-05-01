@@ -32,6 +32,24 @@ The Bullpen application is built on:
 ### Code Quality 
 [![Maintainability](https://api.codeclimate.com/v1/badges/2b1724876c36b5bb29c3/maintainability)](https://codeclimate.com/repos/5f5ff58f6f8e8901a000376a/maintainability) 
 
+### Getting Started with this Codebase (Mac)
+This assumes you have [RVM](http://rvm.io/), postgresql, redis and yarn installed.
+
+1. In your primary workspace directory run `$ git clone git@github.com:BullpenRE/bullpen.git` in terminal.
+2. Enter into the new directory: `$ cd bullpen`
+3. At this point you might be prompted to update your Ruby version. If so, follow the instructions in terminal.
+4. Enter the following command: `$ rvm list` -- verify that your currently selected Ruby version is 2.7.2.
+5. If you had to update your Ruby version in step 3, exit and enter the current directory: `$ cd ..`, then `$ cd bullpen`.
+6. Enter the following command: `$ rvm gemset list` -- verify that the current gemset is bullpen.
+7. Install missing gems in your currently selected gemset by running `$ bundle`
+8. Install NodeJS packages: `$ yarn install`
+9. Instantiate the local database: `$ rails db:create`
+10. Seed the database: `$ rails db:seed`
+11. Open a new tab and start redis: `$ redis-server`. If you have an error such as Address already in use you can use command `$ redis-server --port 6360`
+12. Open a new tab and start sidekiq: `$ sidekiq -C 'config/sidekiq.yml'`
+13. Test it out: `$ rails s` and then navigate to http://localhost:3000
+
+
 ### Test Coverage
 
 After getting the code base running locally you can run `$ rspec` to run all unit tests. 

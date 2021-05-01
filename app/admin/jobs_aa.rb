@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('jobs')
+if SharedMethods.aa_and_table_exists?('jobs')
   ActiveAdmin.register Job do
     menu label: 'Jobs'
 

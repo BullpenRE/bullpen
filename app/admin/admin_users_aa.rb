@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('admin_users')
+if SharedMethods.aa_and_table_exists?('admin_users')
   ActiveAdmin.register AdminUser do
     permit_params :email, :password, :password_confirmation
 

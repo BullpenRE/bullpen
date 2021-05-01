@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('skills')
+if SharedMethods.aa_and_table_exists?('skills')
   ActiveAdmin.register Skill do
     permit_params :description, :disable
     actions :all, except: [:destroy]

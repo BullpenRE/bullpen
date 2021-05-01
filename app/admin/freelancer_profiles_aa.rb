@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('freelancer_profiles')
+if SharedMethods.aa_and_table_exists?('freelancer_profiles')
   ActiveAdmin.register FreelancerProfile do
     menu label: 'Freelancers'
 

@@ -40,25 +40,25 @@ end
 
 if Sector.none?
   Sector.create([
-                      { description: 'HTC' },
-                      { description: 'Affordable Housing' },
-                      { description: 'Condo' },
-                      { description: 'Hospitality' },
-                      { description: 'Industrial' },
-                      { description: 'Land Development' },
-                      { description: 'LIHTC' },
-                      { description: 'Medical' },
-                      { description: 'Mixed Use' },
-                      { description: 'Mobile Home' },
-                      { description: 'Multifamily' },
-                      { description: 'Office' },
-                      { description: 'Retail' },
-                      { description: 'Senior Housing' },
-                      { description: 'Student Housing' },
-                      { description: 'Single Family' },
-                      { description: 'Self Storage' },
-                      { description: 'Marina' }
-                    ])
+                  { description: 'HTC' },
+                  { description: 'Affordable Housing' },
+                  { description: 'Condo' },
+                  { description: 'Hospitality' },
+                  { description: 'Industrial' },
+                  { description: 'Land Development' },
+                  { description: 'LIHTC' },
+                  { description: 'Medical' },
+                  { description: 'Mixed Use' },
+                  { description: 'Mobile Home' },
+                  { description: 'Multifamily' },
+                  { description: 'Office' },
+                  { description: 'Retail' },
+                  { description: 'Senior Housing' },
+                  { description: 'Student Housing' },
+                  { description: 'Single Family' },
+                  { description: 'Self Storage' },
+                  { description: 'Marina' }
+                ])
 end
 
 if Skill.none?

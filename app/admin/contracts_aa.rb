@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('contracts')
+if SharedMethods.aa_and_table_exists?('contracts')
   ActiveAdmin.register Contract do
     menu label: 'Contracts'
     includes :employer_profile, :freelancer_profile, :job
