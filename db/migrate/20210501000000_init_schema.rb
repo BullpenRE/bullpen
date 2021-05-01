@@ -481,7 +481,7 @@ class InitSchema < ActiveRecord::Migration[6.1]
     add_foreign_key "interview_requests", "freelancer_profiles" unless foreign_key_exists?(:interview_requests, :freelancer_profiles)
     add_foreign_key "job_application_questions", "job_applications" unless foreign_key_exists?(:job_application_questions, :job_applications)
     add_foreign_key "job_application_questions", "job_questions" unless foreign_key_exists?(:job_application_questions, :job_questions)
-    add_foreign_key "job_applications", "freelancer_profiles" unless foreign_key_exists?(:job_applications, :freelancer_profies)
+    add_foreign_key "job_applications", "freelancer_profiles" unless foreign_key_exists?(:job_applications, :freelancer_profiles)
     add_foreign_key "job_applications", "jobs" unless foreign_key_exists?(:job_applications, :jobs)
     add_foreign_key "job_questions", "jobs" unless foreign_key_exists?(:job_questions, :jobs)
     add_foreign_key "job_sectors", "jobs" unless foreign_key_exists?(:job_sectors, :jobs)
@@ -493,7 +493,7 @@ class InitSchema < ActiveRecord::Migration[6.1]
     add_foreign_key "jobs", "employer_profiles" unless foreign_key_exists?(:jobs, :employer_profiles)
     add_foreign_key "payment_accounts", "employer_profiles" unless foreign_key_exists?(:payment_accounts, :employer_profiles)
     add_foreign_key "reviews", "employer_profiles" unless foreign_key_exists?(:reviews, :employer_profiles)
-    add_foreign_key "reviews", "freelancer_profiles" unless foreign_key_exists?(:review, :freelancer_profiles)
+    add_foreign_key "reviews", "freelancer_profiles" unless foreign_key_exists?(:reviews, :freelancer_profiles)
     add_foreign_key "timesheets", "contracts" unless foreign_key_exists?(:timesheets, :contracts)
     add_foreign_key "users", "signup_promos" unless foreign_key_exists?(:users, :signup_promos)
 
