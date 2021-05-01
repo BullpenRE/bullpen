@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('credits')
+if SharedMethods.aa_and_table_exists?('credits')
   ActiveAdmin.register Credit do
     menu label: 'Credit Entries'
 

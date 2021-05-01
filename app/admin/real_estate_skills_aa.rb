@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('real_estate_skills')
+if SharedMethods.aa_and_table_exists?('real_estate_skills')
   ActiveAdmin.register RealEstateSkill do
     permit_params :description, :disable
     actions :all, except: [:destroy]

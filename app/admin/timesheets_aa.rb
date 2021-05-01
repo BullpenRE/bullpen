@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('timesheets')
+if SharedMethods.aa_and_table_exists?('timesheets')
   ActiveAdmin.register Timesheet do
     permit_params :contract_id, :description, :starts, :ends, :stripe_id_invoice, :invoice_number
     actions :all

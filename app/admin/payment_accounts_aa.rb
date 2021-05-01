@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('payment_accounts')
+if SharedMethods.aa_and_table_exists?('payment_accounts')
   ActiveAdmin.register PaymentAccount do
     menu label: 'Employer Payment Accounts'
 

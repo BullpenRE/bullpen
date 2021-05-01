@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('messages')
+if SharedMethods.aa_and_table_exists?('messages')
   ActiveAdmin.register Message do
     menu label: 'Messages'
     includes :from_user, :to_user

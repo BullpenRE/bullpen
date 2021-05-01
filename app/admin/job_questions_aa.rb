@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('job_questions')
+if SharedMethods.aa_and_table_exists?('job_questions')
   ActiveAdmin.register JobQuestion do
     menu false
 

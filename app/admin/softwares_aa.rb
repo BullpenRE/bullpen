@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('softwares')
+if SharedMethods.aa_and_table_exists?('softwares')
   ActiveAdmin.register Software do
     permit_params :description, :disable
     actions :all, except: [:destroy]

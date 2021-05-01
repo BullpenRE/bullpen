@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('interview_requests')
+if SharedMethods.aa_and_table_exists?('interview_requests')
   ActiveAdmin.register InterviewRequest do
     menu label: 'Interview Requests'
     includes :employer_profile, :freelancer_profile

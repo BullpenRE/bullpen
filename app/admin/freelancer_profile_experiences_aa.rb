@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('freelancer_profile_experiences')
+if SharedMethods.aa_and_table_exists?('freelancer_profile_experiences')
   ActiveAdmin.register FreelancerProfileExperience do
     menu false
 

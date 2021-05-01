@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('users')
+if SharedMethods.aa_and_table_exists?('users')
   ActiveAdmin.register User do
     permit_params :email, :first_name, :last_name, :confirmed_at, :confirmation_sent_at, :disable
 

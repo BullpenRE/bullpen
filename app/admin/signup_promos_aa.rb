@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('signup_promos')
+if SharedMethods.aa_and_table_exists?('signup_promos')
   ActiveAdmin.register SignupPromo do
     menu label: 'Promo'
 

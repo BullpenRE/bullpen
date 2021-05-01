@@ -1,4 +1,4 @@
-if defined?(ActiveAdmin) && ApplicationRecord.connection.data_source_exists?('employer_profiles')
+if SharedMethods.aa_and_table_exists?('employer_profiles')
   ActiveAdmin.register EmployerProfile do
     menu label: 'Employers'
 
