@@ -428,10 +428,10 @@ ActiveRecord::Schema.define(version: 2021_05_01_000000) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "employer_notified_of_freelancer_changes", default: true
+    t.string "pdf_invoice_link"
     t.string "stripe_id_invoice"
     t.string "invoice_number"
     t.datetime "employer_charged_on"
-    t.string "pdf_invoice_link"
     t.index ["contract_id"], name: "index_timesheets_on_contract_id"
   end
 
