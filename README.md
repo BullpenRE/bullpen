@@ -52,7 +52,7 @@ This assumes you have [RVM](http://rvm.io/), postgresql, redis and yarn installe
 
 ### Test Coverage
 
-After getting the code base running locally you can run `$ rspec` to run all unit tests. 
+After getting the code base running locally you can run `$ rspec` to run all unit tests. You should have redis running in the background before running some tests.
 Follow steps 1-5 below to run the Cypress integration tests. 
 [Here is what it looks like in action](https://www.loom.com/share/ee8a3eaa721345d0926f17d7e8ea7dae).
 
